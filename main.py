@@ -1,0 +1,5 @@
+print("AURA Genesis Booting...")
+print("Status : READY")
+print("Hello, Kiput.")
+print("I'm AURA.")
+print("Nice to meet you.")
