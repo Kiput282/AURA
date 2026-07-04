@@ -13,6 +13,7 @@ from aura.context.context_manager import ContextManager
 from aura.permissions.permission_manager import PermissionManager
 from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
+from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -558,6 +559,54 @@ class AuraCLI:
         print(f"Confirmation: {permission.requires_confirmation}")
         print(f"Reason      : {permission.reason}")
 
+    def project_summary(self) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+        summary = plugin.summary()
+
+        print("AURA Project Summary")
+        print("====================")
+        print(f"Project Root  : {summary['project_root']}")
+        print(f"Visible Files : {summary['visible_files']}")
+        print(f"Python Files  : {summary['python_files']}")
+        print(f"Markdown Files: {summary['markdown_files']}")
+        print(f"YAML Files    : {summary['yaml_files']}")
+        print()
+        print("Top Files:")
+        for file in summary["top_files"]:
+            print(f"- {file}")
+
+    def project_files(self, limit: int = 50) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+        files = plugin.list_files(limit=limit)
+
+        print("AURA Project Files")
+        print("==================")
+        print(f"Limit: {limit}")
+        print()
+
+        if not files:
+            print("No visible project files found.")
+            return
+
+        for file in files:
+            print(f"- {file}")
+
+    def project_read(self, relative_path: str) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+
+        print("AURA Project Read")
+        print("=================")
+        print(f"File: {relative_path}")
+        print()
+
+        try:
+            content = plugin.read_file(relative_path=relative_path)
+        except Exception as error:
+            print(f"Error: {error}")
+            return
+
+        print(content)
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -598,6 +647,14 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("project-summary")
+
+        project_files_parser = subparsers.add_parser("project-files")
+        project_files_parser.add_argument("--limit", type=int, default=50)
+
+        project_read_parser = subparsers.add_parser("project-read")
+        project_read_parser.add_argument("relative_path", type=str)
 
         subparsers.add_parser("plugin-actions")
 
@@ -726,6 +783,21 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "project-summary":
+            disable_logging()
+            self.project_summary()
+            return True
+
+        if parsed.command == "project-files":
+            disable_logging()
+            self.project_files(limit=parsed.limit)
+            return True
+
+        if parsed.command == "project-read":
+            disable_logging()
+            self.project_read(relative_path=parsed.relative_path)
             return True
 
         if parsed.command == "plugin-actions":

@@ -126,6 +126,39 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="project.summary",
+            plugin="project",
+            description="Show safe project summary and file counts.",
+            permission_action="read_project",
+            status="online",
+            skill="file_project_assist",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project.files",
+            plugin="project",
+            description="List safe visible project files.",
+            permission_action="read_project",
+            status="online",
+            skill="file_project_assist",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project.read_file",
+            plugin="project",
+            description="Read a safe project file inside the project root.",
+            permission_action="read_file",
+            status="online",
+            skill="file_project_assist",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="provider.check",
             plugin="provider",
             description="Check reasoning provider status.",

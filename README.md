@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.27.0-genesis
-Status  : PLUGIN ACTION INTERFACE ONLINE
+Version : 0.28.0-genesis
+Status  : FILE AND PROJECT PLUGIN ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -89,6 +89,7 @@ AURA currently supports:
 - Permission system foundation
 - Skill registry
 - Plugin action interface
+- File and project plugin
 - Memory-aware chat
 - Identity guardrail
 - Language control
@@ -183,6 +184,10 @@ python3 main.py memory-delete "<memory_id>"
 
 python3 main.py provider
 python3 main.py provider-check
+
+python3 main.py project-summary
+python3 main.py project-files --limit 30
+python3 main.py project-read README.md
 
 Aliases are also available for several commands, including:
 

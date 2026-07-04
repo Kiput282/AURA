@@ -138,11 +138,11 @@ def build_builtin_skill_registry() -> SkillRegistry:
     registry.register(
         AuraSkill(
             name="file_project_assist",
-            description="Help inspect project files and prepare file changes.",
+            description="Inspect project files, show project summary, and prepare safe file-related assistance.",
             role="coder",
-            permission_action="prepare_file",
-            status="foundation",
-            capabilities=["file_review", "project_analysis", "draft_changes"],
+            permission_action="read_project",
+            status="online",
+            capabilities=["file_review", "project_analysis", "project_summary", "safe_file_read"],
         )
     )
 

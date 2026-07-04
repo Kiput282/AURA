@@ -65,15 +65,17 @@ def build_builtin_role_registry() -> RoleRegistry:
     registry.register(
         AuraRole(
             name="coder",
-            description="Coding, debugging, software architecture, and technical reasoning.",
+            description="Coding, debugging, software architecture, project inspection, and technical reasoning.",
             provider="ollama",
             model="llama3.2",
-            status="planned",
+            status="foundation",
             capabilities=[
                 "coding",
                 "debugging",
                 "architecture",
                 "code_review",
+                "project_inspection",
+                "safe_file_read",
             ],
         )
     )

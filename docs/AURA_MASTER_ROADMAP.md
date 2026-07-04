@@ -423,6 +423,7 @@ Planned:
 - Permission system
 - Skill registry
 - Plugin action interface
+- File and project plugin
 - File/project plugin
 - App launcher plugin
 - Browser helper

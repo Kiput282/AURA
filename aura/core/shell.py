@@ -12,6 +12,7 @@ from aura.context.context_manager import ContextManager
 from aura.permissions.permission_manager import PermissionManager
 from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
+from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
@@ -53,6 +54,9 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "project-summary",
+            "project-files",
+            "project-read",
             "plugin-actions",
             "plugin-action",
             "plugin-action-check",
@@ -140,6 +144,10 @@ class AuraShell:
         print("  journal-count        Count project journal entries")
         print("  context <text>       Preview AURA context packet")
         print("  context-preview <text> Alias for context")
+        print("  project-summary      Show project summary")
+        print("  project-files        Show visible project files")
+        print("  project-files <n>    Show visible project files with limit")
+        print("  project-read <path>  Read safe project file")
         print("  plugin-actions       Show plugin action registry")
         print("  plugin-action <name> Show plugin action detail")
         print("  plugin-action-check <name> Check plugin action permission")
@@ -539,6 +547,54 @@ class AuraShell:
 
         print(packet.to_text())
 
+    def project_summary(self) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+        summary = plugin.summary()
+
+        print("AURA Project Summary")
+        print("====================")
+        print(f"Project Root  : {summary['project_root']}")
+        print(f"Visible Files : {summary['visible_files']}")
+        print(f"Python Files  : {summary['python_files']}")
+        print(f"Markdown Files: {summary['markdown_files']}")
+        print(f"YAML Files    : {summary['yaml_files']}")
+        print()
+        print("Top Files:")
+        for file in summary["top_files"]:
+            print(f"- {file}")
+
+    def project_files(self, limit: int = 50) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+        files = plugin.list_files(limit=limit)
+
+        print("AURA Project Files")
+        print("==================")
+        print(f"Limit: {limit}")
+        print()
+
+        if not files:
+            print("No visible project files found.")
+            return
+
+        for file in files:
+            print(f"- {file}")
+
+    def project_read(self, relative_path: str) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+
+        print("AURA Project Read")
+        print("=================")
+        print(f"File: {relative_path}")
+        print()
+
+        try:
+            content = plugin.read_file(relative_path=relative_path)
+        except Exception as error:
+            print(f"Error: {error}")
+            return
+
+        print(content)
+
     def plugin_actions(self) -> None:
         registry = build_builtin_plugin_action_registry()
 
@@ -931,6 +987,34 @@ class AuraShell:
                 return
 
             self.context(message=message)
+            return
+
+        if normalized == "project-summary":
+            self.project_summary()
+            return
+
+        if normalized == "project-files":
+            self.project_files()
+            return
+
+        if normalized.startswith("project-files "):
+            value = command[len("project-files "):].strip()
+            try:
+                limit = int(value)
+            except ValueError:
+                print("Usage: project-files <limit>")
+                return
+
+            self.project_files(limit=limit)
+            return
+
+        if normalized.startswith("project-read "):
+            relative_path = command[len("project-read "):].strip()
+            if not relative_path:
+                print("Usage: project-read <path>")
+                return
+
+            self.project_read(relative_path=relative_path)
             return
 
         if normalized == "plugin-actions":
