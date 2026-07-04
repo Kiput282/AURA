@@ -16,6 +16,7 @@ class AuraCLI:
     - remember
     - recall
     - chat
+    - history
     - shell
     """
 
@@ -60,6 +61,22 @@ class AuraCLI:
         response = chat.respond(message, source="AuraCLI")
         print(response)
 
+    def history(self, limit: int = 5) -> None:
+        chat = AuraChat(project_root=self.project_root)
+        turns = chat.recent_conversations(limit=limit)
+
+        print("AURA Chat History")
+        print("=================")
+
+        if not turns:
+            print("No chat history found.")
+            return
+
+        for turn in turns:
+            print(f"User: {turn.user_message}")
+            print(f"AURA: {turn.aura_response}")
+            print("---")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -81,6 +98,9 @@ class AuraCLI:
         chat_parser = subparsers.add_parser("chat")
         chat_parser.add_argument("message", type=str)
 
+        history_parser = subparsers.add_parser("history")
+        history_parser.add_argument("--limit", type=int, default=5)
+
         subparsers.add_parser("shell")
 
         return parser.parse_args(args)
@@ -101,6 +121,11 @@ class AuraCLI:
         if parsed.command == "chat":
             disable_logging()
             self.chat(parsed.message)
+            return True
+
+        if parsed.command == "history":
+            disable_logging()
+            self.history(limit=parsed.limit)
             return True
 
         if parsed.command == "shell":
