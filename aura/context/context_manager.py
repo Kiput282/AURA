@@ -23,6 +23,7 @@ class ContextManager:
         "a", "an", "the", "is", "are", "am", "to", "of", "and", "or",
         "apa", "yang", "di", "ke", "dari", "ini", "itu", "kita", "saya",
         "aku", "sebuah", "sebagai", "dengan", "untuk", "sedang",
+        "aura", "gunakan", "digunakan", "pakai", "memakai", "use", "used",
 
         # Generic/noisy memory-management terms.
         "memory", "memori", "remember", "recall", "delete", "deleted",
@@ -59,7 +60,20 @@ class ContextManager:
         journal_limit: int = 3,
     ) -> ContextPacket:
         pinned_memories = self.memory_store.list_pinned()
-        important_memories = self.list_important_memories(limit=important_limit)
+        pinned_ids = {
+            memory.id
+            for memory in pinned_memories
+        }
+
+        important_memories = self.remove_duplicate_memories(
+            memories=self.list_important_memories(limit=important_limit),
+            existing_ids=pinned_ids,
+        )
+        important_ids = {
+            memory.id
+            for memory in important_memories
+        }
+
         relevant_memories = self.list_relevant_memories(
             query=user_message,
             limit=relevant_limit,
@@ -68,10 +82,7 @@ class ContextManager:
 
         relevant_memories = self.remove_duplicate_memories(
             memories=relevant_memories,
-            existing_ids={
-                memory.id
-                for memory in pinned_memories + important_memories
-            },
+            existing_ids=pinned_ids | important_ids,
         )
 
         return ContextPacket(
@@ -128,6 +139,9 @@ class ContextManager:
         scored_memories: list[tuple[int, int, MemoryItem]] = []
 
         for index, memory in enumerate(self.memory_store.list_all()):
+            if memory.kind == "system" and int(memory.metadata.get("importance", 3)) < 4:
+                continue
+
             score = self.score_memory(query_tokens=query_tokens, memory=memory)
 
             if score >= 2:

@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.24.0-genesis
-Status  : CONTEXT MANAGER V1 ONLINE
+Version : 0.24.1-genesis
+Status  : CONTEXT RELEVANCE CLEANUP ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2

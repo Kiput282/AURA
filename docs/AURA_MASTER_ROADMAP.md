@@ -501,6 +501,7 @@ v0.21.0 — Project Journal Foundation
 v0.22.0 — Role System Foundation
 v0.23.0 — Memory Pin and Importance
 v0.24.0 — Context Manager v1
+v0.24.1 — Context Relevance Cleanup
 v0.25.0 — Permission System Foundation
 v0.26.0 — Skill Registry
 v0.27.0 — Plugin Action Interface
