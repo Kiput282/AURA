@@ -3,23 +3,19 @@ from pathlib import Path
 from aura.memory.conversation_store import ConversationStore
 from aura.memory.conversation_turn import ConversationTurn
 from aura.memory.memory_store import MemoryStore
+from aura.reasoning.factory import ReasoningProviderFactory
 from aura.reasoning.provider import ReasoningProvider
-from aura.reasoning.rule_based_provider import RuleBasedReasoningProvider
 
 
 class AuraChat:
     """
     Chat interface for AURA Genesis.
 
-    AuraChat does not directly own reasoning logic.
-    It delegates reasoning to a ReasoningProvider.
+    AuraChat delegates reasoning to a ReasoningProvider.
 
-    This allows AURA to later switch between:
-    - rule-based provider
-    - local LLM provider
-    - Ollama provider
-    - OpenAI provider
-    - LM Studio provider
+    Provider selection:
+    - explicit provider argument, or
+    - settings.yaml via ReasoningProviderFactory
     """
 
     def __init__(
@@ -30,7 +26,10 @@ class AuraChat:
         self.project_root = project_root
         self.memory_store = MemoryStore(project_root=self.project_root)
         self.conversation_store = ConversationStore(project_root=self.project_root)
-        self.reasoning_provider = reasoning_provider or RuleBasedReasoningProvider()
+        self.reasoning_provider = (
+            reasoning_provider
+            or ReasoningProviderFactory.from_settings(project_root=self.project_root)
+        )
 
     def build_context(self) -> dict:
         return {
