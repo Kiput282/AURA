@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 
+from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.utils.logger import disable_logging
@@ -13,6 +14,7 @@ class AuraCLI:
     Supported commands:
     - remember
     - recall
+    - shell
     """
 
     def __init__(self):
@@ -51,6 +53,10 @@ class AuraCLI:
         for memory in memories:
             print(f"- [{memory.kind}] {memory.content}")
 
+    def shell(self) -> None:
+        shell = AuraShell()
+        shell.run()
+
     def parse(self, args: list[str] | None = None):
         parser = argparse.ArgumentParser(
             prog="aura",
@@ -65,6 +71,8 @@ class AuraCLI:
         recall_parser = subparsers.add_parser("recall")
         recall_parser.add_argument("--limit", type=int, default=5)
 
+        subparsers.add_parser("shell")
+
         return parser.parse_args(args)
 
     def run(self, args: list[str] | None = None) -> bool:
@@ -78,6 +86,11 @@ class AuraCLI:
         if parsed.command == "recall":
             disable_logging()
             self.recall(limit=parsed.limit)
+            return True
+
+        if parsed.command == "shell":
+            disable_logging()
+            self.shell()
             return True
 
         return False
