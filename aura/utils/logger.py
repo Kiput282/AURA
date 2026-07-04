@@ -1,15 +1,27 @@
 from pathlib import Path
+import sys
 
 from loguru import logger
 
 
-def setup_logger(project_root: Path) -> None:
+def disable_logging() -> None:
+    """
+    Disable all Loguru sinks.
+
+    Used by CLI commands that should produce clean user-facing output.
+    """
+    logger.remove()
+
+
+def setup_logger(project_root: Path, *, console: bool = False) -> None:
     """
     Configure AURA logger.
 
-    This should be initialized as early as possible by AuraApp,
-    so all app, boot, event, and service logs are captured.
+    By default, logs are written to file only.
+    Console logging can be enabled explicitly when needed.
     """
+
+    logger.remove()
 
     logs_dir = project_root / "logs"
     logs_dir.mkdir(exist_ok=True)
@@ -22,5 +34,8 @@ def setup_logger(project_root: Path) -> None:
         retention="7 days",
         level="INFO",
     )
+
+    if console:
+        logger.add(sys.stderr, level="INFO")
 
     logger.info("Logger initialized")

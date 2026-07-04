@@ -3,6 +3,7 @@ from pathlib import Path
 
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
+from aura.utils.logger import disable_logging
 
 
 class AuraCLI:
@@ -10,16 +11,19 @@ class AuraCLI:
     Simple command-line interface for AURA.
 
     Supported commands:
-    - boot
     - remember
     - recall
     """
 
     def __init__(self):
         self.project_root = Path(__file__).resolve().parents[2]
-        self.memory_store = MemoryStore(project_root=self.project_root)
+
+    def get_memory_store(self) -> MemoryStore:
+        return MemoryStore(project_root=self.project_root)
 
     def remember(self, content: str) -> None:
+        memory_store = self.get_memory_store()
+
         memory = MemoryItem(
             kind="user_note",
             content=content,
@@ -28,13 +32,14 @@ class AuraCLI:
             },
         )
 
-        self.memory_store.save(memory)
+        memory_store.save(memory)
 
         print("Memory saved.")
         print(f"Content: {content}")
 
     def recall(self, limit: int = 5) -> None:
-        memories = self.memory_store.list_recent(limit=limit)
+        memory_store = self.get_memory_store()
+        memories = memory_store.list_recent(limit=limit)
 
         print("AURA Memory Recall")
         print("==================")
@@ -66,10 +71,12 @@ class AuraCLI:
         parsed = self.parse(args)
 
         if parsed.command == "remember":
+            disable_logging()
             self.remember(parsed.content)
             return True
 
         if parsed.command == "recall":
+            disable_logging()
             self.recall(limit=parsed.limit)
             return True
 
