@@ -11,6 +11,7 @@ from aura.journal.project_journal import ProjectJournal
 from aura.context.context_manager import ContextManager
 from aura.permissions.permission_manager import PermissionManager
 from aura.skills.builtin_skills import build_builtin_skill_registry
+from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
@@ -52,6 +53,9 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "plugin-actions",
+            "plugin-action",
+            "plugin-action-check",
             "skills",
             "skill",
             "skill-check",
@@ -136,6 +140,9 @@ class AuraShell:
         print("  journal-count        Count project journal entries")
         print("  context <text>       Preview AURA context packet")
         print("  context-preview <text> Alias for context")
+        print("  plugin-actions       Show plugin action registry")
+        print("  plugin-action <name> Show plugin action detail")
+        print("  plugin-action-check <name> Check plugin action permission")
         print("  skills               Show AURA skill registry")
         print("  skill <name>         Show skill detail")
         print("  skill-check <name>   Check skill permission")
@@ -532,6 +539,72 @@ class AuraShell:
 
         print(packet.to_text())
 
+    def plugin_actions(self) -> None:
+        registry = build_builtin_plugin_action_registry()
+
+        print("AURA Plugin Actions")
+        print("===================")
+        print(f"Total: {registry.count()}")
+        print()
+
+        for action in registry.list_actions():
+            permission = registry.check_permission(action)
+
+            print(f"- {action.name}")
+            print(f"  Plugin      : {action.plugin}")
+            print(f"  Status      : {action.status}")
+            print(f"  Skill       : {action.skill}")
+            print(f"  Permission  : {action.permission_action}")
+            print(f"  Allowed     : {permission.allowed}")
+            print(f"  Confirmation: {permission.requires_confirmation}")
+            print(f"  Description : {action.description}")
+            print()
+
+    def plugin_action_detail(self, name: str) -> None:
+        registry = build_builtin_plugin_action_registry()
+        action = registry.get(name=name)
+
+        print("AURA Plugin Action")
+        print("==================")
+
+        if action is None:
+            print(f"Plugin action not found: {name}")
+            return
+
+        permission = registry.check_permission(action)
+
+        print(f"Name        : {action.name}")
+        print(f"Plugin      : {action.plugin}")
+        print(f"Status      : {action.status}")
+        print(f"Skill       : {action.skill}")
+        print(f"Permission  : {action.permission_action}")
+        print(f"Allowed     : {permission.allowed}")
+        print(f"Confirmation: {permission.requires_confirmation}")
+        print(f"Description : {action.description}")
+
+    def plugin_action_check(self, name: str) -> None:
+        registry = build_builtin_plugin_action_registry()
+        action = registry.get(name=name)
+
+        print("AURA Plugin Action Check")
+        print("========================")
+
+        if action is None:
+            print(f"Plugin action not found: {name}")
+            return
+
+        permission = registry.check_permission(action)
+
+        print(f"Action      : {action.name}")
+        print(f"Plugin      : {action.plugin}")
+        print(f"Status      : {action.status}")
+        print(f"Skill       : {action.skill}")
+        print(f"Permission  : {action.permission_action}")
+        print(f"Level       : {int(permission.level)} - {permission.level.label}")
+        print(f"Allowed     : {permission.allowed}")
+        print(f"Confirmation: {permission.requires_confirmation}")
+        print(f"Reason      : {permission.reason}")
+
     def skills(self) -> None:
         registry = build_builtin_skill_registry()
 
@@ -858,6 +931,28 @@ class AuraShell:
                 return
 
             self.context(message=message)
+            return
+
+        if normalized == "plugin-actions":
+            self.plugin_actions()
+            return
+
+        if normalized.startswith("plugin-action-check "):
+            name = command[len("plugin-action-check "):].strip()
+            if not name:
+                print("Usage: plugin-action-check <name>")
+                return
+
+            self.plugin_action_check(name=name)
+            return
+
+        if normalized.startswith("plugin-action "):
+            name = command[len("plugin-action "):].strip()
+            if not name:
+                print("Usage: plugin-action <name>")
+                return
+
+            self.plugin_action_detail(name=name)
             return
 
         if normalized == "skills":

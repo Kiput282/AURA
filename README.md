@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.26.0-genesis
-Status  : SKILL REGISTRY ONLINE
+Version : 0.27.0-genesis
+Status  : PLUGIN ACTION INTERFACE ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -88,6 +88,7 @@ AURA currently supports:
 - Context manager v1
 - Permission system foundation
 - Skill registry
+- Plugin action interface
 - Memory-aware chat
 - Identity guardrail
 - Language control

@@ -104,6 +104,17 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="plugin_action_interface",
+            description="List plugin actions and check plugin action permissions.",
+            role="action",
+            permission_action="think",
+            status="online",
+            capabilities=["plugin_actions", "action_metadata", "permission_check"],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="provider_check",
             description="Check AURA reasoning provider and runtime status.",
             role="companion",

@@ -12,6 +12,7 @@ from aura.journal.project_journal import ProjectJournal
 from aura.context.context_manager import ContextManager
 from aura.permissions.permission_manager import PermissionManager
 from aura.skills.builtin_skills import build_builtin_skill_registry
+from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -491,6 +492,72 @@ class AuraCLI:
         print(f"Confirmation: {permission.requires_confirmation}")
         print(f"Reason      : {permission.reason}")
 
+    def plugin_actions(self) -> None:
+        registry = build_builtin_plugin_action_registry()
+
+        print("AURA Plugin Actions")
+        print("===================")
+        print(f"Total: {registry.count()}")
+        print()
+
+        for action in registry.list_actions():
+            permission = registry.check_permission(action)
+
+            print(f"- {action.name}")
+            print(f"  Plugin      : {action.plugin}")
+            print(f"  Status      : {action.status}")
+            print(f"  Skill       : {action.skill}")
+            print(f"  Permission  : {action.permission_action}")
+            print(f"  Allowed     : {permission.allowed}")
+            print(f"  Confirmation: {permission.requires_confirmation}")
+            print(f"  Description : {action.description}")
+            print()
+
+    def plugin_action_detail(self, name: str) -> None:
+        registry = build_builtin_plugin_action_registry()
+        action = registry.get(name=name)
+
+        print("AURA Plugin Action")
+        print("==================")
+
+        if action is None:
+            print(f"Plugin action not found: {name}")
+            return
+
+        permission = registry.check_permission(action)
+
+        print(f"Name        : {action.name}")
+        print(f"Plugin      : {action.plugin}")
+        print(f"Status      : {action.status}")
+        print(f"Skill       : {action.skill}")
+        print(f"Permission  : {action.permission_action}")
+        print(f"Allowed     : {permission.allowed}")
+        print(f"Confirmation: {permission.requires_confirmation}")
+        print(f"Description : {action.description}")
+
+    def plugin_action_check(self, name: str) -> None:
+        registry = build_builtin_plugin_action_registry()
+        action = registry.get(name=name)
+
+        print("AURA Plugin Action Check")
+        print("========================")
+
+        if action is None:
+            print(f"Plugin action not found: {name}")
+            return
+
+        permission = registry.check_permission(action)
+
+        print(f"Action      : {action.name}")
+        print(f"Plugin      : {action.plugin}")
+        print(f"Status      : {action.status}")
+        print(f"Skill       : {action.skill}")
+        print(f"Permission  : {action.permission_action}")
+        print(f"Level       : {int(permission.level)} - {permission.level.label}")
+        print(f"Allowed     : {permission.allowed}")
+        print(f"Confirmation: {permission.requires_confirmation}")
+        print(f"Reason      : {permission.reason}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -531,6 +598,14 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("plugin-actions")
+
+        plugin_action_parser = subparsers.add_parser("plugin-action")
+        plugin_action_parser.add_argument("name", type=str)
+
+        plugin_action_check_parser = subparsers.add_parser("plugin-action-check")
+        plugin_action_check_parser.add_argument("name", type=str)
 
         subparsers.add_parser("skills")
 
@@ -651,6 +726,21 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "plugin-actions":
+            disable_logging()
+            self.plugin_actions()
+            return True
+
+        if parsed.command == "plugin-action":
+            disable_logging()
+            self.plugin_action_detail(name=parsed.name)
+            return True
+
+        if parsed.command == "plugin-action-check":
+            disable_logging()
+            self.plugin_action_check(name=parsed.name)
             return True
 
         if parsed.command == "skills":

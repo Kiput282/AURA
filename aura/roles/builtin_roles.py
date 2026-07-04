@@ -136,6 +136,7 @@ def build_builtin_role_registry() -> RoleRegistry:
             capabilities=[
                 "permission_check",
                 "action_safety",
+                "plugin_action_interface",
                 "tool_calling",
                 "plugin_control",
                 "task_planning",
