@@ -17,7 +17,7 @@ class OllamaReasoningProvider(ReasoningProvider):
     """
 
     name = "ollama"
-    version = "0.2.0"
+    version = "0.2.2"
 
     def __init__(
         self,
@@ -224,14 +224,27 @@ class OllamaReasoningProvider(ReasoningProvider):
 
         return None
 
-    def build_user_message(self, message: str) -> str:
+    def build_user_message(self, message: str, context: dict[str, Any]) -> str:
         language = self.detect_language(message)
+        relevant_memories = context.get("relevant_memories", [])
+
+        memory_lines = []
+
+        if relevant_memories:
+            memory_lines.append("Relevant memories that may answer the user:")
+            for memory in relevant_memories:
+                memory_lines.append(f"- {memory.content}")
+            memory_lines.append("Use the relevant memories when they directly answer the question.")
+            memory_lines.append("")
+
+        memory_block = "\n".join(memory_lines)
 
         if language == "en":
             return (
                 "Answer in English. Do not answer in Indonesian. "
                 "Keep proper nouns unchanged. "
                 "If the user asks for a short answer, keep it short.\n\n"
+                f"{memory_block}"
                 f"User message: {message}"
             )
 
@@ -240,14 +253,76 @@ class OllamaReasoningProvider(ReasoningProvider):
                 "Jawab dalam Bahasa Indonesia. Jangan menjawab dalam Bahasa Inggris. "
                 "Jangan terjemahkan proper noun seperti AURA, Kiput, Genesis, dan Grow Together. "
                 "Jika user meminta jawaban singkat, jawab singkat.\n\n"
+                f"{memory_block}"
                 f"Pesan user: {message}"
             )
 
         return (
             "Answer in the same language as the user's message. "
             "Keep proper nouns unchanged.\n\n"
+            f"{memory_block}"
             f"User message: {message}"
         )
+
+    def try_memory_guardrail(
+        self,
+        message: str,
+        context: dict[str, Any],
+    ) -> str | None:
+        """
+        Deterministic guardrail for factual questions that are clearly answered
+        by relevant memories.
+
+        This prevents the LLM from ignoring high-confidence memory context.
+        """
+
+        relevant_memories = context.get("relevant_memories", [])
+
+        if not relevant_memories:
+            return None
+
+        normalized = message.strip().lower()
+        language = self.detect_language(message)
+
+        memory_texts = [memory.content for memory in relevant_memories]
+        combined_memory = "\n".join(memory_texts).lower()
+
+        asks_building = any(
+            phrase in normalized
+            for phrase in {
+                "apa yang sedang kita bangun",
+                "apa yang kita bangun",
+                "sedang kita bangun",
+                "what are we building",
+                "what are we making",
+            }
+        )
+
+        asks_local_model = any(
+            phrase in normalized
+            for phrase in {
+                "model apa",
+                "otak lokal",
+                "local brain",
+                "local model",
+                "what model",
+                "which model",
+            }
+        )
+
+        if asks_building and "aura" in combined_memory and "atlas" in combined_memory:
+            if language == "en":
+                return "We are building AURA on the ATLAS server."
+
+            return "Kita sedang membangun AURA di server ATLAS."
+
+        if asks_local_model and "ollama" in combined_memory and "llama3.2" in combined_memory:
+            if language == "en":
+                return "AURA uses Ollama with the llama3.2 model as its local brain."
+
+            return "AURA menggunakan Ollama dengan model llama3.2 sebagai otak lokal."
+
+        return None
 
     def build_system_prompt(self, context: dict[str, Any], latest_message: str) -> str:
         identity = context.get("identity", {})
@@ -431,6 +506,14 @@ class OllamaReasoningProvider(ReasoningProvider):
         if guardrail_response is not None:
             return guardrail_response
 
+        memory_guardrail_response = self.try_memory_guardrail(
+            message=message,
+            context=context,
+        )
+
+        if memory_guardrail_response is not None:
+            return memory_guardrail_response
+
         payload = {
             "model": self.model,
             "messages": [
@@ -443,7 +526,10 @@ class OllamaReasoningProvider(ReasoningProvider):
                 },
                 {
                     "role": "user",
-                    "content": self.build_user_message(message),
+                    "content": self.build_user_message(
+                        message=message,
+                        context=context,
+                    ),
                 },
             ],
             "stream": False,

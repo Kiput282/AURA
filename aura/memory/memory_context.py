@@ -9,67 +9,70 @@ class MemoryContextBuilder:
     Builds memory context for AURA chat.
 
     Current strategy:
-    - simple keyword relevance
+    - keyword relevance
+    - lightweight Indonesian/English normalization
     - recent fallback
-
-    Future strategy:
-    - embeddings
-    - vector search
-    - semantic memory graph
     """
 
     STOPWORDS = {
-        "a",
-        "an",
-        "and",
-        "are",
-        "as",
-        "at",
-        "apa",
-        "atau",
-        "bagaimana",
-        "buat",
-        "dan",
-        "di",
-        "do",
-        "does",
-        "for",
-        "from",
-        "how",
-        "i",
-        "ini",
-        "is",
-        "itu",
-        "kamu",
-        "kita",
-        "me",
-        "membuat",
-        "membangun",
-        "my",
-        "of",
-        "on",
-        "sedang",
-        "saya",
-        "the",
-        "to",
-        "untuk",
-        "what",
-        "who",
-        "yang",
-        "you",
-        "your",
+        "a", "an", "and", "are", "as", "at",
+        "apa", "atau", "bagaimana", "buat",
+        "dan", "di", "do", "does", "for", "from",
+        "how", "i", "ini", "is", "itu",
+        "kamu", "kita", "me", "my", "of", "on",
+        "sedang", "saya", "the", "to", "untuk",
+        "what", "who", "yang", "you", "your",
+    }
+
+    SYNONYMS = {
+        "bangun": {"bangun", "membangun", "dibangun", "build", "building", "built"},
+        "membangun": {"bangun", "membangun", "dibangun", "build", "building", "built"},
+        "build": {"bangun", "membangun", "dibangun", "build", "building", "built"},
+        "building": {"bangun", "membangun", "dibangun", "build", "building", "built"},
+        "server": {"server", "atlas"},
+        "atlas": {"server", "atlas"},
+        "model": {"model", "llama3", "llama3.2", "ollama"},
+        "llama3": {"model", "llama3", "llama3.2", "ollama"},
+        "ollama": {"model", "llama3", "llama3.2", "ollama"},
+        "otak": {"otak", "brain", "model", "ollama", "llama3.2"},
+        "brain": {"otak", "brain", "model", "ollama", "llama3.2"},
     }
 
     def __init__(self, memory_store: MemoryStore):
         self.memory_store = memory_store
 
+    def normalize_token(self, token: str) -> str:
+        token = token.lower().strip()
+
+        replacements = {
+            "membuatmu": "membuat",
+            "menciptakanmu": "menciptakan",
+            "membangunnya": "membangun",
+            "dibangunnya": "dibangun",
+            "llama3_2": "llama3.2",
+        }
+
+        return replacements.get(token, token)
+
+    def expand_tokens(self, tokens: set[str]) -> set[str]:
+        expanded = set(tokens)
+
+        for token in tokens:
+            if token in self.SYNONYMS:
+                expanded.update(self.SYNONYMS[token])
+
+        return expanded
+
     def tokenize(self, text: str) -> set[str]:
-        tokens = re.findall(r"[a-zA-Z0-9_]+", text.lower())
-        return {
-            token
-            for token in tokens
+        raw_tokens = re.findall(r"[a-zA-Z0-9_.]+", text.lower())
+
+        tokens = {
+            self.normalize_token(token)
+            for token in raw_tokens
             if len(token) >= 3 and token not in self.STOPWORDS
         }
+
+        return self.expand_tokens(tokens)
 
     def score_memory(self, query_tokens: set[str], memory: MemoryItem) -> int:
         memory_tokens = self.tokenize(memory.content)
@@ -78,7 +81,7 @@ class MemoryContextBuilder:
             return 0
 
         overlap = query_tokens.intersection(memory_tokens)
-        score = len(overlap)
+        score = len(overlap) * 3
 
         lowered_content = memory.content.lower()
 
@@ -92,16 +95,16 @@ class MemoryContextBuilder:
         memories = self.memory_store.list_all()
         query_tokens = self.tokenize(query)
 
-        scored_memories: list[tuple[int, MemoryItem]] = []
+        scored_memories: list[tuple[int, int, MemoryItem]] = []
 
-        for memory in memories:
+        for index, memory in enumerate(memories):
             score = self.score_memory(query_tokens=query_tokens, memory=memory)
             if score > 0:
-                scored_memories.append((score, memory))
+                scored_memories.append((score, index, memory))
 
-        scored_memories.sort(key=lambda item: item[0], reverse=True)
+        scored_memories.sort(key=lambda item: (item[0], item[1]), reverse=True)
 
-        return [memory for _, memory in scored_memories[:limit]]
+        return [memory for _, _, memory in scored_memories[:limit]]
 
     def build_context(
         self,
