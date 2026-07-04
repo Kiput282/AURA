@@ -11,6 +11,7 @@ from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
 from aura.context.context_manager import ContextManager
 from aura.permissions.permission_manager import PermissionManager
+from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -416,6 +417,80 @@ class AuraCLI:
         print(f"Description : {result.description}")
         print(f"Reason      : {result.reason}")
 
+    def skills(self) -> None:
+        registry = build_builtin_skill_registry()
+
+        print("AURA Skills")
+        print("===========")
+        print(f"Total: {registry.count()}")
+        print()
+
+        for skill in registry.list_skills():
+            permission = registry.check_permission(skill)
+
+            print(f"- {skill.name}")
+            print(f"  Status      : {skill.status}")
+            print(f"  Role        : {skill.role}")
+            print(f"  Permission  : {skill.permission_action}")
+            print(f"  Allowed     : {permission.allowed}")
+            print(f"  Confirmation: {permission.requires_confirmation}")
+            print(f"  Description : {skill.description}")
+
+            if skill.capabilities:
+                print("  Capabilities:")
+                for capability in skill.capabilities:
+                    print(f"  - {capability}")
+
+            print()
+
+    def skill_detail(self, name: str) -> None:
+        registry = build_builtin_skill_registry()
+        skill = registry.get(name=name)
+
+        print("AURA Skill")
+        print("==========")
+
+        if skill is None:
+            print(f"Skill not found: {name}")
+            return
+
+        permission = registry.check_permission(skill)
+
+        print(f"Name        : {skill.name}")
+        print(f"Status      : {skill.status}")
+        print(f"Role        : {skill.role}")
+        print(f"Permission  : {skill.permission_action}")
+        print(f"Allowed     : {permission.allowed}")
+        print(f"Confirmation: {permission.requires_confirmation}")
+        print(f"Description : {skill.description}")
+
+        if skill.capabilities:
+            print("Capabilities:")
+            for capability in skill.capabilities:
+                print(f"- {capability}")
+
+    def skill_check(self, name: str) -> None:
+        registry = build_builtin_skill_registry()
+        skill = registry.get(name=name)
+
+        print("AURA Skill Check")
+        print("================")
+
+        if skill is None:
+            print(f"Skill not found: {name}")
+            return
+
+        permission = registry.check_permission(skill)
+
+        print(f"Skill       : {skill.name}")
+        print(f"Status      : {skill.status}")
+        print(f"Role        : {skill.role}")
+        print(f"Permission  : {skill.permission_action}")
+        print(f"Level       : {int(permission.level)} - {permission.level.label}")
+        print(f"Allowed     : {permission.allowed}")
+        print(f"Confirmation: {permission.requires_confirmation}")
+        print(f"Reason      : {permission.reason}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -456,6 +531,14 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("skills")
+
+        skill_parser = subparsers.add_parser("skill")
+        skill_parser.add_argument("name", type=str)
+
+        skill_check_parser = subparsers.add_parser("skill-check")
+        skill_check_parser.add_argument("name", type=str)
 
         subparsers.add_parser("permissions")
 
@@ -568,6 +651,21 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "skills":
+            disable_logging()
+            self.skills()
+            return True
+
+        if parsed.command == "skill":
+            disable_logging()
+            self.skill_detail(name=parsed.name)
+            return True
+
+        if parsed.command == "skill-check":
+            disable_logging()
+            self.skill_check(name=parsed.name)
             return True
 
         if parsed.command == "permissions":

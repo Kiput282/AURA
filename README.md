@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.25.0-genesis
-Status  : PERMISSION SYSTEM FOUNDATION ONLINE
+Version : 0.26.0-genesis
+Status  : SKILL REGISTRY ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -87,6 +87,7 @@ AURA currently supports:
 - Memory pin and importance
 - Context manager v1
 - Permission system foundation
+- Skill registry
 - Memory-aware chat
 - Identity guardrail
 - Language control

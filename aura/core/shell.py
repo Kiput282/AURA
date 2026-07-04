@@ -10,6 +10,7 @@ from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
 from aura.context.context_manager import ContextManager
 from aura.permissions.permission_manager import PermissionManager
+from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
@@ -51,6 +52,9 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "skills",
+            "skill",
+            "skill-check",
             "permissions",
             "permission-check",
             "perm-check",
@@ -132,6 +136,9 @@ class AuraShell:
         print("  journal-count        Count project journal entries")
         print("  context <text>       Preview AURA context packet")
         print("  context-preview <text> Alias for context")
+        print("  skills               Show AURA skill registry")
+        print("  skill <name>         Show skill detail")
+        print("  skill-check <name>   Check skill permission")
         print("  permissions          Show permission policy table")
         print("  permission-check <action>  Check permission for an action")
         print("  perm-check <action>        Alias for permission-check")
@@ -525,6 +532,80 @@ class AuraShell:
 
         print(packet.to_text())
 
+    def skills(self) -> None:
+        registry = build_builtin_skill_registry()
+
+        print("AURA Skills")
+        print("===========")
+        print(f"Total: {registry.count()}")
+        print()
+
+        for skill in registry.list_skills():
+            permission = registry.check_permission(skill)
+
+            print(f"- {skill.name}")
+            print(f"  Status      : {skill.status}")
+            print(f"  Role        : {skill.role}")
+            print(f"  Permission  : {skill.permission_action}")
+            print(f"  Allowed     : {permission.allowed}")
+            print(f"  Confirmation: {permission.requires_confirmation}")
+            print(f"  Description : {skill.description}")
+
+            if skill.capabilities:
+                print("  Capabilities:")
+                for capability in skill.capabilities:
+                    print(f"  - {capability}")
+
+            print()
+
+    def skill_detail(self, name: str) -> None:
+        registry = build_builtin_skill_registry()
+        skill = registry.get(name=name)
+
+        print("AURA Skill")
+        print("==========")
+
+        if skill is None:
+            print(f"Skill not found: {name}")
+            return
+
+        permission = registry.check_permission(skill)
+
+        print(f"Name        : {skill.name}")
+        print(f"Status      : {skill.status}")
+        print(f"Role        : {skill.role}")
+        print(f"Permission  : {skill.permission_action}")
+        print(f"Allowed     : {permission.allowed}")
+        print(f"Confirmation: {permission.requires_confirmation}")
+        print(f"Description : {skill.description}")
+
+        if skill.capabilities:
+            print("Capabilities:")
+            for capability in skill.capabilities:
+                print(f"- {capability}")
+
+    def skill_check(self, name: str) -> None:
+        registry = build_builtin_skill_registry()
+        skill = registry.get(name=name)
+
+        print("AURA Skill Check")
+        print("================")
+
+        if skill is None:
+            print(f"Skill not found: {name}")
+            return
+
+        permission = registry.check_permission(skill)
+
+        print(f"Skill       : {skill.name}")
+        print(f"Status      : {skill.status}")
+        print(f"Role        : {skill.role}")
+        print(f"Permission  : {skill.permission_action}")
+        print(f"Level       : {int(permission.level)} - {permission.level.label}")
+        print(f"Allowed     : {permission.allowed}")
+        print(f"Confirmation: {permission.requires_confirmation}")
+        print(f"Reason      : {permission.reason}")
+
     def permissions(self) -> None:
         permission_manager = PermissionManager()
 
@@ -777,6 +858,28 @@ class AuraShell:
                 return
 
             self.context(message=message)
+            return
+
+        if normalized == "skills":
+            self.skills()
+            return
+
+        if normalized.startswith("skill-check "):
+            name = command[len("skill-check "):].strip()
+            if not name:
+                print("Usage: skill-check <name>")
+                return
+
+            self.skill_check(name=name)
+            return
+
+        if normalized.startswith("skill "):
+            name = command[len("skill "):].strip()
+            if not name:
+                print("Usage: skill <name>")
+                return
+
+            self.skill_detail(name=name)
             return
 
         if normalized == "permissions":
