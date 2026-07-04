@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.21.0-genesis
-Status  : PROJECT JOURNAL FOUNDATION ONLINE
+Version : 0.22.0-genesis
+Status  : ROLE SYSTEM FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -76,6 +76,7 @@ AURA currently supports:
 - Chat command
 - Conversation history
 - Project journal
+- Role system foundation
 - File-based memory store
 - Memory recall
 - Memory search

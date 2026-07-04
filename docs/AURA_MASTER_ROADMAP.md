@@ -234,6 +234,7 @@ motion          : hand tracking, pose, motion capture
 - Memory tags
 - Project progress memory
 - Project journal
+- Role system foundation
 - User preference memory
 10.3 Voice
 - Speech-to-text
@@ -366,6 +367,7 @@ Planned:
 
 - Master roadmap document
 - Project journal
+- Role system foundation
 - Memory pin system
 - Memory importance
 - Memory tags

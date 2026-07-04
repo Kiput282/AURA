@@ -7,8 +7,8 @@ class AuraRole:
     """
     Represents an internal role in AURA.
 
-    A role is a specialized responsibility area.
-    Later, each role can be connected to a different model/provider.
+    A role is a responsibility area inside AURA.
+    Later, each role can use different models, skills, and plugins.
     """
 
     name: str

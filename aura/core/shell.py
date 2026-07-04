@@ -8,6 +8,7 @@ from aura.core.chat import AuraChat
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
+from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
 from aura.plugins.plugin_manager import PluginManager
@@ -48,6 +49,7 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "roles",
             "journal",
             "journal-add",
             "journal-count",
@@ -114,6 +116,7 @@ class AuraShell:
         print("  journal-add <text>   Add a project journal entry")
         print("  journal-count        Count project journal entries")
         print("  provider             Show reasoning provider")
+        print("  roles                Show AURA internal roles")
         print("  reason               Alias for provider")
         print("  provider-check       Check reasoning provider runtime")
         print("  reason-check         Alias for provider-check")
@@ -382,6 +385,29 @@ class AuraShell:
         print("==========================")
         print(f"Entries: {project_journal.count()}")
 
+    def roles(self) -> None:
+        registry = build_builtin_role_registry()
+        roles = registry.list_roles()
+
+        print("AURA Roles")
+        print("==========")
+        print(f"Total: {registry.count()}")
+        print()
+
+        for role in roles:
+            print(f"- {role.name}")
+            print(f"  Status      : {role.status}")
+            print(f"  Provider    : {role.provider}")
+            print(f"  Model       : {role.model}")
+            print(f"  Description : {role.description}")
+
+            if role.capabilities:
+                print("  Capabilities:")
+                for capability in role.capabilities:
+                    print(f"  - {capability}")
+
+            print()
+
     def plugins(self) -> None:
         self.ensure_plugins_loaded()
 
@@ -530,6 +556,10 @@ class AuraShell:
 
         if normalized == "journal-count":
             self.journal_count()
+            return
+
+        if normalized == "roles":
+            self.roles()
             return
 
         if normalized in {"provider", "reason"}:

@@ -9,6 +9,7 @@ from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
+from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
 
@@ -260,6 +261,29 @@ class AuraCLI:
         print("==========================")
         print(f"Entries: {project_journal.count()}")
 
+    def roles(self) -> None:
+        registry = build_builtin_role_registry()
+        roles = registry.list_roles()
+
+        print("AURA Roles")
+        print("==========")
+        print(f"Total: {registry.count()}")
+        print()
+
+        for role in roles:
+            print(f"- {role.name}")
+            print(f"  Status      : {role.status}")
+            print(f"  Provider    : {role.provider}")
+            print(f"  Model       : {role.model}")
+            print(f"  Description : {role.description}")
+
+            if role.capabilities:
+                print("  Capabilities:")
+                for capability in role.capabilities:
+                    print(f"  - {capability}")
+
+            print()
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -296,6 +320,7 @@ class AuraCLI:
         subparsers.add_parser("journal-count")
 
         subparsers.add_parser("provider")
+        subparsers.add_parser("roles")
         subparsers.add_parser("reason")
 
         memory_delete_parser = subparsers.add_parser("memory-delete")
@@ -364,6 +389,11 @@ class AuraCLI:
         if parsed.command == "journal-count":
             disable_logging()
             self.journal_count()
+            return True
+
+        if parsed.command == "roles":
+            disable_logging()
+            self.roles()
             return True
 
         if parsed.command in {"provider", "reason"}:
