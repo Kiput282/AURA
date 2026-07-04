@@ -14,9 +14,10 @@ class AuraBoot:
     Responsible for:
     - loading configuration
     - loading identity
-    - preparing logger
     - registering boot events
     - running the structured boot sequence
+
+    Logger is initialized earlier by AuraApp.
     """
 
     def __init__(self, event_bus: EventBus):
@@ -34,21 +35,6 @@ class AuraBoot:
 
         with path.open("r", encoding="utf-8") as file:
             return yaml.safe_load(file) or {}
-
-    def setup_logger(self):
-        logs_dir = self.project_root / "logs"
-        logs_dir.mkdir(exist_ok=True)
-
-        log_file = logs_dir / "aura.log"
-
-        logger.add(
-            log_file,
-            rotation="1 MB",
-            retention="7 days",
-            level="INFO",
-        )
-
-        logger.info("Logger initialized")
 
     def load_config(self):
         self.config = self.load_yaml(self.config_path)
@@ -70,7 +56,6 @@ class AuraBoot:
         logger.info(f"Event handled: {event.name}")
 
     def run(self):
-        self.setup_logger()
         self.register_core_events()
 
         self.event_bus.emit(
