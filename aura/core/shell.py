@@ -94,6 +94,8 @@ class AuraShell:
         print("  mem-count            Alias for memory-count")
         print("  memory-list          Show recent memories")
         print("  memory-list <limit>  Show recent memories with limit")
+        print("  memory-delete <id>   Delete a memory by ID")
+        print("  mem-delete <id>      Alias for memory-delete")
         print("  mem-list             Alias for memory-list")
         print("  chat <text>          Send a message to AURA")
         print("  ask <text>           Alias for chat")
@@ -219,6 +221,21 @@ class AuraShell:
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
             print(f"  Content: {memory.content}")
+
+    def memory_delete(self, memory_id: str) -> None:
+        deleted_memory = self.memory_store.delete_by_id(memory_id=memory_id)
+
+        print("AURA Memory Delete")
+        print("==================")
+
+        if deleted_memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        print("Deleted memory:")
+        print(f"- ID: {deleted_memory.id}")
+        print(f"  Kind: {deleted_memory.kind}")
+        print(f"  Content: {deleted_memory.content}")
 
     def memory_search(self, query: str, limit: int = 5) -> None:
         memories = self.chat_engine.relevant_memories(message=query, limit=limit)
@@ -358,6 +375,16 @@ class AuraShell:
 
         if normalized in {"exit", "quit", "q"}:
             self.exit_shell()
+            return
+
+        if normalized.startswith("memory-delete "):
+            memory_id = command[len("memory-delete "):].strip()
+            self.memory_delete(memory_id=memory_id)
+            return
+
+        if normalized.startswith("mem-delete "):
+            memory_id = command[len("mem-delete "):].strip()
+            self.memory_delete(memory_id=memory_id)
             return
 
         if normalized in {"memory-count", "mem-count"}:

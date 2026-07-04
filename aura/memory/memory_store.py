@@ -12,10 +12,8 @@ class MemoryStore:
 
     Current format:
     - JSON Lines
-    - one memory per line
-    - append-only
-
-    This is intentionally simple for Genesis.
+    - one memory item per line
+    - append-friendly
     """
 
     def __init__(self, project_root: Path):
@@ -57,12 +55,46 @@ class MemoryStore:
     def list_recent(self, limit: int = 5) -> list[MemoryItem]:
         return self.list_all()[-limit:]
 
-    def exists(self, *, kind: str, content: str) -> bool:
+    def exists(self, kind: str, content: str) -> bool:
         for memory in self.list_all():
             if memory.kind == kind and memory.content == content:
                 return True
 
         return False
+
+    def find_by_id(self, memory_id: str) -> MemoryItem | None:
+        target_id = memory_id.strip()
+
+        for memory in self.list_all():
+            if memory.id == target_id:
+                return memory
+
+        return None
+
+    def delete_by_id(self, memory_id: str) -> MemoryItem | None:
+        target_id = memory_id.strip()
+        memories = self.list_all()
+
+        deleted_memory: MemoryItem | None = None
+        remaining_memories: list[MemoryItem] = []
+
+        for memory in memories:
+            if memory.id == target_id:
+                deleted_memory = memory
+                continue
+
+            remaining_memories.append(memory)
+
+        if deleted_memory is None:
+            return None
+
+        with self.memory_file.open("w", encoding="utf-8") as file:
+            for memory in remaining_memories:
+                file.write(json.dumps(memory.to_dict(), ensure_ascii=False) + "\n")
+
+        logger.info(f"Memory deleted: {deleted_memory.id}")
+
+        return deleted_memory
 
     def count(self) -> int:
         return len(self.list_all())

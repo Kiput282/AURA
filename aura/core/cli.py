@@ -163,6 +163,22 @@ class AuraCLI:
             print(f"  Kind: {memory.kind}")
             print(f"  Content: {memory.content}")
 
+    def memory_delete(self, memory_id: str) -> None:
+        memory_store = self.get_memory_store()
+        deleted_memory = memory_store.delete_by_id(memory_id=memory_id)
+
+        print("AURA Memory Delete")
+        print("==================")
+
+        if deleted_memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        print("Deleted memory:")
+        print(f"- ID: {deleted_memory.id}")
+        print(f"  Kind: {deleted_memory.kind}")
+        print(f"  Content: {deleted_memory.content}")
+
     def memory_search(self, query: str, limit: int = 5) -> None:
         chat = AuraChat(project_root=self.project_root)
         memories = chat.relevant_memories(message=query, limit=limit)
@@ -207,6 +223,12 @@ class AuraCLI:
 
         subparsers.add_parser("provider")
         subparsers.add_parser("reason")
+
+        memory_delete_parser = subparsers.add_parser("memory-delete")
+        memory_delete_parser.add_argument("memory_id", type=str)
+
+        mem_delete_parser = subparsers.add_parser("mem-delete")
+        mem_delete_parser.add_argument("memory_id", type=str)
 
         subparsers.add_parser("memory-count")
         subparsers.add_parser("mem-count")
@@ -263,6 +285,11 @@ class AuraCLI:
         if parsed.command in {"provider-check", "reason-check"}:
             disable_logging()
             self.provider_check()
+            return True
+
+        if parsed.command in {"memory-delete", "mem-delete"}:
+            disable_logging()
+            self.memory_delete(memory_id=parsed.memory_id)
             return True
 
         if parsed.command in {"memory-count", "mem-count"}:
