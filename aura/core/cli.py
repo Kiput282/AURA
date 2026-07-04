@@ -96,7 +96,9 @@ class AuraCLI:
             return
 
         for memory in memories:
-            print(f"- [{memory.kind}] {memory.content}")
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Content: {memory.content}")
 
     def chat(self, message: str) -> None:
         chat = AuraChat(project_root=self.project_root)
@@ -157,7 +159,9 @@ class AuraCLI:
             return
 
         for memory in memories:
-            print(f"- [{memory.kind}] {memory.content}")
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Content: {memory.content}")
 
     def memory_search(self, query: str, limit: int = 5) -> None:
         chat = AuraChat(project_root=self.project_root)
@@ -173,7 +177,9 @@ class AuraCLI:
             return
 
         for memory in memories:
-            print(f"- [{memory.kind}] {memory.content}")
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Content: {memory.content}")
 
     def shell(self) -> None:
         shell = AuraShell()

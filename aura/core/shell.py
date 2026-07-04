@@ -173,7 +173,9 @@ class AuraShell:
             return
 
         for memory in memories:
-            print(f"- [{memory.kind}] {memory.content}")
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Content: {memory.content}")
 
     def chat(self, message: str) -> None:
         response = self.chat_engine.respond(message, source="AuraShell")
@@ -214,7 +216,9 @@ class AuraShell:
             return
 
         for memory in memories:
-            print(f"- [{memory.kind}] {memory.content}")
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Content: {memory.content}")
 
     def memory_search(self, query: str, limit: int = 5) -> None:
         memories = self.chat_engine.relevant_memories(message=query, limit=limit)
@@ -229,7 +233,9 @@ class AuraShell:
             return
 
         for memory in memories:
-            print(f"- [{memory.kind}] {memory.content}")
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Content: {memory.content}")
 
     def status(self) -> None:
         memory_count = self.memory_store.count()
