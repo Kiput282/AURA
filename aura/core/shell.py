@@ -8,6 +8,7 @@ from aura.core.chat import AuraChat
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
+from aura.context.context_manager import ContextManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
@@ -49,6 +50,8 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "context",
+            "context-preview",
             "roles",
             "journal",
             "journal-add",
@@ -123,6 +126,8 @@ class AuraShell:
         print("  journal <limit>      Show recent project journal entries with limit")
         print("  journal-add <text>   Add a project journal entry")
         print("  journal-count        Count project journal entries")
+        print("  context <text>       Preview AURA context packet")
+        print("  context-preview <text> Alias for context")
         print("  provider             Show reasoning provider")
         print("  roles                Show AURA internal roles")
         print("  reason               Alias for provider")
@@ -507,6 +512,12 @@ class AuraShell:
 
             print()
 
+    def context(self, message: str) -> None:
+        context_manager = ContextManager(project_root=self.project_root)
+        packet = context_manager.build(user_message=message)
+
+        print(packet.to_text())
+
     def plugins(self) -> None:
         self.ensure_plugins_loaded()
 
@@ -713,6 +724,24 @@ class AuraShell:
 
         if normalized == "roles":
             self.roles()
+            return
+
+        if normalized.startswith("context "):
+            message = command[len("context "):].strip()
+            if not message:
+                print("Usage: context <text>")
+                return
+
+            self.context(message=message)
+            return
+
+        if normalized.startswith("context-preview "):
+            message = command[len("context-preview "):].strip()
+            if not message:
+                print("Usage: context-preview <text>")
+                return
+
+            self.context(message=message)
             return
 
         if normalized in {"provider", "reason"}:

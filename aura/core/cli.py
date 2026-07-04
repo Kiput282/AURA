@@ -9,6 +9,7 @@ from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
+from aura.context.context_manager import ContextManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -380,6 +381,12 @@ class AuraCLI:
             print(f"  Importance: {memory.metadata.get('importance', 3)}")
             print(f"  Content: {memory.content}")
 
+    def context(self, message: str) -> None:
+        context_manager = ContextManager(project_root=self.project_root)
+        packet = context_manager.build(user_message=message)
+
+        print(packet.to_text())
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -414,6 +421,12 @@ class AuraCLI:
         journal_add_parser.add_argument("content", type=str)
 
         subparsers.add_parser("journal-count")
+
+        context_parser = subparsers.add_parser("context")
+        context_parser.add_argument("message", type=str)
+
+        context_preview_parser = subparsers.add_parser("context-preview")
+        context_preview_parser.add_argument("message", type=str)
 
         subparsers.add_parser("provider")
         subparsers.add_parser("roles")
@@ -513,6 +526,11 @@ class AuraCLI:
         if parsed.command == "roles":
             disable_logging()
             self.roles()
+            return True
+
+        if parsed.command in {"context", "context-preview"}:
+            disable_logging()
+            self.context(message=parsed.message)
             return True
 
         if parsed.command in {"provider", "reason"}:

@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.23.0-genesis
-Status  : MEMORY PIN AND IMPORTANCE ONLINE
+Version : 0.24.0-genesis
+Status  : CONTEXT MANAGER V1 ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -85,6 +85,7 @@ AURA currently supports:
 - Memory delete by ID
 - Protected system memories
 - Memory pin and importance
+- Context manager v1
 - Memory-aware chat
 - Identity guardrail
 - Language control
