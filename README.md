@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.22.0-genesis
-Status  : ROLE SYSTEM FOUNDATION ONLINE
+Version : 0.23.0-genesis
+Status  : MEMORY PIN AND IMPORTANCE ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -84,6 +84,7 @@ AURA currently supports:
 - Memory count
 - Memory delete by ID
 - Protected system memories
+- Memory pin and importance
 - Memory-aware chat
 - Identity guardrail
 - Language control

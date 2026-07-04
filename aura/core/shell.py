@@ -101,6 +101,14 @@ class AuraShell:
         print("  memory-list          Show recent memories")
         print("  memory-list <limit>  Show recent memories with limit")
         print("  memory-delete <id>   Delete a memory by ID")
+        print("  memory-pin <id>      Pin a memory")
+        print("  mem-pin <id>         Alias for memory-pin")
+        print("  memory-unpin <id>    Unpin a memory")
+        print("  mem-unpin <id>       Alias for memory-unpin")
+        print("  memory-importance <id> <1-5>  Set memory importance")
+        print("  mem-importance <id> <1-5>     Alias for memory-importance")
+        print("  memory-pinned        Show pinned memories")
+        print("  mem-pinned           Alias for memory-pinned")
         print("  mem-delete <id>      Alias for memory-delete")
         print("  mem-list             Alias for memory-list")
         print("  chat <text>          Send a message to AURA")
@@ -186,8 +194,12 @@ class AuraShell:
             return
 
         for memory in memories:
+            pinned = bool(memory.metadata.get("pinned", False))
+            importance = memory.metadata.get("importance", 3)
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {pinned}")
+            print(f"  Importance: {importance}")
             print(f"  Content: {memory.content}")
 
     def chat(self, message: str) -> None:
@@ -229,8 +241,87 @@ class AuraShell:
             return
 
         for memory in memories:
+            pinned = bool(memory.metadata.get("pinned", False))
+            importance = memory.metadata.get("importance", 3)
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {pinned}")
+            print(f"  Importance: {importance}")
+            print(f"  Content: {memory.content}")
+
+    def memory_pin(self, memory_id: str) -> None:
+        memory = self.memory_store.set_pinned(memory_id=memory_id, pinned=True)
+
+        print("AURA Memory Pin")
+        print("===============")
+
+        if memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        print("Memory pinned.")
+        print(f"- ID: {memory.id}")
+        print(f"  Kind: {memory.kind}")
+        print(f"  Pinned: {bool(memory.metadata.get('pinned', False))}")
+        print(f"  Importance: {memory.metadata.get('importance', 3)}")
+        print(f"  Content: {memory.content}")
+
+    def memory_unpin(self, memory_id: str) -> None:
+        memory = self.memory_store.set_pinned(memory_id=memory_id, pinned=False)
+
+        print("AURA Memory Unpin")
+        print("=================")
+
+        if memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        print("Memory unpinned.")
+        print(f"- ID: {memory.id}")
+        print(f"  Kind: {memory.kind}")
+        print(f"  Pinned: {bool(memory.metadata.get('pinned', False))}")
+        print(f"  Importance: {memory.metadata.get('importance', 3)}")
+        print(f"  Content: {memory.content}")
+
+    def memory_importance(self, memory_id: str, importance: int) -> None:
+        print("AURA Memory Importance")
+        print("======================")
+
+        try:
+            memory = self.memory_store.set_importance(
+                memory_id=memory_id,
+                importance=importance,
+            )
+        except ValueError as error:
+            print(str(error))
+            return
+
+        if memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        print("Memory importance updated.")
+        print(f"- ID: {memory.id}")
+        print(f"  Kind: {memory.kind}")
+        print(f"  Pinned: {bool(memory.metadata.get('pinned', False))}")
+        print(f"  Importance: {memory.metadata.get('importance', 3)}")
+        print(f"  Content: {memory.content}")
+
+    def memory_pinned(self) -> None:
+        memories = self.memory_store.list_pinned()
+
+        print("AURA Pinned Memories")
+        print("====================")
+
+        if not memories:
+            print("No pinned memories found.")
+            return
+
+        for memory in memories:
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {bool(memory.metadata.get('pinned', False))}")
+            print(f"  Importance: {memory.metadata.get('importance', 3)}")
             print(f"  Content: {memory.content}")
 
     def memory_delete(self, memory_id: str) -> None:
@@ -245,8 +336,12 @@ class AuraShell:
 
         if self.memory_store.is_protected(memory):
             print("Cannot delete protected system memory.")
+            pinned = bool(memory.metadata.get("pinned", False))
+            importance = memory.metadata.get("importance", 3)
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {pinned}")
+            print(f"  Importance: {importance}")
             print(f"  Content: {memory.content}")
             return
 
@@ -274,8 +369,12 @@ class AuraShell:
             return
 
         for memory in memories:
+            pinned = bool(memory.metadata.get("pinned", False))
+            importance = memory.metadata.get("importance", 3)
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {pinned}")
+            print(f"  Importance: {importance}")
             print(f"  Content: {memory.content}")
 
     def status(self) -> None:
@@ -468,6 +567,60 @@ class AuraShell:
 
         if normalized in {"exit", "quit", "q"}:
             self.exit_shell()
+            return
+
+        if normalized.startswith("memory-pin "):
+            memory_id = command[len("memory-pin "):].strip()
+            self.memory_pin(memory_id=memory_id)
+            return
+
+        if normalized.startswith("mem-pin "):
+            memory_id = command[len("mem-pin "):].strip()
+            self.memory_pin(memory_id=memory_id)
+            return
+
+        if normalized.startswith("memory-unpin "):
+            memory_id = command[len("memory-unpin "):].strip()
+            self.memory_unpin(memory_id=memory_id)
+            return
+
+        if normalized.startswith("mem-unpin "):
+            memory_id = command[len("mem-unpin "):].strip()
+            self.memory_unpin(memory_id=memory_id)
+            return
+
+        if normalized.startswith("memory-importance "):
+            parts = command.split(maxsplit=2)
+            if len(parts) != 3:
+                print("Usage: memory-importance <id> <1-5>")
+                return
+
+            try:
+                importance = int(parts[2])
+            except ValueError:
+                print("Usage: memory-importance <id> <1-5>")
+                return
+
+            self.memory_importance(memory_id=parts[1], importance=importance)
+            return
+
+        if normalized.startswith("mem-importance "):
+            parts = command.split(maxsplit=2)
+            if len(parts) != 3:
+                print("Usage: mem-importance <id> <1-5>")
+                return
+
+            try:
+                importance = int(parts[2])
+            except ValueError:
+                print("Usage: mem-importance <id> <1-5>")
+                return
+
+            self.memory_importance(memory_id=parts[1], importance=importance)
+            return
+
+        if normalized in {"memory-pinned", "mem-pinned"}:
+            self.memory_pinned()
             return
 
         if normalized.startswith("memory-delete "):

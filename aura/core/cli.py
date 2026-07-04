@@ -98,8 +98,12 @@ class AuraCLI:
             return
 
         for memory in memories:
+            pinned = bool(memory.metadata.get("pinned", False))
+            importance = memory.metadata.get("importance", 3)
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {pinned}")
+            print(f"  Importance: {importance}")
             print(f"  Content: {memory.content}")
 
     def chat(self, message: str) -> None:
@@ -161,8 +165,12 @@ class AuraCLI:
             return
 
         for memory in memories:
+            pinned = bool(memory.metadata.get("pinned", False))
+            importance = memory.metadata.get("importance", 3)
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {pinned}")
+            print(f"  Importance: {importance}")
             print(f"  Content: {memory.content}")
 
     def memory_delete(self, memory_id: str) -> None:
@@ -178,8 +186,12 @@ class AuraCLI:
 
         if memory_store.is_protected(memory):
             print("Cannot delete protected system memory.")
+            pinned = bool(memory.metadata.get("pinned", False))
+            importance = memory.metadata.get("importance", 3)
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {pinned}")
+            print(f"  Importance: {importance}")
             print(f"  Content: {memory.content}")
             return
 
@@ -208,8 +220,12 @@ class AuraCLI:
             return
 
         for memory in memories:
+            pinned = bool(memory.metadata.get("pinned", False))
+            importance = memory.metadata.get("importance", 3)
             print(f"- ID: {memory.id}")
             print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {pinned}")
+            print(f"  Importance: {importance}")
             print(f"  Content: {memory.content}")
 
     def get_project_journal(self) -> ProjectJournal:
@@ -284,6 +300,86 @@ class AuraCLI:
 
             print()
 
+    def memory_pin(self, memory_id: str) -> None:
+        memory_store = self.get_memory_store()
+        memory = memory_store.set_pinned(memory_id=memory_id, pinned=True)
+
+        print("AURA Memory Pin")
+        print("===============")
+
+        if memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        print("Memory pinned.")
+        print(f"- ID: {memory.id}")
+        print(f"  Kind: {memory.kind}")
+        print(f"  Pinned: {bool(memory.metadata.get('pinned', False))}")
+        print(f"  Importance: {memory.metadata.get('importance', 3)}")
+        print(f"  Content: {memory.content}")
+
+    def memory_unpin(self, memory_id: str) -> None:
+        memory_store = self.get_memory_store()
+        memory = memory_store.set_pinned(memory_id=memory_id, pinned=False)
+
+        print("AURA Memory Unpin")
+        print("=================")
+
+        if memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        print("Memory unpinned.")
+        print(f"- ID: {memory.id}")
+        print(f"  Kind: {memory.kind}")
+        print(f"  Pinned: {bool(memory.metadata.get('pinned', False))}")
+        print(f"  Importance: {memory.metadata.get('importance', 3)}")
+        print(f"  Content: {memory.content}")
+
+    def memory_importance(self, memory_id: str, importance: int) -> None:
+        memory_store = self.get_memory_store()
+
+        print("AURA Memory Importance")
+        print("======================")
+
+        try:
+            memory = memory_store.set_importance(
+                memory_id=memory_id,
+                importance=importance,
+            )
+        except ValueError as error:
+            print(str(error))
+            return
+
+        if memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        print("Memory importance updated.")
+        print(f"- ID: {memory.id}")
+        print(f"  Kind: {memory.kind}")
+        print(f"  Pinned: {bool(memory.metadata.get('pinned', False))}")
+        print(f"  Importance: {memory.metadata.get('importance', 3)}")
+        print(f"  Content: {memory.content}")
+
+    def memory_pinned(self) -> None:
+        memory_store = self.get_memory_store()
+        memories = memory_store.list_pinned()
+
+        print("AURA Pinned Memories")
+        print("====================")
+
+        if not memories:
+            print("No pinned memories found.")
+            return
+
+        for memory in memories:
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Pinned: {bool(memory.metadata.get('pinned', False))}")
+            print(f"  Importance: {memory.metadata.get('importance', 3)}")
+            print(f"  Content: {memory.content}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -328,6 +424,29 @@ class AuraCLI:
 
         mem_delete_parser = subparsers.add_parser("mem-delete")
         mem_delete_parser.add_argument("memory_id", type=str)
+
+        memory_pin_parser = subparsers.add_parser("memory-pin")
+        memory_pin_parser.add_argument("memory_id", type=str)
+
+        mem_pin_parser = subparsers.add_parser("mem-pin")
+        mem_pin_parser.add_argument("memory_id", type=str)
+
+        memory_unpin_parser = subparsers.add_parser("memory-unpin")
+        memory_unpin_parser.add_argument("memory_id", type=str)
+
+        mem_unpin_parser = subparsers.add_parser("mem-unpin")
+        mem_unpin_parser.add_argument("memory_id", type=str)
+
+        memory_importance_parser = subparsers.add_parser("memory-importance")
+        memory_importance_parser.add_argument("memory_id", type=str)
+        memory_importance_parser.add_argument("importance", type=int)
+
+        mem_importance_parser = subparsers.add_parser("mem-importance")
+        mem_importance_parser.add_argument("memory_id", type=str)
+        mem_importance_parser.add_argument("importance", type=int)
+
+        subparsers.add_parser("memory-pinned")
+        subparsers.add_parser("mem-pinned")
 
         subparsers.add_parser("memory-count")
         subparsers.add_parser("mem-count")
@@ -409,6 +528,29 @@ class AuraCLI:
         if parsed.command in {"memory-delete", "mem-delete"}:
             disable_logging()
             self.memory_delete(memory_id=parsed.memory_id)
+            return True
+
+        if parsed.command in {"memory-pin", "mem-pin"}:
+            disable_logging()
+            self.memory_pin(memory_id=parsed.memory_id)
+            return True
+
+        if parsed.command in {"memory-unpin", "mem-unpin"}:
+            disable_logging()
+            self.memory_unpin(memory_id=parsed.memory_id)
+            return True
+
+        if parsed.command in {"memory-importance", "mem-importance"}:
+            disable_logging()
+            self.memory_importance(
+                memory_id=parsed.memory_id,
+                importance=parsed.importance,
+            )
+            return True
+
+        if parsed.command in {"memory-pinned", "mem-pinned"}:
+            disable_logging()
+            self.memory_pinned()
             return True
 
         if parsed.command in {"memory-count", "mem-count"}:

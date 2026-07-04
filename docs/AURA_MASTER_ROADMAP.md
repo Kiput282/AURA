@@ -103,6 +103,7 @@ AURA Genesis currently has:
 - Memory count
 - Memory delete by ID
 - Protected system memories
+- Memory pin and importance
 - Memory-aware chat
 - Identity guardrail
 - Language control

@@ -13,7 +13,8 @@ class MemoryStore:
     Current format:
     - JSON Lines
     - one memory item per line
-    - append-friendly
+    - append-friendly for save
+    - rewrite-based for update/delete
     """
 
     PROTECTED_KINDS = {"system"}
@@ -39,7 +40,6 @@ class MemoryStore:
             return []
 
         memories: list[MemoryItem] = []
-
         lines = self.memory_file.read_text(encoding="utf-8").splitlines()
 
         for line in lines:
@@ -53,6 +53,11 @@ class MemoryStore:
                 logger.exception(f"Failed to load memory line: {error}")
 
         return memories
+
+    def write_all(self, memories: list[MemoryItem]) -> None:
+        with self.memory_file.open("w", encoding="utf-8") as file:
+            for memory in memories:
+                file.write(json.dumps(memory.to_dict(), ensure_ascii=False) + "\n")
 
     def list_recent(self, limit: int = 5) -> list[MemoryItem]:
         return self.list_all()[-limit:]
@@ -76,6 +81,50 @@ class MemoryStore:
     def is_protected(self, memory: MemoryItem) -> bool:
         return memory.kind in self.PROTECTED_KINDS
 
+    def update_by_id(self, memory_id: str, metadata_updates: dict) -> MemoryItem | None:
+        target_id = memory_id.strip()
+        memories = self.list_all()
+
+        updated_memory: MemoryItem | None = None
+
+        for memory in memories:
+            if memory.id != target_id:
+                continue
+
+            memory.metadata.update(metadata_updates)
+            updated_memory = memory
+            break
+
+        if updated_memory is None:
+            return None
+
+        self.write_all(memories)
+        logger.info(f"Memory updated: {updated_memory.id}")
+
+        return updated_memory
+
+    def set_pinned(self, memory_id: str, pinned: bool) -> MemoryItem | None:
+        return self.update_by_id(
+            memory_id=memory_id,
+            metadata_updates={"pinned": pinned},
+        )
+
+    def set_importance(self, memory_id: str, importance: int) -> MemoryItem | None:
+        if importance < 1 or importance > 5:
+            raise ValueError("importance must be between 1 and 5")
+
+        return self.update_by_id(
+            memory_id=memory_id,
+            metadata_updates={"importance": importance},
+        )
+
+    def list_pinned(self) -> list[MemoryItem]:
+        return [
+            memory
+            for memory in self.list_all()
+            if bool(memory.metadata.get("pinned", False))
+        ]
+
     def delete_by_id(self, memory_id: str) -> MemoryItem | None:
         target_id = memory_id.strip()
         memories = self.list_all()
@@ -97,9 +146,7 @@ class MemoryStore:
         if deleted_memory is None:
             return None
 
-        with self.memory_file.open("w", encoding="utf-8") as file:
-            for memory in remaining_memories:
-                file.write(json.dumps(memory.to_dict(), ensure_ascii=False) + "\n")
+        self.write_all(remaining_memories)
 
         logger.info(f"Memory deleted: {deleted_memory.id}")
 
