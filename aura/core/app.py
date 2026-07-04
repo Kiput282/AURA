@@ -7,6 +7,7 @@ from aura.core.health import HealthCheck
 from aura.events.event import Event
 from aura.events.event_bus import EventBus
 from aura.plugins.builtin.echo_plugin import EchoPlugin
+from aura.plugins.builtin.memory_plugin import MemoryPlugin
 from aura.plugins.plugin_manager import PluginManager
 from aura.utils.logger import setup_logger
 
@@ -22,7 +23,8 @@ class AuraApp:
     - start the boot sequence
     - run health checks
     - manage plugins
-    - become the future home for memory, voice, vision, and services
+    - initialize memory foundation
+    - become the future home for voice, vision, reasoning, avatar, and services
     """
 
     def __init__(self):
@@ -40,6 +42,7 @@ class AuraApp:
         self.event_bus.subscribe("aura.app.started", self.on_app_started)
         self.event_bus.subscribe("aura.health.checked", self.on_health_checked)
         self.event_bus.subscribe("aura.plugins.loaded", self.on_plugins_loaded)
+        self.event_bus.subscribe("aura.memory.ready", self.on_memory_ready)
 
     def on_app_starting(self, event: Event):
         logger.info(f"Event handled: {event.name}")
@@ -53,8 +56,12 @@ class AuraApp:
     def on_plugins_loaded(self, event: Event):
         logger.info(f"Event handled: {event.name}")
 
+    def on_memory_ready(self, event: Event):
+        logger.info(f"Event handled: {event.name}")
+
     def load_plugins(self):
         self.plugin_manager.register(EchoPlugin())
+        self.plugin_manager.register(MemoryPlugin(project_root=self.project_root))
         self.plugin_manager.start_all()
 
         plugins = self.plugin_manager.list_plugins()
@@ -80,15 +87,35 @@ class AuraApp:
             )
         )
 
+        self.event_bus.emit(
+            Event(
+                name="aura.memory.ready",
+                source="aura.plugins.memory",
+                payload={"status": "ready"},
+            )
+        )
+
     def run_health_check(self):
-        plugin_count = len(self.plugin_manager.list_plugins())
+        plugins = self.plugin_manager.list_plugins()
+        plugin_count = len(plugins)
+
+        memory_status = "NOT_READY"
+
+        for plugin in plugins:
+            if plugin["name"] == "memory":
+                memory_status = plugin["status"]
+                break
 
         self.health.add("Core", "OK", "AuraApp initialized")
         self.health.add("Boot", "OK", "Boot sequence completed")
         self.health.add("Config", "OK", "settings.yaml loaded")
         self.health.add("Identity", "OK", "identity.yaml loaded")
         self.health.add("Events", "OK", "EventBus online")
-        self.health.add("Memory", "NOT_READY", "Memory system not implemented yet")
+
+        if memory_status == "OK":
+            self.health.add("Memory", "OK", "File-based memory store online")
+        else:
+            self.health.add("Memory", "NOT_READY", "Memory system not ready")
 
         if plugin_count > 0:
             self.health.add("Plugins", "OK", f"{plugin_count} plugin(s) loaded")
