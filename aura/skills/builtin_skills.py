@@ -16,6 +16,17 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="system_status",
+            description="Show unified AURA system status across core foundation modules.",
+            role="companion",
+            permission_action="read_project",
+            status="online",
+            capabilities=["system_status", "foundation_summary", "readiness_overview"],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="awakening_status",
             description="Show AURA Awakening Alpha readiness across Speak, See, Think, and Learn.",
             role="companion",

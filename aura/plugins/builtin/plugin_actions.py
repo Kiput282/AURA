@@ -16,6 +16,17 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="system.status",
+            plugin="system",
+            description="Show unified AURA system status.",
+            permission_action="read_project",
+            status="online",
+            skill="system_status",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="awakening.status",
             plugin="awakening",
             description="Show AURA Awakening Alpha readiness status.",

@@ -1,0 +1,108 @@
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+from aura.awakening.awakening_manager import AwakeningManager
+from aura.journal.project_journal import ProjectJournal
+from aura.memory.memory_store import MemoryStore
+from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
+from aura.roles.builtin_roles import build_builtin_role_registry
+from aura.skills.builtin_skills import build_builtin_skill_registry
+from aura.vision.vision_manager import VisionManager
+from aura.voice.voice_manager import VoiceManager
+
+
+class SystemStatusManager:
+    """
+    Unified System Status for AURA.
+
+    This manager creates one high-level dashboard for AURA's current foundation.
+    """
+
+    def __init__(self, project_root: Path):
+        self.project_root = project_root
+        self.identity_path = project_root / "aura" / "personality" / "identity.yaml"
+        self.settings_path = project_root / "aura" / "config" / "settings.yaml"
+
+        self.memory_store = MemoryStore(project_root=project_root)
+        self.project_journal = ProjectJournal(project_root=project_root)
+        self.role_registry = build_builtin_role_registry()
+        self.skill_registry = build_builtin_skill_registry()
+        self.plugin_action_registry = build_builtin_plugin_action_registry()
+        self.voice_manager = VoiceManager()
+        self.vision_manager = VisionManager()
+        self.awakening_manager = AwakeningManager(project_root=project_root)
+
+    def load_yaml(self, path: Path) -> dict[str, Any]:
+        if not path.exists():
+            return {}
+
+        content = path.read_text(encoding="utf-8")
+        data = yaml.safe_load(content)
+
+        if not isinstance(data, dict):
+            return {}
+
+        return data
+
+    def build_status(self) -> dict[str, Any]:
+        identity = self.load_yaml(self.identity_path)
+        settings = self.load_yaml(self.settings_path)
+
+        app_settings = settings.get("app", {})
+        reasoning_settings = settings.get("reasoning", {})
+
+        voice_status = self.voice_manager.status()
+        vision_status = self.vision_manager.status()
+        awakening_status = self.awakening_manager.build_status()
+
+        return {
+            "project_root": str(self.project_root),
+            "identity": {
+                "name": identity.get("name", "AURA"),
+                "version": identity.get("version", "unknown"),
+                "codename": identity.get("codename", "Genesis"),
+                "creator": identity.get("creator", "Kiput"),
+                "motto": identity.get("motto", "Grow Together"),
+            },
+            "app": {
+                "name": app_settings.get("name", "AURA"),
+                "environment": app_settings.get("environment", "development"),
+                "debug": app_settings.get("debug", False),
+            },
+            "reasoning": {
+                "provider": reasoning_settings.get("provider", "unknown"),
+                "model": reasoning_settings.get("model", "unknown"),
+                "host": reasoning_settings.get("host", "unknown"),
+            },
+            "foundation": {
+                "memory_records": self.memory_store.count(),
+                "journal_entries": self.project_journal.count(),
+                "roles": self.role_registry.count(),
+                "skills": self.skill_registry.count(),
+                "plugin_actions": self.plugin_action_registry.count(),
+                "voice_providers": voice_status["providers"],
+                "vision_providers": vision_status["providers"],
+                "awakening_readiness": f"{awakening_status['ready_count']}/{awakening_status['total_pillars']}",
+            },
+            "systems": {
+                "memory": "online",
+                "journal": "online",
+                "context": "online",
+                "permissions": "online",
+                "skills": "online",
+                "plugin_actions": "online",
+                "project_plugin": "online",
+                "voice": voice_status["status"],
+                "vision": vision_status["status"],
+                "awakening": awakening_status["status"],
+            },
+            "runtime": {
+                "real_voice_runtime": False,
+                "real_vision_runtime": False,
+                "desktop_bridge": False,
+                "safe_action_execution": False,
+            },
+            "summary": "AURA has a unified early foundation across memory, context, roles, skills, permissions, plugins, voice, vision, and awakening status.",
+        }

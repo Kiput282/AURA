@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.31.0-genesis
-Status  : VISION FOUNDATION ONLINE
+Version : 0.32.0-genesis
+Status  : UNIFIED SYSTEM STATUS ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -93,6 +93,7 @@ AURA currently supports:
 - Voice foundation
 - AURA Awakening Alpha
 - Vision foundation
+- Unified system status
 - Memory-aware chat
 - Identity guardrail
 - Language control
@@ -187,6 +188,9 @@ python3 main.py memory-delete "<memory_id>"
 
 python3 main.py provider
 python3 main.py provider-check
+
+python3 main.py system-status
+python3 main.py status-full
 
 python3 main.py vision-status
 python3 main.py vision-providers

@@ -427,6 +427,7 @@ Planned:
 - Voice foundation
 - AURA Awakening Alpha
 - Vision foundation
+- Unified system status
 - File/project plugin
 - App launcher plugin
 - Browser helper

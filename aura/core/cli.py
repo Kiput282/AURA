@@ -17,6 +17,7 @@ from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.voice.voice_manager import VoiceManager
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.vision.vision_manager import VisionManager
+from aura.status.system_status_manager import SystemStatusManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -697,6 +698,48 @@ class AuraCLI:
             print(f"  Description     : {provider.description}")
             print()
 
+    def system_status(self) -> None:
+        status_manager = SystemStatusManager(project_root=self.project_root)
+        status = status_manager.build_status()
+
+        print("AURA Unified System Status")
+        print("==========================")
+        print(f"Name       : {status['identity']['name']}")
+        print(f"Version    : {status['identity']['version']}")
+        print(f"Codename   : {status['identity']['codename']}")
+        print(f"Creator    : {status['identity']['creator']}")
+        print(f"Motto      : {status['identity']['motto']}")
+        print(f"Project    : {status['project_root']}")
+        print()
+        print("Reasoning")
+        print("---------")
+        print(f"Provider   : {status['reasoning']['provider']}")
+        print(f"Model      : {status['reasoning']['model']}")
+        print(f"Host       : {status['reasoning']['host']}")
+        print()
+        print("Foundation Counts")
+        print("-----------------")
+        print(f"Memory Records      : {status['foundation']['memory_records']}")
+        print(f"Journal Entries     : {status['foundation']['journal_entries']}")
+        print(f"Roles               : {status['foundation']['roles']}")
+        print(f"Skills              : {status['foundation']['skills']}")
+        print(f"Plugin Actions      : {status['foundation']['plugin_actions']}")
+        print(f"Voice Providers     : {status['foundation']['voice_providers']}")
+        print(f"Vision Providers    : {status['foundation']['vision_providers']}")
+        print(f"Awakening Readiness : {status['foundation']['awakening_readiness']}")
+        print()
+        print("Systems")
+        print("-------")
+        for name, value in status["systems"].items():
+            print(f"{name:16}: {value}")
+        print()
+        print("Runtime")
+        print("-------")
+        for name, value in status["runtime"].items():
+            print(f"{name:22}: {value}")
+        print()
+        print(f"Summary: {status['summary']}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -737,6 +780,9 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("system-status")
+        subparsers.add_parser("status-full")
 
         subparsers.add_parser("vision-status")
         subparsers.add_parser("vision-providers")
@@ -882,6 +928,11 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command in {"system-status", "status-full"}:
+            disable_logging()
+            self.system_status()
             return True
 
         if parsed.command == "vision-status":
