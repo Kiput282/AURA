@@ -4,6 +4,7 @@ from typing import Any
 import yaml
 from loguru import logger
 
+from aura.reasoning.local_stub_provider import LocalStubReasoningProvider
 from aura.reasoning.provider import ReasoningProvider
 from aura.reasoning.rule_based_provider import RuleBasedReasoningProvider
 
@@ -12,8 +13,9 @@ class ReasoningProviderFactory:
     """
     Creates reasoning providers based on AURA configuration.
 
-    Current supported provider:
+    Current supported providers:
     - rule_based
+    - local_stub
 
     Future providers:
     - ollama
@@ -33,6 +35,10 @@ class ReasoningProviderFactory:
         if normalized_name in {"rule_based", "rules", "genesis"}:
             logger.info("Reasoning provider selected: rule_based")
             return RuleBasedReasoningProvider()
+
+        if normalized_name in {"local_stub", "local", "stub"}:
+            logger.info("Reasoning provider selected: local_stub")
+            return LocalStubReasoningProvider()
 
         raise ValueError(f"Unsupported reasoning provider: {provider_name}")
 

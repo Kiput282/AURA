@@ -16,4 +16,4 @@ boot:
   enable_logger: true
 
 reasoning:
-  provider: rule_based
+  provider: local_stub
