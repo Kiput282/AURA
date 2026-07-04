@@ -3,6 +3,9 @@ from pathlib import Path
 import yaml
 from loguru import logger
 
+from aura.events.event import Event
+from aura.events.event_bus import EventBus
+
 
 class AuraBoot:
     """
@@ -12,6 +15,7 @@ class AuraBoot:
     - loading configuration
     - loading identity
     - preparing logger
+    - initializing event bus
     - running the first structured boot sequence
     """
 
@@ -22,6 +26,7 @@ class AuraBoot:
 
         self.config = {}
         self.identity = {}
+        self.event_bus = EventBus()
 
     def load_yaml(self, path: Path) -> dict:
         if not path.exists():
@@ -53,8 +58,29 @@ class AuraBoot:
         self.identity = self.load_yaml(self.identity_path)
         logger.info("Identity loaded")
 
+    def register_core_events(self):
+        self.event_bus.subscribe("aura.boot.started", self.on_boot_started)
+        self.event_bus.subscribe("aura.boot.ready", self.on_boot_ready)
+        logger.info("Core event handlers registered")
+
+    def on_boot_started(self, event: Event):
+        logger.info(f"Event handled: {event.name}")
+
+    def on_boot_ready(self, event: Event):
+        logger.info(f"Event handled: {event.name}")
+
     def run(self):
         self.setup_logger()
+        self.register_core_events()
+
+        self.event_bus.emit(
+            Event(
+                name="aura.boot.started",
+                source="aura.core.boot",
+                payload={"status": "starting"},
+            )
+        )
+
         self.load_config()
         self.load_identity()
 
@@ -76,5 +102,13 @@ class AuraBoot:
         print(f"Hello, {creator}.")
         print("I'm AURA.")
         print("Core systems are online.")
+
+        self.event_bus.emit(
+            Event(
+                name="aura.boot.ready",
+                source="aura.core.boot",
+                payload={"status": "ready", "version": version},
+            )
+        )
 
         logger.info("AURA boot sequence completed successfully")
