@@ -1,5 +1,10 @@
-print("AURA Genesis Booting...")
-print("Status : READY")
-print("Hello, Kiput.")
-print("I'm AURA.")
-print("Nice to meet you.")
+from aura.core.boot import AuraBoot
+
+
+def main():
+    aura = AuraBoot()
+    aura.run()
+
+
+if __name__ == "__main__":
+    main()

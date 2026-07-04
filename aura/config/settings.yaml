@@ -1,0 +1,16 @@
+app:
+  name: AURA
+  environment: development
+  debug: true
+
+server:
+  name: ATLAS
+  role: AI Server
+
+paths:
+  logs: logs
+  data: data
+
+boot:
+  show_banner: true
+  enable_logger: true
