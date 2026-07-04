@@ -6,9 +6,6 @@ from aura.reasoning.provider import ReasoningProvider
 class RuleBasedReasoningProvider(ReasoningProvider):
     """
     Simple rule-based reasoning provider for AURA Genesis.
-
-    This is temporary.
-    Later, this provider interface can be connected to actual LLM backends.
     """
 
     name = "rule_based"
@@ -16,16 +13,22 @@ class RuleBasedReasoningProvider(ReasoningProvider):
 
     def respond(self, message: str, context: dict[str, Any] | None = None) -> str:
         context = context or {}
+        identity = context.get("identity", {})
+
+        aura_name = identity.get("name", "AURA")
+        creator = identity.get("creator", "Kiput")
+        codename = identity.get("codename", "Genesis")
+
         normalized = message.strip().lower()
 
         if not normalized:
             return "I heard silence. That's okay. I'm still here."
 
         if normalized in {"hello", "hi", "hey", "halo"}:
-            return "Hello, Kiput. I'm here."
+            return f"Hello, {creator}. I'm here."
 
         if "who are you" in normalized or "siapa kamu" in normalized:
-            return "I'm AURA, your AI partner in Genesis phase."
+            return f"I'm {aura_name}, your AI partner created by {creator}. I'm currently in {codename} phase."
 
         if "what do you remember" in normalized or "apa yang kamu ingat" in normalized:
             memories = context.get("recent_memories", [])
@@ -42,7 +45,7 @@ class RuleBasedReasoningProvider(ReasoningProvider):
 
         if "status" in normalized:
             return (
-                "AURA Genesis is online. "
+                f"{aura_name} {codename} is online. "
                 "Core, plugins, shell, chat, memory, and reasoning provider are working."
             )
 

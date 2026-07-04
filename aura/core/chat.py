@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from aura.memory.conversation_store import ConversationStore
 from aura.memory.conversation_turn import ConversationTurn
 from aura.memory.memory_store import MemoryStore
@@ -13,6 +15,10 @@ class AuraChat:
     Chat interface for AURA Genesis.
 
     AuraChat delegates reasoning to a ReasoningProvider.
+    It also builds context for the provider, including:
+    - identity
+    - recent memories
+    - recent conversations
     """
 
     def __init__(
@@ -21,6 +27,8 @@ class AuraChat:
         reasoning_provider: ReasoningProvider | None = None,
     ):
         self.project_root = project_root
+        self.identity_path = self.project_root / "aura" / "personality" / "identity.yaml"
+
         self.memory_store = MemoryStore(project_root=self.project_root)
         self.conversation_store = ConversationStore(project_root=self.project_root)
         self.reasoning_provider = (
@@ -28,8 +36,16 @@ class AuraChat:
             or ReasoningProviderFactory.from_settings(project_root=self.project_root)
         )
 
-    def build_context(self) -> dict:
+    def load_identity(self) -> dict[str, Any]:
+        if not self.identity_path.exists():
+            return {}
+
+        with self.identity_path.open("r", encoding="utf-8") as file:
+            return yaml.safe_load(file) or {}
+
+    def build_context(self) -> dict[str, Any]:
         return {
+            "identity": self.load_identity(),
             "recent_memories": self.memory_store.list_recent(limit=5),
             "recent_conversations": self.conversation_store.list_recent(limit=5),
             "provider": {

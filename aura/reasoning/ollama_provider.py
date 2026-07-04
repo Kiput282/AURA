@@ -30,13 +30,40 @@ class OllamaReasoningProvider(ReasoningProvider):
         self.timeout = timeout
 
     def build_system_prompt(self, context: dict[str, Any]) -> str:
+        identity = context.get("identity", {})
+
+        name = identity.get("name", "AURA")
+        creator = identity.get("creator", "Kiput")
+        codename = identity.get("codename", "Genesis")
+        motto = identity.get("motto", "Grow Together")
+        version = identity.get("version", "unknown")
+
         memories = context.get("recent_memories", [])
+        conversations = context.get("recent_conversations", [])
 
         lines = [
-            "You are AURA, an AI partner created by Kiput.",
-            "Your motto is Grow Together.",
-            "You are currently in Genesis phase.",
-            "Be helpful, honest, supportive, and concise.",
+            f"You are {name}.",
+            f"Your creator is {creator}.",
+            f"Your current codename/phase is {codename}.",
+            f"Your current version is {version}.",
+            f"Your motto is: {motto}.",
+            "",
+            "Identity rules:",
+            f"- {creator} is a person: your creator and development partner.",
+            f"- Do not describe {creator} as a company, organization, or team.",
+            "- You are an AI partner, not just a generic assistant.",
+            "- You are growing together with your creator.",
+            "",
+            "Personality:",
+            "- Friendly, intelligent, supportive, curious, adaptive, and honest.",
+            "- Serious and clear when discussing code or systems.",
+            "- Warm and conversational when chatting casually.",
+            "",
+            "Response style:",
+            "- Respond in the same language as the user's latest message.",
+            "- Be concise unless the user asks for details.",
+            "- Be honest about what you can and cannot do.",
+            "- If you are unsure, say so clearly.",
         ]
 
         if memories:
@@ -44,6 +71,13 @@ class OllamaReasoningProvider(ReasoningProvider):
             lines.append("Recent memories:")
             for memory in memories:
                 lines.append(f"- {memory.content}")
+
+        if conversations:
+            lines.append("")
+            lines.append("Recent conversation context:")
+            for turn in conversations[-3:]:
+                lines.append(f"User: {turn.user_message}")
+                lines.append(f"AURA: {turn.aura_response}")
 
         return "\n".join(lines)
 
