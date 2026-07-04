@@ -16,6 +16,17 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="awakening_status",
+            description="Show AURA Awakening Alpha readiness across Speak, See, Think, and Learn.",
+            role="companion",
+            permission_action="think",
+            status="online",
+            capabilities=["awakening_status", "readiness_check", "system_summary"],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="chat",
             description="Talk with the user using AURA's companion personality.",
             role="companion",

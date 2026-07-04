@@ -15,6 +15,7 @@ from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.voice.voice_manager import VoiceManager
+from aura.awakening.awakening_manager import AwakeningManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -637,6 +638,35 @@ class AuraCLI:
             print(f"  Description     : {provider.description}")
             print()
 
+    def awakening_status(self) -> None:
+        awakening_manager = AwakeningManager(project_root=self.project_root)
+        status = awakening_manager.build_status()
+
+        print("AURA Awakening Status")
+        print("=====================")
+        print(f"Milestone     : {status['milestone']}")
+        print(f"Phase         : {status['phase']}")
+        print(f"Status        : {status['status']}")
+        print(f"Readiness     : {status['ready_count']}/{status['total_pillars']} pillars")
+        print()
+        print("Pillars:")
+        for pillar in status["pillars"]:
+            print(f"- {pillar['name']}")
+            print(f"  Status     : {pillar['status']}")
+            print(f"  Ready      : {pillar['ready']}")
+            print(f"  Description: {pillar['description']}")
+            print(f"  Note       : {pillar['note']}")
+        print()
+        print("Foundation Counts:")
+        print(f"- Voice Providers: {status['voice_providers']}")
+        print(f"- Memory Records : {status['memory_records']}")
+        print(f"- Journal Entries: {status['journal_entries']}")
+        print(f"- Roles          : {status['roles']}")
+        print(f"- Skills         : {status['skills']}")
+        print(f"- Plugin Actions : {status['plugin_actions']}")
+        print()
+        print(f"Summary: {status['summary']}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -677,6 +707,9 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("awakening-status")
+        subparsers.add_parser("awaken")
 
         subparsers.add_parser("voice-status")
         subparsers.add_parser("voice-providers")
@@ -816,6 +849,11 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command in {"awakening-status", "awaken"}:
+            disable_logging()
+            self.awakening_status()
             return True
 
         if parsed.command == "voice-status":

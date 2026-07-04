@@ -425,6 +425,7 @@ Planned:
 - Plugin action interface
 - File and project plugin
 - Voice foundation
+- AURA Awakening Alpha
 - File/project plugin
 - App launcher plugin
 - Browser helper

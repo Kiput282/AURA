@@ -16,6 +16,17 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="awakening.status",
+            plugin="awakening",
+            description="Show AURA Awakening Alpha readiness status.",
+            permission_action="think",
+            status="online",
+            skill="awakening_status",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="echo.echo",
             plugin="echo",
             description="Echo a test message.",

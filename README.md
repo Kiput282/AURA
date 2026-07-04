@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.29.0-genesis
-Status  : VOICE FOUNDATION ONLINE
+Version : 0.30.0-genesis
+Status  : AURA AWAKENING ALPHA
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -91,6 +91,7 @@ AURA currently supports:
 - Plugin action interface
 - File and project plugin
 - Voice foundation
+- AURA Awakening Alpha
 - Memory-aware chat
 - Identity guardrail
 - Language control
@@ -185,6 +186,9 @@ python3 main.py memory-delete "<memory_id>"
 
 python3 main.py provider
 python3 main.py provider-check
+
+python3 main.py awakening-status
+python3 main.py awaken
 
 python3 main.py voice-status
 python3 main.py voice-providers

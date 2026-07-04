@@ -14,6 +14,7 @@ from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.voice.voice_manager import VoiceManager
+from aura.awakening.awakening_manager import AwakeningManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
@@ -55,6 +56,8 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "awakening-status",
+            "awaken",
             "voice-status",
             "voice-providers",
             "project-summary",
@@ -147,6 +150,8 @@ class AuraShell:
         print("  journal-count        Count project journal entries")
         print("  context <text>       Preview AURA context packet")
         print("  context-preview <text> Alias for context")
+        print("  awakening-status     Show AURA Awakening Alpha status")
+        print("  awaken               Alias for awakening-status")
         print("  voice-status         Show voice foundation status")
         print("  voice-providers      Show voice provider placeholders")
         print("  project-summary      Show project summary")
@@ -551,6 +556,35 @@ class AuraShell:
         packet = context_manager.build(user_message=message)
 
         print(packet.to_text())
+
+    def awakening_status(self) -> None:
+        awakening_manager = AwakeningManager(project_root=self.project_root)
+        status = awakening_manager.build_status()
+
+        print("AURA Awakening Status")
+        print("=====================")
+        print(f"Milestone     : {status['milestone']}")
+        print(f"Phase         : {status['phase']}")
+        print(f"Status        : {status['status']}")
+        print(f"Readiness     : {status['ready_count']}/{status['total_pillars']} pillars")
+        print()
+        print("Pillars:")
+        for pillar in status["pillars"]:
+            print(f"- {pillar['name']}")
+            print(f"  Status     : {pillar['status']}")
+            print(f"  Ready      : {pillar['ready']}")
+            print(f"  Description: {pillar['description']}")
+            print(f"  Note       : {pillar['note']}")
+        print()
+        print("Foundation Counts:")
+        print(f"- Voice Providers: {status['voice_providers']}")
+        print(f"- Memory Records : {status['memory_records']}")
+        print(f"- Journal Entries: {status['journal_entries']}")
+        print(f"- Roles          : {status['roles']}")
+        print(f"- Skills         : {status['skills']}")
+        print(f"- Plugin Actions : {status['plugin_actions']}")
+        print()
+        print(f"Summary: {status['summary']}")
 
     def voice_status(self) -> None:
         voice_manager = VoiceManager()
@@ -1021,6 +1055,10 @@ class AuraShell:
                 return
 
             self.context(message=message)
+            return
+
+        if normalized in {"awakening-status", "awaken"}:
+            self.awakening_status()
             return
 
         if normalized == "voice-status":
