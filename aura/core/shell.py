@@ -7,6 +7,7 @@ import yaml
 from aura.core.chat import AuraChat
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
+from aura.journal.project_journal import ProjectJournal
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
 from aura.plugins.plugin_manager import PluginManager
@@ -47,6 +48,9 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "journal",
+            "journal-add",
+            "journal-count",
             "reason",
             "provider-check",
             "reason-check",
@@ -105,6 +109,10 @@ class AuraShell:
         print("  mem-search <text>    Alias for memory-search")
         print("  status               Show shell status")
         print("  version              Show AURA version")
+        print("  journal              Show recent project journal entries")
+        print("  journal <limit>      Show recent project journal entries with limit")
+        print("  journal-add <text>   Add a project journal entry")
+        print("  journal-count        Count project journal entries")
         print("  provider             Show reasoning provider")
         print("  reason               Alias for provider")
         print("  provider-check       Check reasoning provider runtime")
@@ -328,6 +336,52 @@ class AuraShell:
         elif "available_models" in runtime:
             print("Models   : none")
 
+    def journal(self, limit: int = 5) -> None:
+        project_journal = ProjectJournal(project_root=self.project_root)
+        entries = project_journal.list_recent(limit=limit)
+
+        print("AURA Project Journal")
+        print("====================")
+        print(f"Limit: {limit}")
+        print()
+
+        if not entries:
+            print("No journal entries found.")
+            return
+
+        for entry in entries:
+            print(f"- ID: {entry.id}")
+            print(f"  Title: {entry.title}")
+            print(f"  Content: {entry.content}")
+            print(f"  Created At: {entry.created_at}")
+
+    def journal_add(self, content: str) -> None:
+        project_journal = ProjectJournal(project_root=self.project_root)
+
+        title = "Manual Entry"
+        if ":" in content:
+            title = content.split(":", 1)[0].strip() or "Manual Entry"
+
+        entry = project_journal.add(
+            title=title,
+            content=content,
+            metadata={"source": "shell"},
+        )
+
+        print("AURA Project Journal")
+        print("====================")
+        print("Journal entry saved.")
+        print(f"- ID: {entry.id}")
+        print(f"  Title: {entry.title}")
+        print(f"  Content: {entry.content}")
+
+    def journal_count(self) -> None:
+        project_journal = ProjectJournal(project_root=self.project_root)
+
+        print("AURA Project Journal Count")
+        print("==========================")
+        print(f"Entries: {project_journal.count()}")
+
     def plugins(self) -> None:
         self.ensure_plugins_loaded()
 
@@ -448,6 +502,34 @@ class AuraShell:
 
         if normalized == "version":
             self.version()
+            return
+
+        if normalized == "journal":
+            self.journal()
+            return
+
+        if normalized.startswith("journal "):
+            value = command[len("journal "):].strip()
+            try:
+                limit = int(value)
+            except ValueError:
+                print("Usage: journal <limit>")
+                return
+
+            self.journal(limit=limit)
+            return
+
+        if normalized.startswith("journal-add "):
+            content = command[len("journal-add "):].strip()
+            if not content:
+                print("Usage: journal-add <text>")
+                return
+
+            self.journal_add(content=content)
+            return
+
+        if normalized == "journal-count":
+            self.journal_count()
             return
 
         if normalized in {"provider", "reason"}:

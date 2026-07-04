@@ -8,6 +8,7 @@ from aura.core.chat import AuraChat
 from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
+from aura.journal.project_journal import ProjectJournal
 from aura.utils.logger import disable_logging
 
 
@@ -210,6 +211,55 @@ class AuraCLI:
             print(f"  Kind: {memory.kind}")
             print(f"  Content: {memory.content}")
 
+    def get_project_journal(self) -> ProjectJournal:
+        return ProjectJournal(project_root=self.project_root)
+
+    def journal(self, limit: int = 5) -> None:
+        project_journal = self.get_project_journal()
+        entries = project_journal.list_recent(limit=limit)
+
+        print("AURA Project Journal")
+        print("====================")
+        print(f"Limit: {limit}")
+        print()
+
+        if not entries:
+            print("No journal entries found.")
+            return
+
+        for entry in entries:
+            print(f"- ID: {entry.id}")
+            print(f"  Title: {entry.title}")
+            print(f"  Content: {entry.content}")
+            print(f"  Created At: {entry.created_at}")
+
+    def journal_add(self, content: str) -> None:
+        project_journal = self.get_project_journal()
+
+        title = "Manual Entry"
+        if ":" in content:
+            title = content.split(":", 1)[0].strip() or "Manual Entry"
+
+        entry = project_journal.add(
+            title=title,
+            content=content,
+            metadata={"source": "cli"},
+        )
+
+        print("AURA Project Journal")
+        print("====================")
+        print("Journal entry saved.")
+        print(f"- ID: {entry.id}")
+        print(f"  Title: {entry.title}")
+        print(f"  Content: {entry.content}")
+
+    def journal_count(self) -> None:
+        project_journal = self.get_project_journal()
+
+        print("AURA Project Journal Count")
+        print("==========================")
+        print(f"Entries: {project_journal.count()}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -233,6 +283,17 @@ class AuraCLI:
 
         history_parser = subparsers.add_parser("history")
         history_parser.add_argument("--limit", type=int, default=5)
+
+        journal_parser = subparsers.add_parser("journal")
+        journal_parser.add_argument("--limit", type=int, default=5)
+
+        journal_latest_parser = subparsers.add_parser("journal-latest")
+        journal_latest_parser.add_argument("--limit", type=int, default=5)
+
+        journal_add_parser = subparsers.add_parser("journal-add")
+        journal_add_parser.add_argument("content", type=str)
+
+        subparsers.add_parser("journal-count")
 
         subparsers.add_parser("provider")
         subparsers.add_parser("reason")
@@ -288,6 +349,21 @@ class AuraCLI:
         if parsed.command == "history":
             disable_logging()
             self.history(limit=parsed.limit)
+            return True
+
+        if parsed.command in {"journal", "journal-latest"}:
+            disable_logging()
+            self.journal(limit=parsed.limit)
+            return True
+
+        if parsed.command == "journal-add":
+            disable_logging()
+            self.journal_add(content=parsed.content)
+            return True
+
+        if parsed.command == "journal-count":
+            disable_logging()
+            self.journal_count()
             return True
 
         if parsed.command in {"provider", "reason"}:

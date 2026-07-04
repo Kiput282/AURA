@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.20.0-genesis
-Status  : MASTER ROADMAP DOCUMENTED
+Version : 0.21.0-genesis
+Status  : PROJECT JOURNAL FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -75,6 +75,7 @@ AURA currently supports:
 - llama3.2 local model support
 - Chat command
 - Conversation history
+- Project journal
 - File-based memory store
 - Memory recall
 - Memory search
