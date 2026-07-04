@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 
+from aura.core.chat import AuraChat
 from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
@@ -14,6 +15,7 @@ class AuraCLI:
     Supported commands:
     - remember
     - recall
+    - chat
     - shell
     """
 
@@ -53,6 +55,11 @@ class AuraCLI:
         for memory in memories:
             print(f"- [{memory.kind}] {memory.content}")
 
+    def chat(self, message: str) -> None:
+        chat = AuraChat(project_root=self.project_root)
+        response = chat.respond(message)
+        print(response)
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -71,6 +78,9 @@ class AuraCLI:
         recall_parser = subparsers.add_parser("recall")
         recall_parser.add_argument("--limit", type=int, default=5)
 
+        chat_parser = subparsers.add_parser("chat")
+        chat_parser.add_argument("message", type=str)
+
         subparsers.add_parser("shell")
 
         return parser.parse_args(args)
@@ -86,6 +96,11 @@ class AuraCLI:
         if parsed.command == "recall":
             disable_logging()
             self.recall(limit=parsed.limit)
+            return True
+
+        if parsed.command == "chat":
+            disable_logging()
+            self.chat(parsed.message)
             return True
 
         if parsed.command == "shell":

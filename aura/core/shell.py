@@ -3,6 +3,7 @@ from pathlib import Path
 
 import yaml
 
+from aura.core.chat import AuraChat
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.plugins.builtin.echo_plugin import EchoPlugin
@@ -13,24 +14,6 @@ from aura.plugins.plugin_manager import PluginManager
 class AuraShell:
     """
     Interactive shell for AURA Genesis.
-
-    Supported commands:
-    - help
-    - remember <text>
-    - recall
-    - recall <limit>
-    - mem
-    - memory
-    - status
-    - version
-    - plugins
-    - plugin
-    - health
-    - clear
-    - cls
-    - exit
-    - quit
-    - q
     """
 
     def __init__(self):
@@ -39,6 +22,7 @@ class AuraShell:
         self.settings_path = self.project_root / "aura" / "config" / "settings.yaml"
 
         self.memory_store = MemoryStore(project_root=self.project_root)
+        self.chat_engine = AuraChat(project_root=self.project_root)
         self.plugin_manager = PluginManager()
         self.plugins_loaded = False
         self.running = True
@@ -58,6 +42,8 @@ class AuraShell:
         print("  recall <limit>       Show recent memories with limit")
         print("  mem                  Alias for recall")
         print("  memory               Alias for recall")
+        print("  chat <text>          Send a message to AURA")
+        print("  ask <text>           Alias for chat")
         print("  status               Show shell status")
         print("  version              Show AURA version")
         print("  plugins              Show loaded plugins")
@@ -116,6 +102,10 @@ class AuraShell:
         for memory in memories:
             print(f"- [{memory.kind}] {memory.content}")
 
+    def chat(self, message: str) -> None:
+        response = self.chat_engine.respond(message)
+        print(response)
+
     def status(self) -> None:
         memory_count = self.memory_store.count()
 
@@ -123,6 +113,7 @@ class AuraShell:
         print("=================")
         print("Shell   : ONLINE")
         print("Memory  : ONLINE")
+        print("Chat    : ONLINE")
         print(f"Records : {memory_count}")
 
     def version(self) -> None:
@@ -174,6 +165,7 @@ class AuraShell:
         print(f"Config    : {config_status} - settings.yaml")
         print(f"Identity  : {identity_status} - identity.yaml")
         print("Memory    : OK - File-based memory store online")
+        print("Chat      : OK - Rule-based chat foundation online")
         print(f"Records   : OK - {memory_count} memory record(s)")
         print(f"Plugins   : OK - {plugin_count} plugin(s) loaded")
 
@@ -238,6 +230,16 @@ class AuraShell:
         if normalized.startswith("remember "):
             content = command[len("remember "):]
             self.remember(content)
+            return
+
+        if normalized.startswith("chat "):
+            message = command[len("chat "):]
+            self.chat(message)
+            return
+
+        if normalized.startswith("ask "):
+            message = command[len("ask "):]
+            self.chat(message)
             return
 
         print(f"Unknown command: {command}")
