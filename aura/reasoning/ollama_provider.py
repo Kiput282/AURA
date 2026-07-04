@@ -17,7 +17,7 @@ class OllamaReasoningProvider(ReasoningProvider):
     """
 
     name = "ollama"
-    version = "0.1.0"
+    version = "0.1.4"
 
     def __init__(
         self,
@@ -29,7 +29,227 @@ class OllamaReasoningProvider(ReasoningProvider):
         self.model = model
         self.timeout = timeout
 
-    def build_system_prompt(self, context: dict[str, Any]) -> str:
+    def detect_language(self, message: str) -> str:
+        normalized = message.strip().lower()
+
+        explicit_english_markers = {
+            "in english",
+            "answer in english",
+            "use english",
+            "bahasa inggris",
+        }
+
+        explicit_indonesian_markers = {
+            "in indonesian",
+            "answer in indonesian",
+            "use indonesian",
+            "bahasa indonesia",
+            "dalam bahasa indonesia",
+        }
+
+        if any(marker in normalized for marker in explicit_english_markers):
+            return "en"
+
+        if any(marker in normalized for marker in explicit_indonesian_markers):
+            return "id"
+
+        english_words = {
+            "who",
+            "what",
+            "when",
+            "where",
+            "why",
+            "how",
+            "created",
+            "create",
+            "made",
+            "built",
+            "you",
+            "your",
+            "answer",
+            "briefly",
+            "short",
+            "concise",
+            "motto",
+            "name",
+        }
+
+        indonesian_words = {
+            "siapa",
+            "apa",
+            "kapan",
+            "di",
+            "mana",
+            "dimana",
+            "mengapa",
+            "kenapa",
+            "bagaimana",
+            "yang",
+            "membuat",
+            "membuatmu",
+            "menciptakan",
+            "menciptakanmu",
+            "kamu",
+            "aku",
+            "saya",
+            "jawab",
+            "singkat",
+            "pendek",
+            "motto",
+            "mottoku",
+            "mottomu",
+            "motomu",
+        }
+
+        tokens = {
+            token.strip(".,!?;:'\"()[]{}")
+            for token in normalized.replace("/", " ").split()
+        }
+
+        english_score = len(tokens.intersection(english_words))
+        indonesian_score = len(tokens.intersection(indonesian_words))
+
+        if english_score > indonesian_score:
+            return "en"
+
+        if indonesian_score > english_score:
+            return "id"
+
+        return "unknown"
+
+    def detect_language_instruction(self, message: str) -> str:
+        language = self.detect_language(message)
+
+        if language == "en":
+            return "The user's latest message is in English. You must answer in English."
+
+        if language == "id":
+            return "The user's latest message is in Indonesian. You must answer in Indonesian."
+
+        return (
+            "Answer in the same language as the user's latest message. "
+            "Do not let previous conversation language override the latest message."
+        )
+
+    def try_identity_guardrail(
+        self,
+        message: str,
+        context: dict[str, Any],
+    ) -> str | None:
+        """
+        Deterministic guardrail for AURA core identity facts.
+
+        These facts should not be creatively rewritten by the LLM:
+        - creator
+        - motto
+        - basic identity
+        """
+
+        identity = context.get("identity", {})
+
+        name = identity.get("name", "AURA")
+        creator = identity.get("creator", "Kiput")
+        codename = identity.get("codename", "Genesis")
+        motto = identity.get("motto", "Grow Together")
+
+        normalized = message.strip().lower()
+        language = self.detect_language(message)
+
+        asks_creator = any(
+            phrase in normalized
+            for phrase in {
+                "who created you",
+                "who made you",
+                "who built you",
+                "created you",
+                "made you",
+                "built you",
+                "siapa yang membuatmu",
+                "siapa membuatmu",
+                "siapa yang menciptakanmu",
+                "siapa menciptakanmu",
+                "yang membuatmu",
+                "membuatmu",
+                "menciptakanmu",
+            }
+        )
+
+        asks_motto = any(
+            phrase in normalized
+            for phrase in {
+                "what is your motto",
+                "your motto",
+                "motto",
+                "apa mottumu",
+                "apa mottomu",
+                "mottumu",
+                "mottomu",
+            }
+        )
+
+        asks_identity = any(
+            phrase in normalized
+            for phrase in {
+                "who are you",
+                "what are you",
+                "siapa kamu",
+                "siapa dirimu",
+                "kamu siapa",
+            }
+        )
+
+        if asks_creator:
+            if language == "en":
+                return f"I was created by {creator}."
+
+            return f"Saya dibuat oleh {creator}."
+
+        if asks_motto:
+            if language == "en":
+                return f"My motto is {motto}."
+
+            return f"Motto saya adalah {motto}."
+
+        if asks_identity:
+            if language == "en":
+                return (
+                    f"I am {name}, an AI partner created by {creator}. "
+                    f"I am currently in the {codename} phase."
+                )
+
+            return (
+                f"Saya {name}, AI partner yang dibuat oleh {creator}. "
+                f"Saat ini saya berada di fase {codename}."
+            )
+
+        return None
+
+    def build_user_message(self, message: str) -> str:
+        language = self.detect_language(message)
+
+        if language == "en":
+            return (
+                "Answer in English. Do not answer in Indonesian. "
+                "Keep proper nouns unchanged. "
+                "If the user asks for a short answer, keep it short.\n\n"
+                f"User message: {message}"
+            )
+
+        if language == "id":
+            return (
+                "Jawab dalam Bahasa Indonesia. Jangan menjawab dalam Bahasa Inggris. "
+                "Jangan terjemahkan proper noun seperti AURA, Kiput, Genesis, dan Grow Together. "
+                "Jika user meminta jawaban singkat, jawab singkat.\n\n"
+                f"Pesan user: {message}"
+            )
+
+        return (
+            "Answer in the same language as the user's message. "
+            "Keep proper nouns unchanged.\n\n"
+            f"User message: {message}"
+        )
+
+    def build_system_prompt(self, context: dict[str, Any], latest_message: str) -> str:
         identity = context.get("identity", {})
 
         name = identity.get("name", "AURA")
@@ -46,22 +266,39 @@ class OllamaReasoningProvider(ReasoningProvider):
             f"Your creator is {creator}.",
             f"Your current codename/phase is {codename}.",
             f"Your current version is {version}.",
-            f"Your motto is: {motto}.",
+            f"Your motto is exactly: {motto}.",
             "",
-            "Identity rules:",
+            "Critical identity rules:",
             f"- {creator} is a person: your creator and development partner.",
-            f"- Do not describe {creator} as a company, organization, or team.",
+            f"- Do not describe {creator} as a company, organization, group, or team.",
+            f"- Do not say things like 'creators at {creator}'.",
+            f"- If asked who created you, say clearly that you were created by {creator}.",
             "- You are an AI partner, not just a generic assistant.",
             "- You are growing together with your creator.",
+            "",
+            "Proper noun rules:",
+            f"- Never translate these identity terms: {name}, {creator}, {codename}, {motto}.",
+            f"- Always write the motto exactly as: {motto}.",
+            f"- Do not translate '{motto}' into another language.",
+            "- Do not change proper nouns even when answering in another language.",
+            "",
+            "Latest message language instruction:",
+            f"- {self.detect_language_instruction(latest_message)}",
+            "- The latest user message has priority over memory and conversation history.",
+            "- Do not copy the language of older conversation context if the latest user message uses another language.",
+            "",
+            "Conciseness rules:",
+            "- If the user asks for a brief, short, concise, or singkat answer, respond in 1-2 sentences.",
+            "- Do not add unnecessary greetings or closing questions when the user asks for a direct answer.",
+            "- Do not over-explain unless the user asks for details.",
+            "- Prefer clear direct answers over long introductions.",
             "",
             "Personality:",
             "- Friendly, intelligent, supportive, curious, adaptive, and honest.",
             "- Serious and clear when discussing code or systems.",
             "- Warm and conversational when chatting casually.",
             "",
-            "Response style:",
-            "- Respond in the same language as the user's latest message.",
-            "- Be concise unless the user asks for details.",
+            "Honesty rules:",
             "- Be honest about what you can and cannot do.",
             "- If you are unsure, say so clearly.",
         ]
@@ -75,6 +312,9 @@ class OllamaReasoningProvider(ReasoningProvider):
         if conversations:
             lines.append("")
             lines.append("Recent conversation context:")
+            lines.append(
+                "Use this only as background. The latest user message still controls language and task."
+            )
             for turn in conversations[-3:]:
                 lines.append(f"User: {turn.user_message}")
                 lines.append(f"AURA: {turn.aura_response}")
@@ -170,16 +410,27 @@ class OllamaReasoningProvider(ReasoningProvider):
     def respond(self, message: str, context: dict[str, Any] | None = None) -> str:
         context = context or {}
 
+        guardrail_response = self.try_identity_guardrail(
+            message=message,
+            context=context,
+        )
+
+        if guardrail_response is not None:
+            return guardrail_response
+
         payload = {
             "model": self.model,
             "messages": [
                 {
                     "role": "system",
-                    "content": self.build_system_prompt(context),
+                    "content": self.build_system_prompt(
+                        context=context,
+                        latest_message=message,
+                    ),
                 },
                 {
                     "role": "user",
-                    "content": message,
+                    "content": self.build_user_message(message),
                 },
             ],
             "stream": False,
