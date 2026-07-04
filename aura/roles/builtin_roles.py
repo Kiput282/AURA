@@ -129,11 +129,13 @@ def build_builtin_role_registry() -> RoleRegistry:
     registry.register(
         AuraRole(
             name="action",
-            description="Tool usage, plugin calling, safe task execution, and automation planning.",
-            provider="planned",
-            model="planner_model",
-            status="planned",
+            description="Tool usage, plugin calling, safe task execution, permission checks, and automation planning.",
+            provider="internal",
+            model="permission_manager",
+            status="foundation",
             capabilities=[
+                "permission_check",
+                "action_safety",
                 "tool_calling",
                 "plugin_control",
                 "task_planning",

@@ -10,6 +10,7 @@ from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
 from aura.context.context_manager import ContextManager
+from aura.permissions.permission_manager import PermissionManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -387,6 +388,34 @@ class AuraCLI:
 
         print(packet.to_text())
 
+    def permissions(self) -> None:
+        permission_manager = PermissionManager()
+
+        print("AURA Permissions")
+        print("================")
+
+        for result in permission_manager.list_permissions():
+            print(f"- {result.action}")
+            print(f"  Level       : {int(result.level)} - {result.level.label}")
+            print(f"  Allowed     : {result.allowed}")
+            print(f"  Confirmation: {result.requires_confirmation}")
+            print(f"  Description : {result.description}")
+            print(f"  Reason      : {result.reason}")
+            print()
+
+    def permission_check(self, action: str) -> None:
+        permission_manager = PermissionManager()
+        result = permission_manager.check(action=action)
+
+        print("AURA Permission Check")
+        print("=====================")
+        print(f"Action      : {result.action}")
+        print(f"Level       : {int(result.level)} - {result.level.label}")
+        print(f"Allowed     : {result.allowed}")
+        print(f"Confirmation: {result.requires_confirmation}")
+        print(f"Description : {result.description}")
+        print(f"Reason      : {result.reason}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -427,6 +456,14 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("permissions")
+
+        permission_check_parser = subparsers.add_parser("permission-check")
+        permission_check_parser.add_argument("action", type=str)
+
+        perm_check_parser = subparsers.add_parser("perm-check")
+        perm_check_parser.add_argument("action", type=str)
 
         subparsers.add_parser("provider")
         subparsers.add_parser("roles")
@@ -531,6 +568,16 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "permissions":
+            disable_logging()
+            self.permissions()
+            return True
+
+        if parsed.command in {"permission-check", "perm-check"}:
+            disable_logging()
+            self.permission_check(action=parsed.action)
             return True
 
         if parsed.command in {"provider", "reason"}:

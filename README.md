@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.24.1-genesis
-Status  : CONTEXT RELEVANCE CLEANUP ONLINE
+Version : 0.25.0-genesis
+Status  : PERMISSION SYSTEM FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -86,6 +86,7 @@ AURA currently supports:
 - Protected system memories
 - Memory pin and importance
 - Context manager v1
+- Permission system foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control

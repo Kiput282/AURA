@@ -9,6 +9,7 @@ from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
 from aura.context.context_manager import ContextManager
+from aura.permissions.permission_manager import PermissionManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
@@ -50,6 +51,9 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "permissions",
+            "permission-check",
+            "perm-check",
             "context",
             "context-preview",
             "roles",
@@ -128,6 +132,9 @@ class AuraShell:
         print("  journal-count        Count project journal entries")
         print("  context <text>       Preview AURA context packet")
         print("  context-preview <text> Alias for context")
+        print("  permissions          Show permission policy table")
+        print("  permission-check <action>  Check permission for an action")
+        print("  perm-check <action>        Alias for permission-check")
         print("  provider             Show reasoning provider")
         print("  roles                Show AURA internal roles")
         print("  reason               Alias for provider")
@@ -518,6 +525,34 @@ class AuraShell:
 
         print(packet.to_text())
 
+    def permissions(self) -> None:
+        permission_manager = PermissionManager()
+
+        print("AURA Permissions")
+        print("================")
+
+        for result in permission_manager.list_permissions():
+            print(f"- {result.action}")
+            print(f"  Level       : {int(result.level)} - {result.level.label}")
+            print(f"  Allowed     : {result.allowed}")
+            print(f"  Confirmation: {result.requires_confirmation}")
+            print(f"  Description : {result.description}")
+            print(f"  Reason      : {result.reason}")
+            print()
+
+    def permission_check(self, action: str) -> None:
+        permission_manager = PermissionManager()
+        result = permission_manager.check(action=action)
+
+        print("AURA Permission Check")
+        print("=====================")
+        print(f"Action      : {result.action}")
+        print(f"Level       : {int(result.level)} - {result.level.label}")
+        print(f"Allowed     : {result.allowed}")
+        print(f"Confirmation: {result.requires_confirmation}")
+        print(f"Description : {result.description}")
+        print(f"Reason      : {result.reason}")
+
     def plugins(self) -> None:
         self.ensure_plugins_loaded()
 
@@ -742,6 +777,28 @@ class AuraShell:
                 return
 
             self.context(message=message)
+            return
+
+        if normalized == "permissions":
+            self.permissions()
+            return
+
+        if normalized.startswith("permission-check "):
+            action = command[len("permission-check "):].strip()
+            if not action:
+                print("Usage: permission-check <action>")
+                return
+
+            self.permission_check(action=action)
+            return
+
+        if normalized.startswith("perm-check "):
+            action = command[len("perm-check "):].strip()
+            if not action:
+                print("Usage: perm-check <action>")
+                return
+
+            self.permission_check(action=action)
             return
 
         if normalized in {"provider", "reason"}:
