@@ -46,6 +46,8 @@ class AuraShell:
         print("  ask <text>           Alias for chat")
         print("  history              Show recent chat history")
         print("  history <limit>      Show recent chat history with limit")
+        print("  memory-search <text> Search relevant memories")
+        print("  mem-search <text>    Alias for memory-search")
         print("  status               Show shell status")
         print("  version              Show AURA version")
         print("  provider             Show reasoning provider")
@@ -138,6 +140,21 @@ class AuraShell:
             print(f"User: {turn.user_message}")
             print(f"AURA: {turn.aura_response}")
             print("---")
+
+    def memory_search(self, query: str, limit: int = 5) -> None:
+        memories = self.chat_engine.relevant_memories(message=query, limit=limit)
+
+        print("AURA Relevant Memories")
+        print("======================")
+        print(f"Query: {query}")
+        print()
+
+        if not memories:
+            print("No relevant memories found.")
+            return
+
+        for memory in memories:
+            print(f"- [{memory.kind}] {memory.content}")
 
     def status(self) -> None:
         memory_count = self.memory_store.count()
@@ -260,6 +277,16 @@ class AuraShell:
 
         if normalized in {"exit", "quit", "q"}:
             self.exit_shell()
+            return
+
+        if normalized.startswith("memory-search "):
+            query = command[len("memory-search "):].strip()
+            self.memory_search(query=query)
+            return
+
+        if normalized.startswith("mem-search "):
+            query = command[len("mem-search "):].strip()
+            self.memory_search(query=query)
             return
 
         if normalized == "status":

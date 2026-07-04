@@ -135,6 +135,22 @@ class AuraCLI:
         runtime = chat.provider_runtime_check()
         self.print_provider_runtime_check(runtime)
 
+    def memory_search(self, query: str, limit: int = 5) -> None:
+        chat = AuraChat(project_root=self.project_root)
+        memories = chat.relevant_memories(message=query, limit=limit)
+
+        print("AURA Relevant Memories")
+        print("======================")
+        print(f"Query: {query}")
+        print()
+
+        if not memories:
+            print("No relevant memories found.")
+            return
+
+        for memory in memories:
+            print(f"- [{memory.kind}] {memory.content}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -163,6 +179,14 @@ class AuraCLI:
         subparsers.add_parser("reason")
         subparsers.add_parser("provider-check")
         subparsers.add_parser("reason-check")
+
+        memory_search_parser = subparsers.add_parser("memory-search")
+        memory_search_parser.add_argument("query", type=str)
+        memory_search_parser.add_argument("--limit", type=int, default=5)
+
+        mem_search_parser = subparsers.add_parser("mem-search")
+        mem_search_parser.add_argument("query", type=str)
+        mem_search_parser.add_argument("--limit", type=int, default=5)
 
         subparsers.add_parser("shell")
 
@@ -199,6 +223,11 @@ class AuraCLI:
         if parsed.command in {"provider-check", "reason-check"}:
             disable_logging()
             self.provider_check()
+            return True
+
+        if parsed.command in {"memory-search", "mem-search"}:
+            disable_logging()
+            self.memory_search(query=parsed.query, limit=parsed.limit)
             return True
 
         if parsed.command == "shell":
