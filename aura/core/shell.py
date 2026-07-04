@@ -19,12 +19,18 @@ class AuraShell:
     - remember <text>
     - recall
     - recall <limit>
+    - mem
+    - memory
     - status
     - version
     - plugins
+    - plugin
     - health
     - clear
+    - cls
     - exit
+    - quit
+    - q
     """
 
     def __init__(self):
@@ -50,12 +56,18 @@ class AuraShell:
         print("  remember <text>      Save a memory")
         print("  recall               Show recent memories")
         print("  recall <limit>       Show recent memories with limit")
+        print("  mem                  Alias for recall")
+        print("  memory               Alias for recall")
         print("  status               Show shell status")
         print("  version              Show AURA version")
         print("  plugins              Show loaded plugins")
+        print("  plugin               Alias for plugins")
         print("  health               Show shell health summary")
         print("  clear                Clear the terminal screen")
+        print("  cls                  Alias for clear")
         print("  exit                 Exit AURA shell")
+        print("  quit                 Alias for exit")
+        print("  q                    Alias for exit")
 
     def load_identity(self) -> dict:
         if not self.identity_path.exists():
@@ -168,47 +180,51 @@ class AuraShell:
     def clear(self) -> None:
         os.system("cls" if os.name == "nt" else "clear")
 
+    def exit_shell(self) -> None:
+        print("Goodbye, Kiput.")
+        self.running = False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
+        normalized = command.lower()
 
         if not command:
             return
 
-        if command == "help":
+        if normalized == "help":
             self.print_help()
             return
 
-        if command == "exit":
-            print("Goodbye, Kiput.")
-            self.running = False
+        if normalized in {"exit", "quit", "q"}:
+            self.exit_shell()
             return
 
-        if command == "status":
+        if normalized == "status":
             self.status()
             return
 
-        if command == "version":
+        if normalized == "version":
             self.version()
             return
 
-        if command == "plugins":
+        if normalized in {"plugins", "plugin"}:
             self.plugins()
             return
 
-        if command == "health":
+        if normalized == "health":
             self.health()
             return
 
-        if command == "clear":
+        if normalized in {"clear", "cls"}:
             self.clear()
             return
 
-        if command == "recall":
+        if normalized in {"recall", "mem", "memory"}:
             self.recall()
             return
 
-        if command.startswith("recall "):
-            raw_limit = command.removeprefix("recall ").strip()
+        if normalized.startswith("recall "):
+            raw_limit = normalized.removeprefix("recall ").strip()
 
             try:
                 limit = int(raw_limit)
@@ -219,8 +235,8 @@ class AuraShell:
             self.recall(limit=limit)
             return
 
-        if command.startswith("remember "):
-            content = command.removeprefix("remember ")
+        if normalized.startswith("remember "):
+            content = command[len("remember "):]
             self.remember(content)
             return
 
