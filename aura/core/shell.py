@@ -223,10 +223,23 @@ class AuraShell:
             print(f"  Content: {memory.content}")
 
     def memory_delete(self, memory_id: str) -> None:
-        deleted_memory = self.memory_store.delete_by_id(memory_id=memory_id)
+        memory = self.memory_store.find_by_id(memory_id=memory_id)
 
         print("AURA Memory Delete")
         print("==================")
+
+        if memory is None:
+            print(f"Memory not found: {memory_id}")
+            return
+
+        if self.memory_store.is_protected(memory):
+            print("Cannot delete protected system memory.")
+            print(f"- ID: {memory.id}")
+            print(f"  Kind: {memory.kind}")
+            print(f"  Content: {memory.content}")
+            return
+
+        deleted_memory = self.memory_store.delete_by_id(memory_id=memory_id)
 
         if deleted_memory is None:
             print(f"Memory not found: {memory_id}")

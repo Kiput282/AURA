@@ -16,6 +16,8 @@ class MemoryStore:
     - append-friendly
     """
 
+    PROTECTED_KINDS = {"system"}
+
     def __init__(self, project_root: Path):
         self.project_root = project_root
         self.memory_dir = self.project_root / "data" / "memory"
@@ -71,6 +73,9 @@ class MemoryStore:
 
         return None
 
+    def is_protected(self, memory: MemoryItem) -> bool:
+        return memory.kind in self.PROTECTED_KINDS
+
     def delete_by_id(self, memory_id: str) -> MemoryItem | None:
         target_id = memory_id.strip()
         memories = self.list_all()
@@ -80,6 +85,10 @@ class MemoryStore:
 
         for memory in memories:
             if memory.id == target_id:
+                if self.is_protected(memory):
+                    logger.warning(f"Blocked deletion of protected memory: {memory.id}")
+                    return None
+
                 deleted_memory = memory
                 continue
 
