@@ -34,16 +34,15 @@ class MemoryStore:
 
         logger.info(f"Memory saved: {item.id}")
 
-    def list_recent(self, limit: int = 5) -> list[MemoryItem]:
+    def list_all(self) -> list[MemoryItem]:
         if not self.memory_file.exists():
             return []
 
-        lines = self.memory_file.read_text(encoding="utf-8").splitlines()
-        recent_lines = lines[-limit:]
-
         memories: list[MemoryItem] = []
 
-        for line in recent_lines:
+        lines = self.memory_file.read_text(encoding="utf-8").splitlines()
+
+        for line in lines:
             if not line.strip():
                 continue
 
@@ -54,3 +53,16 @@ class MemoryStore:
                 logger.exception(f"Failed to load memory line: {error}")
 
         return memories
+
+    def list_recent(self, limit: int = 5) -> list[MemoryItem]:
+        return self.list_all()[-limit:]
+
+    def exists(self, *, kind: str, content: str) -> bool:
+        for memory in self.list_all():
+            if memory.kind == kind and memory.content == content:
+                return True
+
+        return False
+
+    def count(self) -> int:
+        return len(self.list_all())

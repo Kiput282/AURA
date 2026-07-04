@@ -9,7 +9,7 @@ from aura.plugins.plugin import Plugin
 
 class MemoryPlugin(Plugin):
     name = "memory"
-    version = "0.1.0"
+    version = "0.1.1"
     description = "Simple file-based memory foundation for AURA."
 
     def __init__(self, project_root: Path):
@@ -18,16 +18,23 @@ class MemoryPlugin(Plugin):
         self._status = "NOT_READY"
 
     def start(self) -> None:
-        bootstrap_memory = MemoryItem(
-            kind="system",
-            content="AURA Memory Foundation initialized.",
-            metadata={
-                "source": "MemoryPlugin",
-                "phase": "Genesis",
-            },
-        )
+        bootstrap_content = "AURA Memory Foundation initialized."
 
-        self.store.save(bootstrap_memory)
+        if not self.store.exists(kind="system", content=bootstrap_content):
+            bootstrap_memory = MemoryItem(
+                kind="system",
+                content=bootstrap_content,
+                metadata={
+                    "source": "MemoryPlugin",
+                    "phase": "Genesis",
+                },
+            )
+
+            self.store.save(bootstrap_memory)
+            logger.info("Bootstrap memory created")
+        else:
+            logger.info("Bootstrap memory already exists")
+
         self._status = "OK"
 
         logger.info("MemoryPlugin started")
