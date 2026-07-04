@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+from typing import Any
 
 import yaml
 
@@ -20,7 +21,9 @@ class AuraCLI:
     - chat
     - history
     - provider
+    - provider-check
     - reason
+    - reason-check
     - shell
     """
 
@@ -42,6 +45,28 @@ class AuraCLI:
         settings = self.load_settings()
         reasoning = settings.get("reasoning", {})
         return reasoning.get("provider", "unknown")
+
+    def print_provider_runtime_check(self, runtime: dict[str, Any]) -> None:
+        print("AURA Provider Runtime Check")
+        print("===========================")
+        print(f"Provider : {runtime.get('provider', 'unknown')} v{runtime.get('version', 'unknown')}")
+        print(f"Config   : {self.configured_provider_name()}")
+        print(f"Status   : {runtime.get('status', 'UNKNOWN')}")
+        print(f"Message  : {runtime.get('message', '-')}")
+
+        if "host" in runtime:
+            print(f"Host     : {runtime.get('host')}")
+
+        if "model" in runtime:
+            print(f"Model    : {runtime.get('model')}")
+
+        available_models = runtime.get("available_models", [])
+        if available_models:
+            print("Models   :")
+            for model in available_models:
+                print(f"- {model}")
+        elif "available_models" in runtime:
+            print("Models   : none")
 
     def remember(self, content: str) -> None:
         memory_store = self.get_memory_store()
@@ -105,6 +130,11 @@ class AuraCLI:
         print(f"Version : {provider['version']}")
         print(f"Config  : {configured_provider}")
 
+    def provider_check(self) -> None:
+        chat = AuraChat(project_root=self.project_root)
+        runtime = chat.provider_runtime_check()
+        self.print_provider_runtime_check(runtime)
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -131,6 +161,8 @@ class AuraCLI:
 
         subparsers.add_parser("provider")
         subparsers.add_parser("reason")
+        subparsers.add_parser("provider-check")
+        subparsers.add_parser("reason-check")
 
         subparsers.add_parser("shell")
 
@@ -162,6 +194,11 @@ class AuraCLI:
         if parsed.command in {"provider", "reason"}:
             disable_logging()
             self.provider()
+            return True
+
+        if parsed.command in {"provider-check", "reason-check"}:
+            disable_logging()
+            self.provider_check()
             return True
 
         if parsed.command == "shell":

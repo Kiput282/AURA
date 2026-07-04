@@ -47,6 +47,92 @@ class OllamaReasoningProvider(ReasoningProvider):
 
         return "\n".join(lines)
 
+    def list_local_models(self) -> list[str]:
+        request = urllib.request.Request(
+            url=f"{self.host}/api/tags",
+            headers={
+                "Content-Type": "application/json",
+            },
+            method="GET",
+        )
+
+        with urllib.request.urlopen(request, timeout=min(self.timeout, 10)) as response:
+            raw_body = response.read().decode("utf-8")
+            data = json.loads(raw_body)
+
+        models = data.get("models", [])
+
+        model_names: list[str] = []
+        for model in models:
+            name = model.get("name")
+            if name:
+                model_names.append(name)
+
+        return model_names
+
+    def model_is_available(self, available_models: list[str]) -> bool:
+        expected = self.model.strip()
+
+        for model_name in available_models:
+            if model_name == expected:
+                return True
+
+            if model_name == f"{expected}:latest":
+                return True
+
+            if model_name.split(":")[0] == expected:
+                return True
+
+        return False
+
+    def health_check(self, context: dict[str, Any] | None = None) -> dict[str, Any]:
+        try:
+            available_models = self.list_local_models()
+            model_available = self.model_is_available(available_models)
+
+            if model_available:
+                return {
+                    "status": "OK",
+                    "message": "Ollama is reachable and the configured model is available.",
+                    "provider": self.name,
+                    "version": self.version,
+                    "host": self.host,
+                    "model": self.model,
+                    "available_models": available_models,
+                }
+
+            return {
+                "status": "DEGRADED",
+                "message": "Ollama is reachable, but the configured model is not installed.",
+                "provider": self.name,
+                "version": self.version,
+                "host": self.host,
+                "model": self.model,
+                "available_models": available_models,
+            }
+
+        except urllib.error.URLError as error:
+            return {
+                "status": "OFFLINE",
+                "message": f"Ollama is not reachable at {self.host}. Error: {error}",
+                "provider": self.name,
+                "version": self.version,
+                "host": self.host,
+                "model": self.model,
+                "available_models": [],
+            }
+
+        except Exception as error:
+            return {
+                "status": "ERROR",
+                "message": f"Ollama runtime check failed: {error}",
+                "provider": self.name,
+                "version": self.version,
+                "host": self.host,
+                "model": self.model,
+                "available_models": [],
+            }
+
     def respond(self, message: str, context: dict[str, Any] | None = None) -> str:
         context = context or {}
 

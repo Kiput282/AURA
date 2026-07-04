@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 from aura.memory.conversation_store import ConversationStore
 from aura.memory.conversation_turn import ConversationTurn
@@ -12,10 +13,6 @@ class AuraChat:
     Chat interface for AURA Genesis.
 
     AuraChat delegates reasoning to a ReasoningProvider.
-
-    Provider selection:
-    - explicit provider argument, or
-    - settings.yaml via ReasoningProviderFactory
     """
 
     def __init__(
@@ -71,3 +68,7 @@ class AuraChat:
             "name": self.reasoning_provider.name,
             "version": self.reasoning_provider.version,
         }
+
+    def provider_runtime_check(self) -> dict[str, Any]:
+        context = self.build_context()
+        return self.reasoning_provider.health_check(context=context)

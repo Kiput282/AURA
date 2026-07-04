@@ -50,6 +50,8 @@ class AuraShell:
         print("  version              Show AURA version")
         print("  provider             Show reasoning provider")
         print("  reason               Alias for provider")
+        print("  provider-check       Check reasoning provider runtime")
+        print("  reason-check         Alias for provider-check")
         print("  plugins              Show loaded plugins")
         print("  plugin               Alias for plugins")
         print("  health               Show shell health summary")
@@ -174,6 +176,30 @@ class AuraShell:
         print(f"Version : {provider['version']}")
         print(f"Config  : {configured_provider}")
 
+    def provider_check(self) -> None:
+        runtime = self.chat_engine.provider_runtime_check()
+
+        print("AURA Provider Runtime Check")
+        print("===========================")
+        print(f"Provider : {runtime.get('provider', 'unknown')} v{runtime.get('version', 'unknown')}")
+        print(f"Config   : {self.configured_provider_name()}")
+        print(f"Status   : {runtime.get('status', 'UNKNOWN')}")
+        print(f"Message  : {runtime.get('message', '-')}")
+
+        if "host" in runtime:
+            print(f"Host     : {runtime.get('host')}")
+
+        if "model" in runtime:
+            print(f"Model    : {runtime.get('model')}")
+
+        available_models = runtime.get("available_models", [])
+        if available_models:
+            print("Models   :")
+            for model in available_models:
+                print(f"- {model}")
+        elif "available_models" in runtime:
+            print("Models   : none")
+
     def plugins(self) -> None:
         self.ensure_plugins_loaded()
 
@@ -246,6 +272,10 @@ class AuraShell:
 
         if normalized in {"provider", "reason"}:
             self.provider()
+            return
+
+        if normalized in {"provider-check", "reason-check", "provider check", "reason check"}:
+            self.provider_check()
             return
 
         if normalized in {"plugins", "plugin"}:

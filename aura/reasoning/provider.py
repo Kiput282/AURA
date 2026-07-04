@@ -5,14 +5,6 @@ from typing import Any
 class ReasoningProvider(ABC):
     """
     Base interface for AURA reasoning providers.
-
-    Future providers can include:
-    - rule-based
-    - local LLM
-    - Ollama
-    - OpenAI
-    - LM Studio
-    - custom model adapters
     """
 
     name: str = "unknown"
@@ -21,3 +13,11 @@ class ReasoningProvider(ABC):
     @abstractmethod
     def respond(self, message: str, context: dict[str, Any] | None = None) -> str:
         pass
+
+    def health_check(self, context: dict[str, Any] | None = None) -> dict[str, Any]:
+        return {
+            "status": "OK",
+            "message": "Provider is available.",
+            "provider": self.name,
+            "version": self.version,
+        }
