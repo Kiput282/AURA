@@ -1,6 +1,8 @@
 import argparse
 from pathlib import Path
 
+import yaml
+
 from aura.core.chat import AuraChat
 from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
@@ -17,14 +19,29 @@ class AuraCLI:
     - recall
     - chat
     - history
+    - provider
+    - reason
     - shell
     """
 
     def __init__(self):
         self.project_root = Path(__file__).resolve().parents[2]
+        self.settings_path = self.project_root / "aura" / "config" / "settings.yaml"
 
     def get_memory_store(self) -> MemoryStore:
         return MemoryStore(project_root=self.project_root)
+
+    def load_settings(self) -> dict:
+        if not self.settings_path.exists():
+            return {}
+
+        with self.settings_path.open("r", encoding="utf-8") as file:
+            return yaml.safe_load(file) or {}
+
+    def configured_provider_name(self) -> str:
+        settings = self.load_settings()
+        reasoning = settings.get("reasoning", {})
+        return reasoning.get("provider", "unknown")
 
     def remember(self, content: str) -> None:
         memory_store = self.get_memory_store()
@@ -77,6 +94,17 @@ class AuraCLI:
             print(f"AURA: {turn.aura_response}")
             print("---")
 
+    def provider(self) -> None:
+        chat = AuraChat(project_root=self.project_root)
+        provider = chat.provider_info()
+        configured_provider = self.configured_provider_name()
+
+        print("AURA Reasoning Provider")
+        print("=======================")
+        print(f"Name    : {provider['name']}")
+        print(f"Version : {provider['version']}")
+        print(f"Config  : {configured_provider}")
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -100,6 +128,9 @@ class AuraCLI:
 
         history_parser = subparsers.add_parser("history")
         history_parser.add_argument("--limit", type=int, default=5)
+
+        subparsers.add_parser("provider")
+        subparsers.add_parser("reason")
 
         subparsers.add_parser("shell")
 
@@ -126,6 +157,11 @@ class AuraCLI:
         if parsed.command == "history":
             disable_logging()
             self.history(limit=parsed.limit)
+            return True
+
+        if parsed.command in {"provider", "reason"}:
+            disable_logging()
+            self.provider()
             return True
 
         if parsed.command == "shell":
