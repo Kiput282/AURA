@@ -214,6 +214,28 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="voice.status",
+            plugin="voice",
+            description="Show voice foundation status.",
+            permission_action="think",
+            status="online",
+            skill="voice_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="voice.speak",
+            plugin="voice",
+            description="Speak through text-to-speech output when voice mode is enabled.",
+            permission_action="speaker_speak",
+            status="planned",
+            skill="voice_interaction",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="voice.listen",
             plugin="voice",
             description="Listen through microphone for voice interaction.",

@@ -115,11 +115,14 @@ def build_builtin_role_registry() -> RoleRegistry:
     registry.register(
         AuraRole(
             name="voice",
-            description="Speech-to-text, text-to-speech, and voice interaction.",
-            provider="planned",
-            model="stt_tts_models",
-            status="planned",
+            description="Voice foundation, speech-to-text, text-to-speech, and voice interaction.",
+            provider="internal",
+            model="voice_manager",
+            status="foundation",
             capabilities=[
+                "voice_status",
+                "stt_placeholder",
+                "tts_placeholder",
                 "speech_to_text",
                 "text_to_speech",
                 "voice_interaction",

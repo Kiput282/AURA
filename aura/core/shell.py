@@ -13,6 +13,7 @@ from aura.permissions.permission_manager import PermissionManager
 from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.plugins.builtin.project_plugin import ProjectPlugin
+from aura.voice.voice_manager import VoiceManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
@@ -54,6 +55,8 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "voice-status",
+            "voice-providers",
             "project-summary",
             "project-files",
             "project-read",
@@ -144,6 +147,8 @@ class AuraShell:
         print("  journal-count        Count project journal entries")
         print("  context <text>       Preview AURA context packet")
         print("  context-preview <text> Alias for context")
+        print("  voice-status         Show voice foundation status")
+        print("  voice-providers      Show voice provider placeholders")
         print("  project-summary      Show project summary")
         print("  project-files        Show visible project files")
         print("  project-files <n>    Show visible project files with limit")
@@ -546,6 +551,35 @@ class AuraShell:
         packet = context_manager.build(user_message=message)
 
         print(packet.to_text())
+
+    def voice_status(self) -> None:
+        voice_manager = VoiceManager()
+        status = voice_manager.status()
+
+        print("AURA Voice Status")
+        print("=================")
+        print(f"Status           : {status['status']}")
+        print(f"Microphone Access: {status['microphone_access']}")
+        print(f"Speaker Output   : {status['speaker_output']}")
+        print(f"STT Ready        : {status['stt_ready']}")
+        print(f"TTS Ready        : {status['tts_ready']}")
+        print(f"Providers        : {status['providers']}")
+        print(f"Note             : {status['note']}")
+
+    def voice_providers(self) -> None:
+        voice_manager = VoiceManager()
+
+        print("AURA Voice Providers")
+        print("====================")
+
+        for provider in voice_manager.list_providers():
+            print(f"- {provider.name}")
+            print(f"  Type            : {provider.provider_type}")
+            print(f"  Status          : {provider.status}")
+            print(f"  Input Supported : {provider.input_supported}")
+            print(f"  Output Supported: {provider.output_supported}")
+            print(f"  Description     : {provider.description}")
+            print()
 
     def project_summary(self) -> None:
         plugin = ProjectPlugin(project_root=self.project_root)
@@ -987,6 +1021,14 @@ class AuraShell:
                 return
 
             self.context(message=message)
+            return
+
+        if normalized == "voice-status":
+            self.voice_status()
+            return
+
+        if normalized == "voice-providers":
+            self.voice_providers()
             return
 
         if normalized == "project-summary":

@@ -61,6 +61,13 @@ class PermissionManager:
             "description": "Listen through microphone for voice input.",
             "reason": "Microphone access must be intentionally enabled.",
         },
+        "speaker_speak": {
+            "level": PermissionLevel.ACT_WITH_CONFIRMATION,
+            "allowed": True,
+            "requires_confirmation": True,
+            "description": "Speak through speaker or text-to-speech output.",
+            "reason": "Speaker output should only happen when voice mode is intentionally enabled.",
+        },
         "prepare_file": {
             "level": PermissionLevel.PREPARE,
             "allowed": True,

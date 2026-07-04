@@ -424,6 +424,7 @@ Planned:
 - Skill registry
 - Plugin action interface
 - File and project plugin
+- Voice foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

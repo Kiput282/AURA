@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.28.0-genesis
-Status  : FILE AND PROJECT PLUGIN ONLINE
+Version : 0.29.0-genesis
+Status  : VOICE FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -90,6 +90,7 @@ AURA currently supports:
 - Skill registry
 - Plugin action interface
 - File and project plugin
+- Voice foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control
@@ -184,6 +185,9 @@ python3 main.py memory-delete "<memory_id>"
 
 python3 main.py provider
 python3 main.py provider-check
+
+python3 main.py voice-status
+python3 main.py voice-providers
 
 python3 main.py project-summary
 python3 main.py project-files --limit 30

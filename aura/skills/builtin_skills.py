@@ -181,12 +181,23 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="voice_foundation",
+            description="Show AURA voice foundation status and placeholder voice providers.",
+            role="voice",
+            permission_action="think",
+            status="online",
+            capabilities=["voice_status", "stt_placeholder", "tts_placeholder"],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="voice_interaction",
-            description="Listen and respond through voice.",
+            description="Future voice input and output once STT/TTS providers are connected.",
             role="voice",
             permission_action="microphone_listen",
-            status="planned",
-            capabilities=["speech_to_text", "text_to_speech", "voice_mode"],
+            status="foundation",
+            capabilities=["speech_to_text", "text_to_speech", "voice_mode", "microphone_permission"],
         )
     )
 

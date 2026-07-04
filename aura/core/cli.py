@@ -14,6 +14,7 @@ from aura.permissions.permission_manager import PermissionManager
 from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.plugins.builtin.project_plugin import ProjectPlugin
+from aura.voice.voice_manager import VoiceManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -607,6 +608,35 @@ class AuraCLI:
 
         print(content)
 
+    def voice_status(self) -> None:
+        voice_manager = VoiceManager()
+        status = voice_manager.status()
+
+        print("AURA Voice Status")
+        print("=================")
+        print(f"Status           : {status['status']}")
+        print(f"Microphone Access: {status['microphone_access']}")
+        print(f"Speaker Output   : {status['speaker_output']}")
+        print(f"STT Ready        : {status['stt_ready']}")
+        print(f"TTS Ready        : {status['tts_ready']}")
+        print(f"Providers        : {status['providers']}")
+        print(f"Note             : {status['note']}")
+
+    def voice_providers(self) -> None:
+        voice_manager = VoiceManager()
+
+        print("AURA Voice Providers")
+        print("====================")
+
+        for provider in voice_manager.list_providers():
+            print(f"- {provider.name}")
+            print(f"  Type            : {provider.provider_type}")
+            print(f"  Status          : {provider.status}")
+            print(f"  Input Supported : {provider.input_supported}")
+            print(f"  Output Supported: {provider.output_supported}")
+            print(f"  Description     : {provider.description}")
+            print()
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -647,6 +677,9 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("voice-status")
+        subparsers.add_parser("voice-providers")
 
         subparsers.add_parser("project-summary")
 
@@ -783,6 +816,16 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "voice-status":
+            disable_logging()
+            self.voice_status()
+            return True
+
+        if parsed.command == "voice-providers":
+            disable_logging()
+            self.voice_providers()
             return True
 
         if parsed.command == "project-summary":
