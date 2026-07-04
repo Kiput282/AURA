@@ -48,6 +48,8 @@ class AuraShell:
         print("  history <limit>      Show recent chat history with limit")
         print("  status               Show shell status")
         print("  version              Show AURA version")
+        print("  provider             Show reasoning provider")
+        print("  reason               Alias for provider")
         print("  plugins              Show loaded plugins")
         print("  plugin               Alias for plugins")
         print("  health               Show shell health summary")
@@ -63,6 +65,18 @@ class AuraShell:
 
         with self.identity_path.open("r", encoding="utf-8") as file:
             return yaml.safe_load(file) or {}
+
+    def load_settings(self) -> dict:
+        if not self.settings_path.exists():
+            return {}
+
+        with self.settings_path.open("r", encoding="utf-8") as file:
+            return yaml.safe_load(file) or {}
+
+    def configured_provider_name(self) -> str:
+        settings = self.load_settings()
+        reasoning = settings.get("reasoning", {})
+        return reasoning.get("provider", "unknown")
 
     def ensure_plugins_loaded(self) -> None:
         if self.plugins_loaded:
@@ -125,13 +139,14 @@ class AuraShell:
 
     def status(self) -> None:
         memory_count = self.memory_store.count()
+        provider = self.chat_engine.provider_info()
 
         print("AURA Shell Status")
         print("=================")
         print("Shell   : ONLINE")
         print("Memory  : ONLINE")
         print("Chat    : ONLINE")
-        print(f"Reason  : {self.chat_engine.provider_info()['name']} v{self.chat_engine.provider_info()['version']}")
+        print(f"Reason  : {provider['name']} v{provider['version']}")
         print(f"Records : {memory_count}")
 
     def version(self) -> None:
@@ -148,6 +163,16 @@ class AuraShell:
         print(f"Version  : {version}")
         print(f"Codename : {codename}")
         print(f"Motto    : {motto}")
+
+    def provider(self) -> None:
+        provider = self.chat_engine.provider_info()
+        configured_provider = self.configured_provider_name()
+
+        print("AURA Reasoning Provider")
+        print("=======================")
+        print(f"Name    : {provider['name']}")
+        print(f"Version : {provider['version']}")
+        print(f"Config  : {configured_provider}")
 
     def plugins(self) -> None:
         self.ensure_plugins_loaded()
@@ -173,6 +198,7 @@ class AuraShell:
         plugins = self.plugin_manager.list_plugins()
         plugin_count = len(plugins)
         memory_count = self.memory_store.count()
+        provider = self.chat_engine.provider_info()
 
         config_status = "OK" if self.settings_path.exists() else "ERROR"
         identity_status = "OK" if self.identity_path.exists() else "ERROR"
@@ -183,7 +209,6 @@ class AuraShell:
         print(f"Config    : {config_status} - settings.yaml")
         print(f"Identity  : {identity_status} - identity.yaml")
         print("Memory    : OK - File-based memory store online")
-        provider = self.chat_engine.provider_info()
         print(f"Reasoning : OK - {provider['name']} v{provider['version']}")
         print("Chat      : OK - Chat interface online")
         print(f"Records   : OK - {memory_count} memory record(s)")
@@ -217,6 +242,10 @@ class AuraShell:
 
         if normalized == "version":
             self.version()
+            return
+
+        if normalized in {"provider", "reason"}:
+            self.provider()
             return
 
         if normalized in {"plugins", "plugin"}:
