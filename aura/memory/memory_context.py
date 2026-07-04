@@ -22,6 +22,23 @@ class MemoryContextBuilder:
         "kamu", "kita", "me", "my", "of", "on",
         "sedang", "saya", "the", "to", "untuk",
         "what", "who", "yang", "you", "your",
+
+        # Generic/noisy memory-management terms.
+        # These should not make a memory relevant by themselves.
+        "memory",
+        "memori",
+        "remember",
+        "recall",
+        "delete",
+        "deleted",
+        "hapus",
+        "test",
+        "testing",
+        "uji",
+        "coba",
+        "temp",
+        "temporary",
+        "sementara",
     }
 
     SYNONYMS = {
@@ -99,7 +116,7 @@ class MemoryContextBuilder:
 
         for index, memory in enumerate(memories):
             score = self.score_memory(query_tokens=query_tokens, memory=memory)
-            if score > 0:
+            if score >= 3:
                 scored_memories.append((score, index, memory))
 
         scored_memories.sort(key=lambda item: (item[0], item[1]), reverse=True)
