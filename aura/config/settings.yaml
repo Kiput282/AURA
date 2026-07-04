@@ -14,3 +14,6 @@ paths:
 boot:
   show_banner: true
   enable_logger: true
+
+reasoning:
+  provider: rule_based

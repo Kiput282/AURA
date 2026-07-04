@@ -131,6 +131,7 @@ class AuraShell:
         print("Shell   : ONLINE")
         print("Memory  : ONLINE")
         print("Chat    : ONLINE")
+        print(f"Reason  : {self.chat_engine.provider_info()['name']} v{self.chat_engine.provider_info()['version']}")
         print(f"Records : {memory_count}")
 
     def version(self) -> None:
@@ -182,7 +183,9 @@ class AuraShell:
         print(f"Config    : {config_status} - settings.yaml")
         print(f"Identity  : {identity_status} - identity.yaml")
         print("Memory    : OK - File-based memory store online")
-        print("Chat      : OK - Rule-based chat foundation online")
+        provider = self.chat_engine.provider_info()
+        print(f"Reasoning : OK - {provider['name']} v{provider['version']}")
+        print("Chat      : OK - Chat interface online")
         print(f"Records   : OK - {memory_count} memory record(s)")
         print(f"Plugins   : OK - {plugin_count} plugin(s) loaded")
 

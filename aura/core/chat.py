@@ -3,56 +3,48 @@ from pathlib import Path
 from aura.memory.conversation_store import ConversationStore
 from aura.memory.conversation_turn import ConversationTurn
 from aura.memory.memory_store import MemoryStore
+from aura.reasoning.provider import ReasoningProvider
+from aura.reasoning.rule_based_provider import RuleBasedReasoningProvider
 
 
 class AuraChat:
     """
-    Early chat foundation for AURA Genesis.
+    Chat interface for AURA Genesis.
 
-    This is not an LLM yet.
-    It provides a stable interface that can later be connected to:
-    - local LLM
-    - remote LLM
-    - memory-aware reasoning
-    - tool/plugin calling
+    AuraChat does not directly own reasoning logic.
+    It delegates reasoning to a ReasoningProvider.
+
+    This allows AURA to later switch between:
+    - rule-based provider
+    - local LLM provider
+    - Ollama provider
+    - OpenAI provider
+    - LM Studio provider
     """
 
-    def __init__(self, project_root: Path):
+    def __init__(
+        self,
+        project_root: Path,
+        reasoning_provider: ReasoningProvider | None = None,
+    ):
         self.project_root = project_root
         self.memory_store = MemoryStore(project_root=self.project_root)
         self.conversation_store = ConversationStore(project_root=self.project_root)
+        self.reasoning_provider = reasoning_provider or RuleBasedReasoningProvider()
+
+    def build_context(self) -> dict:
+        return {
+            "recent_memories": self.memory_store.list_recent(limit=5),
+            "recent_conversations": self.conversation_store.list_recent(limit=5),
+            "provider": {
+                "name": self.reasoning_provider.name,
+                "version": self.reasoning_provider.version,
+            },
+        }
 
     def generate_response(self, message: str) -> str:
-        normalized = message.strip().lower()
-
-        if not normalized:
-            return "I heard silence. That's okay. I'm still here."
-
-        if normalized in {"hello", "hi", "hey", "halo"}:
-            return "Hello, Kiput. I'm here."
-
-        if "who are you" in normalized or "siapa kamu" in normalized:
-            return "I'm AURA, your AI partner in Genesis phase."
-
-        if "what do you remember" in normalized or "apa yang kamu ingat" in normalized:
-            memories = self.memory_store.list_recent(limit=5)
-
-            if not memories:
-                return "I don't have any memories yet."
-
-            lines = ["I remember:"]
-            for memory in memories:
-                lines.append(f"- {memory.content}")
-
-            return "\n".join(lines)
-
-        if "status" in normalized:
-            return "AURA Genesis is online. Core, plugins, shell, chat, and memory are working."
-
-        return (
-            "I don't have full reasoning yet, but I received your message: "
-            f"\"{message}\""
-        )
+        context = self.build_context()
+        return self.reasoning_provider.respond(message, context=context)
 
     def respond(self, message: str, *, source: str = "AuraChat") -> str:
         response = self.generate_response(message)
@@ -63,7 +55,8 @@ class AuraChat:
             source=source,
             metadata={
                 "phase": "Genesis",
-                "engine": "rule_based",
+                "engine": self.reasoning_provider.name,
+                "provider_version": self.reasoning_provider.version,
             },
         )
 
@@ -73,3 +66,9 @@ class AuraChat:
 
     def recent_conversations(self, limit: int = 5) -> list[ConversationTurn]:
         return self.conversation_store.list_recent(limit=limit)
+
+    def provider_info(self) -> dict[str, str]:
+        return {
+            "name": self.reasoning_provider.name,
+            "version": self.reasoning_provider.version,
+        }
