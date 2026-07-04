@@ -12,7 +12,7 @@ class LocalStubReasoningProvider(ReasoningProvider):
     """
 
     name = "local_stub"
-    version = "0.1.0"
+    version = "0.2.0"
 
     def respond(self, message: str, context: dict[str, Any] | None = None) -> str:
         context = context or {}
@@ -37,7 +37,7 @@ class LocalStubReasoningProvider(ReasoningProvider):
             )
 
         if "what do you remember" in normalized or "apa yang kamu ingat" in normalized:
-            memories = context.get("recent_memories", [])
+            memories = context.get("relevant_memories", []) or context.get("recent_memories", [])
 
             if not memories:
                 return "[local_stub] I do not have memory records yet."
@@ -51,8 +51,14 @@ class LocalStubReasoningProvider(ReasoningProvider):
         if "status" in normalized:
             return (
                 f"[local_stub] {aura_name} {codename} is online. "
-                "Provider switching works through settings.yaml."
+                "Provider switching and memory-aware context work through settings.yaml."
             )
+
+        if "what are we building" in normalized or "apa yang sedang kita bangun" in normalized:
+            memories = context.get("relevant_memories", [])
+
+            if memories:
+                return f"[local_stub] Relevant memory: {memories[0].content}"
 
         return (
             "[local_stub] I am not a real LLM yet, but I received your message: "

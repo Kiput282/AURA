@@ -9,7 +9,7 @@ class RuleBasedReasoningProvider(ReasoningProvider):
     """
 
     name = "rule_based"
-    version = "0.1.0"
+    version = "0.2.0"
 
     def respond(self, message: str, context: dict[str, Any] | None = None) -> str:
         context = context or {}
@@ -31,7 +31,7 @@ class RuleBasedReasoningProvider(ReasoningProvider):
             return f"I'm {aura_name}, your AI partner created by {creator}. I'm currently in {codename} phase."
 
         if "what do you remember" in normalized or "apa yang kamu ingat" in normalized:
-            memories = context.get("recent_memories", [])
+            memories = context.get("relevant_memories", []) or context.get("recent_memories", [])
 
             if not memories:
                 return "I don't have any memories yet."
@@ -46,8 +46,14 @@ class RuleBasedReasoningProvider(ReasoningProvider):
         if "status" in normalized:
             return (
                 f"{aura_name} {codename} is online. "
-                "Core, plugins, shell, chat, memory, and reasoning provider are working."
+                "Core, plugins, shell, chat, memory-aware context, and reasoning provider are working."
             )
+
+        if "what are we building" in normalized or "apa yang sedang kita bangun" in normalized:
+            memories = context.get("relevant_memories", [])
+
+            if memories:
+                return memories[0].content
 
         return (
             "I don't have full reasoning yet, but I received your message: "

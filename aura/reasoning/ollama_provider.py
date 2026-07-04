@@ -17,7 +17,7 @@ class OllamaReasoningProvider(ReasoningProvider):
     """
 
     name = "ollama"
-    version = "0.1.4"
+    version = "0.2.0"
 
     def __init__(
         self,
@@ -258,6 +258,7 @@ class OllamaReasoningProvider(ReasoningProvider):
         motto = identity.get("motto", "Grow Together")
         version = identity.get("version", "unknown")
 
+        relevant_memories = context.get("relevant_memories", [])
         memories = context.get("recent_memories", [])
         conversations = context.get("recent_conversations", [])
 
@@ -298,10 +299,22 @@ class OllamaReasoningProvider(ReasoningProvider):
             "- Serious and clear when discussing code or systems.",
             "- Warm and conversational when chatting casually.",
             "",
+            "Memory usage rules:",
+            "- Relevant memories are high priority context from AURA's memory store.",
+            "- Use relevant memories when they answer the user's question.",
+            "- If relevant memories conflict with recent conversation context, prefer relevant memories for stable facts.",
+            "- Do not claim you remember something unless it appears in memory or conversation context.",
+            "",
             "Honesty rules:",
             "- Be honest about what you can and cannot do.",
             "- If you are unsure, say so clearly.",
         ]
+
+        if relevant_memories:
+            lines.append("")
+            lines.append("Relevant memories for the latest user message:")
+            for memory in relevant_memories:
+                lines.append(f"- {memory.content}")
 
         if memories:
             lines.append("")

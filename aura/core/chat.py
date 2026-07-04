@@ -5,6 +5,7 @@ import yaml
 
 from aura.memory.conversation_store import ConversationStore
 from aura.memory.conversation_turn import ConversationTurn
+from aura.memory.memory_context import MemoryContextBuilder
 from aura.memory.memory_store import MemoryStore
 from aura.reasoning.factory import ReasoningProviderFactory
 from aura.reasoning.provider import ReasoningProvider
@@ -17,6 +18,7 @@ class AuraChat:
     AuraChat delegates reasoning to a ReasoningProvider.
     It also builds context for the provider, including:
     - identity
+    - relevant memories
     - recent memories
     - recent conversations
     """
@@ -30,6 +32,7 @@ class AuraChat:
         self.identity_path = self.project_root / "aura" / "personality" / "identity.yaml"
 
         self.memory_store = MemoryStore(project_root=self.project_root)
+        self.memory_context_builder = MemoryContextBuilder(memory_store=self.memory_store)
         self.conversation_store = ConversationStore(project_root=self.project_root)
         self.reasoning_provider = (
             reasoning_provider
@@ -43,10 +46,17 @@ class AuraChat:
         with self.identity_path.open("r", encoding="utf-8") as file:
             return yaml.safe_load(file) or {}
 
-    def build_context(self) -> dict[str, Any]:
+    def build_context(self, message: str = "") -> dict[str, Any]:
+        memory_context = self.memory_context_builder.build_context(query=message)
+
         return {
             "identity": self.load_identity(),
-            "recent_memories": self.memory_store.list_recent(limit=5),
+            "relevant_memories": memory_context["relevant_memories"],
+            "recent_memories": memory_context["recent_memories"],
+            "memory_context": {
+                "relevant_count": memory_context["relevant_count"],
+                "recent_count": memory_context["recent_count"],
+            },
             "recent_conversations": self.conversation_store.list_recent(limit=5),
             "provider": {
                 "name": self.reasoning_provider.name,
@@ -55,11 +65,13 @@ class AuraChat:
         }
 
     def generate_response(self, message: str) -> str:
-        context = self.build_context()
+        context = self.build_context(message=message)
         return self.reasoning_provider.respond(message, context=context)
 
     def respond(self, message: str, *, source: str = "AuraChat") -> str:
         response = self.generate_response(message)
+
+        context = self.build_context(message=message)
 
         turn = ConversationTurn(
             user_message=message,
@@ -69,6 +81,7 @@ class AuraChat:
                 "phase": "Genesis",
                 "engine": self.reasoning_provider.name,
                 "provider_version": self.reasoning_provider.version,
+                "relevant_memory_count": context["memory_context"]["relevant_count"],
             },
         )
 
@@ -88,3 +101,6 @@ class AuraChat:
     def provider_runtime_check(self) -> dict[str, Any]:
         context = self.build_context()
         return self.reasoning_provider.health_check(context=context)
+
+    def relevant_memories(self, message: str, limit: int = 5):
+        return self.memory_context_builder.find_relevant(query=message, limit=limit)
