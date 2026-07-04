@@ -1,4 +1,5 @@
 import os
+from difflib import get_close_matches
 from pathlib import Path
 
 import yaml
@@ -26,6 +27,53 @@ class AuraShell:
         self.plugin_manager = PluginManager()
         self.plugins_loaded = False
         self.running = True
+
+    def known_commands(self) -> list[str]:
+        return [
+            "help",
+            "remember",
+            "recall",
+            "mem",
+            "memory",
+            "memory-count",
+            "mem-count",
+            "memory-list",
+            "mem-list",
+            "memory-search",
+            "mem-search",
+            "chat",
+            "ask",
+            "history",
+            "status",
+            "version",
+            "provider",
+            "reason",
+            "provider-check",
+            "reason-check",
+            "plugins",
+            "plugin",
+            "health",
+            "clear",
+            "cls",
+            "exit",
+            "quit",
+            "q",
+        ]
+
+    def suggest_command(self, command: str) -> str | None:
+        base_command = command.strip().split()[0].lower()
+
+        matches = get_close_matches(
+            base_command,
+            self.known_commands(),
+            n=1,
+            cutoff=0.7,
+        )
+
+        if not matches:
+            return None
+
+        return matches[0]
 
     def print_banner(self) -> None:
         print("AURA Interactive Shell")
@@ -423,7 +471,13 @@ class AuraShell:
             self.chat(message)
             return
 
+        suggestion = self.suggest_command(command)
+
         print(f"Unknown command: {command}")
+
+        if suggestion:
+            print(f"Did you mean: {suggestion}?")
+
         print("Type 'help' to see available commands.")
 
     def run(self) -> None:
