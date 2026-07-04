@@ -57,7 +57,7 @@ class AuraCLI:
 
     def chat(self, message: str) -> None:
         chat = AuraChat(project_root=self.project_root)
-        response = chat.respond(message)
+        response = chat.respond(message, source="AuraCLI")
         print(response)
 
     def shell(self) -> None:

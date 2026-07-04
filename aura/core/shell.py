@@ -44,6 +44,8 @@ class AuraShell:
         print("  memory               Alias for recall")
         print("  chat <text>          Send a message to AURA")
         print("  ask <text>           Alias for chat")
+        print("  history              Show recent chat history")
+        print("  history <limit>      Show recent chat history with limit")
         print("  status               Show shell status")
         print("  version              Show AURA version")
         print("  plugins              Show loaded plugins")
@@ -103,8 +105,23 @@ class AuraShell:
             print(f"- [{memory.kind}] {memory.content}")
 
     def chat(self, message: str) -> None:
-        response = self.chat_engine.respond(message)
+        response = self.chat_engine.respond(message, source="AuraShell")
         print(response)
+
+    def history(self, limit: int = 5) -> None:
+        turns = self.chat_engine.recent_conversations(limit=limit)
+
+        print("AURA Chat History")
+        print("=================")
+
+        if not turns:
+            print("No chat history found.")
+            return
+
+        for turn in turns:
+            print(f"User: {turn.user_message}")
+            print(f"AURA: {turn.aura_response}")
+            print("---")
 
     def status(self) -> None:
         memory_count = self.memory_store.count()
@@ -213,6 +230,22 @@ class AuraShell:
 
         if normalized in {"recall", "mem", "memory"}:
             self.recall()
+            return
+
+        if normalized == "history":
+            self.history()
+            return
+
+        if normalized.startswith("history "):
+            raw_limit = normalized.removeprefix("history ").strip()
+
+            try:
+                limit = int(raw_limit)
+            except ValueError:
+                print("Invalid history limit. Example: history 3")
+                return
+
+            self.history(limit=limit)
             return
 
         if normalized.startswith("recall "):
