@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.30.0-genesis
-Status  : AURA AWAKENING ALPHA
+Version : 0.31.0-genesis
+Status  : VISION FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -92,6 +92,7 @@ AURA currently supports:
 - File and project plugin
 - Voice foundation
 - AURA Awakening Alpha
+- Vision foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control
@@ -186,6 +187,9 @@ python3 main.py memory-delete "<memory_id>"
 
 python3 main.py provider
 python3 main.py provider-check
+
+python3 main.py vision-status
+python3 main.py vision-providers
 
 python3 main.py awakening-status
 python3 main.py awaken

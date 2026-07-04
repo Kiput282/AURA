@@ -170,23 +170,34 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="vision_foundation",
+            description="Show AURA vision foundation status and placeholder vision providers.",
+            role="vision",
+            permission_action="think",
+            status="online",
+            capabilities=["vision_status", "screen_placeholder", "camera_placeholder"],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="screen_analyzer",
-            description="Analyze the user's screen when enabled.",
+            description="Future screen analysis once screen runtime is connected.",
             role="vision",
             permission_action="screen_analyze",
-            status="planned",
-            capabilities=["screen_analysis", "visual_context"],
+            status="foundation",
+            capabilities=["screen_analysis", "visual_context", "screen_permission"],
         )
     )
 
     registry.register(
         AuraSkill(
             name="camera_analyzer",
-            description="Analyze camera and environment input when enabled.",
+            description="Future camera and environment analysis once camera runtime is connected.",
             role="vision",
             permission_action="camera_analyze",
-            status="planned",
-            capabilities=["camera_context", "environment_analysis"],
+            status="foundation",
+            capabilities=["camera_context", "environment_analysis", "camera_permission"],
         )
     )
 

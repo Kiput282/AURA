@@ -6,6 +6,7 @@ from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_regi
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.voice.voice_manager import VoiceManager
+from aura.vision.vision_manager import VisionManager
 
 
 class AwakeningManager:
@@ -26,12 +27,14 @@ class AwakeningManager:
         self.memory_store = MemoryStore(project_root=project_root)
         self.project_journal = ProjectJournal(project_root=project_root)
         self.voice_manager = VoiceManager()
+        self.vision_manager = VisionManager()
         self.role_registry = build_builtin_role_registry()
         self.skill_registry = build_builtin_skill_registry()
         self.plugin_action_registry = build_builtin_plugin_action_registry()
 
     def build_status(self) -> dict:
         voice_status = self.voice_manager.status()
+        vision_status = self.vision_manager.status()
 
         speak_state = {
             "name": "Speak",
@@ -43,10 +46,10 @@ class AwakeningManager:
 
         see_state = {
             "name": "See",
-            "status": "planned",
-            "ready": False,
-            "description": "Vision, screen analyzer, and camera analyzer are planned.",
-            "note": "Screen/camera runtime is not connected yet.",
+            "status": "foundation",
+            "ready": True,
+            "description": "Vision foundation is online with screen/camera placeholder providers.",
+            "note": "Real screen/camera runtime is not connected yet.",
         }
 
         think_state = {
@@ -82,10 +85,11 @@ class AwakeningManager:
             "total_pillars": len(pillars),
             "pillars": pillars,
             "voice_providers": voice_status["providers"],
+            "vision_providers": vision_status["providers"],
             "memory_records": self.memory_store.count(),
             "journal_entries": self.project_journal.count(),
             "roles": self.role_registry.count(),
             "skills": self.skill_registry.count(),
             "plugin_actions": self.plugin_action_registry.count(),
-            "summary": "AURA has a coherent early mind foundation, but vision and real voice runtime are not fully connected yet.",
+            "summary": "AURA has a coherent early mind foundation across Speak, See, Think, and Learn. Real voice and vision runtimes are not fully connected yet.",
         }

@@ -203,11 +203,22 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="vision.status",
+            plugin="vision",
+            description="Show vision foundation status.",
+            permission_action="think",
+            status="online",
+            skill="vision_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="screen.analyze",
             plugin="vision",
-            description="Analyze the user's screen when enabled.",
+            description="Analyze the user's screen when screen runtime is enabled.",
             permission_action="screen_analyze",
-            status="planned",
+            status="foundation",
             skill="screen_analyzer",
         )
     )
@@ -216,9 +227,9 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         PluginAction(
             name="camera.analyze",
             plugin="vision",
-            description="Analyze camera/environment input when enabled.",
+            description="Analyze camera/environment input when camera runtime is enabled.",
             permission_action="camera_analyze",
-            status="planned",
+            status="foundation",
             skill="camera_analyzer",
         )
     )

@@ -99,11 +99,14 @@ def build_builtin_role_registry() -> RoleRegistry:
     registry.register(
         AuraRole(
             name="vision",
-            description="Screen, image, camera, and environment understanding.",
-            provider="planned",
-            model="vision_model",
-            status="planned",
+            description="Vision foundation, screen analysis, image understanding, camera, and environment awareness.",
+            provider="internal",
+            model="vision_manager",
+            status="foundation",
             capabilities=[
+                "vision_status",
+                "screen_placeholder",
+                "camera_placeholder",
                 "screen_analysis",
                 "image_understanding",
                 "camera_context",

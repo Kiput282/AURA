@@ -16,6 +16,7 @@ from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_regi
 from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.voice.voice_manager import VoiceManager
 from aura.awakening.awakening_manager import AwakeningManager
+from aura.vision.vision_manager import VisionManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
 
@@ -667,6 +668,35 @@ class AuraCLI:
         print()
         print(f"Summary: {status['summary']}")
 
+    def vision_status(self) -> None:
+        vision_manager = VisionManager()
+        status = vision_manager.status()
+
+        print("AURA Vision Status")
+        print("==================")
+        print(f"Status       : {status['status']}")
+        print(f"Screen Access: {status['screen_access']}")
+        print(f"Camera Access: {status['camera_access']}")
+        print(f"Screen Ready : {status['screen_ready']}")
+        print(f"Camera Ready : {status['camera_ready']}")
+        print(f"Providers    : {status['providers']}")
+        print(f"Note         : {status['note']}")
+
+    def vision_providers(self) -> None:
+        vision_manager = VisionManager()
+
+        print("AURA Vision Providers")
+        print("=====================")
+
+        for provider in vision_manager.list_providers():
+            print(f"- {provider.name}")
+            print(f"  Type            : {provider.provider_type}")
+            print(f"  Status          : {provider.status}")
+            print(f"  Screen Supported: {provider.screen_supported}")
+            print(f"  Camera Supported: {provider.camera_supported}")
+            print(f"  Description     : {provider.description}")
+            print()
+
     def shell(self) -> None:
         shell = AuraShell()
         shell.run()
@@ -707,6 +737,9 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("vision-status")
+        subparsers.add_parser("vision-providers")
 
         subparsers.add_parser("awakening-status")
         subparsers.add_parser("awaken")
@@ -849,6 +882,16 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "vision-status":
+            disable_logging()
+            self.vision_status()
+            return True
+
+        if parsed.command == "vision-providers":
+            disable_logging()
+            self.vision_providers()
             return True
 
         if parsed.command in {"awakening-status", "awaken"}:

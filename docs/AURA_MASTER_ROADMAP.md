@@ -426,6 +426,7 @@ Planned:
 - File and project plugin
 - Voice foundation
 - AURA Awakening Alpha
+- Vision foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper
