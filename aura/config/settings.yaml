@@ -16,4 +16,7 @@ boot:
   enable_logger: true
 
 reasoning:
-  provider: local_stub
+  provider: ollama
+  host: http://localhost:11434
+  model: llama3.2
+  timeout: 60

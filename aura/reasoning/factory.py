@@ -5,6 +5,7 @@ import yaml
 from loguru import logger
 
 from aura.reasoning.local_stub_provider import LocalStubReasoningProvider
+from aura.reasoning.ollama_provider import OllamaReasoningProvider
 from aura.reasoning.provider import ReasoningProvider
 from aura.reasoning.rule_based_provider import RuleBasedReasoningProvider
 
@@ -16,9 +17,9 @@ class ReasoningProviderFactory:
     Current supported providers:
     - rule_based
     - local_stub
+    - ollama
 
     Future providers:
-    - ollama
     - openai
     - lm_studio
     - local_llm
@@ -39,6 +40,22 @@ class ReasoningProviderFactory:
         if normalized_name in {"local_stub", "local", "stub"}:
             logger.info("Reasoning provider selected: local_stub")
             return LocalStubReasoningProvider()
+
+        if normalized_name in {"ollama", "ollama_local"}:
+            host = config.get("host", "http://localhost:11434")
+            model = config.get("model", "llama3.2")
+            timeout = int(config.get("timeout", 60))
+
+            logger.info(
+                f"Reasoning provider selected: ollama "
+                f"host={host} model={model}"
+            )
+
+            return OllamaReasoningProvider(
+                host=host,
+                model=model,
+                timeout=timeout,
+            )
 
         raise ValueError(f"Unsupported reasoning provider: {provider_name}")
 
