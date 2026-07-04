@@ -1,9 +1,9 @@
-from aura.core.boot import AuraBoot
+from aura.core.app import AuraApp
 
 
 def main():
-    aura = AuraBoot()
-    aura.run()
+    app = AuraApp()
+    app.start()
 
 
 if __name__ == "__main__":

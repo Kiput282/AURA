@@ -15,18 +15,18 @@ class AuraBoot:
     - loading configuration
     - loading identity
     - preparing logger
-    - initializing event bus
-    - running the first structured boot sequence
+    - registering boot events
+    - running the structured boot sequence
     """
 
-    def __init__(self):
+    def __init__(self, event_bus: EventBus):
         self.project_root = Path(__file__).resolve().parents[2]
         self.config_path = self.project_root / "aura" / "config" / "settings.yaml"
         self.identity_path = self.project_root / "aura" / "personality" / "identity.yaml"
 
         self.config = {}
         self.identity = {}
-        self.event_bus = EventBus()
+        self.event_bus = event_bus
 
     def load_yaml(self, path: Path) -> dict:
         if not path.exists():
