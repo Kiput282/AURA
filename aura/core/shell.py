@@ -42,6 +42,11 @@ class AuraShell:
         print("  recall <limit>       Show recent memories with limit")
         print("  mem                  Alias for recall")
         print("  memory               Alias for recall")
+        print("  memory-count         Show memory record count")
+        print("  mem-count            Alias for memory-count")
+        print("  memory-list          Show recent memories")
+        print("  memory-list <limit>  Show recent memories with limit")
+        print("  mem-list             Alias for memory-list")
         print("  chat <text>          Send a message to AURA")
         print("  ask <text>           Alias for chat")
         print("  history              Show recent chat history")
@@ -140,6 +145,28 @@ class AuraShell:
             print(f"User: {turn.user_message}")
             print(f"AURA: {turn.aura_response}")
             print("---")
+
+    def memory_count(self) -> None:
+        count = self.memory_store.count()
+
+        print("AURA Memory Count")
+        print("=================")
+        print(f"Records: {count}")
+
+    def memory_list(self, limit: int = 5) -> None:
+        memories = self.memory_store.list_recent(limit=limit)
+
+        print("AURA Memory List")
+        print("================")
+        print(f"Limit: {limit}")
+        print()
+
+        if not memories:
+            print("No memories found.")
+            return
+
+        for memory in memories:
+            print(f"- [{memory.kind}] {memory.content}")
 
     def memory_search(self, query: str, limit: int = 5) -> None:
         memories = self.chat_engine.relevant_memories(message=query, limit=limit)
@@ -277,6 +304,38 @@ class AuraShell:
 
         if normalized in {"exit", "quit", "q"}:
             self.exit_shell()
+            return
+
+        if normalized in {"memory-count", "mem-count"}:
+            self.memory_count()
+            return
+
+        if normalized in {"memory-list", "mem-list"}:
+            self.memory_list()
+            return
+
+        if normalized.startswith("memory-list "):
+            raw_limit = normalized.removeprefix("memory-list ").strip()
+
+            try:
+                limit = int(raw_limit)
+            except ValueError:
+                print("Invalid memory-list limit. Example: memory-list 10")
+                return
+
+            self.memory_list(limit=limit)
+            return
+
+        if normalized.startswith("mem-list "):
+            raw_limit = normalized.removeprefix("mem-list ").strip()
+
+            try:
+                limit = int(raw_limit)
+            except ValueError:
+                print("Invalid mem-list limit. Example: mem-list 10")
+                return
+
+            self.memory_list(limit=limit)
             return
 
         if normalized.startswith("memory-search "):

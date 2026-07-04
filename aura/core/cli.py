@@ -135,6 +135,30 @@ class AuraCLI:
         runtime = chat.provider_runtime_check()
         self.print_provider_runtime_check(runtime)
 
+    def memory_count(self) -> None:
+        memory_store = self.get_memory_store()
+        count = memory_store.count()
+
+        print("AURA Memory Count")
+        print("=================")
+        print(f"Records: {count}")
+
+    def memory_list(self, limit: int = 5) -> None:
+        memory_store = self.get_memory_store()
+        memories = memory_store.list_recent(limit=limit)
+
+        print("AURA Memory List")
+        print("================")
+        print(f"Limit: {limit}")
+        print()
+
+        if not memories:
+            print("No memories found.")
+            return
+
+        for memory in memories:
+            print(f"- [{memory.kind}] {memory.content}")
+
     def memory_search(self, query: str, limit: int = 5) -> None:
         chat = AuraChat(project_root=self.project_root)
         memories = chat.relevant_memories(message=query, limit=limit)
@@ -177,6 +201,16 @@ class AuraCLI:
 
         subparsers.add_parser("provider")
         subparsers.add_parser("reason")
+
+        subparsers.add_parser("memory-count")
+        subparsers.add_parser("mem-count")
+
+        memory_list_parser = subparsers.add_parser("memory-list")
+        memory_list_parser.add_argument("--limit", type=int, default=5)
+
+        mem_list_parser = subparsers.add_parser("mem-list")
+        mem_list_parser.add_argument("--limit", type=int, default=5)
+
         subparsers.add_parser("provider-check")
         subparsers.add_parser("reason-check")
 
@@ -223,6 +257,16 @@ class AuraCLI:
         if parsed.command in {"provider-check", "reason-check"}:
             disable_logging()
             self.provider_check()
+            return True
+
+        if parsed.command in {"memory-count", "mem-count"}:
+            disable_logging()
+            self.memory_count()
+            return True
+
+        if parsed.command in {"memory-list", "mem-list"}:
+            disable_logging()
+            self.memory_list(limit=parsed.limit)
             return True
 
         if parsed.command in {"memory-search", "mem-search"}:
