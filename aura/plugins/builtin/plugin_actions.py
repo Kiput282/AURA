@@ -159,6 +159,39 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="project.map",
+            plugin="project",
+            description="Show a safe high-level project map.",
+            permission_action="read_project",
+            status="online",
+            skill="file_project_assist",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project.inspect",
+            plugin="project",
+            description="Inspect a safe file or directory inside the project.",
+            permission_action="read_project",
+            status="online",
+            skill="file_project_assist",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project.find",
+            plugin="project",
+            description="Search for a keyword in safe project files.",
+            permission_action="read_project",
+            status="online",
+            skill="file_project_assist",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="project.summary",
             plugin="project",
             description="Show safe project summary and file counts.",

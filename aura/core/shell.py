@@ -67,6 +67,9 @@ class AuraShell:
             "awaken",
             "voice-status",
             "voice-providers",
+            "project-map",
+            "project-inspect",
+            "project-find",
             "project-summary",
             "project-files",
             "project-read",
@@ -167,6 +170,9 @@ class AuraShell:
         print("  awaken               Alias for awakening-status")
         print("  voice-status         Show voice foundation status")
         print("  voice-providers      Show voice provider placeholders")
+        print("  project-map          Show safe project map")
+        print("  project-inspect <p>  Inspect safe project path")
+        print("  project-find <text>  Search keyword in safe project files")
         print("  project-summary      Show project summary")
         print("  project-files        Show visible project files")
         print("  project-files <n>    Show visible project files with limit")
@@ -702,6 +708,87 @@ class AuraShell:
             print(f"  Description     : {provider.description}")
             print()
 
+    def project_map(self, depth: int = 2, limit: int = 80) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+        project_map = plugin.project_map(depth=depth, limit=limit)
+
+        print("AURA Project Map")
+        print("================")
+        print(f"Project Root: {project_map['project_root']}")
+        print(f"Depth       : {project_map['depth']}")
+        print(f"Limit       : {project_map['limit']}")
+        print(f"Directories : {project_map['directories']}")
+        print(f"Files       : {project_map['files']}")
+        print()
+        print("Entries:")
+
+        for entry in project_map["entries"]:
+            marker = "[D]" if entry["type"] == "directory" else "[F]"
+            print(f"- {marker} {entry['path']}")
+
+    def project_inspect(self, relative_path: str) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+
+        try:
+            info = plugin.inspect_path(relative_path=relative_path)
+        except Exception as error:
+            print(f"Error: {error}")
+            return
+
+        print("AURA Project Inspect")
+        print("====================")
+        print(f"Path: {info['path']}")
+        print(f"Type: {info['type']}")
+
+        if info["type"] == "directory":
+            print(f"Children Shown: {info['children_shown']}/{info['child_limit']}")
+            print()
+            print("Children:")
+
+            for child in info["children"]:
+                marker = "[D]" if child["type"] == "directory" else "[F]"
+                print(f"- {marker} {child['path']}")
+
+            return
+
+        if info["type"] == "file":
+            print(f"Suffix      : {info['suffix']}")
+            print(f"Size Bytes  : {info['size_bytes']}")
+            print(f"Safe To Read: {info['safe_to_read']}")
+            print(f"Preview     : {info['preview_line_count']} line(s)")
+            print()
+
+            if info["preview_lines"]:
+                print("Preview:")
+                for index, line in enumerate(info["preview_lines"], start=1):
+                    print(f"{index:03}: {line}")
+
+            return
+
+    def project_find(self, keyword: str, limit: int = 30) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+
+        try:
+            result = plugin.find_text(keyword=keyword, limit=limit)
+        except Exception as error:
+            print(f"Error: {error}")
+            return
+
+        print("AURA Project Find")
+        print("=================")
+        print(f"Keyword: {result['keyword']}")
+        print(f"Limit  : {result['limit']}")
+        print(f"Matches: {result['match_count']}")
+        print()
+
+        if not result["matches"]:
+            print("No matches found.")
+            return
+
+        for match in result["matches"]:
+            print(f"- {match['file']}:{match['line']}")
+            print(f"  {match['text']}")
+
     def project_summary(self) -> None:
         plugin = ProjectPlugin(project_root=self.project_root)
         summary = plugin.summary()
@@ -1187,6 +1274,42 @@ class AuraShell:
 
         if normalized == "voice-providers":
             self.voice_providers()
+            return
+
+        if normalized == "project-map":
+            self.project_map()
+            return
+
+        if normalized.startswith("project-map "):
+            value = command[len("project-map "):].strip()
+
+            try:
+                depth = int(value)
+            except ValueError:
+                print("Usage: project-map <depth>")
+                return
+
+            self.project_map(depth=depth)
+            return
+
+        if normalized.startswith("project-inspect "):
+            relative_path = command[len("project-inspect "):].strip()
+
+            if not relative_path:
+                print("Usage: project-inspect <path>")
+                return
+
+            self.project_inspect(relative_path=relative_path)
+            return
+
+        if normalized.startswith("project-find "):
+            keyword = command[len("project-find "):].strip()
+
+            if not keyword:
+                print("Usage: project-find <keyword>")
+                return
+
+            self.project_find(keyword=keyword)
             return
 
         if normalized == "project-summary":

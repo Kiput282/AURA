@@ -585,6 +585,87 @@ class AuraCLI:
         print(f"Confirmation: {permission.requires_confirmation}")
         print(f"Reason      : {permission.reason}")
 
+    def project_map(self, depth: int = 2, limit: int = 80) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+        project_map = plugin.project_map(depth=depth, limit=limit)
+
+        print("AURA Project Map")
+        print("================")
+        print(f"Project Root: {project_map['project_root']}")
+        print(f"Depth       : {project_map['depth']}")
+        print(f"Limit       : {project_map['limit']}")
+        print(f"Directories : {project_map['directories']}")
+        print(f"Files       : {project_map['files']}")
+        print()
+        print("Entries:")
+
+        for entry in project_map["entries"]:
+            marker = "[D]" if entry["type"] == "directory" else "[F]"
+            print(f"- {marker} {entry['path']}")
+
+    def project_inspect(self, relative_path: str) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+
+        try:
+            info = plugin.inspect_path(relative_path=relative_path)
+        except Exception as error:
+            print(f"Error: {error}")
+            return
+
+        print("AURA Project Inspect")
+        print("====================")
+        print(f"Path: {info['path']}")
+        print(f"Type: {info['type']}")
+
+        if info["type"] == "directory":
+            print(f"Children Shown: {info['children_shown']}/{info['child_limit']}")
+            print()
+            print("Children:")
+
+            for child in info["children"]:
+                marker = "[D]" if child["type"] == "directory" else "[F]"
+                print(f"- {marker} {child['path']}")
+
+            return
+
+        if info["type"] == "file":
+            print(f"Suffix      : {info['suffix']}")
+            print(f"Size Bytes  : {info['size_bytes']}")
+            print(f"Safe To Read: {info['safe_to_read']}")
+            print(f"Preview     : {info['preview_line_count']} line(s)")
+            print()
+
+            if info["preview_lines"]:
+                print("Preview:")
+                for index, line in enumerate(info["preview_lines"], start=1):
+                    print(f"{index:03}: {line}")
+
+            return
+
+    def project_find(self, keyword: str, limit: int = 30) -> None:
+        plugin = ProjectPlugin(project_root=self.project_root)
+
+        try:
+            result = plugin.find_text(keyword=keyword, limit=limit)
+        except Exception as error:
+            print(f"Error: {error}")
+            return
+
+        print("AURA Project Find")
+        print("=================")
+        print(f"Keyword: {result['keyword']}")
+        print(f"Limit  : {result['limit']}")
+        print(f"Matches: {result['match_count']}")
+        print()
+
+        if not result["matches"]:
+            print("No matches found.")
+            return
+
+        for match in result["matches"]:
+            print(f"- {match['file']}:{match['line']}")
+            print(f"  {match['text']}")
+
     def project_summary(self) -> None:
         plugin = ProjectPlugin(project_root=self.project_root)
         summary = plugin.summary()
@@ -818,6 +899,17 @@ class AuraCLI:
         subparsers.add_parser("voice-status")
         subparsers.add_parser("voice-providers")
 
+        project_map_parser = subparsers.add_parser("project-map")
+        project_map_parser.add_argument("--depth", type=int, default=2)
+        project_map_parser.add_argument("--limit", type=int, default=80)
+
+        project_inspect_parser = subparsers.add_parser("project-inspect")
+        project_inspect_parser.add_argument("relative_path", type=str)
+
+        project_find_parser = subparsers.add_parser("project-find")
+        project_find_parser.add_argument("keyword", type=str)
+        project_find_parser.add_argument("--limit", type=int, default=30)
+
         subparsers.add_parser("project-summary")
 
         project_files_parser = subparsers.add_parser("project-files")
@@ -989,6 +1081,21 @@ class AuraCLI:
         if parsed.command == "voice-providers":
             disable_logging()
             self.voice_providers()
+            return True
+
+        if parsed.command == "project-map":
+            disable_logging()
+            self.project_map(depth=parsed.depth, limit=parsed.limit)
+            return True
+
+        if parsed.command == "project-inspect":
+            disable_logging()
+            self.project_inspect(relative_path=parsed.relative_path)
+            return True
+
+        if parsed.command == "project-find":
+            disable_logging()
+            self.project_find(keyword=parsed.keyword, limit=parsed.limit)
             return True
 
         if parsed.command == "project-summary":

@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.34.0-genesis
-Status  : ACTION REQUEST SYSTEM ONLINE
+Version : 0.35.0-genesis
+Status  : PROJECT ASSISTANT V1 ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -96,6 +96,7 @@ AURA currently supports:
 - Unified system status
 - Context-aware chat
 - Action request system
+- Project Assistant v1
 - Memory-aware chat
 - Identity guardrail
 - Language control
@@ -202,6 +203,10 @@ python3 main.py awaken
 
 python3 main.py voice-status
 python3 main.py voice-providers
+
+python3 main.py project-map
+python3 main.py project-inspect aura/core
+python3 main.py project-find ContextManager
 
 python3 main.py project-summary
 python3 main.py project-files --limit 30

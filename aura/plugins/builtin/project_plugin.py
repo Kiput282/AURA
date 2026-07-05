@@ -123,6 +123,174 @@ class ProjectPlugin:
             "top_files": files[:20],
         }
 
+    def project_map(self, depth: int = 2, limit: int = 80) -> dict:
+        """
+        Build a safe high-level project map.
+
+        This is read-only and ignores sensitive/runtime paths.
+        """
+        depth = max(1, min(depth, 5))
+        entries: list[dict] = []
+
+        for path in sorted(self.project_root.rglob("*")):
+            if len(entries) >= limit:
+                break
+
+            relative = path.relative_to(self.project_root)
+
+            if self.is_ignored_path(relative):
+                continue
+
+            if len(relative.parts) > depth:
+                continue
+
+            entry_type = "directory" if path.is_dir() else "file"
+
+            entries.append(
+                {
+                    "path": str(relative),
+                    "type": entry_type,
+                    "suffix": path.suffix if path.is_file() else "",
+                }
+            )
+
+        directories = [
+            entry
+            for entry in entries
+            if entry["type"] == "directory"
+        ]
+
+        files = [
+            entry
+            for entry in entries
+            if entry["type"] == "file"
+        ]
+
+        return {
+            "project_root": str(self.project_root),
+            "depth": depth,
+            "limit": limit,
+            "entries": entries,
+            "directories": len(directories),
+            "files": len(files),
+        }
+
+    def inspect_path(self, relative_path: str, child_limit: int = 40) -> dict:
+        """
+        Safely inspect a file or directory inside the project.
+        """
+        target = self.resolve_safe_path(relative_path)
+
+        if not target.exists():
+            raise FileNotFoundError(f"Path not found: {relative_path}")
+
+        relative = target.relative_to(self.project_root)
+
+        if target.is_dir():
+            children: list[dict] = []
+
+            for child in sorted(target.iterdir()):
+                child_relative = child.relative_to(self.project_root)
+
+                if self.is_ignored_path(child_relative):
+                    continue
+
+                children.append(
+                    {
+                        "path": str(child_relative),
+                        "name": child.name,
+                        "type": "directory" if child.is_dir() else "file",
+                        "suffix": child.suffix if child.is_file() else "",
+                    }
+                )
+
+                if len(children) >= child_limit:
+                    break
+
+            return {
+                "path": str(relative),
+                "type": "directory",
+                "children": children,
+                "children_shown": len(children),
+                "child_limit": child_limit,
+            }
+
+        if target.is_file():
+            size = target.stat().st_size
+
+            preview_lines: list[str] = []
+
+            if size <= self.MAX_READ_BYTES:
+                content = target.read_text(encoding="utf-8", errors="replace")
+                preview_lines = content.splitlines()[:30]
+
+            return {
+                "path": str(relative),
+                "type": "file",
+                "suffix": target.suffix,
+                "size_bytes": size,
+                "safe_to_read": size <= self.MAX_READ_BYTES,
+                "preview_lines": preview_lines,
+                "preview_line_count": len(preview_lines),
+            }
+
+        return {
+            "path": str(relative),
+            "type": "unknown",
+        }
+
+    def find_text(self, keyword: str, limit: int = 30) -> dict:
+        """
+        Search for a keyword in safe project text files.
+
+        This is read-only and capped by limit.
+        """
+        normalized_keyword = keyword.strip()
+
+        if not normalized_keyword:
+            raise ValueError("Keyword cannot be empty.")
+
+        matches: list[dict] = []
+
+        for relative_file in self.list_files(limit=1000):
+            if len(matches) >= limit:
+                break
+
+            target = self.resolve_safe_path(relative_file)
+
+            if not target.is_file():
+                continue
+
+            if target.stat().st_size > self.MAX_READ_BYTES:
+                continue
+
+            try:
+                content = target.read_text(encoding="utf-8", errors="replace")
+            except UnicodeDecodeError:
+                continue
+
+            for line_number, line in enumerate(content.splitlines(), start=1):
+                if normalized_keyword.lower() not in line.lower():
+                    continue
+
+                matches.append(
+                    {
+                        "file": relative_file,
+                        "line": line_number,
+                        "text": line.strip(),
+                    }
+                )
+
+                if len(matches) >= limit:
+                    break
+
+        return {
+            "keyword": normalized_keyword,
+            "limit": limit,
+            "matches": matches,
+            "match_count": len(matches),
+        }
+
     def read_file(self, relative_path: str) -> str:
         target = self.resolve_safe_path(relative_path)
 

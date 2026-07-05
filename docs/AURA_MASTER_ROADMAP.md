@@ -430,6 +430,7 @@ Planned:
 - Unified system status
 - Context-aware chat
 - Action request system
+- Project Assistant v1
 - File/project plugin
 - App launcher plugin
 - Browser helper
