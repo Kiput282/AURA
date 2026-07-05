@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.57.0-genesis
-Status  : WORKSPACE MEMORY LINK ONLINE
+Version : 0.58.0-genesis
+Status  : PROJECT INTENT PLANNER ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -119,6 +119,7 @@ AURA currently supports:
 - Game Companion Foundation
 - Streaming Safety Foundation
 - Workspace Memory Link
+- Project Intent Planner
 - Memory-aware chat
 - Identity guardrail
 - Language control

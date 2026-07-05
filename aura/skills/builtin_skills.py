@@ -27,6 +27,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="project_intent_planner",
+            description="Prepare safe project intent summaries, project goal plans, sprint intent plans, and next action candidates using workspace memory, workspace awareness, project coding, daily briefing, and reflection without writing files, memory, journal, or executing commands.",
+            role="planning",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "project_intent_status",
+                "project_intent_summary",
+                "project_goal_plan",
+                "sprint_intent_plan",
+                "project_next_action_candidates",
+                "project_intent_context",
+                "safety_aware_project_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="workspace_memory_link",
             description="Prepare safe workspace-memory summaries and memory candidates from workspace awareness, memory, journal, and reflection without writing memory, deleting memory, writing journal entries, writing files, or executing commands.",
             role="memory",

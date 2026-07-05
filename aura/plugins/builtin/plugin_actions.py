@@ -247,6 +247,72 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="project_intent.status",
+            plugin="project_intent",
+            description="Show AURA Project Intent Planner status.",
+            permission_action="read_project",
+            status="online",
+            skill="project_intent_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project_intent.summary",
+            plugin="project_intent",
+            description="Prepare a read-only project intent summary without writing files, memory, or journal entries.",
+            permission_action="read_project",
+            status="online",
+            skill="project_intent_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project_intent.goal_plan",
+            plugin="project_intent",
+            description="Prepare a safety-aware project goal plan without executing actions.",
+            permission_action="prepare_file",
+            status="online",
+            skill="project_intent_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project_intent.sprint_plan",
+            plugin="project_intent",
+            description="Prepare a sprint intent plan without writing files, memory, or journal entries.",
+            permission_action="prepare_file",
+            status="online",
+            skill="project_intent_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project_intent.next_actions",
+            plugin="project_intent",
+            description="Prepare next action candidates without executing them.",
+            permission_action="prepare_file",
+            status="online",
+            skill="project_intent_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project_intent.context",
+            plugin="project_intent",
+            description="Prepare project intent context without writing files, memory, journal, or commands.",
+            permission_action="read_project",
+            status="online",
+            skill="project_intent_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="workspace_memory.link_status",
             plugin="workspace_memory",
             description="Show AURA Workspace Memory Link status.",

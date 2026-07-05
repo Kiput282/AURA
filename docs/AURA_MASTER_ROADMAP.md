@@ -453,6 +453,7 @@ Planned:
 - Game Companion Foundation
 - Streaming Safety Foundation
 - Workspace Memory Link
+- Project Intent Planner
 - File/project plugin
 - App launcher plugin
 - Browser helper

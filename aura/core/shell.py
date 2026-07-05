@@ -28,6 +28,7 @@ from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.project_coding.project_coding_manager import ProjectCodingManager
+from aura.project_intent.project_intent_planner_manager import ProjectIntentPlannerManager
 from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
@@ -128,6 +129,12 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "project-intent-status",
+            "project-intent-summary",
+            "project-goal-plan",
+            "sprint-intent-plan",
+            "project-next-action-candidates",
+            "project-intent-context",
             "workspace-memory-link-status",
             "workspace-memory-summary",
             "workspace-memory-candidates",
@@ -341,6 +348,12 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  project-intent-status Show AURA Project Intent Planner status")
+        print("  project-intent-summary <topic> Show read-only project intent summary")
+        print("  project-goal-plan <goal> Prepare safety-aware project goal plan")
+        print("  sprint-intent-plan <goal> Prepare sprint intent plan")
+        print("  project-next-action-candidates <topic> Prepare next action candidates")
+        print("  project-intent-context Show project intent planner context")
         print("  workspace-memory-link-status Show AURA Workspace Memory Link status")
         print("  workspace-memory-summary Show read-only workspace memory summary")
         print("  workspace-memory-candidates <target> Prepare project memory candidates")
@@ -2533,6 +2546,46 @@ class AuraShell:
 
         if normalized == "vision-providers":
             self.vision_providers()
+            return
+
+        if normalized == "project-intent-status":
+            self.project_intent_status()
+            return
+
+        if normalized.startswith("project-intent-summary "):
+            topic = command[len("project-intent-summary "):].strip()
+            if not topic:
+                print("Usage: project-intent-summary <topic>")
+                return
+            self.project_intent_summary(topic)
+            return
+
+        if normalized.startswith("project-goal-plan "):
+            goal = command[len("project-goal-plan "):].strip()
+            if not goal:
+                print("Usage: project-goal-plan <goal>")
+                return
+            self.project_goal_plan(goal)
+            return
+
+        if normalized.startswith("sprint-intent-plan "):
+            goal = command[len("sprint-intent-plan "):].strip()
+            if not goal:
+                print("Usage: sprint-intent-plan <goal>")
+                return
+            self.sprint_intent_plan(goal)
+            return
+
+        if normalized.startswith("project-next-action-candidates "):
+            topic = command[len("project-next-action-candidates "):].strip()
+            if not topic:
+                print("Usage: project-next-action-candidates <topic>")
+                return
+            self.project_next_action_candidates(topic)
+            return
+
+        if normalized == "project-intent-context":
+            self.project_intent_context()
             return
 
         if normalized == "workspace-memory-link-status":
@@ -5597,6 +5650,244 @@ class AuraShell:
         print(f"Context Ready           : {status['context_ready']}")
         print(f"Candidate Only          : {status['candidate_only']}")
         print(f"Runtime Ready           : {status['runtime_ready']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def project_intent_status(self) -> None:
+        manager = ProjectIntentPlannerManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Project Intent Planner Status")
+        print("==================================")
+        print(f"Name                                  : {status['name']}")
+        print(f"Version                               : {status['version']}")
+        print(f"Status                                : {status['status']}")
+        print(f"Intent Ready                          : {status['intent_ready']}")
+        print(f"Summary Ready                         : {status['summary_ready']}")
+        print(f"Goal Plan Ready                       : {status['goal_plan_ready']}")
+        print(f"Sprint Intent Plan Ready              : {status['sprint_intent_plan_ready']}")
+        print(f"Next Action Candidates Ready          : {status['next_action_candidates_ready']}")
+        print(f"Context Ready                         : {status['context_ready']}")
+        print(f"Workspace Memory Link Integration     : {status['workspace_memory_link_integration_ready']}")
+        print(f"Workspace Awareness Integration       : {status['workspace_awareness_integration_ready']}")
+        print(f"Project Coding Integration            : {status['project_coding_integration_ready']}")
+        print(f"Daily Briefing Integration            : {status['daily_briefing_integration_ready']}")
+        print(f"Memory Reflection Integration         : {status['memory_reflection_integration_ready']}")
+        print(f"Intent Categories                     : {status['intent_categories']}")
+        print(f"Project Python Files                  : {status['project_python_files']}")
+        print(f"Memory Count                          : {status['memory_count']}")
+        print(f"Journal Count                         : {status['journal_count']}")
+        print(f"Milestone Count                       : {status['milestone_count']}")
+        print(f"Runtime Ready                         : {status['runtime_ready']}")
+        print(f"Sections                              : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                             : {status['read_only']}")
+        print(f"Proposal Only                         : {status['proposal_only']}")
+        print(f"File Write                            : {status['file_write']}")
+        print(f"Memory Write                          : {status['memory_write']}")
+        print(f"Journal Write                         : {status['journal_write']}")
+        print(f"Command Execution                     : {status['command_execution']}")
+        print(f"External Action Execution             : {status['external_action_execution']}")
+        print(f"Real Tool Execution                   : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def project_intent_summary(self, topic: str) -> None:
+        manager = ProjectIntentPlannerManager(project_root=self.project_root)
+        summary = manager.summary(topic)
+
+        print("AURA Project Intent Summary")
+        print("===========================")
+        print(f"Status                                : {summary['status']}")
+        print(f"Summary Ready                         : {summary['summary_ready']}")
+        print(f"Topic                                 : {summary['topic']}")
+        print(f"Read Only                             : {summary['read_only']}")
+        print(f"Write Performed                       : {summary['write_performed']}")
+        print(f"File Write Performed                  : {summary['file_write_performed']}")
+        print(f"Memory Write Performed                : {summary['memory_write_performed']}")
+        print(f"Journal Write Performed               : {summary['journal_write_performed']}")
+        print(f"Command Execution Performed           : {summary['command_execution_performed']}")
+        print(f"External Action Performed             : {summary['external_action_execution_performed']}")
+        print()
+        print("Intent")
+        print("------")
+        intent = summary["intent"]
+        print(f"Priority       : {intent['priority']}")
+        print(f"Tags           : {', '.join(intent['tags'])}")
+        print(f"Safety Related : {intent['safety_related']}")
+        print(f"Sprint Related : {intent['sprint_related']}")
+        print(f"Implementation : {intent['implementation_related']}")
+        print(f"Memory Related : {intent['memory_related']}")
+        print()
+        print("Summary")
+        print("-------")
+        print(summary["summary"])
+        print()
+        print("Workspace Memory Summary")
+        print("------------------------")
+        print(summary["workspace_memory_summary"])
+        print()
+        print("Daily Project Summary")
+        print("---------------------")
+        print(summary["daily_project_summary"])
+        print()
+        print("Top Insights")
+        print("------------")
+        for item in summary["top_insights"]:
+            print(f"- {item}")
+        print()
+        print("Recommended Next Steps")
+        print("----------------------")
+        for item in summary["recommended_next_steps"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {summary['note']}")
+
+    def print_project_intent_plan(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                                : {plan['status']}")
+        print(f"Plan Type                             : {plan['plan_type']}")
+        print(f"Target                                : {plan['target']}")
+        print(f"Plan State                            : {plan['plan_state']}")
+        print(f"Intent Priority                       : {plan['intent_priority']}")
+        print(f"Intent Tags                           : {', '.join(plan['intent_tags'])}")
+        print(f"Project Coding Route                  : {plan['project_coding_route']}")
+        print(f"Project Python Files                  : {plan['project_python_files']}")
+        print(f"Action Candidate Count                : {plan['action_candidate_count']}")
+        print(f"Execution Ready                       : {plan['execution_ready']}")
+        print(f"Executed                              : {plan['executed']}")
+        print(f"Read Only                             : {plan['read_only']}")
+        print(f"File Write Performed                  : {plan['file_write_performed']}")
+        print(f"Memory Write Performed                : {plan['memory_write_performed']}")
+        print(f"Journal Write Performed               : {plan['journal_write_performed']}")
+        print(f"Command Execution Performed           : {plan['command_execution_performed']}")
+        print(f"External Action Performed             : {plan['external_action_execution_performed']}")
+        print()
+        print("Intent")
+        print("------")
+        intent = plan["intent"]
+        print(f"Priority                 : {intent['priority']}")
+        print(f"Tags                     : {', '.join(intent['tags'])}")
+        print(f"Safety Related           : {intent['safety_related']}")
+        print(f"Sprint Related           : {intent['sprint_related']}")
+        print(f"Implementation Related   : {intent['implementation_related']}")
+        print(f"Memory Related           : {intent['memory_related']}")
+        print()
+        print("Workspace Summary")
+        print("-----------------")
+        print(plan["workspace_summary"])
+        print()
+        print("Workspace Memory Summary")
+        print("------------------------")
+        print(plan["workspace_memory_summary"])
+        print()
+        print("Daily Project Summary")
+        print("---------------------")
+        print(plan["daily_project_summary"])
+        print()
+        print("Patch Plan")
+        print("----------")
+        patch_plan = plan["patch_plan"]
+        print(f"Mode                     : {patch_plan['mode']}")
+        print(f"File Write Performed     : {patch_plan['file_write_performed']}")
+        print(f"Command Execution        : {patch_plan['command_execution_performed']}")
+        print(f"Coding Route             : {patch_plan['coding_route']}")
+        print("Related Files:")
+        for file in patch_plan["related_files"]:
+            print(f"- {file}")
+        print()
+        print("Action Candidates")
+        print("-----------------")
+        for index, candidate in enumerate(plan["action_candidates"], start=1):
+            print(f"{index}. {candidate['name']}")
+            print(f"   Importance : {candidate['importance']}")
+            print(f"   Candidate  : {candidate['candidate_only']}")
+            print(f"   Executed   : {candidate['executed']}")
+            print(f"   Reason     : {candidate['reason']}")
+            print(f"   Detail     : {candidate['description']}")
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in plan["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def project_goal_plan(self, goal: str) -> None:
+        manager = ProjectIntentPlannerManager(project_root=self.project_root)
+        self.print_project_intent_plan(
+            "AURA Project Goal Plan",
+            manager.goal_plan(goal),
+        )
+
+    def sprint_intent_plan(self, goal: str) -> None:
+        manager = ProjectIntentPlannerManager(project_root=self.project_root)
+        self.print_project_intent_plan(
+            "AURA Sprint Intent Plan",
+            manager.sprint_intent_plan(goal),
+        )
+
+    def project_next_action_candidates(self, topic: str) -> None:
+        manager = ProjectIntentPlannerManager(project_root=self.project_root)
+        self.print_project_intent_plan(
+            "AURA Project Next Action Candidates",
+            manager.next_action_candidates(topic),
+        )
+
+    def project_intent_context(self) -> None:
+        manager = ProjectIntentPlannerManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Project Intent Context")
+        print("===========================")
+        print(f"Status                                : {context['status']}")
+        print(f"Context Ready                         : {context['context_ready']}")
+        print(f"Read Only                             : {context['read_only']}")
+        print(f"Write Performed                       : {context['write_performed']}")
+        print(f"File Write Performed                  : {context['file_write_performed']}")
+        print(f"Memory Write Performed                : {context['memory_write_performed']}")
+        print(f"Journal Write Performed               : {context['journal_write_performed']}")
+        print(f"Command Execution Performed           : {context['command_execution_performed']}")
+        print(f"External Action Performed             : {context['external_action_execution_performed']}")
+        print()
+        print("Planner Status")
+        print("--------------")
+        status = context["planner_status"]
+        print(f"Intent Ready                 : {status['intent_ready']}")
+        print(f"Summary Ready                : {status['summary_ready']}")
+        print(f"Goal Plan Ready              : {status['goal_plan_ready']}")
+        print(f"Sprint Intent Plan Ready     : {status['sprint_intent_plan_ready']}")
+        print(f"Next Action Candidates Ready : {status['next_action_candidates_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Proposal Only                : {status['proposal_only']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print()
+        print("Project Coding Status")
+        print("---------------------")
+        coding = context["project_coding_status"]
+        print(f"Status              : {coding['status']}")
+        print(f"Analysis Ready      : {coding['analysis_ready']}")
+        print(f"Patch Planning Ready: {coding['patch_planning_ready']}")
+        print(f"Python Files        : {coding['python_files']}")
+        print(f"Coding Route        : {coding['coding_route']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")

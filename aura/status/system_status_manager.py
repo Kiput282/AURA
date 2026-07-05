@@ -20,6 +20,7 @@ from aura.model_router.model_router import ModelRouter
 from aura.partner.partner_alpha_manager import PartnerAlphaManager
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.project_coding.project_coding_manager import ProjectCodingManager
+from aura.project_intent.project_intent_planner_manager import ProjectIntentPlannerManager
 from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.skills.builtin_skills import build_builtin_skill_registry
@@ -65,6 +66,7 @@ class SystemStatusManager:
         self.model_router = ModelRouter(project_root=project_root)
         self.tool_sandbox_manager = ToolSandboxManager(project_root=project_root)
         self.project_coding_manager = ProjectCodingManager(project_root=project_root)
+        self.project_intent_planner_manager = ProjectIntentPlannerManager(project_root=project_root)
         self.memory_reflection_manager = MemoryReflectionManager(project_root=project_root)
         self.daily_briefing_manager = DailyBriefingManager(project_root=project_root)
         self.partner_alpha_manager = PartnerAlphaManager(project_root=project_root)
@@ -109,6 +111,7 @@ class SystemStatusManager:
         model_router_status = self.model_router.status()
         tool_sandbox_status = self.tool_sandbox_manager.status()
         project_coding_status = self.project_coding_manager.status()
+        project_intent_status = self.project_intent_planner_manager.status()
         memory_reflection_status = self.memory_reflection_manager.status()
         daily_briefing_status = self.daily_briefing_manager.status()
         partner_alpha_status = self.partner_alpha_manager.status()
@@ -168,6 +171,8 @@ class SystemStatusManager:
                 "streaming_safety_categories": streaming_safety_status["safety_categories"],
                 "workspace_memory_link_sections": workspace_memory_link_status["sections"],
                 "workspace_memory_candidate_types": workspace_memory_link_status["candidate_types"],
+                "project_intent_sections": project_intent_status["sections"],
+                "project_intent_categories": project_intent_status["intent_categories"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -201,6 +206,7 @@ class SystemStatusManager:
                 "plugin_actions": "online",
                 "project_plugin": "online",
                 "project_coding": project_coding_status["status"],
+                "project_intent_planner": project_intent_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -254,6 +260,17 @@ class SystemStatusManager:
                 "project_coding_v2": project_coding_status["analysis_ready"],
                 "project_patch_planning": project_coding_status["patch_planning_ready"],
                 "project_file_write": project_coding_status["file_write_ready"],
+                "project_intent_ready": project_intent_status["intent_ready"],
+                "project_intent_summary_ready": project_intent_status["summary_ready"],
+                "project_goal_plan_ready": project_intent_status["goal_plan_ready"],
+                "sprint_intent_plan_ready": project_intent_status["sprint_intent_plan_ready"],
+                "project_next_action_candidates_ready": project_intent_status["next_action_candidates_ready"],
+                "project_intent_context_ready": project_intent_status["context_ready"],
+                "project_intent_file_write": project_intent_status["file_write"],
+                "project_intent_memory_write": project_intent_status["memory_write"],
+                "project_intent_journal_write": project_intent_status["journal_write"],
+                "project_intent_command_execution": project_intent_status["command_execution"],
+                "project_intent_external_action_execution": project_intent_status["external_action_execution"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -391,5 +408,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, project intent planner, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }
