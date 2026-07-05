@@ -19,6 +19,7 @@ from aura.permissions.permission_manager import PermissionManager
 from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.plugins.builtin.project_plugin import ProjectPlugin
+from aura.project_coding.project_coding_manager import ProjectCodingManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.awakening.awakening_manager import AwakeningManager
@@ -98,6 +99,11 @@ class AuraShell:
             "voice-runtime-check",
             "voice-status",
             "voice-providers",
+            "project-code-status",
+            "project-code-map",
+            "project-code-inspect",
+            "project-code-plan",
+            "project-code-safety",
             "project-map",
             "project-inspect",
             "project-find",
@@ -225,6 +231,11 @@ class AuraShell:
         print("  voice-runtime-check  Run passive voice runtime dependency check")
         print("  voice-status         Show voice foundation status")
         print("  voice-providers      Show voice provider placeholders")
+        print("  project-code-status  Show Project Coding Assistant v2 status")
+        print("  project-code-map     Show AST-based project code map")
+        print("  project-code-inspect <path> Inspect code file")
+        print("  project-code-plan <request> Prepare safe patch plan")
+        print("  project-code-safety <cmd> Check command safety")
         print("  project-map          Show safe project map")
         print("  project-inspect <p>  Inspect safe project path")
         print("  project-find <text>  Search keyword in safe project files")
@@ -1149,6 +1160,7 @@ class AuraShell:
         print(f"Sandbox Allowed     : {status['foundation']['sandbox_allowed_commands']}")
         print(f"Sandbox Blocked     : {status['foundation']['sandbox_blocked_commands']}")
         print(f"Sandbox Patterns    : {status['foundation']['sandbox_blocked_patterns']}")
+        print(f"Project Python Files: {status['foundation']['project_python_files']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
@@ -2176,6 +2188,48 @@ class AuraShell:
             self.voice_providers()
             return
 
+        if normalized == "project-code-status":
+            self.project_code_status()
+            return
+
+        if normalized == "project-code-map":
+            self.project_code_map()
+            return
+
+        if normalized.startswith("project-code-map "):
+            value = command[len("project-code-map "):].strip()
+            try:
+                limit = int(value)
+            except ValueError:
+                print("Usage: project-code-map <limit>")
+                return
+            self.project_code_map(limit=limit)
+            return
+
+        if normalized.startswith("project-code-inspect "):
+            relative_path = command[len("project-code-inspect "):].strip()
+            if not relative_path:
+                print("Usage: project-code-inspect <path>")
+                return
+            self.project_code_inspect(relative_path=relative_path)
+            return
+
+        if normalized.startswith("project-code-plan "):
+            request = command[len("project-code-plan "):].strip()
+            if not request:
+                print("Usage: project-code-plan <request>")
+                return
+            self.project_code_plan(request=request)
+            return
+
+        if normalized.startswith("project-code-safety "):
+            command_text = command[len("project-code-safety "):].strip()
+            if not command_text:
+                print("Usage: project-code-safety <command>")
+                return
+            self.project_code_safety(command=command_text)
+            return
+
         if normalized == "project-map":
             self.project_map()
             return
@@ -2413,3 +2467,165 @@ class AuraShell:
                 print()
                 print("Goodbye, Kiput.")
                 break
+
+
+    def project_code_status(self) -> None:
+        manager = ProjectCodingManager(project_root=self.project_root)
+        status = manager.status()
+        route = status["coding_route"]
+
+        print("AURA Project Coding Assistant v2")
+        print("================================")
+        print(f"Name                   : {status['name']}")
+        print(f"Version                : {status['version']}")
+        print(f"Status                 : {status['status']}")
+        print(f"Analysis Ready         : {status['analysis_ready']}")
+        print(f"AST Inspection Ready   : {status['ast_inspection_ready']}")
+        print(f"Patch Planning Ready   : {status['patch_planning_ready']}")
+        print(f"File Write Ready       : {status['file_write_ready']}")
+        print(f"Command Execution Ready: {status['command_execution_ready']}")
+        print(f"Sandbox Check Ready    : {status['sandbox_check_ready']}")
+        print(f"Real Tool Execution    : {status['real_tool_execution']}")
+        print(f"Python Files           : {status['python_files']}")
+        print()
+        print("Coding Route")
+        print("------------")
+        print(f"Route   : {route['name']}")
+        print(f"Provider: {route['provider']}")
+        print(f"Model   : {route['model']}")
+        print(f"Status  : {route['status']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def project_code_map(self, limit: int = 20) -> None:
+        manager = ProjectCodingManager(project_root=self.project_root)
+        result = manager.code_map(limit=limit)
+        totals = result["totals"]
+
+        print("AURA Project Code Map")
+        print("=====================")
+        print(f"Files    : {totals['files']}")
+        print(f"Classes  : {totals['classes']}")
+        print(f"Functions: {totals['functions']}")
+        print(f"Methods  : {totals['methods']}")
+        print()
+
+        for item in result["files"]:
+            print(f"- {item['path']}")
+            print(f"  Parse OK : {item.get('parse_ok', False)}")
+            print(f"  Lines    : {item.get('line_count', 0)}")
+            print(f"  Classes  : {item.get('class_count', 0)}")
+            print(f"  Functions: {item.get('function_count', 0)}")
+            print(f"  Methods  : {item.get('method_count', 0)}")
+            print()
+
+        print(f"Note: {result['note']}")
+
+    def project_code_inspect(self, relative_path: str) -> None:
+        manager = ProjectCodingManager(project_root=self.project_root)
+        summary = manager.summarize_file(relative_path)
+
+        print("AURA Project Code Inspect")
+        print("=========================")
+        print(f"Path     : {summary['path']}")
+        print(f"Language : {summary['language']}")
+        print(f"Size     : {summary['size_bytes']} bytes")
+        print(f"Lines    : {summary['line_count']}")
+        print(f"Parse OK : {summary['parse_ok']}")
+        print(f"Imports  : {summary['import_count']}")
+        print(f"Classes  : {summary['class_count']}")
+        print(f"Functions: {summary['function_count']}")
+        print(f"Methods  : {summary['method_count']}")
+
+        if summary["parse_error"]:
+            print(f"Parse Error: {summary['parse_error']}")
+
+        if summary["classes"]:
+            print()
+            print("Classes")
+            print("-------")
+            for item in summary["classes"]:
+                print(f"- {item}")
+
+        if summary["functions"]:
+            print()
+            print("Functions")
+            print("---------")
+            for item in summary["functions"][:40]:
+                print(f"- {item}")
+
+        if summary["methods"]:
+            print()
+            print("Methods")
+            print("-------")
+            for item in summary["methods"][:50]:
+                print(f"- {item}")
+
+        if summary["safety_notes"]:
+            print()
+            print("Safety Notes")
+            print("------------")
+            for note in summary["safety_notes"]:
+                print(f"- {note}")
+
+    def project_code_plan(self, request: str) -> None:
+        manager = ProjectCodingManager(project_root=self.project_root)
+        plan = manager.patch_plan(request)
+        route = plan["coding_route"]
+
+        print("AURA Project Code Patch Plan")
+        print("============================")
+        print(f"Request                    : {plan['request']}")
+        print(f"Mode                       : {plan['mode']}")
+        print(f"File Write Performed       : {plan['file_write_performed']}")
+        print(f"Command Execution Performed: {plan['command_execution_performed']}")
+        print()
+        print("Coding Route")
+        print("------------")
+        print(f"Route   : {route['name']}")
+        print(f"Provider: {route['provider']}")
+        print(f"Model   : {route['model']}")
+        print(f"Status  : {route['status']}")
+        print()
+        print("Related Files")
+        print("-------------")
+        for file in plan["related_files"]:
+            print(f"- {file}")
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in plan["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Safety")
+        print("------")
+        safety = plan["safety"]
+        print(f"Writes Without Confirmation: {safety['writes_allowed_without_confirmation']}")
+        print(f"Real Tool Execution        : {safety['real_tool_execution']}")
+        print(f"Dangerous Commands Blocked : {safety['dangerous_commands_blocked']}")
+        print(f"Note                       : {safety['note']}")
+
+    def project_code_safety(self, command: str) -> None:
+        manager = ProjectCodingManager(project_root=self.project_root)
+        result = manager.command_safety(command)
+        check = result["check"]
+        dry_run = result["dry_run"]
+
+        print("AURA Project Code Command Safety")
+        print("================================")
+        print(f"Command      : {result['command']}")
+        print(f"State        : {check['state']}")
+        print(f"Allowed      : {check['allowed']}")
+        print(f"Dry Run Ready: {dry_run['dry_run_ready']}")
+        print(f"Would Execute: {dry_run['would_execute']}")
+        print(f"Executed     : {dry_run['executed']}")
+        print(f"Reason       : {check['reason']}")
+
+        if check["blocked_patterns_found"]:
+            print("Blocked Patterns Found:")
+            for pattern in check["blocked_patterns_found"]:
+                print(f"- {pattern}")
+
+        print()
+        print(f"Note: {result['project_coding_note']}")
+

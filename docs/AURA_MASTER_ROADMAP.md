@@ -438,6 +438,7 @@ Planned:
 - AURA Alpha Core Loop
 - Model Router Foundation
 - Tool Execution Sandbox Foundation
+- Project Coding Assistant v2
 - File/project plugin
 - App launcher plugin
 - Browser helper

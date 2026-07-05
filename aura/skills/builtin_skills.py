@@ -212,6 +212,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="project_coding_v2",
+            description="Analyze project code, summarize Python structure, prepare patch plans, and check command safety without writing files.",
+            role="coder",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "project_code_status",
+                "project_code_map",
+                "project_code_inspect",
+                "project_code_plan",
+                "project_code_safety",
+                "python_ast_summary",
+                "safe_patch_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="coding_assist",
             description="Help with coding, debugging, software architecture, and code review.",
             role="coder",

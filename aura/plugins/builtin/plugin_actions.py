@@ -313,6 +313,61 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="project.code_status",
+            plugin="project_coding",
+            description="Show Project Coding Assistant v2 status.",
+            permission_action="read_project",
+            status="online",
+            skill="project_coding_v2",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project.code_map",
+            plugin="project_coding",
+            description="Build a read-only AST-based code map of safe Python project files.",
+            permission_action="read_project",
+            status="online",
+            skill="project_coding_v2",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project.code_inspect",
+            plugin="project_coding",
+            description="Inspect a project code file and summarize imports, classes, functions, and methods.",
+            permission_action="read_project",
+            status="online",
+            skill="project_coding_v2",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project.code_plan",
+            plugin="project_coding",
+            description="Prepare a safe patch plan without modifying files.",
+            permission_action="read_project",
+            status="online",
+            skill="project_coding_v2",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="project.code_safety",
+            plugin="project_coding",
+            description="Check command safety through the tool sandbox for coding workflows.",
+            permission_action="sandbox_check",
+            status="online",
+            skill="project_coding_v2",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="project.map",
             plugin="project",
             description="Show a safe high-level project map.",
