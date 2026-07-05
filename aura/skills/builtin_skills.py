@@ -389,6 +389,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="voice_runtime_alpha",
+            description="Prepare safe local voice runtime alpha status, speak plans, speak tests, and context without automatic microphone access or speaker playback.",
+            role="voice",
+            permission_action="speaker_speak",
+            status="online",
+            capabilities=[
+                "voice_runtime_alpha_status",
+                "voice_speak_plan",
+                "voice_speak_test",
+                "voice_runtime_context",
+                "tts_dependency_check",
+                "prepare_only_speech_output",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="voice_runtime_planning",
             description="Plan local STT/TTS runtime providers, dependency checks, and safe voice runtime readiness.",
             role="voice",

@@ -632,6 +632,50 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="voice.runtime_alpha_status",
+            plugin="voice",
+            description="Show Voice Runtime Alpha status.",
+            permission_action="read_project",
+            status="online",
+            skill="voice_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="voice.speak_plan",
+            plugin="voice",
+            description="Prepare a safe text-to-speech plan without playing audio.",
+            permission_action="suggest",
+            status="online",
+            skill="voice_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="voice.speak_test",
+            plugin="voice",
+            description="Prepare a speak test proposal. Speaker output still requires confirmation and is not executed automatically.",
+            permission_action="speaker_speak",
+            status="online",
+            skill="voice_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="voice.runtime_alpha_context",
+            plugin="voice",
+            description="Prepare Voice Runtime Alpha context without accessing audio devices.",
+            permission_action="read_project",
+            status="online",
+            skill="voice_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="voice.runtime_status",
             plugin="voice",
             description="Show voice runtime planning status.",

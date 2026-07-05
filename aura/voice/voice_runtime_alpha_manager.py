@@ -1,0 +1,237 @@
+import shutil
+from pathlib import Path
+from shlex import quote
+from typing import Any
+
+from aura.permissions.permission_manager import PermissionManager
+from aura.tool_sandbox.tool_sandbox_manager import ToolSandboxManager
+from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
+
+
+class VoiceRuntimeAlphaManager:
+    """
+    Voice Runtime Alpha for AURA.
+
+    Current phase:
+    - prepare local text-to-speech plans
+    - prepare safe speak-test proposals
+    - check local dependency availability
+    - never access microphone automatically
+    - never play speaker output automatically
+    - never execute shell commands
+    """
+
+    name = "voice_runtime_alpha"
+    version = "0.1.0"
+    status_name = "online"
+
+    def __init__(self, project_root: Path):
+        self.project_root = project_root.resolve()
+        self.permission_manager = PermissionManager()
+        self.sandbox = ToolSandboxManager(project_root=self.project_root)
+        self.planner = VoiceRuntimePlanner(project_root=self.project_root)
+
+    def normalize_text(self, text: str) -> str:
+        normalized = " ".join(text.strip().split())
+
+        if len(normalized) > 500:
+            return normalized[:500].rstrip() + "..."
+
+        return normalized
+
+    def detect_tts_backend(self) -> dict[str, Any]:
+        candidates = [
+            {
+                "name": "piper",
+                "type": "neural_tts",
+                "priority": 1,
+                "requires_voice_model": True,
+            },
+            {
+                "name": "espeak-ng",
+                "type": "fallback_tts",
+                "priority": 2,
+                "requires_voice_model": False,
+            },
+            {
+                "name": "espeak",
+                "type": "fallback_tts",
+                "priority": 3,
+                "requires_voice_model": False,
+            },
+        ]
+
+        for candidate in candidates:
+            path = shutil.which(candidate["name"])
+
+            if path:
+                return {
+                    **candidate,
+                    "found": True,
+                    "path": path,
+                }
+
+        return {
+            "name": "",
+            "type": "",
+            "priority": 0,
+            "requires_voice_model": False,
+            "found": False,
+            "path": "",
+        }
+
+    def status(self) -> dict[str, Any]:
+        dependency_check = self.planner.check()
+        backend = self.detect_tts_backend()
+        speaker_permission = self.permission_manager.check("speaker_speak")
+        microphone_permission = self.permission_manager.check("microphone_listen")
+
+        return {
+            "name": self.name,
+            "version": self.version,
+            "status": self.status_name,
+            "alpha_ready": True,
+            "speak_plan_ready": True,
+            "speak_test_ready": True,
+            "voice_context_ready": True,
+            "dependency_check_ready": True,
+            "tts_backend_found": backend["found"],
+            "tts_backend": backend["name"],
+            "tts_backend_path": backend["path"],
+            "stt_runtime_ready": False,
+            "tts_runtime_ready": backend["found"],
+            "microphone_access": False,
+            "speaker_output": False,
+            "recording_enabled": False,
+            "playback_enabled": False,
+            "command_execution": False,
+            "audio_file_write": False,
+            "requires_speaker_confirmation": speaker_permission.requires_confirmation,
+            "requires_microphone_confirmation": microphone_permission.requires_confirmation,
+            "python_packages_installed": dependency_check["python_packages_installed"],
+            "python_packages_total": dependency_check["python_packages_total"],
+            "executables_found": dependency_check["executables_found"],
+            "executables_total": dependency_check["executables_total"],
+            "sections": 6,
+            "project_root": str(self.project_root),
+            "note": "Voice Runtime Alpha is online for safe TTS planning. It does not access microphone, play speakers, write audio files, or execute commands automatically.",
+        }
+
+    def build_tts_command(self, text: str) -> dict[str, Any]:
+        normalized_text = self.normalize_text(text)
+        backend = self.detect_tts_backend()
+
+        if not normalized_text:
+            return {
+                "available": False,
+                "backend": backend,
+                "command": "",
+                "reason": "No text was provided.",
+            }
+
+        if not backend["found"]:
+            return {
+                "available": False,
+                "backend": backend,
+                "command": "",
+                "reason": "No local TTS executable was found. Install or configure piper, espeak-ng, or espeak before real speech output.",
+            }
+
+        if backend["name"] in {"espeak-ng", "espeak"}:
+            command = f"{backend['path']} {quote(normalized_text)}"
+            reason = "Fallback TTS command prepared. It is not executed by AURA."
+        elif backend["name"] == "piper":
+            command = f"{backend['path']} --text {quote(normalized_text)}"
+            reason = "Piper command proposal prepared. A voice model may still be required."
+        else:
+            command = ""
+            reason = "Unsupported TTS backend."
+
+        return {
+            "available": bool(command),
+            "backend": backend,
+            "command": command,
+            "reason": reason,
+        }
+
+    def speak_plan(self, text: str) -> dict[str, Any]:
+        normalized_text = self.normalize_text(text)
+        command_plan = self.build_tts_command(normalized_text)
+        speaker_permission = self.permission_manager.check("speaker_speak")
+
+        sandbox_check = (
+            self.sandbox.check_command(command_plan["command"])
+            if command_plan["command"]
+            else None
+        )
+
+        return {
+            "status": "planned",
+            "text": normalized_text,
+            "text_length": len(normalized_text),
+            "command_available": command_plan["available"],
+            "tts_backend": command_plan["backend"],
+            "proposed_command": command_plan["command"],
+            "command_reason": command_plan["reason"],
+            "sandbox_check": sandbox_check,
+            "speaker_permission": speaker_permission.to_dict(),
+            "speaker_output": False,
+            "microphone_access": False,
+            "command_execution_performed": False,
+            "playback_performed": False,
+            "file_write_performed": False,
+            "safety_notes": [
+                "Speak plan is proposal-only.",
+                "No command was executed.",
+                "No speaker output was played.",
+                "No microphone was accessed.",
+                "Speaker output still requires explicit confirmation.",
+            ],
+        }
+
+    def speak_test(self, text: str) -> dict[str, Any]:
+        plan = self.speak_plan(text=text)
+
+        return {
+            "status": "prepared",
+            "test_ready": True,
+            "speak_plan": plan,
+            "would_speak": plan["command_available"],
+            "speaker_output": False,
+            "microphone_access": False,
+            "command_execution_performed": False,
+            "playback_performed": False,
+            "file_write_performed": False,
+            "note": "Voice speak test was prepared only. AURA did not play audio or execute a TTS command.",
+        }
+
+    def context(self) -> dict[str, Any]:
+        status = self.status()
+        planner_status = self.planner.status()
+        dependency_check = self.planner.check()
+
+        return {
+            "status": self.status_name,
+            "context_ready": True,
+            "alpha_status": status,
+            "planner_status": planner_status,
+            "dependency_check": dependency_check,
+            "safe_current_capabilities": [
+                "voice_runtime_alpha_status",
+                "voice_speak_plan",
+                "voice_speak_test_prepare_only",
+                "voice_runtime_context",
+            ],
+            "disabled_capabilities": [
+                "live_microphone_input",
+                "automatic_speaker_playback",
+                "real_stt_runtime",
+                "real_voice_loop",
+                "command_execution",
+            ],
+            "write_performed": False,
+            "command_execution_performed": False,
+            "microphone_access_performed": False,
+            "speaker_output_performed": False,
+            "note": "Voice runtime context is read-only and preparation-only.",
+        }

@@ -441,6 +441,7 @@ Planned:
 - Project Coding Assistant v2
 - Memory Reflection System
 - Daily Project Briefing
+- Voice Runtime Alpha
 - File/project plugin
 - App launcher plugin
 - Browser helper

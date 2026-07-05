@@ -20,6 +20,7 @@ from aura.vision.vision_manager import VisionManager
 from aura.vision.vision_runtime_planner import VisionRuntimePlanner
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
+from aura.voice.voice_runtime_alpha_manager import VoiceRuntimeAlphaManager
 
 
 class SystemStatusManager:
@@ -41,6 +42,7 @@ class SystemStatusManager:
         self.plugin_action_registry = build_builtin_plugin_action_registry()
         self.voice_manager = VoiceManager()
         self.voice_runtime_planner = VoiceRuntimePlanner(project_root=project_root)
+        self.voice_runtime_alpha_manager = VoiceRuntimeAlphaManager(project_root=project_root)
         self.vision_manager = VisionManager()
         self.vision_runtime_planner = VisionRuntimePlanner(project_root=project_root)
         self.awakening_manager = AwakeningManager(project_root=project_root)
@@ -73,6 +75,7 @@ class SystemStatusManager:
 
         voice_status = self.voice_manager.status()
         voice_runtime_status = self.voice_runtime_planner.status()
+        voice_runtime_alpha_status = self.voice_runtime_alpha_manager.status()
         vision_status = self.vision_manager.status()
         vision_runtime_status = self.vision_runtime_planner.status()
         awakening_status = self.awakening_manager.build_status()
@@ -119,6 +122,7 @@ class SystemStatusManager:
                 "briefing_sections": daily_briefing_status["briefing_sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
+                "voice_runtime_alpha_sections": voice_runtime_alpha_status["sections"],
                 "vision_providers": vision_status["providers"],
                 "vision_runtime_candidates": vision_runtime_status["candidate_count"],
                 "avatar_providers": avatar_status["providers"],
@@ -141,6 +145,7 @@ class SystemStatusManager:
                 "desktop_bridge": desktop_status["status"],
                 "voice": voice_status["status"],
                 "voice_runtime": voice_runtime_status["status"],
+                "voice_runtime_alpha": voice_runtime_alpha_status["status"],
                 "vision": vision_status["status"],
                 "vision_runtime": vision_runtime_status["status"],
                 "avatar": avatar_status["status"],
@@ -149,6 +154,13 @@ class SystemStatusManager:
             "runtime": {
                 "real_voice_runtime": voice_runtime_status["runtime_ready"],
                 "voice_runtime_planning": voice_runtime_status["planning_ready"],
+                "voice_runtime_alpha_ready": voice_runtime_alpha_status["alpha_ready"],
+                "voice_speak_plan_ready": voice_runtime_alpha_status["speak_plan_ready"],
+                "voice_speak_test_ready": voice_runtime_alpha_status["speak_test_ready"],
+                "voice_tts_backend_found": voice_runtime_alpha_status["tts_backend_found"],
+                "voice_speaker_output": voice_runtime_alpha_status["speaker_output"],
+                "voice_microphone_access": voice_runtime_alpha_status["microphone_access"],
+                "voice_command_execution": voice_runtime_alpha_status["command_execution"],
                 "real_vision_runtime": vision_runtime_status["runtime_ready"],
                 "vision_runtime_planning": vision_runtime_status["planning_ready"],
                 "avatar_runtime": avatar_status["runtime_ready"],
@@ -171,5 +183,5 @@ class SystemStatusManager:
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, voice runtime alpha, vision runtime planning, avatar foundation, and awakening status.",
         }

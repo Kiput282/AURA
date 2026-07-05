@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.45.0-genesis
-Status  : DAILY PROJECT BRIEFING ONLINE
+Version : 0.46.0-genesis
+Status  : VOICE RUNTIME ALPHA ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -107,6 +107,7 @@ AURA currently supports:
 - Project Coding Assistant v2
 - Memory Reflection System
 - Daily Project Briefing
+- Voice Runtime Alpha
 - Memory-aware chat
 - Identity guardrail
 - Language control

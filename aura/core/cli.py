@@ -24,6 +24,7 @@ from aura.project_coding.project_coding_manager import ProjectCodingManager
 from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
+from aura.voice.voice_runtime_alpha_manager import VoiceRuntimeAlphaManager
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.briefing.daily_briefing_manager import DailyBriefingManager
 from aura.vision.vision_manager import VisionManager
@@ -1541,6 +1542,7 @@ class AuraCLI:
         print(f"Project Python Files: {status['foundation']['project_python_files']}")
         print(f"Reflection Milestones: {status['foundation']['reflection_milestones']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
+        print(f"Voice Runtime Alpha : {status['foundation']['voice_runtime_alpha_sections']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
         print(f"Awakening Readiness : {status['foundation']['awakening_readiness']}")
@@ -1651,6 +1653,16 @@ class AuraCLI:
 
         subparsers.add_parser("awakening-status")
         subparsers.add_parser("awaken")
+
+        subparsers.add_parser("voice-runtime-alpha-status")
+
+        voice_speak_plan_parser = subparsers.add_parser("voice-speak-plan")
+        voice_speak_plan_parser.add_argument("text", nargs="+")
+
+        voice_speak_test_parser = subparsers.add_parser("voice-speak-test")
+        voice_speak_test_parser.add_argument("text", nargs="+")
+
+        subparsers.add_parser("voice-runtime-context")
 
         subparsers.add_parser("voice-runtime-status")
         subparsers.add_parser("voice-runtime-plan")
@@ -1972,6 +1984,26 @@ class AuraCLI:
         if parsed.command in {"awakening-status", "awaken"}:
             disable_logging()
             self.awakening_status()
+            return True
+
+        if parsed.command == "voice-runtime-alpha-status":
+            disable_logging()
+            self.voice_runtime_alpha_status()
+            return True
+
+        if parsed.command == "voice-speak-plan":
+            disable_logging()
+            self.voice_speak_plan(text=" ".join(parsed.text))
+            return True
+
+        if parsed.command == "voice-speak-test":
+            disable_logging()
+            self.voice_speak_test(text=" ".join(parsed.text))
+            return True
+
+        if parsed.command == "voice-runtime-context":
+            disable_logging()
+            self.voice_runtime_context()
             return True
 
         if parsed.command == "voice-runtime-status":
@@ -2684,6 +2716,153 @@ class AuraCLI:
         print("Recommended Next Steps")
         print("----------------------")
         for item in context["recommended_next_steps"]:
+            print(f"- {item}")
+
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def voice_runtime_alpha_status(self) -> None:
+        manager = VoiceRuntimeAlphaManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Voice Runtime Alpha Status")
+        print("===============================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Alpha Ready                  : {status['alpha_ready']}")
+        print(f"Speak Plan Ready             : {status['speak_plan_ready']}")
+        print(f"Speak Test Ready             : {status['speak_test_ready']}")
+        print(f"Voice Context Ready          : {status['voice_context_ready']}")
+        print(f"Dependency Check Ready       : {status['dependency_check_ready']}")
+        print(f"TTS Backend Found            : {status['tts_backend_found']}")
+        print(f"TTS Backend                  : {status['tts_backend'] or '-'}")
+        print(f"TTS Backend Path             : {status['tts_backend_path'] or '-'}")
+        print(f"STT Runtime Ready            : {status['stt_runtime_ready']}")
+        print(f"TTS Runtime Ready            : {status['tts_runtime_ready']}")
+        print(f"Microphone Access            : {status['microphone_access']}")
+        print(f"Speaker Output               : {status['speaker_output']}")
+        print(f"Recording Enabled            : {status['recording_enabled']}")
+        print(f"Playback Enabled             : {status['playback_enabled']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"Audio File Write             : {status['audio_file_write']}")
+        print(f"Requires Speaker Confirmation: {status['requires_speaker_confirmation']}")
+        print(f"Requires Mic Confirmation    : {status['requires_microphone_confirmation']}")
+        print(f"Python Packages              : {status['python_packages_installed']}/{status['python_packages_total']}")
+        print(f"Executables                  : {status['executables_found']}/{status['executables_total']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def voice_speak_plan(self, text: str) -> None:
+        manager = VoiceRuntimeAlphaManager(project_root=self.project_root)
+        plan = manager.speak_plan(text=text)
+
+        print("AURA Voice Speak Plan")
+        print("=====================")
+        print(f"Status                    : {plan['status']}")
+        print(f"Text                      : {plan['text']}")
+        print(f"Text Length               : {plan['text_length']}")
+        print(f"Command Available         : {plan['command_available']}")
+        print(f"TTS Backend               : {plan['tts_backend']['name'] or '-'}")
+        print(f"TTS Backend Found         : {plan['tts_backend']['found']}")
+        print(f"Proposed Command          : {plan['proposed_command'] or '-'}")
+        print(f"Command Reason            : {plan['command_reason']}")
+        print(f"Speaker Output            : {plan['speaker_output']}")
+        print(f"Microphone Access         : {plan['microphone_access']}")
+        print(f"Command Execution         : {plan['command_execution_performed']}")
+        print(f"Playback Performed        : {plan['playback_performed']}")
+        print(f"File Write Performed      : {plan['file_write_performed']}")
+        print()
+
+        sandbox_check = plan.get("sandbox_check")
+        print("Sandbox Check")
+        print("-------------")
+        if sandbox_check:
+            print(f"State      : {sandbox_check['state']}")
+            print(f"Allowed    : {sandbox_check['allowed']}")
+            print(f"Executed   : {sandbox_check['executed']}")
+            print(f"Reason     : {sandbox_check['reason']}")
+        else:
+            print("-")
+
+        print()
+        print("Speaker Permission")
+        print("------------------")
+        permission = plan["speaker_permission"]
+        print(f"Action       : {permission['action']}")
+        print(f"Level        : {permission['level']} - {permission['level_label']}")
+        print(f"Allowed      : {permission['allowed']}")
+        print(f"Confirmation : {permission['requires_confirmation']}")
+        print(f"Reason       : {permission['reason']}")
+
+        print()
+        print("Safety Notes")
+        print("------------")
+        for item in plan["safety_notes"]:
+            print(f"- {item}")
+
+    def voice_speak_test(self, text: str) -> None:
+        manager = VoiceRuntimeAlphaManager(project_root=self.project_root)
+        result = manager.speak_test(text=text)
+        plan = result["speak_plan"]
+
+        print("AURA Voice Speak Test")
+        print("=====================")
+        print(f"Status               : {result['status']}")
+        print(f"Test Ready           : {result['test_ready']}")
+        print(f"Would Speak          : {result['would_speak']}")
+        print(f"Speaker Output       : {result['speaker_output']}")
+        print(f"Microphone Access    : {result['microphone_access']}")
+        print(f"Command Execution    : {result['command_execution_performed']}")
+        print(f"Playback Performed   : {result['playback_performed']}")
+        print(f"File Write Performed : {result['file_write_performed']}")
+        print()
+        print("Prepared Speak Plan")
+        print("-------------------")
+        print(f"Text              : {plan['text']}")
+        print(f"Command Available : {plan['command_available']}")
+        print(f"TTS Backend       : {plan['tts_backend']['name'] or '-'}")
+        print(f"Proposed Command  : {plan['proposed_command'] or '-'}")
+        print(f"Command Reason    : {plan['command_reason']}")
+        print()
+        print(f"Note: {result['note']}")
+
+    def voice_runtime_context(self) -> None:
+        manager = VoiceRuntimeAlphaManager(project_root=self.project_root)
+        context = manager.context()
+        alpha = context["alpha_status"]
+
+        print("AURA Voice Runtime Alpha Context")
+        print("================================")
+        print(f"Status                      : {context['status']}")
+        print(f"Context Ready               : {context['context_ready']}")
+        print(f"Write Performed             : {context['write_performed']}")
+        print(f"Command Execution Performed : {context['command_execution_performed']}")
+        print(f"Microphone Access Performed : {context['microphone_access_performed']}")
+        print(f"Speaker Output Performed    : {context['speaker_output_performed']}")
+        print()
+        print("Alpha Status")
+        print("------------")
+        print(f"Alpha Ready       : {alpha['alpha_ready']}")
+        print(f"Speak Plan Ready  : {alpha['speak_plan_ready']}")
+        print(f"Speak Test Ready  : {alpha['speak_test_ready']}")
+        print(f"TTS Backend Found : {alpha['tts_backend_found']}")
+        print(f"TTS Backend       : {alpha['tts_backend'] or '-'}")
+        print(f"Microphone Access : {alpha['microphone_access']}")
+        print(f"Speaker Output    : {alpha['speaker_output']}")
+        print(f"Command Execution : {alpha['command_execution']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
             print(f"- {item}")
 
         print()
