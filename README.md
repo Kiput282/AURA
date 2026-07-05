@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.40.0-genesis
-Status  : AURA ALPHA CORE LOOP ONLINE
+Version : 0.40.1-genesis
+Status  : AURA PRODUCT VISION DOCUMENTED
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -259,3 +259,12 @@ The current priority is to build a stable mind foundation before moving into voi
 
 Grow Together.
 
+
+
+## Product Vision
+
+The long-term product vision for AURA is documented in:
+
+docs/AURA_PRODUCT_VISION.md
+
+This document defines AURA's future serious/work mode, creative mode, relaxed mode, media understanding, game companion direction, streaming mode, app bridge vision, Blender bridge plan, safety philosophy, expression language, and 10-sprint review rule.

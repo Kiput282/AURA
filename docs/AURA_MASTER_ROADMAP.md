@@ -544,3 +544,28 @@ Not as a replacement.
 Not as a tool only.
 But as a partner that learns, helps, remembers, and evolves safely.
 
+
+
+---
+
+# Product Vision Reference
+
+AURA's long-term product vision is documented in:
+
+docs/AURA_PRODUCT_VISION.md
+
+This product vision includes serious/work mode, creative mode, relaxed mode, Blender bridge, workspace awareness, media understanding, game companion, streaming mode, AURA expression language, and the 10-sprint review rule.
+
+
+---
+
+# Extended Roadmap Candidates
+
+- v0.51 — Workspace Awareness Foundation
+- v0.52 — Blender Bridge Foundation
+- v0.53 — Media Understanding Foundation
+- v0.54 — AURA Expression Language
+- v0.55 — Game Companion Foundation
+- v0.56 — Streaming Safety Foundation
+
+These milestones may be adjusted during the v0.50 review.
