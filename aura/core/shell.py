@@ -30,6 +30,7 @@ from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.project_coding.project_coding_manager import ProjectCodingManager
 from aura.project_intent.project_intent_planner_manager import ProjectIntentPlannerManager
 from aura.creative.creative_assistant_foundation_manager import CreativeAssistantFoundationManager
+from aura.local_task.local_task_planner_alpha_manager import LocalTaskPlannerAlphaManager
 from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
@@ -130,6 +131,12 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "local-task-planner-status",
+            "local-task-intent-plan",
+            "local-task-breakdown-plan",
+            "local-task-risk-review",
+            "local-task-execution-checklist",
+            "local-task-context",
             "creative-assistant-status",
             "creative-brief-plan",
             "creative-character-concept-plan",
@@ -357,6 +364,12 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  local-task-planner-status Show AURA Local Task Planner Alpha status")
+        print("  local-task-intent-plan <target> Prepare safe local task intent plan")
+        print("  local-task-breakdown-plan <target> Prepare safe local task breakdown plan")
+        print("  local-task-risk-review <target> Prepare safe local task risk review")
+        print("  local-task-execution-checklist <target> Prepare safe task execution checklist")
+        print("  local-task-context Show local task planner context")
         print("  creative-assistant-status Show AURA Creative Assistant Foundation status")
         print("  creative-brief-plan <target> Prepare safe creative brief plan")
         print("  creative-character-concept-plan <target> Prepare character concept plan")
@@ -1363,6 +1376,8 @@ class AuraShell:
         print(f"Project Python Files: {status['foundation']['project_python_files']}")
         print(f"Creative Assistant  : {status['foundation']['creative_assistant_sections']}")
         print(f"Creative Plan Types : {status['foundation']['creative_plan_types']}")
+        print(f"Local Task Planner  : {status['foundation']['local_task_planner_sections']}")
+        print(f"Local Task Types    : {status['foundation']['local_task_plan_types']}")
         print(f"Reflection Milestones: {status['foundation']['reflection_milestones']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Voice Runtime Alpha : {status['foundation']['voice_runtime_alpha_sections']}")
@@ -2565,6 +2580,46 @@ class AuraShell:
 
         if normalized == "vision-providers":
             self.vision_providers()
+            return
+
+        if normalized == "local-task-planner-status":
+            self.local_task_planner_status()
+            return
+
+        if normalized.startswith("local-task-intent-plan "):
+            target = command[len("local-task-intent-plan "):].strip()
+            if not target:
+                print("Usage: local-task-intent-plan <target>")
+                return
+            self.local_task_intent_plan(target)
+            return
+
+        if normalized.startswith("local-task-breakdown-plan "):
+            target = command[len("local-task-breakdown-plan "):].strip()
+            if not target:
+                print("Usage: local-task-breakdown-plan <target>")
+                return
+            self.local_task_breakdown_plan(target)
+            return
+
+        if normalized.startswith("local-task-risk-review "):
+            target = command[len("local-task-risk-review "):].strip()
+            if not target:
+                print("Usage: local-task-risk-review <target>")
+                return
+            self.local_task_risk_review(target)
+            return
+
+        if normalized.startswith("local-task-execution-checklist "):
+            target = command[len("local-task-execution-checklist "):].strip()
+            if not target:
+                print("Usage: local-task-execution-checklist <target>")
+                return
+            self.local_task_execution_checklist(target)
+            return
+
+        if normalized == "local-task-context":
+            self.local_task_context()
             return
 
         if normalized == "creative-assistant-status":
@@ -6152,6 +6207,181 @@ class AuraShell:
         print(f"Media Understanding Ready    : {integration['media_understanding_ready']}")
         print(f"Expression Language Ready    : {integration['expression_language_ready']}")
         print(f"Blender Bridge Ready         : {integration['blender_bridge_ready']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def local_task_planner_status(self) -> None:
+        manager = LocalTaskPlannerAlphaManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Local Task Planner Alpha Status")
+        print("====================================")
+        print(f"Name                                  : {status['name']}")
+        print(f"Version                               : {status['version']}")
+        print(f"Status                                : {status['status']}")
+        print(f"Planner Ready                         : {status['planner_ready']}")
+        print(f"Task Intent Plan Ready                : {status['task_intent_plan_ready']}")
+        print(f"Task Breakdown Plan Ready             : {status['task_breakdown_plan_ready']}")
+        print(f"Task Risk Review Ready                : {status['task_risk_review_ready']}")
+        print(f"Task Execution Checklist Ready        : {status['task_execution_checklist_ready']}")
+        print(f"Context Ready                         : {status['context_ready']}")
+        print(f"Project Intent Integration            : {status['project_intent_integration_ready']}")
+        print(f"Creative Assistant Integration        : {status['creative_assistant_integration_ready']}")
+        print(f"Workspace Memory Link Integration     : {status['workspace_memory_link_integration_ready']}")
+        print(f"Tool Sandbox Integration              : {status['tool_sandbox_integration_ready']}")
+        print(f"Tool Sandbox Dry Run Ready            : {status['tool_sandbox_dry_run_ready']}")
+        print(f"Tool Sandbox Real Execution Ready     : {status['tool_sandbox_real_execution_ready']}")
+        print(f"Task Plan Types                       : {status['task_plan_types']}")
+        print(f"Runtime Ready                         : {status['runtime_ready']}")
+        print(f"Sections                              : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                             : {status['read_only']}")
+        print(f"Proposal Only                         : {status['proposal_only']}")
+        print(f"File Write                            : {status['file_write']}")
+        print(f"Command Execution                     : {status['command_execution']}")
+        print(f"App Opened                            : {status['app_opened']}")
+        print(f"Desktop Action Execution              : {status['desktop_action_execution']}")
+        print(f"External Action Execution             : {status['external_action_execution']}")
+        print(f"Real Tool Execution                   : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def print_local_task_plan(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                                : {plan['status']}")
+        print(f"Plan Type                             : {plan['plan_type']}")
+        print(f"Target                                : {plan['target']}")
+        print(f"Plan State                            : {plan['plan_state']}")
+        print(f"Task Priority                         : {plan['task_priority']}")
+        print(f"Task Tags                             : {', '.join(plan['task_tags'])}")
+        print(f"Step Count                            : {plan['step_count']}")
+        print(f"Checklist Count                       : {plan['checklist_count']}")
+        print(f"Tool Sandbox Ready                    : {plan['tool_sandbox_ready']}")
+        print(f"Tool Sandbox Dry Run Ready            : {plan['tool_sandbox_dry_run_ready']}")
+        print(f"Tool Sandbox Real Execution Ready     : {plan['tool_sandbox_real_execution_ready']}")
+        print(f"Execution Ready                       : {plan['execution_ready']}")
+        print(f"Executed                              : {plan['executed']}")
+        print(f"Read Only                             : {plan['read_only']}")
+        print(f"Proposal Only                         : {plan['proposal_only']}")
+        print(f"File Write Performed                  : {plan['file_write_performed']}")
+        print(f"Command Execution Performed           : {plan['command_execution_performed']}")
+        print(f"App Opened                            : {plan['app_opened']}")
+        print(f"Desktop Action Performed              : {plan['desktop_action_performed']}")
+        print(f"External Action Performed             : {plan['external_action_execution_performed']}")
+        print(f"Real Tool Execution Performed         : {plan['real_tool_execution_performed']}")
+        print()
+        print("Project Intent Summary")
+        print("----------------------")
+        print(plan["project_intent_summary"])
+        print()
+        print("Creative Brief Focus")
+        print("--------------------")
+        print(plan["creative_brief_focus"])
+        print()
+        print("Workspace Memory Summary")
+        print("------------------------")
+        print(plan["workspace_memory_summary"])
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for index, step in enumerate(plan["recommended_steps"], start=1):
+            print(f"{index}. {step['title']}")
+            print(f"   Risk        : {step['risk']}")
+            print(f"   Ready       : {step['ready']}")
+            print(f"   Confirmation: {step['requires_confirmation']}")
+            print(f"   Description : {step['description']}")
+        print()
+        print("Checklist")
+        print("---------")
+        for item in plan["checklist"]:
+            print(f"- {item}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def local_task_intent_plan(self, target: str) -> None:
+        manager = LocalTaskPlannerAlphaManager(project_root=self.project_root)
+        self.print_local_task_plan(
+            "AURA Local Task Intent Plan",
+            manager.task_intent_plan(target),
+        )
+
+    def local_task_breakdown_plan(self, target: str) -> None:
+        manager = LocalTaskPlannerAlphaManager(project_root=self.project_root)
+        self.print_local_task_plan(
+            "AURA Local Task Breakdown Plan",
+            manager.task_breakdown_plan(target),
+        )
+
+    def local_task_risk_review(self, target: str) -> None:
+        manager = LocalTaskPlannerAlphaManager(project_root=self.project_root)
+        self.print_local_task_plan(
+            "AURA Local Task Risk Review",
+            manager.task_risk_review(target),
+        )
+
+    def local_task_execution_checklist(self, target: str) -> None:
+        manager = LocalTaskPlannerAlphaManager(project_root=self.project_root)
+        self.print_local_task_plan(
+            "AURA Local Task Execution Checklist",
+            manager.task_execution_checklist(target),
+        )
+
+    def local_task_context(self) -> None:
+        manager = LocalTaskPlannerAlphaManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Local Task Planner Context")
+        print("===============================")
+        print(f"Status                                : {context['status']}")
+        print(f"Context Ready                         : {context['context_ready']}")
+        print(f"Read Only                             : {context['read_only']}")
+        print(f"Proposal Only                         : {context['proposal_only']}")
+        print(f"Write Performed                       : {context['write_performed']}")
+        print(f"File Write Performed                  : {context['file_write_performed']}")
+        print(f"Command Execution Performed           : {context['command_execution_performed']}")
+        print(f"App Opened                            : {context['app_opened']}")
+        print(f"Desktop Action Performed              : {context['desktop_action_performed']}")
+        print(f"External Action Performed             : {context['external_action_execution_performed']}")
+        print(f"Real Tool Execution Performed         : {context['real_tool_execution_performed']}")
+        print()
+        print("Planner Status")
+        print("--------------")
+        status = context["planner_status"]
+        print(f"Planner Ready                : {status['planner_ready']}")
+        print(f"Task Intent Plan Ready       : {status['task_intent_plan_ready']}")
+        print(f"Task Breakdown Plan Ready    : {status['task_breakdown_plan_ready']}")
+        print(f"Task Risk Review Ready       : {status['task_risk_review_ready']}")
+        print(f"Execution Checklist Ready    : {status['task_execution_checklist_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print()
+        print("Tool Sandbox")
+        print("------------")
+        sandbox = context["tool_sandbox_status"]
+        print(f"Sandbox Ready                : {sandbox['sandbox_ready']}")
+        print(f"Dry Run Ready                : {sandbox['dry_run_ready']}")
+        print(f"Real Execution Ready         : {sandbox['real_execution_ready']}")
+        print(f"Allowed Commands             : {sandbox['allowed_command_count']}")
+        print(f"Blocked Commands             : {sandbox['blocked_command_count']}")
+        print(f"Blocked Patterns             : {sandbox['blocked_pattern_count']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")

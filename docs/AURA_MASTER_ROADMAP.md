@@ -456,6 +456,7 @@ Planned:
 - Project Intent Planner
 - Creative Assistant Foundation
 - Review & Stabilization 51-60
+- Local Task Planner Alpha
 - File/project plugin
 - App launcher plugin
 - Browser helper

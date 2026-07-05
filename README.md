@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.60.0-genesis
-Status  : AURA GENESIS v0.60 STABILIZED
+Version : 0.61.0-genesis
+Status  : LOCAL TASK PLANNER ALPHA ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -122,6 +122,7 @@ AURA currently supports:
 - Project Intent Planner
 - Creative Assistant Foundation
 - Review & Stabilization 51-60
+- Local Task Planner Alpha
 - Memory-aware chat
 - Identity guardrail
 - Language control

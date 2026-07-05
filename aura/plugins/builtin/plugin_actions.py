@@ -247,6 +247,72 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="local_task.status",
+            plugin="local_task",
+            description="Show AURA Local Task Planner Alpha status.",
+            permission_action="read_project",
+            status="online",
+            skill="local_task_planner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="local_task.intent_plan",
+            plugin="local_task",
+            description="Prepare a safe local task intent plan without executing commands, writing files, opening apps, or performing desktop actions.",
+            permission_action="prepare_file",
+            status="online",
+            skill="local_task_planner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="local_task.breakdown_plan",
+            plugin="local_task",
+            description="Prepare a safe local task breakdown plan without executing commands or writing files.",
+            permission_action="prepare_file",
+            status="online",
+            skill="local_task_planner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="local_task.risk_review",
+            plugin="local_task",
+            description="Prepare a safe local task risk review for file, command, app, desktop, and external action risks.",
+            permission_action="prepare_file",
+            status="online",
+            skill="local_task_planner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="local_task.execution_checklist",
+            plugin="local_task",
+            description="Prepare a safe local task execution checklist requiring explicit confirmation before real actions.",
+            permission_action="prepare_file",
+            status="online",
+            skill="local_task_planner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="local_task.context",
+            plugin="local_task",
+            description="Show Local Task Planner Alpha context without executing commands, writing files, opening apps, or performing desktop actions.",
+            permission_action="read_project",
+            status="online",
+            skill="local_task_planner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="creative.assistant_status",
             plugin="creative",
             description="Show AURA Creative Assistant Foundation status.",

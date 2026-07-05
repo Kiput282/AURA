@@ -27,6 +27,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="local_task_planner_alpha",
+            description="Prepare safe local task intent plans, task breakdowns, risk reviews, execution checklists, and task context using project intent, creative assistant, workspace memory, and tool sandbox without executing commands, writing files, opening apps, or performing desktop actions.",
+            role="planning",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "local_task_planner_status",
+                "local_task_intent_plan",
+                "local_task_breakdown_plan",
+                "local_task_risk_review",
+                "local_task_execution_checklist",
+                "local_task_context",
+                "safe_local_task_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="creative_assistant_foundation",
             description="Prepare safe creative briefs, character concept plans, visual asset plans, content ideas, and creative review plans using project intent, workspace memory, media understanding, expression language, and Blender bridge without generating images, opening media files, writing files, or executing commands.",
             role="creative",
