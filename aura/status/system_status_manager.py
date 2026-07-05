@@ -12,6 +12,7 @@ from aura.model_router.model_router import ModelRouter
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.skills.builtin_skills import build_builtin_skill_registry
+from aura.tool_sandbox.tool_sandbox_manager import ToolSandboxManager
 from aura.vision.vision_manager import VisionManager
 from aura.vision.vision_runtime_planner import VisionRuntimePlanner
 from aura.voice.voice_manager import VoiceManager
@@ -43,6 +44,7 @@ class SystemStatusManager:
         self.desktop_manager = DesktopBridgeManager(project_root=project_root)
         self.avatar_manager = AvatarManager(project_root=project_root)
         self.model_router = ModelRouter(project_root=project_root)
+        self.tool_sandbox_manager = ToolSandboxManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -71,6 +73,7 @@ class SystemStatusManager:
         desktop_status = self.desktop_manager.status()
         avatar_status = self.avatar_manager.status()
         model_router_status = self.model_router.status()
+        tool_sandbox_status = self.tool_sandbox_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -99,6 +102,9 @@ class SystemStatusManager:
                 "plugin_actions": self.plugin_action_registry.count(),
                 "core_loop_steps": 7,
                 "model_routes": model_router_status["routes"],
+                "sandbox_allowed_commands": tool_sandbox_status["allowed_command_count"],
+                "sandbox_blocked_commands": tool_sandbox_status["blocked_command_count"],
+                "sandbox_blocked_patterns": tool_sandbox_status["blocked_pattern_count"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
                 "vision_providers": vision_status["providers"],
@@ -112,6 +118,7 @@ class SystemStatusManager:
                 "context": "online",
                 "core_loop": "alpha",
                 "model_router": model_router_status["status"],
+                "tool_sandbox": tool_sandbox_status["status"],
                 "permissions": "online",
                 "skills": "online",
                 "plugin_actions": "online",
@@ -134,8 +141,11 @@ class SystemStatusManager:
                 "alpha_core_loop": True,
                 "model_routing": model_router_status["route_selection_ready"],
                 "real_model_switching": model_router_status["runtime_switching_ready"],
+                "tool_sandbox_ready": tool_sandbox_status["sandbox_ready"],
+                "tool_sandbox_dry_run": tool_sandbox_status["dry_run_ready"],
+                "real_tool_execution": tool_sandbox_status["real_execution_ready"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, context, alpha core loop, model router, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, context, alpha core loop, model router, tool sandbox, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
         }

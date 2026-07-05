@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.41.0-genesis
-Status  : MODEL ROUTER FOUNDATION ONLINE
+Version : 0.42.0-genesis
+Status  : TOOL EXECUTION SANDBOX FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -103,6 +103,7 @@ AURA currently supports:
 - Avatar Foundation
 - AURA Alpha Core Loop
 - Model Router Foundation
+- Tool Execution Sandbox Foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control

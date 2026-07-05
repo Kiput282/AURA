@@ -103,6 +103,27 @@ class PermissionManager:
             "description": "Open a file with a desktop application.",
             "reason": "Opening files should only happen when explicitly requested.",
         },
+        "sandbox_check": {
+            "level": PermissionLevel.THINK_ONLY,
+            "allowed": True,
+            "requires_confirmation": False,
+            "description": "Check a command against the tool sandbox policy.",
+            "reason": "Sandbox checks are metadata-only and do not execute commands.",
+        },
+        "sandbox_dry_run": {
+            "level": PermissionLevel.PREPARE,
+            "allowed": True,
+            "requires_confirmation": False,
+            "description": "Prepare a dry-run command execution proposal.",
+            "reason": "Dry-run only prepares an execution plan and does not run commands.",
+        },
+        "sandbox_execute": {
+            "level": PermissionLevel.ACT_WITH_CONFIRMATION,
+            "allowed": False,
+            "requires_confirmation": True,
+            "description": "Execute a sandboxed command.",
+            "reason": "Real sandbox execution is disabled in the current foundation sprint.",
+        },
         "run_command": {
             "level": PermissionLevel.ACT_WITH_CONFIRMATION,
             "allowed": True,

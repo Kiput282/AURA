@@ -7,6 +7,7 @@ import yaml
 from aura.core.chat import AuraChat
 from aura.core_loop.core_loop_manager import CoreLoopManager
 from aura.model_router.model_router import ModelRouter
+from aura.tool_sandbox.tool_sandbox_manager import ToolSandboxManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.actions.action_request_manager import ActionRequestManager
 from aura.avatar.avatar_manager import AvatarManager
@@ -65,6 +66,10 @@ class AuraShell:
             "status",
             "version",
             "provider",
+            "tool-sandbox-status",
+            "tool-sandbox-policy",
+            "tool-sandbox-check",
+            "tool-sandbox-dry-run",
             "model-router-status",
             "model-router-routes",
             "model-router-select",
@@ -188,6 +193,10 @@ class AuraShell:
         print("  journal-count        Count project journal entries")
         print("  context <text>       Preview AURA context packet")
         print("  context-preview <text> Alias for context")
+        print("  tool-sandbox-status  Show tool sandbox foundation status")
+        print("  tool-sandbox-policy  Show tool sandbox policy")
+        print("  tool-sandbox-check <cmd> Check command safety")
+        print("  tool-sandbox-dry-run <cmd> Prepare dry-run plan")
         print("  model-router-status  Show model router foundation status")
         print("  model-router-routes  List model routes")
         print("  model-router-select <target> Select model route metadata")
@@ -624,6 +633,113 @@ class AuraShell:
 
         print(packet.to_text())
 
+    def tool_sandbox_status(self) -> None:
+        sandbox = ToolSandboxManager(project_root=self.project_root)
+        status = sandbox.status()
+
+        print("AURA Tool Sandbox Status")
+        print("========================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Sandbox Ready                : {status['sandbox_ready']}")
+        print(f"Policy Ready                 : {status['policy_ready']}")
+        print(f"Dry Run Ready                : {status['dry_run_ready']}")
+        print(f"Real Execution Ready         : {status['real_execution_ready']}")
+        print(f"Requires Confirmation        : {status['requires_confirmation_for_execution']}")
+        print(f"Allowed Commands             : {status['allowed_command_count']}")
+        print(f"Blocked Commands             : {status['blocked_command_count']}")
+        print(f"Blocked Patterns             : {status['blocked_pattern_count']}")
+        print(f"Project Root                 : {status['project_root']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def tool_sandbox_policy(self) -> None:
+        sandbox = ToolSandboxManager(project_root=self.project_root)
+        policy = sandbox.policy_dict()
+
+        print("AURA Tool Sandbox Policy")
+        print("========================")
+        print(f"Name                         : {policy['name']}")
+        print(f"Status                       : {policy['status']}")
+        print(f"Dry Run Supported            : {policy['dry_run_supported']}")
+        print(f"Real Execution Supported     : {policy['real_execution_supported']}")
+        print(f"Requires Confirmation        : {policy['requires_confirmation_for_execution']}")
+        print(f"Description                  : {policy['description']}")
+        print()
+
+        print("Allowed Commands")
+        print("----------------")
+        for command in policy["allowed_commands"]:
+            print(f"- {command}")
+
+        print()
+        print("Blocked Commands")
+        print("----------------")
+        for command in policy["blocked_commands"]:
+            print(f"- {command}")
+
+        print()
+        print("Blocked Patterns")
+        print("----------------")
+        for pattern in policy["blocked_patterns"]:
+            print(f"- {pattern}")
+
+    def tool_sandbox_check(self, command: str) -> None:
+        sandbox = ToolSandboxManager(project_root=self.project_root)
+        result = sandbox.check_command(command)
+
+        print("AURA Tool Sandbox Check")
+        print("=======================")
+        print(f"Command              : {result['command']}")
+        print(f"Normalized Command   : {result['normalized_command']}")
+        print(f"Base Command         : {result['base_command']}")
+        print(f"State                : {result['state']}")
+        print(f"Allowed              : {result['allowed']}")
+        print(f"Dry Run Supported    : {result['dry_run_supported']}")
+        print(f"Real Execution       : {result['real_execution_supported']}")
+        print(f"Confirmation Required: {result['requires_confirmation_for_execution']}")
+        print(f"Executed             : {result['executed']}")
+        print(f"Reason               : {result['reason']}")
+
+        if result["blocked_patterns_found"]:
+            print("Blocked Patterns Found:")
+            for pattern in result["blocked_patterns_found"]:
+                print(f"- {pattern}")
+
+        print()
+        print(f"Note: {result['note']}")
+
+    def tool_sandbox_dry_run(self, command: str) -> None:
+        sandbox = ToolSandboxManager(project_root=self.project_root)
+        result = sandbox.dry_run(command)
+        check = result["check"]
+
+        print("AURA Tool Sandbox Dry Run")
+        print("=========================")
+        print(f"Command       : {result['command']}")
+        print(f"Dry Run Ready : {result['dry_run_ready']}")
+        print(f"Would Execute : {result['would_execute']}")
+        print(f"Executed      : {result['executed']}")
+        print(f"Check State   : {check['state']}")
+        print(f"Allowed       : {check['allowed']}")
+        print(f"Reason        : {check['reason']}")
+
+        if check["blocked_patterns_found"]:
+            print("Blocked Patterns Found:")
+            for pattern in check["blocked_patterns_found"]:
+                print(f"- {pattern}")
+
+        if result["plan"]:
+            print()
+            print("Plan")
+            print("----")
+            for step in result["plan"]:
+                print(f"- {step}")
+
+        print()
+        print(f"Note: {result['note']}")
+
     def model_router_status(self) -> None:
         router = ModelRouter(project_root=self.project_root)
         status = router.status()
@@ -1030,6 +1146,9 @@ class AuraShell:
         print(f"Plugin Actions      : {status['foundation']['plugin_actions']}")
         print(f"Core Loop Steps     : {status['foundation']['core_loop_steps']}")
         print(f"Model Routes        : {status['foundation']['model_routes']}")
+        print(f"Sandbox Allowed     : {status['foundation']['sandbox_allowed_commands']}")
+        print(f"Sandbox Blocked     : {status['foundation']['sandbox_blocked_commands']}")
+        print(f"Sandbox Patterns    : {status['foundation']['sandbox_blocked_patterns']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
@@ -1887,6 +2006,34 @@ class AuraShell:
                 return
 
             self.context(message=message)
+            return
+
+        if normalized == "tool-sandbox-status":
+            self.tool_sandbox_status()
+            return
+
+        if normalized == "tool-sandbox-policy":
+            self.tool_sandbox_policy()
+            return
+
+        if normalized.startswith("tool-sandbox-check "):
+            command_text = command[len("tool-sandbox-check "):].strip()
+
+            if not command_text:
+                print("Usage: tool-sandbox-check <command>")
+                return
+
+            self.tool_sandbox_check(command=command_text)
+            return
+
+        if normalized.startswith("tool-sandbox-dry-run "):
+            command_text = command[len("tool-sandbox-dry-run "):].strip()
+
+            if not command_text:
+                print("Usage: tool-sandbox-dry-run <command>")
+                return
+
+            self.tool_sandbox_dry_run(command=command_text)
             return
 
         if normalized == "model-router-status":

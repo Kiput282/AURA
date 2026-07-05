@@ -38,6 +38,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="tool_sandbox",
+            description="Check and dry-run tool commands through a safe sandbox policy without real execution.",
+            role="action",
+            permission_action="sandbox_check",
+            status="online",
+            capabilities=[
+                "tool_sandbox_status",
+                "tool_sandbox_policy",
+                "tool_sandbox_check",
+                "tool_sandbox_dry_run",
+                "dangerous_command_blocking",
+                "allowlist_policy",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="model_router",
             description="Select recommended model/provider routes for AURA roles and tasks without switching real runtimes yet.",
             role="companion",

@@ -7,6 +7,7 @@ import yaml
 from aura.core.chat import AuraChat
 from aura.core_loop.core_loop_manager import CoreLoopManager
 from aura.model_router.model_router import ModelRouter
+from aura.tool_sandbox.tool_sandbox_manager import ToolSandboxManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.actions.action_request_manager import ActionRequestManager
 from aura.avatar.avatar_manager import AvatarManager
@@ -1018,6 +1019,113 @@ class AuraCLI:
             print(f"  Description     : {provider.description}")
             print()
 
+    def tool_sandbox_status(self) -> None:
+        sandbox = ToolSandboxManager(project_root=self.project_root)
+        status = sandbox.status()
+
+        print("AURA Tool Sandbox Status")
+        print("========================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Sandbox Ready                : {status['sandbox_ready']}")
+        print(f"Policy Ready                 : {status['policy_ready']}")
+        print(f"Dry Run Ready                : {status['dry_run_ready']}")
+        print(f"Real Execution Ready         : {status['real_execution_ready']}")
+        print(f"Requires Confirmation        : {status['requires_confirmation_for_execution']}")
+        print(f"Allowed Commands             : {status['allowed_command_count']}")
+        print(f"Blocked Commands             : {status['blocked_command_count']}")
+        print(f"Blocked Patterns             : {status['blocked_pattern_count']}")
+        print(f"Project Root                 : {status['project_root']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def tool_sandbox_policy(self) -> None:
+        sandbox = ToolSandboxManager(project_root=self.project_root)
+        policy = sandbox.policy_dict()
+
+        print("AURA Tool Sandbox Policy")
+        print("========================")
+        print(f"Name                         : {policy['name']}")
+        print(f"Status                       : {policy['status']}")
+        print(f"Dry Run Supported            : {policy['dry_run_supported']}")
+        print(f"Real Execution Supported     : {policy['real_execution_supported']}")
+        print(f"Requires Confirmation        : {policy['requires_confirmation_for_execution']}")
+        print(f"Description                  : {policy['description']}")
+        print()
+
+        print("Allowed Commands")
+        print("----------------")
+        for command in policy["allowed_commands"]:
+            print(f"- {command}")
+
+        print()
+        print("Blocked Commands")
+        print("----------------")
+        for command in policy["blocked_commands"]:
+            print(f"- {command}")
+
+        print()
+        print("Blocked Patterns")
+        print("----------------")
+        for pattern in policy["blocked_patterns"]:
+            print(f"- {pattern}")
+
+    def tool_sandbox_check(self, command: str) -> None:
+        sandbox = ToolSandboxManager(project_root=self.project_root)
+        result = sandbox.check_command(command)
+
+        print("AURA Tool Sandbox Check")
+        print("=======================")
+        print(f"Command              : {result['command']}")
+        print(f"Normalized Command   : {result['normalized_command']}")
+        print(f"Base Command         : {result['base_command']}")
+        print(f"State                : {result['state']}")
+        print(f"Allowed              : {result['allowed']}")
+        print(f"Dry Run Supported    : {result['dry_run_supported']}")
+        print(f"Real Execution       : {result['real_execution_supported']}")
+        print(f"Confirmation Required: {result['requires_confirmation_for_execution']}")
+        print(f"Executed             : {result['executed']}")
+        print(f"Reason               : {result['reason']}")
+
+        if result["blocked_patterns_found"]:
+            print("Blocked Patterns Found:")
+            for pattern in result["blocked_patterns_found"]:
+                print(f"- {pattern}")
+
+        print()
+        print(f"Note: {result['note']}")
+
+    def tool_sandbox_dry_run(self, command: str) -> None:
+        sandbox = ToolSandboxManager(project_root=self.project_root)
+        result = sandbox.dry_run(command)
+        check = result["check"]
+
+        print("AURA Tool Sandbox Dry Run")
+        print("=========================")
+        print(f"Command       : {result['command']}")
+        print(f"Dry Run Ready : {result['dry_run_ready']}")
+        print(f"Would Execute : {result['would_execute']}")
+        print(f"Executed      : {result['executed']}")
+        print(f"Check State   : {check['state']}")
+        print(f"Allowed       : {check['allowed']}")
+        print(f"Reason        : {check['reason']}")
+
+        if check["blocked_patterns_found"]:
+            print("Blocked Patterns Found:")
+            for pattern in check["blocked_patterns_found"]:
+                print(f"- {pattern}")
+
+        if result["plan"]:
+            print()
+            print("Plan")
+            print("----")
+            for step in result["plan"]:
+                print(f"- {step}")
+
+        print()
+        print(f"Note: {result['note']}")
+
     def model_router_status(self) -> None:
         router = ModelRouter(project_root=self.project_root)
         status = router.status()
@@ -1424,6 +1532,9 @@ class AuraCLI:
         print(f"Plugin Actions      : {status['foundation']['plugin_actions']}")
         print(f"Core Loop Steps     : {status['foundation']['core_loop_steps']}")
         print(f"Model Routes        : {status['foundation']['model_routes']}")
+        print(f"Sandbox Allowed     : {status['foundation']['sandbox_allowed_commands']}")
+        print(f"Sandbox Blocked     : {status['foundation']['sandbox_blocked_commands']}")
+        print(f"Sandbox Patterns    : {status['foundation']['sandbox_blocked_patterns']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
@@ -1483,6 +1594,15 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("tool-sandbox-status")
+        subparsers.add_parser("tool-sandbox-policy")
+
+        tool_sandbox_check_parser = subparsers.add_parser("tool-sandbox-check")
+        tool_sandbox_check_parser.add_argument("command_text", type=str)
+
+        tool_sandbox_dry_run_parser = subparsers.add_parser("tool-sandbox-dry-run")
+        tool_sandbox_dry_run_parser.add_argument("command_text", type=str)
 
         subparsers.add_parser("model-router-status")
         subparsers.add_parser("model-router-routes")
@@ -1686,6 +1806,26 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "tool-sandbox-status":
+            disable_logging()
+            self.tool_sandbox_status()
+            return True
+
+        if parsed.command == "tool-sandbox-policy":
+            disable_logging()
+            self.tool_sandbox_policy()
+            return True
+
+        if parsed.command == "tool-sandbox-check":
+            disable_logging()
+            self.tool_sandbox_check(command=parsed.command_text)
+            return True
+
+        if parsed.command == "tool-sandbox-dry-run":
+            disable_logging()
+            self.tool_sandbox_dry_run(command=parsed.command_text)
             return True
 
         if parsed.command == "model-router-status":

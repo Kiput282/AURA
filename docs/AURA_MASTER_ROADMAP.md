@@ -437,6 +437,7 @@ Planned:
 - Avatar Foundation
 - AURA Alpha Core Loop
 - Model Router Foundation
+- Tool Execution Sandbox Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

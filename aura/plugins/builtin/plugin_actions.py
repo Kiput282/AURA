@@ -16,6 +16,61 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="tool.sandbox_status",
+            plugin="tool_sandbox",
+            description="Show tool execution sandbox status.",
+            permission_action="sandbox_check",
+            status="online",
+            skill="tool_sandbox",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="tool.sandbox_policy",
+            plugin="tool_sandbox",
+            description="Show sandbox allowlist and blocked command policy.",
+            permission_action="sandbox_check",
+            status="online",
+            skill="tool_sandbox",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="tool.sandbox_check",
+            plugin="tool_sandbox",
+            description="Check whether a command is allowed by the sandbox policy without executing it.",
+            permission_action="sandbox_check",
+            status="online",
+            skill="tool_sandbox",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="tool.sandbox_dry_run",
+            plugin="tool_sandbox",
+            description="Prepare a dry-run command execution plan without executing the command.",
+            permission_action="sandbox_dry_run",
+            status="online",
+            skill="tool_sandbox",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="tool.sandbox_execute",
+            plugin="tool_sandbox",
+            description="Future real sandbox command execution with confirmation. Disabled for now.",
+            permission_action="sandbox_execute",
+            status="foundation",
+            skill="tool_sandbox",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="desktop.status",
             plugin="desktop",
             description="Show desktop bridge foundation status.",
