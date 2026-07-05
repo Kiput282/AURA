@@ -25,6 +25,7 @@ def build_builtin_role_registry() -> RoleRegistry:
                 "identity",
                 "conversation",
                 "language_control",
+                "model_routing",
             ],
         )
     )

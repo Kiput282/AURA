@@ -49,6 +49,39 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="model.router_status",
+            plugin="model_router",
+            description="Show model router foundation status.",
+            permission_action="think",
+            status="online",
+            skill="model_router",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="model.router_routes",
+            plugin="model_router",
+            description="List model routes for AURA roles and tasks.",
+            permission_action="think",
+            status="online",
+            skill="model_router",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="model.router_select",
+            plugin="model_router",
+            description="Select a recommended model route without switching real runtimes.",
+            permission_action="think",
+            status="online",
+            skill="model_router",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="core.loop_status",
             plugin="core",
             description="Show AURA alpha core loop status.",

@@ -8,6 +8,7 @@ from aura.avatar.avatar_manager import AvatarManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.journal.project_journal import ProjectJournal
 from aura.memory.memory_store import MemoryStore
+from aura.model_router.model_router import ModelRouter
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.skills.builtin_skills import build_builtin_skill_registry
@@ -41,6 +42,7 @@ class SystemStatusManager:
         self.awakening_manager = AwakeningManager(project_root=project_root)
         self.desktop_manager = DesktopBridgeManager(project_root=project_root)
         self.avatar_manager = AvatarManager(project_root=project_root)
+        self.model_router = ModelRouter(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -68,6 +70,7 @@ class SystemStatusManager:
         awakening_status = self.awakening_manager.build_status()
         desktop_status = self.desktop_manager.status()
         avatar_status = self.avatar_manager.status()
+        model_router_status = self.model_router.status()
 
         return {
             "project_root": str(self.project_root),
@@ -95,6 +98,7 @@ class SystemStatusManager:
                 "skills": self.skill_registry.count(),
                 "plugin_actions": self.plugin_action_registry.count(),
                 "core_loop_steps": 7,
+                "model_routes": model_router_status["routes"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
                 "vision_providers": vision_status["providers"],
@@ -107,6 +111,7 @@ class SystemStatusManager:
                 "journal": "online",
                 "context": "online",
                 "core_loop": "alpha",
+                "model_router": model_router_status["status"],
                 "permissions": "online",
                 "skills": "online",
                 "plugin_actions": "online",
@@ -127,8 +132,10 @@ class SystemStatusManager:
                 "avatar_runtime": avatar_status["runtime_ready"],
                 "avatar_foundation": avatar_status["foundation_ready"],
                 "alpha_core_loop": True,
+                "model_routing": model_router_status["route_selection_ready"],
+                "real_model_switching": model_router_status["runtime_switching_ready"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, context, alpha core loop, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, context, alpha core loop, model router, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
         }

@@ -436,6 +436,7 @@ Planned:
 - Vision Runtime Planning
 - Avatar Foundation
 - AURA Alpha Core Loop
+- Model Router Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

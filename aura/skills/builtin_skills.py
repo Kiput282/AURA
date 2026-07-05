@@ -38,6 +38,23 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="model_router",
+            description="Select recommended model/provider routes for AURA roles and tasks without switching real runtimes yet.",
+            role="companion",
+            permission_action="think",
+            status="online",
+            capabilities=[
+                "model_router_status",
+                "model_router_routes",
+                "model_router_select",
+                "role_model_mapping",
+                "runtime_switching_placeholder",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="core_loop",
             description="Run AURA alpha core loop across input, context, reasoning, planning, safety, response, and journal context.",
             role="companion",

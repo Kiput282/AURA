@@ -6,6 +6,7 @@ import yaml
 
 from aura.core.chat import AuraChat
 from aura.core_loop.core_loop_manager import CoreLoopManager
+from aura.model_router.model_router import ModelRouter
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.actions.action_request_manager import ActionRequestManager
 from aura.avatar.avatar_manager import AvatarManager
@@ -1017,6 +1018,96 @@ class AuraCLI:
             print(f"  Description     : {provider.description}")
             print()
 
+    def model_router_status(self) -> None:
+        router = ModelRouter(project_root=self.project_root)
+        status = router.status()
+
+        print("AURA Model Router Status")
+        print("========================")
+        print(f"Name                   : {status['name']}")
+        print(f"Version                : {status['version']}")
+        print(f"Status                 : {status['status']}")
+        print(f"Router Ready           : {status['router_ready']}")
+        print(f"Route Selection Ready  : {status['route_selection_ready']}")
+        print(f"Runtime Switching Ready: {status['runtime_switching_ready']}")
+        print(f"Model Download Ready   : {status['model_download_ready']}")
+        print(f"Active Provider        : {status['active_provider']}")
+        print(f"Active Model           : {status['active_model']}")
+        print(f"Active Host            : {status['active_host']}")
+        print(f"Routes                 : {status['routes']}")
+        print()
+        print("Route Status Counts")
+        print("-------------------")
+        for name, value in status["route_status_counts"].items():
+            print(f"{name:<12}: {value}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def model_router_routes(self) -> None:
+        router = ModelRouter(project_root=self.project_root)
+
+        print("AURA Model Router Routes")
+        print("========================")
+
+        for route in router.list_routes():
+            print(f"- {route.name}")
+            print(f"  Role       : {route.role}")
+            print(f"  Provider   : {route.provider}")
+            print(f"  Model      : {route.model}")
+            print(f"  Status     : {route.status}")
+            print(f"  Description: {route.description}")
+
+            if route.use_cases:
+                print(f"  Use Cases  : {', '.join(route.use_cases)}")
+
+            if route.candidate_models:
+                print(f"  Candidates : {', '.join(route.candidate_models)}")
+
+            if route.safety_notes:
+                print("  Safety:")
+                for note in route.safety_notes:
+                    print(f"  - {note}")
+
+            print()
+
+    def model_router_select(self, target: str) -> None:
+        router = ModelRouter(project_root=self.project_root)
+        result = router.select(target)
+        route = result["route"]
+
+        print("AURA Model Router Selection")
+        print("===========================")
+        print(f"Target                     : {result['target']}")
+        print(f"Normalized Target          : {result['normalized_target']}")
+        print(f"Found                      : {result['found']}")
+        print(f"Fallback Used              : {result['fallback_used']}")
+        print(f"Runtime Switching Performed: {result['runtime_switching_performed']}")
+        print()
+
+        if route:
+            print("Selected Route")
+            print("--------------")
+            print(f"Name       : {route['name']}")
+            print(f"Role       : {route['role']}")
+            print(f"Provider   : {route['provider']}")
+            print(f"Model      : {route['model']}")
+            print(f"Status     : {route['status']}")
+            print(f"Description: {route['description']}")
+
+            if route["use_cases"]:
+                print(f"Use Cases  : {', '.join(route['use_cases'])}")
+
+            if route["candidate_models"]:
+                print(f"Candidates : {', '.join(route['candidate_models'])}")
+
+            if route["safety_notes"]:
+                print("Safety:")
+                for note in route["safety_notes"]:
+                    print(f"- {note}")
+
+        print()
+        print(f"Note: {result['note']}")
+
     def core_loop_status(self) -> None:
         manager = CoreLoopManager(project_root=self.project_root)
         status = manager.status()
@@ -1332,6 +1423,7 @@ class AuraCLI:
         print(f"Skills              : {status['foundation']['skills']}")
         print(f"Plugin Actions      : {status['foundation']['plugin_actions']}")
         print(f"Core Loop Steps     : {status['foundation']['core_loop_steps']}")
+        print(f"Model Routes        : {status['foundation']['model_routes']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
@@ -1391,6 +1483,12 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("model-router-status")
+        subparsers.add_parser("model-router-routes")
+
+        model_router_select_parser = subparsers.add_parser("model-router-select")
+        model_router_select_parser.add_argument("target", type=str)
 
         subparsers.add_parser("core-loop-status")
 
@@ -1588,6 +1686,21 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "model-router-status":
+            disable_logging()
+            self.model_router_status()
+            return True
+
+        if parsed.command == "model-router-routes":
+            disable_logging()
+            self.model_router_routes()
+            return True
+
+        if parsed.command == "model-router-select":
+            disable_logging()
+            self.model_router_select(target=parsed.target)
             return True
 
         if parsed.command == "core-loop-status":
