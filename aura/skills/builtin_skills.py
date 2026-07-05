@@ -27,6 +27,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="partner_alpha",
+            description="Unify AURA memory, reflection, briefing, voice, vision, avatar, desktop, action safety, and readiness into a safe partner alpha layer.",
+            role="companion",
+            permission_action="think",
+            status="online",
+            capabilities=[
+                "partner_alpha_status",
+                "partner_context",
+                "partner_readiness",
+                "partner_next_step",
+                "partner_action_safety",
+                "safe_partner_layer",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="awakening_status",
             description="Show AURA Awakening Alpha readiness across Speak, See, Think, and Learn.",
             role="companion",

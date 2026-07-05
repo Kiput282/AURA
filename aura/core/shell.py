@@ -7,6 +7,7 @@ import yaml
 from aura.core.chat import AuraChat
 from aura.core_loop.core_loop_manager import CoreLoopManager
 from aura.model_router.model_router import ModelRouter
+from aura.partner.partner_alpha_manager import PartnerAlphaManager
 from aura.tool_sandbox.tool_sandbox_manager import ToolSandboxManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.desktop.desktop_assistant_alpha_manager import DesktopAssistantAlphaManager
@@ -120,6 +121,10 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "partner-alpha-status",
+            "partner-context",
+            "partner-readiness",
+            "partner-next-step",
             "awakening-status",
             "awaken",
             "voice-runtime-alpha-status",
@@ -284,6 +289,10 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  partner-alpha-status Show AURA Partner Alpha status")
+        print("  partner-context      Show AURA Partner Alpha context")
+        print("  partner-readiness    Show AURA Partner Alpha readiness")
+        print("  partner-next-step    Show AURA Partner Alpha next step")
         print("  awakening-status     Show AURA Awakening Alpha status")
         print("  awaken               Alias for awakening-status")
         print("  voice-runtime-alpha-status Show Voice Runtime Alpha status")
@@ -2429,6 +2438,22 @@ class AuraShell:
             self.vision_providers()
             return
 
+        if normalized == "partner-alpha-status":
+            self.partner_alpha_status()
+            return
+
+        if normalized == "partner-context":
+            self.partner_context()
+            return
+
+        if normalized == "partner-readiness":
+            self.partner_readiness()
+            return
+
+        if normalized == "partner-next-step":
+            self.partner_next_step()
+            return
+
         if normalized in {"awakening-status", "awaken"}:
             self.awakening_status()
             return
@@ -3755,4 +3780,178 @@ class AuraShell:
             print(f"- {item}")
         print()
         print(f"Note: {context['note']}")
+
+
+    def partner_alpha_status(self) -> None:
+        manager = PartnerAlphaManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Partner Alpha Status")
+        print("=========================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Alpha Ready                  : {status['alpha_ready']}")
+        print(f"Partner Ready                : {status['partner_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Readiness Report Ready       : {status['readiness_report_ready']}")
+        print(f"Next Step Ready              : {status['next_step_ready']}")
+        print(f"Action Safety Ready          : {status['action_safety_ready']}")
+        print(f"Component Readiness          : {status['component_readiness']}")
+        print(f"Awakening Readiness          : {status['awakening_readiness']}")
+        print(f"Memory Count                 : {status['memory_count']}")
+        print(f"Journal Count                : {status['journal_count']}")
+        print(f"Roles                        : {status['roles']}")
+        print(f"Skills                       : {status['skills']}")
+        print(f"Plugin Actions               : {status['plugin_actions']}")
+        print(f"Voice Runtime Alpha Ready    : {status['voice_runtime_alpha_ready']}")
+        print(f"Vision Runtime Alpha Ready   : {status['vision_runtime_alpha_ready']}")
+        print(f"Avatar Runtime Alpha Ready   : {status['avatar_runtime_alpha_ready']}")
+        print(f"Desktop Assistant Alpha Ready: {status['desktop_assistant_alpha_ready']}")
+        print(f"Actions Checked              : {status['actions_checked']}")
+        print(f"Actions Need Confirmation    : {status['actions_requiring_confirmation']}")
+        print(f"Actions Restricted           : {status['actions_restricted']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Safe Action Execution        : {status['safe_action_execution']}")
+        print(f"External Action Execution    : {status['external_action_execution']}")
+        print(f"Microphone Access            : {status['microphone_access']}")
+        print(f"Speaker Output               : {status['speaker_output']}")
+        print(f"Screen Access                : {status['screen_access']}")
+        print(f"Camera Access                : {status['camera_access']}")
+        print(f"Avatar Rendering             : {status['avatar_rendering']}")
+        print(f"Avatar Expression Changed    : {status['avatar_expression_changed']}")
+        print(f"Avatar Gesture Changed       : {status['avatar_gesture_changed']}")
+        print(f"Desktop App Opened           : {status['desktop_app_opened']}")
+        print(f"Desktop Browser Opened       : {status['desktop_browser_opened']}")
+        print(f"Desktop File Opened          : {status['desktop_file_opened']}")
+        print(f"Desktop Click Performed      : {status['desktop_click_performed']}")
+        print(f"Desktop Keyboard Input       : {status['desktop_keyboard_input_performed']}")
+        print(f"Memory Write                 : {status['memory_write']}")
+        print(f"Journal Write                : {status['journal_write']}")
+        print(f"File Write                   : {status['file_write']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def partner_context(self) -> None:
+        manager = PartnerAlphaManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Partner Alpha Context")
+        print("==========================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Memory Write Performed       : {context['memory_write_performed']}")
+        print(f"Journal Write Performed      : {context['journal_write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"External Action Performed    : {context['external_action_execution_performed']}")
+        print()
+        print("Project")
+        print("-------")
+        print(f"Project Summary : {context['project_summary']}")
+        print(f"Latest Milestone: {context['latest_milestone'] or '-'}")
+        print()
+        print("Readiness")
+        print("---------")
+        readiness = context["readiness"]
+        print(f"Readiness Ready : {readiness['readiness_ready']}")
+        print(f"Readiness       : {readiness['readiness']}")
+        print(f"Partner Ready   : {readiness['partner_ready']}")
+        print(f"Write Performed : {readiness['write_performed']}")
+        print(f"Command Executed: {readiness['command_execution_performed']}")
+        print()
+        print("Action Safety")
+        print("-------------")
+        safety = context["action_safety"]
+        print(f"Status                    : {safety['status']}")
+        print(f"Actions Checked           : {safety['actions_checked']}")
+        print(f"Ready Count               : {safety['ready_count']}")
+        print(f"Requires Confirmation     : {safety['requires_confirmation_count']}")
+        print(f"Restricted Count          : {safety['restricted_count']}")
+        print(f"Executed                  : {safety['executed']}")
+        print()
+        print("Project Insights")
+        print("----------------")
+        for item in context["project_insights"][:6]:
+            print(f"- {item}")
+        print()
+        print("Recommended Next Steps")
+        print("----------------------")
+        for item in context["recommended_next_steps"][:6]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+    def partner_readiness(self) -> None:
+        manager = PartnerAlphaManager(project_root=self.project_root)
+        readiness = manager.readiness_report()
+
+        print("AURA Partner Alpha Readiness")
+        print("============================")
+        print(f"Status                       : {readiness['status']}")
+        print(f"Readiness Ready              : {readiness['readiness_ready']}")
+        print(f"Readiness                    : {readiness['readiness']}")
+        print(f"Partner Ready                : {readiness['partner_ready']}")
+        print(f"Ready Count                  : {readiness['ready_count']}")
+        print(f"Total Components             : {readiness['total_components']}")
+        print(f"Write Performed              : {readiness['write_performed']}")
+        print(f"Command Execution Performed  : {readiness['command_execution_performed']}")
+        print()
+        print("Components")
+        print("----------")
+        for component in readiness["components"]:
+            print(f"- {component['name']}")
+            print(f"  Status : {component['status']}")
+            print(f"  Ready  : {component['ready']}")
+            print(f"  Summary: {component['summary']}")
+        print()
+        print("Blocked Real-World Access")
+        print("-------------------------")
+        for item in readiness["blocked_real_world_access"]:
+            print(f"- {item}")
+        print()
+        print("Safety State")
+        print("------------")
+        safety = readiness["safety_state"]
+        print(f"Real Tool Execution : {safety['real_tool_execution']}")
+        print(f"Safe Action Execution: {safety['safe_action_execution']}")
+        print(f"Memory Write        : {safety['memory_write']}")
+        print(f"Journal Write       : {safety['journal_write']}")
+        print(f"File Write          : {safety['file_write']}")
+        print(f"Command Execution   : {safety['command_execution']}")
+        print()
+        print(f"Note: {readiness['note']}")
+
+    def partner_next_step(self) -> None:
+        manager = PartnerAlphaManager(project_root=self.project_root)
+        recommendation = manager.next_step_recommendation()
+
+        print("AURA Partner Alpha Next Step")
+        print("============================")
+        print(f"Status                       : {recommendation['status']}")
+        print(f"Recommendation Ready         : {recommendation['recommendation_ready']}")
+        print(f"Latest Milestone             : {recommendation['latest_milestone'] or '-'}")
+        print(f"Write Performed              : {recommendation['write_performed']}")
+        print(f"Memory Write Performed       : {recommendation['memory_write_performed']}")
+        print(f"Journal Write Performed      : {recommendation['journal_write_performed']}")
+        print(f"Command Execution Performed  : {recommendation['command_execution_performed']}")
+        print()
+        print("Recommended Next Steps")
+        print("----------------------")
+        for item in recommendation["recommended_next_steps"]:
+            print(f"- {item}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for item in recommendation["safety_notes"]:
+            print(f"- {item}")
 

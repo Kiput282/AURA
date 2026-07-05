@@ -247,6 +247,50 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="partner.alpha_status",
+            plugin="partner",
+            description="Show AURA Partner Alpha status.",
+            permission_action="read_project",
+            status="online",
+            skill="partner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="partner.context",
+            plugin="partner",
+            description="Prepare unified AURA Partner Alpha context without writing or executing actions.",
+            permission_action="read_project",
+            status="online",
+            skill="partner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="partner.readiness",
+            plugin="partner",
+            description="Show AURA Partner Alpha readiness report.",
+            permission_action="read_project",
+            status="online",
+            skill="partner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="partner.next_step",
+            plugin="partner",
+            description="Suggest next safe AURA development steps from Partner Alpha context.",
+            permission_action="suggest",
+            status="online",
+            skill="partner_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="awakening.status",
             plugin="awakening",
             description="Show AURA Awakening Alpha readiness status.",

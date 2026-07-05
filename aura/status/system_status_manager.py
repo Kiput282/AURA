@@ -12,6 +12,7 @@ from aura.desktop.desktop_assistant_alpha_manager import DesktopAssistantAlphaMa
 from aura.journal.project_journal import ProjectJournal
 from aura.memory.memory_store import MemoryStore
 from aura.model_router.model_router import ModelRouter
+from aura.partner.partner_alpha_manager import PartnerAlphaManager
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.project_coding.project_coding_manager import ProjectCodingManager
 from aura.reflection.memory_reflection_manager import MemoryReflectionManager
@@ -59,6 +60,7 @@ class SystemStatusManager:
         self.project_coding_manager = ProjectCodingManager(project_root=project_root)
         self.memory_reflection_manager = MemoryReflectionManager(project_root=project_root)
         self.daily_briefing_manager = DailyBriefingManager(project_root=project_root)
+        self.partner_alpha_manager = PartnerAlphaManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -95,6 +97,7 @@ class SystemStatusManager:
         project_coding_status = self.project_coding_manager.status()
         memory_reflection_status = self.memory_reflection_manager.status()
         daily_briefing_status = self.daily_briefing_manager.status()
+        partner_alpha_status = self.partner_alpha_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -129,6 +132,7 @@ class SystemStatusManager:
                 "project_python_files": project_coding_status["python_files"],
                 "reflection_milestones": memory_reflection_status["milestone_count"],
                 "briefing_sections": daily_briefing_status["briefing_sections"],
+                "partner_alpha_sections": partner_alpha_status["sections"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -145,6 +149,7 @@ class SystemStatusManager:
                 "journal": "online",
                 "memory_reflection": memory_reflection_status["status"],
                 "daily_briefing": daily_briefing_status["status"],
+                "partner_alpha": partner_alpha_status["status"],
                 "context": "online",
                 "core_loop": "alpha",
                 "model_router": model_router_status["status"],
@@ -213,6 +218,20 @@ class SystemStatusManager:
                 "daily_briefing_ready": daily_briefing_status["briefing_ready"],
                 "daily_briefing_write": daily_briefing_status["automatic_file_write"],
                 "daily_briefing_command_execution": daily_briefing_status["command_execution"],
+                "partner_alpha_ready": partner_alpha_status["alpha_ready"],
+                "partner_ready": partner_alpha_status["partner_ready"],
+                "partner_context_ready": partner_alpha_status["context_ready"],
+                "partner_readiness_report_ready": partner_alpha_status["readiness_report_ready"],
+                "partner_next_step_ready": partner_alpha_status["next_step_ready"],
+                "partner_microphone_access": partner_alpha_status["microphone_access"],
+                "partner_speaker_output": partner_alpha_status["speaker_output"],
+                "partner_screen_access": partner_alpha_status["screen_access"],
+                "partner_camera_access": partner_alpha_status["camera_access"],
+                "partner_desktop_action_execution": partner_alpha_status["external_action_execution"],
+                "partner_memory_write": partner_alpha_status["memory_write"],
+                "partner_journal_write": partner_alpha_status["journal_write"],
+                "partner_file_write": partner_alpha_status["file_write"],
+                "partner_command_execution": partner_alpha_status["command_execution"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
                 "desktop_assistant_alpha_ready": desktop_alpha_status["alpha_ready"],
@@ -229,5 +248,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

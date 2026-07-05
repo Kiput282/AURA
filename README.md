@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.49.0-genesis
-Status  : DESKTOP ASSISTANT ALPHA ONLINE
+Version : 0.50.0-genesis
+Status  : AURA PARTNER ALPHA ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -111,6 +111,7 @@ AURA currently supports:
 - Vision Runtime Alpha
 - Avatar Runtime Alpha
 - Desktop Assistant Alpha
+- AURA Partner Alpha
 - Memory-aware chat
 - Identity guardrail
 - Language control
