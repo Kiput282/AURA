@@ -454,6 +454,7 @@ Planned:
 - Streaming Safety Foundation
 - Workspace Memory Link
 - Project Intent Planner
+- Creative Assistant Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

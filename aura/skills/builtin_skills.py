@@ -27,6 +27,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="creative_assistant_foundation",
+            description="Prepare safe creative briefs, character concept plans, visual asset plans, content ideas, and creative review plans using project intent, workspace memory, media understanding, expression language, and Blender bridge without generating images, opening media files, writing files, or executing commands.",
+            role="creative",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "creative_assistant_status",
+                "creative_brief_plan",
+                "creative_character_concept_plan",
+                "creative_visual_asset_plan",
+                "creative_content_idea_plan",
+                "creative_review_plan",
+                "creative_context",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="project_intent_planner",
             description="Prepare safe project intent summaries, project goal plans, sprint intent plans, and next action candidates using workspace memory, workspace awareness, project coding, daily briefing, and reflection without writing files, memory, journal, or executing commands.",
             role="planning",

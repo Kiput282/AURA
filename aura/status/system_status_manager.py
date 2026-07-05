@@ -5,6 +5,7 @@ import yaml
 
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.briefing.daily_briefing_manager import DailyBriefingManager
+from aura.creative.creative_assistant_foundation_manager import CreativeAssistantFoundationManager
 from aura.avatar.avatar_manager import AvatarManager
 from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
 from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundationManager
@@ -67,6 +68,7 @@ class SystemStatusManager:
         self.tool_sandbox_manager = ToolSandboxManager(project_root=project_root)
         self.project_coding_manager = ProjectCodingManager(project_root=project_root)
         self.project_intent_planner_manager = ProjectIntentPlannerManager(project_root=project_root)
+        self.creative_assistant_manager = CreativeAssistantFoundationManager(project_root=project_root)
         self.memory_reflection_manager = MemoryReflectionManager(project_root=project_root)
         self.daily_briefing_manager = DailyBriefingManager(project_root=project_root)
         self.partner_alpha_manager = PartnerAlphaManager(project_root=project_root)
@@ -112,6 +114,7 @@ class SystemStatusManager:
         tool_sandbox_status = self.tool_sandbox_manager.status()
         project_coding_status = self.project_coding_manager.status()
         project_intent_status = self.project_intent_planner_manager.status()
+        creative_assistant_status = self.creative_assistant_manager.status()
         memory_reflection_status = self.memory_reflection_manager.status()
         daily_briefing_status = self.daily_briefing_manager.status()
         partner_alpha_status = self.partner_alpha_manager.status()
@@ -173,6 +176,8 @@ class SystemStatusManager:
                 "workspace_memory_candidate_types": workspace_memory_link_status["candidate_types"],
                 "project_intent_sections": project_intent_status["sections"],
                 "project_intent_categories": project_intent_status["intent_categories"],
+                "creative_assistant_sections": creative_assistant_status["sections"],
+                "creative_plan_types": creative_assistant_status["creative_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -207,6 +212,7 @@ class SystemStatusManager:
                 "project_plugin": "online",
                 "project_coding": project_coding_status["status"],
                 "project_intent_planner": project_intent_status["status"],
+                "creative_assistant": creative_assistant_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -271,6 +277,23 @@ class SystemStatusManager:
                 "project_intent_journal_write": project_intent_status["journal_write"],
                 "project_intent_command_execution": project_intent_status["command_execution"],
                 "project_intent_external_action_execution": project_intent_status["external_action_execution"],
+                "creative_assistant_ready": creative_assistant_status["assistant_ready"],
+                "creative_brief_plan_ready": creative_assistant_status["brief_plan_ready"],
+                "creative_character_concept_ready": creative_assistant_status["character_concept_ready"],
+                "creative_visual_asset_plan_ready": creative_assistant_status["visual_asset_plan_ready"],
+                "creative_content_idea_plan_ready": creative_assistant_status["content_idea_plan_ready"],
+                "creative_review_plan_ready": creative_assistant_status["review_plan_ready"],
+                "creative_context_ready": creative_assistant_status["context_ready"],
+                "creative_project_intent_integration_ready": creative_assistant_status["project_intent_integration_ready"],
+                "creative_workspace_memory_integration_ready": creative_assistant_status["workspace_memory_link_integration_ready"],
+                "creative_media_integration_ready": creative_assistant_status["media_understanding_integration_ready"],
+                "creative_expression_integration_ready": creative_assistant_status["expression_language_integration_ready"],
+                "creative_blender_integration_ready": creative_assistant_status["blender_bridge_integration_ready"],
+                "creative_image_generation": creative_assistant_status["image_generation"],
+                "creative_media_file_opened": creative_assistant_status["media_file_opened"],
+                "creative_file_write": creative_assistant_status["file_write"],
+                "creative_command_execution": creative_assistant_status["command_execution"],
+                "creative_external_action_execution": creative_assistant_status["external_action_execution"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -408,5 +431,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, project intent planner, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, project intent planner, creative assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

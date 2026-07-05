@@ -247,6 +247,83 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="creative.assistant_status",
+            plugin="creative",
+            description="Show AURA Creative Assistant Foundation status.",
+            permission_action="read_project",
+            status="online",
+            skill="creative_assistant_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="creative.brief_plan",
+            plugin="creative",
+            description="Prepare a safe creative brief plan without generating images or writing files.",
+            permission_action="prepare_file",
+            status="online",
+            skill="creative_assistant_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="creative.character_concept_plan",
+            plugin="creative",
+            description="Prepare a safe character concept plan without generating images, changing avatar state, or writing files.",
+            permission_action="prepare_file",
+            status="online",
+            skill="creative_assistant_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="creative.visual_asset_plan",
+            plugin="creative",
+            description="Prepare a safe visual asset plan without opening media files or writing assets.",
+            permission_action="prepare_file",
+            status="online",
+            skill="creative_assistant_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="creative.content_idea_plan",
+            plugin="creative",
+            description="Prepare safe creative content ideas without posting, opening apps, or executing commands.",
+            permission_action="prepare_file",
+            status="online",
+            skill="creative_assistant_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="creative.review_plan",
+            plugin="creative",
+            description="Prepare a safe creative review plan without opening media files or editing assets.",
+            permission_action="prepare_file",
+            status="online",
+            skill="creative_assistant_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="creative.context",
+            plugin="creative",
+            description="Prepare creative assistant context without generating images, opening media files, writing files, or executing commands.",
+            permission_action="read_project",
+            status="online",
+            skill="creative_assistant_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="project_intent.status",
             plugin="project_intent",
             description="Show AURA Project Intent Planner status.",

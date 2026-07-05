@@ -29,6 +29,7 @@ from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_regi
 from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.project_coding.project_coding_manager import ProjectCodingManager
 from aura.project_intent.project_intent_planner_manager import ProjectIntentPlannerManager
+from aura.creative.creative_assistant_foundation_manager import CreativeAssistantFoundationManager
 from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
@@ -129,6 +130,13 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "creative-assistant-status",
+            "creative-brief-plan",
+            "creative-character-concept-plan",
+            "creative-visual-asset-plan",
+            "creative-content-idea-plan",
+            "creative-review-plan",
+            "creative-context",
             "project-intent-status",
             "project-intent-summary",
             "project-goal-plan",
@@ -348,6 +356,13 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  creative-assistant-status Show AURA Creative Assistant Foundation status")
+        print("  creative-brief-plan <target> Prepare safe creative brief plan")
+        print("  creative-character-concept-plan <target> Prepare character concept plan")
+        print("  creative-visual-asset-plan <target> Prepare visual asset plan")
+        print("  creative-content-idea-plan <target> Prepare content idea plan")
+        print("  creative-review-plan <target> Prepare creative review plan")
+        print("  creative-context Show creative assistant context")
         print("  project-intent-status Show AURA Project Intent Planner status")
         print("  project-intent-summary <topic> Show read-only project intent summary")
         print("  project-goal-plan <goal> Prepare safety-aware project goal plan")
@@ -1344,6 +1359,8 @@ class AuraShell:
         print(f"Sandbox Blocked     : {status['foundation']['sandbox_blocked_commands']}")
         print(f"Sandbox Patterns    : {status['foundation']['sandbox_blocked_patterns']}")
         print(f"Project Python Files: {status['foundation']['project_python_files']}")
+        print(f"Creative Assistant  : {status['foundation']['creative_assistant_sections']}")
+        print(f"Creative Plan Types : {status['foundation']['creative_plan_types']}")
         print(f"Reflection Milestones: {status['foundation']['reflection_milestones']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Voice Runtime Alpha : {status['foundation']['voice_runtime_alpha_sections']}")
@@ -2546,6 +2563,54 @@ class AuraShell:
 
         if normalized == "vision-providers":
             self.vision_providers()
+            return
+
+        if normalized == "creative-assistant-status":
+            self.creative_assistant_status()
+            return
+
+        if normalized.startswith("creative-brief-plan "):
+            target = command[len("creative-brief-plan "):].strip()
+            if not target:
+                print("Usage: creative-brief-plan <target>")
+                return
+            self.creative_brief_plan(target)
+            return
+
+        if normalized.startswith("creative-character-concept-plan "):
+            target = command[len("creative-character-concept-plan "):].strip()
+            if not target:
+                print("Usage: creative-character-concept-plan <target>")
+                return
+            self.creative_character_concept_plan(target)
+            return
+
+        if normalized.startswith("creative-visual-asset-plan "):
+            target = command[len("creative-visual-asset-plan "):].strip()
+            if not target:
+                print("Usage: creative-visual-asset-plan <target>")
+                return
+            self.creative_visual_asset_plan(target)
+            return
+
+        if normalized.startswith("creative-content-idea-plan "):
+            target = command[len("creative-content-idea-plan "):].strip()
+            if not target:
+                print("Usage: creative-content-idea-plan <target>")
+                return
+            self.creative_content_idea_plan(target)
+            return
+
+        if normalized.startswith("creative-review-plan "):
+            target = command[len("creative-review-plan "):].strip()
+            if not target:
+                print("Usage: creative-review-plan <target>")
+                return
+            self.creative_review_plan(target)
+            return
+
+        if normalized == "creative-context":
+            self.creative_context()
             return
 
         if normalized == "project-intent-status":
@@ -5888,6 +5953,199 @@ class AuraShell:
         print(f"Patch Planning Ready: {coding['patch_planning_ready']}")
         print(f"Python Files        : {coding['python_files']}")
         print(f"Coding Route        : {coding['coding_route']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def creative_assistant_status(self) -> None:
+        manager = CreativeAssistantFoundationManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Creative Assistant Foundation Status")
+        print("========================================")
+        print(f"Name                                  : {status['name']}")
+        print(f"Version                               : {status['version']}")
+        print(f"Status                                : {status['status']}")
+        print(f"Assistant Ready                       : {status['assistant_ready']}")
+        print(f"Brief Plan Ready                      : {status['brief_plan_ready']}")
+        print(f"Character Concept Ready               : {status['character_concept_ready']}")
+        print(f"Visual Asset Plan Ready               : {status['visual_asset_plan_ready']}")
+        print(f"Content Idea Plan Ready               : {status['content_idea_plan_ready']}")
+        print(f"Review Plan Ready                     : {status['review_plan_ready']}")
+        print(f"Context Ready                         : {status['context_ready']}")
+        print(f"Project Intent Integration            : {status['project_intent_integration_ready']}")
+        print(f"Workspace Memory Link Integration     : {status['workspace_memory_link_integration_ready']}")
+        print(f"Media Understanding Integration       : {status['media_understanding_integration_ready']}")
+        print(f"Expression Language Integration       : {status['expression_language_integration_ready']}")
+        print(f"Blender Bridge Integration            : {status['blender_bridge_integration_ready']}")
+        print(f"Creative Plan Types                   : {status['creative_plan_types']}")
+        print(f"Media Candidate Count                 : {status['media_candidate_count']}")
+        print(f"Blender Asset Candidate Count         : {status['blender_asset_candidate_count']}")
+        print(f"Expression Mood States                : {status['expression_mood_states']}")
+        print(f"Runtime Ready                         : {status['runtime_ready']}")
+        print(f"Sections                              : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                             : {status['read_only']}")
+        print(f"Proposal Only                         : {status['proposal_only']}")
+        print(f"Image Generation                      : {status['image_generation']}")
+        print(f"Media File Opened                     : {status['media_file_opened']}")
+        print(f"Pixel Read                            : {status['pixel_read']}")
+        print(f"File Write                            : {status['file_write']}")
+        print(f"Command Execution                     : {status['command_execution']}")
+        print(f"External Action Execution             : {status['external_action_execution']}")
+        print(f"Real Tool Execution                   : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def print_creative_plan(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                                : {plan['status']}")
+        print(f"Plan Type                             : {plan['plan_type']}")
+        print(f"Target                                : {plan['target']}")
+        print(f"Plan State                            : {plan['plan_state']}")
+        print(f"Creative Focus                        : {plan['creative_direction']['focus']}")
+        print(f"Creative Tags                         : {', '.join(plan['creative_direction']['tags'])}")
+        print(f"Brand Anchor                          : {plan['creative_direction']['brand_anchor']}")
+        print(f"Safety Priority                       : {plan['creative_direction']['safety_priority']}")
+        print(f"Creative Output Count                 : {plan['creative_output_count']}")
+        print(f"Media Candidate Count                 : {plan['media_candidate_count']}")
+        print(f"Media Metadata Only                   : {plan['media_metadata_only']}")
+        print(f"Expression Mood                       : {plan['expression_mood']}")
+        print(f"Expression Tags                       : {', '.join(plan['expression_tags'])}")
+        print(f"Blender Asset Candidate Count         : {plan['blender_asset_candidate_count']}")
+        print(f"Execution Ready                       : {plan['execution_ready']}")
+        print(f"Executed                              : {plan['executed']}")
+        print(f"Read Only                             : {plan['read_only']}")
+        print(f"Proposal Only                         : {plan['proposal_only']}")
+        print(f"Image Generation Performed            : {plan['image_generation_performed']}")
+        print(f"Media File Opened                     : {plan['media_file_opened']}")
+        print(f"Pixel Read                            : {plan['pixel_read']}")
+        print(f"File Write Performed                  : {plan['file_write_performed']}")
+        print(f"Command Execution Performed           : {plan['command_execution_performed']}")
+        print(f"External Action Performed             : {plan['external_action_execution_performed']}")
+        print()
+        print("Creative Outputs")
+        print("----------------")
+        for item in plan["creative_outputs"]:
+            print(f"- {item}")
+        print()
+        print("Project Intent Summary")
+        print("----------------------")
+        print(plan["project_intent_summary"])
+        print()
+        print("Workspace Memory Summary")
+        print("------------------------")
+        print(plan["workspace_memory_summary"])
+        print()
+        print("Expression Plan")
+        print("---------------")
+        expression = plan["expression_plan"]
+        print(f"Mood              : {expression['mood']}")
+        print(f"Voice Tone Hint   : {expression['voice_tone_hint']}")
+        print(f"Avatar Expression : {expression['avatar_expression_hint']}")
+        print(f"Gesture Hint      : {expression['gesture_hint']}")
+        print(f"Response Style    : {expression['response_style_hint']}")
+        print(f"Avatar Changed    : {expression['avatar_changed']}")
+        print(f"Voice Output      : {expression['voice_output_performed']}")
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in plan["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def creative_brief_plan(self, target: str) -> None:
+        manager = CreativeAssistantFoundationManager(project_root=self.project_root)
+        self.print_creative_plan(
+            "AURA Creative Brief Plan",
+            manager.brief_plan(target),
+        )
+
+    def creative_character_concept_plan(self, target: str) -> None:
+        manager = CreativeAssistantFoundationManager(project_root=self.project_root)
+        self.print_creative_plan(
+            "AURA Creative Character Concept Plan",
+            manager.character_concept_plan(target),
+        )
+
+    def creative_visual_asset_plan(self, target: str) -> None:
+        manager = CreativeAssistantFoundationManager(project_root=self.project_root)
+        self.print_creative_plan(
+            "AURA Creative Visual Asset Plan",
+            manager.visual_asset_plan(target),
+        )
+
+    def creative_content_idea_plan(self, target: str) -> None:
+        manager = CreativeAssistantFoundationManager(project_root=self.project_root)
+        self.print_creative_plan(
+            "AURA Creative Content Idea Plan",
+            manager.content_idea_plan(target),
+        )
+
+    def creative_review_plan(self, target: str) -> None:
+        manager = CreativeAssistantFoundationManager(project_root=self.project_root)
+        self.print_creative_plan(
+            "AURA Creative Review Plan",
+            manager.review_plan(target),
+        )
+
+    def creative_context(self) -> None:
+        manager = CreativeAssistantFoundationManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Creative Assistant Context")
+        print("===============================")
+        print(f"Status                                : {context['status']}")
+        print(f"Context Ready                         : {context['context_ready']}")
+        print(f"Read Only                             : {context['read_only']}")
+        print(f"Proposal Only                         : {context['proposal_only']}")
+        print(f"Write Performed                       : {context['write_performed']}")
+        print(f"Image Generation Performed            : {context['image_generation_performed']}")
+        print(f"Media File Opened                     : {context['media_file_opened']}")
+        print(f"Pixel Read                            : {context['pixel_read']}")
+        print(f"File Write Performed                  : {context['file_write_performed']}")
+        print(f"Command Execution Performed           : {context['command_execution_performed']}")
+        print(f"External Action Performed             : {context['external_action_execution_performed']}")
+        print()
+        print("Creative Status")
+        print("---------------")
+        status = context["creative_status"]
+        print(f"Assistant Ready              : {status['assistant_ready']}")
+        print(f"Brief Plan Ready             : {status['brief_plan_ready']}")
+        print(f"Character Concept Ready      : {status['character_concept_ready']}")
+        print(f"Visual Asset Plan Ready      : {status['visual_asset_plan_ready']}")
+        print(f"Content Idea Plan Ready      : {status['content_idea_plan_ready']}")
+        print(f"Review Plan Ready            : {status['review_plan_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Proposal Only                : {status['proposal_only']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print()
+        print("Integration Summary")
+        print("-------------------")
+        integration = context["integration_summary"]
+        print(f"Project Intent Ready         : {integration['project_intent_ready']}")
+        print(f"Workspace Memory Ready       : {integration['workspace_memory_ready']}")
+        print(f"Media Understanding Ready    : {integration['media_understanding_ready']}")
+        print(f"Expression Language Ready    : {integration['expression_language_ready']}")
+        print(f"Blender Bridge Ready         : {integration['blender_bridge_ready']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")

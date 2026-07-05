@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.58.0-genesis
-Status  : PROJECT INTENT PLANNER ONLINE
+Version : 0.59.0-genesis
+Status  : CREATIVE ASSISTANT FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -120,6 +120,7 @@ AURA currently supports:
 - Streaming Safety Foundation
 - Workspace Memory Link
 - Project Intent Planner
+- Creative Assistant Foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control
