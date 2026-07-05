@@ -247,6 +247,83 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="expression.language_status",
+            plugin="expression",
+            description="Show AURA Expression Language status.",
+            permission_action="read_project",
+            status="online",
+            skill="expression_language",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="expression.state",
+            plugin="expression",
+            description="Show AURA internal expression state, moods, emotion tags, voice tones, avatar expressions, gestures, and response styles.",
+            permission_action="read_project",
+            status="online",
+            skill="expression_language",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="expression.plan",
+            plugin="expression",
+            description="Prepare a safe expression plan with mood, emotion tags, voice tone, avatar expression, gesture, and response style hints.",
+            permission_action="prepare_file",
+            status="online",
+            skill="expression_language",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="expression.voice_hint",
+            plugin="expression",
+            description="Prepare a safe voice tone hint without playing audio.",
+            permission_action="prepare_file",
+            status="online",
+            skill="expression_language",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="expression.avatar_hint",
+            plugin="expression",
+            description="Prepare a safe avatar expression hint without changing or rendering a real avatar.",
+            permission_action="prepare_file",
+            status="online",
+            skill="expression_language",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="expression.gesture_hint",
+            plugin="expression",
+            description="Prepare a safe gesture hint without changing or rendering a real avatar.",
+            permission_action="prepare_file",
+            status="online",
+            skill="expression_language",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="expression.context",
+            plugin="expression",
+            description="Prepare expression language context without voice output, avatar changes, file writing, or command execution.",
+            permission_action="read_project",
+            status="online",
+            skill="expression_language",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="media.understanding_status",
             plugin="media",
             description="Show AURA Media Understanding Foundation status.",

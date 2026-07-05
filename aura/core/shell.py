@@ -16,6 +16,7 @@ from aura.avatar.avatar_manager import AvatarManager
 from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
 from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundationManager
 from aura.media.media_understanding_foundation_manager import MediaUnderstandingFoundationManager
+from aura.expression.expression_language_manager import ExpressionLanguageManager
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
@@ -124,6 +125,13 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "expression-language-status",
+            "expression-state",
+            "expression-plan",
+            "expression-voice-hint",
+            "expression-avatar-hint",
+            "expression-gesture-hint",
+            "expression-context",
             "media-understanding-status",
             "media-asset-summary",
             "media-image-plan",
@@ -311,6 +319,13 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  expression-language-status Show AURA Expression Language status")
+        print("  expression-state Show AURA internal expression state")
+        print("  expression-plan <text> Prepare safe expression plan")
+        print("  expression-voice-hint <target> Prepare safe voice tone hint")
+        print("  expression-avatar-hint <target> Prepare safe avatar expression hint")
+        print("  expression-gesture-hint <target> Prepare safe gesture hint")
+        print("  expression-context Show expression language context")
         print("  media-understanding-status Show AURA Media Understanding status")
         print("  media-asset-summary Show metadata-only media asset summary")
         print("  media-image-plan <goal> Prepare safe image description plan")
@@ -2479,6 +2494,50 @@ class AuraShell:
             self.vision_providers()
             return
 
+        if normalized == "expression-language-status":
+            self.expression_language_status()
+            return
+
+        if normalized == "expression-state":
+            self.expression_state()
+            return
+
+        if normalized.startswith("expression-plan "):
+            target = command[len("expression-plan "):].strip()
+            if not target:
+                print("Usage: expression-plan <text>")
+                return
+            self.expression_plan(target)
+            return
+
+        if normalized.startswith("expression-voice-hint "):
+            target = command[len("expression-voice-hint "):].strip()
+            if not target:
+                print("Usage: expression-voice-hint <target>")
+                return
+            self.expression_voice_hint(target)
+            return
+
+        if normalized.startswith("expression-avatar-hint "):
+            target = command[len("expression-avatar-hint "):].strip()
+            if not target:
+                print("Usage: expression-avatar-hint <target>")
+                return
+            self.expression_avatar_hint(target)
+            return
+
+        if normalized.startswith("expression-gesture-hint "):
+            target = command[len("expression-gesture-hint "):].strip()
+            if not target:
+                print("Usage: expression-gesture-hint <target>")
+                return
+            self.expression_gesture_hint(target)
+            return
+
+        if normalized == "expression-context":
+            self.expression_context()
+            return
+
         if normalized == "media-understanding-status":
             self.media_understanding_status()
             return
@@ -4636,6 +4695,219 @@ class AuraShell:
         print(f"Pixel Read     : {summary['pixel_read']}")
         print(f"File Write     : {summary['file_write_performed']}")
         print(f"Command Exec   : {summary['command_execution_performed']}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def expression_language_status(self) -> None:
+        manager = ExpressionLanguageManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Expression Language Status")
+        print("===============================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Language Ready               : {status['language_ready']}")
+        print(f"State Ready                  : {status['state_ready']}")
+        print(f"Plan Ready                   : {status['plan_ready']}")
+        print(f"Voice Hint Ready             : {status['voice_hint_ready']}")
+        print(f"Avatar Hint Ready            : {status['avatar_hint_ready']}")
+        print(f"Gesture Hint Ready           : {status['gesture_hint_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Mood States                  : {status['mood_states']}")
+        print(f"Emotion Tags                 : {status['emotion_tags']}")
+        print(f"Voice Tones                  : {status['voice_tones']}")
+        print(f"Avatar Expressions           : {status['avatar_expressions']}")
+        print(f"Gestures                     : {status['gestures']}")
+        print(f"Response Styles              : {status['response_styles']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                    : {status['read_only']}")
+        print(f"Avatar Changed               : {status['avatar_changed']}")
+        print(f"Gesture Changed              : {status['gesture_changed']}")
+        print(f"Voice Output                 : {status['voice_output']}")
+        print(f"Speaker Output               : {status['speaker_output']}")
+        print(f"File Write                   : {status['file_write']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"External Action Execution    : {status['external_action_execution']}")
+        print(f"Real Tool Execution          : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def expression_state(self) -> None:
+        manager = ExpressionLanguageManager(project_root=self.project_root)
+        state = manager.expression_state()
+
+        print("AURA Expression State")
+        print("=====================")
+        print(f"Status                       : {state['status']}")
+        print(f"State Ready                  : {state['state_ready']}")
+        print(f"AURA Name                    : {state['aura_name']}")
+        print(f"AURA Version                 : {state['aura_version']}")
+        print(f"Codename                     : {state['codename']}")
+        print(f"Creator                      : {state['creator']}")
+        print(f"Base Mood                    : {state['base_mood']}")
+        print(f"Base Emotion Tags            : {', '.join(state['base_emotion_tags'])}")
+        print(f"Default Voice Tone           : {state['default_voice_tone']}")
+        print(f"Default Avatar Expression    : {state['default_avatar_expression']}")
+        print(f"Default Gesture              : {state['default_gesture']}")
+        print()
+        print("Supported Moods")
+        print("---------------")
+        for item in state["supported_moods"]:
+            print(f"- {item}")
+        print()
+        print("Supported Voice Tones")
+        print("---------------------")
+        for item in state["supported_voice_tones"]:
+            print(f"- {item}")
+        print()
+        print("Supported Avatar Expressions")
+        print("----------------------------")
+        for item in state["supported_avatar_expressions"]:
+            print(f"- {item}")
+        print()
+        print("Supported Gestures")
+        print("------------------")
+        for item in state["supported_gestures"]:
+            print(f"- {item}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                    : {state['read_only']}")
+        print(f"Write Performed              : {state['write_performed']}")
+        print(f"Avatar Changed               : {state['avatar_changed']}")
+        print(f"Voice Output Performed       : {state['voice_output_performed']}")
+        print(f"Command Execution Performed  : {state['command_execution_performed']}")
+        print()
+        print(f"Note: {state['note']}")
+
+    def print_expression_hint(self, title: str, hint: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                       : {hint['status']}")
+        print(f"Hint Type                    : {hint['hint_type']}")
+        print(f"Target                       : {hint['target']}")
+        print(f"Hint State                   : {hint['hint_state']}")
+        print(f"Mood                         : {hint['mood']}")
+        print(f"Emotion Tags                 : {', '.join(hint['emotion_tags'])}")
+        print(f"Voice Tone Hint              : {hint['voice_tone_hint']}")
+        print(f"Avatar Expression Hint       : {hint['avatar_expression_hint']}")
+        print(f"Gesture Hint                 : {hint['gesture_hint']}")
+        print(f"Response Style Hint          : {hint['response_style_hint']}")
+        print(f"Execution Ready              : {hint['execution_ready']}")
+        print(f"Executed                     : {hint['executed']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Avatar Changed               : {hint['avatar_changed']}")
+        print(f"Gesture Changed              : {hint['gesture_changed']}")
+        print(f"Voice Output Performed       : {hint['voice_output_performed']}")
+        print(f"File Write Performed         : {hint['file_write_performed']}")
+        print(f"Command Execution Performed  : {hint['command_execution_performed']}")
+        print(f"External Action Performed    : {hint['external_action_execution_performed']}")
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in hint["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in hint["safety_notes"]:
+            print(f"- {note}")
+
+    def expression_plan(self, text: str) -> None:
+        manager = ExpressionLanguageManager(project_root=self.project_root)
+        plan = manager.expression_plan(text)
+
+        print("AURA Expression Plan")
+        print("====================")
+        print(f"Status                       : {plan['status']}")
+        print(f"Plan Type                    : {plan['plan_type']}")
+        print(f"Text                         : {plan['text']}")
+        print(f"Plan State                   : {plan['plan_state']}")
+        print(f"Mood                         : {plan['mood']}")
+        print(f"Emotion Tags                 : {', '.join(plan['emotion_tags'])}")
+        print(f"Voice Tone Hint              : {plan['voice_tone_hint']}")
+        print(f"Avatar Expression Hint       : {plan['avatar_expression_hint']}")
+        print(f"Gesture Hint                 : {plan['gesture_hint']}")
+        print(f"Response Style Hint          : {plan['response_style_hint']}")
+        print(f"Voice Runtime Alpha Ready    : {plan['voice_runtime_alpha_ready']}")
+        print(f"Avatar Runtime Alpha Ready   : {plan['avatar_runtime_alpha_ready']}")
+        print(f"Execution Ready              : {plan['execution_ready']}")
+        print(f"Executed                     : {plan['executed']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Avatar Changed               : {plan['avatar_changed']}")
+        print(f"Gesture Changed              : {plan['gesture_changed']}")
+        print(f"Voice Output Performed       : {plan['voice_output_performed']}")
+        print(f"Speaker Output               : {plan['speaker_output']}")
+        print(f"File Write Performed         : {plan['file_write_performed']}")
+        print(f"Command Execution Performed  : {plan['command_execution_performed']}")
+        print(f"External Action Performed    : {plan['external_action_execution_performed']}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def expression_voice_hint(self, target: str) -> None:
+        manager = ExpressionLanguageManager(project_root=self.project_root)
+        self.print_expression_hint("AURA Expression Voice Hint", manager.voice_hint(target))
+
+    def expression_avatar_hint(self, target: str) -> None:
+        manager = ExpressionLanguageManager(project_root=self.project_root)
+        self.print_expression_hint("AURA Expression Avatar Hint", manager.avatar_hint(target))
+
+    def expression_gesture_hint(self, target: str) -> None:
+        manager = ExpressionLanguageManager(project_root=self.project_root)
+        self.print_expression_hint("AURA Expression Gesture Hint", manager.gesture_hint(target))
+
+    def expression_context(self) -> None:
+        manager = ExpressionLanguageManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Expression Language Context")
+        print("================================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Read Only                    : {context['read_only']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Avatar Changed               : {context['avatar_changed']}")
+        print(f"Gesture Changed              : {context['gesture_changed']}")
+        print(f"Voice Output Performed       : {context['voice_output_performed']}")
+        print(f"File Write Performed         : {context['file_write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"External Action Performed    : {context['external_action_execution_performed']}")
+        print()
+        print("Expression Status")
+        print("-----------------")
+        status = context["expression_status"]
+        print(f"Language Ready      : {status['language_ready']}")
+        print(f"State Ready         : {status['state_ready']}")
+        print(f"Plan Ready          : {status['plan_ready']}")
+        print(f"Voice Hint Ready    : {status['voice_hint_ready']}")
+        print(f"Avatar Hint Ready   : {status['avatar_hint_ready']}")
+        print(f"Gesture Hint Ready  : {status['gesture_hint_ready']}")
+        print(f"Context Ready       : {status['context_ready']}")
+        print(f"Runtime Ready       : {status['runtime_ready']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
         print()
         print(f"Note: {context['note']}")
 

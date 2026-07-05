@@ -27,6 +27,26 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="expression_language",
+            description="Prepare AURA mood, emotion tags, voice tone hints, avatar expression hints, gesture hints, and response style hints without changing avatar state, playing voice output, writing files, or executing commands.",
+            role="creative",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "expression_language_status",
+                "expression_state",
+                "expression_plan",
+                "expression_voice_hint",
+                "expression_avatar_hint",
+                "expression_gesture_hint",
+                "expression_context",
+                "safe_expression_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="media_understanding_foundation",
             description="Prepare metadata-only media understanding, image description, texture reference, thumbnail/banner review, and video/audio plans without opening files, reading pixels, writing files, or executing commands.",
             role="creative",

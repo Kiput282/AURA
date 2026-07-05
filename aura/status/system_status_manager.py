@@ -9,6 +9,7 @@ from aura.avatar.avatar_manager import AvatarManager
 from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
 from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundationManager
 from aura.media.media_understanding_foundation_manager import MediaUnderstandingFoundationManager
+from aura.expression.expression_language_manager import ExpressionLanguageManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.desktop.desktop_assistant_alpha_manager import DesktopAssistantAlphaManager
 from aura.journal.project_journal import ProjectJournal
@@ -67,6 +68,7 @@ class SystemStatusManager:
         self.workspace_awareness_manager = WorkspaceAwarenessManager(project_root=project_root)
         self.blender_bridge_manager = BlenderBridgeFoundationManager(project_root=project_root)
         self.media_understanding_manager = MediaUnderstandingFoundationManager(project_root=project_root)
+        self.expression_language_manager = ExpressionLanguageManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -107,6 +109,7 @@ class SystemStatusManager:
         workspace_awareness_status = self.workspace_awareness_manager.status()
         blender_bridge_status = self.blender_bridge_manager.status()
         media_understanding_status = self.media_understanding_manager.status()
+        expression_language_status = self.expression_language_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -148,6 +151,8 @@ class SystemStatusManager:
                 "blender_asset_candidates": blender_bridge_status["asset_candidate_count"],
                 "media_understanding_sections": media_understanding_status["sections"],
                 "media_asset_candidates": media_understanding_status["candidate_count"],
+                "expression_language_sections": expression_language_status["sections"],
+                "expression_emotion_tags": expression_language_status["emotion_tags"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -168,6 +173,7 @@ class SystemStatusManager:
                 "workspace_awareness": workspace_awareness_status["status"],
                 "blender_bridge": blender_bridge_status["status"],
                 "media_understanding": media_understanding_status["status"],
+                "expression_language": expression_language_status["status"],
                 "context": "online",
                 "core_loop": "alpha",
                 "model_router": model_router_status["status"],
@@ -289,6 +295,19 @@ class SystemStatusManager:
                 "media_file_write": media_understanding_status["file_write"],
                 "media_command_execution": media_understanding_status["command_execution"],
                 "media_external_action_execution": media_understanding_status["external_action_execution"],
+                "expression_language_ready": expression_language_status["language_ready"],
+                "expression_state_ready": expression_language_status["state_ready"],
+                "expression_plan_ready": expression_language_status["plan_ready"],
+                "expression_voice_hint_ready": expression_language_status["voice_hint_ready"],
+                "expression_avatar_hint_ready": expression_language_status["avatar_hint_ready"],
+                "expression_gesture_hint_ready": expression_language_status["gesture_hint_ready"],
+                "expression_context_ready": expression_language_status["context_ready"],
+                "expression_avatar_changed": expression_language_status["avatar_changed"],
+                "expression_gesture_changed": expression_language_status["gesture_changed"],
+                "expression_voice_output": expression_language_status["voice_output"],
+                "expression_file_write": expression_language_status["file_write"],
+                "expression_command_execution": expression_language_status["command_execution"],
+                "expression_external_action_execution": expression_language_status["external_action_execution"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
                 "desktop_assistant_alpha_ready": desktop_alpha_status["alpha_ready"],
@@ -305,5 +324,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, media understanding, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, media understanding, expression language, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

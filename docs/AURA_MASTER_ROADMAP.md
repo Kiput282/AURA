@@ -449,6 +449,7 @@ Planned:
 - Workspace Awareness Foundation
 - Blender Bridge Foundation
 - Media Understanding Foundation
+- AURA Expression Language
 - File/project plugin
 - App launcher plugin
 - Browser helper
