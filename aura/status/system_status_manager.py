@@ -31,6 +31,7 @@ from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.voice.voice_runtime_alpha_manager import VoiceRuntimeAlphaManager
 from aura.workspace.workspace_awareness_manager import WorkspaceAwarenessManager
+from aura.workspace_memory.workspace_memory_link_manager import WorkspaceMemoryLinkManager
 
 
 class SystemStatusManager:
@@ -68,6 +69,7 @@ class SystemStatusManager:
         self.daily_briefing_manager = DailyBriefingManager(project_root=project_root)
         self.partner_alpha_manager = PartnerAlphaManager(project_root=project_root)
         self.workspace_awareness_manager = WorkspaceAwarenessManager(project_root=project_root)
+        self.workspace_memory_link_manager = WorkspaceMemoryLinkManager(project_root=project_root)
         self.blender_bridge_manager = BlenderBridgeFoundationManager(project_root=project_root)
         self.media_understanding_manager = MediaUnderstandingFoundationManager(project_root=project_root)
         self.expression_language_manager = ExpressionLanguageManager(project_root=project_root)
@@ -111,6 +113,7 @@ class SystemStatusManager:
         daily_briefing_status = self.daily_briefing_manager.status()
         partner_alpha_status = self.partner_alpha_manager.status()
         workspace_awareness_status = self.workspace_awareness_manager.status()
+        workspace_memory_link_status = self.workspace_memory_link_manager.status()
         blender_bridge_status = self.blender_bridge_manager.status()
         media_understanding_status = self.media_understanding_manager.status()
         expression_language_status = self.expression_language_manager.status()
@@ -163,6 +166,8 @@ class SystemStatusManager:
                 "game_support_modes": game_companion_status["support_modes"],
                 "streaming_safety_sections": streaming_safety_status["sections"],
                 "streaming_safety_categories": streaming_safety_status["safety_categories"],
+                "workspace_memory_link_sections": workspace_memory_link_status["sections"],
+                "workspace_memory_candidate_types": workspace_memory_link_status["candidate_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -181,6 +186,7 @@ class SystemStatusManager:
                 "daily_briefing": daily_briefing_status["status"],
                 "partner_alpha": partner_alpha_status["status"],
                 "workspace_awareness": workspace_awareness_status["status"],
+                "workspace_memory_link": workspace_memory_link_status["status"],
                 "blender_bridge": blender_bridge_status["status"],
                 "media_understanding": media_understanding_status["status"],
                 "expression_language": expression_language_status["status"],
@@ -278,6 +284,18 @@ class SystemStatusManager:
                 "workspace_journal_write": workspace_awareness_status["journal_write"],
                 "workspace_command_execution": workspace_awareness_status["command_execution"],
                 "workspace_external_action_execution": workspace_awareness_status["external_action_execution"],
+                "workspace_memory_link_ready": workspace_memory_link_status["link_ready"],
+                "workspace_memory_summary_ready": workspace_memory_link_status["summary_ready"],
+                "workspace_memory_candidates_ready": workspace_memory_link_status["memory_candidates_ready"],
+                "workspace_file_memory_candidates_ready": workspace_memory_link_status["file_memory_candidates_ready"],
+                "workspace_milestone_candidates_ready": workspace_memory_link_status["milestone_candidates_ready"],
+                "workspace_memory_context_ready": workspace_memory_link_status["context_ready"],
+                "workspace_memory_link_memory_write": workspace_memory_link_status["memory_write"],
+                "workspace_memory_delete": workspace_memory_link_status["memory_delete"],
+                "workspace_memory_link_journal_write": workspace_memory_link_status["journal_write"],
+                "workspace_memory_link_file_write": workspace_memory_link_status["file_write"],
+                "workspace_memory_link_command_execution": workspace_memory_link_status["command_execution"],
+                "workspace_memory_link_external_action_execution": workspace_memory_link_status["external_action_execution"],
                 "blender_bridge_ready": blender_bridge_status["bridge_ready"],
                 "blender_scene_plan_ready": blender_bridge_status["scene_plan_ready"],
                 "blender_asset_plan_ready": blender_bridge_status["asset_plan_ready"],
@@ -373,5 +391,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

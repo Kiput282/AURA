@@ -247,6 +247,72 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="workspace_memory.link_status",
+            plugin="workspace_memory",
+            description="Show AURA Workspace Memory Link status.",
+            permission_action="read_memory",
+            status="online",
+            skill="workspace_memory_link",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace_memory.summary",
+            plugin="workspace_memory",
+            description="Prepare a read-only workspace memory summary without writing memory.",
+            permission_action="read_memory",
+            status="online",
+            skill="workspace_memory_link",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace_memory.candidates",
+            plugin="workspace_memory",
+            description="Prepare project memory candidates from workspace context without writing memory.",
+            permission_action="prepare_file",
+            status="online",
+            skill="workspace_memory_link",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace_memory.file_candidates",
+            plugin="workspace_memory",
+            description="Prepare important file memory candidates without writing memory or files.",
+            permission_action="prepare_file",
+            status="online",
+            skill="workspace_memory_link",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace_memory.milestone_candidates",
+            plugin="workspace_memory",
+            description="Prepare recent milestone memory candidates without writing memory or journal entries.",
+            permission_action="prepare_file",
+            status="online",
+            skill="workspace_memory_link",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace_memory.context",
+            plugin="workspace_memory",
+            description="Prepare workspace memory link context without writing memory, journal, files, or commands.",
+            permission_action="read_memory",
+            status="online",
+            skill="workspace_memory_link",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="streaming.safety_status",
             plugin="streaming",
             description="Show AURA Streaming Safety Foundation status.",

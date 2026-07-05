@@ -33,6 +33,7 @@ from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.voice.voice_runtime_alpha_manager import VoiceRuntimeAlphaManager
 from aura.workspace.workspace_awareness_manager import WorkspaceAwarenessManager
+from aura.workspace_memory.workspace_memory_link_manager import WorkspaceMemoryLinkManager
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.briefing.daily_briefing_manager import DailyBriefingManager
 from aura.vision.vision_manager import VisionManager
@@ -127,6 +128,12 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "workspace-memory-link-status",
+            "workspace-memory-summary",
+            "workspace-memory-candidates",
+            "workspace-file-memory-candidates",
+            "workspace-milestone-memory-candidates",
+            "workspace-memory-link-context",
             "streaming-safety-status",
             "streaming-context-plan",
             "streaming-chat-safety-plan",
@@ -334,6 +341,12 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  workspace-memory-link-status Show AURA Workspace Memory Link status")
+        print("  workspace-memory-summary Show read-only workspace memory summary")
+        print("  workspace-memory-candidates <target> Prepare project memory candidates")
+        print("  workspace-file-memory-candidates <target> Prepare important file memory candidates")
+        print("  workspace-milestone-memory-candidates <target> Prepare milestone memory candidates")
+        print("  workspace-memory-link-context Show workspace memory link context")
         print("  streaming-safety-status Show AURA Streaming Safety Foundation status")
         print("  streaming-context-plan <target> Prepare safe streaming context plan")
         print("  streaming-chat-safety-plan <target> Prepare safe chat safety plan")
@@ -2520,6 +2533,42 @@ class AuraShell:
 
         if normalized == "vision-providers":
             self.vision_providers()
+            return
+
+        if normalized == "workspace-memory-link-status":
+            self.workspace_memory_link_status()
+            return
+
+        if normalized == "workspace-memory-summary":
+            self.workspace_memory_summary()
+            return
+
+        if normalized.startswith("workspace-memory-candidates "):
+            target = command[len("workspace-memory-candidates "):].strip()
+            if not target:
+                print("Usage: workspace-memory-candidates <target>")
+                return
+            self.workspace_memory_candidates(target)
+            return
+
+        if normalized.startswith("workspace-file-memory-candidates "):
+            target = command[len("workspace-file-memory-candidates "):].strip()
+            if not target:
+                print("Usage: workspace-file-memory-candidates <target>")
+                return
+            self.workspace_file_memory_candidates(target)
+            return
+
+        if normalized.startswith("workspace-milestone-memory-candidates "):
+            target = command[len("workspace-milestone-memory-candidates "):].strip()
+            if not target:
+                print("Usage: workspace-milestone-memory-candidates <target>")
+                return
+            self.workspace_milestone_memory_candidates(target)
+            return
+
+        if normalized == "workspace-memory-link-context":
+            self.workspace_memory_link_context()
             return
 
         if normalized == "streaming-safety-status":
@@ -5365,6 +5414,189 @@ class AuraShell:
         print(f"Media      : {status['media_integration_ready']}")
         print(f"Vision     : {status['vision_integration_ready']}")
         print(f"Desktop    : {status['desktop_integration_ready']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def workspace_memory_link_status(self) -> None:
+        manager = WorkspaceMemoryLinkManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Workspace Memory Link Status")
+        print("=================================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Link Ready                   : {status['link_ready']}")
+        print(f"Summary Ready                : {status['summary_ready']}")
+        print(f"Memory Candidates Ready      : {status['memory_candidates_ready']}")
+        print(f"File Memory Candidates Ready : {status['file_memory_candidates_ready']}")
+        print(f"Milestone Candidates Ready   : {status['milestone_candidates_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Workspace Integration Ready  : {status['workspace_integration_ready']}")
+        print(f"Memory Store Ready           : {status['memory_store_ready']}")
+        print(f"Journal Integration Ready    : {status['journal_integration_ready']}")
+        print(f"Reflection Integration Ready : {status['reflection_integration_ready']}")
+        print(f"Memory Count                 : {status['memory_count']}")
+        print(f"Journal Count                : {status['journal_count']}")
+        print(f"Milestone Count              : {status['milestone_count']}")
+        print(f"Important File Count         : {status['important_file_count']}")
+        print(f"Candidate Types              : {status['candidate_types']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                    : {status['read_only']}")
+        print(f"Candidate Only               : {status['candidate_only']}")
+        print(f"Memory Write                 : {status['memory_write']}")
+        print(f"Memory Delete                : {status['memory_delete']}")
+        print(f"Journal Write                : {status['journal_write']}")
+        print(f"File Write                   : {status['file_write']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"External Action Execution    : {status['external_action_execution']}")
+        print(f"Real Tool Execution          : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def workspace_memory_summary(self) -> None:
+        manager = WorkspaceMemoryLinkManager(project_root=self.project_root)
+        summary = manager.summary()
+
+        print("AURA Workspace Memory Summary")
+        print("=============================")
+        print(f"Status                       : {summary['status']}")
+        print(f"Summary Ready                : {summary['summary_ready']}")
+        print(f"Memory Count                 : {summary['memory_count']}")
+        print(f"Journal Count                : {summary['journal_count']}")
+        print(f"Milestone Count              : {summary['milestone_count']}")
+        print(f"Read Only                    : {summary['read_only']}")
+        print(f"Write Performed              : {summary['write_performed']}")
+        print(f"Memory Write Performed       : {summary['memory_write_performed']}")
+        print(f"Memory Delete Performed      : {summary['memory_delete_performed']}")
+        print(f"Journal Write Performed      : {summary['journal_write_performed']}")
+        print(f"File Write Performed         : {summary['file_write_performed']}")
+        print(f"Command Execution Performed  : {summary['command_execution_performed']}")
+        print(f"External Action Performed    : {summary['external_action_execution_performed']}")
+        print()
+        print("Summary")
+        print("-------")
+        print(summary["summary"])
+        print()
+        print("Workspace Summary")
+        print("-----------------")
+        print(summary["workspace_summary"])
+        latest = summary.get("latest_milestone")
+        if latest:
+            print()
+            print("Latest Milestone")
+            print("----------------")
+            print(f"Title      : {latest['title']}")
+            print(f"Created At : {latest['created_at']}")
+        print()
+        print(f"Note: {summary['note']}")
+
+    def print_workspace_memory_candidates(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                       : {plan['status']}")
+        print(f"Plan Type                    : {plan['plan_type']}")
+        print(f"Target                       : {plan['target']}")
+        print(f"Plan State                   : {plan['plan_state']}")
+        print(f"Candidate Count              : {plan['candidate_count']}")
+        print(f"Execution Ready              : {plan['execution_ready']}")
+        print(f"Executed                     : {plan['executed']}")
+        print(f"Read Only                    : {plan['read_only']}")
+        print(f"Memory Write Performed       : {plan['memory_write_performed']}")
+        print(f"Memory Delete Performed      : {plan['memory_delete_performed']}")
+        print(f"Journal Write Performed      : {plan['journal_write_performed']}")
+        print(f"File Write Performed         : {plan['file_write_performed']}")
+        print(f"Command Execution Performed  : {plan['command_execution_performed']}")
+        print(f"External Action Performed    : {plan['external_action_execution_performed']}")
+        print()
+        print("Candidates")
+        print("----------")
+        for index, candidate in enumerate(plan["candidates"], start=1):
+            metadata = candidate["metadata"]
+            print(f"{index}. Type       : {candidate['candidate_type']}")
+            print(f"   Kind       : {candidate['kind']}")
+            print(f"   Importance : {metadata['suggested_importance']}")
+            print(f"   Pinned     : {metadata['suggested_pinned']}")
+            print(f"   Write Ready: {candidate['write_ready']}")
+            print(f"   Written    : {candidate['written']}")
+            print(f"   Reason     : {candidate['reason']}")
+            print(f"   Content    : {candidate['content']}")
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in plan["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def workspace_memory_candidates(self, target: str) -> None:
+        manager = WorkspaceMemoryLinkManager(project_root=self.project_root)
+        self.print_workspace_memory_candidates(
+            "AURA Workspace Memory Candidates",
+            manager.project_memory_candidates(target),
+        )
+
+    def workspace_file_memory_candidates(self, target: str) -> None:
+        manager = WorkspaceMemoryLinkManager(project_root=self.project_root)
+        self.print_workspace_memory_candidates(
+            "AURA Workspace File Memory Candidates",
+            manager.file_memory_candidates(target),
+        )
+
+    def workspace_milestone_memory_candidates(self, target: str) -> None:
+        manager = WorkspaceMemoryLinkManager(project_root=self.project_root)
+        self.print_workspace_memory_candidates(
+            "AURA Workspace Milestone Memory Candidates",
+            manager.milestone_memory_candidates(target),
+        )
+
+    def workspace_memory_link_context(self) -> None:
+        manager = WorkspaceMemoryLinkManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Workspace Memory Link Context")
+        print("==================================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Read Only                    : {context['read_only']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Memory Write Performed       : {context['memory_write_performed']}")
+        print(f"Memory Delete Performed      : {context['memory_delete_performed']}")
+        print(f"Journal Write Performed      : {context['journal_write_performed']}")
+        print(f"File Write Performed         : {context['file_write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"External Action Performed    : {context['external_action_execution_performed']}")
+        print()
+        print("Link Status")
+        print("-----------")
+        status = context["link_status"]
+        print(f"Link Ready              : {status['link_ready']}")
+        print(f"Summary Ready           : {status['summary_ready']}")
+        print(f"Memory Candidates Ready : {status['memory_candidates_ready']}")
+        print(f"File Candidates Ready   : {status['file_memory_candidates_ready']}")
+        print(f"Milestone Ready         : {status['milestone_candidates_ready']}")
+        print(f"Context Ready           : {status['context_ready']}")
+        print(f"Candidate Only          : {status['candidate_only']}")
+        print(f"Runtime Ready           : {status['runtime_ready']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")

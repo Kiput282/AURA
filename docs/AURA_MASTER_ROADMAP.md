@@ -452,6 +452,7 @@ Planned:
 - AURA Expression Language
 - Game Companion Foundation
 - Streaming Safety Foundation
+- Workspace Memory Link
 - File/project plugin
 - App launcher plugin
 - Browser helper

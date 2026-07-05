@@ -27,6 +27,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="workspace_memory_link",
+            description="Prepare safe workspace-memory summaries and memory candidates from workspace awareness, memory, journal, and reflection without writing memory, deleting memory, writing journal entries, writing files, or executing commands.",
+            role="memory",
+            permission_action="read_memory",
+            status="online",
+            capabilities=[
+                "workspace_memory_link_status",
+                "workspace_memory_summary",
+                "workspace_memory_candidates",
+                "workspace_file_memory_candidates",
+                "workspace_milestone_memory_candidates",
+                "workspace_memory_link_context",
+                "candidate_only_memory_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="streaming_safety_foundation",
             description="Prepare safe streaming context, chat safety, content boundary, privacy, and moderation plans without reading live chat, sending messages, moderating, capturing screen, opening apps/browser, writing files, or executing commands.",
             role="safety",
