@@ -324,6 +324,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="vision_runtime_alpha",
+            description="Prepare safe local vision runtime alpha status, screen plans, camera plans, and context without automatic screen or camera access.",
+            role="vision",
+            permission_action="screen_analyze",
+            status="online",
+            capabilities=[
+                "vision_runtime_alpha_status",
+                "vision_screen_plan",
+                "vision_camera_plan",
+                "vision_runtime_context",
+                "screen_dependency_check",
+                "camera_dependency_check",
+                "prepare_only_vision_input",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="vision_runtime_planning",
             description="Plan local screen/camera capture, vision model candidates, dependency checks, and safe vision runtime readiness.",
             role="vision",

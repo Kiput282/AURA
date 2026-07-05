@@ -28,6 +28,7 @@ from aura.awakening.awakening_manager import AwakeningManager
 from aura.briefing.daily_briefing_manager import DailyBriefingManager
 from aura.vision.vision_manager import VisionManager
 from aura.vision.vision_runtime_planner import VisionRuntimePlanner
+from aura.vision.vision_runtime_alpha_manager import VisionRuntimeAlphaManager
 from aura.status.system_status_manager import SystemStatusManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
@@ -98,6 +99,10 @@ class AuraShell:
             "desktop-action",
             "system-status",
             "status-full",
+            "vision-runtime-alpha-status",
+            "vision-screen-plan",
+            "vision-camera-plan",
+            "vision-runtime-context",
             "vision-runtime-status",
             "vision-runtime-plan",
             "vision-runtime-check",
@@ -248,6 +253,10 @@ class AuraShell:
         print("  desktop-action <a>   Prepare desktop action proposal")
         print("  system-status        Show unified AURA system status")
         print("  status-full          Alias for system-status")
+        print("  vision-runtime-alpha-status Show Vision Runtime Alpha status")
+        print("  vision-screen-plan   Prepare safe screen analysis plan")
+        print("  vision-camera-plan   Prepare safe camera analysis plan")
+        print("  vision-runtime-context Show Vision Runtime Alpha context")
         print("  vision-runtime-status Show vision runtime planning status")
         print("  vision-runtime-plan   Show screen/camera/model runtime plan")
         print("  vision-runtime-check  Run passive vision runtime dependency check")
@@ -1198,6 +1207,7 @@ class AuraShell:
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Voice Runtime Alpha : {status['foundation']['voice_runtime_alpha_sections']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
+        print(f"Vision Runtime Alpha: {status['foundation']['vision_runtime_alpha_sections']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
         print(f"Awakening Readiness : {status['foundation']['awakening_readiness']}")
         print()
@@ -2271,6 +2281,22 @@ class AuraShell:
             self.system_status()
             return
 
+        if normalized == "vision-runtime-alpha-status":
+            self.vision_runtime_alpha_status()
+            return
+
+        if normalized == "vision-screen-plan":
+            self.vision_screen_plan()
+            return
+
+        if normalized == "vision-camera-plan":
+            self.vision_camera_plan()
+            return
+
+        if normalized == "vision-runtime-context":
+            self.vision_runtime_context()
+            return
+
         if normalized == "vision-runtime-status":
             self.vision_runtime_status()
             return
@@ -3148,6 +3174,133 @@ class AuraShell:
         print(f"Microphone Access : {alpha['microphone_access']}")
         print(f"Speaker Output    : {alpha['speaker_output']}")
         print(f"Command Execution : {alpha['command_execution']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def vision_runtime_alpha_status(self) -> None:
+        manager = VisionRuntimeAlphaManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Vision Runtime Alpha Status")
+        print("================================")
+        print(f"Name                        : {status['name']}")
+        print(f"Version                     : {status['version']}")
+        print(f"Status                      : {status['status']}")
+        print(f"Alpha Ready                 : {status['alpha_ready']}")
+        print(f"Screen Plan Ready           : {status['screen_plan_ready']}")
+        print(f"Camera Plan Ready           : {status['camera_plan_ready']}")
+        print(f"Vision Context Ready        : {status['vision_context_ready']}")
+        print(f"Dependency Check Ready      : {status['dependency_check_ready']}")
+        print(f"Screen Backend Found        : {status['screen_backend_found']}")
+        print(f"Screen Backend              : {status['screen_backend'] or '-'}")
+        print(f"Screen Backend Path         : {status['screen_backend_path'] or '-'}")
+        print(f"Camera Backend Found        : {status['camera_backend_found']}")
+        print(f"Camera Backend              : {status['camera_backend'] or '-'}")
+        print(f"Camera Backend Path         : {status['camera_backend_path'] or '-'}")
+        print(f"Screen Capture Ready        : {status['screen_capture_ready']}")
+        print(f"Camera Capture Ready        : {status['camera_capture_ready']}")
+        print(f"Vision Model Ready          : {status['vision_model_ready']}")
+        print(f"Screen Access               : {status['screen_access']}")
+        print(f"Camera Access               : {status['camera_access']}")
+        print(f"Screenshot Capture          : {status['screenshot_capture']}")
+        print(f"Camera Frame Capture        : {status['camera_frame_capture']}")
+        print(f"Command Execution           : {status['command_execution']}")
+        print(f"Image File Write            : {status['image_file_write']}")
+        print(f"Requires Screen Confirmation: {status['requires_screen_confirmation']}")
+        print(f"Requires Camera Confirmation: {status['requires_camera_confirmation']}")
+        print(f"Python Packages             : {status['python_packages_installed']}/{status['python_packages_total']}")
+        print(f"Executables                 : {status['executables_found']}/{status['executables_total']}")
+        print(f"Sections                    : {status['sections']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def vision_screen_plan(self) -> None:
+        manager = VisionRuntimeAlphaManager(project_root=self.project_root)
+        plan = manager.screen_plan()
+
+        print("AURA Vision Screen Plan")
+        print("=======================")
+        print(f"Status                     : {plan['status']}")
+        print(f"Command Available          : {plan['command_available']}")
+        print(f"Screen Backend             : {plan['screen_backend']['name'] or '-'}")
+        print(f"Screen Backend Found       : {plan['screen_backend']['found']}")
+        print(f"Proposed Command           : {plan['proposed_command'] or '-'}")
+        print(f"Command Reason             : {plan['command_reason']}")
+        print(f"Screen Access              : {plan['screen_access']}")
+        print(f"Camera Access              : {plan['camera_access']}")
+        print(f"Screenshot Capture         : {plan['screenshot_capture_performed']}")
+        print(f"Command Execution          : {plan['command_execution_performed']}")
+        print(f"File Write Performed       : {plan['file_write_performed']}")
+        print()
+
+        print("Safety Notes")
+        print("------------")
+        for item in plan["safety_notes"]:
+            print(f"- {item}")
+
+    def vision_camera_plan(self) -> None:
+        manager = VisionRuntimeAlphaManager(project_root=self.project_root)
+        plan = manager.camera_plan()
+
+        print("AURA Vision Camera Plan")
+        print("=======================")
+        print(f"Status                     : {plan['status']}")
+        print(f"Command Available          : {plan['command_available']}")
+        print(f"Camera Backend             : {plan['camera_backend']['name'] or '-'}")
+        print(f"Camera Backend Found       : {plan['camera_backend']['found']}")
+        print(f"Proposed Command           : {plan['proposed_command'] or '-'}")
+        print(f"Command Reason             : {plan['command_reason']}")
+        print(f"Screen Access              : {plan['screen_access']}")
+        print(f"Camera Access              : {plan['camera_access']}")
+        print(f"Camera Frame Capture       : {plan['camera_frame_capture_performed']}")
+        print(f"Command Execution          : {plan['command_execution_performed']}")
+        print(f"File Write Performed       : {plan['file_write_performed']}")
+        print()
+
+        print("Safety Notes")
+        print("------------")
+        for item in plan["safety_notes"]:
+            print(f"- {item}")
+
+    def vision_runtime_context(self) -> None:
+        manager = VisionRuntimeAlphaManager(project_root=self.project_root)
+        context = manager.context()
+        alpha = context["alpha_status"]
+
+        print("AURA Vision Runtime Alpha Context")
+        print("=================================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"Screen Access Performed      : {context['screen_access_performed']}")
+        print(f"Camera Access Performed      : {context['camera_access_performed']}")
+        print(f"Screenshot Capture Performed : {context['screenshot_capture_performed']}")
+        print(f"Camera Frame Capture         : {context['camera_frame_capture_performed']}")
+        print()
+        print("Alpha Status")
+        print("------------")
+        print(f"Alpha Ready          : {alpha['alpha_ready']}")
+        print(f"Screen Plan Ready    : {alpha['screen_plan_ready']}")
+        print(f"Camera Plan Ready    : {alpha['camera_plan_ready']}")
+        print(f"Screen Backend Found : {alpha['screen_backend_found']}")
+        print(f"Screen Backend       : {alpha['screen_backend'] or '-'}")
+        print(f"Camera Backend Found : {alpha['camera_backend_found']}")
+        print(f"Camera Backend       : {alpha['camera_backend'] or '-'}")
+        print(f"Screen Access        : {alpha['screen_access']}")
+        print(f"Camera Access        : {alpha['camera_access']}")
+        print(f"Command Execution    : {alpha['command_execution']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")

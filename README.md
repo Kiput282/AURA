@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.46.0-genesis
-Status  : VOICE RUNTIME ALPHA ONLINE
+Version : 0.47.0-genesis
+Status  : VISION RUNTIME ALPHA ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -108,6 +108,7 @@ AURA currently supports:
 - Memory Reflection System
 - Daily Project Briefing
 - Voice Runtime Alpha
+- Vision Runtime Alpha
 - Memory-aware chat
 - Identity guardrail
 - Language control

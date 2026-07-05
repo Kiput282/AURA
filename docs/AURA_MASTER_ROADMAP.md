@@ -442,6 +442,7 @@ Planned:
 - Memory Reflection System
 - Daily Project Briefing
 - Voice Runtime Alpha
+- Vision Runtime Alpha
 - File/project plugin
 - App launcher plugin
 - Browser helper

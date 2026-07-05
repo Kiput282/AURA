@@ -566,6 +566,50 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="vision.runtime_alpha_status",
+            plugin="vision",
+            description="Show Vision Runtime Alpha status.",
+            permission_action="read_project",
+            status="online",
+            skill="vision_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="vision.screen_plan",
+            plugin="vision",
+            description="Prepare a safe screen analysis plan without capturing the screen.",
+            permission_action="suggest",
+            status="online",
+            skill="vision_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="vision.camera_plan",
+            plugin="vision",
+            description="Prepare a safe camera analysis plan without accessing the camera.",
+            permission_action="suggest",
+            status="online",
+            skill="vision_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="vision.runtime_alpha_context",
+            plugin="vision",
+            description="Prepare Vision Runtime Alpha context without accessing screen or camera.",
+            permission_action="read_project",
+            status="online",
+            skill="vision_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="vision.runtime_status",
             plugin="vision",
             description="Show vision runtime planning status.",
