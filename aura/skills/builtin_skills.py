@@ -27,6 +27,26 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="game_companion_foundation",
+            description="Prepare safe game companion session plans, strategy plans, streaming plans, and coaching plans without reading game screen, controlling input, opening games/apps, writing files, or executing commands.",
+            role="creative",
+            permission_action="prepare_file",
+            status="foundation",
+            capabilities=[
+                "game_companion_status",
+                "game_session_plan",
+                "game_strategy_plan",
+                "game_streaming_plan",
+                "game_coaching_plan",
+                "game_context",
+                "non_invasive_game_support",
+                "streaming_safe_game_notes",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="expression_language",
             description="Prepare AURA mood, emotion tags, voice tone hints, avatar expression hints, gesture hints, and response style hints without changing avatar state, playing voice output, writing files, or executing commands.",
             role="creative",

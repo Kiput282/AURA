@@ -17,6 +17,7 @@ from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
 from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundationManager
 from aura.media.media_understanding_foundation_manager import MediaUnderstandingFoundationManager
 from aura.expression.expression_language_manager import ExpressionLanguageManager
+from aura.game.game_companion_foundation_manager import GameCompanionFoundationManager
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
@@ -125,6 +126,12 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "game-companion-status",
+            "game-session-plan",
+            "game-strategy-plan",
+            "game-streaming-plan",
+            "game-coaching-plan",
+            "game-context",
             "expression-language-status",
             "expression-state",
             "expression-plan",
@@ -319,6 +326,12 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  game-companion-status Show AURA Game Companion Foundation status")
+        print("  game-session-plan <target> Prepare safe game session plan")
+        print("  game-strategy-plan <target> Prepare safe game strategy plan")
+        print("  game-streaming-plan <target> Prepare streaming-safe game plan")
+        print("  game-coaching-plan <target> Prepare safe game coaching plan")
+        print("  game-context Show game companion context")
         print("  expression-language-status Show AURA Expression Language status")
         print("  expression-state Show AURA internal expression state")
         print("  expression-plan <text> Prepare safe expression plan")
@@ -2492,6 +2505,46 @@ class AuraShell:
 
         if normalized == "vision-providers":
             self.vision_providers()
+            return
+
+        if normalized == "game-companion-status":
+            self.game_companion_status()
+            return
+
+        if normalized.startswith("game-session-plan "):
+            target = command[len("game-session-plan "):].strip()
+            if not target:
+                print("Usage: game-session-plan <target>")
+                return
+            self.game_session_plan(target)
+            return
+
+        if normalized.startswith("game-strategy-plan "):
+            target = command[len("game-strategy-plan "):].strip()
+            if not target:
+                print("Usage: game-strategy-plan <target>")
+                return
+            self.game_strategy_plan(target)
+            return
+
+        if normalized.startswith("game-streaming-plan "):
+            target = command[len("game-streaming-plan "):].strip()
+            if not target:
+                print("Usage: game-streaming-plan <target>")
+                return
+            self.game_streaming_plan(target)
+            return
+
+        if normalized.startswith("game-coaching-plan "):
+            target = command[len("game-coaching-plan "):].strip()
+            if not target:
+                print("Usage: game-coaching-plan <target>")
+                return
+            self.game_coaching_plan(target)
+            return
+
+        if normalized == "game-context":
+            self.game_context()
             return
 
         if normalized == "expression-language-status":
@@ -4898,6 +4951,177 @@ class AuraShell:
         print(f"Gesture Hint Ready  : {status['gesture_hint_ready']}")
         print(f"Context Ready       : {status['context_ready']}")
         print(f"Runtime Ready       : {status['runtime_ready']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def game_companion_status(self) -> None:
+        manager = GameCompanionFoundationManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Game Companion Foundation Status")
+        print("=====================================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Companion Ready              : {status['companion_ready']}")
+        print(f"Session Plan Ready           : {status['session_plan_ready']}")
+        print(f"Strategy Plan Ready          : {status['strategy_plan_ready']}")
+        print(f"Streaming Plan Ready         : {status['streaming_plan_ready']}")
+        print(f"Coaching Plan Ready          : {status['coaching_plan_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Expression Integration Ready : {status['expression_integration_ready']}")
+        print(f"Vision Integration Ready     : {status['vision_integration_ready']}")
+        print(f"Desktop Integration Ready    : {status['desktop_integration_ready']}")
+        print(f"Media Integration Ready      : {status['media_integration_ready']}")
+        print(f"Partner Integration Ready    : {status['partner_integration_ready']}")
+        print(f"Supported Styles             : {status['supported_styles']}")
+        print(f"Support Modes                : {status['support_modes']}")
+        print(f"Safety Boundaries            : {status['safety_boundaries']}")
+        print(f"Gaming Mode                  : {status['gaming_mode']}")
+        print(f"Streaming Mode               : {status['streaming_mode']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                    : {status['read_only']}")
+        print(f"Game Screen Read             : {status['game_screen_read']}")
+        print(f"Screen Capture               : {status['screen_capture']}")
+        print(f"Camera Access                : {status['camera_access']}")
+        print(f"Game Input Control           : {status['game_input_control']}")
+        print(f"Keyboard Input               : {status['keyboard_input']}")
+        print(f"Mouse Control                : {status['mouse_control']}")
+        print(f"Game App Opened              : {status['game_app_opened']}")
+        print(f"Desktop Action Execution     : {status['desktop_action_execution']}")
+        print(f"Voice Output                 : {status['voice_output']}")
+        print(f"Avatar Changed               : {status['avatar_changed']}")
+        print(f"File Write                   : {status['file_write']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"External Action Execution    : {status['external_action_execution']}")
+        print(f"Real Tool Execution          : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def print_game_plan(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                       : {plan['status']}")
+        print(f"Plan Type                    : {plan['plan_type']}")
+        print(f"Target                       : {plan['target']}")
+        print(f"Plan State                   : {plan['plan_state']}")
+        print(f"Game Style                   : {plan['game_style']}")
+        print(f"Game Tags                    : {', '.join(plan['game_tags'])}")
+        print(f"Voice Tone Hint              : {plan['voice_tone_hint']}")
+        print(f"Avatar Expression Hint       : {plan['avatar_expression_hint']}")
+        print(f"Gesture Hint                 : {plan['gesture_hint']}")
+        print(f"Response Style Hint          : {plan['response_style_hint']}")
+        print(f"Vision Context Ready         : {plan['vision_context_ready']}")
+        print(f"Desktop Context Ready        : {plan['desktop_context_ready']}")
+        print(f"Media Context Ready          : {plan['media_context_ready']}")
+        print(f"Partner Context Ready        : {plan['partner_context_ready']}")
+        print(f"Execution Ready              : {plan['execution_ready']}")
+        print(f"Executed                     : {plan['executed']}")
+        print()
+        print("Game Context")
+        print("------------")
+        context = plan["game_context"]
+        print(f"Style               : {context['style']}")
+        print(f"Tags                : {', '.join(context['tags'])}")
+        print(f"Streaming Related   : {context['streaming_related']}")
+        print(f"Competitive Related : {context['competitive_related']}")
+        print(f"Strategy Related    : {context['strategy_related']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Game Screen Read             : {plan['game_screen_read']}")
+        print(f"Screen Capture Performed     : {plan['screen_capture_performed']}")
+        print(f"Camera Access Performed      : {plan['camera_access_performed']}")
+        print(f"Keyboard Input Performed     : {plan['keyboard_input_performed']}")
+        print(f"Mouse Control Performed      : {plan['mouse_control_performed']}")
+        print(f"Game Input Control           : {plan['game_input_control']}")
+        print(f"Game App Opened              : {plan['game_app_opened']}")
+        print(f"Desktop Action Performed     : {plan['desktop_action_performed']}")
+        print(f"Voice Output Performed       : {plan['voice_output_performed']}")
+        print(f"Avatar Changed               : {plan['avatar_changed']}")
+        print(f"File Write Performed         : {plan['file_write_performed']}")
+        print(f"Command Execution Performed  : {plan['command_execution_performed']}")
+        print(f"External Action Performed    : {plan['external_action_execution_performed']}")
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in plan["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def game_session_plan(self, target: str) -> None:
+        manager = GameCompanionFoundationManager(project_root=self.project_root)
+        self.print_game_plan("AURA Game Session Plan", manager.session_plan(target))
+
+    def game_strategy_plan(self, target: str) -> None:
+        manager = GameCompanionFoundationManager(project_root=self.project_root)
+        self.print_game_plan("AURA Game Strategy Plan", manager.strategy_plan(target))
+
+    def game_streaming_plan(self, target: str) -> None:
+        manager = GameCompanionFoundationManager(project_root=self.project_root)
+        self.print_game_plan("AURA Game Streaming Plan", manager.streaming_plan(target))
+
+    def game_coaching_plan(self, target: str) -> None:
+        manager = GameCompanionFoundationManager(project_root=self.project_root)
+        self.print_game_plan("AURA Game Coaching Plan", manager.coaching_plan(target))
+
+    def game_context(self) -> None:
+        manager = GameCompanionFoundationManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Game Companion Context")
+        print("===========================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Read Only                    : {context['read_only']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Game Screen Read             : {context['game_screen_read']}")
+        print(f"Game Input Control           : {context['game_input_control']}")
+        print(f"Game App Opened              : {context['game_app_opened']}")
+        print(f"Voice Output Performed       : {context['voice_output_performed']}")
+        print(f"Avatar Changed               : {context['avatar_changed']}")
+        print(f"File Write Performed         : {context['file_write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"External Action Performed    : {context['external_action_execution_performed']}")
+        print()
+        print("Game Status")
+        print("-----------")
+        status = context["game_status"]
+        print(f"Companion Ready      : {status['companion_ready']}")
+        print(f"Session Plan Ready   : {status['session_plan_ready']}")
+        print(f"Strategy Plan Ready  : {status['strategy_plan_ready']}")
+        print(f"Streaming Plan Ready : {status['streaming_plan_ready']}")
+        print(f"Coaching Plan Ready  : {status['coaching_plan_ready']}")
+        print(f"Context Ready        : {status['context_ready']}")
+        print(f"Runtime Ready        : {status['runtime_ready']}")
+        print()
+        print("Integrations")
+        print("------------")
+        print(f"Expression : {status['expression_integration_ready']}")
+        print(f"Vision     : {status['vision_integration_ready']}")
+        print(f"Desktop    : {status['desktop_integration_ready']}")
+        print(f"Media      : {status['media_integration_ready']}")
+        print(f"Partner    : {status['partner_integration_ready']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")

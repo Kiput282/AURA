@@ -10,6 +10,7 @@ from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
 from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundationManager
 from aura.media.media_understanding_foundation_manager import MediaUnderstandingFoundationManager
 from aura.expression.expression_language_manager import ExpressionLanguageManager
+from aura.game.game_companion_foundation_manager import GameCompanionFoundationManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.desktop.desktop_assistant_alpha_manager import DesktopAssistantAlphaManager
 from aura.journal.project_journal import ProjectJournal
@@ -69,6 +70,7 @@ class SystemStatusManager:
         self.blender_bridge_manager = BlenderBridgeFoundationManager(project_root=project_root)
         self.media_understanding_manager = MediaUnderstandingFoundationManager(project_root=project_root)
         self.expression_language_manager = ExpressionLanguageManager(project_root=project_root)
+        self.game_companion_manager = GameCompanionFoundationManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -110,6 +112,7 @@ class SystemStatusManager:
         blender_bridge_status = self.blender_bridge_manager.status()
         media_understanding_status = self.media_understanding_manager.status()
         expression_language_status = self.expression_language_manager.status()
+        game_companion_status = self.game_companion_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -153,6 +156,8 @@ class SystemStatusManager:
                 "media_asset_candidates": media_understanding_status["candidate_count"],
                 "expression_language_sections": expression_language_status["sections"],
                 "expression_emotion_tags": expression_language_status["emotion_tags"],
+                "game_companion_sections": game_companion_status["sections"],
+                "game_support_modes": game_companion_status["support_modes"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -174,6 +179,7 @@ class SystemStatusManager:
                 "blender_bridge": blender_bridge_status["status"],
                 "media_understanding": media_understanding_status["status"],
                 "expression_language": expression_language_status["status"],
+                "game_companion": game_companion_status["status"],
                 "context": "online",
                 "core_loop": "alpha",
                 "model_router": model_router_status["status"],
@@ -308,6 +314,22 @@ class SystemStatusManager:
                 "expression_file_write": expression_language_status["file_write"],
                 "expression_command_execution": expression_language_status["command_execution"],
                 "expression_external_action_execution": expression_language_status["external_action_execution"],
+                "game_companion_ready": game_companion_status["companion_ready"],
+                "game_session_plan_ready": game_companion_status["session_plan_ready"],
+                "game_strategy_plan_ready": game_companion_status["strategy_plan_ready"],
+                "game_streaming_plan_ready": game_companion_status["streaming_plan_ready"],
+                "game_coaching_plan_ready": game_companion_status["coaching_plan_ready"],
+                "game_context_ready": game_companion_status["context_ready"],
+                "game_expression_integration_ready": game_companion_status["expression_integration_ready"],
+                "game_vision_integration_ready": game_companion_status["vision_integration_ready"],
+                "game_desktop_integration_ready": game_companion_status["desktop_integration_ready"],
+                "game_partner_integration_ready": game_companion_status["partner_integration_ready"],
+                "game_screen_read": game_companion_status["game_screen_read"],
+                "game_input_control": game_companion_status["game_input_control"],
+                "game_app_opened": game_companion_status["game_app_opened"],
+                "game_file_write": game_companion_status["file_write"],
+                "game_command_execution": game_companion_status["command_execution"],
+                "game_external_action_execution": game_companion_status["external_action_execution"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
                 "desktop_assistant_alpha_ready": desktop_alpha_status["alpha_ready"],
@@ -324,5 +346,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, media understanding, expression language, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, media understanding, expression language, game companion, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

@@ -247,6 +247,72 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="game.companion_status",
+            plugin="game",
+            description="Show AURA Game Companion Foundation status.",
+            permission_action="read_project",
+            status="foundation",
+            skill="game_companion_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="game.session_plan",
+            plugin="game",
+            description="Prepare a safe game session companion plan without reading screen or controlling input.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="game_companion_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="game.strategy_plan",
+            plugin="game",
+            description="Prepare a safe game strategy plan without live screen reading or command execution.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="game_companion_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="game.streaming_plan",
+            plugin="game",
+            description="Prepare streaming-safe game companion notes without capture, voice output, or external actions.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="game_companion_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="game.coaching_plan",
+            plugin="game",
+            description="Prepare a safe game coaching/practice plan without input control or screen reading.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="game_companion_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="game.context",
+            plugin="game",
+            description="Prepare game companion context without reading screen, controlling input, opening apps, writing files, or executing commands.",
+            permission_action="read_project",
+            status="foundation",
+            skill="game_companion_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="expression.language_status",
             plugin="expression",
             description="Show AURA Expression Language status.",

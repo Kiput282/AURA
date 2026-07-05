@@ -450,6 +450,7 @@ Planned:
 - Blender Bridge Foundation
 - Media Understanding Foundation
 - AURA Expression Language
+- Game Companion Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

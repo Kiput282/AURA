@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.54.0-genesis
-Status  : EXPRESSION LANGUAGE ONLINE
+Version : 0.55.0-genesis
+Status  : GAME COMPANION FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -116,6 +116,7 @@ AURA currently supports:
 - Blender Bridge Foundation
 - Media Understanding Foundation
 - AURA Expression Language
+- Game Companion Foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control
