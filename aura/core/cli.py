@@ -1837,6 +1837,7 @@ class AuraCLI:
 
         subparsers.add_parser("blender-context")
 
+        subparsers.add_parser("workspace-status")
         subparsers.add_parser("workspace-awareness-status")
         subparsers.add_parser("workspace-map")
         subparsers.add_parser("workspace-context")
@@ -2514,6 +2515,11 @@ class AuraCLI:
         if parsed.command == "blender-context":
             disable_logging()
             self.blender_context()
+            return True
+
+        if parsed.command == "workspace-status":
+            disable_logging()
+            self.workspace_awareness_status()
             return True
 
         if parsed.command == "workspace-awareness-status":

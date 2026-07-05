@@ -1653,4 +1653,59 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         )
     )
 
+    registry.register(
+        PluginAction(
+            name="blender.status",
+            plugin="blender",
+            description="Compatibility alias for AURA Blender Bridge Foundation status.",
+            permission_action="read_project",
+            status="online",
+            skill="blender_bridge_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="media.status",
+            plugin="media",
+            description="Compatibility alias for AURA Media Understanding Foundation status.",
+            permission_action="read_project",
+            status="online",
+            skill="media_understanding_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="expression.status",
+            plugin="expression",
+            description="Compatibility alias for AURA Expression Language status.",
+            permission_action="read_project",
+            status="online",
+            skill="expression_language",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="game_companion.status",
+            plugin="game_companion",
+            description="Compatibility alias for AURA Game Companion Foundation status.",
+            permission_action="read_project",
+            status="online",
+            skill="game_companion_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="streaming_safety.status",
+            plugin="streaming_safety",
+            description="Compatibility alias for AURA Streaming Safety Foundation status.",
+            permission_action="read_project",
+            status="online",
+            skill="streaming_safety_foundation",
+        )
+    )
+
     return registry

@@ -183,6 +183,7 @@ class AuraShell:
             "blender-rigging-plan",
             "blender-animation-plan",
             "blender-context",
+            "workspace-status",
             "workspace-awareness-status",
             "workspace-map",
             "workspace-context",
@@ -409,6 +410,7 @@ class AuraShell:
         print("  blender-rigging-plan <goal> Prepare safe Blender rigging plan")
         print("  blender-animation-plan <goal> Prepare safe Blender animation plan")
         print("  blender-context     Show Blender bridge context")
+        print("  workspace-status Alias for workspace-awareness-status")
         print("  workspace-awareness-status Show AURA Workspace Awareness status")
         print("  workspace-map        Show read-only AURA workspace map")
         print("  workspace-context    Show read-only AURA workspace context")
@@ -2911,6 +2913,10 @@ class AuraShell:
 
         if normalized == "blender-context":
             self.blender_context()
+            return
+
+        if normalized == "workspace-status":
+            self.workspace_awareness_status()
             return
 
         if normalized == "workspace-awareness-status":

@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.59.0-genesis
-Status  : CREATIVE ASSISTANT FOUNDATION ONLINE
+Version : 0.60.0-genesis
+Status  : AURA GENESIS v0.60 STABILIZED
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -121,6 +121,7 @@ AURA currently supports:
 - Workspace Memory Link
 - Project Intent Planner
 - Creative Assistant Foundation
+- Review & Stabilization 51-60
 - Memory-aware chat
 - Identity guardrail
 - Language control
