@@ -11,6 +11,7 @@ from aura.memory.memory_store import MemoryStore
 from aura.model_router.model_router import ModelRouter
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.project_coding.project_coding_manager import ProjectCodingManager
+from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.tool_sandbox.tool_sandbox_manager import ToolSandboxManager
@@ -47,6 +48,7 @@ class SystemStatusManager:
         self.model_router = ModelRouter(project_root=project_root)
         self.tool_sandbox_manager = ToolSandboxManager(project_root=project_root)
         self.project_coding_manager = ProjectCodingManager(project_root=project_root)
+        self.memory_reflection_manager = MemoryReflectionManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -77,6 +79,7 @@ class SystemStatusManager:
         model_router_status = self.model_router.status()
         tool_sandbox_status = self.tool_sandbox_manager.status()
         project_coding_status = self.project_coding_manager.status()
+        memory_reflection_status = self.memory_reflection_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -109,6 +112,7 @@ class SystemStatusManager:
                 "sandbox_blocked_commands": tool_sandbox_status["blocked_command_count"],
                 "sandbox_blocked_patterns": tool_sandbox_status["blocked_pattern_count"],
                 "project_python_files": project_coding_status["python_files"],
+                "reflection_milestones": memory_reflection_status["milestone_count"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
                 "vision_providers": vision_status["providers"],
@@ -119,6 +123,7 @@ class SystemStatusManager:
             "systems": {
                 "memory": "online",
                 "journal": "online",
+                "memory_reflection": memory_reflection_status["status"],
                 "context": "online",
                 "core_loop": "alpha",
                 "model_router": model_router_status["status"],
@@ -152,8 +157,11 @@ class SystemStatusManager:
                 "project_coding_v2": project_coding_status["analysis_ready"],
                 "project_patch_planning": project_coding_status["patch_planning_ready"],
                 "project_file_write": project_coding_status["file_write_ready"],
+                "memory_reflection_ready": memory_reflection_status["reflection_ready"],
+                "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
+                "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
         }

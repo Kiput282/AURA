@@ -40,6 +40,14 @@ class PermissionManager:
             "description": "Read project files, logs, or status.",
             "reason": "Project reading is useful for development assistance.",
         },
+
+        "read_memory": {
+            "level": PermissionLevel.READ,
+            "allowed": True,
+            "requires_confirmation": False,
+            "description": "Read memory and journal metadata.",
+            "reason": "Memory reading is useful for reflection and context assistance.",
+        },
         "screen_analyze": {
             "level": PermissionLevel.READ,
             "allowed": True,

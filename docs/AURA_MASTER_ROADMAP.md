@@ -439,6 +439,7 @@ Planned:
 - Model Router Foundation
 - Tool Execution Sandbox Foundation
 - Project Coding Assistant v2
+- Memory Reflection System
 - File/project plugin
 - App launcher plugin
 - Browser helper

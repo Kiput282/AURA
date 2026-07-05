@@ -124,6 +124,23 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="memory_reflection",
+            description="Reflect on memory and project journal to summarize milestones, highlights, and insights without modifying memory.",
+            role="memory",
+            permission_action="read_memory",
+            status="online",
+            capabilities=[
+                "memory_reflection_status",
+                "memory_reflect",
+                "memory_insights",
+                "reflection_context",
+                "read_only_reflection",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="memory_manage",
             description="List, count, delete, pin, unpin, and set importance for memories.",
             role="memory",

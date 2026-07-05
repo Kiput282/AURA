@@ -21,6 +21,7 @@ from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.project_coding.project_coding_manager import ProjectCodingManager
+from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.awakening.awakening_manager import AwakeningManager
@@ -1537,6 +1538,7 @@ class AuraCLI:
         print(f"Sandbox Blocked     : {status['foundation']['sandbox_blocked_commands']}")
         print(f"Sandbox Patterns    : {status['foundation']['sandbox_blocked_patterns']}")
         print(f"Project Python Files: {status['foundation']['project_python_files']}")
+        print(f"Reflection Milestones: {status['foundation']['reflection_milestones']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
@@ -1722,6 +1724,17 @@ class AuraCLI:
         subparsers.add_parser("provider")
         subparsers.add_parser("roles")
         subparsers.add_parser("reason")
+
+        subparsers.add_parser("memory-reflection-status")
+
+        memory_reflect_parser = subparsers.add_parser("memory-reflect")
+        memory_reflect_parser.add_argument("--limit", type=int, default=8)
+
+        memory_insights_parser = subparsers.add_parser("memory-insights")
+        memory_insights_parser.add_argument("--limit", type=int, default=8)
+
+        memory_reflection_context_parser = subparsers.add_parser("memory-reflection-context")
+        memory_reflection_context_parser.add_argument("--limit", type=int, default=5)
 
         memory_delete_parser = subparsers.add_parser("memory-delete")
         memory_delete_parser.add_argument("memory_id", type=str)
@@ -2084,6 +2097,26 @@ class AuraCLI:
             self.provider_check()
             return True
 
+        if parsed.command == "memory-reflection-status":
+            disable_logging()
+            self.memory_reflection_status()
+            return True
+
+        if parsed.command == "memory-reflect":
+            disable_logging()
+            self.memory_reflect(limit=parsed.limit)
+            return True
+
+        if parsed.command == "memory-insights":
+            disable_logging()
+            self.memory_insights(limit=parsed.limit)
+            return True
+
+        if parsed.command == "memory-reflection-context":
+            disable_logging()
+            self.memory_reflection_context(limit=parsed.limit)
+            return True
+
         if parsed.command in {"memory-delete", "mem-delete"}:
             disable_logging()
             self.memory_delete(memory_id=parsed.memory_id)
@@ -2326,4 +2359,118 @@ class AuraCLI:
 
         print()
         print(f"Note: {result['project_coding_note']}")
+
+
+    def memory_reflection_status(self) -> None:
+        manager = MemoryReflectionManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Memory Reflection System")
+        print("=============================")
+        print(f"Name                    : {status['name']}")
+        print(f"Version                 : {status['version']}")
+        print(f"Status                  : {status['status']}")
+        print(f"Reflection Ready        : {status['reflection_ready']}")
+        print(f"Memory Read Ready       : {status['memory_read_ready']}")
+        print(f"Journal Read Ready      : {status['journal_read_ready']}")
+        print(f"Insight Generation Ready: {status['insight_generation_ready']}")
+        print(f"Automatic Memory Write  : {status['automatic_memory_write']}")
+        print(f"Automatic Memory Delete : {status['automatic_memory_delete']}")
+        print(f"Automatic Memory Merge  : {status['automatic_memory_merge']}")
+        print(f"Memory Count            : {status['memory_count']}")
+        print(f"Journal Count           : {status['journal_count']}")
+        print(f"Pinned Memory Count     : {status['pinned_memory_count']}")
+        print(f"Important Memory Count  : {status['important_memory_count']}")
+        print(f"Milestone Count         : {status['milestone_count']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def memory_reflect(self, limit: int = 8) -> None:
+        manager = MemoryReflectionManager(project_root=self.project_root)
+        reflection = manager.reflect(limit=limit)
+
+        print("AURA Memory Reflection")
+        print("======================")
+        print(f"Title          : {reflection['title']}")
+        print(f"Status         : {reflection['status']}")
+        print(f"Memory Count   : {reflection['memory_count']}")
+        print(f"Journal Count  : {reflection['journal_count']}")
+        print(f"Milestone Count: {reflection['milestone_count']}")
+        print(f"Limit          : {reflection['metadata']['limit']}")
+        print()
+
+        print("Recent Milestones")
+        print("-----------------")
+        for item in reflection["recent_milestones"]:
+            print(f"- {item}")
+
+        print()
+        print("Memory Highlights")
+        print("-----------------")
+        for item in reflection["memory_highlights"]:
+            print(f"- {item}")
+
+        print()
+        print("Project Insights")
+        print("----------------")
+        for item in reflection["project_insights"]:
+            print(f"- {item}")
+
+        print()
+        print("Safety Notes")
+        print("------------")
+        for item in reflection["safety_notes"]:
+            print(f"- {item}")
+
+    def memory_insights(self, limit: int = 8) -> None:
+        manager = MemoryReflectionManager(project_root=self.project_root)
+        result = manager.insights(limit=limit)
+
+        print("AURA Memory Insights")
+        print("====================")
+        print(f"Status         : {result['status']}")
+        print(f"Insight Count  : {result['insight_count']}")
+        print(f"Write Performed: {result['write_performed']}")
+        print(f"Delete Performed: {result['delete_performed']}")
+        print(f"Merge Performed : {result['merge_performed']}")
+        print()
+
+        print("Insights")
+        print("--------")
+        for item in result["insights"]:
+            print(f"- {item}")
+
+        print()
+        print("Safety Notes")
+        print("------------")
+        for item in result["safety_notes"]:
+            print(f"- {item}")
+
+    def memory_reflection_context(self, limit: int = 5) -> None:
+        manager = MemoryReflectionManager(project_root=self.project_root)
+        context = manager.reflection_context(limit=limit)
+
+        print("AURA Memory Reflection Context")
+        print("==============================")
+        print(f"Status          : {context['status']}")
+        print(f"Context Ready   : {context['context_ready']}")
+        print(f"Memory Count    : {context['memory_count']}")
+        print(f"Journal Count   : {context['journal_count']}")
+        print(f"Milestones      : {len(context['milestones'])}")
+        print(f"Memory Highlights: {len(context['memory_highlights'])}")
+        print(f"Write Performed : {context['write_performed']}")
+        print()
+        print("Milestones")
+        print("----------")
+        for milestone in context["milestones"]:
+            print(f"- {milestone['title']}: {milestone['content']}")
+
+        print()
+        print("Memory Highlights")
+        print("-----------------")
+        for memory in context["memory_highlights"]:
+            print(f"- {memory['content']}")
+
+        print()
+        print(f"Note: {context['note']}")
 

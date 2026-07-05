@@ -203,6 +203,50 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="memory.reflection_status",
+            plugin="memory_reflection",
+            description="Show Memory Reflection System status.",
+            permission_action="read_memory",
+            status="online",
+            skill="memory_reflection",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="memory.reflect",
+            plugin="memory_reflection",
+            description="Create a read-only reflection summary from memory and project journal.",
+            permission_action="read_memory",
+            status="online",
+            skill="memory_reflection",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="memory.insights",
+            plugin="memory_reflection",
+            description="Generate read-only project insights from memory and journal.",
+            permission_action="read_memory",
+            status="online",
+            skill="memory_reflection",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="memory.reflection_context",
+            plugin="memory_reflection",
+            description="Prepare reflection context for future reasoning without writing memory.",
+            permission_action="read_memory",
+            status="online",
+            skill="memory_reflection",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="memory.recall",
             plugin="memory",
             description="Recall recent memories.",
