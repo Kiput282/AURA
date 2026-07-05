@@ -49,6 +49,39 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="core.loop_status",
+            plugin="core",
+            description="Show AURA alpha core loop status.",
+            permission_action="think",
+            status="online",
+            skill="core_loop",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="core.loop_run",
+            plugin="core",
+            description="Run AURA alpha core loop and return a safe response without executing external actions.",
+            permission_action="think",
+            status="online",
+            skill="core_loop",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="core.loop_trace",
+            plugin="core",
+            description="Trace AURA alpha core loop steps without executing external actions.",
+            permission_action="think",
+            status="online",
+            skill="core_loop",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="system.status",
             plugin="system",
             description="Show unified AURA system status.",

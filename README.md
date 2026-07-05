@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.39.0-genesis
-Status  : AVATAR FOUNDATION ONLINE
+Version : 0.40.0-genesis
+Status  : AURA ALPHA CORE LOOP ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -101,6 +101,7 @@ AURA currently supports:
 - Voice Runtime Planning
 - Vision Runtime Planning
 - Avatar Foundation
+- AURA Alpha Core Loop
 - Memory-aware chat
 - Identity guardrail
 - Language control

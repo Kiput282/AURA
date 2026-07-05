@@ -435,6 +435,7 @@ Planned:
 - Voice Runtime Planning
 - Vision Runtime Planning
 - Avatar Foundation
+- AURA Alpha Core Loop
 - File/project plugin
 - App launcher plugin
 - Browser helper

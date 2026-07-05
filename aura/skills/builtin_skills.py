@@ -38,6 +38,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="core_loop",
+            description="Run AURA alpha core loop across input, context, reasoning, planning, safety, response, and journal context.",
+            role="companion",
+            permission_action="think",
+            status="online",
+            capabilities=[
+                "core_loop_status",
+                "core_loop_run",
+                "core_loop_trace",
+                "context_reasoning_flow",
+                "safe_action_proposal",
+                "journal_context",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="chat",
             description="Talk with the user using AURA's companion personality and context manager.",
             role="companion",

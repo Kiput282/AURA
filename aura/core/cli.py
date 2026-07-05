@@ -5,6 +5,7 @@ from typing import Any
 import yaml
 
 from aura.core.chat import AuraChat
+from aura.core_loop.core_loop_manager import CoreLoopManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.actions.action_request_manager import ActionRequestManager
 from aura.avatar.avatar_manager import AvatarManager
@@ -1016,6 +1017,103 @@ class AuraCLI:
             print(f"  Description     : {provider.description}")
             print()
 
+    def core_loop_status(self) -> None:
+        manager = CoreLoopManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Alpha Core Loop Status")
+        print("===========================")
+        print(f"Name                 : {status['name']}")
+        print(f"Version              : {status['version']}")
+        print(f"Status               : {status['status']}")
+        print(f"Loop Ready           : {status['loop_ready']}")
+        print(f"Execution Ready      : {status['execution_ready']}")
+        print(f"Safe Action Execution: {status['safe_action_execution']}")
+        print(f"Steps                : {status['steps']}")
+        print(f"Flow                 : {status['flow']}")
+        print()
+        print("Systems")
+        print("-------")
+        for name, value in status["systems"].items():
+            print(f"{name:<16}: {value}")
+        print()
+        print("Runtime")
+        print("-------")
+        for name, value in status["runtime"].items():
+            print(f"{name:<22}: {value}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def core_loop_run(self, message: str) -> None:
+        manager = CoreLoopManager(project_root=self.project_root)
+        result = manager.run(message=message)
+
+        print("AURA Alpha Core Loop Run")
+        print("========================")
+        print(f"Input     : {result['input']['message']}")
+        print(f"Action    : {result['plan']['inferred_action']}")
+        print(f"Mode      : {result['plan']['mode']}")
+        print(f"Executed  : {result['execution']['executed']}")
+        print()
+        print("Context")
+        print("-------")
+        context = result["context"]
+        print(f"Pinned Memories       : {context['pinned_memories']}")
+        print(f"Important Memories    : {context['important_memories']}")
+        print(f"Relevant Memories     : {context['relevant_memories']}")
+        print(f"Recent Journal Entries: {context['recent_journal_entries']}")
+        if context["latest_journal"]:
+            print(f"Latest Journal        : {context['latest_journal']}")
+        print()
+        print("Safety")
+        print("------")
+        safety = result["safety"]
+        print(f"Resolved Action : {safety['resolved_action']}")
+        print(f"Request State   : {safety['request_state']}")
+        print(f"Allowed         : {safety['allowed']}")
+        print(f"Confirmation    : {safety['requires_confirmation']}")
+        print(f"Permission      : {safety['permission_action']}")
+        print(f"Reason          : {safety['reason']}")
+        print()
+        print("AURA Response")
+        print("-------------")
+        print(result["response"]["text"])
+        print()
+        print("Journal")
+        print("-------")
+        print(f"Mode           : {result['journal']['mode']}")
+        print(f"Write Performed: {result['journal']['write_performed']}")
+        print(f"Note           : {result['journal']['note']}")
+
+    def core_loop_trace(self, message: str) -> None:
+        manager = CoreLoopManager(project_root=self.project_root)
+        result = manager.trace(message=message)
+
+        print("AURA Alpha Core Loop Trace")
+        print("==========================")
+        print(f"Loop      : {result['loop']['name']} v{result['loop']['version']}")
+        print(f"Status    : {result['loop']['status']}")
+        print(f"Input     : {result['input']['message']}")
+        print()
+        print("Steps")
+        print("-----")
+        for step in result["loop"]["steps"]:
+            print(f"{step['index']}. {step['name']}")
+            print(f"   Status     : {step['status']}")
+            print(f"   Component  : {step['component']}")
+            print(f"   Description: {step['description']}")
+        print()
+        print("Trace Summary")
+        print("-------------")
+        print(f"Inferred Action: {result['plan']['inferred_action']}")
+        print(f"Safety State   : {result['safety']['request_state']}")
+        print(f"Allowed        : {result['safety']['allowed']}")
+        print(f"Executed       : {result['execution']['executed']}")
+        print()
+        print("Response Preview")
+        print("----------------")
+        print(result["response"]["text"])
+
     def avatar_status(self) -> None:
         manager = AvatarManager(project_root=self.project_root)
         status = manager.status()
@@ -1233,6 +1331,7 @@ class AuraCLI:
         print(f"Roles               : {status['foundation']['roles']}")
         print(f"Skills              : {status['foundation']['skills']}")
         print(f"Plugin Actions      : {status['foundation']['plugin_actions']}")
+        print(f"Core Loop Steps     : {status['foundation']['core_loop_steps']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
@@ -1292,6 +1391,14 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("core-loop-status")
+
+        core_loop_run_parser = subparsers.add_parser("core-loop-run")
+        core_loop_run_parser.add_argument("message", type=str)
+
+        core_loop_trace_parser = subparsers.add_parser("core-loop-trace")
+        core_loop_trace_parser.add_argument("message", type=str)
 
         subparsers.add_parser("avatar-status")
         subparsers.add_parser("avatar-providers")
@@ -1481,6 +1588,21 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "core-loop-status":
+            disable_logging()
+            self.core_loop_status()
+            return True
+
+        if parsed.command == "core-loop-run":
+            disable_logging()
+            self.core_loop_run(message=parsed.message)
+            return True
+
+        if parsed.command == "core-loop-trace":
+            disable_logging()
+            self.core_loop_trace(message=parsed.message)
             return True
 
         if parsed.command == "avatar-status":
