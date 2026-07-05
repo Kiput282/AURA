@@ -786,6 +786,50 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="avatar.runtime_alpha_status",
+            plugin="avatar",
+            description="Show Avatar Runtime Alpha status.",
+            permission_action="read_project",
+            status="online",
+            skill="avatar_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="avatar.expression_plan",
+            plugin="avatar",
+            description="Prepare an avatar expression plan without changing or rendering a real avatar.",
+            permission_action="prepare_file",
+            status="online",
+            skill="avatar_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="avatar.gesture_plan",
+            plugin="avatar",
+            description="Prepare an avatar gesture plan without changing or rendering a real avatar.",
+            permission_action="prepare_file",
+            status="online",
+            skill="avatar_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="avatar.runtime_alpha_context",
+            plugin="avatar",
+            description="Prepare Avatar Runtime Alpha context without rendering, writing files, or executing commands.",
+            permission_action="read_project",
+            status="online",
+            skill="avatar_runtime_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="avatar.status",
             plugin="avatar",
             description="Show avatar foundation status.",

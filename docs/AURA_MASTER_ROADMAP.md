@@ -443,6 +443,7 @@ Planned:
 - Daily Project Briefing
 - Voice Runtime Alpha
 - Vision Runtime Alpha
+- Avatar Runtime Alpha
 - File/project plugin
 - App launcher plugin
 - Browser helper

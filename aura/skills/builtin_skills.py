@@ -475,6 +475,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="avatar_runtime_alpha",
+            description="Prepare safe local avatar runtime alpha status, expression plans, gesture plans, and context without automatic rendering or file writing.",
+            role="avatar",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "avatar_runtime_alpha_status",
+                "avatar_expression_plan",
+                "avatar_gesture_plan",
+                "avatar_runtime_context",
+                "avatar_dependency_check",
+                "prepare_only_avatar_control",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="avatar_foundation",
             description="Show AURA avatar foundation status, providers, placeholder state, and avatar runtime planning metadata.",
             role="avatar",

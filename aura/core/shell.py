@@ -11,6 +11,7 @@ from aura.tool_sandbox.tool_sandbox_manager import ToolSandboxManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.actions.action_request_manager import ActionRequestManager
 from aura.avatar.avatar_manager import AvatarManager
+from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
@@ -89,6 +90,10 @@ class AuraShell:
             "core-loop-status",
             "core-loop-run",
             "core-loop-trace",
+            "avatar-runtime-alpha-status",
+            "avatar-expression-plan",
+            "avatar-gesture-plan",
+            "avatar-runtime-context",
             "avatar-status",
             "avatar-providers",
             "avatar-state",
@@ -243,6 +248,10 @@ class AuraShell:
         print("  core-loop-status     Show AURA alpha core loop status")
         print("  core-loop-run <text> Run alpha core loop safely")
         print("  core-loop-trace <text> Trace alpha core loop safely")
+        print("  avatar-runtime-alpha-status Show Avatar Runtime Alpha status")
+        print("  avatar-expression-plan <e> Prepare safe avatar expression plan")
+        print("  avatar-gesture-plan <g>   Prepare safe avatar gesture plan")
+        print("  avatar-runtime-context Show Avatar Runtime Alpha context")
         print("  avatar-status        Show avatar foundation status")
         print("  avatar-providers     Show avatar placeholder providers")
         print("  avatar-state         Show placeholder avatar state")
@@ -1209,6 +1218,7 @@ class AuraShell:
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
         print(f"Vision Runtime Alpha: {status['foundation']['vision_runtime_alpha_sections']}")
         print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
+        print(f"Avatar Runtime Alpha: {status['foundation']['avatar_runtime_alpha_sections']}")
         print(f"Awakening Readiness : {status['foundation']['awakening_readiness']}")
         print()
         print("Systems")
@@ -2225,6 +2235,38 @@ class AuraShell:
                 return
 
             self.core_loop_trace(message=message)
+            return
+
+        if normalized == "avatar-runtime-alpha-status":
+            self.avatar_runtime_alpha_status()
+            return
+
+        if normalized.startswith("avatar-expression-plan "):
+            expression = command[len("avatar-expression-plan "):].strip()
+            if not expression:
+                print("Usage: avatar-expression-plan <expression>")
+                return
+            self.avatar_expression_plan(expression=expression)
+            return
+
+        if normalized == "avatar-expression-plan":
+            print("Usage: avatar-expression-plan <expression>")
+            return
+
+        if normalized.startswith("avatar-gesture-plan "):
+            gesture = command[len("avatar-gesture-plan "):].strip()
+            if not gesture:
+                print("Usage: avatar-gesture-plan <gesture>")
+                return
+            self.avatar_gesture_plan(gesture=gesture)
+            return
+
+        if normalized == "avatar-gesture-plan":
+            print("Usage: avatar-gesture-plan <gesture>")
+            return
+
+        if normalized == "avatar-runtime-context":
+            self.avatar_runtime_context()
             return
 
         if normalized == "avatar-status":
@@ -3301,6 +3343,161 @@ class AuraShell:
         print(f"Screen Access        : {alpha['screen_access']}")
         print(f"Camera Access        : {alpha['camera_access']}")
         print(f"Command Execution    : {alpha['command_execution']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def avatar_runtime_alpha_status(self) -> None:
+        manager = AvatarRuntimeAlphaManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Avatar Runtime Alpha Status")
+        print("================================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Alpha Ready                  : {status['alpha_ready']}")
+        print(f"Expression Plan Ready        : {status['expression_plan_ready']}")
+        print(f"Gesture Plan Ready           : {status['gesture_plan_ready']}")
+        print(f"Avatar Context Ready         : {status['avatar_context_ready']}")
+        print(f"Dependency Check Ready       : {status['dependency_check_ready']}")
+        print(f"Foundation Ready             : {status['foundation_ready']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print(f"Avatar Loaded                : {status['avatar_loaded']}")
+        print(f"Model Loaded                 : {status['model_loaded']}")
+        print(f"Tracking Connected           : {status['tracking_connected']}")
+        print(f"Render Backend Found         : {status['render_backend_found']}")
+        print(f"Render Backend               : {status['render_backend'] or '-'}")
+        print(f"Media Backend Found          : {status['media_backend_found']}")
+        print(f"Media Backend                : {status['media_backend'] or '-'}")
+        print(f"Render Performed             : {status['render_performed']}")
+        print(f"Expression Changed           : {status['expression_changed']}")
+        print(f"Gesture Changed              : {status['gesture_changed']}")
+        print(f"External App Opened          : {status['external_app_opened']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"Image File Write             : {status['image_file_write']}")
+        print(f"Animation File Write         : {status['animation_file_write']}")
+        print(f"Python Packages              : {status['python_packages_installed']}/{status['python_packages_total']}")
+        print(f"Executables                  : {status['executables_found']}/{status['executables_total']}")
+        print(f"Supported Expressions        : {status['supported_expressions']}")
+        print(f"Supported Gestures           : {status['supported_gestures']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def avatar_expression_plan(self, expression: str) -> None:
+        manager = AvatarRuntimeAlphaManager(project_root=self.project_root)
+        plan = manager.expression_plan(expression=expression)
+
+        print("AURA Avatar Expression Plan")
+        print("===========================")
+        print(f"Status                    : {plan['status']}")
+        print(f"Requested Expression      : {plan['requested_expression']}")
+        print(f"Supported                 : {plan['supported']}")
+        print(f"Request State             : {plan['request_state']}")
+        print(f"Render Command Available  : {plan['render_command_available']}")
+        print(f"Render Backend            : {plan['render_backend']['name'] or '-'}")
+        print(f"Proposed Render Command   : {plan['proposed_render_command'] or '-'}")
+        print(f"Render Command Reason     : {plan['render_command_reason']}")
+        print(f"Runtime Ready             : {plan['runtime_ready']}")
+        print(f"Avatar Loaded             : {plan['avatar_loaded']}")
+        print(f"Expression Changed        : {plan['expression_changed']}")
+        print(f"Gesture Changed           : {plan['gesture_changed']}")
+        print(f"Render Performed          : {plan['render_performed']}")
+        print(f"External App Opened       : {plan['external_app_opened']}")
+        print(f"Command Execution         : {plan['command_execution_performed']}")
+        print(f"Image File Write          : {plan['image_file_write_performed']}")
+        print(f"Animation File Write      : {plan['animation_file_write_performed']}")
+        print()
+
+        print("Safety Notes")
+        print("------------")
+        for item in plan["safety_notes"]:
+            print(f"- {item}")
+
+    def avatar_gesture_plan(self, gesture: str) -> None:
+        manager = AvatarRuntimeAlphaManager(project_root=self.project_root)
+        plan = manager.gesture_plan(gesture=gesture)
+
+        print("AURA Avatar Gesture Plan")
+        print("========================")
+        print(f"Status                    : {plan['status']}")
+        print(f"Requested Gesture         : {plan['requested_gesture']}")
+        print(f"Supported                 : {plan['supported']}")
+        print(f"Request State             : {plan['request_state']}")
+        print(f"Render Command Available  : {plan['render_command_available']}")
+        print(f"Render Backend            : {plan['render_backend']['name'] or '-'}")
+        print(f"Proposed Render Command   : {plan['proposed_render_command'] or '-'}")
+        print(f"Render Command Reason     : {plan['render_command_reason']}")
+        print(f"Runtime Ready             : {plan['runtime_ready']}")
+        print(f"Avatar Loaded             : {plan['avatar_loaded']}")
+        print(f"Expression Changed        : {plan['expression_changed']}")
+        print(f"Gesture Changed           : {plan['gesture_changed']}")
+        print(f"Render Performed          : {plan['render_performed']}")
+        print(f"External App Opened       : {plan['external_app_opened']}")
+        print(f"Command Execution         : {plan['command_execution_performed']}")
+        print(f"Image File Write          : {plan['image_file_write_performed']}")
+        print(f"Animation File Write      : {plan['animation_file_write_performed']}")
+        print()
+
+        print("Safety Notes")
+        print("------------")
+        for item in plan["safety_notes"]:
+            print(f"- {item}")
+
+    def avatar_runtime_context(self) -> None:
+        manager = AvatarRuntimeAlphaManager(project_root=self.project_root)
+        context = manager.context()
+        alpha = context["alpha_status"]
+        state = context["avatar_state"]
+
+        print("AURA Avatar Runtime Alpha Context")
+        print("=================================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"Render Performed             : {context['render_performed']}")
+        print(f"External App Opened          : {context['external_app_opened']}")
+        print(f"Expression Changed           : {context['expression_changed']}")
+        print(f"Gesture Changed              : {context['gesture_changed']}")
+        print(f"Image File Write             : {context['image_file_write_performed']}")
+        print(f"Animation File Write         : {context['animation_file_write_performed']}")
+        print()
+        print("Alpha Status")
+        print("------------")
+        print(f"Alpha Ready           : {alpha['alpha_ready']}")
+        print(f"Expression Plan Ready : {alpha['expression_plan_ready']}")
+        print(f"Gesture Plan Ready    : {alpha['gesture_plan_ready']}")
+        print(f"Render Backend Found  : {alpha['render_backend_found']}")
+        print(f"Render Backend        : {alpha['render_backend'] or '-'}")
+        print(f"Media Backend Found   : {alpha['media_backend_found']}")
+        print(f"Media Backend         : {alpha['media_backend'] or '-'}")
+        print(f"Avatar Loaded         : {alpha['avatar_loaded']}")
+        print(f"Render Performed      : {alpha['render_performed']}")
+        print(f"Command Execution     : {alpha['command_execution']}")
+        print()
+        print("Avatar State")
+        print("------------")
+        print(f"Avatar Name       : {state['avatar_name']}")
+        print(f"Avatar Format     : {state['avatar_format']}")
+        print(f"Runtime           : {state['runtime']}")
+        print(f"Body State        : {state['body_state']}")
+        print(f"Pose              : {state['pose']}")
+        print(f"Expression        : {state['expression']}")
+        print(f"Gesture           : {state['gesture']}")
+        print(f"Model Loaded      : {state['model_loaded']}")
+        print(f"Tracking Connected: {state['tracking_connected']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")
