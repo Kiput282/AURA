@@ -296,6 +296,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="desktop_assistant_alpha",
+            description="Prepare safe desktop assistant alpha status, desktop action plans, open app/browser/file plans, and workspace context without automatic desktop execution.",
+            role="action",
+            permission_action="think",
+            status="online",
+            capabilities=[
+                "desktop_alpha_status",
+                "desktop_action_plan",
+                "desktop_open_app_plan",
+                "desktop_open_browser_plan",
+                "desktop_open_file_plan",
+                "desktop_workspace_context",
+                "safe_desktop_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="desktop_bridge",
             description="Show desktop bridge status, capabilities, and prepare desktop action proposals.",
             role="action",

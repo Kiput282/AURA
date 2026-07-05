@@ -71,6 +71,72 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="desktop.alpha_status",
+            plugin="desktop",
+            description="Show Desktop Assistant Alpha status.",
+            permission_action="read_project",
+            status="online",
+            skill="desktop_assistant_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="desktop.action_plan",
+            plugin="desktop",
+            description="Prepare a safe desktop action plan without executing it.",
+            permission_action="think",
+            status="online",
+            skill="desktop_assistant_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="desktop.open_app_plan",
+            plugin="desktop",
+            description="Prepare an open app plan without opening the application.",
+            permission_action="open_app",
+            status="online",
+            skill="desktop_assistant_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="desktop.open_browser_plan",
+            plugin="desktop",
+            description="Prepare an open browser plan without opening the browser.",
+            permission_action="open_browser",
+            status="online",
+            skill="desktop_assistant_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="desktop.open_file_plan",
+            plugin="desktop",
+            description="Prepare an open file plan without opening the file.",
+            permission_action="open_file",
+            status="online",
+            skill="desktop_assistant_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="desktop.workspace_context",
+            plugin="desktop",
+            description="Show read-only desktop workspace context.",
+            permission_action="read_project",
+            status="online",
+            skill="desktop_assistant_alpha",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="desktop.status",
             plugin="desktop",
             description="Show desktop bridge foundation status.",

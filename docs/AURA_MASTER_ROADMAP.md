@@ -444,6 +444,7 @@ Planned:
 - Voice Runtime Alpha
 - Vision Runtime Alpha
 - Avatar Runtime Alpha
+- Desktop Assistant Alpha
 - File/project plugin
 - App launcher plugin
 - Browser helper

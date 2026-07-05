@@ -9,6 +9,7 @@ from aura.core_loop.core_loop_manager import CoreLoopManager
 from aura.model_router.model_router import ModelRouter
 from aura.tool_sandbox.tool_sandbox_manager import ToolSandboxManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
+from aura.desktop.desktop_assistant_alpha_manager import DesktopAssistantAlphaManager
 from aura.actions.action_request_manager import ActionRequestManager
 from aura.avatar.avatar_manager import AvatarManager
 from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
@@ -99,6 +100,12 @@ class AuraShell:
             "avatar-state",
             "avatar-expression",
             "avatar-gesture",
+            "desktop-alpha-status",
+            "desktop-action-plan",
+            "desktop-open-app-plan",
+            "desktop-open-browser-plan",
+            "desktop-open-file-plan",
+            "desktop-workspace-context",
             "desktop-status",
             "desktop-capabilities",
             "desktop-action",
@@ -257,6 +264,12 @@ class AuraShell:
         print("  avatar-state         Show placeholder avatar state")
         print("  avatar-expression <e> Prepare expression proposal")
         print("  avatar-gesture <g>   Prepare gesture proposal")
+        print("  desktop-alpha-status Show Desktop Assistant Alpha status")
+        print("  desktop-action-plan <type> <target> Prepare safe desktop action plan")
+        print("  desktop-open-app-plan <app> Prepare safe open app plan")
+        print("  desktop-open-browser-plan <url> Prepare safe open browser plan")
+        print("  desktop-open-file-plan <path> Prepare safe open file plan")
+        print("  desktop-workspace-context Show desktop workspace context")
         print("  desktop-status       Show desktop bridge status")
         print("  desktop-capabilities Show desktop bridge capabilities")
         print("  desktop-action <a>   Prepare desktop action proposal")
@@ -2301,6 +2314,63 @@ class AuraShell:
             self.avatar_gesture(gesture=gesture)
             return
 
+        if normalized == "desktop-alpha-status":
+            self.desktop_alpha_status()
+            return
+
+        if normalized.startswith("desktop-action-plan "):
+            rest = command[len("desktop-action-plan "):].strip()
+            parts = rest.split(maxsplit=1)
+            if len(parts) < 2:
+                print("Usage: desktop-action-plan <action_type> <target>")
+                return
+            self.desktop_action_plan(action_type=parts[0], target=parts[1])
+            return
+
+        if normalized == "desktop-action-plan":
+            print("Usage: desktop-action-plan <action_type> <target>")
+            return
+
+        if normalized.startswith("desktop-open-app-plan "):
+            app_name = command[len("desktop-open-app-plan "):].strip()
+            if not app_name:
+                print("Usage: desktop-open-app-plan <app>")
+                return
+            self.desktop_open_app_plan(app_name=app_name)
+            return
+
+        if normalized == "desktop-open-app-plan":
+            print("Usage: desktop-open-app-plan <app>")
+            return
+
+        if normalized.startswith("desktop-open-browser-plan "):
+            url = command[len("desktop-open-browser-plan "):].strip()
+            if not url:
+                print("Usage: desktop-open-browser-plan <url>")
+                return
+            self.desktop_open_browser_plan(url=url)
+            return
+
+        if normalized == "desktop-open-browser-plan":
+            print("Usage: desktop-open-browser-plan <url>")
+            return
+
+        if normalized.startswith("desktop-open-file-plan "):
+            file_path = command[len("desktop-open-file-plan "):].strip()
+            if not file_path:
+                print("Usage: desktop-open-file-plan <path>")
+                return
+            self.desktop_open_file_plan(file_path=file_path)
+            return
+
+        if normalized == "desktop-open-file-plan":
+            print("Usage: desktop-open-file-plan <path>")
+            return
+
+        if normalized == "desktop-workspace-context":
+            self.desktop_workspace_context()
+            return
+
         if normalized == "desktop-status":
             self.desktop_status()
             return
@@ -3498,6 +3568,181 @@ class AuraShell:
         print(f"Gesture           : {state['gesture']}")
         print(f"Model Loaded      : {state['model_loaded']}")
         print(f"Tracking Connected: {state['tracking_connected']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def desktop_alpha_status(self) -> None:
+        manager = DesktopAssistantAlphaManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Desktop Assistant Alpha Status")
+        print("===================================")
+        print(f"Name                          : {status['name']}")
+        print(f"Version                       : {status['version']}")
+        print(f"Status                        : {status['status']}")
+        print(f"Alpha Ready                   : {status['alpha_ready']}")
+        print(f"Action Plan Ready             : {status['action_plan_ready']}")
+        print(f"Open App Plan Ready           : {status['open_app_plan_ready']}")
+        print(f"Open Browser Plan Ready       : {status['open_browser_plan_ready']}")
+        print(f"Open File Plan Ready          : {status['open_file_plan_ready']}")
+        print(f"Workspace Context Ready       : {status['workspace_context_ready']}")
+        print(f"Dependency Check Ready        : {status['dependency_check_ready']}")
+        print(f"Bridge Ready                  : {status['bridge_ready']}")
+        print(f"Execution Ready               : {status['execution_ready']}")
+        print(f"Safe Action Execution         : {status['safe_action_execution']}")
+        print(f"App Opened                    : {status['app_opened']}")
+        print(f"Browser Opened                : {status['browser_opened']}")
+        print(f"File Opened                   : {status['file_opened']}")
+        print(f"Click Performed               : {status['click_performed']}")
+        print(f"Keyboard Input Performed      : {status['keyboard_input_performed']}")
+        print(f"Mouse Control                 : {status['mouse_control']}")
+        print(f"Command Execution             : {status['command_execution']}")
+        print(f"File Write                    : {status['file_write']}")
+        print(f"External App Opened           : {status['external_app_opened']}")
+        print(f"Open App Confirmation         : {status['requires_open_app_confirmation']}")
+        print(f"Open Browser Confirmation     : {status['requires_open_browser_confirmation']}")
+        print(f"Open File Confirmation        : {status['requires_open_file_confirmation']}")
+        print(f"Run Command Confirmation      : {status['requires_run_command_confirmation']}")
+        print(f"Write File Confirmation       : {status['requires_write_file_confirmation']}")
+        print(f"Capability Count              : {status['capability_count']}")
+        print(f"Supported Action Types        : {status['supported_action_type_count']}")
+        print(f"Sandbox Ready                 : {status['sandbox_ready']}")
+        print(f"Sandbox Dry Run Ready         : {status['sandbox_dry_run_ready']}")
+        print(f"Real Tool Execution           : {status['real_tool_execution']}")
+        print(f"Sections                      : {status['sections']}")
+        print()
+        print("Environment")
+        print("-----------")
+        env = status["environment"]
+        print(f"OS                  : {env['os']}")
+        print(f"OS Release          : {env['os_release']}")
+        print(f"Machine             : {env['machine']}")
+        print(f"Desktop Environment : {env['desktop_environment']}")
+        print(f"Display             : {env['display'] or '-'}")
+        print(f"Wayland Display     : {env['wayland_display'] or '-'}")
+        print()
+        print("Supported Action Types")
+        print("----------------------")
+        for item in status["supported_action_types"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def desktop_action_plan(self, action_type: str, target: str) -> None:
+        manager = DesktopAssistantAlphaManager(project_root=self.project_root)
+        plan = manager.action_plan(action_type=action_type, target=target)
+
+        print("AURA Desktop Action Plan")
+        print("========================")
+        print(f"Status                  : {plan['status']}")
+        print(f"Action Type             : {plan['action_type']}")
+        print(f"Target                  : {plan['target'] or '-'}")
+        print(f"Plan State              : {plan['plan_state']}")
+        print(f"Supported               : {plan['supported']}")
+        print(f"Description             : {plan['description']}")
+        print(f"Plugin Action           : {plan['plugin_action']}")
+        print(f"Command Available       : {plan['command_available']}")
+        print(f"Proposed Command        : {plan['proposed_command'] or '-'}")
+        print(f"Command Reason          : {plan['command_reason']}")
+        print(f"Execution Ready         : {plan['execution_ready']}")
+        print(f"Executed                : {plan['executed']}")
+        print(f"App Opened              : {plan['app_opened']}")
+        print(f"Browser Opened          : {plan['browser_opened']}")
+        print(f"File Opened             : {plan['file_opened']}")
+        print(f"Click Performed         : {plan['click_performed']}")
+        print(f"Keyboard Input          : {plan['keyboard_input_performed']}")
+        print(f"Mouse Control           : {plan['mouse_control_performed']}")
+        print(f"External App Opened     : {plan['external_app_opened']}")
+        print(f"Command Execution       : {plan['command_execution_performed']}")
+        print(f"File Write              : {plan['file_write_performed']}")
+        print()
+
+        print("Permission")
+        print("----------")
+        permission = plan["permission"]
+        print(f"Action       : {permission['action']}")
+        print(f"Level        : {permission['level']} - {permission['level_label']}")
+        print(f"Allowed      : {permission['allowed']}")
+        print(f"Confirmation : {permission['requires_confirmation']}")
+        print(f"Reason       : {permission['reason']}")
+        print()
+
+        sandbox_check = plan.get("sandbox_check")
+        print("Sandbox Check")
+        print("-------------")
+        if sandbox_check:
+            print(f"State      : {sandbox_check['state']}")
+            print(f"Allowed    : {sandbox_check['allowed']}")
+            print(f"Executed   : {sandbox_check['executed']}")
+            print(f"Reason     : {sandbox_check['reason']}")
+        else:
+            print("-")
+        print()
+
+        print("Safety Notes")
+        print("------------")
+        for item in plan["safety_notes"]:
+            print(f"- {item}")
+
+    def desktop_open_app_plan(self, app_name: str) -> None:
+        self.desktop_action_plan(action_type="open_app", target=app_name)
+
+    def desktop_open_browser_plan(self, url: str) -> None:
+        self.desktop_action_plan(action_type="open_browser", target=url)
+
+    def desktop_open_file_plan(self, file_path: str) -> None:
+        self.desktop_action_plan(action_type="open_file", target=file_path)
+
+    def desktop_workspace_context(self) -> None:
+        manager = DesktopAssistantAlphaManager(project_root=self.project_root)
+        context = manager.workspace_context()
+        alpha = context["alpha_status"]
+        env = context["environment"]
+
+        print("AURA Desktop Workspace Context")
+        print("==============================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"App Opened                   : {context['app_opened']}")
+        print(f"Browser Opened               : {context['browser_opened']}")
+        print(f"File Opened                  : {context['file_opened']}")
+        print(f"Click Performed              : {context['click_performed']}")
+        print(f"Keyboard Input Performed     : {context['keyboard_input_performed']}")
+        print(f"Mouse Control Performed      : {context['mouse_control_performed']}")
+        print()
+        print("Alpha Status")
+        print("------------")
+        print(f"Alpha Ready              : {alpha['alpha_ready']}")
+        print(f"Action Plan Ready        : {alpha['action_plan_ready']}")
+        print(f"Open App Plan Ready      : {alpha['open_app_plan_ready']}")
+        print(f"Open Browser Plan Ready  : {alpha['open_browser_plan_ready']}")
+        print(f"Open File Plan Ready     : {alpha['open_file_plan_ready']}")
+        print(f"Workspace Context Ready  : {alpha['workspace_context_ready']}")
+        print(f"Safe Action Execution    : {alpha['safe_action_execution']}")
+        print(f"Command Execution        : {alpha['command_execution']}")
+        print(f"File Write               : {alpha['file_write']}")
+        print()
+        print("Environment")
+        print("-----------")
+        print(f"OS                  : {env['os']}")
+        print(f"OS Release          : {env['os_release']}")
+        print(f"Machine             : {env['machine']}")
+        print(f"Desktop Environment : {env['desktop_environment']}")
+        print(f"Display             : {env['display'] or '-'}")
+        print(f"Wayland Display     : {env['wayland_display'] or '-'}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")
