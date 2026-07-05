@@ -111,6 +111,11 @@ def build_builtin_role_registry() -> RoleRegistry:
                 "image_understanding",
                 "camera_context",
                 "environment_analysis",
+                "vision_runtime_planning",
+                "screen_capture_candidates",
+                "camera_capture_candidates",
+                "vision_model_candidates",
+                "vision_dependency_check",
             ],
         )
     )

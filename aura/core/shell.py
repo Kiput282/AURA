@@ -19,6 +19,7 @@ from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.vision.vision_manager import VisionManager
+from aura.vision.vision_runtime_planner import VisionRuntimePlanner
 from aura.status.system_status_manager import SystemStatusManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
@@ -66,6 +67,9 @@ class AuraShell:
             "desktop-action",
             "system-status",
             "status-full",
+            "vision-runtime-status",
+            "vision-runtime-plan",
+            "vision-runtime-check",
             "vision-status",
             "vision-providers",
             "awakening-status",
@@ -175,6 +179,9 @@ class AuraShell:
         print("  desktop-action <a>   Prepare desktop action proposal")
         print("  system-status        Show unified AURA system status")
         print("  status-full          Alias for system-status")
+        print("  vision-runtime-status Show vision runtime planning status")
+        print("  vision-runtime-plan   Show screen/camera/model runtime plan")
+        print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
         print("  awakening-status     Show AURA Awakening Alpha status")
@@ -705,6 +712,116 @@ class AuraShell:
             print(f"{name:22}: {value}")
         print()
         print(f"Summary: {status['summary']}")
+
+    def vision_runtime_status(self) -> None:
+        planner = VisionRuntimePlanner(project_root=self.project_root)
+        status = planner.status()
+
+        print("AURA Vision Runtime Status")
+        print("==========================")
+        print(f"Name                 : {status['name']}")
+        print(f"Version              : {status['version']}")
+        print(f"Status               : {status['status']}")
+        print(f"Planning Ready       : {status['planning_ready']}")
+        print(f"Runtime Ready        : {status['runtime_ready']}")
+        print(f"Screen Access        : {status['screen_access']}")
+        print(f"Camera Access        : {status['camera_access']}")
+        print(f"Screen Runtime Ready : {status['screen_runtime_ready']}")
+        print(f"Camera Runtime Ready : {status['camera_runtime_ready']}")
+        print(f"Vision Model Ready   : {status['vision_model_ready']}")
+        print(f"Screen Candidates    : {status['screen_candidates']}")
+        print(f"Camera Candidates    : {status['camera_candidates']}")
+        print(f"Model Candidates     : {status['model_candidates']}")
+        print(f"Candidate Count      : {status['candidate_count']}")
+        print(f"Note                 : {status['note']}")
+
+    def vision_runtime_plan(self) -> None:
+        planner = VisionRuntimePlanner(project_root=self.project_root)
+        plan = planner.plan()
+        recommended = plan["recommended_path"]
+
+        print("AURA Vision Runtime Plan")
+        print("========================")
+        print("Recommended Path")
+        print("----------------")
+        print(f"Screen Capture  : {recommended['screen_capture']}")
+        print(f"Camera Capture  : {recommended['camera_capture']}")
+        print(f"Vision Model    : {recommended['vision_model']}")
+        print(f"Image Processing: {recommended['image_processing']}")
+        print(f"Description     : {recommended['description']}")
+        print()
+        print("Phases")
+        print("------")
+
+        for phase in plan["phases"]:
+            print(f"- Phase {phase['phase']}: {phase['name']}")
+            print(f"  Status     : {phase['status']}")
+            print(f"  Description: {phase['description']}")
+
+        print()
+        print("Screen Capture Candidates")
+        print("-------------------------")
+        for candidate in plan["screen_capture_candidates"]:
+            print(f"- {candidate['name']} ({candidate['status']})")
+            print(f"  {candidate['description']}")
+
+        print()
+        print("Camera Capture Candidates")
+        print("-------------------------")
+        for candidate in plan["camera_capture_candidates"]:
+            print(f"- {candidate['name']} ({candidate['status']})")
+            print(f"  {candidate['description']}")
+
+        print()
+        print("Vision Model Candidates")
+        print("-----------------------")
+        for candidate in plan["vision_model_candidates"]:
+            print(f"- {candidate['name']} ({candidate['status']})")
+            print(f"  {candidate['description']}")
+
+        print()
+        print("Safety Rules")
+        print("------------")
+        for rule in plan["safety_rules"]:
+            print(f"- {rule}")
+
+    def vision_runtime_check(self) -> None:
+        planner = VisionRuntimePlanner(project_root=self.project_root)
+        result = planner.check()
+        dependencies = result["dependencies"]
+
+        print("AURA Vision Runtime Check")
+        print("=========================")
+        print(f"Status                 : {result['status']}")
+        print(f"Planning Ready         : {result['planning_ready']}")
+        print(f"Runtime Ready          : {result['runtime_ready']}")
+        print(f"Python Packages        : {result['python_packages_installed']}/{result['python_packages_total']}")
+        print(f"Executables            : {result['executables_found']}/{result['executables_total']}")
+        print()
+        print("Python Packages")
+        print("---------------")
+        for package in dependencies["python_packages"]:
+            print(f"- {package['name']}: {package['installed']} ({package['purpose']})")
+
+        print()
+        print("Executables")
+        print("-----------")
+        for executable in dependencies["executables"]:
+            print(f"- {executable['name']}: {executable['found']} ({executable['purpose']})")
+
+        print()
+        print("Environment")
+        print("-----------")
+        environment = dependencies["environment"]
+        print(f"OS                 : {environment['os']}")
+        print(f"OS Release         : {environment['os_release']}")
+        print(f"Machine            : {environment['machine']}")
+        print(f"Desktop Environment: {environment['desktop_environment']}")
+        print(f"Display            : {environment['display'] or '-'}")
+        print(f"Wayland Display    : {environment['wayland_display'] or '-'}")
+        print(f"XDG Runtime        : {environment['xdg_runtime'] or '-'}")
+        print()
+        print(f"Note: {result['note']}")
 
     def vision_status(self) -> None:
         vision_manager = VisionManager()
@@ -1458,6 +1575,18 @@ class AuraShell:
 
         if normalized in {"system-status", "status-full"}:
             self.system_status()
+            return
+
+        if normalized == "vision-runtime-status":
+            self.vision_runtime_status()
+            return
+
+        if normalized == "vision-runtime-plan":
+            self.vision_runtime_plan()
+            return
+
+        if normalized == "vision-runtime-check":
+            self.vision_runtime_check()
             return
 
         if normalized == "vision-status":

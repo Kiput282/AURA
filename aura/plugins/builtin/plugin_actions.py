@@ -302,6 +302,39 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="vision.runtime_status",
+            plugin="vision",
+            description="Show vision runtime planning status.",
+            permission_action="think",
+            status="online",
+            skill="vision_runtime_planning",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="vision.runtime_plan",
+            plugin="vision",
+            description="Show screen/camera/model runtime planning candidates and safety phases.",
+            permission_action="think",
+            status="online",
+            skill="vision_runtime_planning",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="vision.runtime_check",
+            plugin="vision",
+            description="Run passive vision runtime dependency checks without accessing screen or camera.",
+            permission_action="think",
+            status="online",
+            skill="vision_runtime_planning",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="vision.status",
             plugin="vision",
             description="Show vision foundation status.",
@@ -315,7 +348,7 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         PluginAction(
             name="screen.analyze",
             plugin="vision",
-            description="Analyze the user's screen when screen runtime is enabled.",
+            description="Prepare screen analysis when vision runtime is enabled.",
             permission_action="screen_analyze",
             status="foundation",
             skill="screen_analyzer",
@@ -326,7 +359,7 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         PluginAction(
             name="camera.analyze",
             plugin="vision",
-            description="Analyze camera/environment input when camera runtime is enabled.",
+            description="Prepare camera/environment analysis when vision runtime is enabled.",
             permission_action="camera_analyze",
             status="foundation",
             skill="camera_analyzer",

@@ -20,6 +20,7 @@ from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.vision.vision_manager import VisionManager
+from aura.vision.vision_runtime_planner import VisionRuntimePlanner
 from aura.status.system_status_manager import SystemStatusManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
@@ -875,6 +876,116 @@ class AuraCLI:
         print()
         print(f"Summary: {status['summary']}")
 
+    def vision_runtime_status(self) -> None:
+        planner = VisionRuntimePlanner(project_root=self.project_root)
+        status = planner.status()
+
+        print("AURA Vision Runtime Status")
+        print("==========================")
+        print(f"Name                 : {status['name']}")
+        print(f"Version              : {status['version']}")
+        print(f"Status               : {status['status']}")
+        print(f"Planning Ready       : {status['planning_ready']}")
+        print(f"Runtime Ready        : {status['runtime_ready']}")
+        print(f"Screen Access        : {status['screen_access']}")
+        print(f"Camera Access        : {status['camera_access']}")
+        print(f"Screen Runtime Ready : {status['screen_runtime_ready']}")
+        print(f"Camera Runtime Ready : {status['camera_runtime_ready']}")
+        print(f"Vision Model Ready   : {status['vision_model_ready']}")
+        print(f"Screen Candidates    : {status['screen_candidates']}")
+        print(f"Camera Candidates    : {status['camera_candidates']}")
+        print(f"Model Candidates     : {status['model_candidates']}")
+        print(f"Candidate Count      : {status['candidate_count']}")
+        print(f"Note                 : {status['note']}")
+
+    def vision_runtime_plan(self) -> None:
+        planner = VisionRuntimePlanner(project_root=self.project_root)
+        plan = planner.plan()
+        recommended = plan["recommended_path"]
+
+        print("AURA Vision Runtime Plan")
+        print("========================")
+        print("Recommended Path")
+        print("----------------")
+        print(f"Screen Capture  : {recommended['screen_capture']}")
+        print(f"Camera Capture  : {recommended['camera_capture']}")
+        print(f"Vision Model    : {recommended['vision_model']}")
+        print(f"Image Processing: {recommended['image_processing']}")
+        print(f"Description     : {recommended['description']}")
+        print()
+        print("Phases")
+        print("------")
+
+        for phase in plan["phases"]:
+            print(f"- Phase {phase['phase']}: {phase['name']}")
+            print(f"  Status     : {phase['status']}")
+            print(f"  Description: {phase['description']}")
+
+        print()
+        print("Screen Capture Candidates")
+        print("-------------------------")
+        for candidate in plan["screen_capture_candidates"]:
+            print(f"- {candidate['name']} ({candidate['status']})")
+            print(f"  {candidate['description']}")
+
+        print()
+        print("Camera Capture Candidates")
+        print("-------------------------")
+        for candidate in plan["camera_capture_candidates"]:
+            print(f"- {candidate['name']} ({candidate['status']})")
+            print(f"  {candidate['description']}")
+
+        print()
+        print("Vision Model Candidates")
+        print("-----------------------")
+        for candidate in plan["vision_model_candidates"]:
+            print(f"- {candidate['name']} ({candidate['status']})")
+            print(f"  {candidate['description']}")
+
+        print()
+        print("Safety Rules")
+        print("------------")
+        for rule in plan["safety_rules"]:
+            print(f"- {rule}")
+
+    def vision_runtime_check(self) -> None:
+        planner = VisionRuntimePlanner(project_root=self.project_root)
+        result = planner.check()
+        dependencies = result["dependencies"]
+
+        print("AURA Vision Runtime Check")
+        print("=========================")
+        print(f"Status                 : {result['status']}")
+        print(f"Planning Ready         : {result['planning_ready']}")
+        print(f"Runtime Ready          : {result['runtime_ready']}")
+        print(f"Python Packages        : {result['python_packages_installed']}/{result['python_packages_total']}")
+        print(f"Executables            : {result['executables_found']}/{result['executables_total']}")
+        print()
+        print("Python Packages")
+        print("---------------")
+        for package in dependencies["python_packages"]:
+            print(f"- {package['name']}: {package['installed']} ({package['purpose']})")
+
+        print()
+        print("Executables")
+        print("-----------")
+        for executable in dependencies["executables"]:
+            print(f"- {executable['name']}: {executable['found']} ({executable['purpose']})")
+
+        print()
+        print("Environment")
+        print("-----------")
+        environment = dependencies["environment"]
+        print(f"OS                 : {environment['os']}")
+        print(f"OS Release         : {environment['os_release']}")
+        print(f"Machine            : {environment['machine']}")
+        print(f"Desktop Environment: {environment['desktop_environment']}")
+        print(f"Display            : {environment['display'] or '-'}")
+        print(f"Wayland Display    : {environment['wayland_display'] or '-'}")
+        print(f"XDG Runtime        : {environment['xdg_runtime'] or '-'}")
+        print()
+        print(f"Note: {result['note']}")
+
     def vision_status(self) -> None:
         vision_manager = VisionManager()
         status = vision_manager.status()
@@ -1070,6 +1181,10 @@ class AuraCLI:
         subparsers.add_parser("system-status")
         subparsers.add_parser("status-full")
 
+        subparsers.add_parser("vision-runtime-status")
+        subparsers.add_parser("vision-runtime-plan")
+        subparsers.add_parser("vision-runtime-check")
+
         subparsers.add_parser("vision-status")
         subparsers.add_parser("vision-providers")
 
@@ -1255,6 +1370,21 @@ class AuraCLI:
         if parsed.command in {"system-status", "status-full"}:
             disable_logging()
             self.system_status()
+            return True
+
+        if parsed.command == "vision-runtime-status":
+            disable_logging()
+            self.vision_runtime_status()
+            return True
+
+        if parsed.command == "vision-runtime-plan":
+            disable_logging()
+            self.vision_runtime_plan()
+            return True
+
+        if parsed.command == "vision-runtime-check":
+            disable_logging()
+            self.vision_runtime_check()
             return True
 
         if parsed.command == "vision-status":

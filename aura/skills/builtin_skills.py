@@ -217,12 +217,32 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="vision_runtime_planning",
+            description="Plan local screen/camera capture, vision model candidates, dependency checks, and safe vision runtime readiness.",
+            role="vision",
+            permission_action="think",
+            status="online",
+            capabilities=[
+                "vision_runtime_status",
+                "vision_runtime_plan",
+                "vision_runtime_check",
+                "screen_capture_candidates",
+                "camera_capture_candidates",
+                "vision_model_candidates",
+                "dependency_check",
+                "vision_permission_mapping",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="vision_foundation",
             description="Show AURA vision foundation status and placeholder vision providers.",
             role="vision",
             permission_action="think",
             status="online",
-            capabilities=["vision_status", "screen_placeholder", "camera_placeholder"],
+            capabilities=["vision_status", "screen_placeholder", "camera_placeholder", "vision_runtime_planning"],
         )
     )
 
@@ -233,7 +253,13 @@ def build_builtin_skill_registry() -> SkillRegistry:
             role="vision",
             permission_action="screen_analyze",
             status="foundation",
-            capabilities=["screen_analysis", "visual_context", "screen_permission"],
+            capabilities=[
+                "screen_analysis",
+                "visual_context",
+                "screen_permission",
+                "runtime_planning",
+                "confirmation_required",
+            ],
         )
     )
 
@@ -244,7 +270,13 @@ def build_builtin_skill_registry() -> SkillRegistry:
             role="vision",
             permission_action="camera_analyze",
             status="foundation",
-            capabilities=["camera_context", "environment_analysis", "camera_permission"],
+            capabilities=[
+                "camera_context",
+                "environment_analysis",
+                "camera_permission",
+                "runtime_planning",
+                "confirmation_required",
+            ],
         )
     )
 

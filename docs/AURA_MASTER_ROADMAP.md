@@ -433,6 +433,7 @@ Planned:
 - Project Assistant v1
 - Desktop Bridge Foundation
 - Voice Runtime Planning
+- Vision Runtime Planning
 - File/project plugin
 - App launcher plugin
 - Browser helper
