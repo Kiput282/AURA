@@ -226,25 +226,53 @@ class OllamaReasoningProvider(ReasoningProvider):
 
     def build_user_message(self, message: str, context: dict[str, Any]) -> str:
         language = self.detect_language(message)
-        relevant_memories = context.get("relevant_memories", [])
 
-        memory_lines = []
+        pinned_memories = context.get("pinned_memories", [])
+        important_memories = context.get("important_memories", [])
+        relevant_memories = context.get("raw_relevant_memories", context.get("relevant_memories", []))
+        recent_project_journal = context.get("recent_project_journal", [])
+
+        context_lines = []
+
+        if pinned_memories:
+            context_lines.append("Pinned memories:")
+            for memory in pinned_memories:
+                context_lines.append(f"- {memory.content}")
+            context_lines.append("")
+
+        if important_memories:
+            context_lines.append("Important memories:")
+            for memory in important_memories:
+                importance = memory.metadata.get("importance", 3)
+                context_lines.append(f"- importance={importance}: {memory.content}")
+            context_lines.append("")
 
         if relevant_memories:
-            memory_lines.append("Relevant memories that may answer the user:")
+            context_lines.append("Relevant memories:")
             for memory in relevant_memories:
-                memory_lines.append(f"- {memory.content}")
-            memory_lines.append("Use the relevant memories when they directly answer the question.")
-            memory_lines.append("")
+                context_lines.append(f"- {memory.content}")
+            context_lines.append("")
 
-        memory_block = "\n".join(memory_lines)
+        if recent_project_journal:
+            context_lines.append("Recent project journal:")
+            for entry in recent_project_journal:
+                context_lines.append(f"- {entry.title}: {entry.content}")
+            context_lines.append("")
+
+        if context_lines:
+            context_lines.append("Use this context only when it directly helps answer the user.")
+            context_lines.append("Do not invent project history that is not present in the context.")
+            context_lines.append("")
+
+        context_block = "\n".join(context_lines)
 
         if language == "en":
             return (
                 "Answer in English. Do not answer in Indonesian. "
                 "Keep proper nouns unchanged. "
-                "If the user asks for a short answer, keep it short.\n\n"
-                f"{memory_block}"
+                "If the user asks for a short answer, keep it short. "
+                "Use the provided AURA context when relevant.\n\n"
+                f"{context_block}"
                 f"User message: {message}"
             )
 
@@ -252,15 +280,17 @@ class OllamaReasoningProvider(ReasoningProvider):
             return (
                 "Jawab dalam Bahasa Indonesia. Jangan menjawab dalam Bahasa Inggris. "
                 "Jangan terjemahkan proper noun seperti AURA, Kiput, Genesis, dan Grow Together. "
-                "Jika user meminta jawaban singkat, jawab singkat.\n\n"
-                f"{memory_block}"
+                "Jika user meminta jawaban singkat, jawab singkat. "
+                "Gunakan konteks AURA yang tersedia jika relevan.\n\n"
+                f"{context_block}"
                 f"Pesan user: {message}"
             )
 
         return (
             "Answer in the same language as the user's message. "
-            "Keep proper nouns unchanged.\n\n"
-            f"{memory_block}"
+            "Keep proper nouns unchanged. "
+            "Use the provided AURA context when relevant.\n\n"
+            f"{context_block}"
             f"User message: {message}"
         )
 

@@ -659,6 +659,7 @@ class AuraShell:
         print()
         print("Foundation Counts:")
         print(f"- Voice Providers: {status['voice_providers']}")
+        print(f"- Vision Providers: {status['vision_providers']}")
         print(f"- Memory Records : {status['memory_records']}")
         print(f"- Journal Entries: {status['journal_entries']}")
         print(f"- Roles          : {status['roles']}")

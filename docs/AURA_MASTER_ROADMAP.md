@@ -428,6 +428,7 @@ Planned:
 - AURA Awakening Alpha
 - Vision foundation
 - Unified system status
+- Context-aware chat
 - File/project plugin
 - App launcher plugin
 - Browser helper

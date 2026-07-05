@@ -661,6 +661,7 @@ class AuraCLI:
         print()
         print("Foundation Counts:")
         print(f"- Voice Providers: {status['voice_providers']}")
+        print(f"- Vision Providers: {status['vision_providers']}")
         print(f"- Memory Records : {status['memory_records']}")
         print(f"- Journal Entries: {status['journal_entries']}")
         print(f"- Roles          : {status['roles']}")
@@ -762,6 +763,8 @@ class AuraCLI:
         chat_parser.add_argument("message", type=str)
 
         history_parser = subparsers.add_parser("history")
+
+        history_parser.add_argument("limit", type=int, nargs="?", default=5)
         history_parser.add_argument("--limit", type=int, default=5)
 
         journal_parser = subparsers.add_parser("journal")

@@ -39,11 +39,11 @@ def build_builtin_skill_registry() -> SkillRegistry:
     registry.register(
         AuraSkill(
             name="chat",
-            description="Talk with the user using AURA's companion personality.",
+            description="Talk with the user using AURA's companion personality and context manager.",
             role="companion",
             permission_action="think",
             status="online",
-            capabilities=["conversation", "identity", "language_control"],
+            capabilities=["conversation", "identity", "language_control", "context_aware_chat"],
         )
     )
 

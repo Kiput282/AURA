@@ -43,6 +43,18 @@ class RuleBasedReasoningProvider(ReasoningProvider):
 
             return "\n".join(lines)
 
+        if (
+            "apa yang terakhir kita kerjakan" in normalized
+            or "sprint terakhir" in normalized
+            or "latest sprint" in normalized
+            or "last sprint" in normalized
+        ):
+            recent_journal = context.get("recent_project_journal", [])
+
+            if recent_journal:
+                latest_entry = recent_journal[-1]
+                return f"Terakhir kita mengerjakan {latest_entry.content}"
+
         if "status" in normalized:
             return (
                 f"{aura_name} {codename} is online. "
