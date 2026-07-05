@@ -7,6 +7,7 @@ import yaml
 from aura.core.chat import AuraChat
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.actions.action_request_manager import ActionRequestManager
+from aura.avatar.avatar_manager import AvatarManager
 from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
@@ -1015,6 +1016,125 @@ class AuraCLI:
             print(f"  Description     : {provider.description}")
             print()
 
+    def avatar_status(self) -> None:
+        manager = AvatarManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Avatar Status")
+        print("==================")
+        print(f"Name                    : {status['name']}")
+        print(f"Version                 : {status['version']}")
+        print(f"Status                  : {status['status']}")
+        print(f"Foundation Ready        : {status['foundation_ready']}")
+        print(f"Runtime Ready           : {status['runtime_ready']}")
+        print(f"Avatar Loaded           : {status['avatar_loaded']}")
+        print(f"Expression Runtime Ready: {status['expression_runtime_ready']}")
+        print(f"Gesture Runtime Ready   : {status['gesture_runtime_ready']}")
+        print(f"Motion Runtime Ready    : {status['motion_runtime_ready']}")
+        print(f"Providers               : {status['providers']}")
+        print(f"Expressions             : {status['expressions']}")
+        print(f"Gestures                : {status['gestures']}")
+        print(f"Note                    : {status['note']}")
+
+    def avatar_providers(self) -> None:
+        manager = AvatarManager(project_root=self.project_root)
+
+        print("AURA Avatar Providers")
+        print("=====================")
+
+        for provider in manager.list_providers():
+            print(f"- {provider.name}")
+            print(f"  Type                : {provider.provider_type}")
+            print(f"  Status              : {provider.status}")
+            print(f"  State Supported     : {provider.state_supported}")
+            print(f"  Expression Supported: {provider.expression_supported}")
+            print(f"  Gesture Supported   : {provider.gesture_supported}")
+            print(f"  Runtime Supported   : {provider.runtime_supported}")
+            print(f"  Description         : {provider.description}")
+            print()
+
+    def avatar_state(self) -> None:
+        manager = AvatarManager(project_root=self.project_root)
+        state = manager.state()
+
+        print("AURA Avatar State")
+        print("=================")
+        print(f"Avatar Name       : {state['avatar_name']}")
+        print(f"Avatar Format     : {state['avatar_format']}")
+        print(f"Runtime           : {state['runtime']}")
+        print(f"Body State        : {state['body_state']}")
+        print(f"Pose              : {state['pose']}")
+        print(f"Expression        : {state['expression']}")
+        print(f"Gesture           : {state['gesture']}")
+        print(f"Model Loaded      : {state['model_loaded']}")
+        print(f"Tracking Connected: {state['tracking_connected']}")
+        print(f"Voice Link Ready  : {state['voice_link_ready']}")
+        print(f"Vision Link Ready : {state['vision_link_ready']}")
+        print(f"Motion Link Ready : {state['motion_link_ready']}")
+        print()
+        print("Supported Expressions:")
+        for expression in state["supported_expressions"]:
+            print(f"- {expression}")
+        print()
+        print("Supported Gestures:")
+        for gesture in state["supported_gestures"]:
+            print(f"- {gesture}")
+        print()
+        print("Planning:")
+        planning = state["planning"]
+        print(f"Preferred Format   : {planning['preferred_format']}")
+        print(f"Authoring Tools    : {', '.join(planning['authoring_tools'])}")
+        print(f"Runtime Candidates : {', '.join(planning['runtime_candidates'])}")
+        print(f"Future Links       : {', '.join(planning['future_links'])}")
+        print()
+        print(f"Note: {state['note']}")
+
+    def avatar_expression(self, expression: str) -> None:
+        manager = AvatarManager(project_root=self.project_root)
+        result = manager.expression_request(expression=expression)
+        permission = result["permission"]
+
+        print("AURA Avatar Expression Proposal")
+        print("===============================")
+        print(f"Requested Expression: {result['requested_expression']}")
+        print(f"Supported           : {result['supported']}")
+        print(f"Request State       : {result['request_state']}")
+        print(f"Runtime Ready       : {result['runtime_ready']}")
+        print(f"Executed            : {result['executed']}")
+        print()
+        print("Permission")
+        print("----------")
+        print(f"Action      : {permission['action']}")
+        print(f"Level       : {permission['level']} - {permission['level_label']}")
+        print(f"Allowed     : {permission['allowed']}")
+        print(f"Confirmation: {permission['requires_confirmation']}")
+        print(f"Reason      : {permission['reason']}")
+        print()
+        print(f"Note: {result['note']}")
+
+    def avatar_gesture(self, gesture: str) -> None:
+        manager = AvatarManager(project_root=self.project_root)
+        result = manager.gesture_request(gesture=gesture)
+        permission = result["permission"]
+
+        print("AURA Avatar Gesture Proposal")
+        print("============================")
+        print(f"Requested Gesture: {result['requested_gesture']}")
+        print(f"Supported        : {result['supported']}")
+        print(f"Request State    : {result['request_state']}")
+        print(f"Runtime Ready    : {result['runtime_ready']}")
+        print(f"Executed         : {result['executed']}")
+        print()
+        print("Permission")
+        print("----------")
+        print(f"Action      : {permission['action']}")
+        print(f"Level       : {permission['level']} - {permission['level_label']}")
+        print(f"Allowed     : {permission['allowed']}")
+        print(f"Confirmation: {permission['requires_confirmation']}")
+        print(f"Reason      : {permission['reason']}")
+        print()
+        print(f"Note: {result['note']}")
+
     def desktop_status(self) -> None:
         manager = DesktopBridgeManager(project_root=self.project_root)
         status = manager.status()
@@ -1115,6 +1235,7 @@ class AuraCLI:
         print(f"Plugin Actions      : {status['foundation']['plugin_actions']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Vision Providers    : {status['foundation']['vision_providers']}")
+        print(f"Avatar Providers    : {status['foundation']['avatar_providers']}")
         print(f"Awakening Readiness : {status['foundation']['awakening_readiness']}")
         print()
         print("Systems")
@@ -1171,6 +1292,16 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("avatar-status")
+        subparsers.add_parser("avatar-providers")
+        subparsers.add_parser("avatar-state")
+
+        avatar_expression_parser = subparsers.add_parser("avatar-expression")
+        avatar_expression_parser.add_argument("expression", type=str)
+
+        avatar_gesture_parser = subparsers.add_parser("avatar-gesture")
+        avatar_gesture_parser.add_argument("gesture", type=str)
 
         subparsers.add_parser("desktop-status")
         subparsers.add_parser("desktop-capabilities")
@@ -1350,6 +1481,31 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "avatar-status":
+            disable_logging()
+            self.avatar_status()
+            return True
+
+        if parsed.command == "avatar-providers":
+            disable_logging()
+            self.avatar_providers()
+            return True
+
+        if parsed.command == "avatar-state":
+            disable_logging()
+            self.avatar_state()
+            return True
+
+        if parsed.command == "avatar-expression":
+            disable_logging()
+            self.avatar_expression(expression=parsed.expression)
+            return True
+
+        if parsed.command == "avatar-gesture":
+            disable_logging()
+            self.avatar_gesture(gesture=parsed.gesture)
             return True
 
         if parsed.command == "desktop-status":

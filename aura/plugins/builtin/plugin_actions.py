@@ -434,11 +434,66 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="avatar.status",
+            plugin="avatar",
+            description="Show avatar foundation status.",
+            permission_action="think",
+            status="online",
+            skill="avatar_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="avatar.providers",
+            plugin="avatar",
+            description="List avatar placeholder providers.",
+            permission_action="think",
+            status="online",
+            skill="avatar_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="avatar.state",
+            plugin="avatar",
+            description="Show placeholder avatar state and runtime planning metadata.",
+            permission_action="think",
+            status="online",
+            skill="avatar_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="avatar.expression",
+            plugin="avatar",
+            description="Prepare an avatar expression proposal without controlling a real avatar.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="avatar_control",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="avatar.gesture",
+            plugin="avatar",
+            description="Prepare an avatar gesture proposal without controlling a real avatar.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="avatar_control",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="avatar.control",
             plugin="avatar",
-            description="Control AURA avatar state, expression, or gesture.",
+            description="Prepare avatar state, expression, or gesture control proposal.",
             permission_action="prepare_file",
-            status="planned",
+            status="foundation",
             skill="avatar_control",
         )
     )

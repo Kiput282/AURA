@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.38.0-genesis
-Status  : VISION RUNTIME PLANNING ONLINE
+Version : 0.39.0-genesis
+Status  : AVATAR FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -100,6 +100,7 @@ AURA currently supports:
 - Desktop Bridge Foundation
 - Voice Runtime Planning
 - Vision Runtime Planning
+- Avatar Foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control

@@ -4,6 +4,7 @@ from typing import Any
 import yaml
 
 from aura.awakening.awakening_manager import AwakeningManager
+from aura.avatar.avatar_manager import AvatarManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.journal.project_journal import ProjectJournal
 from aura.memory.memory_store import MemoryStore
@@ -39,6 +40,7 @@ class SystemStatusManager:
         self.vision_runtime_planner = VisionRuntimePlanner(project_root=project_root)
         self.awakening_manager = AwakeningManager(project_root=project_root)
         self.desktop_manager = DesktopBridgeManager(project_root=project_root)
+        self.avatar_manager = AvatarManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -65,6 +67,7 @@ class SystemStatusManager:
         vision_runtime_status = self.vision_runtime_planner.status()
         awakening_status = self.awakening_manager.build_status()
         desktop_status = self.desktop_manager.status()
+        avatar_status = self.avatar_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -95,6 +98,7 @@ class SystemStatusManager:
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
                 "vision_providers": vision_status["providers"],
                 "vision_runtime_candidates": vision_runtime_status["candidate_count"],
+                "avatar_providers": avatar_status["providers"],
                 "awakening_readiness": f"{awakening_status['ready_count']}/{awakening_status['total_pillars']}",
             },
             "systems": {
@@ -110,6 +114,7 @@ class SystemStatusManager:
                 "voice_runtime": voice_runtime_status["status"],
                 "vision": vision_status["status"],
                 "vision_runtime": vision_runtime_status["status"],
+                "avatar": avatar_status["status"],
                 "awakening": awakening_status["status"],
             },
             "runtime": {
@@ -117,8 +122,10 @@ class SystemStatusManager:
                 "voice_runtime_planning": voice_runtime_status["planning_ready"],
                 "real_vision_runtime": vision_runtime_status["runtime_ready"],
                 "vision_runtime_planning": vision_runtime_status["planning_ready"],
+                "avatar_runtime": avatar_status["runtime_ready"],
+                "avatar_foundation": avatar_status["foundation_ready"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, context, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, context, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
         }

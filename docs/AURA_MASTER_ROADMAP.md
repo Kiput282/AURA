@@ -434,6 +434,7 @@ Planned:
 - Desktop Bridge Foundation
 - Voice Runtime Planning
 - Vision Runtime Planning
+- Avatar Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

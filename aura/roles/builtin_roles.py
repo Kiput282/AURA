@@ -168,14 +168,17 @@ def build_builtin_role_registry() -> RoleRegistry:
         AuraRole(
             name="avatar",
             description="3D avatar, VRM/VRoid, expressions, gestures, and digital body control.",
-            provider="planned",
-            model="avatar_model",
-            status="planned",
+            provider="internal",
+            model="avatar_manager",
+            status="foundation",
             capabilities=[
+                "avatar_status",
+                "avatar_state",
                 "avatar_control",
                 "vrm_control",
                 "expression_control",
                 "gesture_control",
+                "avatar_runtime_planning",
             ],
         )
     )

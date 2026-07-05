@@ -331,12 +331,38 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="avatar_foundation",
+            description="Show AURA avatar foundation status, providers, placeholder state, and avatar runtime planning metadata.",
+            role="avatar",
+            permission_action="think",
+            status="online",
+            capabilities=[
+                "avatar_status",
+                "avatar_providers",
+                "avatar_state",
+                "expression_options",
+                "gesture_options",
+                "vrm_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="avatar_control",
-            description="Control AURA's 3D avatar, expression, gesture, and body state.",
+            description="Prepare avatar state, expression, gesture, and body control proposals.",
             role="avatar",
             permission_action="prepare_file",
-            status="planned",
-            capabilities=["vrm", "expression", "gesture", "avatar_state"],
+            status="foundation",
+            capabilities=[
+                "vrm",
+                "expression",
+                "gesture",
+                "avatar_state",
+                "expression_proposal",
+                "gesture_proposal",
+                "runtime_placeholder",
+            ],
         )
     )
 
