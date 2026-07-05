@@ -446,6 +446,7 @@ Planned:
 - Avatar Runtime Alpha
 - Desktop Assistant Alpha
 - AURA Partner Alpha
+- Workspace Awareness Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

@@ -27,6 +27,7 @@ from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.voice.voice_runtime_alpha_manager import VoiceRuntimeAlphaManager
+from aura.workspace.workspace_awareness_manager import WorkspaceAwarenessManager
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.briefing.daily_briefing_manager import DailyBriefingManager
 from aura.vision.vision_manager import VisionManager
@@ -121,6 +122,11 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "workspace-awareness-status",
+            "workspace-map",
+            "workspace-context",
+            "workspace-current-state",
+            "workspace-important-files",
             "partner-alpha-status",
             "partner-context",
             "partner-readiness",
@@ -289,6 +295,11 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  workspace-awareness-status Show AURA Workspace Awareness status")
+        print("  workspace-map        Show read-only AURA workspace map")
+        print("  workspace-context    Show read-only AURA workspace context")
+        print("  workspace-current-state Show current AURA workspace state")
+        print("  workspace-important-files Show important AURA project files")
         print("  partner-alpha-status Show AURA Partner Alpha status")
         print("  partner-context      Show AURA Partner Alpha context")
         print("  partner-readiness    Show AURA Partner Alpha readiness")
@@ -2438,6 +2449,26 @@ class AuraShell:
             self.vision_providers()
             return
 
+        if normalized == "workspace-awareness-status":
+            self.workspace_awareness_status()
+            return
+
+        if normalized == "workspace-map":
+            self.workspace_map()
+            return
+
+        if normalized == "workspace-context":
+            self.workspace_context()
+            return
+
+        if normalized == "workspace-current-state":
+            self.workspace_current_state()
+            return
+
+        if normalized == "workspace-important-files":
+            self.workspace_important_files()
+            return
+
         if normalized == "partner-alpha-status":
             self.partner_alpha_status()
             return
@@ -3954,4 +3985,182 @@ class AuraShell:
         print("------------")
         for item in recommendation["safety_notes"]:
             print(f"- {item}")
+
+
+    def workspace_awareness_status(self) -> None:
+        manager = WorkspaceAwarenessManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Workspace Awareness Status")
+        print("===============================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Awareness Ready              : {status['awareness_ready']}")
+        print(f"Workspace Map Ready          : {status['workspace_map_ready']}")
+        print(f"Workspace Context Ready      : {status['workspace_context_ready']}")
+        print(f"Current State Ready          : {status['current_state_ready']}")
+        print(f"Important Files Ready        : {status['important_files_ready']}")
+        print(f"Project Root Detected        : {status['project_root_detected']}")
+        print(f"Git Repository Detected      : {status['git_repository_detected']}")
+        print(f"Git Branch                   : {status['git_branch']}")
+        print(f"Latest Commit Hint           : {status['latest_commit_hint'] or '-'}")
+        print(f"AURA Version                 : {status['aura_version']}")
+        print(f"Current Sprint               : {status['current_sprint'] or '-'}")
+        print(f"Top-Level Directories        : {status['top_level_directories']}")
+        print(f"Top-Level Files              : {status['top_level_files']}")
+        print(f"Workspace Directories        : {status['workspace_directories']}")
+        print(f"Workspace Files              : {status['workspace_files']}")
+        print(f"Important Files              : {status['existing_important_file_count']}/{status['important_file_count']}")
+        print(f"Ignored Directories          : {status['ignored_dir_count']}")
+        print(f"Python Files                 : {status['python_files']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                    : {status['read_only']}")
+        print(f"File Write                   : {status['file_write']}")
+        print(f"Memory Write                 : {status['memory_write']}")
+        print(f"Journal Write                : {status['journal_write']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"External Action Execution    : {status['external_action_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def workspace_map(self) -> None:
+        manager = WorkspaceAwarenessManager(project_root=self.project_root)
+        workspace_map = manager.workspace_map(depth=2, limit=120)
+
+        print("AURA Workspace Map")
+        print("==================")
+        print(f"Status                       : {workspace_map['status']}")
+        print(f"Workspace Map Ready          : {workspace_map['workspace_map_ready']}")
+        print(f"Project Root                 : {workspace_map['project_root']}")
+        print(f"Depth                        : {workspace_map['depth']}")
+        print(f"Limit                        : {workspace_map['limit']}")
+        print(f"Directories                  : {workspace_map['directories']}")
+        print(f"Files                        : {workspace_map['files']}")
+        print(f"Read Only                    : {workspace_map['read_only']}")
+        print(f"Write Performed              : {workspace_map['write_performed']}")
+        print(f"Command Execution Performed  : {workspace_map['command_execution_performed']}")
+        print()
+        print("Ignored/Runtime Directories")
+        print("---------------------------")
+        for item in workspace_map["ignored_dirs"]:
+            print(f"- {item}")
+        print()
+        print("Entries")
+        print("-------")
+        for item in workspace_map["entries"]:
+            marker = "D" if item["type"] == "directory" else "F"
+            print(f"- [{marker}] {item['path']}")
+        print()
+        print(f"Note: {workspace_map['note']}")
+
+    def workspace_context(self) -> None:
+        manager = WorkspaceAwarenessManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Workspace Context")
+        print("======================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Read Only                    : {context['read_only']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Memory Write Performed       : {context['memory_write_performed']}")
+        print(f"Journal Write Performed      : {context['journal_write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"External Action Performed    : {context['external_action_execution_performed']}")
+        print()
+        print("Summary")
+        print("-------")
+        print(context["workspace_summary"])
+        print()
+        print("Current State")
+        print("-------------")
+        state = context["current_state"]
+        print(f"Version             : {state['version']}")
+        print(f"Codename            : {state['codename']}")
+        print(f"Creator             : {state['creator']}")
+        print(f"Motto               : {state['motto']}")
+        print(f"Current Sprint      : {state['current_sprint'] or '-'}")
+        print(f"Git Repository      : {state['git_repository_detected']}")
+        print(f"Git Branch          : {state['git_branch']}")
+        print(f"Git Status Checked  : {state['git_status_checked']}")
+        print(f"Python Files        : {state['python_files']}")
+        print(f"Memory Records      : {state['memory_records']}")
+        print(f"Journal Entries     : {state['journal_entries']}")
+        print()
+        print("Top-Level Directories")
+        print("---------------------")
+        for item in context["top_level_directories"]:
+            print(f"- {item}")
+        print()
+        print("Top-Level Files")
+        print("---------------")
+        for item in context["top_level_files"]:
+            print(f"- {item}")
+        print()
+        print("Important Files")
+        print("---------------")
+        for item in context["important_files"]:
+            state_text = "exists" if item["exists"] else "missing"
+            print(f"- {item['path']} [{state_text}]")
+            print(f"  Reason: {item['reason']}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+    def workspace_current_state(self) -> None:
+        manager = WorkspaceAwarenessManager(project_root=self.project_root)
+        state = manager.current_state()
+
+        print("AURA Workspace Current State")
+        print("============================")
+        print(f"Status                       : {state['status']}")
+        print(f"Current State Ready          : {state['current_state_ready']}")
+        print(f"Project Root                 : {state['project_root']}")
+        print(f"Version                      : {state['version']}")
+        print(f"Codename                     : {state['codename']}")
+        print(f"Creator                      : {state['creator']}")
+        print(f"Motto                        : {state['motto']}")
+        print(f"Current Sprint               : {state['current_sprint'] or '-'}")
+        print(f"Git Repository Detected      : {state['git_repository_detected']}")
+        print(f"Git Branch                   : {state['git_branch']}")
+        print(f"Latest Commit Hint           : {state['latest_commit_hint'] or '-'}")
+        print(f"Git Status Checked           : {state['git_status_checked']}")
+        print(f"Git Status Note              : {state['git_status_note']}")
+        print(f"Python Files                 : {state['python_files']}")
+        print(f"Memory Records               : {state['memory_records']}")
+        print(f"Journal Entries              : {state['journal_entries']}")
+        print(f"Read Only                    : {state['read_only']}")
+        print(f"Write Performed              : {state['write_performed']}")
+        print(f"Command Execution Performed  : {state['command_execution_performed']}")
+
+    def workspace_important_files(self) -> None:
+        manager = WorkspaceAwarenessManager(project_root=self.project_root)
+        files = manager.important_files()
+
+        print("AURA Workspace Important Files")
+        print("==============================")
+        print(f"Important File Candidates: {len(files)}")
+        print()
+        for item in files:
+            state_text = "exists" if item["exists"] else "missing"
+            print(f"- {item['path']}")
+            print(f"  State : {state_text}")
+            print(f"  Type  : {item['type']}")
+            print(f"  Size  : {item['size_bytes']} bytes")
+            print(f"  Reason: {item['reason']}")
+        print()
+        print("Safety")
+        print("------")
+        print("Read Only                 : True")
+        print("Write Performed           : False")
+        print("Command Execution Performed: False")
 

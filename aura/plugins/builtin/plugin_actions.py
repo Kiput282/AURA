@@ -247,6 +247,61 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="workspace.awareness_status",
+            plugin="workspace",
+            description="Show AURA Workspace Awareness status.",
+            permission_action="read_project",
+            status="online",
+            skill="workspace_awareness",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace.map",
+            plugin="workspace",
+            description="Show a read-only AURA workspace map.",
+            permission_action="read_project",
+            status="online",
+            skill="workspace_awareness",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace.context",
+            plugin="workspace",
+            description="Prepare AURA workspace context without writing or executing actions.",
+            permission_action="read_project",
+            status="online",
+            skill="workspace_awareness",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace.current_state",
+            plugin="workspace",
+            description="Show current AURA workspace state.",
+            permission_action="read_project",
+            status="online",
+            skill="workspace_awareness",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="workspace.important_files",
+            plugin="workspace",
+            description="List important AURA project files and why they matter.",
+            permission_action="read_project",
+            status="online",
+            skill="workspace_awareness",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="partner.alpha_status",
             plugin="partner",
             description="Show AURA Partner Alpha status.",

@@ -27,6 +27,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="workspace_awareness",
+            description="Read AURA workspace structure, current state, important files, workspace map, and workspace context without writing or executing commands.",
+            role="project_manager",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "workspace_awareness_status",
+                "workspace_map",
+                "workspace_context",
+                "workspace_current_state",
+                "workspace_important_files",
+                "read_only_workspace_understanding",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="partner_alpha",
             description="Unify AURA memory, reflection, briefing, voice, vision, avatar, desktop, action safety, and readiness into a safe partner alpha layer.",
             role="companion",
