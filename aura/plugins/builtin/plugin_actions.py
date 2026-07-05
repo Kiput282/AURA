@@ -137,6 +137,17 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="action.request",
+            plugin="action",
+            description="Prepare a safe action request proposal without executing it.",
+            permission_action="think",
+            status="online",
+            skill="action_request",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="permissions.check",
             plugin="permissions",
             description="Check whether an action is allowed, requires confirmation, or is restricted.",

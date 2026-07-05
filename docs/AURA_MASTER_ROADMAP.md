@@ -429,6 +429,7 @@ Planned:
 - Vision foundation
 - Unified system status
 - Context-aware chat
+- Action request system
 - File/project plugin
 - App launcher plugin
 - Browser helper

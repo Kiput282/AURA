@@ -5,6 +5,7 @@ from pathlib import Path
 import yaml
 
 from aura.core.chat import AuraChat
+from aura.actions.action_request_manager import ActionRequestManager
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
@@ -69,6 +70,8 @@ class AuraShell:
             "project-summary",
             "project-files",
             "project-read",
+            "action-request",
+            "action-request-check",
             "plugin-actions",
             "plugin-action",
             "plugin-action-check",
@@ -168,6 +171,8 @@ class AuraShell:
         print("  project-files        Show visible project files")
         print("  project-files <n>    Show visible project files with limit")
         print("  project-read <path>  Read safe project file")
+        print("  action-request <name>       Prepare safe action request proposal")
+        print("  action-request-check <name> Alias for action-request")
         print("  plugin-actions       Show plugin action registry")
         print("  plugin-action <name> Show plugin action detail")
         print("  plugin-action-check <name> Check plugin action permission")
@@ -745,6 +750,27 @@ class AuraShell:
 
         print(content)
 
+    def action_request(self, action: str) -> None:
+        manager = ActionRequestManager()
+        request = manager.build(action_name=action)
+
+        print("AURA Action Request")
+        print("===================")
+        print(f"Requested Action   : {request.requested_action}")
+        print(f"Resolved Action    : {request.resolved_action}")
+        print(f"Request State      : {request.request_state}")
+        print(f"Plugin Action Found: {request.plugin_action_found}")
+        print(f"Plugin             : {request.plugin or '-'}")
+        print(f"Skill              : {request.skill or '-'}")
+        print(f"Plugin Status      : {request.plugin_action_status}")
+        print(f"Permission Action  : {request.permission_action}")
+        print(f"Permission Level   : {request.permission_level} - {request.permission_level_label}")
+        print(f"Allowed            : {request.allowed}")
+        print(f"Confirmation       : {request.requires_confirmation}")
+        print(f"Description        : {request.description}")
+        print(f"Reason             : {request.reason}")
+        print(f"Note               : {request.note}")
+
     def plugin_actions(self) -> None:
         registry = build_builtin_plugin_action_registry()
 
@@ -1189,6 +1215,26 @@ class AuraShell:
                 return
 
             self.project_read(relative_path=relative_path)
+            return
+
+        if normalized.startswith("action-request-check "):
+            action = command[len("action-request-check "):].strip()
+
+            if not action:
+                print("Usage: action-request-check <name>")
+                return
+
+            self.action_request(action=action)
+            return
+
+        if normalized.startswith("action-request "):
+            action = command[len("action-request "):].strip()
+
+            if not action:
+                print("Usage: action-request <name>")
+                return
+
+            self.action_request(action=action)
             return
 
         if normalized == "plugin-actions":

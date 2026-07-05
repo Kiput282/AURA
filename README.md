@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.33.0-genesis
-Status  : CONTEXT-AWARE CHAT ONLINE
+Version : 0.34.0-genesis
+Status  : ACTION REQUEST SYSTEM ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -95,6 +95,7 @@ AURA currently supports:
 - Vision foundation
 - Unified system status
 - Context-aware chat
+- Action request system
 - Memory-aware chat
 - Identity guardrail
 - Language control

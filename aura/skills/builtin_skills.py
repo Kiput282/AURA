@@ -115,6 +115,17 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="action_request",
+            description="Prepare safe action request proposals with plugin action and permission metadata.",
+            role="action",
+            permission_action="think",
+            status="online",
+            capabilities=["action_request", "permission_check", "confirmation_check", "safe_action_proposal"],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="permission_check",
             description="Check whether an action is allowed, requires confirmation, or is restricted.",
             role="action",

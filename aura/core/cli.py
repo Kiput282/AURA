@@ -5,6 +5,7 @@ from typing import Any
 import yaml
 
 from aura.core.chat import AuraChat
+from aura.actions.action_request_manager import ActionRequestManager
 from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
@@ -497,6 +498,27 @@ class AuraCLI:
         print(f"Confirmation: {permission.requires_confirmation}")
         print(f"Reason      : {permission.reason}")
 
+    def action_request(self, action: str) -> None:
+        manager = ActionRequestManager()
+        request = manager.build(action_name=action)
+
+        print("AURA Action Request")
+        print("===================")
+        print(f"Requested Action   : {request.requested_action}")
+        print(f"Resolved Action    : {request.resolved_action}")
+        print(f"Request State      : {request.request_state}")
+        print(f"Plugin Action Found: {request.plugin_action_found}")
+        print(f"Plugin             : {request.plugin or '-'}")
+        print(f"Skill              : {request.skill or '-'}")
+        print(f"Plugin Status      : {request.plugin_action_status}")
+        print(f"Permission Action  : {request.permission_action}")
+        print(f"Permission Level   : {request.permission_level} - {request.permission_level_label}")
+        print(f"Allowed            : {request.allowed}")
+        print(f"Confirmation       : {request.requires_confirmation}")
+        print(f"Description        : {request.description}")
+        print(f"Reason             : {request.reason}")
+        print(f"Note               : {request.note}")
+
     def plugin_actions(self) -> None:
         registry = build_builtin_plugin_action_registry()
 
@@ -804,6 +826,12 @@ class AuraCLI:
         project_read_parser = subparsers.add_parser("project-read")
         project_read_parser.add_argument("relative_path", type=str)
 
+        action_request_parser = subparsers.add_parser("action-request")
+        action_request_parser.add_argument("action", type=str)
+
+        action_request_check_parser = subparsers.add_parser("action-request-check")
+        action_request_check_parser.add_argument("action", type=str)
+
         subparsers.add_parser("plugin-actions")
 
         plugin_action_parser = subparsers.add_parser("plugin-action")
@@ -976,6 +1004,11 @@ class AuraCLI:
         if parsed.command == "project-read":
             disable_logging()
             self.project_read(relative_path=parsed.relative_path)
+            return True
+
+        if parsed.command in {"action-request", "action-request-check"}:
+            disable_logging()
+            self.action_request(action=parsed.action)
             return True
 
         if parsed.command == "plugin-actions":
