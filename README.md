@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.52.0-genesis
-Status  : BLENDER BRIDGE FOUNDATION ONLINE
+Version : 0.53.0-genesis
+Status  : MEDIA UNDERSTANDING FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -114,6 +114,7 @@ AURA currently supports:
 - AURA Partner Alpha
 - Workspace Awareness Foundation
 - Blender Bridge Foundation
+- Media Understanding Foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control

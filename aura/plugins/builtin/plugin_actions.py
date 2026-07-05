@@ -247,6 +247,83 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="media.understanding_status",
+            plugin="media",
+            description="Show AURA Media Understanding Foundation status.",
+            permission_action="read_project",
+            status="foundation",
+            skill="media_understanding_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="media.asset_summary",
+            plugin="media",
+            description="Show metadata-only summary of safe visible media assets.",
+            permission_action="read_project",
+            status="foundation",
+            skill="media_understanding_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="media.image_plan",
+            plugin="media",
+            description="Prepare a safe image description plan without opening files or reading pixels.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="media_understanding_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="media.texture_reference_plan",
+            plugin="media",
+            description="Prepare a safe texture reference plan without reading or writing texture files.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="media_understanding_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="media.thumbnail_review_plan",
+            plugin="media",
+            description="Prepare a safe thumbnail/banner review plan without opening or editing images.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="media_understanding_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="media.video_plan",
+            plugin="media",
+            description="Prepare a safe video/audio understanding plan without decoding media or executing ffmpeg.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="media_understanding_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="media.context",
+            plugin="media",
+            description="Prepare media understanding context without opening files, reading pixels, writing files, or executing commands.",
+            permission_action="read_project",
+            status="foundation",
+            skill="media_understanding_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="blender.bridge_status",
             plugin="blender",
             description="Show AURA Blender Bridge Foundation status.",

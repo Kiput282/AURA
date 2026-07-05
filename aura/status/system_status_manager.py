@@ -8,6 +8,7 @@ from aura.briefing.daily_briefing_manager import DailyBriefingManager
 from aura.avatar.avatar_manager import AvatarManager
 from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
 from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundationManager
+from aura.media.media_understanding_foundation_manager import MediaUnderstandingFoundationManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.desktop.desktop_assistant_alpha_manager import DesktopAssistantAlphaManager
 from aura.journal.project_journal import ProjectJournal
@@ -65,6 +66,7 @@ class SystemStatusManager:
         self.partner_alpha_manager = PartnerAlphaManager(project_root=project_root)
         self.workspace_awareness_manager = WorkspaceAwarenessManager(project_root=project_root)
         self.blender_bridge_manager = BlenderBridgeFoundationManager(project_root=project_root)
+        self.media_understanding_manager = MediaUnderstandingFoundationManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -104,6 +106,7 @@ class SystemStatusManager:
         partner_alpha_status = self.partner_alpha_manager.status()
         workspace_awareness_status = self.workspace_awareness_manager.status()
         blender_bridge_status = self.blender_bridge_manager.status()
+        media_understanding_status = self.media_understanding_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -143,6 +146,8 @@ class SystemStatusManager:
                 "workspace_important_files": workspace_awareness_status["existing_important_file_count"],
                 "blender_bridge_sections": blender_bridge_status["sections"],
                 "blender_asset_candidates": blender_bridge_status["asset_candidate_count"],
+                "media_understanding_sections": media_understanding_status["sections"],
+                "media_asset_candidates": media_understanding_status["candidate_count"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -162,6 +167,7 @@ class SystemStatusManager:
                 "partner_alpha": partner_alpha_status["status"],
                 "workspace_awareness": workspace_awareness_status["status"],
                 "blender_bridge": blender_bridge_status["status"],
+                "media_understanding": media_understanding_status["status"],
                 "context": "online",
                 "core_loop": "alpha",
                 "model_router": model_router_status["status"],
@@ -270,6 +276,19 @@ class SystemStatusManager:
                 "blender_file_write": blender_bridge_status["file_write"],
                 "blender_command_execution": blender_bridge_status["command_execution"],
                 "blender_external_action_execution": blender_bridge_status["external_action_execution"],
+                "media_understanding_ready": media_understanding_status["understanding_ready"],
+                "media_asset_summary_ready": media_understanding_status["asset_summary_ready"],
+                "media_image_plan_ready": media_understanding_status["image_plan_ready"],
+                "media_texture_reference_ready": media_understanding_status["texture_reference_ready"],
+                "media_thumbnail_review_ready": media_understanding_status["thumbnail_review_ready"],
+                "media_video_plan_ready": media_understanding_status["video_plan_ready"],
+                "media_context_ready": media_understanding_status["context_ready"],
+                "media_metadata_inspection_ready": media_understanding_status["metadata_inspection_ready"],
+                "media_file_opened": media_understanding_status["media_file_opened"],
+                "media_pixel_read": media_understanding_status["media_pixel_read"],
+                "media_file_write": media_understanding_status["file_write"],
+                "media_command_execution": media_understanding_status["command_execution"],
+                "media_external_action_execution": media_understanding_status["external_action_execution"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
                 "desktop_assistant_alpha_ready": desktop_alpha_status["alpha_ready"],
@@ -286,5 +305,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, media understanding, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

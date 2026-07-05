@@ -27,6 +27,26 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="media_understanding_foundation",
+            description="Prepare metadata-only media understanding, image description, texture reference, thumbnail/banner review, and video/audio plans without opening files, reading pixels, writing files, or executing commands.",
+            role="creative",
+            permission_action="read_project",
+            status="foundation",
+            capabilities=[
+                "media_understanding_status",
+                "media_asset_summary",
+                "media_image_description_plan",
+                "media_texture_reference_plan",
+                "media_thumbnail_banner_review_plan",
+                "media_video_audio_plan",
+                "media_context",
+                "metadata_only_media_awareness",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="blender_bridge_foundation",
             description="Prepare safe Blender scene, asset, texture/material, rigging, animation, and context plans without opening Blender, writing files, or executing commands.",
             role="creative",

@@ -15,6 +15,7 @@ from aura.actions.action_request_manager import ActionRequestManager
 from aura.avatar.avatar_manager import AvatarManager
 from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
 from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundationManager
+from aura.media.media_understanding_foundation_manager import MediaUnderstandingFoundationManager
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
@@ -123,6 +124,13 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "media-understanding-status",
+            "media-asset-summary",
+            "media-image-plan",
+            "media-texture-reference-plan",
+            "media-thumbnail-review-plan",
+            "media-video-plan",
+            "media-context",
             "blender-bridge-status",
             "blender-scene-plan",
             "blender-asset-plan",
@@ -303,6 +311,13 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  media-understanding-status Show AURA Media Understanding status")
+        print("  media-asset-summary Show metadata-only media asset summary")
+        print("  media-image-plan <goal> Prepare safe image description plan")
+        print("  media-texture-reference-plan <goal> Prepare safe texture reference plan")
+        print("  media-thumbnail-review-plan <goal> Prepare safe thumbnail/banner review plan")
+        print("  media-video-plan <goal> Prepare safe video/audio plan")
+        print("  media-context Show media understanding context")
         print("  blender-bridge-status Show AURA Blender Bridge Foundation status")
         print("  blender-scene-plan <goal> Prepare safe Blender scene plan")
         print("  blender-asset-plan <goal> Prepare safe Blender asset plan")
@@ -2464,6 +2479,50 @@ class AuraShell:
             self.vision_providers()
             return
 
+        if normalized == "media-understanding-status":
+            self.media_understanding_status()
+            return
+
+        if normalized == "media-asset-summary":
+            self.media_asset_summary()
+            return
+
+        if normalized.startswith("media-image-plan "):
+            goal = command[len("media-image-plan "):].strip()
+            if not goal:
+                print("Usage: media-image-plan <goal>")
+                return
+            self.media_image_plan(goal)
+            return
+
+        if normalized.startswith("media-texture-reference-plan "):
+            goal = command[len("media-texture-reference-plan "):].strip()
+            if not goal:
+                print("Usage: media-texture-reference-plan <goal>")
+                return
+            self.media_texture_reference_plan(goal)
+            return
+
+        if normalized.startswith("media-thumbnail-review-plan "):
+            goal = command[len("media-thumbnail-review-plan "):].strip()
+            if not goal:
+                print("Usage: media-thumbnail-review-plan <goal>")
+                return
+            self.media_thumbnail_review_plan(goal)
+            return
+
+        if normalized.startswith("media-video-plan "):
+            goal = command[len("media-video-plan "):].strip()
+            if not goal:
+                print("Usage: media-video-plan <goal>")
+                return
+            self.media_video_plan(goal)
+            return
+
+        if normalized == "media-context":
+            self.media_context()
+            return
+
         if normalized == "blender-bridge-status":
             self.blender_bridge_status()
             return
@@ -4371,6 +4430,212 @@ class AuraShell:
         print("---------------------")
         for item in context["disabled_capabilities"]:
             print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def media_understanding_status(self) -> None:
+        manager = MediaUnderstandingFoundationManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Media Understanding Foundation Status")
+        print("==========================================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Understanding Ready          : {status['understanding_ready']}")
+        print(f"Asset Summary Ready          : {status['asset_summary_ready']}")
+        print(f"Image Plan Ready             : {status['image_plan_ready']}")
+        print(f"Texture Reference Ready      : {status['texture_reference_ready']}")
+        print(f"Thumbnail Review Ready       : {status['thumbnail_review_ready']}")
+        print(f"Video Plan Ready             : {status['video_plan_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Dependency Check Ready       : {status['dependency_check_ready']}")
+        print(f"Metadata Inspection Ready    : {status['metadata_inspection_ready']}")
+        print(f"Candidate Count              : {status['candidate_count']}")
+        print(f"Image Count                  : {status['image_count']}")
+        print(f"Texture Reference Count      : {status['texture_reference_count']}")
+        print(f"Video Count                  : {status['video_count']}")
+        print(f"Audio Count                  : {status['audio_count']}")
+        print(f"3D Count                     : {status['three_d_count']}")
+        print(f"Design Source Count          : {status['design_source_count']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                    : {status['read_only']}")
+        print(f"Metadata Only                : {status['metadata_only']}")
+        print(f"Media File Opened            : {status['media_file_opened']}")
+        print(f"Media Pixel Read             : {status['media_pixel_read']}")
+        print(f"Image Pixel Read             : {status['image_pixel_read']}")
+        print(f"Video Frame Read             : {status['video_frame_read']}")
+        print(f"Audio Stream Read            : {status['audio_stream_read']}")
+        print(f"Thumbnail Generated          : {status['thumbnail_generated']}")
+        print(f"File Write                   : {status['file_write']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"External Action Execution    : {status['external_action_execution']}")
+        print(f"Real Tool Execution          : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def media_asset_summary(self) -> None:
+        manager = MediaUnderstandingFoundationManager(project_root=self.project_root)
+        summary = manager.asset_summary()
+
+        print("AURA Media Asset Summary")
+        print("========================")
+        print(f"Status                       : {summary['status']}")
+        print(f"Asset Summary Ready          : {summary['asset_summary_ready']}")
+        print(f"Candidate Count              : {summary['candidate_count']}")
+        print(f"Image Count                  : {summary['image_count']}")
+        print(f"Texture Reference Count      : {summary['texture_reference_count']}")
+        print(f"Video Count                  : {summary['video_count']}")
+        print(f"Audio Count                  : {summary['audio_count']}")
+        print(f"3D Count                     : {summary['three_d_count']}")
+        print(f"Design Source Count          : {summary['design_source_count']}")
+        print(f"Metadata Only                : {summary['metadata_only']}")
+        print(f"File Opened                  : {summary['file_opened']}")
+        print(f"Pixel Read                   : {summary['pixel_read']}")
+        print(f"File Write Performed         : {summary['file_write_performed']}")
+        print(f"Command Execution Performed  : {summary['command_execution_performed']}")
+        print()
+        print("By Category")
+        print("-----------")
+        if summary["by_category"]:
+            for key, value in sorted(summary["by_category"].items()):
+                print(f"- {key}: {value}")
+        else:
+            print("- none")
+        print()
+        print("Assets")
+        print("------")
+        if summary["assets"]:
+            for item in summary["assets"]:
+                print(f"- {item['path']} [{item['category']}, {item['suffix']}, {item['size_bytes']} bytes]")
+        else:
+            print("- no visible media assets found in safe project files")
+        print()
+        print(f"Note: {summary['note']}")
+
+    def print_media_plan(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                       : {plan['status']}")
+        print(f"Plan Type                    : {plan['plan_type']}")
+        print(f"Target                       : {plan['target']}")
+        print(f"Plan State                   : {plan['plan_state']}")
+        print(f"Metadata Only                : {plan['metadata_only']}")
+        print(f"Execution Ready              : {plan['execution_ready']}")
+        print(f"Executed                     : {plan['executed']}")
+        print(f"Media File Opened            : {plan['media_file_opened']}")
+        print(f"Pixel Read                   : {plan['pixel_read']}")
+        print(f"Image Pixel Read             : {plan['image_pixel_read']}")
+        print(f"Video Frame Read             : {plan['video_frame_read']}")
+        print(f"Audio Stream Read            : {plan['audio_stream_read']}")
+        print(f"Thumbnail Generated          : {plan['thumbnail_generated']}")
+        print(f"File Write Performed         : {plan['file_write_performed']}")
+        print(f"Command Execution Performed  : {plan['command_execution_performed']}")
+        print(f"External Action Performed    : {plan['external_action_execution_performed']}")
+        print(f"Vision Context Ready         : {plan['vision_context_ready']}")
+        print(f"Blender Context Ready        : {plan['blender_context_ready']}")
+        print()
+        print("Workspace Summary")
+        print("-----------------")
+        print(plan["workspace_summary"])
+        print()
+        print("Asset Summary")
+        print("-------------")
+        summary = plan["asset_summary"]
+        print(f"Candidate Count: {summary['candidate_count']}")
+        print(f"Images         : {summary['image_count']}")
+        print(f"Videos         : {summary['video_count']}")
+        print(f"Audio          : {summary['audio_count']}")
+        print(f"3D Assets      : {summary['three_d_count']}")
+        print(f"Metadata Only  : {summary['metadata_only']}")
+        print(f"File Opened    : {summary['file_opened']}")
+        print(f"Pixel Read     : {summary['pixel_read']}")
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in plan["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def media_image_plan(self, goal: str) -> None:
+        manager = MediaUnderstandingFoundationManager(project_root=self.project_root)
+        self.print_media_plan("AURA Media Image Description Plan", manager.image_description_plan(goal))
+
+    def media_texture_reference_plan(self, goal: str) -> None:
+        manager = MediaUnderstandingFoundationManager(project_root=self.project_root)
+        self.print_media_plan("AURA Media Texture Reference Plan", manager.texture_reference_plan(goal))
+
+    def media_thumbnail_review_plan(self, goal: str) -> None:
+        manager = MediaUnderstandingFoundationManager(project_root=self.project_root)
+        self.print_media_plan("AURA Media Thumbnail/Banner Review Plan", manager.thumbnail_review_plan(goal))
+
+    def media_video_plan(self, goal: str) -> None:
+        manager = MediaUnderstandingFoundationManager(project_root=self.project_root)
+        self.print_media_plan("AURA Media Video/Audio Plan", manager.video_plan(goal))
+
+    def media_context(self) -> None:
+        manager = MediaUnderstandingFoundationManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Media Understanding Context")
+        print("================================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Read Only                    : {context['read_only']}")
+        print(f"Metadata Only                : {context['metadata_only']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Media File Opened            : {context['media_file_opened']}")
+        print(f"Pixel Read                   : {context['pixel_read']}")
+        print(f"File Write Performed         : {context['file_write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"External Action Performed    : {context['external_action_execution_performed']}")
+        print()
+        print("Media Status")
+        print("------------")
+        status = context["media_status"]
+        print(f"Understanding Ready : {status['understanding_ready']}")
+        print(f"Candidate Count     : {status['candidate_count']}")
+        print(f"Image Count         : {status['image_count']}")
+        print(f"Video Count         : {status['video_count']}")
+        print(f"Audio Count         : {status['audio_count']}")
+        print(f"3D Count            : {status['three_d_count']}")
+        print(f"Runtime Ready       : {status['runtime_ready']}")
+        print(f"File Write          : {status['file_write']}")
+        print(f"Command Execution   : {status['command_execution']}")
+        print()
+        print("Workspace Summary")
+        print("-----------------")
+        print(context["workspace_context"]["workspace_summary"])
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Asset Summary")
+        print("-------------")
+        summary = context["asset_summary"]
+        print(f"Candidate Count: {summary['candidate_count']}")
+        print(f"Metadata Only  : {summary['metadata_only']}")
+        print(f"File Opened    : {summary['file_opened']}")
+        print(f"Pixel Read     : {summary['pixel_read']}")
+        print(f"File Write     : {summary['file_write_performed']}")
+        print(f"Command Exec   : {summary['command_execution_performed']}")
         print()
         print(f"Note: {context['note']}")
 

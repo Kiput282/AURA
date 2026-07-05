@@ -448,6 +448,7 @@ Planned:
 - AURA Partner Alpha
 - Workspace Awareness Foundation
 - Blender Bridge Foundation
+- Media Understanding Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper
