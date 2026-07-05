@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.36.0-genesis
-Status  : DESKTOP BRIDGE FOUNDATION ONLINE
+Version : 0.37.0-genesis
+Status  : VOICE RUNTIME PLANNING ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -98,6 +98,7 @@ AURA currently supports:
 - Action request system
 - Project Assistant v1
 - Desktop Bridge Foundation
+- Voice Runtime Planning
 - Memory-aware chat
 - Identity guardrail
 - Language control
@@ -205,6 +206,10 @@ python3 main.py vision-providers
 
 python3 main.py awakening-status
 python3 main.py awaken
+
+python3 main.py voice-runtime-status
+python3 main.py voice-runtime-plan
+python3 main.py voice-runtime-check
 
 python3 main.py voice-status
 python3 main.py voice-providers

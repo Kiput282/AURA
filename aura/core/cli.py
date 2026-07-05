@@ -17,6 +17,7 @@ from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
 from aura.plugins.builtin.project_plugin import ProjectPlugin
 from aura.voice.voice_manager import VoiceManager
+from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.vision.vision_manager import VisionManager
 from aura.status.system_status_manager import SystemStatusManager
@@ -715,6 +716,106 @@ class AuraCLI:
 
         print(content)
 
+    def voice_runtime_status(self) -> None:
+        planner = VoiceRuntimePlanner(project_root=self.project_root)
+        status = planner.status()
+
+        print("AURA Voice Runtime Status")
+        print("=========================")
+        print(f"Name              : {status['name']}")
+        print(f"Version           : {status['version']}")
+        print(f"Status            : {status['status']}")
+        print(f"Planning Ready    : {status['planning_ready']}")
+        print(f"Runtime Ready     : {status['runtime_ready']}")
+        print(f"Microphone Access : {status['microphone_access']}")
+        print(f"Speaker Output    : {status['speaker_output']}")
+        print(f"STT Runtime Ready : {status['stt_runtime_ready']}")
+        print(f"TTS Runtime Ready : {status['tts_runtime_ready']}")
+        print(f"STT Candidates    : {status['stt_candidates']}")
+        print(f"TTS Candidates    : {status['tts_candidates']}")
+        print(f"Candidate Count   : {status['candidate_count']}")
+        print(f"Note              : {status['note']}")
+
+    def voice_runtime_plan(self) -> None:
+        planner = VoiceRuntimePlanner(project_root=self.project_root)
+        plan = planner.plan()
+        recommended = plan["recommended_path"]
+
+        print("AURA Voice Runtime Plan")
+        print("=======================")
+        print("Recommended Path")
+        print("----------------")
+        print(f"STT         : {recommended['stt']}")
+        print(f"TTS         : {recommended['tts']}")
+        print(f"Fallback TTS: {recommended['fallback_tts']}")
+        print(f"Audio I/O   : {recommended['audio_io']}")
+        print(f"Description : {recommended['description']}")
+        print()
+        print("Phases")
+        print("------")
+
+        for phase in plan["phases"]:
+            print(f"- Phase {phase['phase']}: {phase['name']}")
+            print(f"  Status     : {phase['status']}")
+            print(f"  Description: {phase['description']}")
+
+        print()
+        print("STT Candidates")
+        print("--------------")
+        for candidate in plan["stt_candidates"]:
+            print(f"- {candidate['name']} ({candidate['status']})")
+            print(f"  {candidate['description']}")
+
+        print()
+        print("TTS Candidates")
+        print("--------------")
+        for candidate in plan["tts_candidates"]:
+            print(f"- {candidate['name']} ({candidate['status']})")
+            print(f"  {candidate['description']}")
+
+        print()
+        print("Safety Rules")
+        print("------------")
+        for rule in plan["safety_rules"]:
+            print(f"- {rule}")
+
+    def voice_runtime_check(self) -> None:
+        planner = VoiceRuntimePlanner(project_root=self.project_root)
+        result = planner.check()
+        dependencies = result["dependencies"]
+
+        print("AURA Voice Runtime Check")
+        print("========================")
+        print(f"Status                 : {result['status']}")
+        print(f"Planning Ready         : {result['planning_ready']}")
+        print(f"Runtime Ready          : {result['runtime_ready']}")
+        print(f"Python Packages        : {result['python_packages_installed']}/{result['python_packages_total']}")
+        print(f"Executables            : {result['executables_found']}/{result['executables_total']}")
+        print()
+        print("Python Packages")
+        print("---------------")
+        for package in dependencies["python_packages"]:
+            print(f"- {package['name']}: {package['installed']} ({package['purpose']})")
+
+        print()
+        print("Executables")
+        print("-----------")
+        for executable in dependencies["executables"]:
+            print(f"- {executable['name']}: {executable['found']} ({executable['purpose']})")
+
+        print()
+        print("Environment")
+        print("-----------")
+        environment = dependencies["environment"]
+        print(f"OS             : {environment['os']}")
+        print(f"OS Release     : {environment['os_release']}")
+        print(f"Machine        : {environment['machine']}")
+        print(f"Pulse Server   : {environment['pulse_server'] or '-'}")
+        print(f"PipeWire Runtime: {environment['pipewire_runtime'] or '-'}")
+        print(f"XDG Runtime    : {environment['xdg_runtime'] or '-'}")
+        print()
+        print(f"Note: {result['note']}")
+
     def voice_status(self) -> None:
         voice_manager = VoiceManager()
         status = voice_manager.status()
@@ -975,6 +1076,10 @@ class AuraCLI:
         subparsers.add_parser("awakening-status")
         subparsers.add_parser("awaken")
 
+        subparsers.add_parser("voice-runtime-status")
+        subparsers.add_parser("voice-runtime-plan")
+        subparsers.add_parser("voice-runtime-check")
+
         subparsers.add_parser("voice-status")
         subparsers.add_parser("voice-providers")
 
@@ -1165,6 +1270,21 @@ class AuraCLI:
         if parsed.command in {"awakening-status", "awaken"}:
             disable_logging()
             self.awakening_status()
+            return True
+
+        if parsed.command == "voice-runtime-status":
+            disable_logging()
+            self.voice_runtime_status()
+            return True
+
+        if parsed.command == "voice-runtime-plan":
+            disable_logging()
+            self.voice_runtime_plan()
+            return True
+
+        if parsed.command == "voice-runtime-check":
+            disable_logging()
+            self.voice_runtime_check()
             return True
 
         if parsed.command == "voice-status":

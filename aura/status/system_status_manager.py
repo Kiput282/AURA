@@ -12,6 +12,7 @@ from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.skills.builtin_skills import build_builtin_skill_registry
 from aura.vision.vision_manager import VisionManager
 from aura.voice.voice_manager import VoiceManager
+from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 
 
 class SystemStatusManager:
@@ -32,6 +33,7 @@ class SystemStatusManager:
         self.skill_registry = build_builtin_skill_registry()
         self.plugin_action_registry = build_builtin_plugin_action_registry()
         self.voice_manager = VoiceManager()
+        self.voice_runtime_planner = VoiceRuntimePlanner(project_root=project_root)
         self.vision_manager = VisionManager()
         self.awakening_manager = AwakeningManager(project_root=project_root)
         self.desktop_manager = DesktopBridgeManager(project_root=project_root)
@@ -56,6 +58,7 @@ class SystemStatusManager:
         reasoning_settings = settings.get("reasoning", {})
 
         voice_status = self.voice_manager.status()
+        voice_runtime_status = self.voice_runtime_planner.status()
         vision_status = self.vision_manager.status()
         awakening_status = self.awakening_manager.build_status()
         desktop_status = self.desktop_manager.status()
@@ -86,6 +89,7 @@ class SystemStatusManager:
                 "skills": self.skill_registry.count(),
                 "plugin_actions": self.plugin_action_registry.count(),
                 "voice_providers": voice_status["providers"],
+                "voice_runtime_candidates": voice_runtime_status["candidate_count"],
                 "vision_providers": vision_status["providers"],
                 "awakening_readiness": f"{awakening_status['ready_count']}/{awakening_status['total_pillars']}",
             },
@@ -99,14 +103,16 @@ class SystemStatusManager:
                 "project_plugin": "online",
                 "desktop_bridge": desktop_status["status"],
                 "voice": voice_status["status"],
+                "voice_runtime": voice_runtime_status["status"],
                 "vision": vision_status["status"],
                 "awakening": awakening_status["status"],
             },
             "runtime": {
-                "real_voice_runtime": False,
+                "real_voice_runtime": voice_runtime_status["runtime_ready"],
+                "voice_runtime_planning": voice_runtime_status["planning_ready"],
                 "real_vision_runtime": False,
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, context, roles, skills, permissions, plugins, desktop bridge, voice, vision, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, context, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision, and awakening status.",
         }

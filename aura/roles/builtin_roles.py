@@ -130,6 +130,10 @@ def build_builtin_role_registry() -> RoleRegistry:
                 "text_to_speech",
                 "voice_interaction",
                 "voice_mode",
+                "voice_runtime_planning",
+                "stt_runtime_candidates",
+                "tts_runtime_candidates",
+                "voice_dependency_check",
             ],
         )
     )

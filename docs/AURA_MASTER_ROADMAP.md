@@ -432,6 +432,7 @@ Planned:
 - Action request system
 - Project Assistant v1
 - Desktop Bridge Foundation
+- Voice Runtime Planning
 - File/project plugin
 - App launcher plugin
 - Browser helper

@@ -335,6 +335,39 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="voice.runtime_status",
+            plugin="voice",
+            description="Show voice runtime planning status.",
+            permission_action="think",
+            status="online",
+            skill="voice_runtime_planning",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="voice.runtime_plan",
+            plugin="voice",
+            description="Show local STT/TTS runtime planning candidates and safety phases.",
+            permission_action="think",
+            status="online",
+            skill="voice_runtime_planning",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="voice.runtime_check",
+            plugin="voice",
+            description="Run passive voice runtime dependency checks without accessing audio devices.",
+            permission_action="think",
+            status="online",
+            skill="voice_runtime_planning",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="voice.status",
             plugin="voice",
             description="Show voice foundation status.",
@@ -348,9 +381,9 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         PluginAction(
             name="voice.speak",
             plugin="voice",
-            description="Speak through text-to-speech output when voice mode is enabled.",
+            description="Prepare text-to-speech output when voice runtime is enabled.",
             permission_action="speaker_speak",
-            status="planned",
+            status="foundation",
             skill="voice_interaction",
         )
     )
@@ -359,9 +392,9 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         PluginAction(
             name="voice.listen",
             plugin="voice",
-            description="Listen through microphone for voice interaction.",
+            description="Prepare microphone listening when voice runtime is enabled.",
             permission_action="microphone_listen",
-            status="planned",
+            status="foundation",
             skill="voice_interaction",
         )
     )

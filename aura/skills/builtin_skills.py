@@ -250,12 +250,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="voice_runtime_planning",
+            description="Plan local STT/TTS runtime providers, dependency checks, and safe voice runtime readiness.",
+            role="voice",
+            permission_action="think",
+            status="online",
+            capabilities=[
+                "voice_runtime_status",
+                "voice_runtime_plan",
+                "voice_runtime_check",
+                "stt_candidates",
+                "tts_candidates",
+                "dependency_check",
+                "voice_permission_mapping",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="voice_foundation",
             description="Show AURA voice foundation status and placeholder voice providers.",
             role="voice",
             permission_action="think",
             status="online",
-            capabilities=["voice_status", "stt_placeholder", "tts_placeholder"],
+            capabilities=["voice_status", "stt_placeholder", "tts_placeholder", "voice_runtime_planning"],
         )
     )
 
@@ -266,7 +285,15 @@ def build_builtin_skill_registry() -> SkillRegistry:
             role="voice",
             permission_action="microphone_listen",
             status="foundation",
-            capabilities=["speech_to_text", "text_to_speech", "voice_mode", "microphone_permission"],
+            capabilities=[
+                "speech_to_text",
+                "text_to_speech",
+                "voice_mode",
+                "microphone_permission",
+                "speaker_permission",
+                "runtime_planning",
+                "confirmation_required",
+            ],
         )
     )
 
