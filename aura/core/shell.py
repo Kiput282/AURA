@@ -24,6 +24,7 @@ from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.awakening.awakening_manager import AwakeningManager
+from aura.briefing.daily_briefing_manager import DailyBriefingManager
 from aura.vision.vision_manager import VisionManager
 from aura.vision.vision_runtime_planner import VisionRuntimePlanner
 from aura.status.system_status_manager import SystemStatusManager
@@ -56,6 +57,10 @@ class AuraShell:
             "recall",
             "mem",
             "memory",
+            "daily-briefing-status",
+            "daily-briefing",
+            "daily-briefing-compact",
+            "daily-briefing-context",
             "memory-reflection-status",
             "memory-reflect",
             "memory-insights",
@@ -175,6 +180,13 @@ class AuraShell:
         print("  recall <limit>       Show recent memories with limit")
         print("  mem                  Alias for recall")
         print("  memory               Alias for recall")
+        print("  daily-briefing-status Show Daily Project Briefing status")
+        print("  daily-briefing       Show daily project briefing")
+        print("  daily-briefing <n>   Show daily project briefing with limit")
+        print("  daily-briefing-compact Show compact daily briefing")
+        print("  daily-briefing-compact <n> Show compact daily briefing with limit")
+        print("  daily-briefing-context Show daily briefing context")
+        print("  daily-briefing-context <n> Show daily briefing context with limit")
         print("  memory-reflection-status Show Memory Reflection System status")
         print("  memory-reflect       Reflect on memory and journal")
         print("  memory-reflect <n>   Reflect with milestone limit")
@@ -1933,6 +1945,52 @@ class AuraShell:
             self.memory_delete(memory_id=memory_id)
             return
 
+        if normalized == "daily-briefing-status":
+            self.daily_briefing_status()
+            return
+
+        if normalized == "daily-briefing":
+            self.daily_briefing()
+            return
+
+        if normalized.startswith("daily-briefing "):
+            value = command[len("daily-briefing "):].strip()
+            try:
+                limit = int(value)
+            except ValueError:
+                print("Usage: daily-briefing <limit>")
+                return
+            self.daily_briefing(limit=limit)
+            return
+
+        if normalized == "daily-briefing-compact":
+            self.daily_briefing_compact()
+            return
+
+        if normalized.startswith("daily-briefing-compact "):
+            value = command[len("daily-briefing-compact "):].strip()
+            try:
+                limit = int(value)
+            except ValueError:
+                print("Usage: daily-briefing-compact <limit>")
+                return
+            self.daily_briefing_compact(limit=limit)
+            return
+
+        if normalized == "daily-briefing-context":
+            self.daily_briefing_context()
+            return
+
+        if normalized.startswith("daily-briefing-context "):
+            value = command[len("daily-briefing-context "):].strip()
+            try:
+                limit = int(value)
+            except ValueError:
+                print("Usage: daily-briefing-context <limit>")
+                return
+            self.daily_briefing_context(limit=limit)
+            return
+
         if normalized == "memory-reflection-status":
             self.memory_reflection_status()
             return
@@ -2800,6 +2858,141 @@ class AuraShell:
         for memory in context["memory_highlights"]:
             print(f"- {memory['content']}")
 
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def daily_briefing_status(self) -> None:
+        manager = DailyBriefingManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Daily Project Briefing Status")
+        print("==================================")
+        print(f"Name                   : {status['name']}")
+        print(f"Version                : {status['version']}")
+        print(f"Status                 : {status['status']}")
+        print(f"Briefing Ready         : {status['briefing_ready']}")
+        print(f"Compact Ready          : {status['compact_ready']}")
+        print(f"Context Ready          : {status['context_ready']}")
+        print(f"Journal Read Ready     : {status['journal_read_ready']}")
+        print(f"Reflection Read Ready  : {status['reflection_read_ready']}")
+        print(f"System Summary Ready   : {status['system_summary_ready']}")
+        print(f"Automatic File Write   : {status['automatic_file_write']}")
+        print(f"Automatic Memory Write : {status['automatic_memory_write']}")
+        print(f"Automatic Journal Write: {status['automatic_journal_write']}")
+        print(f"Command Execution      : {status['command_execution']}")
+        print(f"AURA Version           : {status['aura_version']}")
+        print(f"Memory Count           : {status['memory_count']}")
+        print(f"Journal Count          : {status['journal_count']}")
+        print(f"Milestone Count        : {status['milestone_count']}")
+        print(f"Latest Milestone       : {status['latest_milestone']}")
+        print(f"Briefing Sections      : {status['briefing_sections']}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def daily_briefing(self, limit: int = 6) -> None:
+        manager = DailyBriefingManager(project_root=self.project_root)
+        briefing = manager.build(limit=limit)
+
+        print("AURA Daily Project Briefing")
+        print("===========================")
+        print(f"Title   : {briefing['title']}")
+        print(f"Status  : {briefing['status']}")
+        print(f"Version : {briefing['version']}")
+        print(f"Limit   : {briefing['metadata']['limit']}")
+        print()
+        print("Project Summary")
+        print("---------------")
+        print(briefing["project_summary"])
+        print()
+
+        print("Latest Milestone")
+        print("----------------")
+        latest = briefing["latest_milestone"]
+        if latest:
+            print(f"{latest['title']}: {latest['content']}")
+        else:
+            print("-")
+
+        print()
+        print("Project Insights")
+        print("----------------")
+        for item in briefing["project_insights"]:
+            print(f"- {item}")
+
+        print()
+        print("Safety State")
+        print("------------")
+        for key, value in briefing["safety_state"].items():
+            print(f"{key}: {value}")
+
+        print()
+        print("Recommended Next Steps")
+        print("----------------------")
+        for item in briefing["recommended_next_steps"]:
+            print(f"- {item}")
+
+        print()
+        print("Safety Notes")
+        print("------------")
+        for item in briefing["safety_notes"]:
+            print(f"- {item}")
+
+    def daily_briefing_compact(self, limit: int = 4) -> None:
+        manager = DailyBriefingManager(project_root=self.project_root)
+        briefing = manager.compact(limit=limit)
+
+        print("AURA Daily Project Briefing Compact")
+        print("===================================")
+        print(f"Title             : {briefing['title']}")
+        print(f"Status            : {briefing['status']}")
+        print(f"Version           : {briefing['version']}")
+        print(f"Write Performed   : {briefing['write_performed']}")
+        print(f"Command Execution : {briefing['command_execution_performed']}")
+        print()
+        print("Project Summary")
+        print("---------------")
+        print(briefing["project_summary"])
+        print()
+        print("Top Insights")
+        print("------------")
+        for item in briefing["top_insights"]:
+            print(f"- {item}")
+        print()
+        print("Next Steps")
+        print("----------")
+        for item in briefing["next_steps"]:
+            print(f"- {item}")
+
+    def daily_briefing_context(self, limit: int = 5) -> None:
+        manager = DailyBriefingManager(project_root=self.project_root)
+        context = manager.context(limit=limit)
+
+        print("AURA Daily Project Briefing Context")
+        print("===================================")
+        print(f"Status           : {context['status']}")
+        print(f"Context Ready    : {context['context_ready']}")
+        print(f"Write Performed  : {context['write_performed']}")
+        print(f"Command Execution: {context['command_execution_performed']}")
+        print()
+        print("Project Summary")
+        print("---------------")
+        print(context["project_summary"])
+        print()
+        print("Recent Milestones")
+        print("-----------------")
+        for item in context["recent_milestones"]:
+            print(f"- {item}")
+        print()
+        print("Project Insights")
+        print("----------------")
+        for item in context["project_insights"]:
+            print(f"- {item}")
+        print()
+        print("Recommended Next Steps")
+        print("----------------------")
+        for item in context["recommended_next_steps"]:
+            print(f"- {item}")
         print()
         print(f"Note: {context['note']}")
 

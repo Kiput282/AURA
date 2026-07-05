@@ -440,6 +440,7 @@ Planned:
 - Tool Execution Sandbox Foundation
 - Project Coding Assistant v2
 - Memory Reflection System
+- Daily Project Briefing
 - File/project plugin
 - App launcher plugin
 - Browser helper

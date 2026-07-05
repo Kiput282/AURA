@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.44.0-genesis
-Status  : MEMORY REFLECTION SYSTEM ONLINE
+Version : 0.45.0-genesis
+Status  : DAILY PROJECT BRIEFING ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -106,6 +106,7 @@ AURA currently supports:
 - Tool Execution Sandbox Foundation
 - Project Coding Assistant v2
 - Memory Reflection System
+- Daily Project Briefing
 - Memory-aware chat
 - Identity guardrail
 - Language control

@@ -4,6 +4,7 @@ from typing import Any
 import yaml
 
 from aura.awakening.awakening_manager import AwakeningManager
+from aura.briefing.daily_briefing_manager import DailyBriefingManager
 from aura.avatar.avatar_manager import AvatarManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.journal.project_journal import ProjectJournal
@@ -49,6 +50,7 @@ class SystemStatusManager:
         self.tool_sandbox_manager = ToolSandboxManager(project_root=project_root)
         self.project_coding_manager = ProjectCodingManager(project_root=project_root)
         self.memory_reflection_manager = MemoryReflectionManager(project_root=project_root)
+        self.daily_briefing_manager = DailyBriefingManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -80,6 +82,7 @@ class SystemStatusManager:
         tool_sandbox_status = self.tool_sandbox_manager.status()
         project_coding_status = self.project_coding_manager.status()
         memory_reflection_status = self.memory_reflection_manager.status()
+        daily_briefing_status = self.daily_briefing_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -113,6 +116,7 @@ class SystemStatusManager:
                 "sandbox_blocked_patterns": tool_sandbox_status["blocked_pattern_count"],
                 "project_python_files": project_coding_status["python_files"],
                 "reflection_milestones": memory_reflection_status["milestone_count"],
+                "briefing_sections": daily_briefing_status["briefing_sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
                 "vision_providers": vision_status["providers"],
@@ -124,6 +128,7 @@ class SystemStatusManager:
                 "memory": "online",
                 "journal": "online",
                 "memory_reflection": memory_reflection_status["status"],
+                "daily_briefing": daily_briefing_status["status"],
                 "context": "online",
                 "core_loop": "alpha",
                 "model_router": model_router_status["status"],
@@ -160,8 +165,11 @@ class SystemStatusManager:
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
+                "daily_briefing_ready": daily_briefing_status["briefing_ready"],
+                "daily_briefing_write": daily_briefing_status["automatic_file_write"],
+                "daily_briefing_command_execution": daily_briefing_status["command_execution"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, voice runtime planning, vision runtime planning, avatar foundation, and awakening status.",
         }

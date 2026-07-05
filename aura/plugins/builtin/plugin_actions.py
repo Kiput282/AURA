@@ -280,6 +280,50 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="daily.briefing_status",
+            plugin="daily_briefing",
+            description="Show Daily Project Briefing status.",
+            permission_action="read_project",
+            status="online",
+            skill="daily_project_briefing",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="daily.briefing",
+            plugin="daily_briefing",
+            description="Create a read-only daily project briefing.",
+            permission_action="read_project",
+            status="online",
+            skill="daily_project_briefing",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="daily.briefing_compact",
+            plugin="daily_briefing",
+            description="Create a compact read-only daily project briefing.",
+            permission_action="read_project",
+            status="online",
+            skill="daily_project_briefing",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="daily.briefing_context",
+            plugin="daily_briefing",
+            description="Prepare daily briefing context for future reasoning without writing data.",
+            permission_action="read_project",
+            status="online",
+            skill="daily_project_briefing",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="journal.add",
             plugin="journal",
             description="Add a project journal entry.",

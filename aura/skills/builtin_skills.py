@@ -152,6 +152,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="daily_project_briefing",
+            description="Create read-only daily project briefings from system status, journal, memory reflection, safety state, and next-step recommendations.",
+            role="project_manager",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "daily_briefing_status",
+                "daily_briefing",
+                "daily_briefing_compact",
+                "daily_briefing_context",
+                "project_summary",
+                "next_step_recommendations",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="project_journal",
             description="Record and view AURA's project development journal.",
             role="project_manager",
