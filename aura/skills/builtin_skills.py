@@ -27,6 +27,26 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="blender_bridge_foundation",
+            description="Prepare safe Blender scene, asset, texture/material, rigging, animation, and context plans without opening Blender, writing files, or executing commands.",
+            role="creative",
+            permission_action="prepare_file",
+            status="foundation",
+            capabilities=[
+                "blender_bridge_status",
+                "blender_scene_plan",
+                "blender_asset_plan",
+                "blender_texture_material_plan",
+                "blender_rigging_plan",
+                "blender_animation_plan",
+                "blender_context",
+                "safe_blender_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="workspace_awareness",
             description="Read AURA workspace structure, current state, important files, workspace map, and workspace context without writing or executing commands.",
             role="project_manager",

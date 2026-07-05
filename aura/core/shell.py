@@ -14,6 +14,7 @@ from aura.desktop.desktop_assistant_alpha_manager import DesktopAssistantAlphaMa
 from aura.actions.action_request_manager import ActionRequestManager
 from aura.avatar.avatar_manager import AvatarManager
 from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
+from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundationManager
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
@@ -122,6 +123,13 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "blender-bridge-status",
+            "blender-scene-plan",
+            "blender-asset-plan",
+            "blender-texture-plan",
+            "blender-rigging-plan",
+            "blender-animation-plan",
+            "blender-context",
             "workspace-awareness-status",
             "workspace-map",
             "workspace-context",
@@ -295,6 +303,13 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  blender-bridge-status Show AURA Blender Bridge Foundation status")
+        print("  blender-scene-plan <goal> Prepare safe Blender scene plan")
+        print("  blender-asset-plan <goal> Prepare safe Blender asset plan")
+        print("  blender-texture-plan <goal> Prepare safe Blender texture/material plan")
+        print("  blender-rigging-plan <goal> Prepare safe Blender rigging plan")
+        print("  blender-animation-plan <goal> Prepare safe Blender animation plan")
+        print("  blender-context     Show Blender bridge context")
         print("  workspace-awareness-status Show AURA Workspace Awareness status")
         print("  workspace-map        Show read-only AURA workspace map")
         print("  workspace-context    Show read-only AURA workspace context")
@@ -2449,6 +2464,54 @@ class AuraShell:
             self.vision_providers()
             return
 
+        if normalized == "blender-bridge-status":
+            self.blender_bridge_status()
+            return
+
+        if normalized.startswith("blender-scene-plan "):
+            goal = command[len("blender-scene-plan "):].strip()
+            if not goal:
+                print("Usage: blender-scene-plan <goal>")
+                return
+            self.blender_scene_plan(goal)
+            return
+
+        if normalized.startswith("blender-asset-plan "):
+            goal = command[len("blender-asset-plan "):].strip()
+            if not goal:
+                print("Usage: blender-asset-plan <goal>")
+                return
+            self.blender_asset_plan(goal)
+            return
+
+        if normalized.startswith("blender-texture-plan "):
+            goal = command[len("blender-texture-plan "):].strip()
+            if not goal:
+                print("Usage: blender-texture-plan <goal>")
+                return
+            self.blender_texture_plan(goal)
+            return
+
+        if normalized.startswith("blender-rigging-plan "):
+            goal = command[len("blender-rigging-plan "):].strip()
+            if not goal:
+                print("Usage: blender-rigging-plan <goal>")
+                return
+            self.blender_rigging_plan(goal)
+            return
+
+        if normalized.startswith("blender-animation-plan "):
+            goal = command[len("blender-animation-plan "):].strip()
+            if not goal:
+                print("Usage: blender-animation-plan <goal>")
+                return
+            self.blender_animation_plan(goal)
+            return
+
+        if normalized == "blender-context":
+            self.blender_context()
+            return
+
         if normalized == "workspace-awareness-status":
             self.workspace_awareness_status()
             return
@@ -4163,4 +4226,151 @@ class AuraShell:
         print("Read Only                 : True")
         print("Write Performed           : False")
         print("Command Execution Performed: False")
+
+
+    def blender_bridge_status(self) -> None:
+        manager = BlenderBridgeFoundationManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Blender Bridge Foundation Status")
+        print("=====================================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Bridge Ready                 : {status['bridge_ready']}")
+        print(f"Scene Plan Ready             : {status['scene_plan_ready']}")
+        print(f"Asset Plan Ready             : {status['asset_plan_ready']}")
+        print(f"Texture Plan Ready           : {status['texture_plan_ready']}")
+        print(f"Material Plan Ready          : {status['material_plan_ready']}")
+        print(f"Rigging Plan Ready           : {status['rigging_plan_ready']}")
+        print(f"Animation Plan Ready         : {status['animation_plan_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Dependency Check Ready       : {status['dependency_check_ready']}")
+        print(f"Asset Awareness Ready        : {status['asset_awareness_ready']}")
+        print(f"Backend Found                : {status['backend_found']}")
+        print(f"Backend Name                 : {status['backend_name'] or '-'}")
+        print(f"Backend Path                 : {status['backend_path'] or '-'}")
+        print(f"bpy Found                    : {status['bpy_found']}")
+        print(f"Blender Executable Found     : {status['blender_executable_found']}")
+        print(f"Blender Executable Path      : {status['blender_executable_path'] or '-'}")
+        print(f"FFmpeg Found                 : {status['ffmpeg_found']}")
+        print(f"Asset Candidates             : {status['asset_candidate_count']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Blender App Opened           : {status['blender_app_opened']}")
+        print(f"Blender Script Executed      : {status['blender_script_executed']}")
+        print(f"Scene Modified               : {status['scene_modified']}")
+        print(f"File Write                   : {status['file_write']}")
+        print(f"Blend File Write             : {status['blend_file_write']}")
+        print(f"Texture File Write           : {status['texture_file_write']}")
+        print(f"Script File Write            : {status['script_file_write']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"External Action Execution    : {status['external_action_execution']}")
+        print(f"Real Tool Execution          : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def print_blender_plan(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                       : {plan['status']}")
+        print(f"Plan Type                    : {plan['plan_type']}")
+        print(f"Target                       : {plan['target']}")
+        print(f"Plan State                   : {plan['plan_state']}")
+        print(f"Execution Ready              : {plan['execution_ready']}")
+        print(f"Executed                     : {plan['executed']}")
+        print(f"Blender App Opened           : {plan['blender_app_opened']}")
+        print(f"Blender Script Executed      : {plan['blender_script_executed']}")
+        print(f"Scene Modified               : {plan['scene_modified']}")
+        print(f"File Write Performed         : {plan['file_write_performed']}")
+        print(f"Command Execution Performed  : {plan['command_execution_performed']}")
+        print(f"External Action Performed    : {plan['external_action_execution_performed']}")
+        print()
+        print("Workspace Summary")
+        print("-----------------")
+        print(plan["workspace_summary"])
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in plan["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Command Plan")
+        print("------------")
+        command_plan = plan["command_plan"]
+        print(f"Available: {command_plan['available']}")
+        print(f"Backend  : {command_plan['backend']['name'] or '-'}")
+        print(f"Command  : {command_plan['command'] or '-'}")
+        print(f"Reason   : {command_plan['reason']}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def blender_scene_plan(self, goal: str) -> None:
+        manager = BlenderBridgeFoundationManager(project_root=self.project_root)
+        self.print_blender_plan("AURA Blender Scene Plan", manager.scene_plan(goal))
+
+    def blender_asset_plan(self, goal: str) -> None:
+        manager = BlenderBridgeFoundationManager(project_root=self.project_root)
+        self.print_blender_plan("AURA Blender Asset Plan", manager.asset_plan(goal))
+
+    def blender_texture_plan(self, goal: str) -> None:
+        manager = BlenderBridgeFoundationManager(project_root=self.project_root)
+        self.print_blender_plan("AURA Blender Texture/Material Plan", manager.texture_plan(goal))
+
+    def blender_rigging_plan(self, goal: str) -> None:
+        manager = BlenderBridgeFoundationManager(project_root=self.project_root)
+        self.print_blender_plan("AURA Blender Rigging Plan", manager.rigging_plan(goal))
+
+    def blender_animation_plan(self, goal: str) -> None:
+        manager = BlenderBridgeFoundationManager(project_root=self.project_root)
+        self.print_blender_plan("AURA Blender Animation Plan", manager.animation_plan(goal))
+
+    def blender_context(self) -> None:
+        manager = BlenderBridgeFoundationManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Blender Bridge Context")
+        print("===========================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Read Only                    : {context['read_only']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"External Action Performed    : {context['external_action_execution_performed']}")
+        print(f"Blender App Opened           : {context['blender_app_opened']}")
+        print(f"Blender Script Executed      : {context['blender_script_executed']}")
+        print()
+        print("Bridge Status")
+        print("-------------")
+        status = context["bridge_status"]
+        print(f"Bridge Ready       : {status['bridge_ready']}")
+        print(f"Backend Found      : {status['backend_found']}")
+        print(f"Backend Name       : {status['backend_name'] or '-'}")
+        print(f"Asset Candidates   : {status['asset_candidate_count']}")
+        print(f"Runtime Ready      : {status['runtime_ready']}")
+        print(f"File Write         : {status['file_write']}")
+        print(f"Command Execution  : {status['command_execution']}")
+        print()
+        print("Workspace Summary")
+        print("-----------------")
+        print(context["workspace_context"]["workspace_summary"])
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
 

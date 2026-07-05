@@ -447,6 +447,7 @@ Planned:
 - Desktop Assistant Alpha
 - AURA Partner Alpha
 - Workspace Awareness Foundation
+- Blender Bridge Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

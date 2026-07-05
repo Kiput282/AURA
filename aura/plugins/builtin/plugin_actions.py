@@ -247,6 +247,83 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="blender.bridge_status",
+            plugin="blender",
+            description="Show AURA Blender Bridge Foundation status.",
+            permission_action="read_project",
+            status="foundation",
+            skill="blender_bridge_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="blender.scene_plan",
+            plugin="blender",
+            description="Prepare a safe Blender scene plan without opening Blender or writing files.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="blender_bridge_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="blender.asset_plan",
+            plugin="blender",
+            description="Prepare a safe Blender asset plan without creating or modifying assets.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="blender_bridge_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="blender.texture_plan",
+            plugin="blender",
+            description="Prepare a safe Blender texture/material/shader plan without writing texture files.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="blender_bridge_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="blender.rigging_plan",
+            plugin="blender",
+            description="Prepare a safe Blender rigging plan without modifying rigs.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="blender_bridge_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="blender.animation_plan",
+            plugin="blender",
+            description="Prepare a safe Blender animation plan without writing animation data.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="blender_bridge_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="blender.context",
+            plugin="blender",
+            description="Prepare Blender bridge context for future reasoning without executing actions.",
+            permission_action="read_project",
+            status="foundation",
+            skill="blender_bridge_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="workspace.awareness_status",
             plugin="workspace",
             description="Show AURA Workspace Awareness status.",
