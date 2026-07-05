@@ -451,6 +451,7 @@ Planned:
 - Media Understanding Foundation
 - AURA Expression Language
 - Game Companion Foundation
+- Streaming Safety Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper

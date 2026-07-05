@@ -27,6 +27,26 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="streaming_safety_foundation",
+            description="Prepare safe streaming context, chat safety, content boundary, privacy, and moderation plans without reading live chat, sending messages, moderating, capturing screen, opening apps/browser, writing files, or executing commands.",
+            role="safety",
+            permission_action="prepare_file",
+            status="foundation",
+            capabilities=[
+                "streaming_safety_status",
+                "streaming_context_plan",
+                "streaming_chat_safety_plan",
+                "streaming_content_boundary_plan",
+                "streaming_privacy_plan",
+                "streaming_moderation_plan",
+                "streaming_safety_context",
+                "non_invasive_stream_safety",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="game_companion_foundation",
             description="Prepare safe game companion session plans, strategy plans, streaming plans, and coaching plans without reading game screen, controlling input, opening games/apps, writing files, or executing commands.",
             role="creative",

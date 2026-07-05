@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.55.0-genesis
-Status  : GAME COMPANION FOUNDATION ONLINE
+Version : 0.56.0-genesis
+Status  : STREAMING SAFETY FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -117,6 +117,7 @@ AURA currently supports:
 - Media Understanding Foundation
 - AURA Expression Language
 - Game Companion Foundation
+- Streaming Safety Foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control

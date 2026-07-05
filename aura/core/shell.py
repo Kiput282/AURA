@@ -18,6 +18,7 @@ from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundati
 from aura.media.media_understanding_foundation_manager import MediaUnderstandingFoundationManager
 from aura.expression.expression_language_manager import ExpressionLanguageManager
 from aura.game.game_companion_foundation_manager import GameCompanionFoundationManager
+from aura.streaming.streaming_safety_foundation_manager import StreamingSafetyFoundationManager
 from aura.memory.memory_item import MemoryItem
 from aura.memory.memory_store import MemoryStore
 from aura.journal.project_journal import ProjectJournal
@@ -126,6 +127,13 @@ class AuraShell:
             "vision-runtime-check",
             "vision-status",
             "vision-providers",
+            "streaming-safety-status",
+            "streaming-context-plan",
+            "streaming-chat-safety-plan",
+            "streaming-content-boundary-plan",
+            "streaming-privacy-plan",
+            "streaming-moderation-plan",
+            "streaming-safety-context",
             "game-companion-status",
             "game-session-plan",
             "game-strategy-plan",
@@ -326,6 +334,13 @@ class AuraShell:
         print("  vision-runtime-check  Run passive vision runtime dependency check")
         print("  vision-status        Show vision foundation status")
         print("  vision-providers     Show vision provider placeholders")
+        print("  streaming-safety-status Show AURA Streaming Safety Foundation status")
+        print("  streaming-context-plan <target> Prepare safe streaming context plan")
+        print("  streaming-chat-safety-plan <target> Prepare safe chat safety plan")
+        print("  streaming-content-boundary-plan <target> Prepare safe content boundary plan")
+        print("  streaming-privacy-plan <target> Prepare safe privacy plan")
+        print("  streaming-moderation-plan <target> Prepare safe moderation note plan")
+        print("  streaming-safety-context Show streaming safety context")
         print("  game-companion-status Show AURA Game Companion Foundation status")
         print("  game-session-plan <target> Prepare safe game session plan")
         print("  game-strategy-plan <target> Prepare safe game strategy plan")
@@ -2505,6 +2520,54 @@ class AuraShell:
 
         if normalized == "vision-providers":
             self.vision_providers()
+            return
+
+        if normalized == "streaming-safety-status":
+            self.streaming_safety_status()
+            return
+
+        if normalized.startswith("streaming-context-plan "):
+            target = command[len("streaming-context-plan "):].strip()
+            if not target:
+                print("Usage: streaming-context-plan <target>")
+                return
+            self.streaming_context_plan(target)
+            return
+
+        if normalized.startswith("streaming-chat-safety-plan "):
+            target = command[len("streaming-chat-safety-plan "):].strip()
+            if not target:
+                print("Usage: streaming-chat-safety-plan <target>")
+                return
+            self.streaming_chat_safety_plan(target)
+            return
+
+        if normalized.startswith("streaming-content-boundary-plan "):
+            target = command[len("streaming-content-boundary-plan "):].strip()
+            if not target:
+                print("Usage: streaming-content-boundary-plan <target>")
+                return
+            self.streaming_content_boundary_plan(target)
+            return
+
+        if normalized.startswith("streaming-privacy-plan "):
+            target = command[len("streaming-privacy-plan "):].strip()
+            if not target:
+                print("Usage: streaming-privacy-plan <target>")
+                return
+            self.streaming_privacy_plan(target)
+            return
+
+        if normalized.startswith("streaming-moderation-plan "):
+            target = command[len("streaming-moderation-plan "):].strip()
+            if not target:
+                print("Usage: streaming-moderation-plan <target>")
+                return
+            self.streaming_moderation_plan(target)
+            return
+
+        if normalized == "streaming-safety-context":
+            self.streaming_safety_context()
             return
 
         if normalized == "game-companion-status":
@@ -5122,6 +5185,186 @@ class AuraShell:
         print(f"Desktop    : {status['desktop_integration_ready']}")
         print(f"Media      : {status['media_integration_ready']}")
         print(f"Partner    : {status['partner_integration_ready']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def streaming_safety_status(self) -> None:
+        manager = StreamingSafetyFoundationManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Streaming Safety Foundation Status")
+        print("=======================================")
+        print(f"Name                         : {status['name']}")
+        print(f"Version                      : {status['version']}")
+        print(f"Status                       : {status['status']}")
+        print(f"Safety Ready                 : {status['safety_ready']}")
+        print(f"Context Plan Ready           : {status['context_plan_ready']}")
+        print(f"Chat Safety Ready            : {status['chat_safety_ready']}")
+        print(f"Content Boundary Ready       : {status['content_boundary_ready']}")
+        print(f"Privacy Plan Ready           : {status['privacy_plan_ready']}")
+        print(f"Moderation Plan Ready        : {status['moderation_plan_ready']}")
+        print(f"Context Ready                : {status['context_ready']}")
+        print(f"Game Integration Ready       : {status['game_integration_ready']}")
+        print(f"Expression Integration Ready : {status['expression_integration_ready']}")
+        print(f"Media Integration Ready      : {status['media_integration_ready']}")
+        print(f"Vision Integration Ready     : {status['vision_integration_ready']}")
+        print(f"Desktop Integration Ready    : {status['desktop_integration_ready']}")
+        print(f"Safety Categories            : {status['safety_categories']}")
+        print(f"Stream Modes                 : {status['stream_modes']}")
+        print(f"Disabled Runtime Actions     : {status['disabled_runtime_actions']}")
+        print(f"Streaming Mode               : {status['streaming_mode']}")
+        print(f"Runtime Ready                : {status['runtime_ready']}")
+        print(f"Sections                     : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                    : {status['read_only']}")
+        print(f"Live Chat Read               : {status['live_chat_read']}")
+        print(f"Message Sent                 : {status['message_sent']}")
+        print(f"Moderation Action            : {status['moderation_action']}")
+        print(f"Screen Capture               : {status['screen_capture']}")
+        print(f"Camera Access                : {status['camera_access']}")
+        print(f"Browser Opened               : {status['browser_opened']}")
+        print(f"App Opened                   : {status['app_opened']}")
+        print(f"Voice Output                 : {status['voice_output']}")
+        print(f"Avatar Changed               : {status['avatar_changed']}")
+        print(f"File Write                   : {status['file_write']}")
+        print(f"Command Execution            : {status['command_execution']}")
+        print(f"External Action Execution    : {status['external_action_execution']}")
+        print(f"Real Tool Execution          : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def print_streaming_plan(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                       : {plan['status']}")
+        print(f"Plan Type                    : {plan['plan_type']}")
+        print(f"Target                       : {plan['target']}")
+        print(f"Plan State                   : {plan['plan_state']}")
+        print(f"Stream Priority              : {plan['stream_priority']}")
+        print(f"Stream Tags                  : {', '.join(plan['stream_tags'])}")
+        print(f"Voice Tone Hint              : {plan['voice_tone_hint']}")
+        print(f"Avatar Expression Hint       : {plan['avatar_expression_hint']}")
+        print(f"Gesture Hint                 : {plan['gesture_hint']}")
+        print(f"Response Style Hint          : {plan['response_style_hint']}")
+        print(f"Game Context Ready           : {plan['game_context_ready']}")
+        print(f"Expression Context Ready     : {plan['expression_context_ready']}")
+        print(f"Media Context Ready          : {plan['media_context_ready']}")
+        print(f"Vision Context Ready         : {plan['vision_context_ready']}")
+        print(f"Desktop Context Ready        : {plan['desktop_context_ready']}")
+        print(f"Execution Ready              : {plan['execution_ready']}")
+        print(f"Executed                     : {plan['executed']}")
+        print()
+        print("Stream Context")
+        print("--------------")
+        context = plan["stream_context"]
+        print(f"Priority        : {context['priority']}")
+        print(f"Tags            : {', '.join(context['tags'])}")
+        print(f"Chat Related    : {context['chat_related']}")
+        print(f"Privacy Related : {context['privacy_related']}")
+        print(f"Game Related    : {context['game_related']}")
+        print(f"Avatar Related  : {context['avatar_related']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Live Chat Read               : {plan['live_chat_read']}")
+        print(f"Chat Message Sent            : {plan['chat_message_sent']}")
+        print(f"Moderation Action Performed  : {plan['moderation_action_performed']}")
+        print(f"Screen Capture Performed     : {plan['screen_capture_performed']}")
+        print(f"Camera Access Performed      : {plan['camera_access_performed']}")
+        print(f"Browser Opened               : {plan['browser_opened']}")
+        print(f"App Opened                   : {plan['app_opened']}")
+        print(f"Voice Output Performed       : {plan['voice_output_performed']}")
+        print(f"Avatar Changed               : {plan['avatar_changed']}")
+        print(f"File Write Performed         : {plan['file_write_performed']}")
+        print(f"Command Execution Performed  : {plan['command_execution_performed']}")
+        print(f"External Action Performed    : {plan['external_action_execution_performed']}")
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for step in plan["recommended_steps"]:
+            print(f"- {step}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def streaming_context_plan(self, target: str) -> None:
+        manager = StreamingSafetyFoundationManager(project_root=self.project_root)
+        self.print_streaming_plan("AURA Streaming Context Plan", manager.context_plan(target))
+
+    def streaming_chat_safety_plan(self, target: str) -> None:
+        manager = StreamingSafetyFoundationManager(project_root=self.project_root)
+        self.print_streaming_plan("AURA Streaming Chat Safety Plan", manager.chat_safety_plan(target))
+
+    def streaming_content_boundary_plan(self, target: str) -> None:
+        manager = StreamingSafetyFoundationManager(project_root=self.project_root)
+        self.print_streaming_plan("AURA Streaming Content Boundary Plan", manager.content_boundary_plan(target))
+
+    def streaming_privacy_plan(self, target: str) -> None:
+        manager = StreamingSafetyFoundationManager(project_root=self.project_root)
+        self.print_streaming_plan("AURA Streaming Privacy Plan", manager.privacy_plan(target))
+
+    def streaming_moderation_plan(self, target: str) -> None:
+        manager = StreamingSafetyFoundationManager(project_root=self.project_root)
+        self.print_streaming_plan("AURA Streaming Moderation Plan", manager.moderation_plan(target))
+
+    def streaming_safety_context(self) -> None:
+        manager = StreamingSafetyFoundationManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Streaming Safety Context")
+        print("=============================")
+        print(f"Status                       : {context['status']}")
+        print(f"Context Ready                : {context['context_ready']}")
+        print(f"Read Only                    : {context['read_only']}")
+        print(f"Write Performed              : {context['write_performed']}")
+        print(f"Live Chat Read               : {context['live_chat_read']}")
+        print(f"Message Sent                 : {context['message_sent']}")
+        print(f"Moderation Action            : {context['moderation_action']}")
+        print(f"Screen Capture               : {context['screen_capture']}")
+        print(f"Camera Access                : {context['camera_access']}")
+        print(f"Browser Opened               : {context['browser_opened']}")
+        print(f"App Opened                   : {context['app_opened']}")
+        print(f"Voice Output Performed       : {context['voice_output_performed']}")
+        print(f"Avatar Changed               : {context['avatar_changed']}")
+        print(f"File Write Performed         : {context['file_write_performed']}")
+        print(f"Command Execution Performed  : {context['command_execution_performed']}")
+        print(f"External Action Performed    : {context['external_action_execution_performed']}")
+        print()
+        print("Streaming Status")
+        print("----------------")
+        status = context["streaming_status"]
+        print(f"Safety Ready           : {status['safety_ready']}")
+        print(f"Context Plan Ready     : {status['context_plan_ready']}")
+        print(f"Chat Safety Ready      : {status['chat_safety_ready']}")
+        print(f"Content Boundary Ready : {status['content_boundary_ready']}")
+        print(f"Privacy Plan Ready     : {status['privacy_plan_ready']}")
+        print(f"Moderation Plan Ready  : {status['moderation_plan_ready']}")
+        print(f"Context Ready          : {status['context_ready']}")
+        print(f"Runtime Ready          : {status['runtime_ready']}")
+        print()
+        print("Integrations")
+        print("------------")
+        print(f"Game       : {status['game_integration_ready']}")
+        print(f"Expression : {status['expression_integration_ready']}")
+        print(f"Media      : {status['media_integration_ready']}")
+        print(f"Vision     : {status['vision_integration_ready']}")
+        print(f"Desktop    : {status['desktop_integration_ready']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")

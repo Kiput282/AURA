@@ -247,6 +247,83 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="streaming.safety_status",
+            plugin="streaming",
+            description="Show AURA Streaming Safety Foundation status.",
+            permission_action="read_project",
+            status="foundation",
+            skill="streaming_safety_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="streaming.context_plan",
+            plugin="streaming",
+            description="Prepare a safe streaming context plan without reading live chat, capturing screen, or opening apps.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="streaming_safety_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="streaming.chat_safety_plan",
+            plugin="streaming",
+            description="Prepare a safe live chat plan without reading chat or sending messages automatically.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="streaming_safety_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="streaming.content_boundary_plan",
+            plugin="streaming",
+            description="Prepare safe content boundaries for stream topics, commentary, and avatar behavior.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="streaming_safety_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="streaming.privacy_plan",
+            plugin="streaming",
+            description="Prepare a privacy checklist for desktop or stream setup without capturing screen.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="streaming_safety_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="streaming.moderation_plan",
+            plugin="streaming",
+            description="Prepare moderation notes and community rules without performing moderation actions.",
+            permission_action="prepare_file",
+            status="foundation",
+            skill="streaming_safety_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="streaming.safety_context",
+            plugin="streaming",
+            description="Prepare streaming safety context without live chat access, screen capture, message sending, moderation action, file writing, or command execution.",
+            permission_action="read_project",
+            status="foundation",
+            skill="streaming_safety_foundation",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="game.companion_status",
             plugin="game",
             description="Show AURA Game Companion Foundation status.",

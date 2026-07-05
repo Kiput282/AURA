@@ -11,6 +11,7 @@ from aura.blender.blender_bridge_foundation_manager import BlenderBridgeFoundati
 from aura.media.media_understanding_foundation_manager import MediaUnderstandingFoundationManager
 from aura.expression.expression_language_manager import ExpressionLanguageManager
 from aura.game.game_companion_foundation_manager import GameCompanionFoundationManager
+from aura.streaming.streaming_safety_foundation_manager import StreamingSafetyFoundationManager
 from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.desktop.desktop_assistant_alpha_manager import DesktopAssistantAlphaManager
 from aura.journal.project_journal import ProjectJournal
@@ -71,6 +72,7 @@ class SystemStatusManager:
         self.media_understanding_manager = MediaUnderstandingFoundationManager(project_root=project_root)
         self.expression_language_manager = ExpressionLanguageManager(project_root=project_root)
         self.game_companion_manager = GameCompanionFoundationManager(project_root=project_root)
+        self.streaming_safety_manager = StreamingSafetyFoundationManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -113,6 +115,7 @@ class SystemStatusManager:
         media_understanding_status = self.media_understanding_manager.status()
         expression_language_status = self.expression_language_manager.status()
         game_companion_status = self.game_companion_manager.status()
+        streaming_safety_status = self.streaming_safety_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -158,6 +161,8 @@ class SystemStatusManager:
                 "expression_emotion_tags": expression_language_status["emotion_tags"],
                 "game_companion_sections": game_companion_status["sections"],
                 "game_support_modes": game_companion_status["support_modes"],
+                "streaming_safety_sections": streaming_safety_status["sections"],
+                "streaming_safety_categories": streaming_safety_status["safety_categories"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -180,6 +185,7 @@ class SystemStatusManager:
                 "media_understanding": media_understanding_status["status"],
                 "expression_language": expression_language_status["status"],
                 "game_companion": game_companion_status["status"],
+                "streaming_safety": streaming_safety_status["status"],
                 "context": "online",
                 "core_loop": "alpha",
                 "model_router": model_router_status["status"],
@@ -330,6 +336,27 @@ class SystemStatusManager:
                 "game_file_write": game_companion_status["file_write"],
                 "game_command_execution": game_companion_status["command_execution"],
                 "game_external_action_execution": game_companion_status["external_action_execution"],
+                "streaming_safety_ready": streaming_safety_status["safety_ready"],
+                "streaming_context_plan_ready": streaming_safety_status["context_plan_ready"],
+                "streaming_chat_safety_ready": streaming_safety_status["chat_safety_ready"],
+                "streaming_content_boundary_ready": streaming_safety_status["content_boundary_ready"],
+                "streaming_privacy_plan_ready": streaming_safety_status["privacy_plan_ready"],
+                "streaming_moderation_plan_ready": streaming_safety_status["moderation_plan_ready"],
+                "streaming_safety_context_ready": streaming_safety_status["context_ready"],
+                "streaming_game_integration_ready": streaming_safety_status["game_integration_ready"],
+                "streaming_expression_integration_ready": streaming_safety_status["expression_integration_ready"],
+                "streaming_media_integration_ready": streaming_safety_status["media_integration_ready"],
+                "streaming_vision_integration_ready": streaming_safety_status["vision_integration_ready"],
+                "streaming_desktop_integration_ready": streaming_safety_status["desktop_integration_ready"],
+                "streaming_live_chat_read": streaming_safety_status["live_chat_read"],
+                "streaming_message_sent": streaming_safety_status["message_sent"],
+                "streaming_moderation_action": streaming_safety_status["moderation_action"],
+                "streaming_screen_capture": streaming_safety_status["screen_capture"],
+                "streaming_browser_opened": streaming_safety_status["browser_opened"],
+                "streaming_app_opened": streaming_safety_status["app_opened"],
+                "streaming_file_write": streaming_safety_status["file_write"],
+                "streaming_command_execution": streaming_safety_status["command_execution"],
+                "streaming_external_action_execution": streaming_safety_status["external_action_execution"],
                 "desktop_bridge": desktop_status["bridge_ready"],
                 "safe_action_execution": desktop_status["safe_action_execution"],
                 "desktop_assistant_alpha_ready": desktop_alpha_status["alpha_ready"],
@@ -346,5 +373,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, media understanding, expression language, game companion, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }
