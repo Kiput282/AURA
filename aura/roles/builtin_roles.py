@@ -149,6 +149,8 @@ def build_builtin_role_registry() -> RoleRegistry:
                 "plugin_control",
                 "task_planning",
                 "safe_actions",
+                "desktop_bridge",
+                "desktop_action_proposal",
             ],
         )
     )

@@ -4,6 +4,7 @@ from typing import Any
 import yaml
 
 from aura.awakening.awakening_manager import AwakeningManager
+from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.journal.project_journal import ProjectJournal
 from aura.memory.memory_store import MemoryStore
 from aura.plugins.builtin.plugin_actions import build_builtin_plugin_action_registry
@@ -33,6 +34,7 @@ class SystemStatusManager:
         self.voice_manager = VoiceManager()
         self.vision_manager = VisionManager()
         self.awakening_manager = AwakeningManager(project_root=project_root)
+        self.desktop_manager = DesktopBridgeManager(project_root=project_root)
 
     def load_yaml(self, path: Path) -> dict[str, Any]:
         if not path.exists():
@@ -56,6 +58,7 @@ class SystemStatusManager:
         voice_status = self.voice_manager.status()
         vision_status = self.vision_manager.status()
         awakening_status = self.awakening_manager.build_status()
+        desktop_status = self.desktop_manager.status()
 
         return {
             "project_root": str(self.project_root),
@@ -94,6 +97,7 @@ class SystemStatusManager:
                 "skills": "online",
                 "plugin_actions": "online",
                 "project_plugin": "online",
+                "desktop_bridge": desktop_status["status"],
                 "voice": voice_status["status"],
                 "vision": vision_status["status"],
                 "awakening": awakening_status["status"],
@@ -101,8 +105,8 @@ class SystemStatusManager:
             "runtime": {
                 "real_voice_runtime": False,
                 "real_vision_runtime": False,
-                "desktop_bridge": False,
-                "safe_action_execution": False,
+                "desktop_bridge": desktop_status["bridge_ready"],
+                "safe_action_execution": desktop_status["safe_action_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, context, roles, skills, permissions, plugins, voice, vision, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, context, roles, skills, permissions, plugins, desktop bridge, voice, vision, and awakening status.",
         }

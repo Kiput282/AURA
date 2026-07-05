@@ -5,6 +5,7 @@ from typing import Any
 import yaml
 
 from aura.core.chat import AuraChat
+from aura.desktop.desktop_manager import DesktopBridgeManager
 from aura.actions.action_request_manager import ActionRequestManager
 from aura.core.shell import AuraShell
 from aura.memory.memory_item import MemoryItem
@@ -802,6 +803,78 @@ class AuraCLI:
             print(f"  Description     : {provider.description}")
             print()
 
+    def desktop_status(self) -> None:
+        manager = DesktopBridgeManager(project_root=self.project_root)
+        status = manager.status()
+        environment = status["environment"]
+
+        print("AURA Desktop Bridge Status")
+        print("==========================")
+        print(f"Name                 : {status['name']}")
+        print(f"Version              : {status['version']}")
+        print(f"Status               : {status['status']}")
+        print(f"Bridge Ready         : {status['bridge_ready']}")
+        print(f"Execution Ready      : {status['execution_ready']}")
+        print(f"Safe Action Execution: {status['safe_action_execution']}")
+        print(f"Capability Count     : {status['capability_count']}")
+        print()
+        print("Environment")
+        print("-----------")
+        print(f"OS                  : {environment['os']}")
+        print(f"OS Release          : {environment['os_release']}")
+        print(f"Machine             : {environment['machine']}")
+        print(f"Desktop Environment: {environment['desktop_environment']}")
+        print(f"Display             : {environment['display'] or '-'}")
+        print(f"Wayland Display     : {environment['wayland_display'] or '-'}")
+        print()
+        print(f"Note: {status['note']}")
+
+    def desktop_capabilities(self) -> None:
+        manager = DesktopBridgeManager(project_root=self.project_root)
+        capabilities = manager.capabilities()
+
+        print("AURA Desktop Capabilities")
+        print("=========================")
+        print(f"Total: {len(capabilities)}")
+        print()
+
+        for capability in capabilities:
+            print(f"- {capability['name']}")
+            print(f"  Status       : {capability['status']}")
+            print(f"  Permission   : {capability['permission_action']}")
+            print(f"  Confirmation : {capability['requires_confirmation']}")
+            print(f"  Execution    : {capability['execution_ready']}")
+            print(f"  Description  : {capability['description']}")
+            print()
+
+    def desktop_action(self, action: str) -> None:
+        manager = DesktopBridgeManager(project_root=self.project_root)
+        proposal = manager.action_request(action_name=action)
+        request = proposal["action_request"]
+
+        print("AURA Desktop Action Proposal")
+        print("============================")
+        print(f"Requested Action        : {proposal['requested_action']}")
+        print(f"Desktop Capability Found: {proposal['desktop_capability_found']}")
+        print(f"Desktop State           : {proposal['desktop_state']}")
+        print(f"Execution Ready         : {proposal['execution_ready']}")
+        print(f"Executed                : {proposal['executed']}")
+        print()
+        print("Action Request")
+        print("--------------")
+        print(f"Resolved Action   : {request.resolved_action}")
+        print(f"Request State     : {request.request_state}")
+        print(f"Plugin Found      : {request.plugin_action_found}")
+        print(f"Plugin            : {request.plugin or '-'}")
+        print(f"Skill             : {request.skill or '-'}")
+        print(f"Plugin Status     : {request.plugin_action_status}")
+        print(f"Permission Action : {request.permission_action}")
+        print(f"Permission Level  : {request.permission_level} - {request.permission_level_label}")
+        print(f"Allowed           : {request.allowed}")
+        print(f"Confirmation      : {request.requires_confirmation}")
+        print(f"Reason            : {request.reason}")
+        print(f"Note              : {proposal['note']}")
+
     def system_status(self) -> None:
         status_manager = SystemStatusManager(project_root=self.project_root)
         status = status_manager.build_status()
@@ -886,6 +959,12 @@ class AuraCLI:
 
         context_preview_parser = subparsers.add_parser("context-preview")
         context_preview_parser.add_argument("message", type=str)
+
+        subparsers.add_parser("desktop-status")
+        subparsers.add_parser("desktop-capabilities")
+
+        desktop_action_parser = subparsers.add_parser("desktop-action")
+        desktop_action_parser.add_argument("action", type=str)
 
         subparsers.add_parser("system-status")
         subparsers.add_parser("status-full")
@@ -1051,6 +1130,21 @@ class AuraCLI:
         if parsed.command in {"context", "context-preview"}:
             disable_logging()
             self.context(message=parsed.message)
+            return True
+
+        if parsed.command == "desktop-status":
+            disable_logging()
+            self.desktop_status()
+            return True
+
+        if parsed.command == "desktop-capabilities":
+            disable_logging()
+            self.desktop_capabilities()
+            return True
+
+        if parsed.command == "desktop-action":
+            disable_logging()
+            self.desktop_action(action=parsed.action)
             return True
 
         if parsed.command in {"system-status", "status-full"}:

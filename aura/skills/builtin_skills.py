@@ -189,12 +189,29 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="desktop_bridge",
+            description="Show desktop bridge status, capabilities, and prepare desktop action proposals.",
+            role="action",
+            permission_action="think",
+            status="online",
+            capabilities=[
+                "desktop_status",
+                "desktop_capabilities",
+                "desktop_action_proposal",
+                "os_detection",
+                "safe_desktop_placeholder",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="app_launcher",
-            description="Open applications, browser, or files when explicitly requested.",
+            description="Prepare application, browser, or file opening through the desktop bridge.",
             role="action",
             permission_action="open_app",
-            status="planned",
-            capabilities=["open_app", "open_browser", "open_file"],
+            status="foundation",
+            capabilities=["open_app", "open_browser", "open_file", "desktop_bridge", "confirmation_required"],
         )
     )
 

@@ -96,6 +96,13 @@ class PermissionManager:
             "description": "Open a browser or URL.",
             "reason": "Browser actions should only happen with user intent.",
         },
+        "open_file": {
+            "level": PermissionLevel.ACT_WITH_CONFIRMATION,
+            "allowed": True,
+            "requires_confirmation": True,
+            "description": "Open a file with a desktop application.",
+            "reason": "Opening files should only happen when explicitly requested.",
+        },
         "run_command": {
             "level": PermissionLevel.ACT_WITH_CONFIRMATION,
             "allowed": True,

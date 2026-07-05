@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.35.0-genesis
-Status  : PROJECT ASSISTANT V1 ONLINE
+Version : 0.36.0-genesis
+Status  : DESKTOP BRIDGE FOUNDATION ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -97,6 +97,7 @@ AURA currently supports:
 - Context-aware chat
 - Action request system
 - Project Assistant v1
+- Desktop Bridge Foundation
 - Memory-aware chat
 - Identity guardrail
 - Language control
@@ -191,6 +192,10 @@ python3 main.py memory-delete "<memory_id>"
 
 python3 main.py provider
 python3 main.py provider-check
+
+python3 main.py desktop-status
+python3 main.py desktop-capabilities
+python3 main.py desktop-action app.open
 
 python3 main.py system-status
 python3 main.py status-full

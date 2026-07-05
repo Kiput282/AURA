@@ -16,6 +16,39 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="desktop.status",
+            plugin="desktop",
+            description="Show desktop bridge foundation status.",
+            permission_action="think",
+            status="online",
+            skill="desktop_bridge",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="desktop.capabilities",
+            plugin="desktop",
+            description="List desktop bridge capabilities.",
+            permission_action="think",
+            status="online",
+            skill="desktop_bridge",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="desktop.action",
+            plugin="desktop",
+            description="Prepare a desktop action proposal without executing it.",
+            permission_action="think",
+            status="online",
+            skill="desktop_bridge",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="system.status",
             plugin="system",
             description="Show unified AURA system status.",
@@ -238,9 +271,9 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         PluginAction(
             name="app.open",
             plugin="app_launcher",
-            description="Open an application when explicitly requested.",
+            description="Prepare opening an application through the desktop bridge.",
             permission_action="open_app",
-            status="planned",
+            status="foundation",
             skill="app_launcher",
         )
     )
@@ -249,9 +282,20 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         PluginAction(
             name="browser.open",
             plugin="app_launcher",
-            description="Open a browser or URL when explicitly requested.",
+            description="Prepare opening a browser or URL through the desktop bridge.",
             permission_action="open_browser",
-            status="planned",
+            status="foundation",
+            skill="app_launcher",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="file.open",
+            plugin="app_launcher",
+            description="Prepare opening a file through the desktop bridge.",
+            permission_action="open_file",
+            status="foundation",
             skill="app_launcher",
         )
     )

@@ -431,6 +431,7 @@ Planned:
 - Context-aware chat
 - Action request system
 - Project Assistant v1
+- Desktop Bridge Foundation
 - File/project plugin
 - App launcher plugin
 - Browser helper
