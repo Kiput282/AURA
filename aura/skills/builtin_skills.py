@@ -1059,4 +1059,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 74.0 voice input runtime foundation skill.
+    registry.register(
+        AuraSkill(
+            name="voice_input_runtime_foundation",
+            description="Prepare safe foundation-only voice input runtime plans for microphone permission, voice capture boundaries, speech-to-text adapter planning, voice intent gates, command confirmation, voice sessions, and voice input safety without microphone access, audio recording, STT runtime, voice command execution, file operations, command execution, internet access, network actions, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "voice_input_status",
+                "voice_input_permission_plan",
+                "voice_capture_boundary_plan",
+                "speech_to_text_adapter_plan",
+                "voice_intent_gate_plan",
+                "voice_command_confirmation_plan",
+                "voice_session_plan",
+                "voice_input_safety_plan",
+                "voice_input_context",
+                "foundation_only_voice_input_runtime",
+            ],
+        )
+    )
+
     return registry

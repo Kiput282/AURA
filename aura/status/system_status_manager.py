@@ -46,6 +46,7 @@ from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntime
 from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
 from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
 from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
+from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -154,6 +155,7 @@ class SystemStatusManager:
         thought_loop_status = ThoughtLoopPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         reasoning_context_status = ReasoningContextManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         knowledge_uncertainty_status = KnowledgeUncertaintyGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        voice_input_status = VoiceInputRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -222,6 +224,7 @@ class SystemStatusManager:
             "thought_loop_plan_types": thought_loop_status["thought_plan_types"],
             "reasoning_context_plan_types": reasoning_context_status["reasoning_plan_types"],
             "knowledge_uncertainty_plan_types": knowledge_uncertainty_status["knowledge_plan_types"],
+            "voice_input_plan_types": voice_input_status["voice_input_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -270,6 +273,7 @@ class SystemStatusManager:
             "thought_loop_planner": thought_loop_status["status"],
             "reasoning_context_manager": reasoning_context_status["status"],
             "knowledge_uncertainty_gate": knowledge_uncertainty_status["status"],
+            "voice_input_runtime_foundation": voice_input_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -688,6 +692,46 @@ class SystemStatusManager:
             "knowledge_uncertainty_autonomous_search": knowledge_uncertainty_status["autonomous_search"],
             "knowledge_uncertainty_fabricated_answer": knowledge_uncertainty_status["fabricated_answer"],
             "knowledge_uncertainty_fabricated_source": knowledge_uncertainty_status["fabricated_source"],
+            "voice_input_runtime_foundation_ready": voice_input_status["planner_ready"],
+            "voice_input_permission_plan_ready": voice_input_status["voice_input_permission_plan_ready"],
+            "voice_capture_boundary_plan_ready": voice_input_status["voice_capture_boundary_plan_ready"],
+            "speech_to_text_adapter_plan_ready": voice_input_status["speech_to_text_adapter_plan_ready"],
+            "voice_intent_gate_plan_ready": voice_input_status["voice_intent_gate_plan_ready"],
+            "voice_command_confirmation_plan_ready": voice_input_status["voice_command_confirmation_plan_ready"],
+            "voice_session_plan_ready": voice_input_status["voice_session_plan_ready"],
+            "voice_input_safety_plan_ready": voice_input_status["voice_input_safety_plan_ready"],
+            "voice_input_context_ready": voice_input_status["context_ready"],
+            "voice_input_voice_conversation_reference_ready": voice_input_status["voice_conversation_reference_ready"],
+            "voice_input_thought_loop_reference_ready": voice_input_status["thought_loop_reference_ready"],
+            "voice_input_reasoning_context_reference_ready": voice_input_status["reasoning_context_reference_ready"],
+            "voice_input_knowledge_uncertainty_reference_ready": voice_input_status["knowledge_uncertainty_reference_ready"],
+            "voice_input_partner_runtime_reference_ready": voice_input_status["partner_runtime_reference_ready"],
+            "voice_input_microphone_access": voice_input_status["microphone_access"],
+            "voice_input_audio_recording": voice_input_status["audio_recording"],
+            "voice_input_audio_capture": voice_input_status["audio_capture"],
+            "voice_input_speech_to_text_runtime": voice_input_status["speech_to_text_runtime"],
+            "voice_input_speech_transcription": voice_input_status["speech_transcription"],
+            "voice_input_wake_word_detection": voice_input_status["wake_word_detection"],
+            "voice_input_always_listening": voice_input_status["always_listening"],
+            "voice_input_background_listening": voice_input_status["background_listening"],
+            "voice_input_voice_command_execution": voice_input_status["voice_command_execution"],
+            "voice_input_voice_tool_execution": voice_input_status["voice_tool_execution"],
+            "voice_input_speaker_output": voice_input_status["speaker_output"],
+            "voice_input_tts_runtime": voice_input_status["tts_runtime"],
+            "voice_input_network_stt": voice_input_status["network_stt"],
+            "voice_input_cloud_stt": voice_input_status["cloud_stt"],
+            "voice_input_file_read": voice_input_status["file_read"],
+            "voice_input_file_write": voice_input_status["file_write"],
+            "voice_input_command_execution": voice_input_status["command_execution"],
+            "voice_input_tool_execution": voice_input_status["tool_execution"],
+            "voice_input_real_tool_execution": voice_input_status["real_tool_execution"],
+            "voice_input_external_action_execution": voice_input_status["external_action_execution"],
+            "voice_input_memory_write": voice_input_status["memory_write"],
+            "voice_input_internet_search": voice_input_status["internet_search"],
+            "voice_input_network_action": voice_input_status["network_action"],
+            "voice_input_desktop_control": voice_input_status["desktop_control"],
+            "voice_input_git_commit": voice_input_status["git_commit"],
+            "voice_input_git_push": voice_input_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -850,5 +894,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

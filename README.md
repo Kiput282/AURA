@@ -574,3 +574,39 @@ Safety boundary:
 - no fabricated answers or fabricated sources
 - no external action execution
 - no real tool execution
+
+
+## Sprint 74.0 — Voice Input Runtime Foundation
+
+AURA includes a Voice Input Runtime Foundation for future safe hearing capability.
+
+Status: VOICE INPUT RUNTIME FOUNDATION ONLINE
+
+Purpose:
+- prepare AURA's future ability to hear Kiput through voice
+- plan microphone permission before any microphone access
+- plan voice capture boundaries without recording audio
+- plan speech-to-text adapter selection without running STT
+- separate normal conversation from voice commands
+- require confirmation before future voice command execution
+- support AURA's essence: think, hear, see
+
+Safety boundary:
+- no microphone access
+- no audio recording or capture
+- no speech-to-text runtime
+- no wake word detection
+- no always-listening mode
+- no background listening
+- no voice command execution
+- no speaker/TTS runtime
+- no network/cloud STT
+- no file operations
+- no command execution
+- no tool execution
+- no memory write
+- no internet/network action
+- no desktop control
+- no git execution
+- no external action execution
+- no real tool execution

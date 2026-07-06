@@ -2491,4 +2491,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 74.0 voice input runtime foundation actions.
+    voice_input_actions = [
+        ('voice_input.status', 'read_project', 'Show AURA Voice Input Runtime Foundation status.'),
+        ('voice_input.permission_plan', 'read_project', 'Prepare a microphone permission plan without accessing the microphone.'),
+        ('voice_input.capture_boundary_plan', 'read_project', 'Prepare a voice capture boundary plan without recording audio.'),
+        ('voice_input.stt_adapter_plan', 'read_project', 'Prepare a speech-to-text adapter plan without running STT.'),
+        ('voice_input.intent_gate_plan', 'read_project', 'Prepare a voice intent gate plan before future voice commands.'),
+        ('voice_input.command_confirmation_plan', 'read_project', 'Prepare a voice command confirmation plan without executing commands.'),
+        ('voice_input.session_plan', 'read_project', 'Prepare a voice session plan without live listening.'),
+        ('voice_input.safety_plan', 'read_project', 'Prepare voice input safety boundaries without mic, audio, STT, tools, files, commands, network, or real execution.'),
+        ('voice_input.context', 'read_project', 'Show Voice Input Runtime Foundation context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in voice_input_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="voice_input",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="voice_input_runtime_foundation",
+            )
+        )
+
     return registry

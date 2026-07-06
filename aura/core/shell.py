@@ -59,6 +59,7 @@ from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntime
 from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
 from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
 from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
+from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRuntimeFoundationManager
 
 
 class AuraShell:
@@ -296,6 +297,15 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  voice-input-status Show Voice Input Runtime Foundation status")
+        print("  voice-input-permission-plan <target> Prepare microphone permission plan")
+        print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
+        print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
+        print("  voice-intent-gate-plan <target> Prepare voice intent gate plan")
+        print("  voice-command-confirmation-plan <target> Prepare command confirmation plan")
+        print("  voice-session-plan <target> Prepare voice session plan")
+        print("  voice-input-safety-plan <target> Prepare voice input safety plan")
+        print("  voice-input-context Show Voice Input Runtime Foundation context")
         print("  knowledge-uncertainty-status Show Knowledge Uncertainty Gate status")
         print("  knowledge-gap-plan <target> Prepare knowledge gap plan")
         print("  knowledge-uncertainty-review-plan <target> Prepare uncertainty review plan")
@@ -2975,6 +2985,111 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 74.0 voice input compatibility shell helpers.
+    def print_voice_input_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} field(s)")
+
+        print()
+        print("Voice Input Safety Boundary")
+        print("---------------------------")
+        for key in [
+            "foundation_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "microphone_access",
+            "audio_recording",
+            "audio_capture",
+            "speech_to_text_runtime",
+            "speech_transcription",
+            "wake_word_detection",
+            "always_listening",
+            "background_listening",
+            "voice_command_execution",
+            "voice_tool_execution",
+            "speaker_output",
+            "tts_runtime",
+            "network_stt",
+            "cloud_stt",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "desktop_control",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {packet[key]}")
+
+    def handle_voice_input_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general voice input foundation"
+        manager = VoiceInputRuntimeFoundationManager(project_root=self.project_root)
+
+        if command == "voice-input-status":
+            self.print_voice_input_packet("AURA Voice Input Runtime Foundation Status", manager.status())
+            return True
+
+        if command == "voice-input-permission-plan":
+            self.print_voice_input_packet("AURA Voice Input Permission Plan", manager.voice_input_permission_plan(target))
+            return True
+
+        if command == "voice-capture-boundary-plan":
+            self.print_voice_input_packet("AURA Voice Capture Boundary Plan", manager.voice_capture_boundary_plan(target))
+            return True
+
+        if command == "speech-to-text-adapter-plan":
+            self.print_voice_input_packet("AURA Speech To Text Adapter Plan", manager.speech_to_text_adapter_plan(target))
+            return True
+
+        if command == "voice-intent-gate-plan":
+            self.print_voice_input_packet("AURA Voice Intent Gate Plan", manager.voice_intent_gate_plan(target))
+            return True
+
+        if command == "voice-command-confirmation-plan":
+            self.print_voice_input_packet("AURA Voice Command Confirmation Plan", manager.voice_command_confirmation_plan(target))
+            return True
+
+        if command == "voice-session-plan":
+            self.print_voice_input_packet("AURA Voice Session Plan", manager.voice_session_plan(target))
+            return True
+
+        if command == "voice-input-safety-plan":
+            self.print_voice_input_packet("AURA Voice Input Safety Plan", manager.voice_input_safety_plan(target))
+            return True
+
+        if command == "voice-input-context":
+            self.print_voice_input_packet("AURA Voice Input Runtime Foundation Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -3007,6 +3122,9 @@ class AuraShell:
             return
 
         if self.handle_knowledge_uncertainty_shell_command(normalized):
+            return
+
+        if self.handle_voice_input_shell_command(normalized):
             return
 
         if normalized == "help":

@@ -663,3 +663,13 @@ Status: KNOWLEDGE UNCERTAINTY GATE ONLINE
 AURA can prepare metadata-only plans for knowledge gaps, uncertainty review, internet search permission gates, source requirements, download requirement notices, answer confidence, and knowledge safety. This strengthens the principle: AURA is intelligent, but does not pretend to know.
 
 This sprint does not perform real internet search, web requests, source fetching, browser opening, network actions, downloads, dependency installs, package installs, tool execution, memory writes, file operations, command execution, external actions, fabricated answers, fabricated sources, or real tool execution.
+
+
+## Sprint 74.0 — Voice Input Runtime Foundation
+
+Target: v0.74.0-genesis  
+Status: VOICE INPUT RUNTIME FOUNDATION ONLINE
+
+AURA can prepare metadata-only plans for microphone permission, voice capture boundaries, speech-to-text adapter selection, voice intent gates, voice command confirmation, voice sessions, and voice input safety. This sprint begins the "hear" part of AURA's core essence while keeping all device and runtime access disabled.
+
+This sprint does not access the microphone, record/capture audio, run STT, transcribe speech, detect wake words, listen continuously, listen in the background, execute voice commands, run TTS/speaker output, use network/cloud STT, perform file operations, execute commands/tools, write memory, search the internet, perform network actions, control desktop, run git operations, perform external actions, or execute real tools.
