@@ -633,3 +633,13 @@ Status: PARTNER RUNTIME PLANNING LAYER ONLINE
 AURA can plan partner runtime modes, session flow, multimodal handoffs, tool permission gates, growth-cycle checkpoints, and runtime safety boundaries as metadata only. This sprint does not enable autonomous runtime, background agent loops, scheduled self-execution, tool execution, file operations, command execution, desktop control, app opening, screen capture, camera/microphone access, speaker output, avatar rendering, network actions, git operations, external action execution, or real tool execution.
 
 Checkpoint: After Sprint 70, review the v0.61-v0.70 block before planning Sprint 71.
+
+
+## Sprint 71.0 — Thought Loop Planner
+
+Target: v0.71.0-genesis  
+Status: THOUGHT LOOP PLANNER ONLINE
+
+AURA can plan safe thought cycles, intent framing, visible reasoning summaries, uncertainty reviews, action readiness reviews, growth memory reviews, and thought safety boundaries as metadata only. This sprint starts the v0.71-v0.80 direction: prioritize AURA's core essence before avatar runtime. AURA should grow toward being able to think, hear, and see before focusing on live avatar or 3D environment work.
+
+This sprint does not enable autonomous thought loops, background loops, self-triggered actions, tool execution, memory write, internet search, file operations, command execution, desktop control, camera/microphone access, speaker output, avatar rendering, network actions, git operations, external action execution, or real tool execution.

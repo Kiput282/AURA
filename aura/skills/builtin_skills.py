@@ -990,4 +990,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 71.0 thought loop planner skill.
+    registry.register(
+        AuraSkill(
+            name="thought_loop_planner",
+            description="Plan safe metadata-only thought cycles, intent framing, visible reasoning summaries, uncertainty review, action readiness, growth memory review, and thought safety without autonomous loops, tool execution, memory write, internet search, file operations, command execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "thought_loop_status",
+                "thought_cycle_plan",
+                "intent_frame_plan",
+                "reasoning_summary_plan",
+                "uncertainty_review_plan",
+                "action_readiness_review",
+                "growth_memory_review",
+                "thought_safety_plan",
+                "thought_loop_context",
+                "metadata_only_thought_loop_planning",
+            ],
+        )
+    )
+
     return registry

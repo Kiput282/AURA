@@ -56,6 +56,7 @@ from aura.vision_context.vision_context_planner_manager import VisionContextPlan
 from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
 from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkflowPlannerManager
 from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
+from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
 
 
 class AuraShell:
@@ -293,6 +294,15 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  thought-loop-status Show Thought Loop Planner status")
+        print("  thought-cycle-plan <target> Prepare metadata-only thought cycle plan")
+        print("  intent-frame-plan <target> Prepare metadata-only intent frame plan")
+        print("  reasoning-summary-plan <target> Prepare visible reasoning summary plan")
+        print("  uncertainty-review-plan <target> Prepare uncertainty review plan")
+        print("  action-readiness-review <target> Prepare action readiness review")
+        print("  growth-memory-review <target> Prepare growth memory review")
+        print("  thought-safety-plan <target> Prepare thought safety plan")
+        print("  thought-loop-context Show Thought Loop Planner context")
         print("  partner-runtime-status Show Partner Runtime Planning Layer status")
         print("  partner-runtime-mode-plan <target> Prepare metadata-only partner runtime mode plan")
         print("  partner-session-plan <target> Prepare metadata-only partner session plan")
@@ -2647,6 +2657,106 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 71.0 thought loop compatibility shell helpers.
+    def print_thought_loop_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} field(s)")
+
+        print()
+        print("Thought Loop Safety Boundary")
+        print("----------------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "autonomous_thought_loop",
+            "background_loop",
+            "continuous_self_prompting",
+            "self_triggered_action",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "desktop_control",
+            "app_opening",
+            "screen_capture",
+            "camera_access",
+            "microphone_access",
+            "speaker_output",
+            "avatar_rendering",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {packet[key]}")
+
+    def handle_thought_loop_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general thought loop planning"
+        manager = ThoughtLoopPlannerManager(project_root=self.project_root)
+
+        if command == "thought-loop-status":
+            self.print_thought_loop_packet("AURA Thought Loop Planner Status", manager.status())
+            return True
+
+        if command == "thought-cycle-plan":
+            self.print_thought_loop_packet("AURA Thought Cycle Plan", manager.thought_cycle_plan(target))
+            return True
+
+        if command == "intent-frame-plan":
+            self.print_thought_loop_packet("AURA Intent Frame Plan", manager.intent_frame_plan(target))
+            return True
+
+        if command == "reasoning-summary-plan":
+            self.print_thought_loop_packet("AURA Reasoning Summary Plan", manager.reasoning_summary_plan(target))
+            return True
+
+        if command == "uncertainty-review-plan":
+            self.print_thought_loop_packet("AURA Uncertainty Review Plan", manager.uncertainty_review_plan(target))
+            return True
+
+        if command == "action-readiness-review":
+            self.print_thought_loop_packet("AURA Action Readiness Review", manager.action_readiness_review(target))
+            return True
+
+        if command == "growth-memory-review":
+            self.print_thought_loop_packet("AURA Growth Memory Review", manager.growth_memory_review(target))
+            return True
+
+        if command == "thought-safety-plan":
+            self.print_thought_loop_packet("AURA Thought Safety Plan", manager.thought_safety_plan(target))
+            return True
+
+        if command == "thought-loop-context":
+            self.print_thought_loop_packet("AURA Thought Loop Planner Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -2670,6 +2780,9 @@ class AuraShell:
             return
 
         if self.handle_partner_runtime_shell_command(normalized):
+            return
+
+        if self.handle_thought_loop_shell_command(normalized):
             return
 
         if normalized == "help":

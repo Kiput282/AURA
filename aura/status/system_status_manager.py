@@ -43,6 +43,7 @@ from aura.vision_context.vision_context_planner_manager import VisionContextPlan
 from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
 from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkflowPlannerManager
 from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
+from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -148,6 +149,7 @@ class SystemStatusManager:
         avatar_interaction_status = AvatarInteractionPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         desktop_workflow_status = DesktopWorkflowPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         partner_runtime_status = PartnerRuntimePlanningManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        thought_loop_status = ThoughtLoopPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -213,6 +215,7 @@ class SystemStatusManager:
             "avatar_interaction_plan_types": avatar_interaction_status["avatar_plan_types"],
             "desktop_workflow_plan_types": desktop_workflow_status["desktop_plan_types"],
             "partner_runtime_plan_types": partner_runtime_status["partner_plan_types"],
+            "thought_loop_plan_types": thought_loop_status["thought_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -258,6 +261,7 @@ class SystemStatusManager:
             "avatar_interaction_planner": avatar_interaction_status["status"],
             "desktop_workflow_planner": desktop_workflow_status["status"],
             "partner_runtime_planning_layer": partner_runtime_status["status"],
+            "thought_loop_planner": thought_loop_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -563,6 +567,45 @@ class SystemStatusManager:
             "partner_runtime_network_action": partner_runtime_status["network_action"],
             "partner_runtime_git_commit": partner_runtime_status["git_commit"],
             "partner_runtime_git_push": partner_runtime_status["git_push"],
+            "thought_loop_planner_ready": thought_loop_status["planner_ready"],
+            "thought_cycle_plan_ready": thought_loop_status["thought_cycle_plan_ready"],
+            "intent_frame_plan_ready": thought_loop_status["intent_frame_plan_ready"],
+            "reasoning_summary_plan_ready": thought_loop_status["reasoning_summary_plan_ready"],
+            "uncertainty_review_plan_ready": thought_loop_status["uncertainty_review_plan_ready"],
+            "action_readiness_review_ready": thought_loop_status["action_readiness_review_ready"],
+            "growth_memory_review_ready": thought_loop_status["growth_memory_review_ready"],
+            "thought_safety_plan_ready": thought_loop_status["thought_safety_plan_ready"],
+            "thought_loop_context_ready": thought_loop_status["context_ready"],
+            "thought_loop_partner_runtime_reference_ready": thought_loop_status["partner_runtime_reference_ready"],
+            "thought_loop_local_task_reference_ready": thought_loop_status["local_task_reference_ready"],
+            "thought_loop_project_intent_reference_ready": thought_loop_status["project_intent_reference_ready"],
+            "thought_loop_workspace_memory_reference_ready": thought_loop_status["workspace_memory_reference_ready"],
+            "thought_loop_voice_conversation_reference_ready": thought_loop_status["voice_conversation_reference_ready"],
+            "thought_loop_vision_context_reference_ready": thought_loop_status["vision_context_reference_ready"],
+            "thought_loop_desktop_workflow_reference_ready": thought_loop_status["desktop_workflow_reference_ready"],
+            "thought_loop_codebase_validation_reference_ready": thought_loop_status["codebase_validation_reference_ready"],
+            "thought_loop_autonomous_thought_loop": thought_loop_status["autonomous_thought_loop"],
+            "thought_loop_background_loop": thought_loop_status["background_loop"],
+            "thought_loop_continuous_self_prompting": thought_loop_status["continuous_self_prompting"],
+            "thought_loop_self_triggered_action": thought_loop_status["self_triggered_action"],
+            "thought_loop_tool_execution": thought_loop_status["tool_execution"],
+            "thought_loop_real_tool_execution": thought_loop_status["real_tool_execution"],
+            "thought_loop_external_action_execution": thought_loop_status["external_action_execution"],
+            "thought_loop_file_read": thought_loop_status["file_read"],
+            "thought_loop_file_write": thought_loop_status["file_write"],
+            "thought_loop_command_execution": thought_loop_status["command_execution"],
+            "thought_loop_memory_write": thought_loop_status["memory_write"],
+            "thought_loop_internet_search": thought_loop_status["internet_search"],
+            "thought_loop_network_action": thought_loop_status["network_action"],
+            "thought_loop_desktop_control": thought_loop_status["desktop_control"],
+            "thought_loop_app_opening": thought_loop_status["app_opening"],
+            "thought_loop_screen_capture": thought_loop_status["screen_capture"],
+            "thought_loop_camera_access": thought_loop_status["camera_access"],
+            "thought_loop_microphone_access": thought_loop_status["microphone_access"],
+            "thought_loop_speaker_output": thought_loop_status["speaker_output"],
+            "thought_loop_avatar_rendering": thought_loop_status["avatar_rendering"],
+            "thought_loop_git_commit": thought_loop_status["git_commit"],
+            "thought_loop_git_push": thought_loop_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -725,5 +768,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

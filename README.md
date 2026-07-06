@@ -472,3 +472,37 @@ Safety boundary:
 - no git commit or push execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 71.0 — Thought Loop Planner
+
+AURA includes a Thought Loop Planner foundation for metadata-only thinking cycles.
+
+Status: THOUGHT LOOP PLANNER ONLINE
+
+Purpose:
+- support the core AURA concept: Grow Together
+- help AURA think before acting
+- help AURA stay intelligent without pretending to know
+- plan uncertainty review before answering
+- plan permission gates before future actions
+- plan growth memory review without writing memory automatically
+
+Safety boundary:
+- no autonomous thought loop
+- no background loop
+- no continuous self-prompting
+- no self-triggered action
+- no tool execution
+- no memory write
+- no internet search
+- no file reading or writing
+- no command execution
+- no desktop control
+- no camera or microphone access
+- no speaker output
+- no avatar rendering
+- no network action
+- no git execution
+- no external action execution
+- no real tool execution

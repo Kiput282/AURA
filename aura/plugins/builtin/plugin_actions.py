@@ -2416,4 +2416,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 71.0 thought loop planner actions.
+    thought_loop_actions = [
+        ('thought_loop.status', 'read_project', 'Show AURA Thought Loop Planner status.'),
+        ('thought_loop.thought_cycle_plan', 'read_project', 'Prepare a metadata-only thought cycle plan without autonomous loops or execution.'),
+        ('thought_loop.intent_frame_plan', 'read_project', 'Prepare a metadata-only intent framing plan before action.'),
+        ('thought_loop.reasoning_summary_plan', 'read_project', 'Prepare a visible reasoning summary plan without exposing hidden chain-of-thought.'),
+        ('thought_loop.uncertainty_review_plan', 'read_project', 'Prepare an uncertainty review plan that avoids pretending to know.'),
+        ('thought_loop.action_readiness_review', 'read_project', 'Prepare an action readiness and permission gate review without executing actions.'),
+        ('thought_loop.growth_memory_review', 'read_project', 'Prepare a growth memory review without writing memory automatically.'),
+        ('thought_loop.safety_plan', 'read_project', 'Prepare a thought safety plan without autonomous loops, tools, memory write, internet, files, commands, devices, or real tool execution.'),
+        ('thought_loop.context', 'read_project', 'Show Thought Loop Planner context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in thought_loop_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="thought_loop",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="thought_loop_planner",
+            )
+        )
+
     return registry
