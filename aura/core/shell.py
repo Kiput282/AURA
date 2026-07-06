@@ -77,6 +77,7 @@ from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import A
 from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundation_manager import AuraPluginPermissionDashboardFoundationManager
 from aura.local_console_static_prototype.aura_local_console_static_prototype_foundation_manager import AuraLocalConsoleStaticPrototypeFoundationManager
 from aura.local_console_api_schema.aura_local_console_api_schema_foundation_manager import AuraLocalConsoleAPISchemaFoundationManager
+from aura.control_center_data_aggregator.aura_control_center_data_aggregator_foundation_manager import AuraControlCenterDataAggregatorFoundationManager
 
 
 class AuraShell:
@@ -480,6 +481,17 @@ class AuraShell:
         print("  schema-versioning-plan <target> Prepare schema versioning plan")
         print("  api-schema-safety-policy-plan <target> Prepare API schema safety policy plan")
         print("  local-console-api-schema-context Show Local Console API Schema Foundation context")
+        print("  control-center-data-aggregator-status Show Control Center Data Aggregator Foundation status")
+        print("  aggregator-packet-catalog-plan <target> Prepare aggregator packet catalog plan")
+        print("  atlas-core-packet-plan <target> Prepare ATLAS core packet plan")
+        print("  orion-client-packet-plan <target> Prepare ORION client packet plan")
+        print("  client-bridge-packet-plan <target> Prepare client bridge packet plan")
+        print("  dashboard-view-packet-plan <target> Prepare dashboard view packet plan")
+        print("  permission-scope-packet-plan <target> Prepare permission scope packet plan")
+        print("  health-snapshot-packet-plan <target> Prepare health snapshot packet plan")
+        print("  audit-event-visibility-packet-plan <target> Prepare audit event visibility packet plan")
+        print("  data-aggregator-safety-policy-plan <target> Prepare data aggregator safety policy plan")
+        print("  control-center-data-aggregator-context Show Control Center Data Aggregator Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4422,6 +4434,67 @@ class AuraShell:
 
 
 
+
+    # Sprint 93.0 control center data aggregator foundation shell helpers.
+    def print_control_center_data_aggregator_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Data Aggregator Safety Boundary"))
+
+    def handle_control_center_data_aggregator_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Control Center data aggregator foundation"
+        manager = AuraControlCenterDataAggregatorFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-data-aggregator-status":
+            self.print_control_center_data_aggregator_packet("AURA Control Center Data Aggregator Foundation Status", manager.status())
+            return True
+
+        if command == "aggregator-packet-catalog-plan":
+            self.print_control_center_data_aggregator_packet("AURA Aggregator Packet Catalog Plan", manager.aggregator_packet_catalog_plan(target))
+            return True
+
+        if command == "atlas-core-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA ATLAS Core Packet Plan", manager.atlas_core_packet_plan(target))
+            return True
+
+        if command == "orion-client-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA ORION Client Packet Plan", manager.orion_client_packet_plan(target))
+            return True
+
+        if command == "client-bridge-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Client Bridge Packet Plan", manager.client_bridge_packet_plan(target))
+            return True
+
+        if command == "dashboard-view-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Dashboard View Packet Plan", manager.dashboard_view_packet_plan(target))
+            return True
+
+        if command == "permission-scope-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Permission Scope Packet Plan", manager.permission_scope_packet_plan(target))
+            return True
+
+        if command == "health-snapshot-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Health Snapshot Packet Plan", manager.health_snapshot_packet_plan(target))
+            return True
+
+        if command == "audit-event-visibility-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Audit Event Visibility Packet Plan", manager.audit_event_visibility_packet_plan(target))
+            return True
+
+        if command == "data-aggregator-safety-policy-plan":
+            self.print_control_center_data_aggregator_packet("AURA Data Aggregator Safety Policy Plan", manager.data_aggregator_safety_policy_plan(target))
+            return True
+
+        if command == "control-center-data-aggregator-context":
+            self.print_control_center_data_aggregator_packet("AURA Control Center Data Aggregator Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 92.0 local console API schema foundation shell helpers.
     def print_local_console_api_schema_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4628,6 +4701,9 @@ class AuraShell:
             return
 
         if self.handle_local_console_api_schema_shell_command(normalized):
+            return
+
+        if self.handle_control_center_data_aggregator_shell_command(normalized):
             return
 
         if normalized == "help":

@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 93.0 control center data aggregator foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_control_center_data_aggregator_foundation",
+            description="Prepare planner-only AURA Control Center Data Aggregator Foundation for aggregation packet catalog planning, ATLAS core packet planning, ORION client packet planning, client bridge packet planning, dashboard view packet planning, permission scope packet planning, health snapshot packet planning, audit event visibility packet planning, and data aggregator safety policy without fetching runtime data, connecting to ORION, creating client pairings, sending or receiving heartbeats, fetching or forwarding audit events, rendering dashboard views, starting API/web/client runtime, activating voice/screen/avatar/3D environment/OBS/game/Blender/VS Code/local action bridges, file operations, command execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_data_aggregator_status",
+                "aggregator_packet_catalog_plan",
+                "atlas_core_packet_plan",
+                "orion_client_packet_plan",
+                "client_bridge_packet_plan",
+                "dashboard_view_packet_plan",
+                "permission_scope_packet_plan",
+                "health_snapshot_packet_plan",
+                "audit_event_visibility_packet_plan",
+                "data_aggregator_safety_policy_plan",
+                "control_center_data_aggregator_context",
+                "atlas_orion_dashboard_packet_metadata",
+            ],
+        )
+    )
+
     # Sprint 92.0 local console API schema foundation skill.
     registry.register(
         AuraSkill(

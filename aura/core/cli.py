@@ -75,6 +75,7 @@ from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import A
 from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundation_manager import AuraPluginPermissionDashboardFoundationManager
 from aura.local_console_static_prototype.aura_local_console_static_prototype_foundation_manager import AuraLocalConsoleStaticPrototypeFoundationManager
 from aura.local_console_api_schema.aura_local_console_api_schema_foundation_manager import AuraLocalConsoleAPISchemaFoundationManager
+from aura.control_center_data_aggregator.aura_control_center_data_aggregator_foundation_manager import AuraControlCenterDataAggregatorFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4126,6 +4127,66 @@ class AuraCLI:
 
 
 
+
+    # Sprint 93.0 control center data aggregator foundation CLI helpers.
+    def print_control_center_data_aggregator_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Data Aggregator Safety Boundary"))
+
+    def handle_control_center_data_aggregator_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA Control Center data aggregator foundation"
+        manager = AuraControlCenterDataAggregatorFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-data-aggregator-status":
+            self.print_control_center_data_aggregator_packet("AURA Control Center Data Aggregator Foundation Status", manager.status())
+            return True
+
+        if command == "aggregator-packet-catalog-plan":
+            self.print_control_center_data_aggregator_packet("AURA Aggregator Packet Catalog Plan", manager.aggregator_packet_catalog_plan(target))
+            return True
+
+        if command == "atlas-core-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA ATLAS Core Packet Plan", manager.atlas_core_packet_plan(target))
+            return True
+
+        if command == "orion-client-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA ORION Client Packet Plan", manager.orion_client_packet_plan(target))
+            return True
+
+        if command == "client-bridge-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Client Bridge Packet Plan", manager.client_bridge_packet_plan(target))
+            return True
+
+        if command == "dashboard-view-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Dashboard View Packet Plan", manager.dashboard_view_packet_plan(target))
+            return True
+
+        if command == "permission-scope-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Permission Scope Packet Plan", manager.permission_scope_packet_plan(target))
+            return True
+
+        if command == "health-snapshot-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Health Snapshot Packet Plan", manager.health_snapshot_packet_plan(target))
+            return True
+
+        if command == "audit-event-visibility-packet-plan":
+            self.print_control_center_data_aggregator_packet("AURA Audit Event Visibility Packet Plan", manager.audit_event_visibility_packet_plan(target))
+            return True
+
+        if command == "data-aggregator-safety-policy-plan":
+            self.print_control_center_data_aggregator_packet("AURA Data Aggregator Safety Policy Plan", manager.data_aggregator_safety_policy_plan(target))
+            return True
+
+        if command == "control-center-data-aggregator-context":
+            self.print_control_center_data_aggregator_packet("AURA Control Center Data Aggregator Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 92.0 local console API schema foundation CLI helpers.
     def print_local_console_api_schema_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4327,6 +4388,9 @@ class AuraCLI:
             return True
 
         if self.handle_local_console_api_schema_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_data_aggregator_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

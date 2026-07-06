@@ -1448,3 +1448,41 @@ This plan defines:
 - Control Center data aggregator implications
 
 Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes approved local actions.
+
+## Sprint 93.0 — Control Center Data Aggregator Foundation
+
+Status: completed
+Version: v0.93.0-genesis
+
+Sprint 93 adds the planner-only AURA Control Center Data Aggregator Foundation.
+
+This sprint prepares dashboard aggregation packet blueprints for:
+
+- ATLAS core status
+- ORION client status
+- client bridge status
+- dashboard view metadata
+- permission scope metadata
+- health snapshot metadata
+- audit event visibility metadata
+
+Counts:
+
+- 11 plan types
+- 7 aggregation packet groups
+- 6 ATLAS core packets
+- 8 ORION client packets
+- 8 client bridge packets
+- 9 dashboard view packets
+- 7 permission scope packets
+- 10 health snapshot packets
+- 8 audit event visibility fields
+- 56 total blueprint packets/fields
+- 0 runtime data fetches
+- 0 client connections
+- 0 dashboard views rendered
+- 0 API requests handled
+- 0 audit events fetched or forwarded
+- 0 runtime execution features
+
+Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first.

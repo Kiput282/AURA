@@ -2899,6 +2899,33 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 93.0 control center data aggregator foundation actions.
+    control_center_data_aggregator_actions = [
+        ('control_center_data_aggregator.status', 'read_project', 'Show AURA Control Center Data Aggregator Foundation status.'),
+        ('control_center_data_aggregator.catalog_plan', 'read_project', 'Prepare Control Center aggregation packet catalog planning.'),
+        ('control_center_data_aggregator.atlas_core_packet_plan', 'read_project', 'Prepare ATLAS core packet planning.'),
+        ('control_center_data_aggregator.orion_client_packet_plan', 'read_project', 'Prepare ORION client packet planning.'),
+        ('control_center_data_aggregator.client_bridge_packet_plan', 'read_project', 'Prepare client bridge packet planning.'),
+        ('control_center_data_aggregator.dashboard_view_packet_plan', 'read_project', 'Prepare dashboard view packet planning.'),
+        ('control_center_data_aggregator.permission_scope_packet_plan', 'read_project', 'Prepare permission scope packet planning.'),
+        ('control_center_data_aggregator.health_snapshot_packet_plan', 'read_project', 'Prepare health snapshot packet planning.'),
+        ('control_center_data_aggregator.audit_event_visibility_packet_plan', 'read_project', 'Prepare audit event visibility packet planning.'),
+        ('control_center_data_aggregator.safety_policy_plan', 'read_project', 'Prepare Control Center data aggregator safety policy planning.'),
+        ('control_center_data_aggregator.context', 'read_project', 'Show Control Center Data Aggregator Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_data_aggregator_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="control_center_data_aggregator",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_control_center_data_aggregator_foundation",
+            )
+        )
+
     # Sprint 92.0 local console API schema foundation actions.
     local_console_api_schema_actions = [
         ('local_console_api_schema.status', 'read_project', 'Show AURA Local Console API Schema Foundation status.'),

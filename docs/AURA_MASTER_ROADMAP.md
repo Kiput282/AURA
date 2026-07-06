@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.92.0-genesis
+Target: v0.93.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1122,3 +1122,11 @@ Canonical split:
 - ORION: AURA Client Agent, screen capture, voice bridge, avatar and 3D environment runtime, OBS/streaming bridge, game companion, Blender bridge, VS Code/project bridge, local action bridge, emergency stop, and GPU-heavy workloads.
 
 This deployment plan should guide future Control Center Data Aggregator, client agent, voice, vision, avatar, Blender, VS Code, streaming, gaming, and plugin work.
+
+## v0.93.0 Genesis — Control Center Data Aggregator Foundation
+
+Status: completed
+
+AURA now includes a planner-only Control Center Data Aggregator Foundation. It prepares future dashboard packet blueprints for ATLAS core, ORION client, client bridge, dashboard views, permission scopes, health snapshots, and audit event visibility.
+
+This foundation follows the canonical ATLAS-ORION deployment plan and keeps all runtime data fetch, client connection, API runtime, dashboard runtime, and action execution disabled.

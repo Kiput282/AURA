@@ -413,6 +413,18 @@ class CapabilityRegistryManager:
                     "introduced_in": "0.92.0-genesis",
                     "control_center_visible": True,
                 },
+                {
+                    "id": "aura_control_center_data_aggregator_foundation",
+                    "name": "AURA Control Center Data Aggregator Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.93.0-genesis",
+                    "category": "control_center",
+                    "control_center_visible": True,
+                    "description": "Planner-only Control Center data aggregator foundation for ATLAS core packets, ORION client packets, client bridge packets, dashboard view packets, permission scope packets, health snapshot packets, audit event visibility fields, and metadata-only aggregator safety policy.",
+                },
 ]
 
 
