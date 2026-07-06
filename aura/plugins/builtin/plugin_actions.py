@@ -2899,6 +2899,33 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 92.0 local console API schema foundation actions.
+    local_console_api_schema_actions = [
+        ('local_console_api_schema.status', 'read_project', 'Show AURA Local Console API Schema Foundation status.'),
+        ('local_console_api_schema.catalog_plan', 'read_project', 'Prepare Local Console API schema catalog planning.'),
+        ('local_console_api_schema.endpoint_blueprint_plan', 'read_project', 'Prepare Local Console endpoint blueprint planning.'),
+        ('local_console_api_schema.response_envelope_plan', 'read_project', 'Prepare Local Console response envelope planning.'),
+        ('local_console_api_schema.request_schema_blueprint_plan', 'read_project', 'Prepare Local Console request schema blueprint planning.'),
+        ('local_console_api_schema.validation_rule_plan', 'read_project', 'Prepare Local Console validation rule planning.'),
+        ('local_console_api_schema.permission_boundary_schema_plan', 'read_project', 'Prepare Local Console permission boundary schema planning.'),
+        ('local_console_api_schema.error_contract_plan', 'read_project', 'Prepare Local Console error contract planning.'),
+        ('local_console_api_schema.schema_versioning_plan', 'read_project', 'Prepare Local Console schema versioning planning.'),
+        ('local_console_api_schema.safety_policy_plan', 'read_project', 'Prepare Local Console API schema safety policy planning.'),
+        ('local_console_api_schema.context', 'read_project', 'Show Local Console API Schema Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in local_console_api_schema_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="local_console_api_schema",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_local_console_api_schema_foundation",
+            )
+        )
+
     # Sprint 91.0 local console static prototype foundation actions.
     local_console_static_prototype_actions = [
         ('local_console_static_prototype.status', 'read_project', 'Show AURA Local Console Static Prototype Foundation status.'),

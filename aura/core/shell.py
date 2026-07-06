@@ -76,6 +76,7 @@ from aura.local_console_web.aura_local_console_web_foundation_manager import Aur
 from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import AuraChatBridgeSessionStateFoundationManager
 from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundation_manager import AuraPluginPermissionDashboardFoundationManager
 from aura.local_console_static_prototype.aura_local_console_static_prototype_foundation_manager import AuraLocalConsoleStaticPrototypeFoundationManager
+from aura.local_console_api_schema.aura_local_console_api_schema_foundation_manager import AuraLocalConsoleAPISchemaFoundationManager
 
 
 class AuraShell:
@@ -468,6 +469,17 @@ class AuraShell:
         print("  accessibility-blueprint-plan <target> Prepare accessibility blueprint plan")
         print("  static-prototype-safety-policy-plan <target> Prepare static prototype safety policy plan")
         print("  local-console-static-prototype-context Show Local Console Static Prototype Foundation context")
+        print("  local-console-api-schema-status Show Local Console API Schema Foundation status")
+        print("  api-schema-catalog-plan <target> Prepare Local Console API schema catalog plan")
+        print("  endpoint-blueprint-plan <target> Prepare endpoint blueprint plan")
+        print("  response-envelope-plan <target> Prepare response envelope plan")
+        print("  request-schema-blueprint-plan <target> Prepare request schema blueprint plan")
+        print("  validation-rule-plan <target> Prepare validation rule plan")
+        print("  permission-boundary-schema-plan <target> Prepare permission boundary schema plan")
+        print("  error-contract-plan <target> Prepare error contract plan")
+        print("  schema-versioning-plan <target> Prepare schema versioning plan")
+        print("  api-schema-safety-policy-plan <target> Prepare API schema safety policy plan")
+        print("  local-console-api-schema-context Show Local Console API Schema Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4409,6 +4421,67 @@ class AuraShell:
         return False
 
 
+
+    # Sprint 92.0 local console API schema foundation shell helpers.
+    def print_local_console_api_schema_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Console API Schema Safety Boundary"))
+
+    def handle_local_console_api_schema_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Local Console API schema foundation"
+        manager = AuraLocalConsoleAPISchemaFoundationManager(project_root=self.project_root)
+
+        if command == "local-console-api-schema-status":
+            self.print_local_console_api_schema_packet("AURA Local Console API Schema Foundation Status", manager.status())
+            return True
+
+        if command == "api-schema-catalog-plan":
+            self.print_local_console_api_schema_packet("AURA API Schema Catalog Plan", manager.api_schema_catalog_plan(target))
+            return True
+
+        if command == "endpoint-blueprint-plan":
+            self.print_local_console_api_schema_packet("AURA Endpoint Blueprint Plan", manager.endpoint_blueprint_plan(target))
+            return True
+
+        if command == "response-envelope-plan":
+            self.print_local_console_api_schema_packet("AURA Response Envelope Plan", manager.response_envelope_plan(target))
+            return True
+
+        if command == "request-schema-blueprint-plan":
+            self.print_local_console_api_schema_packet("AURA Request Schema Blueprint Plan", manager.request_schema_blueprint_plan(target))
+            return True
+
+        if command == "validation-rule-plan":
+            self.print_local_console_api_schema_packet("AURA Validation Rule Plan", manager.validation_rule_plan(target))
+            return True
+
+        if command == "permission-boundary-schema-plan":
+            self.print_local_console_api_schema_packet("AURA Permission Boundary Schema Plan", manager.permission_boundary_schema_plan(target))
+            return True
+
+        if command == "error-contract-plan":
+            self.print_local_console_api_schema_packet("AURA Error Contract Plan", manager.error_contract_plan(target))
+            return True
+
+        if command == "schema-versioning-plan":
+            self.print_local_console_api_schema_packet("AURA Schema Versioning Plan", manager.schema_versioning_plan(target))
+            return True
+
+        if command == "api-schema-safety-policy-plan":
+            self.print_local_console_api_schema_packet("AURA API Schema Safety Policy Plan", manager.api_schema_safety_policy_plan(target))
+            return True
+
+        if command == "local-console-api-schema-context":
+            self.print_local_console_api_schema_packet("AURA Local Console API Schema Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 91.0 local console static prototype foundation shell helpers.
     def print_local_console_static_prototype_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4552,6 +4625,9 @@ class AuraShell:
             return
 
         if self.handle_local_console_static_prototype_shell_command(normalized):
+            return
+
+        if self.handle_local_console_api_schema_shell_command(normalized):
             return
 
         if normalized == "help":

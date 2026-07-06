@@ -402,6 +402,17 @@ class CapabilityRegistryManager:
                     "introduced_in": "0.91.0-genesis",
                     "control_center_visible": True,
                 },
+                {
+                    "id": "aura_local_console_api_schema_foundation",
+                    "name": "AURA Local Console API Schema Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "user_confirmation",
+                    "category": "local_console_api_schema",
+                    "introduced_in": "0.92.0-genesis",
+                    "control_center_visible": True,
+                },
 ]
 
 

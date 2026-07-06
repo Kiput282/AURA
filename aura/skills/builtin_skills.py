@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 92.0 local console API schema foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_console_api_schema_foundation",
+            description="Prepare planner-only AURA Local Console API Schema Foundation for API schema catalog planning, endpoint blueprint planning, response envelope planning, request schema blueprint planning, validation rule planning, permission boundary schema planning, error contract planning, schema versioning planning, and API schema safety policy without starting API runtime, creating API routes, handling requests, serving responses, binding ports, starting HTTP/web server runtime, fetching runtime data, running runtime validation, serialization, error emission, frontend/backend runtime, chat/session/plugin/permission/service/launcher/action runtime, file operations, command execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_console_api_schema_status",
+                "api_schema_catalog_plan",
+                "endpoint_blueprint_plan",
+                "response_envelope_plan",
+                "request_schema_blueprint_plan",
+                "validation_rule_plan",
+                "permission_boundary_schema_plan",
+                "error_contract_plan",
+                "schema_versioning_plan",
+                "api_schema_safety_policy_plan",
+                "local_console_api_schema_context",
+                "control_center_api_contract_metadata",
+            ],
+        )
+    )
+
     # Sprint 91.0 local console static prototype foundation skill.
     registry.register(
         AuraSkill(

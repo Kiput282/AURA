@@ -74,6 +74,7 @@ from aura.local_console_web.aura_local_console_web_foundation_manager import Aur
 from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import AuraChatBridgeSessionStateFoundationManager
 from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundation_manager import AuraPluginPermissionDashboardFoundationManager
 from aura.local_console_static_prototype.aura_local_console_static_prototype_foundation_manager import AuraLocalConsoleStaticPrototypeFoundationManager
+from aura.local_console_api_schema.aura_local_console_api_schema_foundation_manager import AuraLocalConsoleAPISchemaFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4124,6 +4125,66 @@ class AuraCLI:
         return False
 
 
+
+    # Sprint 92.0 local console API schema foundation CLI helpers.
+    def print_local_console_api_schema_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Console API Schema Safety Boundary"))
+
+    def handle_local_console_api_schema_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA Local Console API schema foundation"
+        manager = AuraLocalConsoleAPISchemaFoundationManager(project_root=self.project_root)
+
+        if command == "local-console-api-schema-status":
+            self.print_local_console_api_schema_packet("AURA Local Console API Schema Foundation Status", manager.status())
+            return True
+
+        if command == "api-schema-catalog-plan":
+            self.print_local_console_api_schema_packet("AURA API Schema Catalog Plan", manager.api_schema_catalog_plan(target))
+            return True
+
+        if command == "endpoint-blueprint-plan":
+            self.print_local_console_api_schema_packet("AURA Endpoint Blueprint Plan", manager.endpoint_blueprint_plan(target))
+            return True
+
+        if command == "response-envelope-plan":
+            self.print_local_console_api_schema_packet("AURA Response Envelope Plan", manager.response_envelope_plan(target))
+            return True
+
+        if command == "request-schema-blueprint-plan":
+            self.print_local_console_api_schema_packet("AURA Request Schema Blueprint Plan", manager.request_schema_blueprint_plan(target))
+            return True
+
+        if command == "validation-rule-plan":
+            self.print_local_console_api_schema_packet("AURA Validation Rule Plan", manager.validation_rule_plan(target))
+            return True
+
+        if command == "permission-boundary-schema-plan":
+            self.print_local_console_api_schema_packet("AURA Permission Boundary Schema Plan", manager.permission_boundary_schema_plan(target))
+            return True
+
+        if command == "error-contract-plan":
+            self.print_local_console_api_schema_packet("AURA Error Contract Plan", manager.error_contract_plan(target))
+            return True
+
+        if command == "schema-versioning-plan":
+            self.print_local_console_api_schema_packet("AURA Schema Versioning Plan", manager.schema_versioning_plan(target))
+            return True
+
+        if command == "api-schema-safety-policy-plan":
+            self.print_local_console_api_schema_packet("AURA API Schema Safety Policy Plan", manager.api_schema_safety_policy_plan(target))
+            return True
+
+        if command == "local-console-api-schema-context":
+            self.print_local_console_api_schema_packet("AURA Local Console API Schema Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 91.0 local console static prototype foundation CLI helpers.
     def print_local_console_static_prototype_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4263,6 +4324,9 @@ class AuraCLI:
             return True
 
         if self.handle_local_console_static_prototype_cli_command(raw_args):
+            return True
+
+        if self.handle_local_console_api_schema_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

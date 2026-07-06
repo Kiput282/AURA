@@ -1374,3 +1374,47 @@ Capability Registry update:
 Core rule: AURA Local Console Static Prototype may prepare static blueprints, but must not run web runtime yet.
 
 See docs/AURA_LOCAL_CONSOLE_STATIC_PROTOTYPE_FOUNDATION.md.
+
+
+## Sprint 92.0 — AURA Local Console API Schema Foundation
+
+Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
+
+AURA includes planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
+
+Summary:
+- API schema plan types: 11
+- schema packets: 9
+- endpoint blueprints: 10
+- request schema blueprints: 6
+- response envelopes: 6
+- validation rules: 8
+- permission boundary rules: 8
+- error contracts: 6
+- schema versioning notes: 6
+- runtime routes created: 0
+- API servers started: 0
+- HTTP servers started: 0
+- ports bound: 0
+- requests handled: 0
+- responses served: 0
+- runtime data fetches: 0
+- runtime schema validations: 0
+- runtime serializations: 0
+- runtime errors emitted: 0
+- runtime execution features: 0
+
+Capability Registry update:
+- total capabilities tracked: 23
+- online capabilities: 21
+- foundation-only capabilities: 11
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Core rule: AURA Local Console API Schema may prepare data contracts, but must not run API runtime yet.
+
+See docs/AURA_LOCAL_CONSOLE_API_SCHEMA_FOUNDATION.md.

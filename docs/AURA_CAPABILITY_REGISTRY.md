@@ -294,3 +294,23 @@ Updated registry summary:
 - runtime execution features: 0
 
 AURA Local Console Static Prototype Foundation remains foundation-only and blueprint-only. It does not start a web server, serve static files, bind ports, launch a browser, create runtime routes, run frontend/backend/API runtime, activate chat/session/plugin/permission/action runtime, create static assets at runtime, or execute tools.
+
+
+## Sprint 92 Update — Local Console API Schema Foundation Online
+
+Status: UPDATED FOR v0.92.0-genesis
+
+The Capability Registry now tracks AURA Local Console API Schema Foundation as online.
+
+Updated registry summary:
+- total capabilities tracked: 23
+- online capabilities: 21
+- foundation-only capabilities: 11
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+AURA Local Console API Schema Foundation remains foundation-only and blueprint-only. It does not start API runtime, create API routes, handle API requests, serve API responses, bind ports, fetch runtime data, run runtime validation, run runtime serialization, emit runtime errors, or execute tools.

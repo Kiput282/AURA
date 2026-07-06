@@ -1088,3 +1088,24 @@ Capability Registry now tracks AURA Local Console Static Prototype Foundation:
 - runtime execution features: 0
 
 No web server runtime, frontend/backend/API runtime, route creation runtime, static file serving runtime, port binding, browser launch, websocket runtime, chat runtime, session runtime, plugin runtime, permission grant/deny runtime, runtime action activation, file operation, static asset generation runtime, command execution, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
+
+
+## Sprint 92.0 — AURA Local Console API Schema Foundation
+
+Target: v0.92.0-genesis
+Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
+
+AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
+
+Capability Registry now tracks AURA Local Console API Schema Foundation:
+- total capabilities tracked: 23
+- online capabilities: 21
+- foundation-only capabilities: 11
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+No API server runtime, API route runtime, API request handling, API response serving, HTTP server start, web server runtime, frontend/backend runtime, route creation runtime, static file serving runtime, port binding, browser launch, websocket runtime, chat runtime, session runtime, plugin runtime, permission grant/deny runtime, runtime action activation, file operation, command execution, runtime data fetch, runtime schema validation, runtime serialization, runtime error emission, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
