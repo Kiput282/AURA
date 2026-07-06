@@ -60,6 +60,7 @@ from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import Knowle
 from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRuntimeFoundationManager
 from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
 from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
+from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3182,6 +3183,117 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 77.0 visual context compatibility CLI helpers.
+    def print_visual_context_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} field(s)")
+
+        print()
+        print("Visual Context Safety Boundary")
+        print("------------------------------")
+        for key in [
+            "foundation_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "camera_access",
+            "screen_capture",
+            "screenshot_capture",
+            "image_capture",
+            "video_capture",
+            "webcam_runtime",
+            "vision_runtime",
+            "visual_context_runtime",
+            "image_analysis_runtime",
+            "object_detection_runtime",
+            "ocr_runtime",
+            "image_text_extraction_runtime",
+            "face_recognition",
+            "biometric_identification",
+            "identity_recognition",
+            "emotion_inference_from_face",
+            "always_watching",
+            "background_watching",
+            "visual_command_execution",
+            "visual_tool_execution",
+            "action_execution",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "desktop_control",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {packet[key]}")
+
+    def handle_visual_context_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general visual context understanding"
+        manager = VisualContextUnderstandingManager(project_root=self.project_root)
+
+        if command == "visual-context-status":
+            self.print_visual_context_packet("AURA Visual Context Understanding Status", manager.status())
+            return True
+
+        if command == "visual-scene-understanding-plan":
+            self.print_visual_context_packet("AURA Visual Scene Understanding Plan", manager.visual_scene_understanding_plan(target))
+            return True
+
+        if command == "visual-object-relation-plan":
+            self.print_visual_context_packet("AURA Visual Object Relation Plan", manager.visual_object_relation_plan(target))
+            return True
+
+        if command == "visual-text-context-plan":
+            self.print_visual_context_packet("AURA Visual Text Context Plan", manager.visual_text_context_plan(target))
+            return True
+
+        if command == "visual-uncertainty-plan":
+            self.print_visual_context_packet("AURA Visual Uncertainty Plan", manager.visual_uncertainty_plan(target))
+            return True
+
+        if command == "visual-clarification-plan":
+            self.print_visual_context_packet("AURA Visual Clarification Plan", manager.visual_clarification_plan(target))
+            return True
+
+        if command == "visual-response-context-plan":
+            self.print_visual_context_packet("AURA Visual Response Context Plan", manager.visual_response_context_plan(target))
+            return True
+
+        if command == "visual-context-safety-plan":
+            self.print_visual_context_packet("AURA Visual Context Safety Plan", manager.visual_context_safety_plan(target))
+            return True
+
+        if command == "visual-context":
+            self.print_visual_context_packet("AURA Visual Context Understanding Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3220,6 +3332,9 @@ class AuraCLI:
             return True
 
         if self.handle_vision_input_cli_command(raw_args):
+            return True
+
+        if self.handle_visual_context_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

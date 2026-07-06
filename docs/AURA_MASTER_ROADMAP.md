@@ -693,3 +693,13 @@ Status: VISION INPUT RUNTIME FOUNDATION ONLINE
 AURA can prepare foundation-only plans for future visual input permission, camera/screen/image boundaries, image input adapter planning, visual source selection, visual sessions, visual action gates, and vision safety. This begins the "see" part of AURA's core essence while keeping all visual runtime behavior disabled.
 
 This sprint does not access camera, capture screen, capture screenshots, capture images, capture video, run webcam runtime, run vision runtime, run image analysis, run object detection, run OCR, watch continuously, watch in the background, execute visual commands, execute visual tools, perform actions, read/write files, execute commands/tools, write memory, search the internet, perform network actions, control desktop, run git operations, perform external actions, or execute real tools.
+
+
+## Sprint 77.0 — Visual Context Understanding Layer
+
+Target: v0.77.0-genesis  
+Status: VISUAL CONTEXT UNDERSTANDING ONLINE
+
+AURA can prepare planner-only visual context understanding plans for scene context, object/relation planning, text-in-image context, uncertainty handling, clarification, visual response context, and visual context safety. This continues the "see" part of AURA's core essence after the Vision Input Runtime Foundation.
+
+This sprint does not access camera, capture screen, capture screenshots, capture images, capture video, run webcam runtime, run vision runtime, run visual context runtime, run image analysis, run object detection, run OCR, extract image text, recognize faces, identify biometrics, recognize identity, infer emotion from face, watch continuously, watch in the background, execute visual commands, execute visual tools, perform actions, read/write files, execute commands/tools, write memory, search the internet, perform network actions, control desktop, run git operations, perform external actions, or execute real tools.

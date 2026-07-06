@@ -1128,4 +1128,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 77.0 visual context understanding skill.
+    registry.register(
+        AuraSkill(
+            name="visual_context_understanding",
+            description="Prepare planner-only visual context understanding for scene context, object/relation planning, text-in-image context, uncertainty handling, clarification, visual response planning, and visual safety without camera access, screen capture, image/video capture, vision runtime, OCR runtime, object detection runtime, face recognition, biometric identification, identity recognition, visual command execution, file operations, command execution, tool execution, memory write, internet/network action, desktop control, git execution, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "visual_context_status",
+                "visual_scene_understanding_plan",
+                "visual_object_relation_plan",
+                "visual_text_context_plan",
+                "visual_uncertainty_plan",
+                "visual_clarification_plan",
+                "visual_response_context_plan",
+                "visual_context_safety_plan",
+                "visual_context",
+                "planner_only_visual_context_understanding",
+            ],
+        )
+    )
+
     return registry

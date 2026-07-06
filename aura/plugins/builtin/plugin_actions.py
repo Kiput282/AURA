@@ -2566,4 +2566,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 77.0 visual context understanding actions.
+    visual_context_actions = [
+        ('visual_context.status', 'read_project', 'Show AURA Visual Context Understanding status.'),
+        ('visual_context.scene_understanding_plan', 'read_project', 'Prepare visual scene understanding planning without camera, screen, image, or vision runtime.'),
+        ('visual_context.object_relation_plan', 'read_project', 'Prepare visual object and relation planning without object detection runtime.'),
+        ('visual_context.text_context_plan', 'read_project', 'Prepare text-in-image context planning without OCR or image text extraction runtime.'),
+        ('visual_context.uncertainty_plan', 'read_project', 'Prepare visual uncertainty and evidence boundary planning.'),
+        ('visual_context.clarification_plan', 'read_project', 'Prepare clarification planning for ambiguous visual context.'),
+        ('visual_context.response_context_plan', 'read_project', 'Prepare safe visual response context planning without execution.'),
+        ('visual_context.safety_plan', 'read_project', 'Prepare visual context safety boundaries without camera, screen, vision, OCR, face recognition, tools, files, commands, network, desktop, git, or real execution.'),
+        ('visual_context.context', 'read_project', 'Show Visual Context Understanding context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in visual_context_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="visual_context",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="visual_context_understanding",
+            )
+        )
+
     return registry

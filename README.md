@@ -689,3 +689,51 @@ Safety boundary:
 - no git execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 77.0 — Visual Context Understanding Layer
+
+AURA includes a Visual Context Understanding Layer for future safe visual reasoning.
+
+Status: VISUAL CONTEXT UNDERSTANDING ONLINE
+
+Purpose:
+- plan future scene and context understanding
+- plan future object and relation understanding
+- plan text-in-image context understanding without OCR runtime
+- handle visual uncertainty and evidence boundaries
+- ask clarification when visual context is ambiguous
+- prepare safe visual response context
+- keep visual understanding separate from action execution
+
+Safety boundary:
+- no camera access
+- no screen capture
+- no screenshot capture
+- no image capture
+- no video capture
+- no webcam runtime
+- no vision runtime
+- no visual context runtime
+- no image analysis runtime
+- no object detection runtime
+- no OCR runtime
+- no image text extraction runtime
+- no face recognition
+- no biometric identification
+- no identity recognition
+- no emotion inference from face
+- no always-watching mode
+- no background watching
+- no visual command execution
+- no visual tool execution
+- no action execution
+- no file operations
+- no command execution
+- no tool execution
+- no memory write
+- no internet/network action
+- no desktop control
+- no git execution
+- no external action execution
+- no real tool execution
