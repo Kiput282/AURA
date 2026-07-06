@@ -1105,4 +1105,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 76.0 vision input runtime foundation skill.
+    registry.register(
+        AuraSkill(
+            name="vision_input_runtime_foundation",
+            description="Prepare foundation-only vision input runtime planning for camera permission, screen/image input boundaries, visual source selection, image adapter planning, visual sessions, visual action gates, and vision safety without camera access, screen capture, image capture, video capture, vision runtime, OCR runtime, visual command execution, file operations, command execution, tool execution, memory write, internet/network action, desktop control, git execution, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "vision_input_status",
+                "vision_input_permission_plan",
+                "visual_capture_boundary_plan",
+                "image_input_adapter_plan",
+                "visual_source_plan",
+                "visual_session_plan",
+                "visual_action_gate_plan",
+                "vision_input_safety_plan",
+                "vision_input_context",
+                "planner_only_vision_input_foundation",
+            ],
+        )
+    )
+
     return registry

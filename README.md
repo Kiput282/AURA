@@ -647,3 +647,45 @@ Safety boundary:
 - no git execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 76.0 — Vision Input Runtime Foundation
+
+AURA includes a Vision Input Runtime Foundation for future safe visual input planning.
+
+Status: VISION INPUT RUNTIME FOUNDATION ONLINE
+
+Purpose:
+- plan future camera, screen, screenshot, image, webcam, and video-frame input boundaries
+- prepare visual permission flow before any camera/screen/image runtime
+- plan visual source selection with least-invasive input first
+- plan future image input adapter selection
+- plan explicit visual sessions instead of always-watching behavior
+- gate visual action-like requests before future execution
+- keep visual input safe, permission-first, and reviewable
+
+Safety boundary:
+- no camera access
+- no screen capture
+- no screenshot capture
+- no image capture
+- no video capture
+- no webcam runtime
+- no vision runtime
+- no image analysis runtime
+- no object detection runtime
+- no OCR runtime
+- no always-watching mode
+- no background watching
+- no visual command execution
+- no visual tool execution
+- no action execution
+- no file operations
+- no command execution
+- no tool execution
+- no memory write
+- no internet/network action
+- no desktop control
+- no git execution
+- no external action execution
+- no real tool execution

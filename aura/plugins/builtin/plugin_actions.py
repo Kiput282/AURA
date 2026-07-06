@@ -2541,4 +2541,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 76.0 vision input runtime foundation actions.
+    vision_input_actions = [
+        ('vision_input.status', 'read_project', 'Show AURA Vision Input Runtime Foundation status.'),
+        ('vision_input.permission_plan', 'read_project', 'Prepare future camera/screen/image permission planning without visual runtime.'),
+        ('vision_input.capture_boundary_plan', 'read_project', 'Prepare safe visual capture boundaries without camera, screen, image, or video capture.'),
+        ('vision_input.image_adapter_plan', 'read_project', 'Prepare future image input adapter planning without OCR, object detection, or vision runtime.'),
+        ('vision_input.visual_source_plan', 'read_project', 'Prepare future visual source selection without reading files or accessing camera/screen.'),
+        ('vision_input.visual_session_plan', 'read_project', 'Prepare explicit future visual session planning without always-watching behavior.'),
+        ('vision_input.visual_action_gate_plan', 'read_project', 'Prepare visual action gates that require confirmation before future action.'),
+        ('vision_input.safety_plan', 'read_project', 'Prepare vision input safety boundaries without camera, screen, image, video, tools, files, commands, network, desktop, git, or real execution.'),
+        ('vision_input.context', 'read_project', 'Show Vision Input Runtime Foundation context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in vision_input_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="vision_input",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="vision_input_runtime_foundation",
+            )
+        )
+
     return registry

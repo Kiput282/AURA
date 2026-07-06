@@ -683,3 +683,13 @@ Status: VOICE INTENT UNDERSTANDING ONLINE
 AURA can prepare planner-only voice intent understanding plans for transcript normalization, intent classification, entity/slot extraction, clarification, action gates, response planning, and voice intent safety. This continues the "hear" part of AURA's core essence after the Voice Input Runtime Foundation.
 
 This sprint does not access the microphone, record/capture audio, run speech-to-text, transcribe speech, detect wake words, listen continuously, listen in the background, execute voice commands, execute voice tools, perform actions, read/write files, execute commands/tools, write memory, search the internet, perform network actions, control desktop, run git operations, perform external actions, or execute real tools.
+
+
+## Sprint 76.0 — Vision Input Runtime Foundation
+
+Target: v0.76.0-genesis  
+Status: VISION INPUT RUNTIME FOUNDATION ONLINE
+
+AURA can prepare foundation-only plans for future visual input permission, camera/screen/image boundaries, image input adapter planning, visual source selection, visual sessions, visual action gates, and vision safety. This begins the "see" part of AURA's core essence while keeping all visual runtime behavior disabled.
+
+This sprint does not access camera, capture screen, capture screenshots, capture images, capture video, run webcam runtime, run vision runtime, run image analysis, run object detection, run OCR, watch continuously, watch in the background, execute visual commands, execute visual tools, perform actions, read/write files, execute commands/tools, write memory, search the internet, perform network actions, control desktop, run git operations, perform external actions, or execute real tools.

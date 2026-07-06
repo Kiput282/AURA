@@ -48,6 +48,7 @@ from aura.reasoning_context.reasoning_context_manager import ReasoningContextMan
 from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
 from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRuntimeFoundationManager
 from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
+from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -158,6 +159,7 @@ class SystemStatusManager:
         knowledge_uncertainty_status = KnowledgeUncertaintyGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         voice_input_status = VoiceInputRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         voice_intent_status = VoiceIntentUnderstandingManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        vision_input_status = VisionInputRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -228,6 +230,7 @@ class SystemStatusManager:
             "knowledge_uncertainty_plan_types": knowledge_uncertainty_status["knowledge_plan_types"],
             "voice_input_plan_types": voice_input_status["voice_input_plan_types"],
             "voice_intent_plan_types": voice_intent_status["voice_intent_plan_types"],
+            "vision_input_plan_types": vision_input_status["vision_input_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -278,6 +281,7 @@ class SystemStatusManager:
             "knowledge_uncertainty_gate": knowledge_uncertainty_status["status"],
             "voice_input_runtime_foundation": voice_input_status["status"],
             "voice_intent_understanding": voice_intent_status["status"],
+            "vision_input_runtime_foundation": vision_input_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -768,6 +772,42 @@ class SystemStatusManager:
             "voice_intent_desktop_control": voice_intent_status["desktop_control"],
             "voice_intent_git_commit": voice_intent_status["git_commit"],
             "voice_intent_git_push": voice_intent_status["git_push"],
+            "vision_input_runtime_foundation_ready": vision_input_status["planner_ready"],
+            "vision_input_permission_plan_ready": vision_input_status["vision_input_permission_plan_ready"],
+            "visual_capture_boundary_plan_ready": vision_input_status["visual_capture_boundary_plan_ready"],
+            "image_input_adapter_plan_ready": vision_input_status["image_input_adapter_plan_ready"],
+            "visual_source_plan_ready": vision_input_status["visual_source_plan_ready"],
+            "visual_session_plan_ready": vision_input_status["visual_session_plan_ready"],
+            "visual_action_gate_plan_ready": vision_input_status["visual_action_gate_plan_ready"],
+            "vision_input_safety_plan_ready": vision_input_status["vision_input_safety_plan_ready"],
+            "vision_input_context_ready": vision_input_status["context_ready"],
+            "vision_input_camera_access": vision_input_status["camera_access"],
+            "vision_input_screen_capture": vision_input_status["screen_capture"],
+            "vision_input_screenshot_capture": vision_input_status["screenshot_capture"],
+            "vision_input_image_capture": vision_input_status["image_capture"],
+            "vision_input_video_capture": vision_input_status["video_capture"],
+            "vision_input_webcam_runtime": vision_input_status["webcam_runtime"],
+            "vision_input_vision_runtime": vision_input_status["vision_runtime"],
+            "vision_input_image_analysis_runtime": vision_input_status["image_analysis_runtime"],
+            "vision_input_object_detection_runtime": vision_input_status["object_detection_runtime"],
+            "vision_input_ocr_runtime": vision_input_status["ocr_runtime"],
+            "vision_input_always_watching": vision_input_status["always_watching"],
+            "vision_input_background_watching": vision_input_status["background_watching"],
+            "vision_input_visual_command_execution": vision_input_status["visual_command_execution"],
+            "vision_input_visual_tool_execution": vision_input_status["visual_tool_execution"],
+            "vision_input_action_execution": vision_input_status["action_execution"],
+            "vision_input_file_read": vision_input_status["file_read"],
+            "vision_input_file_write": vision_input_status["file_write"],
+            "vision_input_command_execution": vision_input_status["command_execution"],
+            "vision_input_tool_execution": vision_input_status["tool_execution"],
+            "vision_input_real_tool_execution": vision_input_status["real_tool_execution"],
+            "vision_input_external_action_execution": vision_input_status["external_action_execution"],
+            "vision_input_memory_write": vision_input_status["memory_write"],
+            "vision_input_internet_search": vision_input_status["internet_search"],
+            "vision_input_network_action": vision_input_status["network_action"],
+            "vision_input_desktop_control": vision_input_status["desktop_control"],
+            "vision_input_git_commit": vision_input_status["git_commit"],
+            "vision_input_git_push": vision_input_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -930,5 +970,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

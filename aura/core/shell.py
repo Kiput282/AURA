@@ -61,6 +61,7 @@ from aura.reasoning_context.reasoning_context_manager import ReasoningContextMan
 from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
 from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRuntimeFoundationManager
 from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
+from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
 
 
 class AuraShell:
@@ -308,6 +309,15 @@ class AuraShell:
         print("  voice-response-plan <target> Prepare voice response plan")
         print("  voice-intent-safety-plan <target> Prepare voice intent safety plan")
         print("  voice-intent-context Show Voice Intent Understanding context")
+        print("  vision-input-status Show Vision Input Runtime Foundation status")
+        print("  vision-input-permission-plan <target> Prepare visual permission plan")
+        print("  visual-capture-boundary-plan <target> Prepare visual capture boundary plan")
+        print("  image-input-adapter-plan <target> Prepare image input adapter plan")
+        print("  visual-source-plan <target> Prepare visual source plan")
+        print("  visual-session-plan <target> Prepare visual session plan")
+        print("  visual-action-gate-plan <target> Prepare visual action gate plan")
+        print("  vision-input-safety-plan <target> Prepare vision input safety plan")
+        print("  vision-input-context Show Vision Input Runtime Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -3202,6 +3212,112 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 76.0 vision input compatibility shell helpers.
+    def print_vision_input_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} field(s)")
+
+        print()
+        print("Vision Input Safety Boundary")
+        print("----------------------------")
+        for key in [
+            "foundation_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "camera_access",
+            "screen_capture",
+            "screenshot_capture",
+            "image_capture",
+            "video_capture",
+            "webcam_runtime",
+            "vision_runtime",
+            "image_analysis_runtime",
+            "object_detection_runtime",
+            "ocr_runtime",
+            "always_watching",
+            "background_watching",
+            "visual_command_execution",
+            "visual_tool_execution",
+            "action_execution",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "desktop_control",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {packet[key]}")
+
+    def handle_vision_input_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general vision input foundation"
+        manager = VisionInputRuntimeFoundationManager(project_root=self.project_root)
+
+        if command == "vision-input-status":
+            self.print_vision_input_packet("AURA Vision Input Runtime Foundation Status", manager.status())
+            return True
+
+        if command == "vision-input-permission-plan":
+            self.print_vision_input_packet("AURA Vision Input Permission Plan", manager.vision_input_permission_plan(target))
+            return True
+
+        if command == "visual-capture-boundary-plan":
+            self.print_vision_input_packet("AURA Visual Capture Boundary Plan", manager.visual_capture_boundary_plan(target))
+            return True
+
+        if command == "image-input-adapter-plan":
+            self.print_vision_input_packet("AURA Image Input Adapter Plan", manager.image_input_adapter_plan(target))
+            return True
+
+        if command == "visual-source-plan":
+            self.print_vision_input_packet("AURA Visual Source Plan", manager.visual_source_plan(target))
+            return True
+
+        if command == "visual-session-plan":
+            self.print_vision_input_packet("AURA Visual Session Plan", manager.visual_session_plan(target))
+            return True
+
+        if command == "visual-action-gate-plan":
+            self.print_vision_input_packet("AURA Visual Action Gate Plan", manager.visual_action_gate_plan(target))
+            return True
+
+        if command == "vision-input-safety-plan":
+            self.print_vision_input_packet("AURA Vision Input Safety Plan", manager.vision_input_safety_plan(target))
+            return True
+
+        if command == "vision-input-context":
+            self.print_vision_input_packet("AURA Vision Input Runtime Foundation Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -3240,6 +3356,9 @@ class AuraShell:
             return
 
         if self.handle_voice_intent_shell_command(normalized):
+            return
+
+        if self.handle_vision_input_shell_command(normalized):
             return
 
         if normalized == "help":

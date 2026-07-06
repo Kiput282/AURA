@@ -59,6 +59,7 @@ from aura.reasoning_context.reasoning_context_manager import ReasoningContextMan
 from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
 from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRuntimeFoundationManager
 from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
+from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3076,6 +3077,111 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 76.0 vision input compatibility CLI helpers.
+    def print_vision_input_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} field(s)")
+
+        print()
+        print("Vision Input Safety Boundary")
+        print("----------------------------")
+        for key in [
+            "foundation_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "camera_access",
+            "screen_capture",
+            "screenshot_capture",
+            "image_capture",
+            "video_capture",
+            "webcam_runtime",
+            "vision_runtime",
+            "image_analysis_runtime",
+            "object_detection_runtime",
+            "ocr_runtime",
+            "always_watching",
+            "background_watching",
+            "visual_command_execution",
+            "visual_tool_execution",
+            "action_execution",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "desktop_control",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {packet[key]}")
+
+    def handle_vision_input_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general vision input foundation"
+        manager = VisionInputRuntimeFoundationManager(project_root=self.project_root)
+
+        if command == "vision-input-status":
+            self.print_vision_input_packet("AURA Vision Input Runtime Foundation Status", manager.status())
+            return True
+
+        if command == "vision-input-permission-plan":
+            self.print_vision_input_packet("AURA Vision Input Permission Plan", manager.vision_input_permission_plan(target))
+            return True
+
+        if command == "visual-capture-boundary-plan":
+            self.print_vision_input_packet("AURA Visual Capture Boundary Plan", manager.visual_capture_boundary_plan(target))
+            return True
+
+        if command == "image-input-adapter-plan":
+            self.print_vision_input_packet("AURA Image Input Adapter Plan", manager.image_input_adapter_plan(target))
+            return True
+
+        if command == "visual-source-plan":
+            self.print_vision_input_packet("AURA Visual Source Plan", manager.visual_source_plan(target))
+            return True
+
+        if command == "visual-session-plan":
+            self.print_vision_input_packet("AURA Visual Session Plan", manager.visual_session_plan(target))
+            return True
+
+        if command == "visual-action-gate-plan":
+            self.print_vision_input_packet("AURA Visual Action Gate Plan", manager.visual_action_gate_plan(target))
+            return True
+
+        if command == "vision-input-safety-plan":
+            self.print_vision_input_packet("AURA Vision Input Safety Plan", manager.vision_input_safety_plan(target))
+            return True
+
+        if command == "vision-input-context":
+            self.print_vision_input_packet("AURA Vision Input Runtime Foundation Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3111,6 +3217,9 @@ class AuraCLI:
             return True
 
         if self.handle_voice_intent_cli_command(raw_args):
+            return True
+
+        if self.handle_vision_input_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
