@@ -2691,4 +2691,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 82.0 capability registry actions.
+    capability_registry_actions = [
+        ('capability_registry.status', 'read_project', 'Show AURA Capability Registry status.'),
+        ('capability_registry.catalog_plan', 'read_project', 'Prepare capability catalog plan.'),
+        ('capability_registry.state_review_plan', 'read_project', 'Prepare capability state review plan.'),
+        ('capability_registry.permission_requirement_review_plan', 'read_project', 'Prepare permission requirement review plan.'),
+        ('capability_registry.risk_level_review_plan', 'read_project', 'Prepare risk level review plan.'),
+        ('capability_registry.control_center_capability_view_plan', 'read_project', 'Prepare future Control Center capability view plan.'),
+        ('capability_registry.gap_review_plan', 'read_project', 'Prepare capability gap review plan.'),
+        ('capability_registry.migration_plan', 'read_project', 'Prepare capability registry migration plan.'),
+        ('capability_registry.context', 'read_project', 'Show Capability Registry context and catalog metadata.'),
+    ]
+
+    for action_name, permission_action, description in capability_registry_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="capability_registry",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="capability_registry",
+            )
+        )
+
     return registry

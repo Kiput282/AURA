@@ -82,3 +82,26 @@ The default boot behavior must be safe:
 ## Design Principle
 
 AURA may wake automatically, but AURA must not act automatically.
+
+
+## Sprint 82 Update — Capability Registry Consolidation
+
+Status: CAPABILITY REGISTRY ONLINE  
+Target version: v0.82.0-genesis
+
+Sprint 82 adds a central planner-only Capability Registry for AURA. The registry tracks online, foundation-only, planner-only, permission-gated, review-only, planned-future, and disabled-runtime capabilities.
+
+Current registry summary:
+- total capabilities tracked: 18
+- online capabilities: 12
+- foundation-only capabilities: 3
+- planner-only capabilities: 6
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 4
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+The registry prepares metadata for the future AURA Control Center, service monitor, launcher, plugin dashboard, and permission dashboard.
+
+The registry does not grant permissions, enable runtime actions, start UI/web/chat/service/launcher runtime, perform file operations, execute commands, install dependencies, download packages, use internet/network actions, execute tools, write memory, control desktop, run git operations, perform external actions, or execute real tools.

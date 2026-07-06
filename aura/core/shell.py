@@ -67,6 +67,7 @@ from aura.coder_project.coder_project_generation_planner_manager import CoderPro
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
 from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
 from aura.output_formatter.shared_output_formatter_manager import SharedOutputFormatterManager
+from aura.capability_registry.capability_registry_manager import CapabilityRegistryManager
 
 
 class AuraShell:
@@ -368,6 +369,15 @@ class AuraShell:
         print("  ui-output-contract-plan <target> Prepare future UI output contract plan")
         print("  formatter-migration-plan <target> Prepare formatter migration plan")
         print("  output-formatter-context Show Shared Output Formatter context")
+        print("  capability-registry-status Show Capability Registry status")
+        print("  capability-catalog-plan <target> Prepare capability catalog plan")
+        print("  capability-state-review-plan <target> Prepare capability state review plan")
+        print("  permission-requirement-review-plan <target> Prepare permission requirement review plan")
+        print("  risk-level-review-plan <target> Prepare risk level review plan")
+        print("  control-center-capability-view-plan <target> Prepare Control Center capability view plan")
+        print("  capability-gap-review-plan <target> Prepare capability gap review plan")
+        print("  capability-registry-migration-plan <target> Prepare capability registry migration plan")
+        print("  capability-registry-context Show Capability Registry context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -3852,6 +3862,59 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 82.0 capability registry shell helpers.
+    def print_capability_registry_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Capability Registry Safety Boundary"))
+
+    def handle_capability_registry_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA capability registry"
+        manager = CapabilityRegistryManager()
+
+        if command == "capability-registry-status":
+            self.print_capability_registry_packet("AURA Capability Registry Status", manager.status())
+            return True
+
+        if command == "capability-catalog-plan":
+            self.print_capability_registry_packet("AURA Capability Catalog Plan", manager.capability_catalog_plan(target))
+            return True
+
+        if command == "capability-state-review-plan":
+            self.print_capability_registry_packet("AURA Capability State Review Plan", manager.capability_state_review_plan(target))
+            return True
+
+        if command == "permission-requirement-review-plan":
+            self.print_capability_registry_packet("AURA Permission Requirement Review Plan", manager.permission_requirement_review_plan(target))
+            return True
+
+        if command == "risk-level-review-plan":
+            self.print_capability_registry_packet("AURA Risk Level Review Plan", manager.risk_level_review_plan(target))
+            return True
+
+        if command == "control-center-capability-view-plan":
+            self.print_capability_registry_packet("AURA Control Center Capability View Plan", manager.control_center_capability_view_plan(target))
+            return True
+
+        if command == "capability-gap-review-plan":
+            self.print_capability_registry_packet("AURA Capability Gap Review Plan", manager.capability_gap_review_plan(target))
+            return True
+
+        if command == "capability-registry-migration-plan":
+            self.print_capability_registry_packet("AURA Capability Registry Migration Plan", manager.capability_registry_migration_plan(target))
+            return True
+
+        if command == "capability-registry-context":
+            self.print_capability_registry_packet("AURA Capability Registry Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -3908,6 +3971,9 @@ class AuraShell:
             return
 
         if self.handle_output_formatter_shell_command(normalized):
+            return
+
+        if self.handle_capability_registry_shell_command(normalized):
             return
 
         if normalized == "help":

@@ -65,6 +65,7 @@ from aura.coder_project.coder_project_generation_planner_manager import CoderPro
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
 from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
 from aura.output_formatter.shared_output_formatter_manager import SharedOutputFormatterManager
+from aura.capability_registry.capability_registry_manager import CapabilityRegistryManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3666,6 +3667,58 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 82.0 capability registry CLI helpers.
+    def print_capability_registry_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Capability Registry Safety Boundary"))
+
+    def handle_capability_registry_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA capability registry"
+        manager = CapabilityRegistryManager()
+
+        if command == "capability-registry-status":
+            self.print_capability_registry_packet("AURA Capability Registry Status", manager.status())
+            return True
+
+        if command == "capability-catalog-plan":
+            self.print_capability_registry_packet("AURA Capability Catalog Plan", manager.capability_catalog_plan(target))
+            return True
+
+        if command == "capability-state-review-plan":
+            self.print_capability_registry_packet("AURA Capability State Review Plan", manager.capability_state_review_plan(target))
+            return True
+
+        if command == "permission-requirement-review-plan":
+            self.print_capability_registry_packet("AURA Permission Requirement Review Plan", manager.permission_requirement_review_plan(target))
+            return True
+
+        if command == "risk-level-review-plan":
+            self.print_capability_registry_packet("AURA Risk Level Review Plan", manager.risk_level_review_plan(target))
+            return True
+
+        if command == "control-center-capability-view-plan":
+            self.print_capability_registry_packet("AURA Control Center Capability View Plan", manager.control_center_capability_view_plan(target))
+            return True
+
+        if command == "capability-gap-review-plan":
+            self.print_capability_registry_packet("AURA Capability Gap Review Plan", manager.capability_gap_review_plan(target))
+            return True
+
+        if command == "capability-registry-migration-plan":
+            self.print_capability_registry_packet("AURA Capability Registry Migration Plan", manager.capability_registry_migration_plan(target))
+            return True
+
+        if command == "capability-registry-context":
+            self.print_capability_registry_packet("AURA Capability Registry Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3719,6 +3772,9 @@ class AuraCLI:
             return True
 
         if self.handle_output_formatter_cli_command(raw_args):
+            return True
+
+        if self.handle_capability_registry_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

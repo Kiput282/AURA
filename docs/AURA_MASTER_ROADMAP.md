@@ -770,3 +770,49 @@ Sprint 81-90 planning direction:
 Detailed docs:
 - docs/AURA_SHARED_OUTPUT_FORMATTER.md
 - docs/AURA_ROADMAP_81_90_PLAN.md
+
+
+## Sprint 82.0 — Capability Registry Consolidation
+
+Target: v0.82.0-genesis  
+Status: CAPABILITY REGISTRY ONLINE
+
+AURA can provide a central planner-only Capability Registry for current and planned capabilities.
+
+This sprint adds capability state metadata, runtime-level metadata, risk-level metadata, permission requirement metadata, Control Center capability view planning, capability gap review planning, and capability registry migration planning.
+
+Current registry summary:
+- total capabilities tracked: 18
+- online capabilities: 12
+- foundation-only capabilities: 3
+- planner-only capabilities: 6
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 4
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+The registry prepares data for future AURA Control Center, service monitor, launcher, plugin dashboard, and permission dashboard. It does not grant permissions or enable any runtime action.
+
+Safety boundary:
+- no runtime behavior change
+- no automatic capability enablement
+- no dynamic runtime discovery
+- no runtime action activation
+- no permission grant runtime
+- no UI/web/chat/service/launcher runtime
+- no file operations
+- no command/test/code execution
+- no dependency install
+- no package download
+- no internet/network action
+- no tool execution
+- no memory write
+- no desktop control
+- no git execution
+- no external action execution
+- no real tool execution
+
+Detailed docs:
+- docs/AURA_CAPABILITY_REGISTRY.md
+- docs/AURA_ROADMAP_81_90_PLAN.md

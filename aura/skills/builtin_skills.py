@@ -1243,4 +1243,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 82.0 capability registry skill.
+    registry.register(
+        AuraSkill(
+            name="capability_registry",
+            description="Provide planner-only central AURA capability registry metadata for current capabilities, capability states, runtime levels, risk levels, permission requirements, future Control Center views, capability gaps, and registry migration without runtime behavior changes, automatic capability enablement, dynamic runtime discovery, runtime action activation, permission grant runtime, UI runtime, web server runtime, chat runtime, service runtime, launcher runtime, file operations, command execution, test execution, code execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "capability_registry_status",
+                "capability_catalog_plan",
+                "capability_state_review_plan",
+                "permission_requirement_review_plan",
+                "risk_level_review_plan",
+                "control_center_capability_view_plan",
+                "capability_gap_review_plan",
+                "capability_registry_migration_plan",
+                "capability_registry_context",
+                "control_center_capability_data",
+            ],
+        )
+    )
+
     return registry

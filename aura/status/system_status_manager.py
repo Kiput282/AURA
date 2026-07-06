@@ -54,6 +54,7 @@ from aura.coder_project.coder_project_generation_planner_manager import CoderPro
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
 from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
 from aura.output_formatter.shared_output_formatter_manager import SharedOutputFormatterManager
+from aura.capability_registry.capability_registry_manager import CapabilityRegistryManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -170,6 +171,7 @@ class SystemStatusManager:
         dependency_permission_status = DependencyDownloadPermissionGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         checkpoint_80_status = ReviewStabilization7180Manager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         output_formatter_status = SharedOutputFormatterManager().status()
+        capability_registry_status = CapabilityRegistryManager().status()
 
         return {
             "project_root": str(self.project_root),
@@ -246,6 +248,7 @@ class SystemStatusManager:
             "dependency_permission_plan_types": dependency_permission_status["dependency_permission_plan_types"],
             "checkpoint_71_80_plan_types": checkpoint_80_status["checkpoint_plan_types"],
             "shared_output_formatter_plan_types": output_formatter_status["formatter_plan_types"],
+            "capability_registry_plan_types": capability_registry_status["registry_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -302,6 +305,7 @@ class SystemStatusManager:
             "dependency_download_permission_gate": dependency_permission_status["status"],
             "review_stabilization_71_80": checkpoint_80_status["status"],
             "shared_output_formatter": output_formatter_status["status"],
+            "capability_registry": capability_registry_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -1026,6 +1030,58 @@ class SystemStatusManager:
             "shared_output_formatter_git_add": output_formatter_status["git_add"],
             "shared_output_formatter_git_commit": output_formatter_status["git_commit"],
             "shared_output_formatter_git_push": output_formatter_status["git_push"],
+            "capability_registry_ready": capability_registry_status["registry_ready"],
+            "capability_registry_planner_ready": capability_registry_status["planner_ready"],
+            "capability_registry_control_center_data_ready": capability_registry_status["control_center_data_ready"],
+            "capability_registry_catalog_plan_ready": capability_registry_status["capability_catalog_plan_ready"],
+            "capability_registry_state_review_plan_ready": capability_registry_status["capability_state_review_plan_ready"],
+            "capability_registry_permission_requirement_review_plan_ready": capability_registry_status["permission_requirement_review_plan_ready"],
+            "capability_registry_risk_level_review_plan_ready": capability_registry_status["risk_level_review_plan_ready"],
+            "capability_registry_control_center_capability_view_plan_ready": capability_registry_status["control_center_capability_view_plan_ready"],
+            "capability_registry_gap_review_plan_ready": capability_registry_status["capability_gap_review_plan_ready"],
+            "capability_registry_migration_plan_ready": capability_registry_status["capability_registry_migration_plan_ready"],
+            "capability_registry_context_ready": capability_registry_status["context_ready"],
+            "capability_registry_total_capabilities": capability_registry_status["total_capabilities"],
+            "capability_registry_online_capabilities": capability_registry_status["online_capabilities"],
+            "capability_registry_foundation_only_count": capability_registry_status["foundation_only_count"],
+            "capability_registry_planner_only_count": capability_registry_status["planner_only_count"],
+            "capability_registry_permission_gated_count": capability_registry_status["permission_gated_count"],
+            "capability_registry_review_only_count": capability_registry_status["review_only_count"],
+            "capability_registry_planned_future_count": capability_registry_status["planned_future_count"],
+            "capability_registry_disabled_runtime_count": capability_registry_status["disabled_runtime_count"],
+            "capability_registry_runtime_execution_features": capability_registry_status["runtime_execution_features"],
+            "capability_registry_registry_only": capability_registry_status["registry_only"],
+            "capability_registry_metadata_only": capability_registry_status["metadata_only"],
+            "capability_registry_runtime_behavior_change": capability_registry_status["runtime_behavior_change"],
+            "capability_registry_automatic_capability_enablement": capability_registry_status["automatic_capability_enablement"],
+            "capability_registry_dynamic_runtime_discovery": capability_registry_status["dynamic_runtime_discovery"],
+            "capability_registry_runtime_action_activation": capability_registry_status["runtime_action_activation"],
+            "capability_registry_permission_grant_runtime": capability_registry_status["permission_grant_runtime"],
+            "capability_registry_ui_runtime": capability_registry_status["ui_runtime"],
+            "capability_registry_web_server_runtime": capability_registry_status["web_server_runtime"],
+            "capability_registry_chat_runtime": capability_registry_status["chat_runtime"],
+            "capability_registry_service_runtime": capability_registry_status["service_runtime"],
+            "capability_registry_launcher_runtime": capability_registry_status["launcher_runtime"],
+            "capability_registry_file_read": capability_registry_status["file_read"],
+            "capability_registry_file_write": capability_registry_status["file_write"],
+            "capability_registry_file_modify": capability_registry_status["file_modify"],
+            "capability_registry_file_delete": capability_registry_status["file_delete"],
+            "capability_registry_command_execution": capability_registry_status["command_execution"],
+            "capability_registry_test_execution": capability_registry_status["test_execution"],
+            "capability_registry_code_execution": capability_registry_status["code_execution"],
+            "capability_registry_dependency_install": capability_registry_status["dependency_install"],
+            "capability_registry_package_download": capability_registry_status["package_download"],
+            "capability_registry_internet_search": capability_registry_status["internet_search"],
+            "capability_registry_network_action": capability_registry_status["network_action"],
+            "capability_registry_tool_execution": capability_registry_status["tool_execution"],
+            "capability_registry_real_tool_execution": capability_registry_status["real_tool_execution"],
+            "capability_registry_external_action_execution": capability_registry_status["external_action_execution"],
+            "capability_registry_memory_write": capability_registry_status["memory_write"],
+            "capability_registry_desktop_control": capability_registry_status["desktop_control"],
+            "capability_registry_git_init": capability_registry_status["git_init"],
+            "capability_registry_git_add": capability_registry_status["git_add"],
+            "capability_registry_git_commit": capability_registry_status["git_commit"],
+            "capability_registry_git_push": capability_registry_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -1188,5 +1244,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, dependency download permission gate, review stabilization 71-80, shared output formatter, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, dependency download permission gate, review stabilization 71-80, shared output formatter, capability registry, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }
