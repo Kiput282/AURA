@@ -703,3 +703,13 @@ Status: VISUAL CONTEXT UNDERSTANDING ONLINE
 AURA can prepare planner-only visual context understanding plans for scene context, object/relation planning, text-in-image context, uncertainty handling, clarification, visual response context, and visual context safety. This continues the "see" part of AURA's core essence after the Vision Input Runtime Foundation.
 
 This sprint does not access camera, capture screen, capture screenshots, capture images, capture video, run webcam runtime, run vision runtime, run visual context runtime, run image analysis, run object detection, run OCR, extract image text, recognize faces, identify biometrics, recognize identity, infer emotion from face, watch continuously, watch in the background, execute visual commands, execute visual tools, perform actions, read/write files, execute commands/tools, write memory, search the internet, perform network actions, control desktop, run git operations, perform external actions, or execute real tools.
+
+
+## Sprint 78.0 — Coder Project Generation Planner
+
+Target: v0.78.0-genesis  
+Status: CODER PROJECT GENERATION PLANNER ONLINE
+
+AURA can prepare planner-only code/project generation plans for project request framing, directory/file structure blueprints, code file blueprints, dependency planning, generation review gates, validation strategy, and project generation safety.
+
+This sprint does not create projects, create directories, write files, read files, modify files, delete files, run generated code, run tests, execute commands, install dependencies, download packages, execute tools, write memory, search the internet, perform network actions, control desktop, run git init/add/commit/push, perform external actions, or execute real tools. All project generation output remains proposal-only and review-gated.

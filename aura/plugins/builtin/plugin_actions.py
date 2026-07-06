@@ -2591,4 +2591,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 78.0 coder project generation planner actions.
+    coder_project_actions = [
+        ('coder_project.status', 'read_project', 'Show AURA Coder Project Generation Planner status.'),
+        ('coder_project.request_frame_plan', 'read_project', 'Prepare project request framing without creating files or running commands.'),
+        ('coder_project.structure_plan', 'read_project', 'Prepare project directory/file structure blueprint without writing to disk.'),
+        ('coder_project.code_file_blueprint_plan', 'read_project', 'Prepare code file responsibility blueprint without code execution or file write.'),
+        ('coder_project.dependency_plan', 'read_project', 'Prepare dependency planning without package download or install.'),
+        ('coder_project.generation_review_gate_plan', 'read_project', 'Prepare review gates before future project generation.'),
+        ('coder_project.validation_strategy_plan', 'read_project', 'Prepare validation strategy without running tests, builds, commands, or tools.'),
+        ('coder_project.safety_plan', 'read_project', 'Prepare project generation safety boundaries without files, commands, dependencies, tools, network, desktop, git, or real execution.'),
+        ('coder_project.context', 'read_project', 'Show Coder Project Generation Planner context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in coder_project_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="coder_project",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="coder_project_generation_planner",
+            )
+        )
+
     return registry

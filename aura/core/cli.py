@@ -61,6 +61,7 @@ from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRu
 from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
 from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
 from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
+from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3294,6 +3295,109 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 78.0 coder project compatibility CLI helpers.
+    def print_coder_project_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} field(s)")
+
+        print()
+        print("Coder Project Safety Boundary")
+        print("-----------------------------")
+        for key in [
+            "foundation_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "generation_ready",
+            "execution_ready",
+            "project_creation_runtime",
+            "project_files_written",
+            "directory_creation",
+            "file_read",
+            "file_write",
+            "file_delete",
+            "file_modify",
+            "code_generation_runtime",
+            "code_execution",
+            "test_execution",
+            "command_execution",
+            "dependency_install",
+            "package_download",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "desktop_control",
+            "git_init",
+            "git_add",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {packet[key]}")
+
+    def handle_coder_project_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general coder project generation"
+        manager = CoderProjectGenerationPlannerManager(project_root=self.project_root)
+
+        if command == "coder-project-status":
+            self.print_coder_project_packet("AURA Coder Project Generation Planner Status", manager.status())
+            return True
+
+        if command == "project-request-frame-plan":
+            self.print_coder_project_packet("AURA Project Request Frame Plan", manager.project_request_frame_plan(target))
+            return True
+
+        if command == "project-structure-plan":
+            self.print_coder_project_packet("AURA Project Structure Plan", manager.project_structure_plan(target))
+            return True
+
+        if command == "code-file-blueprint-plan":
+            self.print_coder_project_packet("AURA Code File Blueprint Plan", manager.code_file_blueprint_plan(target))
+            return True
+
+        if command == "dependency-plan":
+            self.print_coder_project_packet("AURA Dependency Plan", manager.dependency_plan(target))
+            return True
+
+        if command == "generation-review-gate-plan":
+            self.print_coder_project_packet("AURA Generation Review Gate Plan", manager.generation_review_gate_plan(target))
+            return True
+
+        if command == "validation-strategy-plan":
+            self.print_coder_project_packet("AURA Validation Strategy Plan", manager.validation_strategy_plan(target))
+            return True
+
+        if command == "project-generation-safety-plan":
+            self.print_coder_project_packet("AURA Project Generation Safety Plan", manager.project_generation_safety_plan(target))
+            return True
+
+        if command == "coder-project-context":
+            self.print_coder_project_packet("AURA Coder Project Generation Planner Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3335,6 +3439,9 @@ class AuraCLI:
             return True
 
         if self.handle_visual_context_cli_command(raw_args):
+            return True
+
+        if self.handle_coder_project_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

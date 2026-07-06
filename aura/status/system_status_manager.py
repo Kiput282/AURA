@@ -50,6 +50,7 @@ from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRu
 from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
 from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
 from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
+from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -162,6 +163,7 @@ class SystemStatusManager:
         voice_intent_status = VoiceIntentUnderstandingManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         vision_input_status = VisionInputRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         visual_context_status = VisualContextUnderstandingManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        coder_project_status = CoderProjectGenerationPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -234,6 +236,7 @@ class SystemStatusManager:
             "voice_intent_plan_types": voice_intent_status["voice_intent_plan_types"],
             "vision_input_plan_types": vision_input_status["vision_input_plan_types"],
             "visual_context_plan_types": visual_context_status["visual_context_plan_types"],
+            "coder_project_plan_types": coder_project_status["coder_project_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -286,6 +289,7 @@ class SystemStatusManager:
             "voice_intent_understanding": voice_intent_status["status"],
             "vision_input_runtime_foundation": vision_input_status["status"],
             "visual_context_understanding": visual_context_status["status"],
+            "coder_project_generation_planner": coder_project_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -854,6 +858,39 @@ class SystemStatusManager:
             "visual_context_desktop_control": visual_context_status["desktop_control"],
             "visual_context_git_commit": visual_context_status["git_commit"],
             "visual_context_git_push": visual_context_status["git_push"],
+            "coder_project_generation_planner_ready": coder_project_status["planner_ready"],
+            "project_request_frame_plan_ready": coder_project_status["project_request_frame_plan_ready"],
+            "project_structure_plan_ready": coder_project_status["project_structure_plan_ready"],
+            "code_file_blueprint_plan_ready": coder_project_status["code_file_blueprint_plan_ready"],
+            "dependency_plan_ready": coder_project_status["dependency_plan_ready"],
+            "generation_review_gate_plan_ready": coder_project_status["generation_review_gate_plan_ready"],
+            "validation_strategy_plan_ready": coder_project_status["validation_strategy_plan_ready"],
+            "project_generation_safety_plan_ready": coder_project_status["project_generation_safety_plan_ready"],
+            "coder_project_context_ready": coder_project_status["context_ready"],
+            "coder_project_project_creation_runtime": coder_project_status["project_creation_runtime"],
+            "coder_project_project_files_written": coder_project_status["project_files_written"],
+            "coder_project_directory_creation": coder_project_status["directory_creation"],
+            "coder_project_file_read": coder_project_status["file_read"],
+            "coder_project_file_write": coder_project_status["file_write"],
+            "coder_project_file_delete": coder_project_status["file_delete"],
+            "coder_project_file_modify": coder_project_status["file_modify"],
+            "coder_project_code_generation_runtime": coder_project_status["code_generation_runtime"],
+            "coder_project_code_execution": coder_project_status["code_execution"],
+            "coder_project_test_execution": coder_project_status["test_execution"],
+            "coder_project_command_execution": coder_project_status["command_execution"],
+            "coder_project_dependency_install": coder_project_status["dependency_install"],
+            "coder_project_package_download": coder_project_status["package_download"],
+            "coder_project_tool_execution": coder_project_status["tool_execution"],
+            "coder_project_real_tool_execution": coder_project_status["real_tool_execution"],
+            "coder_project_external_action_execution": coder_project_status["external_action_execution"],
+            "coder_project_memory_write": coder_project_status["memory_write"],
+            "coder_project_internet_search": coder_project_status["internet_search"],
+            "coder_project_network_action": coder_project_status["network_action"],
+            "coder_project_desktop_control": coder_project_status["desktop_control"],
+            "coder_project_git_init": coder_project_status["git_init"],
+            "coder_project_git_add": coder_project_status["git_add"],
+            "coder_project_git_commit": coder_project_status["git_commit"],
+            "coder_project_git_push": coder_project_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -1016,5 +1053,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

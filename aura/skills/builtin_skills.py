@@ -1151,4 +1151,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 78.0 coder project generation planner skill.
+    registry.register(
+        AuraSkill(
+            name="coder_project_generation_planner",
+            description="Prepare planner-only code/project generation for project request framing, project structure blueprints, code file blueprints, dependency planning, generation review gates, validation strategy, and project generation safety without creating projects, directories, or files; without reading, writing, modifying, or deleting files; without code execution, test execution, command execution, dependency install, package download, tool execution, memory write, internet/network action, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "coder_project_status",
+                "project_request_frame_plan",
+                "project_structure_plan",
+                "code_file_blueprint_plan",
+                "dependency_plan",
+                "generation_review_gate_plan",
+                "validation_strategy_plan",
+                "project_generation_safety_plan",
+                "coder_project_context",
+                "planner_only_project_generation",
+            ],
+        )
+    )
+
     return registry

@@ -737,3 +737,41 @@ Safety boundary:
 - no git execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 78.0 — Coder Project Generation Planner
+
+AURA includes a Coder Project Generation Planner for future safe code/project generation planning.
+
+Status: CODER PROJECT GENERATION PLANNER ONLINE
+
+Purpose:
+- plan project request framing
+- plan project directory/file structure blueprints
+- plan code file responsibility blueprints
+- plan dependency requirements without installing or downloading packages
+- plan generation review gates before any file write or project creation
+- plan validation strategy without running commands, tests, builds, or tools
+- keep project generation separate from execution
+
+Safety boundary:
+- no project creation runtime
+- no project files written
+- no directory creation
+- no file read
+- no file write
+- no file delete
+- no file modify
+- no code generation runtime
+- no code execution
+- no test execution
+- no command execution
+- no dependency install
+- no package download
+- no tool execution
+- no memory write
+- no internet/network action
+- no desktop control
+- no git init/add/commit/push
+- no external action execution
+- no real tool execution

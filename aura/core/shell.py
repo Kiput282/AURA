@@ -63,6 +63,7 @@ from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRu
 from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
 from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
 from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
+from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 
 
 class AuraShell:
@@ -328,6 +329,15 @@ class AuraShell:
         print("  visual-response-context-plan <target> Prepare visual response context plan")
         print("  visual-context-safety-plan <target> Prepare visual context safety plan")
         print("  visual-context Show Visual Context Understanding context")
+        print("  coder-project-status Show Coder Project Generation Planner status")
+        print("  project-request-frame-plan <target> Prepare project request frame plan")
+        print("  project-structure-plan <target> Prepare project structure plan")
+        print("  code-file-blueprint-plan <target> Prepare code file blueprint plan")
+        print("  dependency-plan <target> Prepare dependency plan")
+        print("  generation-review-gate-plan <target> Prepare generation review gate plan")
+        print("  validation-strategy-plan <target> Prepare validation strategy plan")
+        print("  project-generation-safety-plan <target> Prepare project generation safety plan")
+        print("  coder-project-context Show Coder Project Generation Planner context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -3440,6 +3450,110 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 78.0 coder project compatibility shell helpers.
+    def print_coder_project_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} field(s)")
+
+        print()
+        print("Coder Project Safety Boundary")
+        print("-----------------------------")
+        for key in [
+            "foundation_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "generation_ready",
+            "execution_ready",
+            "project_creation_runtime",
+            "project_files_written",
+            "directory_creation",
+            "file_read",
+            "file_write",
+            "file_delete",
+            "file_modify",
+            "code_generation_runtime",
+            "code_execution",
+            "test_execution",
+            "command_execution",
+            "dependency_install",
+            "package_download",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "desktop_control",
+            "git_init",
+            "git_add",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {packet[key]}")
+
+    def handle_coder_project_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general coder project generation"
+        manager = CoderProjectGenerationPlannerManager(project_root=self.project_root)
+
+        if command == "coder-project-status":
+            self.print_coder_project_packet("AURA Coder Project Generation Planner Status", manager.status())
+            return True
+
+        if command == "project-request-frame-plan":
+            self.print_coder_project_packet("AURA Project Request Frame Plan", manager.project_request_frame_plan(target))
+            return True
+
+        if command == "project-structure-plan":
+            self.print_coder_project_packet("AURA Project Structure Plan", manager.project_structure_plan(target))
+            return True
+
+        if command == "code-file-blueprint-plan":
+            self.print_coder_project_packet("AURA Code File Blueprint Plan", manager.code_file_blueprint_plan(target))
+            return True
+
+        if command == "dependency-plan":
+            self.print_coder_project_packet("AURA Dependency Plan", manager.dependency_plan(target))
+            return True
+
+        if command == "generation-review-gate-plan":
+            self.print_coder_project_packet("AURA Generation Review Gate Plan", manager.generation_review_gate_plan(target))
+            return True
+
+        if command == "validation-strategy-plan":
+            self.print_coder_project_packet("AURA Validation Strategy Plan", manager.validation_strategy_plan(target))
+            return True
+
+        if command == "project-generation-safety-plan":
+            self.print_coder_project_packet("AURA Project Generation Safety Plan", manager.project_generation_safety_plan(target))
+            return True
+
+        if command == "coder-project-context":
+            self.print_coder_project_packet("AURA Coder Project Generation Planner Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -3484,6 +3598,9 @@ class AuraShell:
             return
 
         if self.handle_visual_context_shell_command(normalized):
+            return
+
+        if self.handle_coder_project_shell_command(normalized):
             return
 
         if normalized == "help":
