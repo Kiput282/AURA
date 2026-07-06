@@ -2466,4 +2466,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 73.0 knowledge uncertainty gate actions.
+    knowledge_uncertainty_actions = [
+        ('knowledge_uncertainty.status', 'read_project', 'Show AURA Knowledge Uncertainty Gate status.'),
+        ('knowledge_uncertainty.knowledge_gap_plan', 'read_project', 'Prepare a metadata-only knowledge gap plan.'),
+        ('knowledge_uncertainty.uncertainty_review_plan', 'read_project', 'Prepare an uncertainty review plan that avoids pretending to know.'),
+        ('knowledge_uncertainty.internet_search_gate_plan', 'read_project', 'Prepare an internet search permission gate plan without searching.'),
+        ('knowledge_uncertainty.source_requirement_plan', 'read_project', 'Prepare a source requirement plan without fetching sources.'),
+        ('knowledge_uncertainty.download_requirement_plan', 'read_project', 'Prepare a download requirement notice plan without downloading.'),
+        ('knowledge_uncertainty.answer_confidence_plan', 'read_project', 'Prepare an answer confidence plan.'),
+        ('knowledge_uncertainty.safety_plan', 'read_project', 'Prepare a knowledge safety plan without internet, downloads, files, commands, memory, network, or real tool execution.'),
+        ('knowledge_uncertainty.context', 'read_project', 'Show Knowledge Uncertainty Gate context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in knowledge_uncertainty_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="knowledge_uncertainty",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="knowledge_uncertainty_gate",
+            )
+        )
+
     return registry

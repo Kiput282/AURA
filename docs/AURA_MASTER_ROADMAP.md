@@ -653,3 +653,13 @@ Status: REASONING CONTEXT MANAGER ONLINE
 AURA can prepare safe visible reasoning context, fact/assumption separation, unknowns review, evidence boundary review, decision frames, response strategy plans, and reasoning safety boundaries as metadata only. This continues the v0.71-v0.80 direction focused on AURA's core essence: think, hear, see, grow together, and stay intelligent without pretending to know.
 
 This sprint does not expose hidden chain-of-thought, disclose private reasoning, run autonomous/background reasoning loops, self-trigger actions, execute tools, write memory, search the internet, read/write files, execute commands, control desktop, access camera/microphone/speaker, render avatar, perform network actions, perform git operations, execute external actions, or execute real tools.
+
+
+## Sprint 73.0 — Knowledge Uncertainty & Internet Search Gate
+
+Target: v0.73.0-genesis  
+Status: KNOWLEDGE UNCERTAINTY GATE ONLINE
+
+AURA can prepare metadata-only plans for knowledge gaps, uncertainty review, internet search permission gates, source requirements, download requirement notices, answer confidence, and knowledge safety. This strengthens the principle: AURA is intelligent, but does not pretend to know.
+
+This sprint does not perform real internet search, web requests, source fetching, browser opening, network actions, downloads, dependency installs, package installs, tool execution, memory writes, file operations, command execution, external actions, fabricated answers, fabricated sources, or real tool execution.

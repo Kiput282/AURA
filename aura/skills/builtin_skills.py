@@ -1036,4 +1036,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 73.0 knowledge uncertainty gate skill.
+    registry.register(
+        AuraSkill(
+            name="knowledge_uncertainty_gate",
+            description="Plan safe metadata-only knowledge uncertainty handling, knowledge gaps, internet search permission gates, source requirements, download requirement notices, answer confidence, and knowledge safety without real internet search, downloads, network actions, file operations, command execution, memory write, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "knowledge_uncertainty_status",
+                "knowledge_gap_plan",
+                "uncertainty_review_plan",
+                "internet_search_gate_plan",
+                "source_requirement_plan",
+                "download_requirement_plan",
+                "answer_confidence_plan",
+                "knowledge_safety_plan",
+                "knowledge_uncertainty_context",
+                "metadata_only_knowledge_uncertainty_gate",
+            ],
+        )
+    )
+
     return registry

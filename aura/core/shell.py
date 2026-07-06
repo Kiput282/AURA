@@ -58,6 +58,7 @@ from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkfl
 from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
 from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
 from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
+from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
 
 
 class AuraShell:
@@ -295,6 +296,15 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  knowledge-uncertainty-status Show Knowledge Uncertainty Gate status")
+        print("  knowledge-gap-plan <target> Prepare knowledge gap plan")
+        print("  knowledge-uncertainty-review-plan <target> Prepare uncertainty review plan")
+        print("  internet-search-gate-plan <target> Prepare internet search permission gate plan")
+        print("  source-requirement-plan <target> Prepare source requirement plan")
+        print("  download-requirement-plan <target> Prepare download requirement notice plan")
+        print("  answer-confidence-plan <target> Prepare answer confidence plan")
+        print("  knowledge-safety-plan <target> Prepare knowledge safety plan")
+        print("  knowledge-uncertainty-context Show Knowledge Uncertainty Gate context")
         print("  reasoning-context-status Show Reasoning Context Manager status")
         print("  reasoning-context-plan <target> Prepare visible reasoning context plan")
         print("  fact-assumption-plan <target> Prepare fact/assumption separation plan")
@@ -2867,6 +2877,104 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 73.0 knowledge uncertainty compatibility shell helpers.
+    def print_knowledge_uncertainty_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} field(s)")
+
+        print()
+        print("Knowledge Uncertainty Safety Boundary")
+        print("-------------------------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "internet_search",
+            "web_request",
+            "source_fetch",
+            "browser_opening",
+            "network_action",
+            "download_execution",
+            "file_download",
+            "dependency_install",
+            "package_install",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "memory_write",
+            "background_monitoring",
+            "autonomous_search",
+            "fabricated_answer",
+            "fabricated_source",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {packet[key]}")
+
+    def handle_knowledge_uncertainty_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general knowledge uncertainty gate"
+        manager = KnowledgeUncertaintyGateManager(project_root=self.project_root)
+
+        if command == "knowledge-uncertainty-status":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Uncertainty Gate Status", manager.status())
+            return True
+
+        if command == "knowledge-gap-plan":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Gap Plan", manager.knowledge_gap_plan(target))
+            return True
+
+        if command == "knowledge-uncertainty-review-plan":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Uncertainty Review Plan", manager.uncertainty_review_plan(target))
+            return True
+
+        if command == "internet-search-gate-plan":
+            self.print_knowledge_uncertainty_packet("AURA Internet Search Gate Plan", manager.internet_search_gate_plan(target))
+            return True
+
+        if command == "source-requirement-plan":
+            self.print_knowledge_uncertainty_packet("AURA Source Requirement Plan", manager.source_requirement_plan(target))
+            return True
+
+        if command == "download-requirement-plan":
+            self.print_knowledge_uncertainty_packet("AURA Download Requirement Plan", manager.download_requirement_plan(target))
+            return True
+
+        if command == "answer-confidence-plan":
+            self.print_knowledge_uncertainty_packet("AURA Answer Confidence Plan", manager.answer_confidence_plan(target))
+            return True
+
+        if command == "knowledge-safety-plan":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Safety Plan", manager.knowledge_safety_plan(target))
+            return True
+
+        if command == "knowledge-uncertainty-context":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Uncertainty Gate Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -2896,6 +3004,9 @@ class AuraShell:
             return
 
         if self.handle_reasoning_context_shell_command(normalized):
+            return
+
+        if self.handle_knowledge_uncertainty_shell_command(normalized):
             return
 
         if normalized == "help":

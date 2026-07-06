@@ -45,6 +45,7 @@ from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkfl
 from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
 from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
 from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
+from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -152,6 +153,7 @@ class SystemStatusManager:
         partner_runtime_status = PartnerRuntimePlanningManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         thought_loop_status = ThoughtLoopPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         reasoning_context_status = ReasoningContextManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        knowledge_uncertainty_status = KnowledgeUncertaintyGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -219,6 +221,7 @@ class SystemStatusManager:
             "partner_runtime_plan_types": partner_runtime_status["partner_plan_types"],
             "thought_loop_plan_types": thought_loop_status["thought_plan_types"],
             "reasoning_context_plan_types": reasoning_context_status["reasoning_plan_types"],
+            "knowledge_uncertainty_plan_types": knowledge_uncertainty_status["knowledge_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -266,6 +269,7 @@ class SystemStatusManager:
             "partner_runtime_planning_layer": partner_runtime_status["status"],
             "thought_loop_planner": thought_loop_status["status"],
             "reasoning_context_manager": reasoning_context_status["status"],
+            "knowledge_uncertainty_gate": knowledge_uncertainty_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -649,6 +653,41 @@ class SystemStatusManager:
             "reasoning_context_avatar_rendering": reasoning_context_status["avatar_rendering"],
             "reasoning_context_git_commit": reasoning_context_status["git_commit"],
             "reasoning_context_git_push": reasoning_context_status["git_push"],
+            "knowledge_uncertainty_gate_ready": knowledge_uncertainty_status["planner_ready"],
+            "knowledge_gap_plan_ready": knowledge_uncertainty_status["knowledge_gap_plan_ready"],
+            "knowledge_uncertainty_review_plan_ready": knowledge_uncertainty_status["uncertainty_review_plan_ready"],
+            "internet_search_gate_plan_ready": knowledge_uncertainty_status["internet_search_gate_plan_ready"],
+            "source_requirement_plan_ready": knowledge_uncertainty_status["source_requirement_plan_ready"],
+            "download_requirement_plan_ready": knowledge_uncertainty_status["download_requirement_plan_ready"],
+            "answer_confidence_plan_ready": knowledge_uncertainty_status["answer_confidence_plan_ready"],
+            "knowledge_safety_plan_ready": knowledge_uncertainty_status["knowledge_safety_plan_ready"],
+            "knowledge_uncertainty_context_ready": knowledge_uncertainty_status["context_ready"],
+            "knowledge_uncertainty_reasoning_context_reference_ready": knowledge_uncertainty_status["reasoning_context_reference_ready"],
+            "knowledge_uncertainty_thought_loop_reference_ready": knowledge_uncertainty_status["thought_loop_reference_ready"],
+            "knowledge_uncertainty_partner_runtime_reference_ready": knowledge_uncertainty_status["partner_runtime_reference_ready"],
+            "knowledge_uncertainty_workspace_memory_reference_ready": knowledge_uncertainty_status["workspace_memory_reference_ready"],
+            "knowledge_uncertainty_safe_file_operation_reference_ready": knowledge_uncertainty_status["safe_file_operation_reference_ready"],
+            "knowledge_uncertainty_codebase_validation_reference_ready": knowledge_uncertainty_status["codebase_validation_reference_ready"],
+            "knowledge_uncertainty_internet_search": knowledge_uncertainty_status["internet_search"],
+            "knowledge_uncertainty_web_request": knowledge_uncertainty_status["web_request"],
+            "knowledge_uncertainty_source_fetch": knowledge_uncertainty_status["source_fetch"],
+            "knowledge_uncertainty_browser_opening": knowledge_uncertainty_status["browser_opening"],
+            "knowledge_uncertainty_network_action": knowledge_uncertainty_status["network_action"],
+            "knowledge_uncertainty_download_execution": knowledge_uncertainty_status["download_execution"],
+            "knowledge_uncertainty_file_download": knowledge_uncertainty_status["file_download"],
+            "knowledge_uncertainty_dependency_install": knowledge_uncertainty_status["dependency_install"],
+            "knowledge_uncertainty_package_install": knowledge_uncertainty_status["package_install"],
+            "knowledge_uncertainty_tool_execution": knowledge_uncertainty_status["tool_execution"],
+            "knowledge_uncertainty_real_tool_execution": knowledge_uncertainty_status["real_tool_execution"],
+            "knowledge_uncertainty_external_action_execution": knowledge_uncertainty_status["external_action_execution"],
+            "knowledge_uncertainty_file_read": knowledge_uncertainty_status["file_read"],
+            "knowledge_uncertainty_file_write": knowledge_uncertainty_status["file_write"],
+            "knowledge_uncertainty_command_execution": knowledge_uncertainty_status["command_execution"],
+            "knowledge_uncertainty_memory_write": knowledge_uncertainty_status["memory_write"],
+            "knowledge_uncertainty_background_monitoring": knowledge_uncertainty_status["background_monitoring"],
+            "knowledge_uncertainty_autonomous_search": knowledge_uncertainty_status["autonomous_search"],
+            "knowledge_uncertainty_fabricated_answer": knowledge_uncertainty_status["fabricated_answer"],
+            "knowledge_uncertainty_fabricated_source": knowledge_uncertainty_status["fabricated_source"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -811,5 +850,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

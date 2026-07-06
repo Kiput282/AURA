@@ -541,3 +541,36 @@ Safety boundary:
 - no git execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 73.0 — Knowledge Uncertainty & Internet Search Gate
+
+AURA includes a Knowledge Uncertainty Gate foundation for honest knowledge behavior and future internet/search/download permission gates.
+
+Status: KNOWLEDGE UNCERTAINTY GATE ONLINE
+
+Purpose:
+- help AURA avoid pretending to know
+- separate known facts, assumptions, and unknowns
+- plan when AURA should ask Kiput first
+- plan when internet search permission is needed
+- plan source requirements before future search
+- plan download/dependency notices before future project downloads
+- plan answer confidence before responding
+
+Safety boundary:
+- no real internet search
+- no web request
+- no source fetch
+- no browser opening
+- no network action
+- no download execution
+- no file download
+- no dependency/package install
+- no tool execution
+- no memory write
+- no file reading or writing
+- no command execution
+- no fabricated answers or fabricated sources
+- no external action execution
+- no real tool execution

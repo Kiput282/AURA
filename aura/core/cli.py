@@ -56,6 +56,7 @@ from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkfl
 from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
 from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
 from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
+from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -2771,6 +2772,103 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 73.0 knowledge uncertainty compatibility CLI helpers.
+    def print_knowledge_uncertainty_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} field(s)")
+
+        print()
+        print("Knowledge Uncertainty Safety Boundary")
+        print("-------------------------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "internet_search",
+            "web_request",
+            "source_fetch",
+            "browser_opening",
+            "network_action",
+            "download_execution",
+            "file_download",
+            "dependency_install",
+            "package_install",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "memory_write",
+            "background_monitoring",
+            "autonomous_search",
+            "fabricated_answer",
+            "fabricated_source",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {packet[key]}")
+
+    def handle_knowledge_uncertainty_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general knowledge uncertainty gate"
+        manager = KnowledgeUncertaintyGateManager(project_root=self.project_root)
+
+        if command == "knowledge-uncertainty-status":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Uncertainty Gate Status", manager.status())
+            return True
+
+        if command == "knowledge-gap-plan":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Gap Plan", manager.knowledge_gap_plan(target))
+            return True
+
+        if command == "knowledge-uncertainty-review-plan":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Uncertainty Review Plan", manager.uncertainty_review_plan(target))
+            return True
+
+        if command == "internet-search-gate-plan":
+            self.print_knowledge_uncertainty_packet("AURA Internet Search Gate Plan", manager.internet_search_gate_plan(target))
+            return True
+
+        if command == "source-requirement-plan":
+            self.print_knowledge_uncertainty_packet("AURA Source Requirement Plan", manager.source_requirement_plan(target))
+            return True
+
+        if command == "download-requirement-plan":
+            self.print_knowledge_uncertainty_packet("AURA Download Requirement Plan", manager.download_requirement_plan(target))
+            return True
+
+        if command == "answer-confidence-plan":
+            self.print_knowledge_uncertainty_packet("AURA Answer Confidence Plan", manager.answer_confidence_plan(target))
+            return True
+
+        if command == "knowledge-safety-plan":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Safety Plan", manager.knowledge_safety_plan(target))
+            return True
+
+        if command == "knowledge-uncertainty-context":
+            self.print_knowledge_uncertainty_packet("AURA Knowledge Uncertainty Gate Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -2797,6 +2895,9 @@ class AuraCLI:
             return True
 
         if self.handle_reasoning_context_cli_command(raw_args):
+            return True
+
+        if self.handle_knowledge_uncertainty_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
