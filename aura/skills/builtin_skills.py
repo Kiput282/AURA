@@ -886,4 +886,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 66.0 voice conversation planner skill.
+    registry.register(
+        AuraSkill(
+            name="voice_conversation_planner",
+            description="Plan safe metadata-only voice conversation flows, intent, response style, turn handling, and safety boundaries without microphone access, TTS output, speaker output, command execution, app opening, or runtime voice action.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "voice_conversation_status",
+                "voice_intent_plan",
+                "voice_response_plan",
+                "conversation_turn_plan",
+                "voice_safety_plan",
+                "voice_conversation_context",
+                "metadata_only_voice_conversation_planning",
+            ],
+        )
+    )
+
     return registry

@@ -363,3 +363,23 @@ Safety boundary:
 - no git commit or push
 - validation gates are proposal-only until explicit confirmation and manual execution
 
+
+
+## Sprint 66.0 — Voice Conversation Planner
+
+AURA includes a Voice Conversation Planner foundation for metadata-only voice conversation planning.
+
+Status: VOICE CONVERSATION PLANNER ONLINE
+
+Safety boundary:
+- no microphone access
+- no speaker output
+- no TTS runtime output
+- no audio recording
+- no wake word runtime
+- no voice command execution
+- no app opening
+- no file writing
+- no command execution
+- no external action execution
+- no real tool execution

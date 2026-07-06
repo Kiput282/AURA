@@ -591,3 +591,11 @@ This product vision includes serious/work mode, creative mode, relaxed mode, Ble
 - v0.56 — Streaming Safety Foundation
 
 These milestones may be adjusted during the v0.50 review.
+
+
+## Sprint 66.0 — Voice Conversation Planner
+
+Target: v0.66.0-genesis  
+Status: VOICE CONVERSATION PLANNER ONLINE
+
+AURA can plan voice conversation intent, response style, turn flow, and safety boundaries as metadata only. This sprint does not enable real microphone access, TTS output, speaker output, wake word runtime, command execution, app opening, file writing, or external action execution.

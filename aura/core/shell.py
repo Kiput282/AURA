@@ -51,6 +51,7 @@ from aura.plugins.plugin_manager import PluginManager
 from aura.codebase_change.codebase_change_planner_manager import CodebaseChangePlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
+from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
 
 
 class AuraShell:
@@ -288,6 +289,12 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  voice-conversation-status Show Voice Conversation Planner status")
+        print("  voice-intent-plan <target> Prepare metadata-only voice intent plan")
+        print("  voice-response-plan <target> Prepare metadata-only voice response plan")
+        print("  voice-turn-plan <target> Prepare metadata-only conversation turn plan")
+        print("  voice-safety-plan <target> Prepare voice safety plan")
+        print("  voice-conversation-context Show Voice Conversation Planner context")
         print("  codebase-change-status Show Codebase Change Planner status")
         print("  codebase-change-plan <target> Prepare metadata-only codebase change plan")
         print("  codebase-impact-review <target> Prepare metadata-only codebase impact review")
@@ -2184,6 +2191,84 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 66.0 voice conversation compatibility shell helpers.
+    def print_voice_conversation_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<42}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<42}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<42}: {len(value)} field(s)")
+
+        print()
+        print("Voice Safety Boundary")
+        print("---------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "microphone_access",
+            "speaker_output",
+            "tts_runtime_output",
+            "audio_recording",
+            "wake_word_runtime",
+            "voice_command_execution",
+            "desktop_action_execution",
+            "app_opened",
+            "file_write",
+            "command_execution",
+            "external_action_execution",
+            "real_tool_execution",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<42}: {packet[key]}")
+
+    def handle_voice_conversation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general voice conversation"
+        manager = VoiceConversationPlannerManager(project_root=self.project_root)
+
+        if command == "voice-conversation-status":
+            self.print_voice_conversation_packet("AURA Voice Conversation Planner Status", manager.status())
+            return True
+
+        if command == "voice-intent-plan":
+            self.print_voice_conversation_packet("AURA Voice Intent Plan", manager.voice_intent_plan(target))
+            return True
+
+        if command == "voice-response-plan":
+            self.print_voice_conversation_packet("AURA Voice Response Plan", manager.voice_response_plan(target))
+            return True
+
+        if command == "voice-turn-plan":
+            self.print_voice_conversation_packet("AURA Voice Conversation Turn Plan", manager.conversation_turn_plan(target))
+            return True
+
+        if command == "voice-safety-plan":
+            self.print_voice_conversation_packet("AURA Voice Safety Plan", manager.voice_safety_plan(target))
+            return True
+
+        if command == "voice-conversation-context":
+            self.print_voice_conversation_packet("AURA Voice Conversation Planner Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -2192,6 +2277,9 @@ class AuraShell:
             return
 
         if self.handle_codebase_compat_shell_command(normalized):
+            return
+
+        if self.handle_voice_conversation_shell_command(normalized):
             return
 
         if normalized == "help":

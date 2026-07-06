@@ -2302,4 +2302,26 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 66.0 voice conversation planner actions.
+    voice_conversation_actions = [
+        ('voice_conversation.status', 'read_project', 'Show AURA Voice Conversation Planner status.'),
+        ('voice_conversation.intent_plan', 'read_project', 'Prepare a metadata-only voice intent plan without microphone access or command execution.'),
+        ('voice_conversation.response_plan', 'read_project', 'Prepare a metadata-only voice response plan without TTS or speaker output.'),
+        ('voice_conversation.turn_plan', 'read_project', 'Prepare a metadata-only conversation turn plan without runtime voice action.'),
+        ('voice_conversation.safety_plan', 'read_project', 'Prepare a voice safety plan without microphone, speaker, app, file, command, or external action execution.'),
+        ('voice_conversation.context', 'read_project', 'Show Voice Conversation Planner context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in voice_conversation_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="voice_conversation",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="voice_conversation_planner",
+            )
+        )
+
     return registry
