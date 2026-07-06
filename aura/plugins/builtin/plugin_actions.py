@@ -2616,4 +2616,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 79.0 dependency download permission gate actions.
+    dependency_permission_actions = [
+        ('dependency_permission.status', 'read_project', 'Show AURA Dependency Download Permission Gate status.'),
+        ('dependency_permission.request_review_plan', 'read_project', 'Prepare dependency request review without installing, downloading, or running commands.'),
+        ('dependency_permission.package_source_review_plan', 'read_project', 'Prepare package/source trust review without internet or network action.'),
+        ('dependency_permission.download_permission_plan', 'read_project', 'Prepare download permission planning without downloading packages, models, assets, installers, or binaries.'),
+        ('dependency_permission.install_command_review_plan', 'read_project', 'Prepare install command review without running pip, npm, apt, uv, poetry, shell, or commands.'),
+        ('dependency_permission.risk_plan', 'read_project', 'Prepare dependency risk planning for license, supply chain, malware, and package risk.'),
+        ('dependency_permission.offline_alternative_plan', 'read_project', 'Prepare offline or standard-library alternative planning before dependency use.'),
+        ('dependency_permission.safety_plan', 'read_project', 'Prepare dependency/download safety boundaries without install, download, network, files, commands, tools, git, or real execution.'),
+        ('dependency_permission.context', 'read_project', 'Show Dependency Download Permission Gate context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in dependency_permission_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="dependency_permission",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="dependency_download_permission_gate",
+            )
+        )
+
     return registry

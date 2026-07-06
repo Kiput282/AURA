@@ -51,6 +51,7 @@ from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnde
 from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
 from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
 from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
+from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -164,6 +165,7 @@ class SystemStatusManager:
         vision_input_status = VisionInputRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         visual_context_status = VisualContextUnderstandingManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         coder_project_status = CoderProjectGenerationPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        dependency_permission_status = DependencyDownloadPermissionGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -237,6 +239,7 @@ class SystemStatusManager:
             "vision_input_plan_types": vision_input_status["vision_input_plan_types"],
             "visual_context_plan_types": visual_context_status["visual_context_plan_types"],
             "coder_project_plan_types": coder_project_status["coder_project_plan_types"],
+            "dependency_permission_plan_types": dependency_permission_status["dependency_permission_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -290,6 +293,7 @@ class SystemStatusManager:
             "vision_input_runtime_foundation": vision_input_status["status"],
             "visual_context_understanding": visual_context_status["status"],
             "coder_project_generation_planner": coder_project_status["status"],
+            "dependency_download_permission_gate": dependency_permission_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -891,6 +895,48 @@ class SystemStatusManager:
             "coder_project_git_add": coder_project_status["git_add"],
             "coder_project_git_commit": coder_project_status["git_commit"],
             "coder_project_git_push": coder_project_status["git_push"],
+            "dependency_download_permission_gate_ready": dependency_permission_status["planner_ready"],
+            "dependency_request_review_plan_ready": dependency_permission_status["dependency_request_review_plan_ready"],
+            "package_source_review_plan_ready": dependency_permission_status["package_source_review_plan_ready"],
+            "download_permission_plan_ready": dependency_permission_status["download_permission_plan_ready"],
+            "install_command_review_plan_ready": dependency_permission_status["install_command_review_plan_ready"],
+            "dependency_risk_plan_ready": dependency_permission_status["dependency_risk_plan_ready"],
+            "offline_alternative_plan_ready": dependency_permission_status["offline_alternative_plan_ready"],
+            "dependency_permission_safety_plan_ready": dependency_permission_status["dependency_permission_safety_plan_ready"],
+            "dependency_permission_context_ready": dependency_permission_status["context_ready"],
+            "dependency_permission_dependency_install": dependency_permission_status["dependency_install"],
+            "dependency_permission_package_download": dependency_permission_status["package_download"],
+            "dependency_permission_model_download": dependency_permission_status["model_download"],
+            "dependency_permission_asset_download": dependency_permission_status["asset_download"],
+            "dependency_permission_installer_download": dependency_permission_status["installer_download"],
+            "dependency_permission_binary_download": dependency_permission_status["binary_download"],
+            "dependency_permission_network_action": dependency_permission_status["network_action"],
+            "dependency_permission_internet_search": dependency_permission_status["internet_search"],
+            "dependency_permission_package_manager_runtime": dependency_permission_status["package_manager_runtime"],
+            "dependency_permission_dependency_resolution_runtime": dependency_permission_status["dependency_resolution_runtime"],
+            "dependency_permission_download_runtime": dependency_permission_status["download_runtime"],
+            "dependency_permission_install_runtime": dependency_permission_status["install_runtime"],
+            "dependency_permission_pip_execution": dependency_permission_status["pip_execution"],
+            "dependency_permission_npm_execution": dependency_permission_status["npm_execution"],
+            "dependency_permission_apt_execution": dependency_permission_status["apt_execution"],
+            "dependency_permission_uv_execution": dependency_permission_status["uv_execution"],
+            "dependency_permission_poetry_execution": dependency_permission_status["poetry_execution"],
+            "dependency_permission_shell_execution": dependency_permission_status["shell_execution"],
+            "dependency_permission_command_execution": dependency_permission_status["command_execution"],
+            "dependency_permission_tool_execution": dependency_permission_status["tool_execution"],
+            "dependency_permission_real_tool_execution": dependency_permission_status["real_tool_execution"],
+            "dependency_permission_external_action_execution": dependency_permission_status["external_action_execution"],
+            "dependency_permission_external_binary_execution": dependency_permission_status["external_binary_execution"],
+            "dependency_permission_file_read": dependency_permission_status["file_read"],
+            "dependency_permission_file_write": dependency_permission_status["file_write"],
+            "dependency_permission_file_modify": dependency_permission_status["file_modify"],
+            "dependency_permission_file_delete": dependency_permission_status["file_delete"],
+            "dependency_permission_memory_write": dependency_permission_status["memory_write"],
+            "dependency_permission_desktop_control": dependency_permission_status["desktop_control"],
+            "dependency_permission_git_init": dependency_permission_status["git_init"],
+            "dependency_permission_git_add": dependency_permission_status["git_add"],
+            "dependency_permission_git_commit": dependency_permission_status["git_commit"],
+            "dependency_permission_git_push": dependency_permission_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -1053,5 +1099,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, dependency download permission gate, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

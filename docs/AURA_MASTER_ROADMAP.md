@@ -713,3 +713,13 @@ Status: CODER PROJECT GENERATION PLANNER ONLINE
 AURA can prepare planner-only code/project generation plans for project request framing, directory/file structure blueprints, code file blueprints, dependency planning, generation review gates, validation strategy, and project generation safety.
 
 This sprint does not create projects, create directories, write files, read files, modify files, delete files, run generated code, run tests, execute commands, install dependencies, download packages, execute tools, write memory, search the internet, perform network actions, control desktop, run git init/add/commit/push, perform external actions, or execute real tools. All project generation output remains proposal-only and review-gated.
+
+
+## Sprint 79.0 — Dependency & Download Permission Gate
+
+Target: v0.79.0-genesis  
+Status: DEPENDENCY DOWNLOAD PERMISSION GATE ONLINE
+
+AURA can prepare planner-only dependency and download permission gates for dependency request review, package/source trust review, download permission, install command review, dependency risk review, offline alternatives, and dependency permission safety.
+
+This sprint does not install dependencies, download packages/models/assets/installers/binaries, perform network actions, search the internet, run package managers, resolve dependencies at runtime, run download/install runtime, execute pip/npm/apt/uv/poetry/shell commands, execute tools, read/write/modify/delete files, write memory, control desktop, run git init/add/commit/push, perform external actions, execute external binaries, or execute real tools. All dependency and download decisions remain proposal-only and permission-gated.

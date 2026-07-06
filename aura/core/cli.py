@@ -62,6 +62,7 @@ from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnde
 from aura.vision_input.vision_input_runtime_foundation_manager import VisionInputRuntimeFoundationManager
 from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
 from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
+from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3398,6 +3399,118 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 79.0 dependency permission compatibility CLI helpers.
+    def print_dependency_permission_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {len(value)} field(s)")
+
+        print()
+        print("Dependency Permission Safety Boundary")
+        print("-------------------------------------")
+        for key in [
+            "foundation_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "permission_ready",
+            "execution_ready",
+            "dependency_install",
+            "package_download",
+            "model_download",
+            "asset_download",
+            "installer_download",
+            "binary_download",
+            "network_action",
+            "internet_search",
+            "package_manager_runtime",
+            "dependency_resolution_runtime",
+            "download_runtime",
+            "install_runtime",
+            "pip_execution",
+            "npm_execution",
+            "apt_execution",
+            "uv_execution",
+            "poetry_execution",
+            "shell_execution",
+            "command_execution",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "external_binary_execution",
+            "file_read",
+            "file_write",
+            "file_modify",
+            "file_delete",
+            "memory_write",
+            "desktop_control",
+            "git_init",
+            "git_add",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {packet[key]}")
+
+    def handle_dependency_permission_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general dependency download permission"
+        manager = DependencyDownloadPermissionGateManager(project_root=self.project_root)
+
+        if command == "dependency-permission-status":
+            self.print_dependency_permission_packet("AURA Dependency Download Permission Gate Status", manager.status())
+            return True
+
+        if command == "dependency-request-review-plan":
+            self.print_dependency_permission_packet("AURA Dependency Request Review Plan", manager.dependency_request_review_plan(target))
+            return True
+
+        if command == "package-source-review-plan":
+            self.print_dependency_permission_packet("AURA Package Source Review Plan", manager.package_source_review_plan(target))
+            return True
+
+        if command == "download-permission-plan":
+            self.print_dependency_permission_packet("AURA Download Permission Plan", manager.download_permission_plan(target))
+            return True
+
+        if command == "install-command-review-plan":
+            self.print_dependency_permission_packet("AURA Install Command Review Plan", manager.install_command_review_plan(target))
+            return True
+
+        if command == "dependency-risk-plan":
+            self.print_dependency_permission_packet("AURA Dependency Risk Plan", manager.dependency_risk_plan(target))
+            return True
+
+        if command == "offline-alternative-plan":
+            self.print_dependency_permission_packet("AURA Offline Alternative Plan", manager.offline_alternative_plan(target))
+            return True
+
+        if command == "dependency-permission-safety-plan":
+            self.print_dependency_permission_packet("AURA Dependency Permission Safety Plan", manager.dependency_permission_safety_plan(target))
+            return True
+
+        if command == "dependency-permission-context":
+            self.print_dependency_permission_packet("AURA Dependency Download Permission Gate Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3442,6 +3555,9 @@ class AuraCLI:
             return True
 
         if self.handle_coder_project_cli_command(raw_args):
+            return True
+
+        if self.handle_dependency_permission_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

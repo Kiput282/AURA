@@ -775,3 +775,44 @@ Safety boundary:
 - no git init/add/commit/push
 - no external action execution
 - no real tool execution
+
+
+## Sprint 79.0 — Dependency & Download Permission Gate
+
+AURA includes a Dependency & Download Permission Gate for future safe dependency, package, model, asset, installer, binary, and external download planning.
+
+Status: DEPENDENCY DOWNLOAD PERMISSION GATE ONLINE
+
+Purpose:
+- review dependency/package requests before approval
+- review package/source trust before future download or install
+- prepare explicit download permission prompts
+- review install commands before future execution
+- plan dependency risk review
+- prefer offline or standard-library alternatives first
+- keep dependency decisions separate from install/download/runtime execution
+
+Safety boundary:
+- no dependency install
+- no package download
+- no model download
+- no asset download
+- no installer download
+- no binary download
+- no network action
+- no internet search
+- no package manager runtime
+- no dependency resolution runtime
+- no download runtime
+- no install runtime
+- no pip/npm/apt/uv/poetry execution
+- no shell execution
+- no command execution
+- no tool execution
+- no file operations
+- no memory write
+- no desktop control
+- no git init/add/commit/push
+- no external action execution
+- no external binary execution
+- no real tool execution

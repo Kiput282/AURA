@@ -1174,4 +1174,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 79.0 dependency download permission gate skill.
+    registry.register(
+        AuraSkill(
+            name="dependency_download_permission_gate",
+            description="Prepare planner-only dependency and download permission gates for dependency request review, package/source review, download permission, install command review, dependency risk review, offline alternatives, and safety without dependency install, package/model/asset/installer/binary download, network action, internet search, package manager runtime, command execution, tool execution, file operations, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "dependency_permission_status",
+                "dependency_request_review_plan",
+                "package_source_review_plan",
+                "download_permission_plan",
+                "install_command_review_plan",
+                "dependency_risk_plan",
+                "offline_alternative_plan",
+                "dependency_permission_safety_plan",
+                "dependency_permission_context",
+                "planner_only_dependency_download_permission",
+            ],
+        )
+    )
+
     return registry
