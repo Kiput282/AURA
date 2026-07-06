@@ -68,6 +68,7 @@ from aura.dependency_permission.dependency_download_permission_gate_manager impo
 from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
 from aura.output_formatter.shared_output_formatter_manager import SharedOutputFormatterManager
 from aura.capability_registry.capability_registry_manager import CapabilityRegistryManager
+from aura.permission_workflow.unified_permission_workflow_manager import UnifiedPermissionWorkflowManager
 
 
 class AuraShell:
@@ -378,6 +379,15 @@ class AuraShell:
         print("  capability-gap-review-plan <target> Prepare capability gap review plan")
         print("  capability-registry-migration-plan <target> Prepare capability registry migration plan")
         print("  capability-registry-context Show Capability Registry context")
+        print("  permission-workflow-status Show Unified Permission Workflow status")
+        print("  permission-request-plan <target> Prepare permission request plan")
+        print("  permission-state-transition-plan <target> Prepare permission state transition plan")
+        print("  permission-risk-review-plan <target> Prepare permission risk review plan")
+        print("  confirmation-prompt-plan <target> Prepare confirmation prompt plan")
+        print("  permission-audit-trail-plan <target> Prepare permission audit trail plan")
+        print("  control-center-permission-view-plan <target> Prepare Control Center permission view plan")
+        print("  permission-policy-gap-review-plan <target> Prepare permission policy gap review plan")
+        print("  permission-workflow-context Show Unified Permission Workflow context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -3915,6 +3925,59 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 83.0 unified permission workflow shell helpers.
+    def print_permission_workflow_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Permission Workflow Safety Boundary"))
+
+    def handle_permission_workflow_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA permission workflow"
+        manager = UnifiedPermissionWorkflowManager()
+
+        if command == "permission-workflow-status":
+            self.print_permission_workflow_packet("AURA Unified Permission Workflow Status", manager.status())
+            return True
+
+        if command == "permission-request-plan":
+            self.print_permission_workflow_packet("AURA Permission Request Plan", manager.permission_request_plan(target))
+            return True
+
+        if command == "permission-state-transition-plan":
+            self.print_permission_workflow_packet("AURA Permission State Transition Plan", manager.permission_state_transition_plan(target))
+            return True
+
+        if command == "permission-risk-review-plan":
+            self.print_permission_workflow_packet("AURA Permission Risk Review Plan", manager.permission_risk_review_plan(target))
+            return True
+
+        if command == "confirmation-prompt-plan":
+            self.print_permission_workflow_packet("AURA Confirmation Prompt Plan", manager.confirmation_prompt_plan(target))
+            return True
+
+        if command == "permission-audit-trail-plan":
+            self.print_permission_workflow_packet("AURA Permission Audit Trail Plan", manager.permission_audit_trail_plan(target))
+            return True
+
+        if command == "control-center-permission-view-plan":
+            self.print_permission_workflow_packet("AURA Control Center Permission View Plan", manager.control_center_permission_view_plan(target))
+            return True
+
+        if command == "permission-policy-gap-review-plan":
+            self.print_permission_workflow_packet("AURA Permission Policy Gap Review Plan", manager.permission_policy_gap_review_plan(target))
+            return True
+
+        if command == "permission-workflow-context":
+            self.print_permission_workflow_packet("AURA Unified Permission Workflow Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -3974,6 +4037,9 @@ class AuraShell:
             return
 
         if self.handle_capability_registry_shell_command(normalized):
+            return
+
+        if self.handle_permission_workflow_shell_command(normalized):
             return
 
         if normalized == "help":

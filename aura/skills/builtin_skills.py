@@ -1266,4 +1266,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 83.0 unified permission workflow skill.
+    registry.register(
+        AuraSkill(
+            name="unified_permission_workflow",
+            description="Provide planner-only unified permission workflow planning for permission requests, approval/deny states, risk review, confirmation prompts, audit trail planning, future Control Center Permission Center views, and permission policy gap review without granting permission, automatic approval, always-approve mode, background approval, runtime action activation, runtime behavior changes, file operations, command execution, dependency install, download runtime, microphone/camera/screen runtime, internet runtime, desktop control runtime, git runtime, plugin install runtime, service control runtime, UI runtime, web server runtime, chat runtime, launcher runtime, tool execution, memory write, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "permission_workflow_status",
+                "permission_request_plan",
+                "permission_state_transition_plan",
+                "permission_risk_review_plan",
+                "confirmation_prompt_plan",
+                "permission_audit_trail_plan",
+                "control_center_permission_view_plan",
+                "permission_policy_gap_review_plan",
+                "permission_workflow_context",
+                "control_center_permission_data",
+            ],
+        )
+    )
+
     return registry

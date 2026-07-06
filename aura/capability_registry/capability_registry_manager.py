@@ -295,12 +295,12 @@ class CapabilityRegistryManager:
             {
                 "id": "unified_permission_workflow",
                 "name": "Unified Permission Workflow Manager",
-                "state": "planned_future",
-                "runtime_level": "planned_permission_layer",
+                "state": "online",
+                "runtime_level": "planner_only",
                 "risk_level": "high",
                 "permission_required": "user_confirmation",
                 "category": "permission_workflow",
-                "introduced_in": "planned-0.83.0-genesis",
+                "introduced_in": "0.83.0-genesis",
                 "control_center_visible": True,
             },
             {

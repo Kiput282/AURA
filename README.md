@@ -958,3 +958,80 @@ Safety boundary:
 See:
 - docs/AURA_CAPABILITY_REGISTRY.md
 - docs/AURA_ROADMAP_81_90_PLAN.md
+
+
+## Sprint 83.0 — Unified Permission Workflow Manager
+
+AURA includes a Unified Permission Workflow Manager foundation.
+
+Status: UNIFIED PERMISSION WORKFLOW ONLINE
+
+Purpose:
+- unify permission request planning
+- prepare approval/deny state transition planning
+- prepare permission risk review planning
+- prepare confirmation prompt planning
+- prepare permission audit trail planning
+- prepare future AURA Control Center Permission Center views
+- prepare permission policy gap review
+
+Current workflow summary:
+- permission templates: 12
+- permission categories: 13
+- permission request states: 7
+- approval modes: 5
+- risk levels: 4
+- explicit confirmation required templates: 11
+- runtime-enabled templates: 0
+- always-approve templates: 0
+- runtime execution features: 0
+
+Capability registry update:
+- total capabilities tracked: 18
+- online capabilities: 13
+- foundation-only capabilities: 3
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 3
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Safety boundary:
+- permission-workflow-only
+- planner-only
+- proposal-only
+- metadata-only
+- no permission grant runtime
+- no automatic approval
+- no always-approve mode
+- no background approval
+- no runtime action activation
+- no runtime behavior change
+- no file operation runtime
+- no command execution runtime
+- no dependency install runtime
+- no download runtime
+- no microphone/camera/screen runtime
+- no internet runtime
+- no desktop control runtime
+- no git operation runtime
+- no plugin install runtime
+- no service control runtime
+- no UI/web/chat/launcher runtime
+- no file operations
+- no command/test/code execution
+- no dependency install
+- no package download
+- no internet/network action
+- no tool execution
+- no memory write
+- no desktop control
+- no git execution
+- no external action execution
+- no real tool execution
+
+See:
+- docs/AURA_UNIFIED_PERMISSION_WORKFLOW.md
+- docs/AURA_CAPABILITY_REGISTRY.md
+- docs/AURA_ROADMAP_81_90_PLAN.md

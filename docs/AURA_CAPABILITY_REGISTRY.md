@@ -134,3 +134,23 @@ It does not enable:
 ## Design Principle
 
 AURA must know her capabilities clearly before she is allowed to perform runtime actions.
+
+
+## Sprint 83 Update — Unified Permission Workflow Online
+
+Status: UPDATED FOR v0.83.0-genesis
+
+The Capability Registry now marks Unified Permission Workflow Manager as online.
+
+Updated registry summary:
+- total capabilities tracked: 18
+- online capabilities: 13
+- foundation-only capabilities: 3
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 3
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Unified Permission Workflow remains planner-only. It does not grant permission or enable runtime action.

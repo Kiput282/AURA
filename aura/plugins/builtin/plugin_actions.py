@@ -2716,4 +2716,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 83.0 unified permission workflow actions.
+    permission_workflow_actions = [
+        ('permission_workflow.status', 'read_project', 'Show AURA Unified Permission Workflow status.'),
+        ('permission_workflow.request_plan', 'read_project', 'Prepare permission request planning.'),
+        ('permission_workflow.state_transition_plan', 'read_project', 'Prepare permission state transition planning.'),
+        ('permission_workflow.risk_review_plan', 'read_project', 'Prepare permission risk review planning.'),
+        ('permission_workflow.confirmation_prompt_plan', 'read_project', 'Prepare confirmation prompt planning.'),
+        ('permission_workflow.audit_trail_plan', 'read_project', 'Prepare permission audit trail planning.'),
+        ('permission_workflow.control_center_permission_view_plan', 'read_project', 'Prepare future Control Center Permission Center view planning.'),
+        ('permission_workflow.policy_gap_review_plan', 'read_project', 'Prepare permission policy gap review planning.'),
+        ('permission_workflow.context', 'read_project', 'Show Unified Permission Workflow context and templates.'),
+    ]
+
+    for action_name, permission_action, description in permission_workflow_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="permission_workflow",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="unified_permission_workflow",
+            )
+        )
+
     return registry

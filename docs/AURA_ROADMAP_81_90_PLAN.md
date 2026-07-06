@@ -105,3 +105,24 @@ Current registry summary:
 The registry prepares metadata for the future AURA Control Center, service monitor, launcher, plugin dashboard, and permission dashboard.
 
 The registry does not grant permissions, enable runtime actions, start UI/web/chat/service/launcher runtime, perform file operations, execute commands, install dependencies, download packages, use internet/network actions, execute tools, write memory, control desktop, run git operations, perform external actions, or execute real tools.
+
+
+## Sprint 83 Update — Unified Permission Workflow Manager
+
+Status: UNIFIED PERMISSION WORKFLOW ONLINE  
+Target version: v0.83.0-genesis
+
+Sprint 83 adds a planner-only Unified Permission Workflow Manager. It prepares permission request planning, approval/deny state transition planning, risk review planning, confirmation prompt planning, permission audit trail planning, future Control Center Permission Center view planning, and permission policy gap review.
+
+Current workflow summary:
+- permission templates: 12
+- permission categories: 13
+- permission request states: 7
+- approval modes: 5
+- risk levels: 4
+- explicit confirmation required templates: 11
+- runtime-enabled templates: 0
+- always-approve templates: 0
+- runtime execution features: 0
+
+This sprint does not grant permission, approve actions automatically, enable always-approve mode, activate runtime actions, start UI/web/chat/service/launcher runtime, perform file operations, execute commands, install dependencies, download packages, use internet/network actions, execute tools, write memory, control desktop, run git operations, perform external actions, or execute real tools.
