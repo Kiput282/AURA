@@ -47,6 +47,7 @@ from aura.vision.vision_runtime_alpha_manager import VisionRuntimeAlphaManager
 from aura.status.system_status_manager import SystemStatusManager
 from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.utils.logger import disable_logging
+from aura.codebase_change.codebase_change_planner_manager import CodebaseChangePlannerManager
 
 
 class AuraCLI:

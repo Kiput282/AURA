@@ -36,6 +36,7 @@ from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
 from aura.voice.voice_runtime_alpha_manager import VoiceRuntimeAlphaManager
 from aura.workspace.workspace_awareness_manager import WorkspaceAwarenessManager
 from aura.workspace_memory.workspace_memory_link_manager import WorkspaceMemoryLinkManager
+from aura.codebase_change.codebase_change_planner_manager import CodebaseChangePlannerManager
 
 
 class SystemStatusManager:
@@ -131,6 +132,8 @@ class SystemStatusManager:
         expression_language_status = self.expression_language_manager.status()
         game_companion_status = self.game_companion_manager.status()
         streaming_safety_status = self.streaming_safety_manager.status()
+
+        codebase_change_status = CodebaseChangePlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -482,5 +485,30 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "codebase_change": {
+                "planner_status": codebase_change_status["status"],
+                "planner_ready": codebase_change_status["planner_ready"],
+                "change_intent_plan_ready": codebase_change_status["change_intent_plan_ready"],
+                "change_impact_plan_ready": codebase_change_status["change_impact_plan_ready"],
+                "patch_plan_ready": codebase_change_status["patch_plan_ready"],
+                "validation_plan_ready": codebase_change_status["validation_plan_ready"],
+                "rollback_plan_ready": codebase_change_status["rollback_plan_ready"],
+                "context_ready": codebase_change_status["context_ready"],
+                "plan_types": codebase_change_status["change_plan_types"],
+                "read_only": codebase_change_status["read_only"],
+                "proposal_only": codebase_change_status["proposal_only"],
+                "metadata_only": codebase_change_status["metadata_only"],
+                "file_read": codebase_change_status["file_read"],
+                "file_write": codebase_change_status["file_write"],
+                "file_edit": codebase_change_status["file_edit"],
+                "file_delete": codebase_change_status["file_delete"],
+                "file_move": codebase_change_status["file_move"],
+                "file_copy": codebase_change_status["file_copy"],
+                "command_execution": codebase_change_status["command_execution"],
+                "git_commit": codebase_change_status["git_commit"],
+                "git_push": codebase_change_status["git_push"],
+                "external_action_execution": codebase_change_status["external_action_execution"],
+                "real_tool_execution": codebase_change_status["real_tool_execution"],
+            },
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

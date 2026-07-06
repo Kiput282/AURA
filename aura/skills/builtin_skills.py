@@ -823,4 +823,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    registry.register(
+        AuraSkill(
+            name="codebase_change_planner",
+            description="Prepare safe metadata-only codebase change intent plans, impact plans, patch plans, validation plans, rollback plans, and change context without reading, writing, editing, executing commands, committing, or pushing automatically.",
+            role="coder",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "codebase_change_status",
+                "codebase_change_intent_plan",
+                "codebase_change_impact_plan",
+                "codebase_patch_plan",
+                "codebase_validation_plan",
+                "codebase_rollback_plan",
+                "codebase_change_context",
+                "metadata_only_codebase_change_planning",
+            ],
+        )
+    )
+
     return registry

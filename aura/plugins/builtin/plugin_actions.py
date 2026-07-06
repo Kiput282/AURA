@@ -1851,4 +1851,81 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         )
     )
 
+    registry.register(
+        PluginAction(
+            name="codebase_change.status",
+            plugin="codebase_change",
+            description="Show AURA Codebase Change Planner status.",
+            permission_action="read_project",
+            status="online",
+            skill="codebase_change_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_change.intent_plan",
+            plugin="codebase_change",
+            description="Prepare a metadata-only codebase change intent plan without reading or writing files automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_change_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_change.impact_plan",
+            plugin="codebase_change",
+            description="Prepare a metadata-only codebase change impact plan without reading or writing files automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_change_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_change.patch_plan",
+            plugin="codebase_change",
+            description="Prepare a proposal-only codebase patch plan without editing files automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_change_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_change.validation_plan",
+            plugin="codebase_change",
+            description="Prepare a codebase validation plan without executing commands automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_change_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_change.rollback_plan",
+            plugin="codebase_change",
+            description="Prepare a safe rollback plan without deleting, resetting, committing, or pushing automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_change_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_change.context",
+            plugin="codebase_change",
+            description="Show Codebase Change Planner context without reading, writing, editing, executing commands, committing, or pushing.",
+            permission_action="read_project",
+            status="online",
+            skill="codebase_change_planner",
+        )
+    )
+
     return registry

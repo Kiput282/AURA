@@ -290,3 +290,27 @@ The long-term product vision for AURA is documented in:
 docs/AURA_PRODUCT_VISION.md
 
 This document defines AURA's future serious/work mode, creative mode, relaxed mode, media understanding, game companion direction, streaming mode, app bridge vision, Blender bridge plan, safety philosophy, expression language, and 10-sprint review rule.
+
+
+## Sprint 63.0 — Codebase Change Planner
+
+AURA includes a Codebase Change Planner foundation for metadata-only planning around codebase changes.
+
+Capabilities:
+- codebase_change.status
+- codebase_change.intent_plan
+- codebase_change.impact_plan
+- codebase_change.patch_plan
+- codebase_change.validation_plan
+- codebase_change.rollback_plan
+- codebase_change.context
+
+Safety boundary:
+- no automatic file reads
+- no automatic file opens
+- no automatic file writes or edits
+- no move/copy/delete operations
+- no command execution
+- no git commit or push
+- proposal-only planning until explicit confirmation and validation
+
