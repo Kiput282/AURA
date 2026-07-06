@@ -1082,4 +1082,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 75.0 voice intent understanding skill.
+    registry.register(
+        AuraSkill(
+            name="voice_intent_understanding",
+            description="Prepare planner-only voice intent understanding for transcript normalization, intent classification, entity/slot extraction, clarification, action gates, response planning, and safety without microphone access, audio recording, speech-to-text runtime, voice command execution, tool execution, file operations, command execution, memory write, internet/network action, desktop control, git execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "voice_intent_status",
+                "voice_transcript_normalization_plan",
+                "voice_intent_classification_plan",
+                "voice_entity_slot_plan",
+                "voice_clarification_plan",
+                "voice_action_gate_plan",
+                "voice_response_plan",
+                "voice_intent_safety_plan",
+                "voice_intent_context",
+                "planner_only_voice_intent_understanding",
+            ],
+        )
+    )
+
     return registry

@@ -673,3 +673,13 @@ Status: VOICE INPUT RUNTIME FOUNDATION ONLINE
 AURA can prepare metadata-only plans for microphone permission, voice capture boundaries, speech-to-text adapter selection, voice intent gates, voice command confirmation, voice sessions, and voice input safety. This sprint begins the "hear" part of AURA's core essence while keeping all device and runtime access disabled.
 
 This sprint does not access the microphone, record/capture audio, run STT, transcribe speech, detect wake words, listen continuously, listen in the background, execute voice commands, run TTS/speaker output, use network/cloud STT, perform file operations, execute commands/tools, write memory, search the internet, perform network actions, control desktop, run git operations, perform external actions, or execute real tools.
+
+
+## Sprint 75.0 — Voice Intent Understanding Layer
+
+Target: v0.75.0-genesis  
+Status: VOICE INTENT UNDERSTANDING ONLINE
+
+AURA can prepare planner-only voice intent understanding plans for transcript normalization, intent classification, entity/slot extraction, clarification, action gates, response planning, and voice intent safety. This continues the "hear" part of AURA's core essence after the Voice Input Runtime Foundation.
+
+This sprint does not access the microphone, record/capture audio, run speech-to-text, transcribe speech, detect wake words, listen continuously, listen in the background, execute voice commands, execute voice tools, perform actions, read/write files, execute commands/tools, write memory, search the internet, perform network actions, control desktop, run git operations, perform external actions, or execute real tools.

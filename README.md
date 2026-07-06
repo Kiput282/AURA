@@ -610,3 +610,40 @@ Safety boundary:
 - no git execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 75.0 — Voice Intent Understanding Layer
+
+AURA includes a Voice Intent Understanding Layer for future safe understanding of voice-derived text.
+
+Status: VOICE INTENT UNDERSTANDING ONLINE
+
+Purpose:
+- plan how future transcribed voice text should be normalized
+- classify voice intent as conversation, question, instruction, command-like request, correction, or unclear
+- plan entity and slot extraction from voice text
+- ask clarification when voice meaning is ambiguous
+- gate action-like voice requests before future execution
+- require explicit confirmation before future action
+- keep voice interaction concise, safe, and reviewable
+
+Safety boundary:
+- no microphone access
+- no audio recording or capture
+- no speech-to-text runtime
+- no speech transcription
+- no wake word detection
+- no always-listening mode
+- no background listening
+- no voice command execution
+- no voice tool execution
+- no action execution
+- no file operations
+- no command execution
+- no tool execution
+- no memory write
+- no internet/network action
+- no desktop control
+- no git execution
+- no external action execution
+- no real tool execution

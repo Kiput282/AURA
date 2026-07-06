@@ -58,6 +58,7 @@ from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerMan
 from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
 from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
 from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRuntimeFoundationManager
+from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -2974,6 +2975,107 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 75.0 voice intent compatibility CLI helpers.
+    def print_voice_intent_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {len(value)} field(s)")
+
+        print()
+        print("Voice Intent Safety Boundary")
+        print("----------------------------")
+        for key in [
+            "foundation_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "microphone_access",
+            "audio_recording",
+            "audio_capture",
+            "speech_to_text_runtime",
+            "speech_transcription",
+            "wake_word_detection",
+            "always_listening",
+            "background_listening",
+            "voice_command_execution",
+            "voice_tool_execution",
+            "action_execution",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "desktop_control",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<48}: {packet[key]}")
+
+    def handle_voice_intent_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general voice intent understanding"
+        manager = VoiceIntentUnderstandingManager(project_root=self.project_root)
+
+        if command == "voice-intent-status":
+            self.print_voice_intent_packet("AURA Voice Intent Understanding Status", manager.status())
+            return True
+
+        if command == "voice-transcript-normalization-plan":
+            self.print_voice_intent_packet("AURA Voice Transcript Normalization Plan", manager.voice_transcript_normalization_plan(target))
+            return True
+
+        if command == "voice-intent-classification-plan":
+            self.print_voice_intent_packet("AURA Voice Intent Classification Plan", manager.voice_intent_classification_plan(target))
+            return True
+
+        if command == "voice-entity-slot-plan":
+            self.print_voice_intent_packet("AURA Voice Entity Slot Plan", manager.voice_entity_slot_plan(target))
+            return True
+
+        if command == "voice-clarification-plan":
+            self.print_voice_intent_packet("AURA Voice Clarification Plan", manager.voice_clarification_plan(target))
+            return True
+
+        if command == "voice-action-gate-plan":
+            self.print_voice_intent_packet("AURA Voice Action Gate Plan", manager.voice_action_gate_plan(target))
+            return True
+
+        if command == "voice-response-plan":
+            self.print_voice_intent_packet("AURA Voice Response Plan", manager.voice_response_plan(target))
+            return True
+
+        if command == "voice-intent-safety-plan":
+            self.print_voice_intent_packet("AURA Voice Intent Safety Plan", manager.voice_intent_safety_plan(target))
+            return True
+
+        if command == "voice-intent-context":
+            self.print_voice_intent_packet("AURA Voice Intent Understanding Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3006,6 +3108,9 @@ class AuraCLI:
             return True
 
         if self.handle_voice_input_cli_command(raw_args):
+            return True
+
+        if self.handle_voice_intent_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

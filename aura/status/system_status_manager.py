@@ -47,6 +47,7 @@ from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerMan
 from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
 from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
 from aura.voice_input.voice_input_runtime_foundation_manager import VoiceInputRuntimeFoundationManager
+from aura.voice_intent.voice_intent_understanding_manager import VoiceIntentUnderstandingManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -156,6 +157,7 @@ class SystemStatusManager:
         reasoning_context_status = ReasoningContextManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         knowledge_uncertainty_status = KnowledgeUncertaintyGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         voice_input_status = VoiceInputRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        voice_intent_status = VoiceIntentUnderstandingManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -225,6 +227,7 @@ class SystemStatusManager:
             "reasoning_context_plan_types": reasoning_context_status["reasoning_plan_types"],
             "knowledge_uncertainty_plan_types": knowledge_uncertainty_status["knowledge_plan_types"],
             "voice_input_plan_types": voice_input_status["voice_input_plan_types"],
+            "voice_intent_plan_types": voice_intent_status["voice_intent_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -274,6 +277,7 @@ class SystemStatusManager:
             "reasoning_context_manager": reasoning_context_status["status"],
             "knowledge_uncertainty_gate": knowledge_uncertainty_status["status"],
             "voice_input_runtime_foundation": voice_input_status["status"],
+            "voice_intent_understanding": voice_intent_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -732,6 +736,38 @@ class SystemStatusManager:
             "voice_input_desktop_control": voice_input_status["desktop_control"],
             "voice_input_git_commit": voice_input_status["git_commit"],
             "voice_input_git_push": voice_input_status["git_push"],
+            "voice_intent_understanding_ready": voice_intent_status["planner_ready"],
+            "voice_transcript_normalization_plan_ready": voice_intent_status["voice_transcript_normalization_plan_ready"],
+            "voice_intent_classification_plan_ready": voice_intent_status["voice_intent_classification_plan_ready"],
+            "voice_entity_slot_plan_ready": voice_intent_status["voice_entity_slot_plan_ready"],
+            "voice_clarification_plan_ready": voice_intent_status["voice_clarification_plan_ready"],
+            "voice_action_gate_plan_ready": voice_intent_status["voice_action_gate_plan_ready"],
+            "voice_response_plan_ready": voice_intent_status["voice_response_plan_ready"],
+            "voice_intent_safety_plan_ready": voice_intent_status["voice_intent_safety_plan_ready"],
+            "voice_intent_context_ready": voice_intent_status["context_ready"],
+            "voice_intent_microphone_access": voice_intent_status["microphone_access"],
+            "voice_intent_audio_recording": voice_intent_status["audio_recording"],
+            "voice_intent_audio_capture": voice_intent_status["audio_capture"],
+            "voice_intent_speech_to_text_runtime": voice_intent_status["speech_to_text_runtime"],
+            "voice_intent_speech_transcription": voice_intent_status["speech_transcription"],
+            "voice_intent_wake_word_detection": voice_intent_status["wake_word_detection"],
+            "voice_intent_always_listening": voice_intent_status["always_listening"],
+            "voice_intent_background_listening": voice_intent_status["background_listening"],
+            "voice_intent_voice_command_execution": voice_intent_status["voice_command_execution"],
+            "voice_intent_voice_tool_execution": voice_intent_status["voice_tool_execution"],
+            "voice_intent_action_execution": voice_intent_status["action_execution"],
+            "voice_intent_tool_execution": voice_intent_status["tool_execution"],
+            "voice_intent_real_tool_execution": voice_intent_status["real_tool_execution"],
+            "voice_intent_external_action_execution": voice_intent_status["external_action_execution"],
+            "voice_intent_file_read": voice_intent_status["file_read"],
+            "voice_intent_file_write": voice_intent_status["file_write"],
+            "voice_intent_command_execution": voice_intent_status["command_execution"],
+            "voice_intent_memory_write": voice_intent_status["memory_write"],
+            "voice_intent_internet_search": voice_intent_status["internet_search"],
+            "voice_intent_network_action": voice_intent_status["network_action"],
+            "voice_intent_desktop_control": voice_intent_status["desktop_control"],
+            "voice_intent_git_commit": voice_intent_status["git_commit"],
+            "voice_intent_git_push": voice_intent_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -894,5 +930,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

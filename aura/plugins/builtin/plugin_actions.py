@@ -2516,4 +2516,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 75.0 voice intent understanding actions.
+    voice_intent_actions = [
+        ('voice_intent.status', 'read_project', 'Show AURA Voice Intent Understanding status.'),
+        ('voice_intent.transcript_normalization_plan', 'read_project', 'Prepare a voice transcript normalization plan without audio capture or STT runtime.'),
+        ('voice_intent.classification_plan', 'read_project', 'Prepare a voice intent classification plan without executing actions.'),
+        ('voice_intent.entity_slot_plan', 'read_project', 'Prepare a voice entity and slot extraction plan without reading files or external state.'),
+        ('voice_intent.clarification_plan', 'read_project', 'Prepare a clarification plan for unclear voice intent.'),
+        ('voice_intent.action_gate_plan', 'read_project', 'Prepare a voice action gate plan that requires confirmation before future action.'),
+        ('voice_intent.response_plan', 'read_project', 'Prepare a voice-friendly response plan without execution.'),
+        ('voice_intent.safety_plan', 'read_project', 'Prepare voice intent safety boundaries without microphone, audio, STT, tools, files, commands, network, desktop, git, or real execution.'),
+        ('voice_intent.context', 'read_project', 'Show Voice Intent Understanding context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in voice_intent_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="voice_intent",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="voice_intent_understanding",
+            )
+        )
+
     return registry
