@@ -337,3 +337,29 @@ Safety boundary:
 - no git commit or push
 - proposal-only review packets until explicit confirmation and validation
 
+
+## Sprint 65.0 — Codebase Validation Gate Planner
+
+AURA includes a Codebase Validation Gate Planner foundation for proposal-only validation gates around codebase changes.
+
+Capabilities:
+- codebase_validation_gate.status
+- codebase_validation_gate.plan
+- codebase_validation_gate.preflight
+- codebase_validation_gate.static_validation
+- codebase_validation_gate.registry_validation
+- codebase_validation_gate.runtime_smoke
+- codebase_validation_gate.diff_review
+- codebase_validation_gate.rollback
+- codebase_validation_gate.commit_push
+- codebase_validation_gate.context
+
+Safety boundary:
+- no automatic file reads
+- no automatic file opens
+- no automatic file writes or edits
+- no automatic patch apply
+- no command or test execution
+- no git commit or push
+- validation gates are proposal-only until explicit confirmation and manual execution
+

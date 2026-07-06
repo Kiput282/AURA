@@ -863,4 +863,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    registry.register(
+        AuraSkill(
+            name="codebase_validation_gate_planner",
+            description="Plan safe proposal-only validation gates for codebase changes, including preflight, static validation, registry validation, runtime smoke, diff review, rollback, and commit/push gates without executing commands automatically.",
+            role="coder",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "codebase_validation_gate_status",
+                "codebase_validation_gate_plan",
+                "codebase_preflight_gate",
+                "codebase_static_validation_gate",
+                "codebase_registry_validation_gate",
+                "codebase_runtime_smoke_gate",
+                "codebase_diff_review_gate",
+                "codebase_rollback_gate",
+                "codebase_commit_push_gate",
+                "codebase_validation_gate_context",
+                "proposal_only_validation_gating",
+            ],
+        )
+    )
+
     return registry

@@ -1994,4 +1994,114 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         )
     )
 
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.status",
+            plugin="codebase_validation_gate",
+            description="Show Codebase Validation Gate Planner status.",
+            permission_action="read_project",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.plan",
+            plugin="codebase_validation_gate",
+            description="Prepare a proposal-only validation gate plan for a codebase change without executing commands automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.preflight",
+            plugin="codebase_validation_gate",
+            description="Prepare a proposal-only preflight gate for clean tree and branch checks.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.static_validation",
+            plugin="codebase_validation_gate",
+            description="Prepare proposal-only static validation steps without running py_compile automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.registry_validation",
+            plugin="codebase_validation_gate",
+            description="Prepare proposal-only registry validation steps for skills and plugin actions.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.runtime_smoke",
+            plugin="codebase_validation_gate",
+            description="Prepare proposal-only runtime smoke validation steps without executing commands automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.diff_review",
+            plugin="codebase_validation_gate",
+            description="Prepare proposal-only diff review gates before staging or committing.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.rollback",
+            plugin="codebase_validation_gate",
+            description="Prepare proposal-only rollback gates for uncommitted or staged changes.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.commit_push",
+            plugin="codebase_validation_gate",
+            description="Prepare proposal-only commit and push gate steps without committing or pushing automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_validation_gate.context",
+            plugin="codebase_validation_gate",
+            description="Show Codebase Validation Gate Planner context and safety boundary.",
+            permission_action="read_project",
+            status="online",
+            skill="codebase_validation_gate_planner",
+        )
+    )
+
     return registry
