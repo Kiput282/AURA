@@ -1197,4 +1197,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 80.0 review stabilization 71-80 skill.
+    registry.register(
+        AuraSkill(
+            name="review_stabilization_71_80",
+            description="Prepare planner-only Sprint 71-80 checkpoint review and stabilization planning for completed feature review, active/foundation/planner-only review, safety boundary review, stabilization validation, technical debt review, roadmap gap review, and next block planning without runtime behavior changes, automatic stabilization, file operations, command execution, test execution, code execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "checkpoint_71_80_status",
+                "completed_feature_review_plan",
+                "active_foundation_review_plan",
+                "safety_boundary_review_plan",
+                "stabilization_validation_plan",
+                "technical_debt_review_plan",
+                "roadmap_gap_review_plan",
+                "next_block_planning_plan",
+                "checkpoint_71_80_context",
+                "planner_only_checkpoint_review",
+            ],
+        )
+    )
+
     return registry

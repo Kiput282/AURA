@@ -65,6 +65,7 @@ from aura.vision_input.vision_input_runtime_foundation_manager import VisionInpu
 from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
 from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
+from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
 
 
 class AuraShell:
@@ -348,6 +349,15 @@ class AuraShell:
         print("  offline-alternative-plan <target> Prepare offline alternative plan")
         print("  dependency-permission-safety-plan <target> Prepare dependency permission safety plan")
         print("  dependency-permission-context Show Dependency Download Permission Gate context")
+        print("  checkpoint-80-status Show Sprint 71-80 Review & Stabilization status")
+        print("  completed-feature-review-plan <target> Prepare completed feature review plan")
+        print("  active-foundation-review-plan <target> Prepare active/foundation review plan")
+        print("  safety-boundary-review-plan <target> Prepare safety boundary review plan")
+        print("  stabilization-validation-plan <target> Prepare stabilization validation plan")
+        print("  technical-debt-review-plan <target> Prepare technical debt review plan")
+        print("  roadmap-gap-review-plan <target> Prepare roadmap gap review plan")
+        print("  next-block-planning-plan <target> Prepare next block planning plan")
+        print("  checkpoint-80-context Show Sprint 71-80 checkpoint context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -3677,6 +3687,108 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 80.0 checkpoint compatibility shell helpers.
+    def print_checkpoint_80_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {len(value)} field(s)")
+
+        print()
+        print("Checkpoint 71-80 Safety Boundary")
+        print("--------------------------------")
+        for key in [
+            "checkpoint_only",
+            "review_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "runtime_behavior_change",
+            "automatic_stabilization",
+            "file_read",
+            "file_write",
+            "file_modify",
+            "file_delete",
+            "command_execution",
+            "test_execution",
+            "code_execution",
+            "dependency_install",
+            "package_download",
+            "internet_search",
+            "network_action",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "desktop_control",
+            "git_init",
+            "git_add",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {packet[key]}")
+
+    def handle_checkpoint_80_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "Sprint 71-80 checkpoint review"
+        manager = ReviewStabilization7180Manager(project_root=self.project_root)
+
+        if command == "checkpoint-80-status":
+            self.print_checkpoint_80_packet("AURA Sprint 71-80 Review & Stabilization Status", manager.status())
+            return True
+
+        if command == "completed-feature-review-plan":
+            self.print_checkpoint_80_packet("AURA Completed Feature Review Plan", manager.completed_feature_review_plan(target))
+            return True
+
+        if command == "active-foundation-review-plan":
+            self.print_checkpoint_80_packet("AURA Active Foundation Review Plan", manager.active_foundation_review_plan(target))
+            return True
+
+        if command == "safety-boundary-review-plan":
+            self.print_checkpoint_80_packet("AURA Safety Boundary Review Plan", manager.safety_boundary_review_plan(target))
+            return True
+
+        if command == "stabilization-validation-plan":
+            self.print_checkpoint_80_packet("AURA Stabilization Validation Plan", manager.stabilization_validation_plan(target))
+            return True
+
+        if command == "technical-debt-review-plan":
+            self.print_checkpoint_80_packet("AURA Technical Debt Review Plan", manager.technical_debt_review_plan(target))
+            return True
+
+        if command == "roadmap-gap-review-plan":
+            self.print_checkpoint_80_packet("AURA Roadmap Gap Review Plan", manager.roadmap_gap_review_plan(target))
+            return True
+
+        if command == "next-block-planning-plan":
+            self.print_checkpoint_80_packet("AURA Next Block Planning Plan", manager.next_block_planning_plan(target))
+            return True
+
+        if command == "checkpoint-80-context":
+            self.print_checkpoint_80_packet("AURA Sprint 71-80 Checkpoint Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -3727,6 +3839,9 @@ class AuraShell:
             return
 
         if self.handle_dependency_permission_shell_command(normalized):
+            return
+
+        if self.handle_checkpoint_80_shell_command(normalized):
             return
 
         if normalized == "help":

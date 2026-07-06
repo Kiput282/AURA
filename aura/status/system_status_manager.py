@@ -52,6 +52,7 @@ from aura.vision_input.vision_input_runtime_foundation_manager import VisionInpu
 from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
 from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
+from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -166,6 +167,7 @@ class SystemStatusManager:
         visual_context_status = VisualContextUnderstandingManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         coder_project_status = CoderProjectGenerationPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         dependency_permission_status = DependencyDownloadPermissionGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        checkpoint_80_status = ReviewStabilization7180Manager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -240,6 +242,7 @@ class SystemStatusManager:
             "visual_context_plan_types": visual_context_status["visual_context_plan_types"],
             "coder_project_plan_types": coder_project_status["coder_project_plan_types"],
             "dependency_permission_plan_types": dependency_permission_status["dependency_permission_plan_types"],
+            "checkpoint_71_80_plan_types": checkpoint_80_status["checkpoint_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -294,6 +297,7 @@ class SystemStatusManager:
             "visual_context_understanding": visual_context_status["status"],
             "coder_project_generation_planner": coder_project_status["status"],
             "dependency_download_permission_gate": dependency_permission_status["status"],
+            "review_stabilization_71_80": checkpoint_80_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -937,6 +941,46 @@ class SystemStatusManager:
             "dependency_permission_git_add": dependency_permission_status["git_add"],
             "dependency_permission_git_commit": dependency_permission_status["git_commit"],
             "dependency_permission_git_push": dependency_permission_status["git_push"],
+            "checkpoint_71_80_ready": checkpoint_80_status["checkpoint_ready"],
+            "checkpoint_71_80_planner_ready": checkpoint_80_status["planner_ready"],
+            "completed_feature_review_plan_ready": checkpoint_80_status["completed_feature_review_plan_ready"],
+            "active_foundation_review_plan_ready": checkpoint_80_status["active_foundation_review_plan_ready"],
+            "safety_boundary_review_plan_ready": checkpoint_80_status["safety_boundary_review_plan_ready"],
+            "stabilization_validation_plan_ready": checkpoint_80_status["stabilization_validation_plan_ready"],
+            "technical_debt_review_plan_ready": checkpoint_80_status["technical_debt_review_plan_ready"],
+            "roadmap_gap_review_plan_ready": checkpoint_80_status["roadmap_gap_review_plan_ready"],
+            "next_block_planning_plan_ready": checkpoint_80_status["next_block_planning_plan_ready"],
+            "checkpoint_71_80_context_ready": checkpoint_80_status["context_ready"],
+            "checkpoint_71_80_completed_online": checkpoint_80_status["completed_online"],
+            "checkpoint_71_80_foundation_only_count": checkpoint_80_status["foundation_only_count"],
+            "checkpoint_71_80_planner_only_count": checkpoint_80_status["planner_only_count"],
+            "checkpoint_71_80_permission_gated_count": checkpoint_80_status["permission_gated_count"],
+            "checkpoint_71_80_runtime_execution_features": checkpoint_80_status["runtime_execution_features"],
+            "checkpoint_71_80_checkpoint_only": checkpoint_80_status["checkpoint_only"],
+            "checkpoint_71_80_review_only": checkpoint_80_status["review_only"],
+            "checkpoint_71_80_metadata_only": checkpoint_80_status["metadata_only"],
+            "checkpoint_71_80_runtime_behavior_change": checkpoint_80_status["runtime_behavior_change"],
+            "checkpoint_71_80_automatic_stabilization": checkpoint_80_status["automatic_stabilization"],
+            "checkpoint_71_80_file_read": checkpoint_80_status["file_read"],
+            "checkpoint_71_80_file_write": checkpoint_80_status["file_write"],
+            "checkpoint_71_80_file_modify": checkpoint_80_status["file_modify"],
+            "checkpoint_71_80_file_delete": checkpoint_80_status["file_delete"],
+            "checkpoint_71_80_command_execution": checkpoint_80_status["command_execution"],
+            "checkpoint_71_80_test_execution": checkpoint_80_status["test_execution"],
+            "checkpoint_71_80_code_execution": checkpoint_80_status["code_execution"],
+            "checkpoint_71_80_dependency_install": checkpoint_80_status["dependency_install"],
+            "checkpoint_71_80_package_download": checkpoint_80_status["package_download"],
+            "checkpoint_71_80_internet_search": checkpoint_80_status["internet_search"],
+            "checkpoint_71_80_network_action": checkpoint_80_status["network_action"],
+            "checkpoint_71_80_tool_execution": checkpoint_80_status["tool_execution"],
+            "checkpoint_71_80_real_tool_execution": checkpoint_80_status["real_tool_execution"],
+            "checkpoint_71_80_external_action_execution": checkpoint_80_status["external_action_execution"],
+            "checkpoint_71_80_memory_write": checkpoint_80_status["memory_write"],
+            "checkpoint_71_80_desktop_control": checkpoint_80_status["desktop_control"],
+            "checkpoint_71_80_git_init": checkpoint_80_status["git_init"],
+            "checkpoint_71_80_git_add": checkpoint_80_status["git_add"],
+            "checkpoint_71_80_git_commit": checkpoint_80_status["git_commit"],
+            "checkpoint_71_80_git_push": checkpoint_80_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -1099,5 +1143,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, dependency download permission gate, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, dependency download permission gate, review stabilization 71-80, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

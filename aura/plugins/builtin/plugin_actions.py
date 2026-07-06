@@ -2641,4 +2641,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 80.0 review stabilization 71-80 actions.
+    checkpoint_80_actions = [
+        ('checkpoint_80.status', 'read_project', 'Show AURA Sprint 71-80 Review & Stabilization checkpoint status.'),
+        ('checkpoint_80.completed_feature_review_plan', 'read_project', 'Prepare Sprint 71-80 completed feature review planning.'),
+        ('checkpoint_80.active_foundation_review_plan', 'read_project', 'Prepare active, foundation-only, planner-only, and permission-gated review planning.'),
+        ('checkpoint_80.safety_boundary_review_plan', 'read_project', 'Prepare Sprint 71-80 safety boundary review planning.'),
+        ('checkpoint_80.stabilization_validation_plan', 'read_project', 'Prepare checkpoint stabilization validation planning without executing commands.'),
+        ('checkpoint_80.technical_debt_review_plan', 'read_project', 'Prepare technical debt review planning for the next block.'),
+        ('checkpoint_80.roadmap_gap_review_plan', 'read_project', 'Prepare roadmap gap review planning for unbuilt runtime capabilities.'),
+        ('checkpoint_80.next_block_planning_plan', 'read_project', 'Prepare Sprint 81-90 next block planning direction.'),
+        ('checkpoint_80.context', 'read_project', 'Show Sprint 71-80 checkpoint context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in checkpoint_80_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="checkpoint_80",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="review_stabilization_71_80",
+            )
+        )
+
     return registry

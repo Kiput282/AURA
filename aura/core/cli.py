@@ -63,6 +63,7 @@ from aura.vision_input.vision_input_runtime_foundation_manager import VisionInpu
 from aura.visual_context.visual_context_understanding_manager import VisualContextUnderstandingManager
 from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
+from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3511,6 +3512,107 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 80.0 checkpoint compatibility CLI helpers.
+    def print_checkpoint_80_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {len(value)} field(s)")
+
+        print()
+        print("Checkpoint 71-80 Safety Boundary")
+        print("--------------------------------")
+        for key in [
+            "checkpoint_only",
+            "review_only",
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "runtime_behavior_change",
+            "automatic_stabilization",
+            "file_read",
+            "file_write",
+            "file_modify",
+            "file_delete",
+            "command_execution",
+            "test_execution",
+            "code_execution",
+            "dependency_install",
+            "package_download",
+            "internet_search",
+            "network_action",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "desktop_control",
+            "git_init",
+            "git_add",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<56}: {packet[key]}")
+
+    def handle_checkpoint_80_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "Sprint 71-80 checkpoint review"
+        manager = ReviewStabilization7180Manager(project_root=self.project_root)
+
+        if command == "checkpoint-80-status":
+            self.print_checkpoint_80_packet("AURA Sprint 71-80 Review & Stabilization Status", manager.status())
+            return True
+
+        if command == "completed-feature-review-plan":
+            self.print_checkpoint_80_packet("AURA Completed Feature Review Plan", manager.completed_feature_review_plan(target))
+            return True
+
+        if command == "active-foundation-review-plan":
+            self.print_checkpoint_80_packet("AURA Active Foundation Review Plan", manager.active_foundation_review_plan(target))
+            return True
+
+        if command == "safety-boundary-review-plan":
+            self.print_checkpoint_80_packet("AURA Safety Boundary Review Plan", manager.safety_boundary_review_plan(target))
+            return True
+
+        if command == "stabilization-validation-plan":
+            self.print_checkpoint_80_packet("AURA Stabilization Validation Plan", manager.stabilization_validation_plan(target))
+            return True
+
+        if command == "technical-debt-review-plan":
+            self.print_checkpoint_80_packet("AURA Technical Debt Review Plan", manager.technical_debt_review_plan(target))
+            return True
+
+        if command == "roadmap-gap-review-plan":
+            self.print_checkpoint_80_packet("AURA Roadmap Gap Review Plan", manager.roadmap_gap_review_plan(target))
+            return True
+
+        if command == "next-block-planning-plan":
+            self.print_checkpoint_80_packet("AURA Next Block Planning Plan", manager.next_block_planning_plan(target))
+            return True
+
+        if command == "checkpoint-80-context":
+            self.print_checkpoint_80_packet("AURA Sprint 71-80 Checkpoint Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3558,6 +3660,9 @@ class AuraCLI:
             return True
 
         if self.handle_dependency_permission_cli_command(raw_args):
+            return True
+
+        if self.handle_checkpoint_80_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

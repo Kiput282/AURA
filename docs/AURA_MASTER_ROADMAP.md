@@ -723,3 +723,22 @@ Status: DEPENDENCY DOWNLOAD PERMISSION GATE ONLINE
 AURA can prepare planner-only dependency and download permission gates for dependency request review, package/source trust review, download permission, install command review, dependency risk review, offline alternatives, and dependency permission safety.
 
 This sprint does not install dependencies, download packages/models/assets/installers/binaries, perform network actions, search the internet, run package managers, resolve dependencies at runtime, run download/install runtime, execute pip/npm/apt/uv/poetry/shell commands, execute tools, read/write/modify/delete files, write memory, control desktop, run git init/add/commit/push, perform external actions, execute external binaries, or execute real tools. All dependency and download decisions remain proposal-only and permission-gated.
+
+
+## Sprint 80.0 — Review & Stabilization 71-80
+
+Target: v0.80.0-genesis  
+Status: REVIEW & STABILIZATION 71-80 ONLINE
+
+AURA can prepare a planner-only checkpoint review for Sprint 71-80. This checkpoint reviews completed features, active/foundation/planner-only status, permission-gated systems, safety boundaries, stabilization validation, technical debt, roadmap gaps, and Sprint 81-90 planning direction.
+
+Checkpoint result:
+- completed online features: 9
+- foundation-only systems: 2
+- planner-only systems: 5
+- permission-gated planner systems: 2
+- runtime execution features introduced: 0
+
+This sprint does not change runtime behavior, automatically stabilize code, read/write/modify/delete files at runtime, execute commands, run tests, run code, install dependencies, download packages, search the internet, perform network actions, execute tools, write memory, control desktop, run git operations, perform external actions, or execute real tools.
+
+Detailed checkpoint review: docs/AURA_CHECKPOINT_71_80_REVIEW.md

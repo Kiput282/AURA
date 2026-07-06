@@ -816,3 +816,37 @@ Safety boundary:
 - no external action execution
 - no external binary execution
 - no real tool execution
+
+
+## Sprint 80.0 — Review & Stabilization 71-80
+
+AURA includes a Sprint 71-80 Review & Stabilization checkpoint.
+
+Status: REVIEW & STABILIZATION 71-80 ONLINE
+
+Summary:
+- completed online features in Sprint 71-79: 9
+- foundation-only systems: 2
+- planner-only systems: 5
+- permission-gated planner systems: 2
+- runtime execution features introduced in this block: 0
+
+Completed block:
+- Sprint 71: Thought Loop Planner
+- Sprint 72: Reasoning Context Manager
+- Sprint 73: Knowledge Uncertainty & Internet Search Gate
+- Sprint 74: Voice Input Runtime Foundation
+- Sprint 75: Voice Intent Understanding Layer
+- Sprint 76: Vision Input Runtime Foundation
+- Sprint 77: Visual Context Understanding Layer
+- Sprint 78: Coder Project Generation Planner
+- Sprint 79: Dependency & Download Permission Gate
+- Sprint 80: Review & Stabilization 71-80
+
+Checkpoint notes:
+- AURA's thinking, hearing foundation, seeing foundation, coding planner, and dependency permission layers are now better organized.
+- Voice and vision runtime foundations remain foundation-only.
+- Voice intent, visual context, coder project generation, and dependency/download decisions remain planner-only or permission-gated.
+- No real microphone, camera, OCR, vision, download, install, file generation, command execution, tool execution, network action, desktop control, git action, or external execution is enabled.
+
+See: docs/AURA_CHECKPOINT_71_80_REVIEW.md
