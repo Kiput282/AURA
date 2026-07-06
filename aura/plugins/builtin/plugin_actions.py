@@ -2441,4 +2441,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 72.0 reasoning context manager actions.
+    reasoning_context_actions = [
+        ('reasoning_context.status', 'read_project', 'Show AURA Reasoning Context Manager status.'),
+        ('reasoning_context.context_plan', 'read_project', 'Prepare a metadata-only visible reasoning context plan without hidden chain-of-thought exposure.'),
+        ('reasoning_context.fact_assumption_plan', 'read_project', 'Prepare a fact and assumption separation plan.'),
+        ('reasoning_context.unknowns_review_plan', 'read_project', 'Prepare an unknowns review plan that avoids pretending to know.'),
+        ('reasoning_context.evidence_boundary_plan', 'read_project', 'Prepare an evidence boundary and confidence plan.'),
+        ('reasoning_context.decision_frame_plan', 'read_project', 'Prepare a safe decision frame plan.'),
+        ('reasoning_context.response_strategy_plan', 'read_project', 'Prepare a response strategy plan for honest answers and next steps.'),
+        ('reasoning_context.safety_plan', 'read_project', 'Prepare a reasoning safety plan without hidden chain-of-thought exposure or execution.'),
+        ('reasoning_context.context', 'read_project', 'Show Reasoning Context Manager context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in reasoning_context_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="reasoning_context",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="reasoning_context_manager",
+            )
+        )
+
     return registry

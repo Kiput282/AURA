@@ -1013,4 +1013,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 72.0 reasoning context manager skill.
+    registry.register(
+        AuraSkill(
+            name="reasoning_context_manager",
+            description="Prepare safe metadata-only visible reasoning context, fact/assumption separation, unknowns review, evidence boundaries, decision frames, response strategy, and reasoning safety without exposing hidden chain-of-thought, autonomous reasoning loops, tool execution, memory write, internet search, file operations, command execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "reasoning_context_status",
+                "reasoning_context_plan",
+                "fact_assumption_plan",
+                "unknowns_review_plan",
+                "evidence_boundary_plan",
+                "decision_frame_plan",
+                "response_strategy_plan",
+                "reasoning_safety_plan",
+                "reasoning_context",
+                "metadata_only_reasoning_context_management",
+            ],
+        )
+    )
+
     return registry

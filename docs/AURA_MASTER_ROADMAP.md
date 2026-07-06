@@ -643,3 +643,13 @@ Status: THOUGHT LOOP PLANNER ONLINE
 AURA can plan safe thought cycles, intent framing, visible reasoning summaries, uncertainty reviews, action readiness reviews, growth memory reviews, and thought safety boundaries as metadata only. This sprint starts the v0.71-v0.80 direction: prioritize AURA's core essence before avatar runtime. AURA should grow toward being able to think, hear, and see before focusing on live avatar or 3D environment work.
 
 This sprint does not enable autonomous thought loops, background loops, self-triggered actions, tool execution, memory write, internet search, file operations, command execution, desktop control, camera/microphone access, speaker output, avatar rendering, network actions, git operations, external action execution, or real tool execution.
+
+
+## Sprint 72.0 — Reasoning Context Manager
+
+Target: v0.72.0-genesis  
+Status: REASONING CONTEXT MANAGER ONLINE
+
+AURA can prepare safe visible reasoning context, fact/assumption separation, unknowns review, evidence boundary review, decision frames, response strategy plans, and reasoning safety boundaries as metadata only. This continues the v0.71-v0.80 direction focused on AURA's core essence: think, hear, see, grow together, and stay intelligent without pretending to know.
+
+This sprint does not expose hidden chain-of-thought, disclose private reasoning, run autonomous/background reasoning loops, self-trigger actions, execute tools, write memory, search the internet, read/write files, execute commands, control desktop, access camera/microphone/speaker, render avatar, perform network actions, perform git operations, execute external actions, or execute real tools.

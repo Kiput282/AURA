@@ -55,6 +55,7 @@ from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInt
 from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkflowPlannerManager
 from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
 from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
+from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -2671,6 +2672,105 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 72.0 reasoning context compatibility CLI helpers.
+    def print_reasoning_context_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} field(s)")
+
+        print()
+        print("Reasoning Context Safety Boundary")
+        print("---------------------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "hidden_chain_of_thought_exposed",
+            "private_reasoning_disclosed",
+            "autonomous_reasoning_loop",
+            "background_reasoning_loop",
+            "self_triggered_action",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "desktop_control",
+            "screen_capture",
+            "camera_access",
+            "microphone_access",
+            "speaker_output",
+            "avatar_rendering",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {packet[key]}")
+
+    def handle_reasoning_context_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general reasoning context"
+        manager = ReasoningContextManager(project_root=self.project_root)
+
+        if command == "reasoning-context-status":
+            self.print_reasoning_context_packet("AURA Reasoning Context Manager Status", manager.status())
+            return True
+
+        if command == "reasoning-context-plan":
+            self.print_reasoning_context_packet("AURA Reasoning Context Plan", manager.reasoning_context_plan(target))
+            return True
+
+        if command == "fact-assumption-plan":
+            self.print_reasoning_context_packet("AURA Fact Assumption Plan", manager.fact_assumption_plan(target))
+            return True
+
+        if command == "unknowns-review-plan":
+            self.print_reasoning_context_packet("AURA Unknowns Review Plan", manager.unknowns_review_plan(target))
+            return True
+
+        if command == "evidence-boundary-plan":
+            self.print_reasoning_context_packet("AURA Evidence Boundary Plan", manager.evidence_boundary_plan(target))
+            return True
+
+        if command == "decision-frame-plan":
+            self.print_reasoning_context_packet("AURA Decision Frame Plan", manager.decision_frame_plan(target))
+            return True
+
+        if command == "response-strategy-plan":
+            self.print_reasoning_context_packet("AURA Response Strategy Plan", manager.response_strategy_plan(target))
+            return True
+
+        if command == "reasoning-safety-plan":
+            self.print_reasoning_context_packet("AURA Reasoning Safety Plan", manager.reasoning_safety_plan(target))
+            return True
+
+        if command == "reasoning-context":
+            self.print_reasoning_context_packet("AURA Reasoning Context Manager Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -2694,6 +2794,9 @@ class AuraCLI:
             return True
 
         if self.handle_thought_loop_cli_command(raw_args):
+            return True
+
+        if self.handle_reasoning_context_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

@@ -57,6 +57,7 @@ from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInt
 from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkflowPlannerManager
 from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
 from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
+from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
 
 
 class AuraShell:
@@ -294,6 +295,15 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  reasoning-context-status Show Reasoning Context Manager status")
+        print("  reasoning-context-plan <target> Prepare visible reasoning context plan")
+        print("  fact-assumption-plan <target> Prepare fact/assumption separation plan")
+        print("  unknowns-review-plan <target> Prepare unknowns review plan")
+        print("  evidence-boundary-plan <target> Prepare evidence boundary plan")
+        print("  decision-frame-plan <target> Prepare decision frame plan")
+        print("  response-strategy-plan <target> Prepare response strategy plan")
+        print("  reasoning-safety-plan <target> Prepare reasoning safety plan")
+        print("  reasoning-context Show Reasoning Context Manager context")
         print("  thought-loop-status Show Thought Loop Planner status")
         print("  thought-cycle-plan <target> Prepare metadata-only thought cycle plan")
         print("  intent-frame-plan <target> Prepare metadata-only intent frame plan")
@@ -2757,6 +2767,106 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 72.0 reasoning context compatibility shell helpers.
+    def print_reasoning_context_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {len(value)} field(s)")
+
+        print()
+        print("Reasoning Context Safety Boundary")
+        print("---------------------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "hidden_chain_of_thought_exposed",
+            "private_reasoning_disclosed",
+            "autonomous_reasoning_loop",
+            "background_reasoning_loop",
+            "self_triggered_action",
+            "tool_execution",
+            "real_tool_execution",
+            "external_action_execution",
+            "memory_write",
+            "internet_search",
+            "network_action",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "desktop_control",
+            "screen_capture",
+            "camera_access",
+            "microphone_access",
+            "speaker_output",
+            "avatar_rendering",
+            "git_commit",
+            "git_push",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<52}: {packet[key]}")
+
+    def handle_reasoning_context_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general reasoning context"
+        manager = ReasoningContextManager(project_root=self.project_root)
+
+        if command == "reasoning-context-status":
+            self.print_reasoning_context_packet("AURA Reasoning Context Manager Status", manager.status())
+            return True
+
+        if command == "reasoning-context-plan":
+            self.print_reasoning_context_packet("AURA Reasoning Context Plan", manager.reasoning_context_plan(target))
+            return True
+
+        if command == "fact-assumption-plan":
+            self.print_reasoning_context_packet("AURA Fact Assumption Plan", manager.fact_assumption_plan(target))
+            return True
+
+        if command == "unknowns-review-plan":
+            self.print_reasoning_context_packet("AURA Unknowns Review Plan", manager.unknowns_review_plan(target))
+            return True
+
+        if command == "evidence-boundary-plan":
+            self.print_reasoning_context_packet("AURA Evidence Boundary Plan", manager.evidence_boundary_plan(target))
+            return True
+
+        if command == "decision-frame-plan":
+            self.print_reasoning_context_packet("AURA Decision Frame Plan", manager.decision_frame_plan(target))
+            return True
+
+        if command == "response-strategy-plan":
+            self.print_reasoning_context_packet("AURA Response Strategy Plan", manager.response_strategy_plan(target))
+            return True
+
+        if command == "reasoning-safety-plan":
+            self.print_reasoning_context_packet("AURA Reasoning Safety Plan", manager.reasoning_safety_plan(target))
+            return True
+
+        if command == "reasoning-context":
+            self.print_reasoning_context_packet("AURA Reasoning Context Manager Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -2783,6 +2893,9 @@ class AuraShell:
             return
 
         if self.handle_thought_loop_shell_command(normalized):
+            return
+
+        if self.handle_reasoning_context_shell_command(normalized):
             return
 
         if normalized == "help":

@@ -506,3 +506,38 @@ Safety boundary:
 - no git execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 72.0 — Reasoning Context Manager
+
+AURA includes a Reasoning Context Manager foundation for safe visible reasoning context.
+
+Status: REASONING CONTEXT MANAGER ONLINE
+
+Purpose:
+- help AURA organize context before answering
+- separate facts, assumptions, unknowns, constraints, and goals
+- prepare visible reasoning summaries without exposing hidden chain-of-thought
+- support the principle: cerdas, tetapi tidak sok tahu
+- prepare evidence boundaries and confidence framing
+- prepare response strategy before action
+
+Safety boundary:
+- no hidden chain-of-thought exposure
+- no private reasoning disclosure
+- no autonomous reasoning loop
+- no background reasoning loop
+- no self-triggered action
+- no tool execution
+- no memory write
+- no internet search
+- no file reading or writing
+- no command execution
+- no desktop control
+- no camera or microphone access
+- no speaker output
+- no avatar rendering
+- no network action
+- no git execution
+- no external action execution
+- no real tool execution
