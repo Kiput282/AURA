@@ -247,6 +247,83 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     registry.register(
         PluginAction(
+            name="file_ops.status",
+            plugin="file_ops",
+            description="Show AURA Safe File Operation Planner status.",
+            permission_action="read_project",
+            status="online",
+            skill="safe_file_operation_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="file_ops.read_plan",
+            plugin="file_ops",
+            description="Prepare a metadata-only safe file read plan without opening or reading files automatically.",
+            permission_action="read_project",
+            status="online",
+            skill="safe_file_operation_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="file_ops.write_plan",
+            plugin="file_ops",
+            description="Prepare a safe file write proposal without writing files automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="safe_file_operation_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="file_ops.edit_plan",
+            plugin="file_ops",
+            description="Prepare a safe file edit proposal without editing files automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="safe_file_operation_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="file_ops.move_copy_delete_risk_review",
+            plugin="file_ops",
+            description="Prepare a safe move/copy/delete risk review without moving, copying, or deleting files automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="safe_file_operation_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="file_ops.checklist",
+            plugin="file_ops",
+            description="Prepare a safe file operation checklist requiring explicit confirmation before real file actions.",
+            permission_action="prepare_file",
+            status="online",
+            skill="safe_file_operation_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="file_ops.context",
+            plugin="file_ops",
+            description="Show Safe File Operation Planner context without reading, opening, writing, editing, moving, copying, deleting files, or executing commands.",
+            permission_action="read_project",
+            status="online",
+            skill="safe_file_operation_planner",
+        )
+    )
+
+    registry.register(
+        PluginAction(
             name="local_task.status",
             plugin="local_task",
             description="Show AURA Local Task Planner Alpha status.",

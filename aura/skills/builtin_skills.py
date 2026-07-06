@@ -27,6 +27,26 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="safe_file_operation_planner",
+            description="Prepare safe metadata-only file read plans, write proposals, edit proposals, move/copy/delete risk reviews, file operation checklists, and file operation context using local task planner, workspace awareness, workspace memory, and tool sandbox without reading, opening, writing, editing, moving, copying, deleting files, or executing commands automatically.",
+            role="safety",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "safe_file_operation_status",
+                "safe_file_read_plan",
+                "safe_file_write_plan",
+                "safe_file_edit_plan",
+                "safe_file_move_copy_delete_risk_review",
+                "safe_file_operation_checklist",
+                "safe_file_operation_context",
+                "metadata_only_file_operation_planning",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="local_task_planner_alpha",
             description="Prepare safe local task intent plans, task breakdowns, risk reviews, execution checklists, and task context using project intent, creative assistant, workspace memory, and tool sandbox without executing commands, writing files, opening apps, or performing desktop actions.",
             role="planning",

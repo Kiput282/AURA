@@ -52,8 +52,8 @@ Plugin-based abilities.
 Event-driven core.
 Safe autonomy.
 Current Status
-Version : 0.61.0-genesis
-Status  : LOCAL TASK PLANNER ALPHA ONLINE
+Version : 0.62.0-genesis
+Status  : SAFE FILE OPERATION PLANNER ONLINE
 Runtime : Local-first
 Server  : ATLAS
 Model   : Ollama / llama3.2
@@ -123,6 +123,7 @@ AURA currently supports:
 - Creative Assistant Foundation
 - Review & Stabilization 51-60
 - Local Task Planner Alpha
+- Safe File Operation Planner
 - Memory-aware chat
 - Identity guardrail
 - Language control

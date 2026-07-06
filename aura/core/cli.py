@@ -32,6 +32,7 @@ from aura.project_coding.project_coding_manager import ProjectCodingManager
 from aura.project_intent.project_intent_planner_manager import ProjectIntentPlannerManager
 from aura.creative.creative_assistant_foundation_manager import CreativeAssistantFoundationManager
 from aura.local_task.local_task_planner_alpha_manager import LocalTaskPlannerAlphaManager
+from aura.file_ops.safe_file_operation_planner_manager import SafeFileOperationPlannerManager
 from aura.reflection.memory_reflection_manager import MemoryReflectionManager
 from aura.voice.voice_manager import VoiceManager
 from aura.voice.voice_runtime_planner import VoiceRuntimePlanner
@@ -1558,6 +1559,8 @@ class AuraCLI:
         print(f"Creative Plan Types : {status['foundation']['creative_plan_types']}")
         print(f"Local Task Planner  : {status['foundation']['local_task_planner_sections']}")
         print(f"Local Task Types    : {status['foundation']['local_task_plan_types']}")
+        print(f"Safe File Planner   : {status['foundation']['safe_file_operation_sections']}")
+        print(f"Safe File Types     : {status['foundation']['safe_file_operation_types']}")
         print(f"Reflection Milestones: {status['foundation']['reflection_milestones']}")
         print(f"Voice Providers     : {status['foundation']['voice_providers']}")
         print(f"Voice Runtime Alpha : {status['foundation']['voice_runtime_alpha_sections']}")
@@ -1702,6 +1705,25 @@ class AuraCLI:
 
         subparsers.add_parser("vision-status")
         subparsers.add_parser("vision-providers")
+
+        subparsers.add_parser("safe-file-operation-status")
+
+        safe_file_read_parser = subparsers.add_parser("safe-file-read-plan")
+        safe_file_read_parser.add_argument("target", nargs="+")
+
+        safe_file_write_parser = subparsers.add_parser("safe-file-write-plan")
+        safe_file_write_parser.add_argument("target", nargs="+")
+
+        safe_file_edit_parser = subparsers.add_parser("safe-file-edit-plan")
+        safe_file_edit_parser.add_argument("target", nargs="+")
+
+        safe_file_risk_parser = subparsers.add_parser("safe-file-move-copy-delete-risk-review")
+        safe_file_risk_parser.add_argument("target", nargs="+")
+
+        safe_file_checklist_parser = subparsers.add_parser("safe-file-operation-checklist")
+        safe_file_checklist_parser.add_argument("target", nargs="+")
+
+        subparsers.add_parser("safe-file-operation-context")
 
         subparsers.add_parser("local-task-planner-status")
 
@@ -2269,6 +2291,41 @@ class AuraCLI:
         if parsed.command == "vision-providers":
             disable_logging()
             self.vision_providers()
+            return True
+
+        if parsed.command == "safe-file-operation-status":
+            disable_logging()
+            self.safe_file_operation_status()
+            return True
+
+        if parsed.command == "safe-file-read-plan":
+            disable_logging()
+            self.safe_file_read_plan(" ".join(parsed.target))
+            return True
+
+        if parsed.command == "safe-file-write-plan":
+            disable_logging()
+            self.safe_file_write_plan(" ".join(parsed.target))
+            return True
+
+        if parsed.command == "safe-file-edit-plan":
+            disable_logging()
+            self.safe_file_edit_plan(" ".join(parsed.target))
+            return True
+
+        if parsed.command == "safe-file-move-copy-delete-risk-review":
+            disable_logging()
+            self.safe_file_move_copy_delete_risk_review(" ".join(parsed.target))
+            return True
+
+        if parsed.command == "safe-file-operation-checklist":
+            disable_logging()
+            self.safe_file_operation_checklist(" ".join(parsed.target))
+            return True
+
+        if parsed.command == "safe-file-operation-context":
+            disable_logging()
+            self.safe_file_operation_context()
             return True
 
         if parsed.command == "local-task-planner-status":
@@ -6183,6 +6240,217 @@ class AuraCLI:
         print(f"Allowed Commands             : {sandbox['allowed_command_count']}")
         print(f"Blocked Commands             : {sandbox['blocked_command_count']}")
         print(f"Blocked Patterns             : {sandbox['blocked_pattern_count']}")
+        print()
+        print("Safe Current Capabilities")
+        print("-------------------------")
+        for item in context["safe_current_capabilities"]:
+            print(f"- {item}")
+        print()
+        print("Disabled Capabilities")
+        print("---------------------")
+        for item in context["disabled_capabilities"]:
+            print(f"- {item}")
+        print()
+        print(f"Note: {context['note']}")
+
+
+    def safe_file_operation_status(self) -> None:
+        manager = SafeFileOperationPlannerManager(project_root=self.project_root)
+        status = manager.status()
+
+        print("AURA Safe File Operation Planner Status")
+        print("=======================================")
+        print(f"Name                                  : {status['name']}")
+        print(f"Version                               : {status['version']}")
+        print(f"Status                                : {status['status']}")
+        print(f"Planner Ready                         : {status['planner_ready']}")
+        print(f"File Read Plan Ready                  : {status['file_read_plan_ready']}")
+        print(f"File Write Plan Ready                 : {status['file_write_plan_ready']}")
+        print(f"File Edit Plan Ready                  : {status['file_edit_plan_ready']}")
+        print(f"Move/Copy/Delete Risk Review Ready    : {status['file_move_copy_delete_risk_review_ready']}")
+        print(f"File Operation Checklist Ready        : {status['file_operation_checklist_ready']}")
+        print(f"Context Ready                         : {status['context_ready']}")
+        print(f"Local Task Integration                : {status['local_task_integration_ready']}")
+        print(f"Workspace Awareness Integration       : {status['workspace_awareness_integration_ready']}")
+        print(f"Workspace Memory Link Integration     : {status['workspace_memory_link_integration_ready']}")
+        print(f"Tool Sandbox Integration              : {status['tool_sandbox_integration_ready']}")
+        print(f"Tool Sandbox Dry Run Ready            : {status['tool_sandbox_dry_run_ready']}")
+        print(f"Tool Sandbox Real Execution Ready     : {status['tool_sandbox_real_execution_ready']}")
+        print(f"File Operation Types                  : {status['file_operation_types']}")
+        print(f"Important File Count                  : {status['important_file_count']}")
+        print(f"Runtime Ready                         : {status['runtime_ready']}")
+        print(f"Sections                              : {status['sections']}")
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        print(f"Read Only                             : {status['read_only']}")
+        print(f"Proposal Only                         : {status['proposal_only']}")
+        print(f"Metadata Only                         : {status['metadata_only']}")
+        print(f"File Read                             : {status['file_read']}")
+        print(f"File Opened                           : {status['file_opened']}")
+        print(f"File Write                            : {status['file_write']}")
+        print(f"File Edit                             : {status['file_edit']}")
+        print(f"File Delete                           : {status['file_delete']}")
+        print(f"File Move                             : {status['file_move']}")
+        print(f"File Copy                             : {status['file_copy']}")
+        print(f"Command Execution                     : {status['command_execution']}")
+        print(f"External Action Execution             : {status['external_action_execution']}")
+        print(f"Real Tool Execution                   : {status['real_tool_execution']}")
+        print()
+        print(f"Project Root: {status['project_root']}")
+        print(f"Note: {status['note']}")
+
+    def print_safe_file_plan(self, title: str, plan: dict) -> None:
+        print(title)
+        print("=" * len(title))
+        print(f"Status                                : {plan['status']}")
+        print(f"Plan Type                             : {plan['plan_type']}")
+        print(f"Target                                : {plan['target']}")
+        print(f"Plan State                            : {plan['plan_state']}")
+        print(f"Operation Risk                        : {plan['operation_risk']}")
+        print(f"Operation Priority                    : {plan['operation_priority']}")
+        print(f"File Tags                             : {', '.join(plan['file_tags'])}")
+        print(f"Step Count                            : {plan['step_count']}")
+        print(f"Checklist Count                       : {plan['checklist_count']}")
+        print(f"Important File Count                  : {plan['important_file_count']}")
+        print(f"Tool Sandbox Ready                    : {plan['tool_sandbox_ready']}")
+        print(f"Tool Sandbox Dry Run Ready            : {plan['tool_sandbox_dry_run_ready']}")
+        print(f"Tool Sandbox Real Execution Ready     : {plan['tool_sandbox_real_execution_ready']}")
+        print(f"Execution Ready                       : {plan['execution_ready']}")
+        print(f"Executed                              : {plan['executed']}")
+        print(f"Read Only                             : {plan['read_only']}")
+        print(f"Proposal Only                         : {plan['proposal_only']}")
+        print(f"Metadata Only                         : {plan['metadata_only']}")
+        print(f"File Read Performed                   : {plan['file_read_performed']}")
+        print(f"File Opened                           : {plan['file_opened']}")
+        print(f"File Write Performed                  : {plan['file_write_performed']}")
+        print(f"File Edit Performed                   : {plan['file_edit_performed']}")
+        print(f"File Delete Performed                 : {plan['file_delete_performed']}")
+        print(f"File Move Performed                   : {plan['file_move_performed']}")
+        print(f"File Copy Performed                   : {plan['file_copy_performed']}")
+        print(f"Command Execution Performed           : {plan['command_execution_performed']}")
+        print(f"External Action Performed             : {plan['external_action_execution_performed']}")
+        print(f"Real Tool Execution Performed         : {plan['real_tool_execution_performed']}")
+        print()
+        print("Path Classification")
+        print("-------------------")
+        path_info = plan["path_classification"]
+        print(f"Path Risk                             : {path_info['path_risk']}")
+        print(f"Matched Important Files               : {path_info['matched_important_file_count']}")
+        print(f"Path Traversal Detected               : {path_info['path_traversal_detected']}")
+        print(f"Absolute Path Hint                    : {path_info['absolute_path_hint']}")
+        print(f"Runtime Path Hint                     : {path_info['runtime_path_hint']}")
+        if path_info["matched_important_files"]:
+            print("Matched Files:")
+            for item in path_info["matched_important_files"]:
+                print(f"- {item}")
+        print()
+        print("Workspace Summary")
+        print("-----------------")
+        print(plan["workspace_summary"])
+        print()
+        print("Workspace Memory Summary")
+        print("------------------------")
+        print(plan["workspace_memory_summary"])
+        print()
+        print("Recommended Steps")
+        print("-----------------")
+        for index, step in enumerate(plan["recommended_steps"], start=1):
+            print(f"{index}. {step['title']}")
+            print(f"   Risk        : {step['risk']}")
+            print(f"   Ready       : {step['ready']}")
+            print(f"   Confirmation: {step['requires_confirmation']}")
+            print(f"   Description : {step['description']}")
+        print()
+        print("Checklist")
+        print("---------")
+        for item in plan["checklist"]:
+            print(f"- {item}")
+        print()
+        print("Safety Notes")
+        print("------------")
+        for note in plan["safety_notes"]:
+            print(f"- {note}")
+
+    def safe_file_read_plan(self, target: str) -> None:
+        manager = SafeFileOperationPlannerManager(project_root=self.project_root)
+        self.print_safe_file_plan(
+            "AURA Safe File Read Plan",
+            manager.file_read_plan(target),
+        )
+
+    def safe_file_write_plan(self, target: str) -> None:
+        manager = SafeFileOperationPlannerManager(project_root=self.project_root)
+        self.print_safe_file_plan(
+            "AURA Safe File Write Plan Proposal",
+            manager.file_write_plan(target),
+        )
+
+    def safe_file_edit_plan(self, target: str) -> None:
+        manager = SafeFileOperationPlannerManager(project_root=self.project_root)
+        self.print_safe_file_plan(
+            "AURA Safe File Edit Plan Proposal",
+            manager.file_edit_plan(target),
+        )
+
+    def safe_file_move_copy_delete_risk_review(self, target: str) -> None:
+        manager = SafeFileOperationPlannerManager(project_root=self.project_root)
+        self.print_safe_file_plan(
+            "AURA Safe File Move/Copy/Delete Risk Review",
+            manager.file_move_copy_delete_risk_review(target),
+        )
+
+    def safe_file_operation_checklist(self, target: str) -> None:
+        manager = SafeFileOperationPlannerManager(project_root=self.project_root)
+        self.print_safe_file_plan(
+            "AURA Safe File Operation Checklist",
+            manager.file_operation_checklist(target),
+        )
+
+    def safe_file_operation_context(self) -> None:
+        manager = SafeFileOperationPlannerManager(project_root=self.project_root)
+        context = manager.context()
+
+        print("AURA Safe File Operation Planner Context")
+        print("========================================")
+        print(f"Status                                : {context['status']}")
+        print(f"Context Ready                         : {context['context_ready']}")
+        print(f"Read Only                             : {context['read_only']}")
+        print(f"Proposal Only                         : {context['proposal_only']}")
+        print(f"Metadata Only                         : {context['metadata_only']}")
+        print(f"Write Performed                       : {context['write_performed']}")
+        print(f"File Read Performed                   : {context['file_read_performed']}")
+        print(f"File Opened                           : {context['file_opened']}")
+        print(f"File Write Performed                  : {context['file_write_performed']}")
+        print(f"File Edit Performed                   : {context['file_edit_performed']}")
+        print(f"File Delete Performed                 : {context['file_delete_performed']}")
+        print(f"File Move Performed                   : {context['file_move_performed']}")
+        print(f"File Copy Performed                   : {context['file_copy_performed']}")
+        print(f"Command Execution Performed           : {context['command_execution_performed']}")
+        print(f"External Action Performed             : {context['external_action_execution_performed']}")
+        print(f"Real Tool Execution Performed         : {context['real_tool_execution_performed']}")
+        print()
+        print("Planner Status")
+        print("--------------")
+        status = context["planner_status"]
+        print(f"Planner Ready                         : {status['planner_ready']}")
+        print(f"File Read Plan Ready                  : {status['file_read_plan_ready']}")
+        print(f"File Write Plan Ready                 : {status['file_write_plan_ready']}")
+        print(f"File Edit Plan Ready                  : {status['file_edit_plan_ready']}")
+        print(f"Move/Copy/Delete Risk Review Ready    : {status['file_move_copy_delete_risk_review_ready']}")
+        print(f"File Operation Checklist Ready        : {status['file_operation_checklist_ready']}")
+        print(f"Context Ready                         : {status['context_ready']}")
+        print(f"Runtime Ready                         : {status['runtime_ready']}")
+        print()
+        print("Tool Sandbox")
+        print("------------")
+        sandbox = context["tool_sandbox_status"]
+        print(f"Sandbox Ready                         : {sandbox['sandbox_ready']}")
+        print(f"Dry Run Ready                         : {sandbox['dry_run_ready']}")
+        print(f"Real Execution Ready                  : {sandbox['real_execution_ready']}")
+        print(f"Allowed Commands                      : {sandbox['allowed_command_count']}")
+        print(f"Blocked Commands                      : {sandbox['blocked_command_count']}")
+        print(f"Blocked Patterns                      : {sandbox['blocked_pattern_count']}")
         print()
         print("Safe Current Capabilities")
         print("-------------------------")

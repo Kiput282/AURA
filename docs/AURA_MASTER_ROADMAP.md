@@ -457,6 +457,7 @@ Planned:
 - Creative Assistant Foundation
 - Review & Stabilization 51-60
 - Local Task Planner Alpha
+- Safe File Operation Planner
 - File/project plugin
 - App launcher plugin
 - Browser helper

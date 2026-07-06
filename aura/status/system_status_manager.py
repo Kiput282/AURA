@@ -6,6 +6,7 @@ import yaml
 from aura.awakening.awakening_manager import AwakeningManager
 from aura.briefing.daily_briefing_manager import DailyBriefingManager
 from aura.creative.creative_assistant_foundation_manager import CreativeAssistantFoundationManager
+from aura.file_ops.safe_file_operation_planner_manager import SafeFileOperationPlannerManager
 from aura.local_task.local_task_planner_alpha_manager import LocalTaskPlannerAlphaManager
 from aura.avatar.avatar_manager import AvatarManager
 from aura.avatar.avatar_runtime_alpha_manager import AvatarRuntimeAlphaManager
@@ -71,6 +72,7 @@ class SystemStatusManager:
         self.project_intent_planner_manager = ProjectIntentPlannerManager(project_root=project_root)
         self.creative_assistant_manager = CreativeAssistantFoundationManager(project_root=project_root)
         self.local_task_planner_manager = LocalTaskPlannerAlphaManager(project_root=project_root)
+        self.safe_file_operation_manager = SafeFileOperationPlannerManager(project_root=project_root)
         self.memory_reflection_manager = MemoryReflectionManager(project_root=project_root)
         self.daily_briefing_manager = DailyBriefingManager(project_root=project_root)
         self.partner_alpha_manager = PartnerAlphaManager(project_root=project_root)
@@ -118,6 +120,7 @@ class SystemStatusManager:
         project_intent_status = self.project_intent_planner_manager.status()
         creative_assistant_status = self.creative_assistant_manager.status()
         local_task_status = self.local_task_planner_manager.status()
+        safe_file_status = self.safe_file_operation_manager.status()
         memory_reflection_status = self.memory_reflection_manager.status()
         daily_briefing_status = self.daily_briefing_manager.status()
         partner_alpha_status = self.partner_alpha_manager.status()
@@ -183,6 +186,8 @@ class SystemStatusManager:
                 "creative_plan_types": creative_assistant_status["creative_plan_types"],
                 "local_task_planner_sections": local_task_status["sections"],
                 "local_task_plan_types": local_task_status["task_plan_types"],
+                "safe_file_operation_sections": safe_file_status["sections"],
+                "safe_file_operation_types": safe_file_status["file_operation_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -219,6 +224,7 @@ class SystemStatusManager:
                 "project_intent_planner": project_intent_status["status"],
                 "creative_assistant": creative_assistant_status["status"],
                 "local_task_planner_alpha": local_task_status["status"],
+                "safe_file_operation_planner": safe_file_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -317,6 +323,28 @@ class SystemStatusManager:
                 "local_task_app_opened": local_task_status["app_opened"],
                 "local_task_desktop_action_execution": local_task_status["desktop_action_execution"],
                 "local_task_external_action_execution": local_task_status["external_action_execution"],
+                "safe_file_operation_planner_ready": safe_file_status["planner_ready"],
+                "safe_file_read_plan_ready": safe_file_status["file_read_plan_ready"],
+                "safe_file_write_plan_ready": safe_file_status["file_write_plan_ready"],
+                "safe_file_edit_plan_ready": safe_file_status["file_edit_plan_ready"],
+                "safe_file_move_copy_delete_risk_review_ready": safe_file_status["file_move_copy_delete_risk_review_ready"],
+                "safe_file_operation_checklist_ready": safe_file_status["file_operation_checklist_ready"],
+                "safe_file_operation_context_ready": safe_file_status["context_ready"],
+                "safe_file_local_task_integration_ready": safe_file_status["local_task_integration_ready"],
+                "safe_file_workspace_awareness_integration_ready": safe_file_status["workspace_awareness_integration_ready"],
+                "safe_file_workspace_memory_integration_ready": safe_file_status["workspace_memory_link_integration_ready"],
+                "safe_file_tool_sandbox_integration_ready": safe_file_status["tool_sandbox_integration_ready"],
+                "safe_file_tool_sandbox_dry_run_ready": safe_file_status["tool_sandbox_dry_run_ready"],
+                "safe_file_tool_sandbox_real_execution_ready": safe_file_status["tool_sandbox_real_execution_ready"],
+                "safe_file_file_read": safe_file_status["file_read"],
+                "safe_file_file_opened": safe_file_status["file_opened"],
+                "safe_file_file_write": safe_file_status["file_write"],
+                "safe_file_file_edit": safe_file_status["file_edit"],
+                "safe_file_file_delete": safe_file_status["file_delete"],
+                "safe_file_file_move": safe_file_status["file_move"],
+                "safe_file_file_copy": safe_file_status["file_copy"],
+                "safe_file_command_execution": safe_file_status["command_execution"],
+                "safe_file_external_action_execution": safe_file_status["external_action_execution"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -454,5 +482,5 @@ class SystemStatusManager:
                 "desktop_file_write": desktop_alpha_status["file_write"],
                 "desktop_command_execution": desktop_alpha_status["command_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }
