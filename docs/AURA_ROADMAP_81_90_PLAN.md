@@ -126,3 +126,24 @@ Current workflow summary:
 - runtime execution features: 0
 
 This sprint does not grant permission, approve actions automatically, enable always-approve mode, activate runtime actions, start UI/web/chat/service/launcher runtime, perform file operations, execute commands, install dependencies, download packages, use internet/network actions, execute tools, write memory, control desktop, run git operations, perform external actions, or execute real tools.
+
+
+## Sprint 84 Update — AURA Runtime Service Foundation
+
+Status: RUNTIME SERVICE FOUNDATION ONLINE  
+Target version: v0.84.0-genesis
+
+Sprint 84 adds a planner-only AURA Runtime Service Foundation for ATLAS safe_idle boot planning, service lifecycle planning, health check planning, systemd unit blueprint planning, service recovery planning, service monitor view planning, and auto-boot policy planning.
+
+Current service foundation summary:
+- service plan types: 9
+- boot modes: 4
+- lifecycle states: 9
+- health check fields: 11
+- runtime-enabled services: 0
+- systemd units created: 0
+- background processes started: 0
+- auto-boot runtime enabled: 0
+- runtime execution features: 0
+
+Core rule: AURA may wake automatically in the future, but only in safe_idle and never as auto-action.

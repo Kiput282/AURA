@@ -2741,4 +2741,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 84.0 runtime service foundation actions.
+    runtime_service_actions = [
+        ('runtime_service.status', 'read_project', 'Show AURA Runtime Service Foundation status.'),
+        ('runtime_service.safe_idle_boot_plan', 'read_project', 'Prepare safe_idle boot planning.'),
+        ('runtime_service.lifecycle_plan', 'read_project', 'Prepare service lifecycle planning.'),
+        ('runtime_service.health_check_plan', 'read_project', 'Prepare service health check planning.'),
+        ('runtime_service.systemd_unit_blueprint_plan', 'read_project', 'Prepare systemd unit blueprint planning without writing service files.'),
+        ('runtime_service.recovery_plan', 'read_project', 'Prepare service recovery planning.'),
+        ('runtime_service.monitor_view_plan', 'read_project', 'Prepare service monitor view planning.'),
+        ('runtime_service.auto_boot_policy_plan', 'read_project', 'Prepare safe auto-boot policy planning.'),
+        ('runtime_service.context', 'read_project', 'Show Runtime Service Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_service_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="runtime_service",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_runtime_service_foundation",
+            )
+        )
+
     return registry

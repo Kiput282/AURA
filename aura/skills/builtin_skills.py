@@ -1289,4 +1289,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 84.0 runtime service foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_service_foundation",
+            description="Prepare planner-only AURA runtime service foundation for ATLAS safe_idle boot mode, service lifecycle planning, health check planning, systemd unit blueprint planning, recovery planning, service monitor view planning, and auto-boot policy planning without creating systemd services, enabling systemd, starting/stopping/restarting services, starting background processes, enabling auto-boot runtime, binding ports, running web/UI/chat/launcher runtime, granting permissions, activating runtime actions, changing runtime behavior, file operations, command execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_service_status",
+                "safe_idle_boot_plan",
+                "service_lifecycle_plan",
+                "service_health_check_plan",
+                "systemd_unit_blueprint_plan",
+                "service_recovery_plan",
+                "service_monitor_view_plan",
+                "auto_boot_policy_plan",
+                "runtime_service_context",
+                "safe_idle_service_planning",
+            ],
+        )
+    )
+
     return registry

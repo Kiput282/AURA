@@ -306,12 +306,12 @@ class CapabilityRegistryManager:
             {
                 "id": "aura_runtime_service",
                 "name": "AURA Runtime Service Foundation",
-                "state": "planned_future",
-                "runtime_level": "planned_service_foundation",
+                "state": "online",
+                "runtime_level": "foundation_only",
                 "risk_level": "high",
                 "permission_required": "user_confirmation",
                 "category": "service_foundation",
-                "introduced_in": "planned-0.84.0-genesis",
+                "introduced_in": "0.84.0-genesis",
                 "control_center_visible": True,
             },
             {

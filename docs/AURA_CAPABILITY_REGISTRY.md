@@ -154,3 +154,23 @@ Updated registry summary:
 - runtime execution features: 0
 
 Unified Permission Workflow remains planner-only. It does not grant permission or enable runtime action.
+
+
+## Sprint 84 Update — Runtime Service Foundation Online
+
+Status: UPDATED FOR v0.84.0-genesis
+
+The Capability Registry now marks AURA Runtime Service Foundation as online.
+
+Updated registry summary:
+- total capabilities tracked: 18
+- online capabilities: 14
+- foundation-only capabilities: 4
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 2
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+AURA Runtime Service Foundation remains foundation-only. It does not create, enable, start, stop, restart, or run a real service.

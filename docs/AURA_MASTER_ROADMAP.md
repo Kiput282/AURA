@@ -881,3 +881,22 @@ Detailed docs:
 - docs/AURA_UNIFIED_PERMISSION_WORKFLOW.md
 - docs/AURA_CAPABILITY_REGISTRY.md
 - docs/AURA_ROADMAP_81_90_PLAN.md
+
+
+## Sprint 84.0 — AURA Runtime Service Foundation
+
+Target: v0.84.0-genesis  
+Status: RUNTIME SERVICE FOUNDATION ONLINE
+
+AURA can provide planner-only Runtime Service Foundation planning for ATLAS safe_idle boot behavior, service lifecycle planning, health check planning, systemd unit blueprint planning, service recovery planning, service monitor view planning, and auto-boot policy planning.
+
+Capability Registry now marks AURA Runtime Service Foundation as online:
+- total capabilities tracked: 18
+- online capabilities: 14
+- foundation-only capabilities: 4
+- planner-only capabilities: 7
+- planned future capabilities: 2
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+No service runtime, systemd creation, background process, auto-boot runtime, port binding, UI/web/chat/launcher runtime, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.

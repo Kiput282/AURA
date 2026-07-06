@@ -67,6 +67,7 @@ from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabiliz
 from aura.output_formatter.shared_output_formatter_manager import SharedOutputFormatterManager
 from aura.capability_registry.capability_registry_manager import CapabilityRegistryManager
 from aura.permission_workflow.unified_permission_workflow_manager import UnifiedPermissionWorkflowManager
+from aura.runtime_service.aura_runtime_service_foundation_manager import AuraRuntimeServiceFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3772,6 +3773,58 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 84.0 runtime service foundation CLI helpers.
+    def print_runtime_service_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Service Safety Boundary"))
+
+    def handle_runtime_service_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA runtime service foundation"
+        manager = AuraRuntimeServiceFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-service-status":
+            self.print_runtime_service_packet("AURA Runtime Service Foundation Status", manager.status())
+            return True
+
+        if command == "safe-idle-boot-plan":
+            self.print_runtime_service_packet("AURA Safe Idle Boot Plan", manager.safe_idle_boot_plan(target))
+            return True
+
+        if command == "service-lifecycle-plan":
+            self.print_runtime_service_packet("AURA Service Lifecycle Plan", manager.service_lifecycle_plan(target))
+            return True
+
+        if command == "service-health-check-plan":
+            self.print_runtime_service_packet("AURA Service Health Check Plan", manager.service_health_check_plan(target))
+            return True
+
+        if command == "systemd-unit-blueprint-plan":
+            self.print_runtime_service_packet("AURA Systemd Unit Blueprint Plan", manager.systemd_unit_blueprint_plan(target))
+            return True
+
+        if command == "service-recovery-plan":
+            self.print_runtime_service_packet("AURA Service Recovery Plan", manager.service_recovery_plan(target))
+            return True
+
+        if command == "service-monitor-view-plan":
+            self.print_runtime_service_packet("AURA Service Monitor View Plan", manager.service_monitor_view_plan(target))
+            return True
+
+        if command == "auto-boot-policy-plan":
+            self.print_runtime_service_packet("AURA Auto Boot Policy Plan", manager.auto_boot_policy_plan(target))
+            return True
+
+        if command == "runtime-service-context":
+            self.print_runtime_service_packet("AURA Runtime Service Foundation Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3831,6 +3884,9 @@ class AuraCLI:
             return True
 
         if self.handle_permission_workflow_cli_command(raw_args):
+            return True
+
+        if self.handle_runtime_service_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

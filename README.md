@@ -1035,3 +1035,34 @@ See:
 - docs/AURA_UNIFIED_PERMISSION_WORKFLOW.md
 - docs/AURA_CAPABILITY_REGISTRY.md
 - docs/AURA_ROADMAP_81_90_PLAN.md
+
+
+## Sprint 84.0 — AURA Runtime Service Foundation
+
+Status: RUNTIME SERVICE FOUNDATION ONLINE
+
+AURA includes planner-only Runtime Service Foundation planning for ATLAS safe_idle boot behavior, service lifecycle planning, health check planning, systemd unit blueprint planning, service recovery planning, service monitor view planning, and auto-boot policy planning.
+
+Summary:
+- service plan types: 9
+- boot modes: 4
+- lifecycle states: 9
+- health check fields: 11
+- runtime-enabled services: 0
+- systemd units created: 0
+- background processes started: 0
+- auto-boot runtime enabled: 0
+- runtime execution features: 0
+
+Capability Registry update:
+- total capabilities tracked: 18
+- online capabilities: 14
+- foundation-only capabilities: 4
+- planner-only capabilities: 7
+- planned future capabilities: 2
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Core rule: AURA may wake automatically in the future, but only in safe_idle and never as auto-action.
+
+See docs/AURA_RUNTIME_SERVICE_FOUNDATION.md.
