@@ -314,3 +314,26 @@ Safety boundary:
 - no git commit or push
 - proposal-only planning until explicit confirmation and validation
 
+
+## Sprint 64.0 — Codebase Patch Proposal Renderer
+
+AURA includes a Codebase Patch Proposal Renderer foundation for proposal-only patch review packets.
+
+Capabilities:
+- codebase_patch_proposal.status
+- codebase_patch_proposal.render
+- codebase_patch_proposal.review_packet
+- codebase_patch_proposal.validation_packet
+- codebase_patch_proposal.rollback_packet
+- codebase_patch_proposal.context
+
+Safety boundary:
+- no automatic file reads
+- no automatic file opens
+- no automatic file writes or edits
+- no automatic patch apply
+- no move/copy/delete operations
+- no command or test execution
+- no git commit or push
+- proposal-only review packets until explicit confirmation and validation
+

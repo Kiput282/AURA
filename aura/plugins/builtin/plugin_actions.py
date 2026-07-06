@@ -1928,4 +1928,70 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         )
     )
 
+    registry.register(
+        PluginAction(
+            name="codebase_patch_proposal.status",
+            plugin="codebase_patch_proposal",
+            description="Show Codebase Patch Proposal Renderer status.",
+            permission_action="read_project",
+            status="online",
+            skill="codebase_patch_proposal_renderer",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_patch_proposal.render",
+            plugin="codebase_patch_proposal",
+            description="Render a proposal-only codebase patch review packet without reading, writing, editing, applying patches, or executing commands automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_patch_proposal_renderer",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_patch_proposal.review_packet",
+            plugin="codebase_patch_proposal",
+            description="Prepare a codebase patch review packet with candidate surfaces and review checklist.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_patch_proposal_renderer",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_patch_proposal.validation_packet",
+            plugin="codebase_patch_proposal",
+            description="Prepare proposal-only validation steps for a codebase patch without executing commands automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_patch_proposal_renderer",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_patch_proposal.rollback_packet",
+            plugin="codebase_patch_proposal",
+            description="Prepare rollback notes for a codebase patch without resetting, deleting, committing, or pushing automatically.",
+            permission_action="prepare_file",
+            status="online",
+            skill="codebase_patch_proposal_renderer",
+        )
+    )
+
+    registry.register(
+        PluginAction(
+            name="codebase_patch_proposal.context",
+            plugin="codebase_patch_proposal",
+            description="Show Codebase Patch Proposal Renderer context and safety boundary.",
+            permission_action="read_project",
+            status="online",
+            skill="codebase_patch_proposal_renderer",
+        )
+    )
+
     return registry

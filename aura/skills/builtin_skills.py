@@ -843,4 +843,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    registry.register(
+        AuraSkill(
+            name="codebase_patch_proposal_renderer",
+            description="Render safe proposal-only codebase patch review packets with candidate surfaces, patch outline, validation packet, rollback packet, and safety boundary without reading, writing, editing, applying patches, executing commands, committing, or pushing automatically.",
+            role="coder",
+            permission_action="prepare_file",
+            status="online",
+            capabilities=[
+                "codebase_patch_proposal_status",
+                "codebase_patch_proposal_render",
+                "codebase_patch_review_packet",
+                "codebase_patch_safety_packet",
+                "codebase_patch_validation_packet",
+                "codebase_patch_rollback_packet",
+                "codebase_patch_proposal_context",
+                "proposal_only_patch_rendering",
+            ],
+        )
+    )
+
     return registry

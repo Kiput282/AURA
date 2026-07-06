@@ -1,0 +1,3 @@
+from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
+
+__all__ = ["CodebasePatchProposalRendererManager"]
