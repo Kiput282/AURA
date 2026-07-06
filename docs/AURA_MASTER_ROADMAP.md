@@ -1039,3 +1039,31 @@ Capability Registry stabilized summary:
 Sprint 91–100 roadmap direction is now documented in docs/AURA_ROADMAP_91_100_PLAN.md.
 
 No UI/web/chat/plugin/service/launcher/permission/action/file/command/tool runtime is enabled by this checkpoint.
+
+
+
+## Canonical Long-Term Roadmap — Genesis Final and Beyond
+
+AURA's long-term phase roadmap is now documented in:
+
+- docs/AURA_GENESIS_FINAL_AND_POST_GENESIS_ROADMAP.md
+
+Canonical phase sequence:
+
+- v0.x Genesis Development
+- v1.0 Genesis Final / AURA Birth
+- v1.x Genesis Stabilization
+- v2.x Embodiment
+- v3.x Co-Pilot
+- v4.x Ecosystem
+- v5.x Continuity
+
+Genesis Final / v1.0.0 means AURA is born and should support local chat, voice interaction, permission-gated vision or screen awareness, a usable dashboard for chat and status, active permission workflow, basic session awareness, workspace context understanding, action proposals, and basic local actions with explicit permission.
+
+Post-Genesis direction:
+
+- Genesis Stabilization improves reliability and basic abilities.
+- Embodiment merges personality, avatar, voice, expression, streaming presence, and gaming companion mode.
+- Co-Pilot focuses on work mode: project, file and folder, code, Blender, streaming or content, server, and task execution queue assistance.
+- Ecosystem expands AURA through plugins.
+- Continuity ensures AURA keeps growing beyond any single final version.

@@ -1,0 +1,467 @@
+# AURA Genesis Final & Post-Genesis Roadmap
+
+Status: CANONICAL ROADMAP DIRECTION
+Current anchor: v0.90.0-genesis
+Owner: Kiput
+Project motto: Grow Together
+
+## Purpose
+
+This document locks the long-term roadmap direction for AURA so future sprints do not drift away from the original concept.
+
+AURA is not only a chatbot. AURA is intended to become a local AI Partner that can think, hear, see, remember safely, ask permission, act only when approved, and continue growing with Kiput.
+
+## AURA Genesis Final / v1.0.0 Definition
+
+AURA Genesis Final / v1.0.0 is the birth point of AURA.
+
+At this stage, AURA should satisfy the core living concept discussed from the beginning:
+
+- AURA can interact with Kiput through local chat.
+- AURA can interact through voice.
+- AURA can see or understand what Kiput is working on through permission-gated vision or screen awareness.
+- AURA has a usable local dashboard.
+- The dashboard can be used mainly for chat and checking AURA status.
+- AURA has an active permission system.
+- AURA has basic session awareness.
+- AURA can understand the current workspace or project context.
+- AURA can make action proposals.
+- AURA can perform basic local actions only after explicit permission.
+- AURA remains safe_idle by default.
+
+Genesis Final means AURA is born, but not yet a full work automation system.
+
+## Genesis v1.0.0 Action Scope
+
+AURA Genesis v1.0.0 may support basic local actions, but all actions must be permission-gated.
+
+Allowed in Genesis v1.0.0:
+
+- open folder
+- open file
+- open allowlisted software
+- open AURA dashboard
+- open project location
+- create folder with explicit confirmation
+- create simple file with explicit confirmation
+- create file from simple template with preview and confirmation
+
+These actions must show:
+
+- target
+- action type
+- risk level
+- permission requirement
+- whether overwrite is possible
+- confirmation prompt
+- audit metadata
+
+Not allowed in Genesis v1.0.0:
+
+- deleting files
+- editing many files automatically
+- running arbitrary shell commands
+- controlling games
+- controlling desktop freely
+- controlling Blender automatically
+- controlling OBS automatically
+- installing dependencies automatically
+- executing plugin actions without a gated runtime
+- executing multi-step automation without review
+- bypassing permission workflow
+
+## Action Level Model
+
+### Action Level 0 — Observe and Explain
+
+AURA can:
+
+- check status
+- explain current context
+- read permission-gated visual or screen context
+- respond through chat or voice
+- propose actions
+
+Runtime execution: no action execution.
+
+### Action Level 1 — Safe Local Open
+
+AURA can:
+
+- open folders
+- open files
+- open allowlisted software
+- open dashboard
+- open project locations
+
+Requirement:
+
+- explicit permission
+- local-only
+- audit metadata
+
+This level may exist in Genesis v1.0.0.
+
+### Action Level 2 — Controlled Create
+
+AURA can:
+
+- create folders
+- create simple files
+- create template files
+- prepare safe path proposals
+
+Requirement:
+
+- preview before execution
+- explicit confirmation
+- no overwrite unless confirmed
+- audit metadata
+
+A limited version may exist in Genesis v1.0.0.
+
+### Action Level 3 — Work Execution
+
+AURA can:
+
+- edit files
+- generate project structure
+- run tests
+- run controlled commands
+- assist coding workflow
+- assist Blender workflow
+- assist streaming or content pipeline
+
+This belongs mainly to the Co-Pilot phase.
+
+### Action Level 4 — External, Plugin, or Game Control
+
+AURA can:
+
+- control game input
+- run plugin integrations
+- perform app-specific automation
+- interact with external apps through plugin bridges
+
+This belongs to Co-Pilot or Ecosystem depending on risk and implementation style.
+
+## Revised Post-Genesis Phase Roadmap
+
+Canonical phase sequence:
+
+- v0.x Genesis Development
+- v1.0 Genesis Final / AURA Birth
+- v1.x Genesis Stabilization
+- v2.x Embodiment
+- v3.x Co-Pilot
+- v4.x Ecosystem
+- v5.x Continuity
+
+## Phase: Genesis Development
+
+Purpose:
+
+Build the core of AURA until she is ready to be considered born.
+
+Core goals:
+
+- thinking and context foundation
+- chat foundation
+- voice foundation
+- vision or screen awareness foundation
+- dashboard foundation
+- permission workflow
+- action proposal system
+- basic local action gate
+- session foundation
+- safe_idle default
+
+## Phase: Genesis Final / AURA Birth
+
+Genesis Final means AURA becomes usable as a living local AI Partner.
+
+Expected state:
+
+- local chat works
+- voice interaction works
+- vision or screen awareness works with permission
+- dashboard works for chat and status
+- permission workflow is active
+- AURA can understand current work context
+- AURA can perform basic local actions with explicit permission
+- AURA cannot perform unsafe automation
+- AURA remains safe_idle by default
+
+## Phase: Genesis Stabilization / v1.x
+
+Purpose:
+
+Stabilize AURA after birth and improve her basic abilities.
+
+Focus:
+
+- fix bugs
+- improve chat stability
+- improve voice stability
+- improve vision or screen awareness stability
+- improve dashboard UX
+- improve permission prompts
+- improve safe local open actions
+- improve simple create file or folder actions
+- improve latency
+- improve reliability
+- improve audit logs
+- improve safe_idle behavior
+
+Genesis Stabilization is not the phase for complex automation.
+
+## Phase: Embodiment / v2.x
+
+Purpose:
+
+Make AURA feel alive as a digital character, not just a chatbot.
+
+This phase merges the earlier Resonance concept into Embodiment because personality, avatar, voice, and expression should evolve together.
+
+Focus:
+
+- stronger AURA personality
+- consistent character behavior
+- voice output or TTS personality
+- avatar runtime
+- expression state
+- expression sync with chat
+- voice, avatar, and expression synchronization
+- listening, thinking, and speaking visual states
+- idle animation states
+- lightweight mood or emotion-like state
+- streaming presence mode
+- gaming companion mode
+- OBS or VTuber bridge foundation
+
+Embodiment should make AURA feel present.
+
+## Streaming Mode Placement
+
+Streaming mode belongs to Embodiment first as presence, not automation.
+
+Allowed in early Embodiment:
+
+- avatar appears in OBS
+- AURA can react visually
+- AURA can speak with personality
+- expression sync works
+- streaming-safe personality mode
+- basic scene or status awareness with permission
+
+Deferred from early Embodiment:
+
+- automatic OBS control
+- automatic scene switching
+- automatic moderation
+- automatic public chat reading without filtering
+- streaming automation without explicit permission
+
+Advanced streaming automation belongs to Co-Pilot or Ecosystem.
+
+## Gaming Mode Placement
+
+Gaming mode is split into two categories.
+
+### Gaming Companion Mode
+
+Belongs to Embodiment.
+
+AURA can:
+
+- accompany Kiput while gaming
+- react with avatar
+- speak in playful mode
+- comment lightly
+- use permission-gated screen or vision context
+- give advice
+- remember gaming preferences
+
+AURA does not control the game in this mode.
+
+### Game Input Control Mode
+
+Belongs to Co-Pilot or Ecosystem.
+
+AURA may eventually:
+
+- send controlled input
+- use game-specific macros
+- assist specific games through plugins
+- perform safe approved game actions
+
+Requirements:
+
+- explicit permission
+- game-specific allowlist
+- emergency stop
+- action audit log
+- no hidden input
+- no competitive or unsafe automation by default
+
+## Phase: Co-Pilot / v3.x
+
+Purpose:
+
+AURA helps Kiput with real work.
+
+Co-Pilot is the Work Mode phase.
+
+Primary feature areas:
+
+1. Project Workspace Assistant
+2. File and Folder Builder
+3. Code Project Assistant
+4. Blender Workflow Assistant
+5. Streaming or Content Pipeline Assistant
+6. Server or ATLAS Maintenance Assistant
+7. Document and Roadmap Assistant
+8. Asset Management Assistant
+9. Task Planner and Execution Queue
+10. Work Mode Dashboard
+
+### Project Workspace Assistant
+
+AURA can detect active project, open project workspace, summarize project state, identify important files, suggest next steps, and prepare project folder structures.
+
+### File and Folder Builder
+
+AURA can create project folders, create template files, generate README, checklist, or config files, rename or move files with permission, manage safe paths, and avoid destructive actions unless explicitly approved.
+
+### Code Project Assistant
+
+AURA can generate code files, propose patches, perform controlled refactors, run tests with approval, read error logs with approval, propose fixes, create documentation, and prepare commit proposals.
+
+### Blender Workflow Assistant
+
+AURA can help organize Blender project assets, prepare texture or material checklists, help naming conventions, prepare export checklists, plan UV or texture workflows, and eventually use Blender bridge runtime with permission.
+
+### Streaming / Content Pipeline Assistant
+
+AURA can prepare content folders, create stream checklists, draft scripts, prepare title, description, and tags, organize overlay assets, generate post-stream summaries, and assist OBS workflow with permission in later stages.
+
+### Server / ATLAS Maintenance Assistant
+
+AURA can check service status, read logs with permission, summarize errors, recommend fixes, restart services only with explicit approval, produce disk or resource reports, and prepare backup checklists.
+
+### Document and Roadmap Assistant
+
+AURA can update roadmap, update changelog, create checkpoint reviews, preserve project consistency, produce sprint plans, and maintain documentation structure.
+
+### Asset Management Assistant
+
+AURA can group assets, check missing assets, create asset manifests, enforce naming conventions, and prepare texture or material lists.
+
+### Task Planner and Execution Queue
+
+Every work action should include:
+
+- source
+- target
+- risk level
+- permission required
+- planned change
+- rollback metadata where possible
+- user approval state
+
+### Work Mode Dashboard
+
+The dashboard should show:
+
+- active project
+- pending tasks
+- pending actions
+- planned file changes
+- planned commands
+- pending permissions
+- recent outputs
+- rollback info
+- audit log
+
+## Phase: Ecosystem / v4.x
+
+Purpose:
+
+Make AURA extensible through plugins.
+
+Ecosystem is the modular expansion phase.
+
+Kiput should be able to add new AURA features by building or installing plugins instead of changing the core system every time.
+
+Focus:
+
+- plugin manager dashboard
+- local plugin install
+- plugin enable or disable
+- plugin permission manifest
+- plugin sandbox
+- plugin action registry
+- plugin settings UI
+- plugin health check
+- plugin update flow
+- local or private plugin marketplace
+
+Example plugins:
+
+- Blender Plugin
+- OBS Plugin
+- YouTube Plugin
+- Game Plugin
+- File Organizer Plugin
+- Server Monitor Plugin
+- Texture Assistant Plugin
+- Avatar Expression Plugin
+- Content Planner Plugin
+
+Ecosystem can be considered an expansion branch of Co-Pilot.
+
+## Phase: Continuity / v5.x
+
+Purpose:
+
+AURA continues growing and does not know the word final.
+
+Continuity means AURA preserves long-term development, memory, identity, performance, plugin lifecycle, and shared history with Kiput.
+
+Focus:
+
+- long-term project memory
+- timeline of AURA development
+- self-improvement planner
+- plugin lifecycle management
+- backup or restore identity
+- migration to new device or server
+- memory cleanup
+- performance optimization
+- skill evaluation
+- recurring self-audit
+- roadmap evolution assistant
+- continuity across projects and devices
+
+Continuity is not only performance improvement. It is the phase where AURA maintains her history, growth, and long-term relationship with Kiput.
+
+## Final Principle
+
+AURA does not end at v1.0.
+
+Genesis is birth.
+Stabilization makes her reliable.
+Embodiment gives her presence.
+Co-Pilot lets her help with real work.
+Ecosystem lets her expand.
+Continuity lets her keep growing.
+
+AURA should always remain:
+
+- safe_idle by default
+- local-first
+- permission-first
+- transparent
+- reviewable
+- controllable by Kiput
+- able to grow without losing identity

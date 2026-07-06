@@ -1303,3 +1303,29 @@ Canonical registry IDs confirmed:
 Core checkpoint result: AURA completed the 81–90 planner/foundation/control-center preparation block without enabling runtime execution.
 
 See docs/AURA_CHECKPOINT_81_90_REVIEW.md and docs/AURA_ROADMAP_91_100_PLAN.md.
+
+
+
+## Canonical Long-Term Roadmap — Genesis Final and Beyond
+
+AURA now has a canonical long-term roadmap document:
+
+- docs/AURA_GENESIS_FINAL_AND_POST_GENESIS_ROADMAP.md
+
+This document defines:
+
+- AURA Genesis Final / v1.0.0 as AURA's birth point
+- expected Genesis capabilities: chat, voice, vision or screen awareness, dashboard chat and status, permission workflow, and basic local actions
+- safe action levels
+- revised post-Genesis phases:
+  - v1.x Genesis Stabilization
+  - v2.x Embodiment
+  - v3.x Co-Pilot
+  - v4.x Ecosystem
+  - v5.x Continuity
+- streaming and gaming mode placement
+- Co-Pilot work mode scope
+- Ecosystem plugin direction
+- Continuity principle: AURA keeps growing beyond any final
+
+Core roadmap principle: Genesis is birth, not the end. AURA should continue growing safely with Kiput.
