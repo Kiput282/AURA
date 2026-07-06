@@ -1218,3 +1218,44 @@ Capability Registry update:
 Core rule: AURA Chat Bridge may prepare session metadata, but must not run chat runtime yet.
 
 See docs/AURA_CHAT_BRIDGE_SESSION_STATE_FOUNDATION.md.
+
+
+## Sprint 89.0 — AURA Plugin / Permission Dashboard Foundation
+
+Status: PLUGIN / PERMISSION DASHBOARD FOUNDATION ONLINE
+
+AURA includes planner-only Plugin / Permission Dashboard Foundation planning for plugin/action registry visibility, permission request visibility, permission decision visibility, chat-originated action request visibility, capability-permission matrix planning, Control Center dashboard bridge planning, Local Console dashboard contract planning, audit trail dashboard blueprint planning, and dashboard safety policy.
+
+Summary:
+- dashboard plan types: 11
+- dashboard panels: 8
+- plugin dashboard cards: 9
+- permission dashboard cards: 10
+- chat action visibility fields: 8
+- capability-permission matrix fields: 8
+- audit trail fields: 8
+- dashboard filters: 7
+- runtime-enabled panels: 0
+- plugin actions executed: 0
+- permission requests resolved: 0
+- permissions granted: 0
+- permissions denied: 0
+- chat-originated actions executed: 0
+- dashboard routes created: 0
+- web panels rendered: 0
+- runtime execution features: 0
+
+Capability Registry update:
+- total capabilities tracked: 21
+- online capabilities: 19
+- foundation-only capabilities: 9
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Core rule: AURA Plugin / Permission Dashboard may show plugin and permission visibility, but must not execute actions or grant permissions.
+
+See docs/AURA_PLUGIN_PERMISSION_DASHBOARD_FOUNDATION.md.

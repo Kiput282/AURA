@@ -984,3 +984,24 @@ Capability Registry now tracks AURA Chat Bridge & Session State Foundation:
 - runtime execution features: 0
 
 No chat runtime, conversation runtime, session runtime, session persistence runtime, websocket runtime, web server runtime, frontend/backend/API runtime, port binding, model inference runtime activation, tool call runtime, permission grant runtime, runtime action activation, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
+
+
+## Sprint 89.0 — AURA Plugin / Permission Dashboard Foundation
+
+Target: v0.89.0-genesis  
+Status: PLUGIN / PERMISSION DASHBOARD FOUNDATION ONLINE
+
+AURA can provide planner-only Plugin / Permission Dashboard Foundation planning for plugin/action registry visibility, permission request visibility, permission decision visibility, chat-originated action request visibility, capability-permission matrix planning, Control Center dashboard bridge planning, Local Console dashboard contract planning, audit trail dashboard blueprint planning, and dashboard safety policy.
+
+Capability Registry now tracks AURA Plugin / Permission Dashboard Foundation:
+- total capabilities tracked: 21
+- online capabilities: 19
+- foundation-only capabilities: 9
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+No plugin runtime, plugin action execution, permission grant/deny/decision runtime, runtime action activation, chat action execution, tool call runtime, web/frontend/backend/API runtime, route creation, port binding, log read/write, file operation, command execution, dependency install, network action, memory write, desktop control, git execution, external action, or real tool execution is enabled.

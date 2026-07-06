@@ -254,3 +254,23 @@ Updated registry summary:
 - runtime execution features: 0
 
 AURA Chat Bridge & Session State Foundation remains foundation-only and blueprint-only. It does not start chat runtime, websocket runtime, session runtime, web/API runtime, grant permissions, activate actions, persist sessions, send messages, receive messages, or execute tools.
+
+
+## Sprint 89 Update — Plugin / Permission Dashboard Foundation Online
+
+Status: UPDATED FOR v0.89.0-genesis
+
+The Capability Registry now tracks AURA Plugin / Permission Dashboard Foundation as online.
+
+Updated registry summary:
+- total capabilities tracked: 21
+- online capabilities: 19
+- foundation-only capabilities: 9
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+AURA Plugin / Permission Dashboard Foundation remains foundation-only and blueprint-only. It does not enable plugin runtime, execute plugin actions, grant or deny permissions, resolve permission requests, execute chat-originated actions, activate runtime actions, call tools, or run dashboard/web runtime.

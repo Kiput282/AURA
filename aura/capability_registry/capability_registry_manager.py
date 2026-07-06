@@ -380,6 +380,17 @@ class CapabilityRegistryManager:
                     "introduced_in": "0.88.0-genesis",
                     "control_center_visible": True,
                 },
+                {
+                    "id": "aura_plugin_permission_dashboard_foundation",
+                    "name": "AURA Plugin / Permission Dashboard Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "user_confirmation",
+                    "category": "plugin_permission_dashboard",
+                    "introduced_in": "0.89.0-genesis",
+                    "control_center_visible": True,
+                },
 ]
 
 

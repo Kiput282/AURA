@@ -1410,4 +1410,29 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 89.0 plugin permission dashboard foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_plugin_permission_dashboard_foundation",
+            description="Prepare planner-only AURA Plugin / Permission Dashboard Foundation for plugin/action registry dashboard planning, permission request dashboard planning, permission decision visibility planning, chat-originated action request visibility planning, capability-permission matrix planning, Control Center dashboard bridge planning, Local Console dashboard contract planning, audit trail dashboard blueprint planning, and dashboard safety policy without enabling plugin runtime, installing/enabling/disabling plugins, executing plugin actions, granting or denying permissions, resolving permission requests, activating runtime actions, executing chat-originated actions, calling tools, running service/launcher/chat/session/web/frontend/backend/API runtime, creating routes, binding ports, reading or writing logs, file operations, command execution, dependency install, package download, internet/network action, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "plugin_permission_dashboard_status",
+                "plugin_registry_dashboard_plan",
+                "permission_request_dashboard_plan",
+                "permission_decision_visibility_plan",
+                "chat_originated_action_visibility_plan",
+                "capability_permission_matrix_plan",
+                "control_center_dashboard_bridge_plan",
+                "local_console_dashboard_contract_plan",
+                "audit_trail_dashboard_blueprint_plan",
+                "dashboard_safety_policy_plan",
+                "plugin_permission_dashboard_context",
+                "plugin_permission_visibility_metadata",
+            ],
+        )
+    )
+
     return registry

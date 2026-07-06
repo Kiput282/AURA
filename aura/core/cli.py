@@ -72,6 +72,7 @@ from aura.launcher_monitor.aura_launcher_health_monitor_foundation_manager impor
 from aura.control_center.aura_control_center_ui_blueprint_manager import AuraControlCenterUIBlueprintManager
 from aura.local_console_web.aura_local_console_web_foundation_manager import AuraLocalConsoleWebFoundationManager
 from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import AuraChatBridgeSessionStateFoundationManager
+from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundation_manager import AuraPluginPermissionDashboardFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4061,6 +4062,66 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 89.0 plugin permission dashboard foundation CLI helpers.
+    def print_plugin_permission_dashboard_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Plugin / Permission Dashboard Safety Boundary"))
+
+    def handle_plugin_permission_dashboard_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA plugin permission dashboard foundation"
+        manager = AuraPluginPermissionDashboardFoundationManager(project_root=self.project_root)
+
+        if command == "plugin-permission-dashboard-status":
+            self.print_plugin_permission_dashboard_packet("AURA Plugin / Permission Dashboard Foundation Status", manager.status())
+            return True
+
+        if command == "plugin-registry-dashboard-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Plugin Registry Dashboard Plan", manager.plugin_registry_dashboard_plan(target))
+            return True
+
+        if command == "permission-request-dashboard-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Permission Request Dashboard Plan", manager.permission_request_dashboard_plan(target))
+            return True
+
+        if command == "permission-decision-visibility-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Permission Decision Visibility Plan", manager.permission_decision_visibility_plan(target))
+            return True
+
+        if command == "chat-originated-action-visibility-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Chat-Originated Action Visibility Plan", manager.chat_originated_action_visibility_plan(target))
+            return True
+
+        if command == "capability-permission-matrix-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Capability Permission Matrix Plan", manager.capability_permission_matrix_plan(target))
+            return True
+
+        if command == "control-center-dashboard-bridge-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Control Center Dashboard Bridge Plan", manager.control_center_dashboard_bridge_plan(target))
+            return True
+
+        if command == "local-console-dashboard-contract-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Local Console Dashboard Contract Plan", manager.local_console_dashboard_contract_plan(target))
+            return True
+
+        if command == "audit-trail-dashboard-blueprint-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Audit Trail Dashboard Blueprint Plan", manager.audit_trail_dashboard_blueprint_plan(target))
+            return True
+
+        if command == "dashboard-safety-policy-plan":
+            self.print_plugin_permission_dashboard_packet("AURA Dashboard Safety Policy Plan", manager.dashboard_safety_policy_plan(target))
+            return True
+
+        if command == "plugin-permission-dashboard-context":
+            self.print_plugin_permission_dashboard_packet("AURA Plugin / Permission Dashboard Foundation Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -4135,6 +4196,9 @@ class AuraCLI:
             return True
 
         if self.handle_chat_bridge_cli_command(raw_args):
+            return True
+
+        if self.handle_plugin_permission_dashboard_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

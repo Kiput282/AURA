@@ -2872,4 +2872,31 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 89.0 plugin permission dashboard foundation actions.
+    plugin_permission_dashboard_actions = [
+        ('plugin_permission_dashboard.status', 'read_project', 'Show AURA Plugin / Permission Dashboard Foundation status.'),
+        ('plugin_permission_dashboard.plugin_registry_dashboard_plan', 'read_project', 'Prepare plugin registry dashboard planning.'),
+        ('plugin_permission_dashboard.permission_request_dashboard_plan', 'read_project', 'Prepare permission request dashboard planning.'),
+        ('plugin_permission_dashboard.permission_decision_visibility_plan', 'read_project', 'Prepare permission decision visibility planning.'),
+        ('plugin_permission_dashboard.chat_originated_action_visibility_plan', 'read_project', 'Prepare chat-originated action request visibility planning.'),
+        ('plugin_permission_dashboard.capability_permission_matrix_plan', 'read_project', 'Prepare capability-permission matrix planning.'),
+        ('plugin_permission_dashboard.control_center_dashboard_bridge_plan', 'read_project', 'Prepare Control Center dashboard bridge planning.'),
+        ('plugin_permission_dashboard.local_console_dashboard_contract_plan', 'read_project', 'Prepare Local Console dashboard contract planning.'),
+        ('plugin_permission_dashboard.audit_trail_dashboard_blueprint_plan', 'read_project', 'Prepare audit trail dashboard blueprint planning.'),
+        ('plugin_permission_dashboard.safety_policy_plan', 'read_project', 'Prepare plugin/permission dashboard safety policy planning.'),
+        ('plugin_permission_dashboard.context', 'read_project', 'Show Plugin / Permission Dashboard Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in plugin_permission_dashboard_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="plugin_permission_dashboard",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_plugin_permission_dashboard_foundation",
+            )
+        )
+
     return registry
