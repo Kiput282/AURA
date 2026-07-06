@@ -280,3 +280,26 @@ Current plugin/permission dashboard summary:
 - runtime execution features: 0
 
 Core rule: AURA Plugin / Permission Dashboard may show plugin and permission visibility, but must not execute actions or grant permissions.
+
+
+## Sprint 90 Update — Review & Stabilization 81–90
+
+Status: CHECKPOINT REVIEW STABILIZED  
+Target version: v0.90.0-genesis
+
+Sprint 90 completes the Sprint 81–90 checkpoint review.
+
+The 81–90 block delivered foundation/planner layers for shared output formatting, capability visibility, permission workflow, runtime service planning, launcher/health monitoring planning, Control Center blueprinting, Local Console web blueprinting, Chat Bridge/session state blueprinting, and Plugin/Permission Dashboard blueprinting.
+
+Final registry summary for the block:
+- total capabilities tracked: 21
+- online capabilities: 19
+- foundation-only capabilities: 9
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Result: Sprint 81–90 is complete without runtime activation.

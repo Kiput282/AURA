@@ -1005,3 +1005,37 @@ Capability Registry now tracks AURA Plugin / Permission Dashboard Foundation:
 - runtime execution features: 0
 
 No plugin runtime, plugin action execution, permission grant/deny/decision runtime, runtime action activation, chat action execution, tool call runtime, web/frontend/backend/API runtime, route creation, port binding, log read/write, file operation, command execution, dependency install, network action, memory write, desktop control, git execution, external action, or real tool execution is enabled.
+
+
+## Sprint 90.0 — Review & Stabilization 81–90 Checkpoint
+
+Target: v0.90.0-genesis  
+Status: CHECKPOINT REVIEW STABILIZED
+
+Sprint 90 reviews and stabilizes the Sprint 81–90 block.
+
+Completed block summary:
+- Shared Output Formatter Foundation
+- Capability Registry Consolidation
+- Unified Permission Workflow Manager
+- Runtime Service Foundation
+- Launcher & Health Monitor Foundation
+- Control Center UI Blueprint
+- Local Console Web Foundation
+- Chat Bridge & Session State Foundation
+- Plugin / Permission Dashboard Foundation
+
+Capability Registry stabilized summary:
+- total capabilities tracked: 21
+- online capabilities: 19
+- foundation-only capabilities: 9
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Sprint 91–100 roadmap direction is now documented in docs/AURA_ROADMAP_91_100_PLAN.md.
+
+No UI/web/chat/plugin/service/launcher/permission/action/file/command/tool runtime is enabled by this checkpoint.

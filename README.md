@@ -1259,3 +1259,47 @@ Capability Registry update:
 Core rule: AURA Plugin / Permission Dashboard may show plugin and permission visibility, but must not execute actions or grant permissions.
 
 See docs/AURA_PLUGIN_PERMISSION_DASHBOARD_FOUNDATION.md.
+
+
+## Sprint 90.0 — Review & Stabilization 81–90 Checkpoint
+
+Status: CHECKPOINT REVIEW STABILIZED
+
+AURA completed the Sprint 81–90 checkpoint review and stabilization pass.
+
+Reviewed completed systems:
+- Shared Output Formatter Foundation
+- Capability Registry Consolidation
+- Unified Permission Workflow Manager
+- Runtime Service Foundation
+- Launcher & Health Monitor Foundation
+- Control Center UI Blueprint
+- Local Console Web Foundation
+- Chat Bridge & Session State Foundation
+- Plugin / Permission Dashboard Foundation
+
+Capability Registry stabilized summary:
+- total capabilities tracked: 21
+- online capabilities: 19
+- foundation-only capabilities: 9
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Canonical registry IDs confirmed:
+- shared_output_formatter
+- capability_registry
+- unified_permission_workflow
+- aura_runtime_service
+- aura_launcher_health_monitor
+- aura_control_center
+- aura_local_console_web_foundation
+- aura_chat_bridge_session_state_foundation
+- aura_plugin_permission_dashboard_foundation
+
+Core checkpoint result: AURA completed the 81–90 planner/foundation/control-center preparation block without enabling runtime execution.
+
+See docs/AURA_CHECKPOINT_81_90_REVIEW.md and docs/AURA_ROADMAP_91_100_PLAN.md.
