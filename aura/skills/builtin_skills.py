@@ -1220,4 +1220,27 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 81.0 shared output formatter skill.
+    registry.register(
+        AuraSkill(
+            name="shared_output_formatter",
+            description="Provide renderer-only shared output formatting for AURA CLI, shell, service monitor, and future Control Center output without runtime behavior changes, automatic CLI/shell refactor, UI runtime, web server runtime, chat runtime, service runtime, file operations, command execution, test execution, code execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "shared_output_formatter_status",
+                "packet_render_plan",
+                "safety_boundary_render_plan",
+                "cli_output_format_plan",
+                "shell_output_format_plan",
+                "console_output_format_plan",
+                "ui_output_contract_plan",
+                "formatter_migration_plan",
+                "shared_output_formatter_context",
+                "renderer_only_formatting",
+            ],
+        )
+    )
+
     return registry

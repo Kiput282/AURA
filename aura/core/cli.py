@@ -64,6 +64,7 @@ from aura.visual_context.visual_context_understanding_manager import VisualConte
 from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
 from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
+from aura.output_formatter.shared_output_formatter_manager import SharedOutputFormatterManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3613,6 +3614,58 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 81.0 shared output formatter CLI helpers.
+    def print_output_formatter_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet))
+
+    def handle_output_formatter_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "shared AURA output formatting"
+        manager = SharedOutputFormatterManager()
+
+        if command == "output-formatter-status":
+            self.print_output_formatter_packet("AURA Shared Output Formatter Status", manager.status())
+            return True
+
+        if command == "packet-render-plan":
+            self.print_output_formatter_packet("AURA Packet Render Plan", manager.packet_render_plan(target))
+            return True
+
+        if command == "safety-boundary-render-plan":
+            self.print_output_formatter_packet("AURA Safety Boundary Render Plan", manager.safety_boundary_render_plan(target))
+            return True
+
+        if command == "cli-output-format-plan":
+            self.print_output_formatter_packet("AURA CLI Output Format Plan", manager.cli_output_format_plan(target))
+            return True
+
+        if command == "shell-output-format-plan":
+            self.print_output_formatter_packet("AURA Shell Output Format Plan", manager.shell_output_format_plan(target))
+            return True
+
+        if command == "console-output-format-plan":
+            self.print_output_formatter_packet("AURA Console Output Format Plan", manager.console_output_format_plan(target))
+            return True
+
+        if command == "ui-output-contract-plan":
+            self.print_output_formatter_packet("AURA UI Output Contract Plan", manager.ui_output_contract_plan(target))
+            return True
+
+        if command == "formatter-migration-plan":
+            self.print_output_formatter_packet("AURA Formatter Migration Plan", manager.formatter_migration_plan(target))
+            return True
+
+        if command == "output-formatter-context":
+            self.print_output_formatter_packet("AURA Shared Output Formatter Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -3663,6 +3716,9 @@ class AuraCLI:
             return True
 
         if self.handle_checkpoint_80_cli_command(raw_args):
+            return True
+
+        if self.handle_output_formatter_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

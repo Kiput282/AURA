@@ -850,3 +850,56 @@ Checkpoint notes:
 - No real microphone, camera, OCR, vision, download, install, file generation, command execution, tool execution, network action, desktop control, git action, or external execution is enabled.
 
 See: docs/AURA_CHECKPOINT_71_80_REVIEW.md
+
+
+## Sprint 81.0 — Shared Output Formatter Foundation
+
+AURA includes a Shared Output Formatter foundation.
+
+Status: SHARED OUTPUT FORMATTER ONLINE
+
+Purpose:
+- provide renderer-only shared output formatting for CLI, shell, future service monitor output, and future AURA Control Center output
+- reduce repeated packet-printing patterns across AURA commands
+- prepare output contracts for dashboard cards, chat status blocks, plugin summaries, permission details, and action log views
+
+Current capabilities:
+- packet render planning
+- safety boundary render planning
+- CLI output format planning
+- shell output format planning
+- future console output format planning
+- future UI output contract planning
+- formatter migration planning
+
+Safety boundary:
+- renderer-only
+- foundation-only
+- planner-only
+- metadata-only
+- no runtime behavior change
+- no automatic CLI/shell refactor
+- no UI runtime
+- no web server runtime
+- no chat runtime
+- no service runtime
+- no file operations
+- no command/test/code execution
+- no dependency install
+- no package download
+- no internet/network action
+- no tool execution
+- no memory write
+- no desktop control
+- no git execution
+- no external action execution
+- no real tool execution
+
+Roadmap update:
+- Sprint 81-90 now prioritizes operational control foundations before major runtime action.
+- AURA Control Center is planned as an official local tester/developer console.
+- AURA auto-boot should eventually start in safe_idle mode only.
+
+See:
+- docs/AURA_SHARED_OUTPUT_FORMATTER.md
+- docs/AURA_ROADMAP_81_90_PLAN.md

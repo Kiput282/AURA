@@ -2666,4 +2666,29 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 81.0 shared output formatter actions.
+    output_formatter_actions = [
+        ('output_formatter.status', 'read_project', 'Show AURA Shared Output Formatter status.'),
+        ('output_formatter.packet_render_plan', 'read_project', 'Prepare shared packet rendering plan.'),
+        ('output_formatter.safety_boundary_render_plan', 'read_project', 'Prepare shared safety boundary rendering plan.'),
+        ('output_formatter.cli_output_format_plan', 'read_project', 'Prepare CLI output formatting migration plan.'),
+        ('output_formatter.shell_output_format_plan', 'read_project', 'Prepare shell output formatting migration plan.'),
+        ('output_formatter.console_output_format_plan', 'read_project', 'Prepare future Control Center console output formatting plan.'),
+        ('output_formatter.ui_output_contract_plan', 'read_project', 'Prepare future UI output contract plan.'),
+        ('output_formatter.formatter_migration_plan', 'read_project', 'Prepare shared output formatter migration plan.'),
+        ('output_formatter.context', 'read_project', 'Show Shared Output Formatter context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in output_formatter_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="output_formatter",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="shared_output_formatter",
+            )
+        )
+
     return registry

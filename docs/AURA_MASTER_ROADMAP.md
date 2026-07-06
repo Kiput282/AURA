@@ -742,3 +742,31 @@ Checkpoint result:
 This sprint does not change runtime behavior, automatically stabilize code, read/write/modify/delete files at runtime, execute commands, run tests, run code, install dependencies, download packages, search the internet, perform network actions, execute tools, write memory, control desktop, run git operations, perform external actions, or execute real tools.
 
 Detailed checkpoint review: docs/AURA_CHECKPOINT_71_80_REVIEW.md
+
+
+## Sprint 81.0 — Shared Output Formatter Foundation
+
+Target: v0.81.0-genesis  
+Status: SHARED OUTPUT FORMATTER ONLINE
+
+AURA can provide a renderer-only shared output formatter foundation for CLI, shell, future service monitor output, and future AURA Control Center output.
+
+This sprint adds shared packet rendering, title rendering, compact list/dictionary summaries, safety boundary rendering, CLI/shell output format planning, future console output format planning, future UI output contract planning, and formatter migration planning.
+
+The formatter is foundation-only, renderer-only, planner-only, and metadata-only. It does not change runtime behavior, automatically refactor CLI/shell output, run UI/web/chat/service runtime, perform file operations, execute commands/tests/code, install dependencies, download packages, use internet/network actions, execute tools, write memory, control desktop, run git actions, perform external actions, or execute real tools.
+
+Sprint 81-90 planning direction:
+- Sprint 81: Shared Output Formatter Foundation
+- Sprint 82: Capability Registry Consolidation
+- Sprint 83: Unified Permission Workflow Manager
+- Sprint 84: AURA Runtime Service Foundation
+- Sprint 85: AURA Launcher & Health Monitor Foundation
+- Sprint 86: AURA Control Center UI Blueprint
+- Sprint 87: Local Console Web Foundation
+- Sprint 88: Chat Bridge & Session State Foundation
+- Sprint 89: Plugin/Permission Dashboard Foundation
+- Sprint 90: Review & Stabilization 81-90
+
+Detailed docs:
+- docs/AURA_SHARED_OUTPUT_FORMATTER.md
+- docs/AURA_ROADMAP_81_90_PLAN.md

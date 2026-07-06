@@ -66,6 +66,7 @@ from aura.visual_context.visual_context_understanding_manager import VisualConte
 from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
 from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
+from aura.output_formatter.shared_output_formatter_manager import SharedOutputFormatterManager
 
 
 class AuraShell:
@@ -358,6 +359,15 @@ class AuraShell:
         print("  roadmap-gap-review-plan <target> Prepare roadmap gap review plan")
         print("  next-block-planning-plan <target> Prepare next block planning plan")
         print("  checkpoint-80-context Show Sprint 71-80 checkpoint context")
+        print("  output-formatter-status Show Shared Output Formatter status")
+        print("  packet-render-plan <target> Prepare shared packet render plan")
+        print("  safety-boundary-render-plan <target> Prepare safety boundary render plan")
+        print("  cli-output-format-plan <target> Prepare CLI output format plan")
+        print("  shell-output-format-plan <target> Prepare shell output format plan")
+        print("  console-output-format-plan <target> Prepare future console output format plan")
+        print("  ui-output-contract-plan <target> Prepare future UI output contract plan")
+        print("  formatter-migration-plan <target> Prepare formatter migration plan")
+        print("  output-formatter-context Show Shared Output Formatter context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -3789,6 +3799,59 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 81.0 shared output formatter shell helpers.
+    def print_output_formatter_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet))
+
+    def handle_output_formatter_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "shared AURA output formatting"
+        manager = SharedOutputFormatterManager()
+
+        if command == "output-formatter-status":
+            self.print_output_formatter_packet("AURA Shared Output Formatter Status", manager.status())
+            return True
+
+        if command == "packet-render-plan":
+            self.print_output_formatter_packet("AURA Packet Render Plan", manager.packet_render_plan(target))
+            return True
+
+        if command == "safety-boundary-render-plan":
+            self.print_output_formatter_packet("AURA Safety Boundary Render Plan", manager.safety_boundary_render_plan(target))
+            return True
+
+        if command == "cli-output-format-plan":
+            self.print_output_formatter_packet("AURA CLI Output Format Plan", manager.cli_output_format_plan(target))
+            return True
+
+        if command == "shell-output-format-plan":
+            self.print_output_formatter_packet("AURA Shell Output Format Plan", manager.shell_output_format_plan(target))
+            return True
+
+        if command == "console-output-format-plan":
+            self.print_output_formatter_packet("AURA Console Output Format Plan", manager.console_output_format_plan(target))
+            return True
+
+        if command == "ui-output-contract-plan":
+            self.print_output_formatter_packet("AURA UI Output Contract Plan", manager.ui_output_contract_plan(target))
+            return True
+
+        if command == "formatter-migration-plan":
+            self.print_output_formatter_packet("AURA Formatter Migration Plan", manager.formatter_migration_plan(target))
+            return True
+
+        if command == "output-formatter-context":
+            self.print_output_formatter_packet("AURA Shared Output Formatter Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -3842,6 +3905,9 @@ class AuraShell:
             return
 
         if self.handle_checkpoint_80_shell_command(normalized):
+            return
+
+        if self.handle_output_formatter_shell_command(normalized):
             return
 
         if normalized == "help":

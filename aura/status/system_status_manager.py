@@ -53,6 +53,7 @@ from aura.visual_context.visual_context_understanding_manager import VisualConte
 from aura.coder_project.coder_project_generation_planner_manager import CoderProjectGenerationPlannerManager
 from aura.dependency_permission.dependency_download_permission_gate_manager import DependencyDownloadPermissionGateManager
 from aura.checkpoint_80.review_stabilization_71_80_manager import ReviewStabilization7180Manager
+from aura.output_formatter.shared_output_formatter_manager import SharedOutputFormatterManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -168,6 +169,7 @@ class SystemStatusManager:
         coder_project_status = CoderProjectGenerationPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         dependency_permission_status = DependencyDownloadPermissionGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         checkpoint_80_status = ReviewStabilization7180Manager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        output_formatter_status = SharedOutputFormatterManager().status()
 
         return {
             "project_root": str(self.project_root),
@@ -243,6 +245,7 @@ class SystemStatusManager:
             "coder_project_plan_types": coder_project_status["coder_project_plan_types"],
             "dependency_permission_plan_types": dependency_permission_status["dependency_permission_plan_types"],
             "checkpoint_71_80_plan_types": checkpoint_80_status["checkpoint_plan_types"],
+            "shared_output_formatter_plan_types": output_formatter_status["formatter_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -298,6 +301,7 @@ class SystemStatusManager:
             "coder_project_generation_planner": coder_project_status["status"],
             "dependency_download_permission_gate": dependency_permission_status["status"],
             "review_stabilization_71_80": checkpoint_80_status["status"],
+            "shared_output_formatter": output_formatter_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -981,6 +985,47 @@ class SystemStatusManager:
             "checkpoint_71_80_git_add": checkpoint_80_status["git_add"],
             "checkpoint_71_80_git_commit": checkpoint_80_status["git_commit"],
             "checkpoint_71_80_git_push": checkpoint_80_status["git_push"],
+            "shared_output_formatter_ready": output_formatter_status["formatter_ready"],
+            "shared_output_formatter_renderer_only": output_formatter_status["renderer_only"],
+            "shared_output_formatter_planner_ready": output_formatter_status["planner_ready"],
+            "shared_output_formatter_packet_render_plan_ready": output_formatter_status["packet_render_plan_ready"],
+            "shared_output_formatter_safety_boundary_render_plan_ready": output_formatter_status["safety_boundary_render_plan_ready"],
+            "shared_output_formatter_cli_output_format_plan_ready": output_formatter_status["cli_output_format_plan_ready"],
+            "shared_output_formatter_shell_output_format_plan_ready": output_formatter_status["shell_output_format_plan_ready"],
+            "shared_output_formatter_console_output_format_plan_ready": output_formatter_status["console_output_format_plan_ready"],
+            "shared_output_formatter_ui_output_contract_plan_ready": output_formatter_status["ui_output_contract_plan_ready"],
+            "shared_output_formatter_migration_plan_ready": output_formatter_status["formatter_migration_plan_ready"],
+            "shared_output_formatter_context_ready": output_formatter_status["context_ready"],
+            "shared_output_formatter_runtime_execution_features": output_formatter_status["runtime_execution_features"],
+            "shared_output_formatter_foundation_only": output_formatter_status["foundation_only"],
+            "shared_output_formatter_metadata_only": output_formatter_status["metadata_only"],
+            "shared_output_formatter_runtime_behavior_change": output_formatter_status["runtime_behavior_change"],
+            "shared_output_formatter_automatic_cli_refactor": output_formatter_status["automatic_cli_refactor"],
+            "shared_output_formatter_automatic_shell_refactor": output_formatter_status["automatic_shell_refactor"],
+            "shared_output_formatter_ui_runtime": output_formatter_status["ui_runtime"],
+            "shared_output_formatter_web_server_runtime": output_formatter_status["web_server_runtime"],
+            "shared_output_formatter_chat_runtime": output_formatter_status["chat_runtime"],
+            "shared_output_formatter_service_runtime": output_formatter_status["service_runtime"],
+            "shared_output_formatter_file_read": output_formatter_status["file_read"],
+            "shared_output_formatter_file_write": output_formatter_status["file_write"],
+            "shared_output_formatter_file_modify": output_formatter_status["file_modify"],
+            "shared_output_formatter_file_delete": output_formatter_status["file_delete"],
+            "shared_output_formatter_command_execution": output_formatter_status["command_execution"],
+            "shared_output_formatter_test_execution": output_formatter_status["test_execution"],
+            "shared_output_formatter_code_execution": output_formatter_status["code_execution"],
+            "shared_output_formatter_dependency_install": output_formatter_status["dependency_install"],
+            "shared_output_formatter_package_download": output_formatter_status["package_download"],
+            "shared_output_formatter_internet_search": output_formatter_status["internet_search"],
+            "shared_output_formatter_network_action": output_formatter_status["network_action"],
+            "shared_output_formatter_tool_execution": output_formatter_status["tool_execution"],
+            "shared_output_formatter_real_tool_execution": output_formatter_status["real_tool_execution"],
+            "shared_output_formatter_external_action_execution": output_formatter_status["external_action_execution"],
+            "shared_output_formatter_memory_write": output_formatter_status["memory_write"],
+            "shared_output_formatter_desktop_control": output_formatter_status["desktop_control"],
+            "shared_output_formatter_git_init": output_formatter_status["git_init"],
+            "shared_output_formatter_git_add": output_formatter_status["git_add"],
+            "shared_output_formatter_git_commit": output_formatter_status["git_commit"],
+            "shared_output_formatter_git_push": output_formatter_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -1143,5 +1188,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, dependency download permission gate, review stabilization 71-80, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, thought loop planner, reasoning context manager, knowledge uncertainty gate, voice input runtime foundation, voice intent understanding, vision input runtime foundation, visual context understanding, coder project generation planner, dependency download permission gate, review stabilization 71-80, shared output formatter, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }
