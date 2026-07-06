@@ -71,6 +71,7 @@ from aura.capability_registry.capability_registry_manager import CapabilityRegis
 from aura.permission_workflow.unified_permission_workflow_manager import UnifiedPermissionWorkflowManager
 from aura.runtime_service.aura_runtime_service_foundation_manager import AuraRuntimeServiceFoundationManager
 from aura.launcher_monitor.aura_launcher_health_monitor_foundation_manager import AuraLauncherHealthMonitorFoundationManager
+from aura.control_center.aura_control_center_ui_blueprint_manager import AuraControlCenterUIBlueprintManager
 
 
 class AuraShell:
@@ -409,6 +410,17 @@ class AuraShell:
         print("  control-center-service-monitor-plan <target> Prepare Control Center service monitor plan")
         print("  launcher-safety-policy-plan <target> Prepare launcher safety policy plan")
         print("  launcher-health-context Show Launcher & Health Monitor Foundation context")
+        print("  control-center-status Show Control Center UI Blueprint status")
+        print("  dashboard-layout-blueprint-plan <target> Prepare dashboard layout blueprint plan")
+        print("  permission-center-blueprint-plan <target> Prepare Permission Center blueprint plan")
+        print("  service-monitor-blueprint-plan <target> Prepare Service Monitor blueprint plan")
+        print("  capability-viewer-blueprint-plan <target> Prepare Capability Viewer blueprint plan")
+        print("  launcher-control-blueprint-plan <target> Prepare Launcher Control blueprint plan")
+        print("  chat-console-placeholder-plan <target> Prepare Chat Console placeholder plan")
+        print("  plugin-dashboard-blueprint-plan <target> Prepare Plugin Dashboard blueprint plan")
+        print("  action-log-blueprint-plan <target> Prepare Action Log blueprint plan")
+        print("  control-center-safety-policy-plan <target> Prepare Control Center safety policy plan")
+        print("  control-center-context Show Control Center UI Blueprint context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4109,6 +4121,67 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 86.0 control center UI blueprint shell helpers.
+    def print_control_center_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Safety Boundary"))
+
+    def handle_control_center_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Control Center UI blueprint"
+        manager = AuraControlCenterUIBlueprintManager(project_root=self.project_root)
+
+        if command == "control-center-status":
+            self.print_control_center_packet("AURA Control Center UI Blueprint Status", manager.status())
+            return True
+
+        if command == "dashboard-layout-blueprint-plan":
+            self.print_control_center_packet("AURA Dashboard Layout Blueprint Plan", manager.dashboard_layout_blueprint_plan(target))
+            return True
+
+        if command == "permission-center-blueprint-plan":
+            self.print_control_center_packet("AURA Permission Center Blueprint Plan", manager.permission_center_blueprint_plan(target))
+            return True
+
+        if command == "service-monitor-blueprint-plan":
+            self.print_control_center_packet("AURA Service Monitor Blueprint Plan", manager.service_monitor_blueprint_plan(target))
+            return True
+
+        if command == "capability-viewer-blueprint-plan":
+            self.print_control_center_packet("AURA Capability Viewer Blueprint Plan", manager.capability_viewer_blueprint_plan(target))
+            return True
+
+        if command == "launcher-control-blueprint-plan":
+            self.print_control_center_packet("AURA Launcher Control Blueprint Plan", manager.launcher_control_blueprint_plan(target))
+            return True
+
+        if command == "chat-console-placeholder-plan":
+            self.print_control_center_packet("AURA Chat Console Placeholder Plan", manager.chat_console_placeholder_plan(target))
+            return True
+
+        if command == "plugin-dashboard-blueprint-plan":
+            self.print_control_center_packet("AURA Plugin Dashboard Blueprint Plan", manager.plugin_dashboard_blueprint_plan(target))
+            return True
+
+        if command == "action-log-blueprint-plan":
+            self.print_control_center_packet("AURA Action Log Blueprint Plan", manager.action_log_blueprint_plan(target))
+            return True
+
+        if command == "control-center-safety-policy-plan":
+            self.print_control_center_packet("AURA Control Center Safety Policy Plan", manager.control_center_safety_policy_plan(target))
+            return True
+
+        if command == "control-center-context":
+            self.print_control_center_packet("AURA Control Center UI Blueprint Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -4177,6 +4250,9 @@ class AuraShell:
             return
 
         if self.handle_launcher_monitor_shell_command(normalized):
+            return
+
+        if self.handle_control_center_shell_command(normalized):
             return
 
         if normalized == "help":

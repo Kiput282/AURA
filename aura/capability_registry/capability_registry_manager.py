@@ -328,12 +328,12 @@ class CapabilityRegistryManager:
             {
                 "id": "aura_control_center",
                 "name": "AURA Control Center",
-                "state": "planned_future",
-                "runtime_level": "planned_ui_blueprint",
+                "state": "online",
+                "runtime_level": "foundation_only",
                 "risk_level": "medium",
                 "permission_required": "user_confirmation",
                 "category": "local_console_ui",
-                "introduced_in": "planned-0.86.0-genesis",
+                "introduced_in": "0.86.0-genesis",
                 "control_center_visible": True,
             },
             {

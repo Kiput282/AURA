@@ -1336,4 +1336,29 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 86.0 control center UI blueprint skill.
+    registry.register(
+        AuraSkill(
+            name="aura_control_center_ui_blueprint",
+            description="Prepare planner-only AURA Control Center / Genesis Console UI blueprint for dashboard layout, Permission Center, Service Monitor, Capability Viewer, Launcher Control, Chat Console placeholder, Plugin Dashboard, Action Log, and safety policy planning without creating frontend apps, backend services, web routes, binding ports, opening browser windows, running UI/web/chat/service/launcher/plugin runtime, granting permissions, activating runtime actions, changing runtime behavior, reading logs, file operations, command execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_status",
+                "dashboard_layout_blueprint_plan",
+                "permission_center_blueprint_plan",
+                "service_monitor_blueprint_plan",
+                "capability_viewer_blueprint_plan",
+                "launcher_control_blueprint_plan",
+                "chat_console_placeholder_plan",
+                "plugin_dashboard_blueprint_plan",
+                "action_log_blueprint_plan",
+                "control_center_safety_policy_plan",
+                "control_center_context",
+                "genesis_console_blueprint_data",
+            ],
+        )
+    )
+
     return registry

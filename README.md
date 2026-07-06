@@ -1102,3 +1102,41 @@ Capability Registry update:
 Core rule: AURA may prepare launcher and monitor visibility, but must not control runtime yet.
 
 See docs/AURA_LAUNCHER_HEALTH_MONITOR_FOUNDATION.md.
+
+
+## Sprint 86.0 — AURA Control Center UI Blueprint
+
+Status: CONTROL CENTER UI BLUEPRINT ONLINE
+
+AURA includes planner-only Control Center / Genesis Console UI Blueprint planning for dashboard layout, Permission Center, Service Monitor, Capability Viewer, Launcher Control, Chat Console placeholder, Plugin Dashboard, Action Log, Roadmap Viewer direction, and Control Center safety policy.
+
+Summary:
+- blueprint plan types: 11
+- UI panels: 9
+- navigation items: 9
+- Permission Center cards: 9
+- Service Monitor cards: 10
+- Launcher Control cards: 6
+- Capability Viewer cards: 7
+- runtime-enabled panels: 0
+- frontend apps created: 0
+- backend services created: 0
+- web routes created: 0
+- ports bound: 0
+- browser windows opened: 0
+- runtime execution features: 0
+
+Capability Registry update:
+- total capabilities tracked: 18
+- online capabilities: 16
+- foundation-only capabilities: 6
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Core rule: AURA Control Center may show visibility, but must not control runtime yet.
+
+See docs/AURA_CONTROL_CENTER_UI_BLUEPRINT.md.

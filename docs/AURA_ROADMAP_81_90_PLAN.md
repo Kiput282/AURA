@@ -171,3 +171,29 @@ Current launcher monitor summary:
 - runtime execution features: 0
 
 Core rule: AURA may prepare launcher and monitor visibility, but must not control runtime yet.
+
+
+## Sprint 86 Update — AURA Control Center UI Blueprint
+
+Status: CONTROL CENTER UI BLUEPRINT ONLINE  
+Target version: v0.86.0-genesis
+
+Sprint 86 adds a planner-only AURA Control Center / Genesis Console UI Blueprint for dashboard layout, Permission Center, Service Monitor, Capability Viewer, Launcher Control, Chat Console placeholder, Plugin Dashboard, Action Log, Roadmap Viewer direction, and Control Center safety policy.
+
+Current Control Center blueprint summary:
+- blueprint plan types: 11
+- UI panels: 9
+- navigation items: 9
+- Permission Center cards: 9
+- Service Monitor cards: 10
+- Launcher Control cards: 6
+- Capability Viewer cards: 7
+- runtime-enabled panels: 0
+- frontend apps created: 0
+- backend services created: 0
+- web routes created: 0
+- ports bound: 0
+- browser windows opened: 0
+- runtime execution features: 0
+
+Core rule: AURA Control Center may show visibility, but must not control runtime yet.

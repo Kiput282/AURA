@@ -921,3 +921,24 @@ Capability Registry now marks AURA Launcher & Health Monitor Foundation as onlin
 - runtime execution features: 0
 
 No launcher runtime, health monitor runtime, service runtime, process control, systemctl execution, systemd control, log file read/write, auto-boot runtime, port binding, UI/web/chat runtime, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
+
+
+## Sprint 86.0 — AURA Control Center UI Blueprint
+
+Target: v0.86.0-genesis  
+Status: CONTROL CENTER UI BLUEPRINT ONLINE
+
+AURA can provide planner-only Control Center / Genesis Console UI Blueprint planning for dashboard layout, Permission Center, Service Monitor, Capability Viewer, Launcher Control, Chat Console placeholder, Plugin Dashboard, Action Log, Roadmap Viewer direction, and Control Center safety policy.
+
+Capability Registry now marks AURA Control Center as online:
+- total capabilities tracked: 18
+- online capabilities: 16
+- foundation-only capabilities: 6
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+No UI runtime, frontend runtime, backend runtime, web server runtime, route creation runtime, port binding, browser launch, chat runtime, service runtime, launcher runtime, plugin runtime, permission grant runtime, runtime action activation, log file read/write, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.

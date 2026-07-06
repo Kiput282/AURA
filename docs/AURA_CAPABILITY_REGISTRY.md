@@ -194,3 +194,23 @@ Updated registry summary:
 - runtime execution features: 0
 
 AURA Launcher & Health Monitor Foundation remains foundation-only. It does not start, stop, restart, monitor, query, or control a real service or process.
+
+
+## Sprint 86 Update — Control Center UI Blueprint Online
+
+Status: UPDATED FOR v0.86.0-genesis
+
+The Capability Registry now marks AURA Control Center as online.
+
+Updated registry summary:
+- total capabilities tracked: 18
+- online capabilities: 16
+- foundation-only capabilities: 6
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+AURA Control Center remains foundation-only and blueprint-only. It does not create, run, open, bind, control, execute, or serve a real UI/web runtime.

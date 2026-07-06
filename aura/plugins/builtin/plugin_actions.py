@@ -2792,4 +2792,31 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 86.0 control center UI blueprint actions.
+    control_center_actions = [
+        ('control_center.status', 'read_project', 'Show AURA Control Center UI Blueprint status.'),
+        ('control_center.dashboard_layout_blueprint_plan', 'read_project', 'Prepare dashboard layout blueprint planning.'),
+        ('control_center.permission_center_blueprint_plan', 'read_project', 'Prepare Permission Center blueprint planning.'),
+        ('control_center.service_monitor_blueprint_plan', 'read_project', 'Prepare Service Monitor blueprint planning.'),
+        ('control_center.capability_viewer_blueprint_plan', 'read_project', 'Prepare Capability Viewer blueprint planning.'),
+        ('control_center.launcher_control_blueprint_plan', 'read_project', 'Prepare Launcher Control blueprint planning.'),
+        ('control_center.chat_console_placeholder_plan', 'read_project', 'Prepare Chat Console placeholder planning.'),
+        ('control_center.plugin_dashboard_blueprint_plan', 'read_project', 'Prepare Plugin Dashboard blueprint planning.'),
+        ('control_center.action_log_blueprint_plan', 'read_project', 'Prepare Action Log blueprint planning.'),
+        ('control_center.safety_policy_plan', 'read_project', 'Prepare Control Center safety policy planning.'),
+        ('control_center.context', 'read_project', 'Show Control Center UI Blueprint context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="control_center",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_control_center_ui_blueprint",
+            )
+        )
+
     return registry
