@@ -947,4 +947,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 69.0 desktop workflow planner skill.
+    registry.register(
+        AuraSkill(
+            name="desktop_workflow_planner",
+            description="Plan safe metadata-only desktop workflows, app context, window flow, task sequences, and safety boundaries without app opening, window control, mouse/keyboard control, screen capture, file operations, command execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "desktop_workflow_status",
+                "desktop_workflow_plan",
+                "desktop_app_context_plan",
+                "desktop_window_flow_plan",
+                "desktop_task_sequence_plan",
+                "desktop_safety_plan",
+                "desktop_workflow_context",
+                "metadata_only_desktop_workflow_planning",
+            ],
+        )
+    )
+
     return registry

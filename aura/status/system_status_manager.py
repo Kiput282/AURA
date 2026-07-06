@@ -41,6 +41,7 @@ from aura.codebase_validation_gate.codebase_validation_gate_planner_manager impo
 from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
 from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
 from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
+from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkflowPlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -144,6 +145,7 @@ class SystemStatusManager:
         voice_conversation_status = VoiceConversationPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         vision_context_status = VisionContextPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         avatar_interaction_status = AvatarInteractionPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        desktop_workflow_status = DesktopWorkflowPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -207,6 +209,7 @@ class SystemStatusManager:
             "voice_conversation_plan_types": voice_conversation_status["voice_plan_types"],
             "vision_context_plan_types": vision_context_status["vision_plan_types"],
             "avatar_interaction_plan_types": avatar_interaction_status["avatar_plan_types"],
+            "desktop_workflow_plan_types": desktop_workflow_status["desktop_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -250,6 +253,7 @@ class SystemStatusManager:
             "voice_conversation_planner": voice_conversation_status["status"],
             "vision_context_planner": vision_context_status["status"],
             "avatar_interaction_planner": avatar_interaction_status["status"],
+            "desktop_workflow_planner": desktop_workflow_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -490,6 +494,35 @@ class SystemStatusManager:
             "avatar_interaction_command_execution": avatar_interaction_status["command_execution"],
             "avatar_interaction_external_action_execution": avatar_interaction_status["external_action_execution"],
             "avatar_interaction_real_tool_execution": avatar_interaction_status["real_tool_execution"],
+            "desktop_workflow_planner_ready": desktop_workflow_status["planner_ready"],
+            "desktop_workflow_plan_ready": desktop_workflow_status["desktop_workflow_plan_ready"],
+            "desktop_app_context_plan_ready": desktop_workflow_status["desktop_app_context_plan_ready"],
+            "desktop_window_flow_plan_ready": desktop_workflow_status["desktop_window_flow_plan_ready"],
+            "desktop_task_sequence_plan_ready": desktop_workflow_status["desktop_task_sequence_plan_ready"],
+            "desktop_safety_plan_ready": desktop_workflow_status["desktop_safety_plan_ready"],
+            "desktop_workflow_context_ready": desktop_workflow_status["context_ready"],
+            "desktop_workflow_local_task_reference_ready": desktop_workflow_status["local_task_reference_ready"],
+            "desktop_workflow_safe_file_operation_reference_ready": desktop_workflow_status["safe_file_operation_reference_ready"],
+            "desktop_workflow_workspace_awareness_reference_ready": desktop_workflow_status["workspace_awareness_reference_ready"],
+            "desktop_workflow_voice_conversation_reference_ready": desktop_workflow_status["voice_conversation_reference_ready"],
+            "desktop_workflow_vision_context_reference_ready": desktop_workflow_status["vision_context_reference_ready"],
+            "desktop_workflow_avatar_interaction_reference_ready": desktop_workflow_status["avatar_interaction_reference_ready"],
+            "desktop_workflow_codebase_validation_reference_ready": desktop_workflow_status["codebase_validation_reference_ready"],
+            "desktop_workflow_desktop_control": desktop_workflow_status["desktop_control"],
+            "desktop_workflow_app_opening": desktop_workflow_status["app_opening"],
+            "desktop_workflow_window_inspection": desktop_workflow_status["window_inspection"],
+            "desktop_workflow_window_control": desktop_workflow_status["window_control"],
+            "desktop_workflow_mouse_control": desktop_workflow_status["mouse_control"],
+            "desktop_workflow_keyboard_control": desktop_workflow_status["keyboard_control"],
+            "desktop_workflow_screen_capture": desktop_workflow_status["screen_capture"],
+            "desktop_workflow_clipboard_access": desktop_workflow_status["clipboard_access"],
+            "desktop_workflow_notification_access": desktop_workflow_status["notification_access"],
+            "desktop_workflow_process_inspection": desktop_workflow_status["process_inspection"],
+            "desktop_workflow_file_read": desktop_workflow_status["file_read"],
+            "desktop_workflow_file_write": desktop_workflow_status["file_write"],
+            "desktop_workflow_command_execution": desktop_workflow_status["command_execution"],
+            "desktop_workflow_external_action_execution": desktop_workflow_status["external_action_execution"],
+            "desktop_workflow_real_tool_execution": desktop_workflow_status["real_tool_execution"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -652,5 +685,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

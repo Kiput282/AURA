@@ -2369,4 +2369,27 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 69.0 desktop workflow planner actions.
+    desktop_workflow_actions = [
+        ('desktop_workflow.status', 'read_project', 'Show AURA Desktop Workflow Planner status.'),
+        ('desktop_workflow.workflow_plan', 'read_project', 'Prepare a metadata-only desktop workflow plan without app opening, window control, screen capture, or runtime execution.'),
+        ('desktop_workflow.app_context_plan', 'read_project', 'Prepare a metadata-only app context plan without opening, focusing, inspecting, or controlling apps.'),
+        ('desktop_workflow.window_flow_plan', 'read_project', 'Prepare a metadata-only window flow plan without screen capture, window inspection, or window control.'),
+        ('desktop_workflow.task_sequence_plan', 'read_project', 'Prepare a metadata-only task sequence plan without file operations, command execution, or external tools.'),
+        ('desktop_workflow.safety_plan', 'read_project', 'Prepare a desktop workflow safety plan without desktop, app, window, file, command, external action, or real tool execution.'),
+        ('desktop_workflow.context', 'read_project', 'Show Desktop Workflow Planner context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in desktop_workflow_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="desktop_workflow",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="desktop_workflow_planner",
+            )
+        )
+
     return registry

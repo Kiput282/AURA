@@ -426,3 +426,24 @@ Safety boundary:
 - no command execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 69.0 — Desktop Workflow Planner
+
+AURA includes a Desktop Workflow Planner foundation for metadata-only desktop workflow planning.
+
+Status: DESKTOP WORKFLOW PLANNER ONLINE
+
+Safety boundary:
+- no desktop control
+- no app opening
+- no window inspection or control
+- no mouse or keyboard control
+- no screen capture
+- no clipboard access
+- no notification access
+- no process inspection
+- no file reading or writing
+- no command execution
+- no external action execution
+- no real tool execution

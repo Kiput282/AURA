@@ -54,6 +54,7 @@ from aura.codebase_validation_gate.codebase_validation_gate_planner_manager impo
 from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
 from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
 from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
+from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkflowPlannerManager
 
 
 class AuraShell:
@@ -291,6 +292,13 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  desktop-workflow-status Show Desktop Workflow Planner status")
+        print("  desktop-workflow-plan <target> Prepare metadata-only desktop workflow plan")
+        print("  desktop-app-context-plan <target> Prepare metadata-only app context plan")
+        print("  desktop-window-flow-plan <target> Prepare metadata-only window flow plan")
+        print("  desktop-task-sequence-plan <target> Prepare metadata-only task sequence plan")
+        print("  desktop-safety-plan <target> Prepare desktop safety plan")
+        print("  desktop-workflow-context Show Desktop Workflow Planner context")
         print("  avatar-interaction-status Show Avatar Interaction Planner status")
         print("  avatar-expression-plan <target> Prepare metadata-only avatar expression plan")
         print("  avatar-gesture-plan <target> Prepare metadata-only avatar gesture plan")
@@ -2452,6 +2460,91 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 69.0 desktop workflow compatibility shell helpers.
+    def print_desktop_workflow_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {len(value)} field(s)")
+
+        print()
+        print("Desktop Safety Boundary")
+        print("-----------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "desktop_control",
+            "app_opening",
+            "window_inspection",
+            "window_control",
+            "mouse_control",
+            "keyboard_control",
+            "screen_capture",
+            "clipboard_access",
+            "notification_access",
+            "process_inspection",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "external_action_execution",
+            "real_tool_execution",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {packet[key]}")
+
+    def handle_desktop_workflow_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general desktop workflow"
+        manager = DesktopWorkflowPlannerManager(project_root=self.project_root)
+
+        if command == "desktop-workflow-status":
+            self.print_desktop_workflow_packet("AURA Desktop Workflow Planner Status", manager.status())
+            return True
+
+        if command == "desktop-workflow-plan":
+            self.print_desktop_workflow_packet("AURA Desktop Workflow Plan", manager.desktop_workflow_plan(target))
+            return True
+
+        if command == "desktop-app-context-plan":
+            self.print_desktop_workflow_packet("AURA Desktop App Context Plan", manager.desktop_app_context_plan(target))
+            return True
+
+        if command == "desktop-window-flow-plan":
+            self.print_desktop_workflow_packet("AURA Desktop Window Flow Plan", manager.desktop_window_flow_plan(target))
+            return True
+
+        if command == "desktop-task-sequence-plan":
+            self.print_desktop_workflow_packet("AURA Desktop Task Sequence Plan", manager.desktop_task_sequence_plan(target))
+            return True
+
+        if command == "desktop-safety-plan":
+            self.print_desktop_workflow_packet("AURA Desktop Safety Plan", manager.desktop_safety_plan(target))
+            return True
+
+        if command == "desktop-workflow-context":
+            self.print_desktop_workflow_packet("AURA Desktop Workflow Planner Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -2469,6 +2562,9 @@ class AuraShell:
             return
 
         if self.handle_avatar_interaction_shell_command(normalized):
+            return
+
+        if self.handle_desktop_workflow_shell_command(normalized):
             return
 
         if normalized == "help":

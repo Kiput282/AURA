@@ -615,3 +615,11 @@ Target: v0.68.0-genesis
 Status: AVATAR INTERACTION PLANNER ONLINE
 
 AURA can plan avatar expressions, gestures, poses, streaming presence, and avatar safety boundaries as metadata only. This sprint does not enable avatar rendering, animation playback, mocap runtime, camera/face/body tracking, rig/bone/blendshape control, Blender execution, OBS control, desktop action execution, file operations, command execution, external action execution, or real tool execution.
+
+
+## Sprint 69.0 — Desktop Workflow Planner
+
+Target: v0.69.0-genesis  
+Status: DESKTOP WORKFLOW PLANNER ONLINE
+
+AURA can plan desktop workflows, app context, window flow, task sequences, and desktop safety boundaries as metadata only. This sprint does not enable desktop control, app opening, window inspection/control, mouse/keyboard control, screen capture, clipboard access, notification access, process inspection, file operations, command execution, external action execution, or real tool execution.
