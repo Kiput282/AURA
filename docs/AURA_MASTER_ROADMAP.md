@@ -942,3 +942,24 @@ Capability Registry now marks AURA Control Center as online:
 - runtime execution features: 0
 
 No UI runtime, frontend runtime, backend runtime, web server runtime, route creation runtime, port binding, browser launch, chat runtime, service runtime, launcher runtime, plugin runtime, permission grant runtime, runtime action activation, log file read/write, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
+
+
+## Sprint 87.0 — AURA Local Console Web Foundation
+
+Target: v0.87.0-genesis  
+Status: LOCAL CONSOLE WEB FOUNDATION ONLINE
+
+AURA can provide planner-only Local Console Web Foundation planning for localhost-only policy, route blueprints, API contract blueprints, static asset blueprints, session state blueprints, security boundary planning, Control Center web bridge planning, and developer console access planning.
+
+Capability Registry now tracks AURA Local Console Web Foundation:
+- total capabilities tracked: 19
+- online capabilities: 17
+- foundation-only capabilities: 7
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+No web server runtime, frontend runtime, backend runtime, route creation runtime, API runtime, static file serving, session runtime, port binding, browser launch, public/LAN/remote access, websocket runtime, chat runtime, UI runtime, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.

@@ -358,7 +358,18 @@ class CapabilityRegistryManager:
                 "introduced_in": "deferred-91-100",
                 "control_center_visible": True,
             },
-        ]
+                        {
+                    "id": "aura_local_console_web_foundation",
+                    "name": "AURA Local Console Web Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "user_confirmation",
+                    "category": "control_center_web",
+                    "introduced_in": "0.87.0-genesis",
+                    "control_center_visible": True,
+                },
+]
 
 
     def capability_summary(self) -> dict[str, Any]:

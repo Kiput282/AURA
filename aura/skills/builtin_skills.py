@@ -1361,4 +1361,28 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 87.0 local console web foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_console_web_foundation",
+            description="Prepare planner-only AURA Local Console Web Foundation for localhost-only policy planning, route blueprint planning, API contract blueprint planning, static asset blueprint planning, session state blueprint planning, security boundary planning, Control Center web bridge planning, and developer console access planning without starting web servers, binding ports, creating live routes, serving static files, opening browsers, creating frontend/backend runtime, enabling API runtime, enabling session runtime, allowing public/LAN/remote access, running websocket/chat/UI/service/launcher runtime, granting permissions, activating runtime actions, changing runtime behavior, file operations, command execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_console_web_status",
+                "local_host_policy_plan",
+                "route_blueprint_plan",
+                "api_contract_blueprint_plan",
+                "static_asset_blueprint_plan",
+                "session_state_blueprint_plan",
+                "security_boundary_plan",
+                "control_center_web_bridge_plan",
+                "developer_console_access_plan",
+                "local_console_web_context",
+                "localhost_only_console_metadata",
+            ],
+        )
+    )
+
     return registry

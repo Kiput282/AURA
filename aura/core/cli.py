@@ -70,6 +70,7 @@ from aura.permission_workflow.unified_permission_workflow_manager import Unified
 from aura.runtime_service.aura_runtime_service_foundation_manager import AuraRuntimeServiceFoundationManager
 from aura.launcher_monitor.aura_launcher_health_monitor_foundation_manager import AuraLauncherHealthMonitorFoundationManager
 from aura.control_center.aura_control_center_ui_blueprint_manager import AuraControlCenterUIBlueprintManager
+from aura.local_console_web.aura_local_console_web_foundation_manager import AuraLocalConsoleWebFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -3943,6 +3944,62 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 87.0 local console web foundation CLI helpers.
+    def print_local_console_web_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Console Web Safety Boundary"))
+
+    def handle_local_console_web_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local console web foundation"
+        manager = AuraLocalConsoleWebFoundationManager(project_root=self.project_root)
+
+        if command == "local-console-web-status":
+            self.print_local_console_web_packet("AURA Local Console Web Foundation Status", manager.status())
+            return True
+
+        if command == "local-host-policy-plan":
+            self.print_local_console_web_packet("AURA Local Host Policy Plan", manager.local_host_policy_plan(target))
+            return True
+
+        if command == "route-blueprint-plan":
+            self.print_local_console_web_packet("AURA Route Blueprint Plan", manager.route_blueprint_plan(target))
+            return True
+
+        if command == "api-contract-blueprint-plan":
+            self.print_local_console_web_packet("AURA API Contract Blueprint Plan", manager.api_contract_blueprint_plan(target))
+            return True
+
+        if command == "static-asset-blueprint-plan":
+            self.print_local_console_web_packet("AURA Static Asset Blueprint Plan", manager.static_asset_blueprint_plan(target))
+            return True
+
+        if command == "session-state-blueprint-plan":
+            self.print_local_console_web_packet("AURA Session State Blueprint Plan", manager.session_state_blueprint_plan(target))
+            return True
+
+        if command == "security-boundary-plan":
+            self.print_local_console_web_packet("AURA Local Console Security Boundary Plan", manager.security_boundary_plan(target))
+            return True
+
+        if command == "control-center-web-bridge-plan":
+            self.print_local_console_web_packet("AURA Control Center Web Bridge Plan", manager.control_center_web_bridge_plan(target))
+            return True
+
+        if command == "developer-console-access-plan":
+            self.print_local_console_web_packet("AURA Developer Console Access Plan", manager.developer_console_access_plan(target))
+            return True
+
+        if command == "local-console-web-context":
+            self.print_local_console_web_packet("AURA Local Console Web Foundation Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -4011,6 +4068,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_cli_command(raw_args):
+            return True
+
+        if self.handle_local_console_web_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

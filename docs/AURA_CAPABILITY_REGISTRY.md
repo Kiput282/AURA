@@ -214,3 +214,23 @@ Updated registry summary:
 - runtime execution features: 0
 
 AURA Control Center remains foundation-only and blueprint-only. It does not create, run, open, bind, control, execute, or serve a real UI/web runtime.
+
+
+## Sprint 87 Update — Local Console Web Foundation Online
+
+Status: UPDATED FOR v0.87.0-genesis
+
+The Capability Registry now tracks AURA Local Console Web Foundation as online.
+
+Updated registry summary:
+- total capabilities tracked: 19
+- online capabilities: 17
+- foundation-only capabilities: 7
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+AURA Local Console Web Foundation remains foundation-only and blueprint-only. It does not start a web server, bind ports, create live routes, serve files, open browsers, or enable frontend/backend/API/session runtime.

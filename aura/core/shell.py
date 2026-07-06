@@ -72,6 +72,7 @@ from aura.permission_workflow.unified_permission_workflow_manager import Unified
 from aura.runtime_service.aura_runtime_service_foundation_manager import AuraRuntimeServiceFoundationManager
 from aura.launcher_monitor.aura_launcher_health_monitor_foundation_manager import AuraLauncherHealthMonitorFoundationManager
 from aura.control_center.aura_control_center_ui_blueprint_manager import AuraControlCenterUIBlueprintManager
+from aura.local_console_web.aura_local_console_web_foundation_manager import AuraLocalConsoleWebFoundationManager
 
 
 class AuraShell:
@@ -421,6 +422,16 @@ class AuraShell:
         print("  action-log-blueprint-plan <target> Prepare Action Log blueprint plan")
         print("  control-center-safety-policy-plan <target> Prepare Control Center safety policy plan")
         print("  control-center-context Show Control Center UI Blueprint context")
+        print("  local-console-web-status Show Local Console Web Foundation status")
+        print("  local-host-policy-plan <target> Prepare local host policy plan")
+        print("  route-blueprint-plan <target> Prepare route blueprint plan")
+        print("  api-contract-blueprint-plan <target> Prepare API contract blueprint plan")
+        print("  static-asset-blueprint-plan <target> Prepare static asset blueprint plan")
+        print("  session-state-blueprint-plan <target> Prepare session state blueprint plan")
+        print("  security-boundary-plan <target> Prepare local console security boundary plan")
+        print("  control-center-web-bridge-plan <target> Prepare Control Center web bridge plan")
+        print("  developer-console-access-plan <target> Prepare developer console access plan")
+        print("  local-console-web-context Show Local Console Web Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4182,6 +4193,63 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 87.0 local console web foundation shell helpers.
+    def print_local_console_web_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Console Web Safety Boundary"))
+
+    def handle_local_console_web_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA local console web foundation"
+        manager = AuraLocalConsoleWebFoundationManager(project_root=self.project_root)
+
+        if command == "local-console-web-status":
+            self.print_local_console_web_packet("AURA Local Console Web Foundation Status", manager.status())
+            return True
+
+        if command == "local-host-policy-plan":
+            self.print_local_console_web_packet("AURA Local Host Policy Plan", manager.local_host_policy_plan(target))
+            return True
+
+        if command == "route-blueprint-plan":
+            self.print_local_console_web_packet("AURA Route Blueprint Plan", manager.route_blueprint_plan(target))
+            return True
+
+        if command == "api-contract-blueprint-plan":
+            self.print_local_console_web_packet("AURA API Contract Blueprint Plan", manager.api_contract_blueprint_plan(target))
+            return True
+
+        if command == "static-asset-blueprint-plan":
+            self.print_local_console_web_packet("AURA Static Asset Blueprint Plan", manager.static_asset_blueprint_plan(target))
+            return True
+
+        if command == "session-state-blueprint-plan":
+            self.print_local_console_web_packet("AURA Session State Blueprint Plan", manager.session_state_blueprint_plan(target))
+            return True
+
+        if command == "security-boundary-plan":
+            self.print_local_console_web_packet("AURA Local Console Security Boundary Plan", manager.security_boundary_plan(target))
+            return True
+
+        if command == "control-center-web-bridge-plan":
+            self.print_local_console_web_packet("AURA Control Center Web Bridge Plan", manager.control_center_web_bridge_plan(target))
+            return True
+
+        if command == "developer-console-access-plan":
+            self.print_local_console_web_packet("AURA Developer Console Access Plan", manager.developer_console_access_plan(target))
+            return True
+
+        if command == "local-console-web-context":
+            self.print_local_console_web_packet("AURA Local Console Web Foundation Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -4253,6 +4321,9 @@ class AuraShell:
             return
 
         if self.handle_control_center_shell_command(normalized):
+            return
+
+        if self.handle_local_console_web_shell_command(normalized):
             return
 
         if normalized == "help":

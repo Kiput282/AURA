@@ -2819,4 +2819,30 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 87.0 local console web foundation actions.
+    local_console_web_actions = [
+        ('local_console_web.status', 'read_project', 'Show AURA Local Console Web Foundation status.'),
+        ('local_console_web.local_host_policy_plan', 'read_project', 'Prepare localhost-only policy planning.'),
+        ('local_console_web.route_blueprint_plan', 'read_project', 'Prepare route blueprint planning without live routes.'),
+        ('local_console_web.api_contract_blueprint_plan', 'read_project', 'Prepare API contract blueprint planning without backend runtime.'),
+        ('local_console_web.static_asset_blueprint_plan', 'read_project', 'Prepare static asset blueprint planning without serving files.'),
+        ('local_console_web.session_state_blueprint_plan', 'read_project', 'Prepare session state blueprint planning without session runtime.'),
+        ('local_console_web.security_boundary_plan', 'read_project', 'Prepare local console web security boundary planning.'),
+        ('local_console_web.control_center_web_bridge_plan', 'read_project', 'Prepare Control Center web bridge planning.'),
+        ('local_console_web.developer_console_access_plan', 'read_project', 'Prepare local developer console access planning.'),
+        ('local_console_web.context', 'read_project', 'Show Local Console Web Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in local_console_web_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="local_console_web",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_local_console_web_foundation",
+            )
+        )
+
     return registry

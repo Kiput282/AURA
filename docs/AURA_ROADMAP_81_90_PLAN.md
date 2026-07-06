@@ -197,3 +197,32 @@ Current Control Center blueprint summary:
 - runtime execution features: 0
 
 Core rule: AURA Control Center may show visibility, but must not control runtime yet.
+
+
+## Sprint 87 Update — AURA Local Console Web Foundation
+
+Status: LOCAL CONSOLE WEB FOUNDATION ONLINE  
+Target version: v0.87.0-genesis
+
+Sprint 87 adds a planner-only AURA Local Console Web Foundation for localhost-only policy planning, route blueprint planning, API contract blueprint planning, static asset blueprint planning, session state blueprint planning, security boundary planning, Control Center web bridge planning, and developer console access planning.
+
+Current local console web summary:
+- web foundation plan types: 10
+- local host policies: 6
+- route blueprints: 9
+- API contracts: 8
+- static asset groups: 6
+- session state fields: 7
+- runtime-enabled routes: 0
+- runtime-enabled APIs: 0
+- web servers started: 0
+- ports bound: 0
+- frontend apps created: 0
+- backend services created: 0
+- routes created: 0
+- static files served: 0
+- sessions started: 0
+- browser windows opened: 0
+- runtime execution features: 0
+
+Core rule: AURA Local Console may prepare local visibility, but must not run web runtime yet.

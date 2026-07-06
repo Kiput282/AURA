@@ -1140,3 +1140,44 @@ Capability Registry update:
 Core rule: AURA Control Center may show visibility, but must not control runtime yet.
 
 See docs/AURA_CONTROL_CENTER_UI_BLUEPRINT.md.
+
+
+## Sprint 87.0 — AURA Local Console Web Foundation
+
+Status: LOCAL CONSOLE WEB FOUNDATION ONLINE
+
+AURA includes planner-only Local Console Web Foundation planning for localhost-only policy, route blueprints, API contract blueprints, static asset blueprints, session state blueprints, security boundary planning, Control Center web bridge planning, and developer console access planning.
+
+Summary:
+- web foundation plan types: 10
+- local host policies: 6
+- route blueprints: 9
+- API contracts: 8
+- static asset groups: 6
+- session state fields: 7
+- runtime-enabled routes: 0
+- runtime-enabled APIs: 0
+- web servers started: 0
+- ports bound: 0
+- frontend apps created: 0
+- backend services created: 0
+- routes created: 0
+- static files served: 0
+- sessions started: 0
+- browser windows opened: 0
+- runtime execution features: 0
+
+Capability Registry update:
+- total capabilities tracked: 19
+- online capabilities: 17
+- foundation-only capabilities: 7
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Core rule: AURA Local Console may prepare local visibility, but must not run web runtime yet.
+
+See docs/AURA_LOCAL_CONSOLE_WEB_FOUNDATION.md.
