@@ -48,6 +48,9 @@ from aura.roles.builtin_roles import build_builtin_role_registry
 from aura.plugins.builtin.echo_plugin import EchoPlugin
 from aura.plugins.builtin.memory_plugin import MemoryPlugin
 from aura.plugins.plugin_manager import PluginManager
+from aura.codebase_change.codebase_change_planner_manager import CodebaseChangePlannerManager
+from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
+from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
 
 
 class AuraShell:
@@ -285,6 +288,15 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  codebase-change-status Show Codebase Change Planner status")
+        print("  codebase-change-plan <target> Prepare metadata-only codebase change plan")
+        print("  codebase-impact-review <target> Prepare metadata-only codebase impact review")
+        print("  codebase-patch-proposal-status Show Codebase Patch Proposal Renderer status")
+        print("  codebase-patch-proposal <target> Prepare proposal-only patch packet")
+        print("  codebase-patch-safety-packet <target> Prepare proposal-only patch safety packet")
+        print("  codebase-validation-gate-status Show Codebase Validation Gate Planner status")
+        print("  codebase-validation-gate-plan <target> Prepare proposal-only validation gate plan")
+        print("  codebase-validation-preflight-gate <target> Prepare proposal-only preflight gate")
         print("  remember <text>      Save a memory")
         print("  recall               Show recent memories")
         print("  recall <limit>       Show recent memories with limit")
@@ -2079,11 +2091,107 @@ class AuraShell:
         print("Goodbye, Kiput.")
         self.running = False
 
+
+    # Sprint 65.1 codebase compatibility shell helpers.
+    def print_codebase_compat_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<38}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<38}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<38}: {len(value)} field(s)")
+
+        print()
+        print("Safety Boundary")
+        print("---------------")
+        for key in [
+            "read_only",
+            "proposal_only",
+            "metadata_only",
+            "file_read",
+            "file_write",
+            "file_edit",
+            "file_delete",
+            "file_move",
+            "file_copy",
+            "command_execution",
+            "git_commit",
+            "git_push",
+            "external_action_execution",
+            "real_tool_execution",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<38}: {packet[key]}")
+
+    def handle_codebase_compat_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general codebase change"
+        project_root = self.project_root
+
+        change_manager = CodebaseChangePlannerManager(project_root=project_root)
+        patch_manager = CodebasePatchProposalRendererManager(project_root=project_root)
+        validation_manager = CodebaseValidationGatePlannerManager(project_root=project_root)
+
+        if command == "codebase-change-status":
+            self.print_codebase_compat_packet("AURA Codebase Change Planner Status", change_manager.status())
+            return True
+
+        if command == "codebase-change-plan":
+            self.print_codebase_compat_packet("AURA Codebase Change Plan", change_manager.change_intent_plan(target))
+            return True
+
+        if command == "codebase-impact-review":
+            self.print_codebase_compat_packet("AURA Codebase Impact Review", change_manager.change_impact_plan(target))
+            return True
+
+        if command == "codebase-patch-proposal-status":
+            self.print_codebase_compat_packet("AURA Codebase Patch Proposal Renderer Status", patch_manager.status())
+            return True
+
+        if command == "codebase-patch-proposal":
+            self.print_codebase_compat_packet("AURA Codebase Patch Proposal", patch_manager.render_proposal(target))
+            return True
+
+        if command == "codebase-patch-safety-packet":
+            packet = patch_manager.render_proposal(target)
+            packet["compatibility_view"] = "safety_packet"
+            self.print_codebase_compat_packet("AURA Codebase Patch Safety Packet", packet)
+            return True
+
+        if command == "codebase-validation-gate-status":
+            self.print_codebase_compat_packet("AURA Codebase Validation Gate Planner Status", validation_manager.status())
+            return True
+
+        if command == "codebase-validation-gate-plan":
+            self.print_codebase_compat_packet("AURA Codebase Validation Gate Plan", validation_manager.validation_gate_plan(target))
+            return True
+
+        if command == "codebase-validation-preflight-gate":
+            self.print_codebase_compat_packet("AURA Codebase Validation Preflight Gate", validation_manager.preflight_gate(target))
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
 
         if not command:
+            return
+
+        if self.handle_codebase_compat_shell_command(normalized):
             return
 
         if normalized == "help":

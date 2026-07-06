@@ -278,6 +278,7 @@ class CodebaseValidationGatePlannerManager:
             "version": self.version,
             "status": self.status_name,
             "gate_planner_ready": True,
+            "planner_ready": True,
             "validation_gate_plan_ready": True,
             "preflight_gate_ready": True,
             "static_validation_gate_ready": True,

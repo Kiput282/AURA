@@ -37,6 +37,8 @@ from aura.voice.voice_runtime_alpha_manager import VoiceRuntimeAlphaManager
 from aura.workspace.workspace_awareness_manager import WorkspaceAwarenessManager
 from aura.workspace_memory.workspace_memory_link_manager import WorkspaceMemoryLinkManager
 from aura.codebase_change.codebase_change_planner_manager import CodebaseChangePlannerManager
+from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
+from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
 class SystemStatusManager:
@@ -134,6 +136,8 @@ class SystemStatusManager:
         streaming_safety_status = self.streaming_safety_manager.status()
 
         codebase_change_status = CodebaseChangePlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        codebase_patch_proposal_status = CodebasePatchProposalRendererManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        codebase_validation_gate_status = CodebaseValidationGatePlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -191,6 +195,9 @@ class SystemStatusManager:
                 "local_task_plan_types": local_task_status["task_plan_types"],
                 "safe_file_operation_sections": safe_file_status["sections"],
                 "safe_file_operation_types": safe_file_status["file_operation_types"],
+            "codebase_change_plan_types": codebase_change_status.get("change_plan_types", 0),
+            "codebase_patch_proposal_sections": codebase_patch_proposal_status.get("proposal_sections", 0),
+            "codebase_validation_gate_types": codebase_validation_gate_status.get("gate_types", 0),
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -228,6 +235,9 @@ class SystemStatusManager:
                 "creative_assistant": creative_assistant_status["status"],
                 "local_task_planner_alpha": local_task_status["status"],
                 "safe_file_operation_planner": safe_file_status["status"],
+            "codebase_change_planner": codebase_change_status["status"],
+            "codebase_patch_proposal_renderer": codebase_patch_proposal_status["status"],
+            "codebase_validation_gate_planner": codebase_validation_gate_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -348,6 +358,45 @@ class SystemStatusManager:
                 "safe_file_file_copy": safe_file_status["file_copy"],
                 "safe_file_command_execution": safe_file_status["command_execution"],
                 "safe_file_external_action_execution": safe_file_status["external_action_execution"],
+            "codebase_change_planner_ready": codebase_change_status["planner_ready"],
+            "codebase_change_intent_plan_ready": codebase_change_status["change_intent_plan_ready"],
+            "codebase_change_impact_plan_ready": codebase_change_status["change_impact_plan_ready"],
+            "codebase_change_patch_plan_ready": codebase_change_status["patch_plan_ready"],
+            "codebase_change_validation_plan_ready": codebase_change_status["validation_plan_ready"],
+            "codebase_change_rollback_plan_ready": codebase_change_status["rollback_plan_ready"],
+            "codebase_change_context_ready": codebase_change_status["context_ready"],
+            "codebase_change_file_write": codebase_change_status["file_write"],
+            "codebase_change_command_execution": codebase_change_status["command_execution"],
+            "codebase_change_git_commit": codebase_change_status["git_commit"],
+            "codebase_change_git_push": codebase_change_status["git_push"],
+            "codebase_change_real_tool_execution": codebase_change_status["real_tool_execution"],
+            "codebase_patch_proposal_renderer_ready": codebase_patch_proposal_status["renderer_ready"],
+            "codebase_patch_proposal_render_ready": codebase_patch_proposal_status["proposal_render_ready"],
+            "codebase_patch_proposal_review_packet_ready": codebase_patch_proposal_status["review_packet_ready"],
+            "codebase_patch_proposal_safety_packet_ready": codebase_patch_proposal_status["safety_packet_ready"],
+            "codebase_patch_proposal_validation_packet_ready": codebase_patch_proposal_status["validation_packet_ready"],
+            "codebase_patch_proposal_rollback_packet_ready": codebase_patch_proposal_status["rollback_packet_ready"],
+            "codebase_patch_proposal_context_ready": codebase_patch_proposal_status["context_ready"],
+            "codebase_patch_proposal_file_write": codebase_patch_proposal_status["file_write"],
+            "codebase_patch_proposal_command_execution": codebase_patch_proposal_status["command_execution"],
+            "codebase_patch_proposal_git_commit": codebase_patch_proposal_status["git_commit"],
+            "codebase_patch_proposal_git_push": codebase_patch_proposal_status["git_push"],
+            "codebase_patch_proposal_real_tool_execution": codebase_patch_proposal_status["real_tool_execution"],
+            "codebase_validation_gate_planner_ready": codebase_validation_gate_status["planner_ready"],
+            "codebase_validation_gate_plan_ready": codebase_validation_gate_status["validation_gate_plan_ready"],
+            "codebase_validation_preflight_gate_ready": codebase_validation_gate_status["preflight_gate_ready"],
+            "codebase_validation_static_validation_gate_ready": codebase_validation_gate_status["static_validation_gate_ready"],
+            "codebase_validation_registry_validation_gate_ready": codebase_validation_gate_status["registry_validation_gate_ready"],
+            "codebase_validation_runtime_smoke_gate_ready": codebase_validation_gate_status["runtime_smoke_gate_ready"],
+            "codebase_validation_diff_review_gate_ready": codebase_validation_gate_status["diff_review_gate_ready"],
+            "codebase_validation_rollback_gate_ready": codebase_validation_gate_status["rollback_gate_ready"],
+            "codebase_validation_commit_push_gate_ready": codebase_validation_gate_status["commit_push_gate_ready"],
+            "codebase_validation_gate_context_ready": codebase_validation_gate_status["context_ready"],
+            "codebase_validation_file_write": codebase_validation_gate_status["file_write"],
+            "codebase_validation_command_execution": codebase_validation_gate_status["command_execution"],
+            "codebase_validation_git_commit": codebase_validation_gate_status["git_commit"],
+            "codebase_validation_git_push": codebase_validation_gate_status["git_push"],
+            "codebase_validation_real_tool_execution": codebase_validation_gate_status["real_tool_execution"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -510,5 +559,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

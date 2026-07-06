@@ -2104,4 +2104,202 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         )
     )
 
+    # Sprint 65.1 compatibility aliases for canonical codebase planner action names.
+    codebase_compatibility_aliases = [
+        (
+            'codebase_change.change_plan',
+            'codebase_change',
+            'codebase_change_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_change.intent_plan. Prepare a metadata-only codebase change plan without reading, writing, editing, executing commands, committing, or pushing automatically.',
+        ),
+        (
+            'codebase_change.impact_review',
+            'codebase_change',
+            'codebase_change_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_change.impact_plan. Prepare a metadata-only codebase impact review without reading, writing, editing, executing commands, committing, or pushing automatically.',
+        ),
+        (
+            'codebase_patch.status',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'read_project',
+            'Compatibility alias for codebase_patch_proposal.status. Show Codebase Patch Proposal Renderer status.',
+        ),
+        (
+            'codebase_patch.patch_proposal',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'prepare_file',
+            'Compatibility alias for codebase_patch_proposal.render. Render a proposal-only codebase patch packet without applying patches automatically.',
+        ),
+        (
+            'codebase_patch.before_after_review',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'prepare_file',
+            'Prepare a proposal-only before/after codebase patch review without reading, writing, editing, applying patches, or executing commands automatically.',
+        ),
+        (
+            'codebase_patch.diff_summary',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'prepare_file',
+            'Prepare a proposal-only codebase diff summary without reading, writing, editing, applying patches, or executing commands automatically.',
+        ),
+        (
+            'codebase_patch.review_packet',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'prepare_file',
+            'Compatibility alias for codebase_patch_proposal.review_packet. Prepare a codebase patch review packet.',
+        ),
+        (
+            'codebase_patch.safety_packet',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'prepare_file',
+            'Prepare a proposal-only codebase patch safety packet without reading, writing, editing, applying patches, or executing commands automatically.',
+        ),
+        (
+            'codebase_patch.validation_packet',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'prepare_file',
+            'Compatibility alias for codebase_patch_proposal.validation_packet. Prepare validation notes for a codebase patch.',
+        ),
+        (
+            'codebase_patch.rollback_packet',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'prepare_file',
+            'Compatibility alias for codebase_patch_proposal.rollback_packet. Prepare rollback notes for a codebase patch.',
+        ),
+        (
+            'codebase_patch.context',
+            'codebase_patch',
+            'codebase_patch_proposal_renderer',
+            'read_project',
+            'Compatibility alias for codebase_patch_proposal.context. Show Codebase Patch Proposal Renderer context.',
+        ),
+        (
+            'codebase_patch_proposal.safety_packet',
+            'codebase_patch_proposal',
+            'codebase_patch_proposal_renderer',
+            'prepare_file',
+            'Prepare a proposal-only codebase patch safety packet without reading, writing, editing, applying patches, or executing commands automatically.',
+        ),
+        (
+            'codebase_validation.status',
+            'codebase_validation',
+            'codebase_validation_gate_planner',
+            'read_project',
+            'Compatibility alias for codebase_validation_gate.status. Show Codebase Validation Gate Planner status.',
+        ),
+        (
+            'codebase_validation.validation_gate',
+            'codebase_validation',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.plan. Prepare a proposal-only validation gate plan.',
+        ),
+        (
+            'codebase_validation.test_plan',
+            'codebase_validation',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Prepare a proposal-only codebase validation test plan without executing commands or tests automatically.',
+        ),
+        (
+            'codebase_validation.risk_gate',
+            'codebase_validation',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Prepare a proposal-only codebase validation risk gate without executing commands automatically.',
+        ),
+        (
+            'codebase_validation.release_checklist',
+            'codebase_validation',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Prepare a proposal-only release checklist for codebase validation without committing or pushing automatically.',
+        ),
+        (
+            'codebase_validation.context',
+            'codebase_validation',
+            'codebase_validation_gate_planner',
+            'read_project',
+            'Compatibility alias for codebase_validation_gate.context. Show Codebase Validation Gate Planner context.',
+        ),
+        (
+            'codebase_validation_gate.validation_gate',
+            'codebase_validation_gate',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.plan. Prepare a proposal-only validation gate plan.',
+        ),
+        (
+            'codebase_validation_gate.preflight_gate',
+            'codebase_validation_gate',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.preflight. Prepare a proposal-only preflight gate.',
+        ),
+        (
+            'codebase_validation_gate.static_validation_gate',
+            'codebase_validation_gate',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.static_validation. Prepare a proposal-only static validation gate.',
+        ),
+        (
+            'codebase_validation_gate.registry_validation_gate',
+            'codebase_validation_gate',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.registry_validation. Prepare a proposal-only registry validation gate.',
+        ),
+        (
+            'codebase_validation_gate.runtime_smoke_gate',
+            'codebase_validation_gate',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.runtime_smoke. Prepare a proposal-only runtime smoke gate.',
+        ),
+        (
+            'codebase_validation_gate.diff_review_gate',
+            'codebase_validation_gate',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.diff_review. Prepare a proposal-only diff review gate.',
+        ),
+        (
+            'codebase_validation_gate.rollback_gate',
+            'codebase_validation_gate',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.rollback. Prepare a proposal-only rollback gate.',
+        ),
+        (
+            'codebase_validation_gate.commit_push_gate',
+            'codebase_validation_gate',
+            'codebase_validation_gate_planner',
+            'prepare_file',
+            'Compatibility alias for codebase_validation_gate.commit_push. Prepare a proposal-only commit/push gate without committing or pushing automatically.',
+        ),
+    ]
+
+    for alias_name, plugin_name, skill_name, permission_action, description in codebase_compatibility_aliases:
+        registry.register(
+            PluginAction(
+                name=alias_name,
+                plugin=plugin_name,
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill=skill_name,
+            )
+        )
+
     return registry
