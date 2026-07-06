@@ -73,6 +73,7 @@ from aura.runtime_service.aura_runtime_service_foundation_manager import AuraRun
 from aura.launcher_monitor.aura_launcher_health_monitor_foundation_manager import AuraLauncherHealthMonitorFoundationManager
 from aura.control_center.aura_control_center_ui_blueprint_manager import AuraControlCenterUIBlueprintManager
 from aura.local_console_web.aura_local_console_web_foundation_manager import AuraLocalConsoleWebFoundationManager
+from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import AuraChatBridgeSessionStateFoundationManager
 
 
 class AuraShell:
@@ -432,6 +433,17 @@ class AuraShell:
         print("  control-center-web-bridge-plan <target> Prepare Control Center web bridge plan")
         print("  developer-console-access-plan <target> Prepare developer console access plan")
         print("  local-console-web-context Show Local Console Web Foundation context")
+        print("  chat-bridge-status Show Chat Bridge & Session State Foundation status")
+        print("  conversation-session-blueprint-plan <target> Prepare conversation session blueprint plan")
+        print("  message-flow-blueprint-plan <target> Prepare message flow blueprint plan")
+        print("  control-center-chat-panel-bridge-plan <target> Prepare Control Center chat panel bridge plan")
+        print("  local-console-session-contract-plan <target> Prepare Local Console session contract plan")
+        print("  permission-aware-chat-action-boundary-plan <target> Prepare permission-aware chat action boundary plan")
+        print("  chat-context-persistence-blueprint-plan <target> Prepare chat context persistence blueprint plan")
+        print("  websocket-boundary-plan <target> Prepare websocket boundary plan")
+        print("  session-recovery-blueprint-plan <target> Prepare session recovery blueprint plan")
+        print("  chat-bridge-safety-policy-plan <target> Prepare chat bridge safety policy plan")
+        print("  chat-bridge-context Show Chat Bridge & Session State Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4250,6 +4262,67 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 88.0 chat bridge session state foundation shell helpers.
+    def print_chat_bridge_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Chat Bridge Safety Boundary"))
+
+    def handle_chat_bridge_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA chat bridge and session state foundation"
+        manager = AuraChatBridgeSessionStateFoundationManager(project_root=self.project_root)
+
+        if command == "chat-bridge-status":
+            self.print_chat_bridge_packet("AURA Chat Bridge & Session State Foundation Status", manager.status())
+            return True
+
+        if command == "conversation-session-blueprint-plan":
+            self.print_chat_bridge_packet("AURA Conversation Session Blueprint Plan", manager.conversation_session_blueprint_plan(target))
+            return True
+
+        if command == "message-flow-blueprint-plan":
+            self.print_chat_bridge_packet("AURA Message Flow Blueprint Plan", manager.message_flow_blueprint_plan(target))
+            return True
+
+        if command == "control-center-chat-panel-bridge-plan":
+            self.print_chat_bridge_packet("AURA Control Center Chat Panel Bridge Plan", manager.control_center_chat_panel_bridge_plan(target))
+            return True
+
+        if command == "local-console-session-contract-plan":
+            self.print_chat_bridge_packet("AURA Local Console Session Contract Plan", manager.local_console_session_contract_plan(target))
+            return True
+
+        if command == "permission-aware-chat-action-boundary-plan":
+            self.print_chat_bridge_packet("AURA Permission-Aware Chat Action Boundary Plan", manager.permission_aware_chat_action_boundary_plan(target))
+            return True
+
+        if command == "chat-context-persistence-blueprint-plan":
+            self.print_chat_bridge_packet("AURA Chat Context Persistence Blueprint Plan", manager.chat_context_persistence_blueprint_plan(target))
+            return True
+
+        if command == "websocket-boundary-plan":
+            self.print_chat_bridge_packet("AURA Websocket Boundary Plan", manager.websocket_boundary_plan(target))
+            return True
+
+        if command == "session-recovery-blueprint-plan":
+            self.print_chat_bridge_packet("AURA Session Recovery Blueprint Plan", manager.session_recovery_blueprint_plan(target))
+            return True
+
+        if command == "chat-bridge-safety-policy-plan":
+            self.print_chat_bridge_packet("AURA Chat Bridge Safety Policy Plan", manager.chat_bridge_safety_policy_plan(target))
+            return True
+
+        if command == "chat-bridge-context":
+            self.print_chat_bridge_packet("AURA Chat Bridge & Session State Foundation Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -4324,6 +4397,9 @@ class AuraShell:
             return
 
         if self.handle_local_console_web_shell_command(normalized):
+            return
+
+        if self.handle_chat_bridge_shell_command(normalized):
             return
 
         if normalized == "help":

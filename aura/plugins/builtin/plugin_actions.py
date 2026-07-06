@@ -2845,4 +2845,31 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 88.0 chat bridge session state foundation actions.
+    chat_bridge_actions = [
+        ('chat_bridge.status', 'read_project', 'Show AURA Chat Bridge & Session State Foundation status.'),
+        ('chat_bridge.conversation_session_blueprint_plan', 'read_project', 'Prepare conversation session blueprint planning.'),
+        ('chat_bridge.message_flow_blueprint_plan', 'read_project', 'Prepare message flow blueprint planning.'),
+        ('chat_bridge.control_center_chat_panel_bridge_plan', 'read_project', 'Prepare Control Center chat panel bridge planning.'),
+        ('chat_bridge.local_console_session_contract_plan', 'read_project', 'Prepare Local Console session contract planning.'),
+        ('chat_bridge.permission_aware_chat_action_boundary_plan', 'read_project', 'Prepare permission-aware chat action boundary planning.'),
+        ('chat_bridge.chat_context_persistence_blueprint_plan', 'read_project', 'Prepare chat context persistence blueprint planning.'),
+        ('chat_bridge.websocket_boundary_plan', 'read_project', 'Prepare websocket boundary planning without websocket runtime.'),
+        ('chat_bridge.session_recovery_blueprint_plan', 'read_project', 'Prepare session recovery blueprint planning.'),
+        ('chat_bridge.safety_policy_plan', 'read_project', 'Prepare chat bridge safety policy planning.'),
+        ('chat_bridge.context', 'read_project', 'Show Chat Bridge & Session State Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in chat_bridge_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="chat_bridge",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_chat_bridge_session_state_foundation",
+            )
+        )
+
     return registry

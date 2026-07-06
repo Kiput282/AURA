@@ -226,3 +226,28 @@ Current local console web summary:
 - runtime execution features: 0
 
 Core rule: AURA Local Console may prepare local visibility, but must not run web runtime yet.
+
+
+## Sprint 88 Update — AURA Chat Bridge & Session State Foundation
+
+Status: CHAT BRIDGE & SESSION STATE FOUNDATION ONLINE  
+Target version: v0.88.0-genesis
+
+Sprint 88 adds a planner-only AURA Chat Bridge & Session State Foundation for conversation session metadata, message flow blueprints, Control Center chat panel bridge planning, Local Console session contract planning, permission-aware chat action boundary planning, chat context persistence blueprint planning, websocket boundary planning, session recovery blueprint planning, and chat bridge safety policy.
+
+Current chat bridge summary:
+- chat bridge plan types: 11
+- chat channels: 5
+- session state fields: 12
+- message flow steps: 8
+- permission action boundary rules: 10
+- session events: 8
+- runtime-enabled channels: 0
+- chat sessions started: 0
+- messages sent: 0
+- messages received: 0
+- websocket servers started: 0
+- session files written: 0
+- runtime execution features: 0
+
+Core rule: AURA Chat Bridge may prepare session metadata, but must not run chat runtime yet.

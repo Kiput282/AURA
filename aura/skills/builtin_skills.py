@@ -1385,4 +1385,29 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 88.0 chat bridge session state foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_chat_bridge_session_state_foundation",
+            description="Prepare planner-only AURA Chat Bridge and Session State Foundation for conversation session metadata, message flow blueprints, Control Center chat panel bridge planning, Local Console session contract planning, permission-aware chat action boundary planning, chat context persistence blueprint planning, websocket boundary planning, session recovery blueprint planning, and chat bridge safety policy without starting chat runtime, conversation runtime, session runtime, websocket runtime, web/frontend/backend/API runtime, binding ports, sending or receiving messages, persisting sessions, granting permissions, activating runtime actions, changing runtime behavior, running service/launcher/plugin runtime, file operations, command execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "chat_bridge_status",
+                "conversation_session_blueprint_plan",
+                "message_flow_blueprint_plan",
+                "control_center_chat_panel_bridge_plan",
+                "local_console_session_contract_plan",
+                "permission_aware_chat_action_boundary_plan",
+                "chat_context_persistence_blueprint_plan",
+                "websocket_boundary_plan",
+                "session_recovery_blueprint_plan",
+                "chat_bridge_safety_policy_plan",
+                "chat_bridge_context",
+                "safe_idle_chat_session_metadata",
+            ],
+        )
+    )
+
     return registry

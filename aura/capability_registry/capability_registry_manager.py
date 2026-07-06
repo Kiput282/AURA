@@ -369,6 +369,17 @@ class CapabilityRegistryManager:
                     "introduced_in": "0.87.0-genesis",
                     "control_center_visible": True,
                 },
+                {
+                    "id": "aura_chat_bridge_session_state_foundation",
+                    "name": "AURA Chat Bridge & Session State Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "user_confirmation",
+                    "category": "chat_bridge",
+                    "introduced_in": "0.88.0-genesis",
+                    "control_center_visible": True,
+                },
 ]
 
 

@@ -234,3 +234,23 @@ Updated registry summary:
 - runtime execution features: 0
 
 AURA Local Console Web Foundation remains foundation-only and blueprint-only. It does not start a web server, bind ports, create live routes, serve files, open browsers, or enable frontend/backend/API/session runtime.
+
+
+## Sprint 88 Update — Chat Bridge & Session State Foundation Online
+
+Status: UPDATED FOR v0.88.0-genesis
+
+The Capability Registry now tracks AURA Chat Bridge & Session State Foundation as online.
+
+Updated registry summary:
+- total capabilities tracked: 20
+- online capabilities: 18
+- foundation-only capabilities: 8
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+AURA Chat Bridge & Session State Foundation remains foundation-only and blueprint-only. It does not start chat runtime, websocket runtime, session runtime, web/API runtime, grant permissions, activate actions, persist sessions, send messages, receive messages, or execute tools.

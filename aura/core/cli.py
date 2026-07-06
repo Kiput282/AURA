@@ -71,6 +71,7 @@ from aura.runtime_service.aura_runtime_service_foundation_manager import AuraRun
 from aura.launcher_monitor.aura_launcher_health_monitor_foundation_manager import AuraLauncherHealthMonitorFoundationManager
 from aura.control_center.aura_control_center_ui_blueprint_manager import AuraControlCenterUIBlueprintManager
 from aura.local_console_web.aura_local_console_web_foundation_manager import AuraLocalConsoleWebFoundationManager
+from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import AuraChatBridgeSessionStateFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4000,6 +4001,66 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 88.0 chat bridge session state foundation CLI helpers.
+    def print_chat_bridge_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Chat Bridge Safety Boundary"))
+
+    def handle_chat_bridge_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA chat bridge and session state foundation"
+        manager = AuraChatBridgeSessionStateFoundationManager(project_root=self.project_root)
+
+        if command == "chat-bridge-status":
+            self.print_chat_bridge_packet("AURA Chat Bridge & Session State Foundation Status", manager.status())
+            return True
+
+        if command == "conversation-session-blueprint-plan":
+            self.print_chat_bridge_packet("AURA Conversation Session Blueprint Plan", manager.conversation_session_blueprint_plan(target))
+            return True
+
+        if command == "message-flow-blueprint-plan":
+            self.print_chat_bridge_packet("AURA Message Flow Blueprint Plan", manager.message_flow_blueprint_plan(target))
+            return True
+
+        if command == "control-center-chat-panel-bridge-plan":
+            self.print_chat_bridge_packet("AURA Control Center Chat Panel Bridge Plan", manager.control_center_chat_panel_bridge_plan(target))
+            return True
+
+        if command == "local-console-session-contract-plan":
+            self.print_chat_bridge_packet("AURA Local Console Session Contract Plan", manager.local_console_session_contract_plan(target))
+            return True
+
+        if command == "permission-aware-chat-action-boundary-plan":
+            self.print_chat_bridge_packet("AURA Permission-Aware Chat Action Boundary Plan", manager.permission_aware_chat_action_boundary_plan(target))
+            return True
+
+        if command == "chat-context-persistence-blueprint-plan":
+            self.print_chat_bridge_packet("AURA Chat Context Persistence Blueprint Plan", manager.chat_context_persistence_blueprint_plan(target))
+            return True
+
+        if command == "websocket-boundary-plan":
+            self.print_chat_bridge_packet("AURA Websocket Boundary Plan", manager.websocket_boundary_plan(target))
+            return True
+
+        if command == "session-recovery-blueprint-plan":
+            self.print_chat_bridge_packet("AURA Session Recovery Blueprint Plan", manager.session_recovery_blueprint_plan(target))
+            return True
+
+        if command == "chat-bridge-safety-policy-plan":
+            self.print_chat_bridge_packet("AURA Chat Bridge Safety Policy Plan", manager.chat_bridge_safety_policy_plan(target))
+            return True
+
+        if command == "chat-bridge-context":
+            self.print_chat_bridge_packet("AURA Chat Bridge & Session State Foundation Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -4071,6 +4132,9 @@ class AuraCLI:
             return True
 
         if self.handle_local_console_web_cli_command(raw_args):
+            return True
+
+        if self.handle_chat_bridge_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

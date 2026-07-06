@@ -963,3 +963,24 @@ Capability Registry now tracks AURA Local Console Web Foundation:
 - runtime execution features: 0
 
 No web server runtime, frontend runtime, backend runtime, route creation runtime, API runtime, static file serving, session runtime, port binding, browser launch, public/LAN/remote access, websocket runtime, chat runtime, UI runtime, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
+
+
+## Sprint 88.0 — AURA Chat Bridge & Session State Foundation
+
+Target: v0.88.0-genesis  
+Status: CHAT BRIDGE & SESSION STATE FOUNDATION ONLINE
+
+AURA can provide planner-only Chat Bridge & Session State Foundation planning for conversation session metadata, message flow blueprints, Control Center chat panel bridge planning, Local Console session contract planning, permission-aware chat action boundary planning, chat context persistence blueprint planning, websocket boundary planning, session recovery blueprint planning, and chat bridge safety policy.
+
+Capability Registry now tracks AURA Chat Bridge & Session State Foundation:
+- total capabilities tracked: 20
+- online capabilities: 18
+- foundation-only capabilities: 8
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+No chat runtime, conversation runtime, session runtime, session persistence runtime, websocket runtime, web server runtime, frontend/backend/API runtime, port binding, model inference runtime activation, tool call runtime, permission grant runtime, runtime action activation, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
