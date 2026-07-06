@@ -447,3 +447,28 @@ Safety boundary:
 - no command execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 70.0 — Partner Runtime Planning Layer
+
+AURA includes a Partner Runtime Planning Layer for metadata-only coordination across partner-mode planners.
+
+Status: PARTNER RUNTIME PLANNING LAYER ONLINE
+
+Safety boundary:
+- no autonomous runtime
+- no background agent loop
+- no scheduled self-execution
+- no tool execution
+- no file reading or writing
+- no command execution
+- no desktop control
+- no app opening
+- no screen capture
+- no camera or microphone access
+- no speaker output
+- no avatar rendering
+- no network action
+- no git commit or push execution
+- no external action execution
+- no real tool execution

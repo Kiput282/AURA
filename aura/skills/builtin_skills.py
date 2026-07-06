@@ -968,4 +968,26 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 70.0 partner runtime planning layer skill.
+    registry.register(
+        AuraSkill(
+            name="partner_runtime_planning_layer",
+            description="Plan safe metadata-only partner runtime coordination, session flow, multimodal handoff, tool permission gates, growth checkpoints, and runtime safety without autonomous runtime, tool execution, file operations, command execution, desktop control, device access, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "partner_runtime_status",
+                "partner_runtime_mode_plan",
+                "partner_session_plan",
+                "partner_multimodal_handoff_plan",
+                "partner_tool_permission_plan",
+                "partner_growth_cycle_plan",
+                "partner_runtime_safety_plan",
+                "partner_runtime_context",
+                "metadata_only_partner_runtime_planning",
+            ],
+        )
+    )
+
     return registry

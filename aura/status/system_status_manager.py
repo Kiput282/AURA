@@ -42,6 +42,7 @@ from aura.voice_conversation.voice_conversation_planner_manager import VoiceConv
 from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
 from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
 from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkflowPlannerManager
+from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -146,6 +147,7 @@ class SystemStatusManager:
         vision_context_status = VisionContextPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         avatar_interaction_status = AvatarInteractionPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         desktop_workflow_status = DesktopWorkflowPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        partner_runtime_status = PartnerRuntimePlanningManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -210,6 +212,7 @@ class SystemStatusManager:
             "vision_context_plan_types": vision_context_status["vision_plan_types"],
             "avatar_interaction_plan_types": avatar_interaction_status["avatar_plan_types"],
             "desktop_workflow_plan_types": desktop_workflow_status["desktop_plan_types"],
+            "partner_runtime_plan_types": partner_runtime_status["partner_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -254,6 +257,7 @@ class SystemStatusManager:
             "vision_context_planner": vision_context_status["status"],
             "avatar_interaction_planner": avatar_interaction_status["status"],
             "desktop_workflow_planner": desktop_workflow_status["status"],
+            "partner_runtime_planning_layer": partner_runtime_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -523,6 +527,42 @@ class SystemStatusManager:
             "desktop_workflow_command_execution": desktop_workflow_status["command_execution"],
             "desktop_workflow_external_action_execution": desktop_workflow_status["external_action_execution"],
             "desktop_workflow_real_tool_execution": desktop_workflow_status["real_tool_execution"],
+            "partner_runtime_planning_layer_ready": partner_runtime_status["planner_ready"],
+            "partner_runtime_mode_plan_ready": partner_runtime_status["partner_runtime_mode_plan_ready"],
+            "partner_session_plan_ready": partner_runtime_status["partner_session_plan_ready"],
+            "partner_multimodal_handoff_plan_ready": partner_runtime_status["partner_multimodal_handoff_plan_ready"],
+            "partner_tool_permission_plan_ready": partner_runtime_status["partner_tool_permission_plan_ready"],
+            "partner_growth_cycle_plan_ready": partner_runtime_status["partner_growth_cycle_plan_ready"],
+            "partner_runtime_safety_plan_ready": partner_runtime_status["partner_runtime_safety_plan_ready"],
+            "partner_runtime_context_ready": partner_runtime_status["context_ready"],
+            "partner_runtime_local_task_reference_ready": partner_runtime_status["local_task_reference_ready"],
+            "partner_runtime_safe_file_operation_reference_ready": partner_runtime_status["safe_file_operation_reference_ready"],
+            "partner_runtime_codebase_change_reference_ready": partner_runtime_status["codebase_change_reference_ready"],
+            "partner_runtime_codebase_patch_reference_ready": partner_runtime_status["codebase_patch_reference_ready"],
+            "partner_runtime_codebase_validation_reference_ready": partner_runtime_status["codebase_validation_reference_ready"],
+            "partner_runtime_voice_conversation_reference_ready": partner_runtime_status["voice_conversation_reference_ready"],
+            "partner_runtime_vision_context_reference_ready": partner_runtime_status["vision_context_reference_ready"],
+            "partner_runtime_avatar_interaction_reference_ready": partner_runtime_status["avatar_interaction_reference_ready"],
+            "partner_runtime_desktop_workflow_reference_ready": partner_runtime_status["desktop_workflow_reference_ready"],
+            "partner_runtime_autonomous_runtime": partner_runtime_status["autonomous_runtime"],
+            "partner_runtime_background_agent_loop": partner_runtime_status["background_agent_loop"],
+            "partner_runtime_scheduled_self_execution": partner_runtime_status["scheduled_self_execution"],
+            "partner_runtime_tool_execution": partner_runtime_status["tool_execution"],
+            "partner_runtime_real_tool_execution": partner_runtime_status["real_tool_execution"],
+            "partner_runtime_external_action_execution": partner_runtime_status["external_action_execution"],
+            "partner_runtime_file_read": partner_runtime_status["file_read"],
+            "partner_runtime_file_write": partner_runtime_status["file_write"],
+            "partner_runtime_command_execution": partner_runtime_status["command_execution"],
+            "partner_runtime_desktop_control": partner_runtime_status["desktop_control"],
+            "partner_runtime_app_opening": partner_runtime_status["app_opening"],
+            "partner_runtime_screen_capture": partner_runtime_status["screen_capture"],
+            "partner_runtime_camera_access": partner_runtime_status["camera_access"],
+            "partner_runtime_microphone_access": partner_runtime_status["microphone_access"],
+            "partner_runtime_speaker_output": partner_runtime_status["speaker_output"],
+            "partner_runtime_avatar_rendering": partner_runtime_status["avatar_rendering"],
+            "partner_runtime_network_action": partner_runtime_status["network_action"],
+            "partner_runtime_git_commit": partner_runtime_status["git_commit"],
+            "partner_runtime_git_push": partner_runtime_status["git_push"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -685,5 +725,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, desktop workflow planner, partner runtime planning layer, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

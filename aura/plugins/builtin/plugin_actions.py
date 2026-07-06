@@ -2392,4 +2392,28 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 70.0 partner runtime planning layer actions.
+    partner_runtime_actions = [
+        ('partner_runtime.status', 'read_project', 'Show AURA Partner Runtime Planning Layer status.'),
+        ('partner_runtime.mode_plan', 'read_project', 'Prepare a metadata-only partner runtime mode plan without autonomous runtime or execution.'),
+        ('partner_runtime.session_plan', 'read_project', 'Prepare a metadata-only partner session plan without tool, file, desktop, device, command, or git execution.'),
+        ('partner_runtime.multimodal_handoff_plan', 'read_project', 'Prepare a metadata-only handoff plan across voice, vision, avatar, desktop, and codebase planners.'),
+        ('partner_runtime.tool_permission_plan', 'read_project', 'Prepare a tool permission gate plan without using tools or executing external actions.'),
+        ('partner_runtime.growth_cycle_plan', 'read_project', 'Prepare a metadata-only growth cycle and checkpoint review plan.'),
+        ('partner_runtime.safety_plan', 'read_project', 'Prepare a partner runtime safety plan without autonomous runtime, tools, files, commands, devices, desktop, network, git, or real tool execution.'),
+        ('partner_runtime.context', 'read_project', 'Show Partner Runtime Planning Layer context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in partner_runtime_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="partner_runtime",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="partner_runtime_planning_layer",
+            )
+        )
+
     return registry
