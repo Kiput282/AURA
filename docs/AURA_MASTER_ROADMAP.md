@@ -599,3 +599,11 @@ Target: v0.66.0-genesis
 Status: VOICE CONVERSATION PLANNER ONLINE
 
 AURA can plan voice conversation intent, response style, turn flow, and safety boundaries as metadata only. This sprint does not enable real microphone access, TTS output, speaker output, wake word runtime, command execution, app opening, file writing, or external action execution.
+
+
+## Sprint 67.0 — Vision Context Planner
+
+Target: v0.67.0-genesis  
+Status: VISION CONTEXT PLANNER ONLINE
+
+AURA can plan visual context, screen context, camera context, and vision safety boundaries as metadata only. This sprint does not enable screen capture, camera access, image opening/reading, video capture, OCR runtime, visual recognition runtime, desktop action execution, app opening, file operations, command execution, external action execution, or real tool execution.

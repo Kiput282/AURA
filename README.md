@@ -383,3 +383,24 @@ Safety boundary:
 - no command execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 67.0 — Vision Context Planner
+
+AURA includes a Vision Context Planner foundation for metadata-only visual context planning.
+
+Status: VISION CONTEXT PLANNER ONLINE
+
+Safety boundary:
+- no screen capture
+- no camera access
+- no image opening or reading
+- no video capture
+- no OCR runtime
+- no visual recognition runtime
+- no desktop action execution
+- no app opening
+- no file reading or writing
+- no command execution
+- no external action execution
+- no real tool execution

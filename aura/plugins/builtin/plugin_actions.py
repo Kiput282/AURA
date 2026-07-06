@@ -2324,4 +2324,26 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 67.0 vision context planner actions.
+    vision_context_actions = [
+        ('vision_context.status', 'read_project', 'Show AURA Vision Context Planner status.'),
+        ('vision_context.visual_context_plan', 'read_project', 'Prepare a metadata-only visual context plan without screen capture, camera access, image reading, or runtime recognition.'),
+        ('vision_context.screen_context_plan', 'read_project', 'Prepare a metadata-only screen context plan without capturing the screen or executing desktop actions.'),
+        ('vision_context.camera_context_plan', 'read_project', 'Prepare a metadata-only camera context plan without camera access or video capture.'),
+        ('vision_context.safety_plan', 'read_project', 'Prepare a vision safety plan without screen, camera, file, command, external action, or real tool execution.'),
+        ('vision_context.context', 'read_project', 'Show Vision Context Planner context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in vision_context_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="vision_context",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="vision_context_planner",
+            )
+        )
+
     return registry

@@ -52,6 +52,7 @@ from aura.codebase_change.codebase_change_planner_manager import CodebaseChangeP
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
 from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
+from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
 
 
 class AuraShell:
@@ -289,6 +290,12 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  vision-context-status Show Vision Context Planner status")
+        print("  visual-context-plan <target> Prepare metadata-only visual context plan")
+        print("  screen-context-plan <target> Prepare metadata-only screen context plan")
+        print("  camera-context-plan <target> Prepare metadata-only camera context plan")
+        print("  vision-safety-plan <target> Prepare vision safety plan")
+        print("  vision-context Show Vision Context Planner context")
         print("  voice-conversation-status Show Voice Conversation Planner status")
         print("  voice-intent-plan <target> Prepare metadata-only voice intent plan")
         print("  voice-response-plan <target> Prepare metadata-only voice response plan")
@@ -2269,6 +2276,86 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 67.0 vision context compatibility shell helpers.
+    def print_vision_context_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<44}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<44}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<44}: {len(value)} field(s)")
+
+        print()
+        print("Vision Safety Boundary")
+        print("----------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "screen_capture",
+            "camera_access",
+            "image_open",
+            "image_read",
+            "video_capture",
+            "ocr_runtime",
+            "visual_recognition_runtime",
+            "desktop_action_execution",
+            "app_opened",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "external_action_execution",
+            "real_tool_execution",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<44}: {packet[key]}")
+
+    def handle_vision_context_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general vision context"
+        manager = VisionContextPlannerManager(project_root=self.project_root)
+
+        if command == "vision-context-status":
+            self.print_vision_context_packet("AURA Vision Context Planner Status", manager.status())
+            return True
+
+        if command == "visual-context-plan":
+            self.print_vision_context_packet("AURA Visual Context Plan", manager.visual_context_plan(target))
+            return True
+
+        if command == "screen-context-plan":
+            self.print_vision_context_packet("AURA Screen Context Plan", manager.screen_context_plan(target))
+            return True
+
+        if command == "camera-context-plan":
+            self.print_vision_context_packet("AURA Camera Context Plan", manager.camera_context_plan(target))
+            return True
+
+        if command == "vision-safety-plan":
+            self.print_vision_context_packet("AURA Vision Safety Plan", manager.vision_safety_plan(target))
+            return True
+
+        if command == "vision-context":
+            self.print_vision_context_packet("AURA Vision Context Planner Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -2280,6 +2367,9 @@ class AuraShell:
             return
 
         if self.handle_voice_conversation_shell_command(normalized):
+            return
+
+        if self.handle_vision_context_shell_command(normalized):
             return
 
         if normalized == "help":

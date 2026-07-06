@@ -906,4 +906,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 67.0 vision context planner skill.
+    registry.register(
+        AuraSkill(
+            name="vision_context_planner",
+            description="Plan safe metadata-only visual context flows for screen, camera, and general vision needs without screen capture, camera access, image reading, OCR runtime, file operations, command execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "vision_context_status",
+                "visual_context_plan",
+                "screen_context_plan",
+                "camera_context_plan",
+                "vision_safety_plan",
+                "vision_context",
+                "metadata_only_vision_context_planning",
+            ],
+        )
+    )
+
     return registry

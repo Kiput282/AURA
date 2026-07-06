@@ -39,6 +39,7 @@ from aura.workspace_memory.workspace_memory_link_manager import WorkspaceMemoryL
 from aura.codebase_change.codebase_change_planner_manager import CodebaseChangePlannerManager
 from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
 from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
+from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -140,6 +141,7 @@ class SystemStatusManager:
         codebase_patch_proposal_status = CodebasePatchProposalRendererManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         codebase_validation_gate_status = CodebaseValidationGatePlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         voice_conversation_status = VoiceConversationPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        vision_context_status = VisionContextPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -201,6 +203,7 @@ class SystemStatusManager:
             "codebase_patch_proposal_sections": codebase_patch_proposal_status.get("proposal_sections", 0),
             "codebase_validation_gate_types": codebase_validation_gate_status.get("gate_types", 0),
             "voice_conversation_plan_types": voice_conversation_status["voice_plan_types"],
+            "vision_context_plan_types": vision_context_status["vision_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -242,6 +245,7 @@ class SystemStatusManager:
             "codebase_patch_proposal_renderer": codebase_patch_proposal_status["status"],
             "codebase_validation_gate_planner": codebase_validation_gate_status["status"],
             "voice_conversation_planner": voice_conversation_status["status"],
+            "vision_context_planner": vision_context_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -425,6 +429,32 @@ class SystemStatusManager:
             "voice_conversation_command_execution": voice_conversation_status["command_execution"],
             "voice_conversation_external_action_execution": voice_conversation_status["external_action_execution"],
             "voice_conversation_real_tool_execution": voice_conversation_status["real_tool_execution"],
+            "vision_context_planner_ready": vision_context_status["planner_ready"],
+            "visual_context_plan_ready": vision_context_status["visual_context_plan_ready"],
+            "screen_context_plan_ready": vision_context_status["screen_context_plan_ready"],
+            "camera_context_plan_ready": vision_context_status["camera_context_plan_ready"],
+            "vision_safety_plan_ready": vision_context_status["vision_safety_plan_ready"],
+            "vision_context_context_ready": vision_context_status["context_ready"],
+            "vision_context_runtime_alpha_reference_ready": vision_context_status["vision_runtime_alpha_reference_ready"],
+            "vision_context_media_understanding_reference_ready": vision_context_status["media_understanding_reference_ready"],
+            "vision_context_workspace_awareness_reference_ready": vision_context_status["workspace_awareness_reference_ready"],
+            "vision_context_voice_conversation_reference_ready": vision_context_status["voice_conversation_reference_ready"],
+            "vision_context_tool_sandbox_reference_ready": vision_context_status["tool_sandbox_reference_ready"],
+            "vision_context_permissions_reference_ready": vision_context_status["permissions_reference_ready"],
+            "vision_context_screen_capture": vision_context_status["screen_capture"],
+            "vision_context_camera_access": vision_context_status["camera_access"],
+            "vision_context_image_open": vision_context_status["image_open"],
+            "vision_context_image_read": vision_context_status["image_read"],
+            "vision_context_video_capture": vision_context_status["video_capture"],
+            "vision_context_ocr_runtime": vision_context_status["ocr_runtime"],
+            "vision_context_visual_recognition_runtime": vision_context_status["visual_recognition_runtime"],
+            "vision_context_desktop_action_execution": vision_context_status["desktop_action_execution"],
+            "vision_context_app_opened": vision_context_status["app_opened"],
+            "vision_context_file_read": vision_context_status["file_read"],
+            "vision_context_file_write": vision_context_status["file_write"],
+            "vision_context_command_execution": vision_context_status["command_execution"],
+            "vision_context_external_action_execution": vision_context_status["external_action_execution"],
+            "vision_context_real_tool_execution": vision_context_status["real_tool_execution"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -587,5 +617,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

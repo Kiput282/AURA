@@ -50,6 +50,7 @@ from aura.utils.logger import disable_logging
 from aura.codebase_change.codebase_change_planner_manager import CodebaseChangePlannerManager
 from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
 from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
+from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -2225,6 +2226,85 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 67.0 vision context compatibility CLI helpers.
+    def print_vision_context_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<44}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<44}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<44}: {len(value)} field(s)")
+
+        print()
+        print("Vision Safety Boundary")
+        print("----------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "screen_capture",
+            "camera_access",
+            "image_open",
+            "image_read",
+            "video_capture",
+            "ocr_runtime",
+            "visual_recognition_runtime",
+            "desktop_action_execution",
+            "app_opened",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "external_action_execution",
+            "real_tool_execution",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<44}: {packet[key]}")
+
+    def handle_vision_context_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general vision context"
+        manager = VisionContextPlannerManager(project_root=self.project_root)
+
+        if command == "vision-context-status":
+            self.print_vision_context_packet("AURA Vision Context Planner Status", manager.status())
+            return True
+
+        if command == "visual-context-plan":
+            self.print_vision_context_packet("AURA Visual Context Plan", manager.visual_context_plan(target))
+            return True
+
+        if command == "screen-context-plan":
+            self.print_vision_context_packet("AURA Screen Context Plan", manager.screen_context_plan(target))
+            return True
+
+        if command == "camera-context-plan":
+            self.print_vision_context_packet("AURA Camera Context Plan", manager.camera_context_plan(target))
+            return True
+
+        if command == "vision-safety-plan":
+            self.print_vision_context_packet("AURA Vision Safety Plan", manager.vision_safety_plan(target))
+            return True
+
+        if command == "vision-context":
+            self.print_vision_context_packet("AURA Vision Context Planner Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -2233,6 +2313,9 @@ class AuraCLI:
             return True
 
         if self.handle_voice_conversation_cli_command(raw_args):
+            return True
+
+        if self.handle_vision_context_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
