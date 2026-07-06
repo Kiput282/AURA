@@ -1312,4 +1312,28 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 85.0 launcher health monitor foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_launcher_health_monitor_foundation",
+            description="Prepare planner-only AURA Launcher and Health Monitor foundation for safe_idle launch planning, start/stop/restart/status/logs planning, health monitor planning, Control Center service monitor planning, and launcher safety policy planning without starting/stopping/restarting processes, executing systemctl, creating services, reading log files, enabling auto-boot runtime, binding ports, running web/UI/chat/service runtime, granting permissions, activating runtime actions, changing runtime behavior, file operations, command execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "launcher_health_status",
+                "launcher_start_plan",
+                "launcher_stop_plan",
+                "launcher_restart_plan",
+                "launcher_status_plan",
+                "launcher_log_view_plan",
+                "health_monitor_plan",
+                "control_center_service_monitor_plan",
+                "launcher_safety_policy_plan",
+                "launcher_health_context",
+                "safe_idle_launcher_monitor_data",
+            ],
+        )
+    )
+
     return registry

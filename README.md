@@ -1066,3 +1066,39 @@ Capability Registry update:
 Core rule: AURA may wake automatically in the future, but only in safe_idle and never as auto-action.
 
 See docs/AURA_RUNTIME_SERVICE_FOUNDATION.md.
+
+
+## Sprint 85.0 — AURA Launcher & Health Monitor Foundation
+
+Status: LAUNCHER HEALTH MONITOR FOUNDATION ONLINE
+
+AURA includes planner-only Launcher & Health Monitor Foundation planning for safe_idle launch behavior, start/stop/restart/status/logs planning, health monitor planning, Control Center service monitor planning, and launcher safety policy planning.
+
+Summary:
+- launcher plan types: 10
+- launcher modes: 4
+- launcher actions: 6
+- health states: 5
+- monitor fields: 12
+- runtime-enabled launchers: 0
+- processes started: 0
+- processes stopped: 0
+- processes restarted: 0
+- systemctl commands executed: 0
+- log files read: 0
+- runtime execution features: 0
+
+Capability Registry update:
+- total capabilities tracked: 18
+- online capabilities: 15
+- foundation-only capabilities: 5
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 1
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Core rule: AURA may prepare launcher and monitor visibility, but must not control runtime yet.
+
+See docs/AURA_LAUNCHER_HEALTH_MONITOR_FOUNDATION.md.

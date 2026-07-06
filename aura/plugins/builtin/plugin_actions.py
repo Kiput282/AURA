@@ -2766,4 +2766,30 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 85.0 launcher health monitor foundation actions.
+    launcher_monitor_actions = [
+        ('launcher_monitor.status', 'read_project', 'Show AURA Launcher & Health Monitor Foundation status.'),
+        ('launcher_monitor.start_plan', 'read_project', 'Prepare launcher start planning without starting a process.'),
+        ('launcher_monitor.stop_plan', 'read_project', 'Prepare launcher stop planning without stopping a process.'),
+        ('launcher_monitor.restart_plan', 'read_project', 'Prepare launcher restart planning without restarting a process.'),
+        ('launcher_monitor.status_plan', 'read_project', 'Prepare launcher status planning.'),
+        ('launcher_monitor.log_view_plan', 'read_project', 'Prepare launcher log view planning without reading log files.'),
+        ('launcher_monitor.health_monitor_plan', 'read_project', 'Prepare health monitor planning.'),
+        ('launcher_monitor.control_center_service_monitor_plan', 'read_project', 'Prepare future Control Center service monitor planning.'),
+        ('launcher_monitor.safety_policy_plan', 'read_project', 'Prepare launcher safety policy planning.'),
+        ('launcher_monitor.context', 'read_project', 'Show Launcher & Health Monitor Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in launcher_monitor_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="launcher_monitor",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_launcher_health_monitor_foundation",
+            )
+        )
+
     return registry

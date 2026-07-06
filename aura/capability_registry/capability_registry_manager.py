@@ -317,12 +317,12 @@ class CapabilityRegistryManager:
             {
                 "id": "aura_launcher_health_monitor",
                 "name": "AURA Launcher & Health Monitor",
-                "state": "planned_future",
-                "runtime_level": "planned_launcher_foundation",
+                "state": "online",
+                "runtime_level": "foundation_only",
                 "risk_level": "medium",
                 "permission_required": "user_confirmation",
                 "category": "operations_monitoring",
-                "introduced_in": "planned-0.85.0-genesis",
+                "introduced_in": "0.85.0-genesis",
                 "control_center_visible": True,
             },
             {

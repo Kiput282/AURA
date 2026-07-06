@@ -174,3 +174,23 @@ Updated registry summary:
 - runtime execution features: 0
 
 AURA Runtime Service Foundation remains foundation-only. It does not create, enable, start, stop, restart, or run a real service.
+
+
+## Sprint 85 Update — Launcher Health Monitor Foundation Online
+
+Status: UPDATED FOR v0.85.0-genesis
+
+The Capability Registry now marks AURA Launcher & Health Monitor Foundation as online.
+
+Updated registry summary:
+- total capabilities tracked: 18
+- online capabilities: 15
+- foundation-only capabilities: 5
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 1
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+AURA Launcher & Health Monitor Foundation remains foundation-only. It does not start, stop, restart, monitor, query, or control a real service or process.

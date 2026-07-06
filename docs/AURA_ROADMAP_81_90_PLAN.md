@@ -147,3 +147,27 @@ Current service foundation summary:
 - runtime execution features: 0
 
 Core rule: AURA may wake automatically in the future, but only in safe_idle and never as auto-action.
+
+
+## Sprint 85 Update — AURA Launcher & Health Monitor Foundation
+
+Status: LAUNCHER HEALTH MONITOR FOUNDATION ONLINE  
+Target version: v0.85.0-genesis
+
+Sprint 85 adds a planner-only AURA Launcher & Health Monitor Foundation for safe_idle launch planning, start/stop/restart/status/logs planning, health monitor planning, Control Center service monitor planning, and launcher safety policy planning.
+
+Current launcher monitor summary:
+- launcher plan types: 10
+- launcher modes: 4
+- launcher actions: 6
+- health states: 5
+- monitor fields: 12
+- runtime-enabled launchers: 0
+- processes started: 0
+- processes stopped: 0
+- processes restarted: 0
+- systemctl commands executed: 0
+- log files read: 0
+- runtime execution features: 0
+
+Core rule: AURA may prepare launcher and monitor visibility, but must not control runtime yet.

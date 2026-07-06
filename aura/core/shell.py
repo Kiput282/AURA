@@ -70,6 +70,7 @@ from aura.output_formatter.shared_output_formatter_manager import SharedOutputFo
 from aura.capability_registry.capability_registry_manager import CapabilityRegistryManager
 from aura.permission_workflow.unified_permission_workflow_manager import UnifiedPermissionWorkflowManager
 from aura.runtime_service.aura_runtime_service_foundation_manager import AuraRuntimeServiceFoundationManager
+from aura.launcher_monitor.aura_launcher_health_monitor_foundation_manager import AuraLauncherHealthMonitorFoundationManager
 
 
 class AuraShell:
@@ -398,6 +399,16 @@ class AuraShell:
         print("  service-monitor-view-plan <target> Prepare service monitor view plan")
         print("  auto-boot-policy-plan <target> Prepare auto-boot policy plan")
         print("  runtime-service-context Show Runtime Service Foundation context")
+        print("  launcher-monitor-status Show Launcher & Health Monitor Foundation status")
+        print("  launcher-start-plan <target> Prepare launcher start plan")
+        print("  launcher-stop-plan <target> Prepare launcher stop plan")
+        print("  launcher-restart-plan <target> Prepare launcher restart plan")
+        print("  launcher-status-plan <target> Prepare launcher status plan")
+        print("  launcher-log-view-plan <target> Prepare launcher log view plan")
+        print("  health-monitor-plan <target> Prepare health monitor plan")
+        print("  control-center-service-monitor-plan <target> Prepare Control Center service monitor plan")
+        print("  launcher-safety-policy-plan <target> Prepare launcher safety policy plan")
+        print("  launcher-health-context Show Launcher & Health Monitor Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4041,6 +4052,63 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 85.0 launcher health monitor foundation shell helpers.
+    def print_launcher_monitor_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Launcher Monitor Safety Boundary"))
+
+    def handle_launcher_monitor_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA launcher and health monitor foundation"
+        manager = AuraLauncherHealthMonitorFoundationManager(project_root=self.project_root)
+
+        if command == "launcher-monitor-status":
+            self.print_launcher_monitor_packet("AURA Launcher & Health Monitor Foundation Status", manager.status())
+            return True
+
+        if command == "launcher-start-plan":
+            self.print_launcher_monitor_packet("AURA Launcher Start Plan", manager.launcher_start_plan(target))
+            return True
+
+        if command == "launcher-stop-plan":
+            self.print_launcher_monitor_packet("AURA Launcher Stop Plan", manager.launcher_stop_plan(target))
+            return True
+
+        if command == "launcher-restart-plan":
+            self.print_launcher_monitor_packet("AURA Launcher Restart Plan", manager.launcher_restart_plan(target))
+            return True
+
+        if command == "launcher-status-plan":
+            self.print_launcher_monitor_packet("AURA Launcher Status Plan", manager.launcher_status_plan(target))
+            return True
+
+        if command == "launcher-log-view-plan":
+            self.print_launcher_monitor_packet("AURA Launcher Log View Plan", manager.launcher_log_view_plan(target))
+            return True
+
+        if command == "health-monitor-plan":
+            self.print_launcher_monitor_packet("AURA Health Monitor Plan", manager.health_monitor_plan(target))
+            return True
+
+        if command == "control-center-service-monitor-plan":
+            self.print_launcher_monitor_packet("AURA Control Center Service Monitor Plan", manager.control_center_service_monitor_plan(target))
+            return True
+
+        if command == "launcher-safety-policy-plan":
+            self.print_launcher_monitor_packet("AURA Launcher Safety Policy Plan", manager.launcher_safety_policy_plan(target))
+            return True
+
+        if command == "launcher-health-context":
+            self.print_launcher_monitor_packet("AURA Launcher & Health Monitor Foundation Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -4106,6 +4174,9 @@ class AuraShell:
             return
 
         if self.handle_runtime_service_shell_command(normalized):
+            return
+
+        if self.handle_launcher_monitor_shell_command(normalized):
             return
 
         if normalized == "help":

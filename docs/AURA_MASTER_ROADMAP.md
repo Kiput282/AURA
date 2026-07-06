@@ -900,3 +900,24 @@ Capability Registry now marks AURA Runtime Service Foundation as online:
 - runtime execution features: 0
 
 No service runtime, systemd creation, background process, auto-boot runtime, port binding, UI/web/chat/launcher runtime, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
+
+
+## Sprint 85.0 — AURA Launcher & Health Monitor Foundation
+
+Target: v0.85.0-genesis  
+Status: LAUNCHER HEALTH MONITOR FOUNDATION ONLINE
+
+AURA can provide planner-only Launcher & Health Monitor Foundation planning for safe_idle launch behavior, start/stop/restart/status/logs planning, health monitor planning, Control Center service monitor planning, and launcher safety policy planning.
+
+Capability Registry now marks AURA Launcher & Health Monitor Foundation as online:
+- total capabilities tracked: 18
+- online capabilities: 15
+- foundation-only capabilities: 5
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 1
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+No launcher runtime, health monitor runtime, service runtime, process control, systemctl execution, systemd control, log file read/write, auto-boot runtime, port binding, UI/web/chat runtime, file operation, command execution, dependency install, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
