@@ -2346,4 +2346,27 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 68.0 avatar interaction planner actions.
+    avatar_interaction_actions = [
+        ('avatar_interaction.status', 'read_project', 'Show AURA Avatar Interaction Planner status.'),
+        ('avatar_interaction.expression_plan', 'read_project', 'Prepare a metadata-only avatar expression plan without blendshape control, face tracking, rendering, or runtime execution.'),
+        ('avatar_interaction.gesture_plan', 'read_project', 'Prepare a metadata-only avatar gesture plan without animation playback, bone control, or runtime execution.'),
+        ('avatar_interaction.pose_plan', 'read_project', 'Prepare a metadata-only avatar pose plan without rig manipulation, Blender execution, or file operations.'),
+        ('avatar_interaction.streaming_presence_plan', 'read_project', 'Prepare a metadata-only avatar streaming presence plan without OBS control or runtime avatar execution.'),
+        ('avatar_interaction.safety_plan', 'read_project', 'Prepare an avatar safety plan without rendering, animation, mocap, Blender, files, commands, external action, or real tool execution.'),
+        ('avatar_interaction.context', 'read_project', 'Show Avatar Interaction Planner context and safety boundary.'),
+    ]
+
+    for action_name, permission_action, description in avatar_interaction_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="avatar_interaction",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="avatar_interaction_planner",
+            )
+        )
+
     return registry

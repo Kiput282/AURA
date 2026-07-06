@@ -926,4 +926,25 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 68.0 avatar interaction planner skill.
+    registry.register(
+        AuraSkill(
+            name="avatar_interaction_planner",
+            description="Plan safe metadata-only avatar interaction flows for expressions, gestures, poses, streaming presence, and safety boundaries without rendering, animation playback, mocap, rig manipulation, Blender execution, file operations, command execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "avatar_interaction_status",
+                "avatar_expression_plan",
+                "avatar_gesture_plan",
+                "avatar_pose_plan",
+                "avatar_streaming_presence_plan",
+                "avatar_safety_plan",
+                "avatar_interaction_context",
+                "metadata_only_avatar_interaction_planning",
+            ],
+        )
+    )
+
     return registry

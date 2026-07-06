@@ -40,6 +40,7 @@ from aura.codebase_change.codebase_change_planner_manager import CodebaseChangeP
 from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
 from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
 from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
+from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -142,6 +143,7 @@ class SystemStatusManager:
         codebase_validation_gate_status = CodebaseValidationGatePlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         voice_conversation_status = VoiceConversationPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         vision_context_status = VisionContextPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        avatar_interaction_status = AvatarInteractionPlannerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
@@ -204,6 +206,7 @@ class SystemStatusManager:
             "codebase_validation_gate_types": codebase_validation_gate_status.get("gate_types", 0),
             "voice_conversation_plan_types": voice_conversation_status["voice_plan_types"],
             "vision_context_plan_types": vision_context_status["vision_plan_types"],
+            "avatar_interaction_plan_types": avatar_interaction_status["avatar_plan_types"],
                 "desktop_alpha_sections": desktop_alpha_status["sections"],
                 "voice_providers": voice_status["providers"],
                 "voice_runtime_candidates": voice_runtime_status["candidate_count"],
@@ -246,6 +249,7 @@ class SystemStatusManager:
             "codebase_validation_gate_planner": codebase_validation_gate_status["status"],
             "voice_conversation_planner": voice_conversation_status["status"],
             "vision_context_planner": vision_context_status["status"],
+            "avatar_interaction_planner": avatar_interaction_status["status"],
                 "desktop_bridge": desktop_status["status"],
                 "desktop_assistant_alpha": desktop_alpha_status["status"],
                 "voice": voice_status["status"],
@@ -455,6 +459,37 @@ class SystemStatusManager:
             "vision_context_command_execution": vision_context_status["command_execution"],
             "vision_context_external_action_execution": vision_context_status["external_action_execution"],
             "vision_context_real_tool_execution": vision_context_status["real_tool_execution"],
+            "avatar_interaction_planner_ready": avatar_interaction_status["planner_ready"],
+            "avatar_expression_plan_ready": avatar_interaction_status["avatar_expression_plan_ready"],
+            "avatar_gesture_plan_ready": avatar_interaction_status["avatar_gesture_plan_ready"],
+            "avatar_pose_plan_ready": avatar_interaction_status["avatar_pose_plan_ready"],
+            "avatar_streaming_presence_plan_ready": avatar_interaction_status["avatar_streaming_presence_plan_ready"],
+            "avatar_safety_plan_ready": avatar_interaction_status["avatar_safety_plan_ready"],
+            "avatar_interaction_context_ready": avatar_interaction_status["context_ready"],
+            "avatar_interaction_expression_language_reference_ready": avatar_interaction_status["expression_language_reference_ready"],
+            "avatar_interaction_voice_conversation_reference_ready": avatar_interaction_status["voice_conversation_reference_ready"],
+            "avatar_interaction_vision_context_reference_ready": avatar_interaction_status["vision_context_reference_ready"],
+            "avatar_interaction_blender_bridge_reference_ready": avatar_interaction_status["blender_bridge_reference_ready"],
+            "avatar_interaction_creative_assistant_reference_ready": avatar_interaction_status["creative_assistant_reference_ready"],
+            "avatar_interaction_streaming_safety_reference_ready": avatar_interaction_status["streaming_safety_reference_ready"],
+            "avatar_interaction_avatar_rendering": avatar_interaction_status["avatar_rendering"],
+            "avatar_interaction_animation_playback": avatar_interaction_status["animation_playback"],
+            "avatar_interaction_mocap_runtime": avatar_interaction_status["mocap_runtime"],
+            "avatar_interaction_camera_tracking": avatar_interaction_status["camera_tracking"],
+            "avatar_interaction_face_tracking": avatar_interaction_status["face_tracking"],
+            "avatar_interaction_body_tracking": avatar_interaction_status["body_tracking"],
+            "avatar_interaction_rig_manipulation": avatar_interaction_status["rig_manipulation"],
+            "avatar_interaction_blendshape_control": avatar_interaction_status["blendshape_control"],
+            "avatar_interaction_bone_control": avatar_interaction_status["bone_control"],
+            "avatar_interaction_blender_execution": avatar_interaction_status["blender_execution"],
+            "avatar_interaction_obs_control": avatar_interaction_status["obs_control"],
+            "avatar_interaction_desktop_action_execution": avatar_interaction_status["desktop_action_execution"],
+            "avatar_interaction_app_opened": avatar_interaction_status["app_opened"],
+            "avatar_interaction_file_read": avatar_interaction_status["file_read"],
+            "avatar_interaction_file_write": avatar_interaction_status["file_write"],
+            "avatar_interaction_command_execution": avatar_interaction_status["command_execution"],
+            "avatar_interaction_external_action_execution": avatar_interaction_status["external_action_execution"],
+            "avatar_interaction_real_tool_execution": avatar_interaction_status["real_tool_execution"],
                 "memory_reflection_ready": memory_reflection_status["reflection_ready"],
                 "memory_reflection_write": memory_reflection_status["automatic_memory_write"],
                 "memory_reflection_delete": memory_reflection_status["automatic_memory_delete"],
@@ -617,5 +652,5 @@ class SystemStatusManager:
                 "external_action_execution": codebase_change_status["external_action_execution"],
                 "real_tool_execution": codebase_change_status["real_tool_execution"],
             },
-            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
+            "summary": "AURA has a unified early foundation across memory, reflection, daily briefing, partner alpha, workspace awareness, workspace memory link, project intent planner, creative assistant, local task planner alpha, safe file operation planner, codebase change planner, codebase patch proposal renderer, codebase validation gate planner, voice conversation planner, vision context planner, avatar interaction planner, blender bridge, media understanding, expression language, game companion, streaming safety, context, alpha core loop, model router, tool sandbox, project coding assistant, roles, skills, permissions, plugins, desktop bridge, desktop assistant alpha, voice runtime planning, voice runtime alpha, vision runtime planning, vision runtime alpha, avatar foundation, avatar runtime alpha, and awakening status.",
         }

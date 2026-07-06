@@ -607,3 +607,11 @@ Target: v0.67.0-genesis
 Status: VISION CONTEXT PLANNER ONLINE
 
 AURA can plan visual context, screen context, camera context, and vision safety boundaries as metadata only. This sprint does not enable screen capture, camera access, image opening/reading, video capture, OCR runtime, visual recognition runtime, desktop action execution, app opening, file operations, command execution, external action execution, or real tool execution.
+
+
+## Sprint 68.0 — Avatar Interaction Planner
+
+Target: v0.68.0-genesis  
+Status: AVATAR INTERACTION PLANNER ONLINE
+
+AURA can plan avatar expressions, gestures, poses, streaming presence, and avatar safety boundaries as metadata only. This sprint does not enable avatar rendering, animation playback, mocap runtime, camera/face/body tracking, rig/bone/blendshape control, Blender execution, OBS control, desktop action execution, file operations, command execution, external action execution, or real tool execution.

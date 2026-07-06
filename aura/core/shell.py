@@ -53,6 +53,7 @@ from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager impor
 from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
 from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
 from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
+from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
 
 
 class AuraShell:
@@ -290,6 +291,13 @@ class AuraShell:
     def print_help(self) -> None:
         print("Available commands:")
         print("  help                 Show this help message")
+        print("  avatar-interaction-status Show Avatar Interaction Planner status")
+        print("  avatar-expression-plan <target> Prepare metadata-only avatar expression plan")
+        print("  avatar-gesture-plan <target> Prepare metadata-only avatar gesture plan")
+        print("  avatar-pose-plan <target> Prepare metadata-only avatar pose plan")
+        print("  avatar-streaming-presence-plan <target> Prepare metadata-only avatar streaming presence plan")
+        print("  avatar-safety-plan <target> Prepare avatar safety plan")
+        print("  avatar-interaction-context Show Avatar Interaction Planner context")
         print("  vision-context-status Show Vision Context Planner status")
         print("  visual-context-plan <target> Prepare metadata-only visual context plan")
         print("  screen-context-plan <target> Prepare metadata-only screen context plan")
@@ -2356,6 +2364,94 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 68.0 avatar interaction compatibility shell helpers.
+    def print_avatar_interaction_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {len(value)} field(s)")
+
+        print()
+        print("Avatar Safety Boundary")
+        print("----------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "avatar_rendering",
+            "animation_playback",
+            "mocap_runtime",
+            "camera_tracking",
+            "face_tracking",
+            "body_tracking",
+            "rig_manipulation",
+            "blendshape_control",
+            "bone_control",
+            "blender_execution",
+            "obs_control",
+            "desktop_action_execution",
+            "app_opened",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "external_action_execution",
+            "real_tool_execution",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {packet[key]}")
+
+    def handle_avatar_interaction_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "general avatar interaction"
+        manager = AvatarInteractionPlannerManager(project_root=self.project_root)
+
+        if command == "avatar-interaction-status":
+            self.print_avatar_interaction_packet("AURA Avatar Interaction Planner Status", manager.status())
+            return True
+
+        if command == "avatar-expression-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Expression Plan", manager.avatar_expression_plan(target))
+            return True
+
+        if command == "avatar-gesture-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Gesture Plan", manager.avatar_gesture_plan(target))
+            return True
+
+        if command == "avatar-pose-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Pose Plan", manager.avatar_pose_plan(target))
+            return True
+
+        if command == "avatar-streaming-presence-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Streaming Presence Plan", manager.avatar_streaming_presence_plan(target))
+            return True
+
+        if command == "avatar-safety-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Safety Plan", manager.avatar_safety_plan(target))
+            return True
+
+        if command == "avatar-interaction-context":
+            self.print_avatar_interaction_packet("AURA Avatar Interaction Planner Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -2370,6 +2466,9 @@ class AuraShell:
             return
 
         if self.handle_vision_context_shell_command(normalized):
+            return
+
+        if self.handle_avatar_interaction_shell_command(normalized):
             return
 
         if normalized == "help":

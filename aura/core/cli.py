@@ -51,6 +51,7 @@ from aura.codebase_change.codebase_change_planner_manager import CodebaseChangeP
 from aura.codebase_validation_gate.codebase_validation_gate_planner_manager import CodebaseValidationGatePlannerManager
 from aura.voice_conversation.voice_conversation_planner_manager import VoiceConversationPlannerManager
 from aura.vision_context.vision_context_planner_manager import VisionContextPlannerManager
+from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -2305,6 +2306,93 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 68.0 avatar interaction compatibility CLI helpers.
+    def print_avatar_interaction_packet(self, title: str, packet: dict) -> None:
+        print(title)
+        print("=" * len(title))
+
+        for key, value in packet.items():
+            if isinstance(value, (str, int, bool)) or value is None:
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {value}")
+            elif isinstance(value, list):
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {len(value)} item(s)")
+            elif isinstance(value, dict):
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {len(value)} field(s)")
+
+        print()
+        print("Avatar Safety Boundary")
+        print("----------------------")
+        for key in [
+            "planner_only",
+            "proposal_only",
+            "metadata_only",
+            "runtime_ready",
+            "execution_ready",
+            "avatar_rendering",
+            "animation_playback",
+            "mocap_runtime",
+            "camera_tracking",
+            "face_tracking",
+            "body_tracking",
+            "rig_manipulation",
+            "blendshape_control",
+            "bone_control",
+            "blender_execution",
+            "obs_control",
+            "desktop_action_execution",
+            "app_opened",
+            "file_read",
+            "file_write",
+            "command_execution",
+            "external_action_execution",
+            "real_tool_execution",
+        ]:
+            if key in packet:
+                label = key.replace("_", " ").title()
+                print(f"{label:<46}: {packet[key]}")
+
+    def handle_avatar_interaction_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "general avatar interaction"
+        manager = AvatarInteractionPlannerManager(project_root=self.project_root)
+
+        if command == "avatar-interaction-status":
+            self.print_avatar_interaction_packet("AURA Avatar Interaction Planner Status", manager.status())
+            return True
+
+        if command == "avatar-expression-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Expression Plan", manager.avatar_expression_plan(target))
+            return True
+
+        if command == "avatar-gesture-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Gesture Plan", manager.avatar_gesture_plan(target))
+            return True
+
+        if command == "avatar-pose-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Pose Plan", manager.avatar_pose_plan(target))
+            return True
+
+        if command == "avatar-streaming-presence-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Streaming Presence Plan", manager.avatar_streaming_presence_plan(target))
+            return True
+
+        if command == "avatar-safety-plan":
+            self.print_avatar_interaction_packet("AURA Avatar Safety Plan", manager.avatar_safety_plan(target))
+            return True
+
+        if command == "avatar-interaction-context":
+            self.print_avatar_interaction_packet("AURA Avatar Interaction Planner Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -2316,6 +2404,9 @@ class AuraCLI:
             return True
 
         if self.handle_vision_context_cli_command(raw_args):
+            return True
+
+        if self.handle_avatar_interaction_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

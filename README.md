@@ -404,3 +404,25 @@ Safety boundary:
 - no command execution
 - no external action execution
 - no real tool execution
+
+
+## Sprint 68.0 — Avatar Interaction Planner
+
+AURA includes an Avatar Interaction Planner foundation for metadata-only avatar interaction planning.
+
+Status: AVATAR INTERACTION PLANNER ONLINE
+
+Safety boundary:
+- no avatar rendering
+- no animation playback
+- no mocap runtime
+- no camera, face, or body tracking
+- no rig, bone, or blendshape control
+- no Blender execution
+- no OBS control
+- no desktop action execution
+- no app opening
+- no file reading or writing
+- no command execution
+- no external action execution
+- no real tool execution
