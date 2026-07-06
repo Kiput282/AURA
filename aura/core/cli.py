@@ -73,6 +73,7 @@ from aura.control_center.aura_control_center_ui_blueprint_manager import AuraCon
 from aura.local_console_web.aura_local_console_web_foundation_manager import AuraLocalConsoleWebFoundationManager
 from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import AuraChatBridgeSessionStateFoundationManager
 from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundation_manager import AuraPluginPermissionDashboardFoundationManager
+from aura.local_console_static_prototype.aura_local_console_static_prototype_foundation_manager import AuraLocalConsoleStaticPrototypeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4122,6 +4123,66 @@ class AuraCLI:
 
         return False
 
+
+    # Sprint 91.0 local console static prototype foundation CLI helpers.
+    def print_local_console_static_prototype_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Console Static Prototype Safety Boundary"))
+
+    def handle_local_console_static_prototype_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA Local Console static prototype foundation"
+        manager = AuraLocalConsoleStaticPrototypeFoundationManager(project_root=self.project_root)
+
+        if command == "local-console-static-prototype-status":
+            self.print_local_console_static_prototype_packet("AURA Local Console Static Prototype Foundation Status", manager.status())
+            return True
+
+        if command == "static-prototype-structure-plan":
+            self.print_local_console_static_prototype_packet("AURA Static Prototype Structure Plan", manager.static_prototype_structure_plan(target))
+            return True
+
+        if command == "static-page-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Static Page Blueprint Plan", manager.static_page_blueprint_plan(target))
+            return True
+
+        if command == "static-asset-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Static Asset Blueprint Plan", manager.static_asset_blueprint_plan(target))
+            return True
+
+        if command == "panel-layout-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Panel Layout Blueprint Plan", manager.panel_layout_blueprint_plan(target))
+            return True
+
+        if command == "route-static-mapping-plan":
+            self.print_local_console_static_prototype_packet("AURA Route Static Mapping Plan", manager.route_static_mapping_plan(target))
+            return True
+
+        if command == "data-placeholder-contract-plan":
+            self.print_local_console_static_prototype_packet("AURA Data Placeholder Contract Plan", manager.data_placeholder_contract_plan(target))
+            return True
+
+        if command == "theme-token-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Theme Token Blueprint Plan", manager.theme_token_blueprint_plan(target))
+            return True
+
+        if command == "accessibility-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Accessibility Blueprint Plan", manager.accessibility_blueprint_plan(target))
+            return True
+
+        if command == "static-prototype-safety-policy-plan":
+            self.print_local_console_static_prototype_packet("AURA Static Prototype Safety Policy Plan", manager.static_prototype_safety_policy_plan(target))
+            return True
+
+        if command == "local-console-static-prototype-context":
+            self.print_local_console_static_prototype_packet("AURA Local Console Static Prototype Foundation Context", manager.context())
+            return True
+
+        return False
+
     def run(self, args: list[str] | None = None) -> bool:
         import sys
 
@@ -4199,6 +4260,9 @@ class AuraCLI:
             return True
 
         if self.handle_plugin_permission_dashboard_cli_command(raw_args):
+            return True
+
+        if self.handle_local_console_static_prototype_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

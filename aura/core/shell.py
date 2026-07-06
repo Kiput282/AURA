@@ -75,6 +75,7 @@ from aura.control_center.aura_control_center_ui_blueprint_manager import AuraCon
 from aura.local_console_web.aura_local_console_web_foundation_manager import AuraLocalConsoleWebFoundationManager
 from aura.chat_bridge.aura_chat_bridge_session_state_foundation_manager import AuraChatBridgeSessionStateFoundationManager
 from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundation_manager import AuraPluginPermissionDashboardFoundationManager
+from aura.local_console_static_prototype.aura_local_console_static_prototype_foundation_manager import AuraLocalConsoleStaticPrototypeFoundationManager
 
 
 class AuraShell:
@@ -456,6 +457,17 @@ class AuraShell:
         print("  audit-trail-dashboard-blueprint-plan <target> Prepare audit trail dashboard blueprint plan")
         print("  dashboard-safety-policy-plan <target> Prepare dashboard safety policy plan")
         print("  plugin-permission-dashboard-context Show Plugin / Permission Dashboard Foundation context")
+        print("  local-console-static-prototype-status Show Local Console Static Prototype Foundation status")
+        print("  static-prototype-structure-plan <target> Prepare static prototype structure plan")
+        print("  static-page-blueprint-plan <target> Prepare static page blueprint plan")
+        print("  static-asset-blueprint-plan <target> Prepare static asset blueprint plan")
+        print("  panel-layout-blueprint-plan <target> Prepare panel layout blueprint plan")
+        print("  route-static-mapping-plan <target> Prepare route static mapping plan")
+        print("  data-placeholder-contract-plan <target> Prepare data placeholder contract plan")
+        print("  theme-token-blueprint-plan <target> Prepare theme token blueprint plan")
+        print("  accessibility-blueprint-plan <target> Prepare accessibility blueprint plan")
+        print("  static-prototype-safety-policy-plan <target> Prepare static prototype safety policy plan")
+        print("  local-console-static-prototype-context Show Local Console Static Prototype Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4396,6 +4408,67 @@ class AuraShell:
 
         return False
 
+
+    # Sprint 91.0 local console static prototype foundation shell helpers.
+    def print_local_console_static_prototype_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Console Static Prototype Safety Boundary"))
+
+    def handle_local_console_static_prototype_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Local Console static prototype foundation"
+        manager = AuraLocalConsoleStaticPrototypeFoundationManager(project_root=self.project_root)
+
+        if command == "local-console-static-prototype-status":
+            self.print_local_console_static_prototype_packet("AURA Local Console Static Prototype Foundation Status", manager.status())
+            return True
+
+        if command == "static-prototype-structure-plan":
+            self.print_local_console_static_prototype_packet("AURA Static Prototype Structure Plan", manager.static_prototype_structure_plan(target))
+            return True
+
+        if command == "static-page-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Static Page Blueprint Plan", manager.static_page_blueprint_plan(target))
+            return True
+
+        if command == "static-asset-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Static Asset Blueprint Plan", manager.static_asset_blueprint_plan(target))
+            return True
+
+        if command == "panel-layout-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Panel Layout Blueprint Plan", manager.panel_layout_blueprint_plan(target))
+            return True
+
+        if command == "route-static-mapping-plan":
+            self.print_local_console_static_prototype_packet("AURA Route Static Mapping Plan", manager.route_static_mapping_plan(target))
+            return True
+
+        if command == "data-placeholder-contract-plan":
+            self.print_local_console_static_prototype_packet("AURA Data Placeholder Contract Plan", manager.data_placeholder_contract_plan(target))
+            return True
+
+        if command == "theme-token-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Theme Token Blueprint Plan", manager.theme_token_blueprint_plan(target))
+            return True
+
+        if command == "accessibility-blueprint-plan":
+            self.print_local_console_static_prototype_packet("AURA Accessibility Blueprint Plan", manager.accessibility_blueprint_plan(target))
+            return True
+
+        if command == "static-prototype-safety-policy-plan":
+            self.print_local_console_static_prototype_packet("AURA Static Prototype Safety Policy Plan", manager.static_prototype_safety_policy_plan(target))
+            return True
+
+        if command == "local-console-static-prototype-context":
+            self.print_local_console_static_prototype_packet("AURA Local Console Static Prototype Foundation Context", manager.context())
+            return True
+
+        return False
+
     def handle_command(self, raw_command: str) -> None:
         command = raw_command.strip()
         normalized = command.lower()
@@ -4476,6 +4549,9 @@ class AuraShell:
             return
 
         if self.handle_plugin_permission_dashboard_shell_command(normalized):
+            return
+
+        if self.handle_local_console_static_prototype_shell_command(normalized):
             return
 
         if normalized == "help":

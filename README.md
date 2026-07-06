@@ -1329,3 +1329,48 @@ This document defines:
 - Continuity principle: AURA keeps growing beyond any final
 
 Core roadmap principle: Genesis is birth, not the end. AURA should continue growing safely with Kiput.
+
+
+## Sprint 91.0 — AURA Local Console Static Prototype Foundation
+
+Status: LOCAL CONSOLE STATIC PROTOTYPE FOUNDATION ONLINE
+
+AURA includes planner-only Local Console Static Prototype Foundation planning for static prototype structure, static page blueprints, asset group blueprints, panel layout blueprints, route-to-static-page mappings, data placeholder contracts, theme tokens, accessibility notes, and static prototype safety policy.
+
+Summary:
+- prototype plan types: 11
+- static pages: 9
+- asset groups: 6
+- panel layouts: 9
+- route static mappings: 9
+- data placeholder contracts: 8
+- theme tokens: 6
+- accessibility notes: 6
+- runtime-enabled pages: 0
+- static files created: 0
+- HTML files created: 0
+- CSS files created: 0
+- JS files created: 0
+- routes created: 0
+- web servers started: 0
+- ports bound: 0
+- browser windows opened: 0
+- frontend apps started: 0
+- backend services started: 0
+- API services started: 0
+- runtime execution features: 0
+
+Capability Registry update:
+- total capabilities tracked: 22
+- online capabilities: 20
+- foundation-only capabilities: 10
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+Core rule: AURA Local Console Static Prototype may prepare static blueprints, but must not run web runtime yet.
+
+See docs/AURA_LOCAL_CONSOLE_STATIC_PROTOTYPE_FOUNDATION.md.

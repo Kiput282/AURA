@@ -391,6 +391,17 @@ class CapabilityRegistryManager:
                     "introduced_in": "0.89.0-genesis",
                     "control_center_visible": True,
                 },
+                {
+                    "id": "aura_local_console_static_prototype_foundation",
+                    "name": "AURA Local Console Static Prototype Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "user_confirmation",
+                    "category": "local_console_static_prototype",
+                    "introduced_in": "0.91.0-genesis",
+                    "control_center_visible": True,
+                },
 ]
 
 

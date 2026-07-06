@@ -1067,3 +1067,24 @@ Post-Genesis direction:
 - Co-Pilot focuses on work mode: project, file and folder, code, Blender, streaming or content, server, and task execution queue assistance.
 - Ecosystem expands AURA through plugins.
 - Continuity ensures AURA keeps growing beyond any single final version.
+
+
+## Sprint 91.0 — AURA Local Console Static Prototype Foundation
+
+Target: v0.91.0-genesis
+Status: LOCAL CONSOLE STATIC PROTOTYPE FOUNDATION ONLINE
+
+AURA can provide planner-only Local Console Static Prototype Foundation planning for static prototype structure, static page blueprints, asset group blueprints, panel layout blueprints, route-to-static-page mappings, data placeholder contracts, theme tokens, accessibility notes, and static prototype safety policy.
+
+Capability Registry now tracks AURA Local Console Static Prototype Foundation:
+- total capabilities tracked: 22
+- online capabilities: 20
+- foundation-only capabilities: 10
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+No web server runtime, frontend/backend/API runtime, route creation runtime, static file serving runtime, port binding, browser launch, websocket runtime, chat runtime, session runtime, plugin runtime, permission grant/deny runtime, runtime action activation, file operation, static asset generation runtime, command execution, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.

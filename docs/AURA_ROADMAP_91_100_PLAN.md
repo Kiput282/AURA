@@ -164,3 +164,36 @@ Entry assumptions for Sprint 91:
 - local UI/web/chat/plugin/runtime systems remain gated
 - Sprint 91 starts with static prototype foundation only
 - no server, port, websocket, plugin runtime, permission runtime, action runtime, file write runtime, command runtime, or tool runtime is enabled automatically
+
+
+## Sprint 91 Update — AURA Local Console Static Prototype Foundation
+
+Status: LOCAL CONSOLE STATIC PROTOTYPE FOUNDATION ONLINE
+Target version: v0.91.0-genesis
+
+Sprint 91 adds a planner-only AURA Local Console Static Prototype Foundation for static prototype structure planning, static page blueprint planning, static asset blueprint planning, panel layout blueprint planning, route-to-static-page mapping planning, data placeholder contract planning, theme token blueprint planning, accessibility blueprint planning, and static prototype safety policy.
+
+Current Local Console static prototype summary:
+- prototype plan types: 11
+- static pages: 9
+- asset groups: 6
+- panel layouts: 9
+- route static mappings: 9
+- data placeholder contracts: 8
+- theme tokens: 6
+- accessibility notes: 6
+- runtime-enabled pages: 0
+- static files created: 0
+- HTML files created: 0
+- CSS files created: 0
+- JS files created: 0
+- routes created: 0
+- web servers started: 0
+- ports bound: 0
+- browser windows opened: 0
+- frontend apps started: 0
+- backend services started: 0
+- API services started: 0
+- runtime execution features: 0
+
+Core rule: AURA Local Console Static Prototype may prepare static blueprints, but must not run web runtime yet.

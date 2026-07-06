@@ -2899,4 +2899,31 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 91.0 local console static prototype foundation actions.
+    local_console_static_prototype_actions = [
+        ('local_console_static_prototype.status', 'read_project', 'Show AURA Local Console Static Prototype Foundation status.'),
+        ('local_console_static_prototype.structure_plan', 'read_project', 'Prepare static prototype structure planning.'),
+        ('local_console_static_prototype.static_page_blueprint_plan', 'read_project', 'Prepare static page blueprint planning.'),
+        ('local_console_static_prototype.static_asset_blueprint_plan', 'read_project', 'Prepare static asset blueprint planning.'),
+        ('local_console_static_prototype.panel_layout_blueprint_plan', 'read_project', 'Prepare panel layout blueprint planning.'),
+        ('local_console_static_prototype.route_static_mapping_plan', 'read_project', 'Prepare route-to-static-page mapping planning.'),
+        ('local_console_static_prototype.data_placeholder_contract_plan', 'read_project', 'Prepare data placeholder contract planning.'),
+        ('local_console_static_prototype.theme_token_blueprint_plan', 'read_project', 'Prepare theme token blueprint planning.'),
+        ('local_console_static_prototype.accessibility_blueprint_plan', 'read_project', 'Prepare accessibility blueprint planning.'),
+        ('local_console_static_prototype.safety_policy_plan', 'read_project', 'Prepare static prototype safety policy planning.'),
+        ('local_console_static_prototype.context', 'read_project', 'Show Local Console Static Prototype Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in local_console_static_prototype_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="local_console_static_prototype",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_local_console_static_prototype_foundation",
+            )
+        )
+
     return registry

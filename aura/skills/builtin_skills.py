@@ -1435,4 +1435,29 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 91.0 local console static prototype foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_console_static_prototype_foundation",
+            description="Prepare planner-only AURA Local Console Static Prototype Foundation for static prototype structure planning, static page blueprint planning, static asset blueprint planning, panel layout blueprint planning, route-to-static-page mapping planning, data placeholder contract planning, theme token blueprint planning, accessibility blueprint planning, and static prototype safety policy without starting web server runtime, serving static files, binding ports, opening browsers, creating runtime routes, running frontend/backend/API runtime, activating chat/session/plugin/permission/service/launcher/action runtime, creating static assets at runtime, file operations, command execution, dependency install, package download, internet/network action, tool execution, memory write, desktop control, git action, external action execution, or real tool execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_console_static_prototype_status",
+                "static_prototype_structure_plan",
+                "static_page_blueprint_plan",
+                "static_asset_blueprint_plan",
+                "panel_layout_blueprint_plan",
+                "route_static_mapping_plan",
+                "data_placeholder_contract_plan",
+                "theme_token_blueprint_plan",
+                "accessibility_blueprint_plan",
+                "static_prototype_safety_policy_plan",
+                "local_console_static_prototype_context",
+                "control_center_static_visibility_metadata",
+            ],
+        )
+    )
+
     return registry

@@ -274,3 +274,23 @@ Updated registry summary:
 - runtime execution features: 0
 
 AURA Plugin / Permission Dashboard Foundation remains foundation-only and blueprint-only. It does not enable plugin runtime, execute plugin actions, grant or deny permissions, resolve permission requests, execute chat-originated actions, activate runtime actions, call tools, or run dashboard/web runtime.
+
+
+## Sprint 91 Update — Local Console Static Prototype Foundation Online
+
+Status: UPDATED FOR v0.91.0-genesis
+
+The Capability Registry now tracks AURA Local Console Static Prototype Foundation as online.
+
+Updated registry summary:
+- total capabilities tracked: 22
+- online capabilities: 20
+- foundation-only capabilities: 10
+- planner-only capabilities: 7
+- permission-gated planner capabilities: 2
+- review-only capabilities: 1
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 0
+
+AURA Local Console Static Prototype Foundation remains foundation-only and blueprint-only. It does not start a web server, serve static files, bind ports, launch a browser, create runtime routes, run frontend/backend/API runtime, activate chat/session/plugin/permission/action runtime, create static assets at runtime, or execute tools.
