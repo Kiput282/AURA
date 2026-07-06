@@ -1109,3 +1109,16 @@ Capability Registry now tracks AURA Local Console API Schema Foundation:
 - runtime execution features: 0
 
 No API server runtime, API route runtime, API request handling, API response serving, HTTP server start, web server runtime, frontend/backend runtime, route creation runtime, static file serving runtime, port binding, browser launch, websocket runtime, chat runtime, session runtime, plugin runtime, permission grant/deny runtime, runtime action activation, file operation, command execution, runtime data fetch, runtime schema validation, runtime serialization, runtime error emission, network action, tool execution, memory write, desktop control, git execution, external action, or real tool execution is enabled.
+
+
+## Canonical Deployment Plan — ATLAS and ORION
+
+AURA's ATLAS-ORION deployment direction is documented in:
+
+- docs/AURA_ATLAS_ORION_CLIENT_DEPLOYMENT_PLAN.md
+
+Canonical split:
+- ATLAS: AURA core, reasoning, personality, memory, permission authority, planner, audit log, Control Center backend, plugin registry, and client coordination.
+- ORION: AURA Client Agent, screen capture, voice bridge, avatar and 3D environment runtime, OBS/streaming bridge, game companion, Blender bridge, VS Code/project bridge, local action bridge, emergency stop, and GPU-heavy workloads.
+
+This deployment plan should guide future Control Center Data Aggregator, client agent, voice, vision, avatar, Blender, VS Code, streaming, gaming, and plugin work.

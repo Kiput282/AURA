@@ -229,3 +229,34 @@ Current Local Console API schema summary:
 - runtime execution features: 0
 
 Core rule: AURA Local Console API Schema may prepare data contracts, but must not run API runtime yet.
+
+
+## Deployment Direction Update — ATLAS and ORION
+
+Status: CANONICAL DEPLOYMENT DIRECTION
+
+AURA's ATLAS-ORION deployment direction is now documented in:
+
+- docs/AURA_ATLAS_ORION_CLIENT_DEPLOYMENT_PLAN.md
+
+This affects Sprint 93+ planning.
+
+Sprint 93 Control Center Data Aggregator Foundation should account for:
+- ATLAS core status
+- ORION client status
+- pairing status
+- voice bridge status
+- screen bridge status
+- avatar runtime status
+- 3D environment status
+- local action bridge status
+- Blender bridge status
+- VS Code/project bridge status
+- OBS/streaming bridge status
+- game companion status
+- active permission scopes
+- active session permissions
+- emergency stop state
+- recent client audit events
+
+Sprint 93 must still remain foundation-only and must not activate runtime data fetching, API runtime, web runtime, client runtime, or local action execution.

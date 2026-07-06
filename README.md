@@ -1418,3 +1418,33 @@ Capability Registry update:
 Core rule: AURA Local Console API Schema may prepare data contracts, but must not run API runtime yet.
 
 See docs/AURA_LOCAL_CONSOLE_API_SCHEMA_FOUNDATION.md.
+
+
+## Canonical Deployment Plan — ATLAS and ORION
+
+AURA now has a canonical ATLAS-ORION deployment plan:
+
+- docs/AURA_ATLAS_ORION_CLIENT_DEPLOYMENT_PLAN.md
+
+Core deployment principle:
+- ATLAS is AURA's brain, memory, planner, permission authority, audit center, and future backend.
+- ORION is AURA's local client body, senses, voice, visual presence, app bridge, GPU-heavy workload host, and approved local executor.
+
+This plan defines:
+- ORION Client Agent
+- command flow
+- latency modes
+- permission/session approval
+- screen capture and short recording
+- voice bridge
+- avatar and 3D environment runtime
+- game companion
+- Blender bridge
+- VS Code/project bridge
+- OBS/streaming bridge
+- local action bridge
+- emergency stop
+- security pairing
+- Control Center data aggregator implications
+
+Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes approved local actions.
