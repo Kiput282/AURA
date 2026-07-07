@@ -449,6 +449,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only chat session persistence planner foundation for session record blueprints, storage boundaries, retention policy blueprints, privacy redaction rules, session lifecycle states, recovery index blueprints, export/migration notes, audit visibility fields, and persistence safety policy.",
                 },
+                {
+                    "id": "aura_safe_local_web_runtime_gate_foundation",
+                    "name": "AURA Safe Local Web Runtime Gate Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.96.0-genesis",
+                    "category": "runtime",
+                    "control_center_visible": True,
+                    "description": "Planner-only and pre-runtime safe local web runtime gate foundation for localhost binding policies, port policies, permission requirements, runtime preflight checks, start/stop proposal contracts, route boundaries, static asset boundaries, kill switch policies, and web runtime audit visibility.",
+                },
 ]
 
 

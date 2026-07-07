@@ -78,6 +78,7 @@ from aura.local_console_api_schema.aura_local_console_api_schema_foundation_mana
 from aura.control_center_data_aggregator.aura_control_center_data_aggregator_foundation_manager import AuraControlCenterDataAggregatorFoundationManager
 from aura.permission_request_review_queue.aura_permission_request_review_queue_foundation_manager import AuraPermissionRequestReviewQueueFoundationManager
 from aura.chat_session_persistence_planner.aura_chat_session_persistence_planner_foundation_manager import AuraChatSessionPersistencePlannerFoundationManager
+from aura.safe_local_web_runtime_gate.aura_safe_local_web_runtime_gate_foundation_manager import AuraSafeLocalWebRuntimeGateFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4132,6 +4133,70 @@ class AuraCLI:
 
 
 
+
+    # Sprint 96.0 safe local web runtime gate foundation CLI helpers.
+    def print_safe_local_web_runtime_gate_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Safe Local Web Runtime Gate Safety Boundary"))
+
+    def handle_safe_local_web_runtime_gate_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA safe local web runtime gate foundation"
+        manager = AuraSafeLocalWebRuntimeGateFoundationManager(project_root=self.project_root)
+
+        if command == "safe-local-web-runtime-gate-status":
+            self.print_safe_local_web_runtime_gate_packet("AURA Safe Local Web Runtime Gate Foundation Status", manager.status())
+            return True
+
+        if command == "localhost-binding-policy-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Localhost Binding Policy Plan", manager.localhost_binding_policy_plan(target))
+            return True
+
+        if command == "port-policy-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Port Policy Plan", manager.port_policy_plan(target))
+            return True
+
+        if command == "web-runtime-permission-requirement-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Web Runtime Permission Requirement Plan", manager.permission_requirement_plan(target))
+            return True
+
+        if command == "runtime-preflight-check-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Runtime Preflight Check Plan", manager.runtime_preflight_check_plan(target))
+            return True
+
+        if command == "start-stop-proposal-contract-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Start Stop Proposal Contract Plan", manager.start_stop_proposal_contract_plan(target))
+            return True
+
+        if command == "route-boundary-policy-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Route Boundary Policy Plan", manager.route_boundary_policy_plan(target))
+            return True
+
+        if command == "static-asset-boundary-policy-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Static Asset Boundary Policy Plan", manager.static_asset_boundary_policy_plan(target))
+            return True
+
+        if command == "kill-switch-policy-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Kill Switch Policy Plan", manager.kill_switch_policy_plan(target))
+            return True
+
+        if command == "web-runtime-audit-visibility-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Web Runtime Audit Visibility Plan", manager.web_runtime_audit_visibility_plan(target))
+            return True
+
+        if command == "safe-local-web-runtime-gate-safety-policy-plan":
+            self.print_safe_local_web_runtime_gate_packet("AURA Safe Local Web Runtime Gate Safety Policy Plan", manager.safety_policy_plan(target))
+            return True
+
+        if command == "safe-local-web-runtime-gate-context":
+            self.print_safe_local_web_runtime_gate_packet("AURA Safe Local Web Runtime Gate Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 95.0 chat session persistence planner foundation CLI helpers.
     def print_chat_session_persistence_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4519,6 +4584,9 @@ class AuraCLI:
             return True
 
         if self.handle_chat_session_persistence_cli_command(raw_args):
+            return True
+
+        if self.handle_safe_local_web_runtime_gate_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

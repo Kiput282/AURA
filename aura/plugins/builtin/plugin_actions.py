@@ -2899,6 +2899,34 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 96.0 safe local web runtime gate foundation actions.
+    safe_local_web_runtime_gate_actions = [
+        ('safe_local_web_runtime_gate.status', 'read_project', 'Show AURA Safe Local Web Runtime Gate Foundation status.'),
+        ('safe_local_web_runtime_gate.localhost_binding_policy_plan', 'read_project', 'Prepare localhost binding policy planning.'),
+        ('safe_local_web_runtime_gate.port_policy_plan', 'read_project', 'Prepare port policy planning.'),
+        ('safe_local_web_runtime_gate.permission_requirement_plan', 'read_project', 'Prepare web runtime permission requirement planning.'),
+        ('safe_local_web_runtime_gate.runtime_preflight_check_plan', 'read_project', 'Prepare runtime preflight check planning.'),
+        ('safe_local_web_runtime_gate.start_stop_proposal_contract_plan', 'read_project', 'Prepare start/stop proposal contract planning.'),
+        ('safe_local_web_runtime_gate.route_boundary_policy_plan', 'read_project', 'Prepare route boundary policy planning.'),
+        ('safe_local_web_runtime_gate.static_asset_boundary_policy_plan', 'read_project', 'Prepare static asset boundary policy planning.'),
+        ('safe_local_web_runtime_gate.kill_switch_policy_plan', 'read_project', 'Prepare kill switch policy planning.'),
+        ('safe_local_web_runtime_gate.web_runtime_audit_visibility_plan', 'read_project', 'Prepare web runtime audit visibility planning.'),
+        ('safe_local_web_runtime_gate.safety_policy_plan', 'read_project', 'Prepare safe local web runtime gate safety policy planning.'),
+        ('safe_local_web_runtime_gate.context', 'read_project', 'Show Safe Local Web Runtime Gate Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in safe_local_web_runtime_gate_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="safe_local_web_runtime_gate",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_safe_local_web_runtime_gate_foundation",
+            )
+        )
+
     # Sprint 95.0 chat session persistence planner foundation actions.
     chat_session_persistence_planner_actions = [
         ('chat_session_persistence_planner.status', 'read_project', 'Show AURA Chat Session Persistence Planner Foundation status.'),

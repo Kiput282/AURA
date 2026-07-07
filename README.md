@@ -1452,7 +1452,7 @@ Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes
 ## Sprint 93.0 — Control Center Data Aggregator Foundation
 
 Status: completed
-Version: v0.95.0-genesis
+Version: v0.96.0-genesis
 
 Sprint 93 adds the planner-only AURA Control Center Data Aggregator Foundation.
 
@@ -1490,7 +1490,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 94.0 — Permission Request Review Queue Foundation
 
 Status: completed
-Version: v0.95.0-genesis
+Version: v0.96.0-genesis
 
 Sprint 94 adds the planner-only AURA Permission Request Review Queue Foundation.
 
@@ -1535,7 +1535,7 @@ Safety remains foundation-only, proposal-only, metadata-only, planner-only, and 
 ## Sprint 95.0 — Chat Session Persistence Planner Foundation
 
 Status: completed
-Version: v0.95.0-genesis
+Version: v0.96.0-genesis
 
 Sprint 95 adds the planner-only AURA Chat Session Persistence Planner Foundation.
 
@@ -1572,3 +1572,52 @@ Counts:
 - 0 runtime execution features
 
 Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first.
+
+## Sprint 96.0 — Safe Local Web Runtime Gate Foundation
+
+Status: completed
+Version: v0.96.0-genesis
+
+Sprint 96 adds the planner-only and pre-runtime AURA Safe Local Web Runtime Gate Foundation.
+
+This sprint prepares safety gate blueprints for:
+
+- localhost-only binding
+- port policy
+- permission requirements
+- runtime preflight checks
+- start/stop proposal contracts
+- route boundary policy
+- static asset boundary policy
+- kill switch policy
+- web runtime audit visibility
+
+Counts:
+
+- 11 plan types
+- 6 localhost binding policies
+- 7 port policies
+- 8 permission requirements
+- 10 runtime preflight checks
+- 7 start/stop proposal contracts
+- 6 route boundary policies
+- 6 static asset boundary policies
+- 7 kill switch policies
+- 9 audit visibility fields
+- 66 total gate blueprints/fields
+- 0 runtime web servers started
+- 0 runtime local web servers started
+- 0 runtime HTTP/API servers started
+- 0 runtime ports bound
+- 0 runtime routes created
+- 0 runtime static files served
+- 0 runtime browsers launched
+- 0 runtime websocket sessions opened
+- 0 runtime API requests/responses handled
+- 0 runtime dashboard views rendered
+- 0 runtime server processes spawned/killed
+- 0 runtime preflight checks executed
+- 0 runtime external network exposures
+- 0 runtime execution features
+
+Safety remains foundation-only, pre-runtime, metadata-only, planner-only, and safe_idle-first.

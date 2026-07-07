@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 96.0 safe local web runtime gate foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_safe_local_web_runtime_gate_foundation",
+            description="Prepare planner-only and pre-runtime AURA Safe Local Web Runtime Gate Foundation for localhost binding policy planning, port policy planning, permission requirement planning, runtime preflight check planning, start/stop proposal contract planning, route boundary policy planning, static asset boundary policy planning, kill switch policy planning, and web runtime audit visibility planning without starting servers, binding ports, creating routes, serving files, launching browsers, opening websockets, handling API requests, or exposing external networks.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "safe_local_web_runtime_gate_status",
+                "localhost_binding_policy_plan",
+                "port_policy_plan",
+                "permission_requirement_plan",
+                "runtime_preflight_check_plan",
+                "start_stop_proposal_contract_plan",
+                "route_boundary_policy_plan",
+                "static_asset_boundary_policy_plan",
+                "kill_switch_policy_plan",
+                "web_runtime_audit_visibility_plan",
+                "safe_local_web_runtime_gate_context",
+                "safe_local_web_runtime_gate_blueprint_metadata",
+            ],
+        )
+    )
+
     # Sprint 95.0 chat session persistence planner foundation skill.
     registry.register(
         AuraSkill(

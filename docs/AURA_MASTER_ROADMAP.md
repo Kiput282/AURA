@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.95.0-genesis
+Target: v0.96.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1146,3 +1146,11 @@ Status: completed
 AURA now includes a planner-only Chat Session Persistence Planner Foundation. It prepares future persistence blueprints for session records, storage boundaries, retention policies, privacy/redaction rules, session lifecycle states, recovery indexes, export/migration notes, and audit visibility fields.
 
 This foundation keeps all chat runtime, session runtime, database runtime, file read/write runtime, memory write runtime, recovery runtime, export runtime, archive runtime, delete runtime, websocket runtime, API runtime, and action execution disabled.
+
+## v0.96.0 Genesis — Safe Local Web Runtime Gate Foundation
+
+Status: completed
+
+AURA now includes a planner-only and pre-runtime Safe Local Web Runtime Gate Foundation. It prepares future safety gates for localhost-only binding, port policies, permission requirements, runtime preflight checks, start/stop proposals, route boundaries, static asset boundaries, kill switch policy, and web runtime audit visibility.
+
+This foundation keeps all web server runtime, HTTP server start, API server runtime, port binding, route creation, static file serving, browser launch, websocket runtime, server process runtime, public interface binding, external tunnel runtime, API request handling, dashboard rendering, and action execution disabled.
