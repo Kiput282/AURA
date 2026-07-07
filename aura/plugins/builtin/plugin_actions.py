@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 109.0 runtime safety freeze manual approval barrier foundation actions.
+    runtime_safety_freeze_manual_approval_barrier_actions = [
+        ('runtime_safety_freeze_manual_approval_barrier.status', 'read_project', 'Show Runtime Safety Freeze Manual Approval Barrier status.'),
+        ('runtime_safety_freeze_manual_approval_barrier.safety_freeze_candidate_inventory_plan', 'read_project', 'Prepare safety freeze candidate inventory plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.manual_approval_barrier_input_plan', 'read_project', 'Prepare manual approval barrier input plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.freeze_condition_check_plan', 'read_project', 'Prepare freeze condition check plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.approval_requirement_rule_plan', 'read_project', 'Prepare approval requirement rule plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.blocked_runtime_catalog_plan', 'read_project', 'Prepare blocked runtime catalog plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.user_confirmation_barrier_plan', 'read_project', 'Prepare user confirmation barrier plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.emergency_stop_requirement_plan', 'read_project', 'Prepare emergency stop requirement plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.audit_freeze_packet_preview_plan', 'read_project', 'Prepare audit freeze packet preview plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.dashboard_barrier_payload_plan', 'read_project', 'Prepare dashboard barrier payload plan.'),
+        ('runtime_safety_freeze_manual_approval_barrier.context', 'read_project', 'Show Runtime Safety Freeze Manual Approval Barrier context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_safety_freeze_manual_approval_barrier_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_safety_freeze_manual_approval_barrier", description=description, permission_action=permission_action, status="online", skill="aura_runtime_safety_freeze_manual_approval_barrier_foundation"))
+
     # Sprint 108.0 runtime audit event packet preview foundation actions.
     runtime_audit_event_packet_preview_actions = [
         ('runtime_audit_event_packet_preview.status', 'read_project', 'Show Runtime Audit Event Packet Preview status.'),

@@ -93,6 +93,7 @@ from aura.permission_decision_runtime_dry_run.aura_permission_decision_runtime_d
 from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_preview_packet_foundation_manager import AuraRuntimeActionExecutionPreviewPacketFoundationManager
 from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate_dry_run_foundation_manager import AuraLocalRuntimeExecutionGateDryRunFoundationManager
 from aura.runtime_audit_event_packet_preview.aura_runtime_audit_event_packet_preview_foundation_manager import AuraRuntimeAuditEventPacketPreviewFoundationManager
+from aura.runtime_safety_freeze_manual_approval_barrier.aura_runtime_safety_freeze_manual_approval_barrier_foundation_manager import AuraRuntimeSafetyFreezeManualApprovalBarrierFoundationManager
 
 
 class AuraShell:
@@ -680,6 +681,17 @@ class AuraShell:
         print("  retention-redaction-boundary-plan <target> Prepare retention redaction boundary plan")
         print("  dashboard-audit-packet-plan <target> Prepare dashboard audit packet plan")
         print("  runtime-audit-event-packet-preview-context Show Runtime Audit Event Packet Preview context")
+        print("  runtime-safety-freeze-manual-approval-barrier-status Show Runtime Safety Freeze Manual Approval Barrier Foundation status")
+        print("  safety-freeze-candidate-inventory-plan <target> Prepare safety freeze candidate inventory plan")
+        print("  manual-approval-barrier-input-plan <target> Prepare manual approval barrier input plan")
+        print("  freeze-condition-check-plan <target> Prepare freeze condition check plan")
+        print("  approval-requirement-rule-plan <target> Prepare approval requirement rule plan")
+        print("  blocked-runtime-catalog-plan <target> Prepare blocked runtime catalog plan")
+        print("  user-confirmation-barrier-plan <target> Prepare user confirmation barrier plan")
+        print("  emergency-stop-requirement-plan <target> Prepare emergency stop requirement plan")
+        print("  audit-freeze-packet-preview-plan <target> Prepare audit freeze packet preview plan")
+        print("  dashboard-barrier-payload-plan <target> Prepare dashboard barrier payload plan")
+        print("  runtime-safety-freeze-manual-approval-barrier-context Show Runtime Safety Freeze Manual Approval Barrier context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4638,6 +4650,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 109.0 runtime safety freeze manual approval barrier shell helpers.
+    def print_runtime_safety_freeze_manual_approval_barrier_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Safety Freeze Manual Approval Barrier Safety Boundary"))
+
+    def handle_runtime_safety_freeze_manual_approval_barrier_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime safety freeze manual approval barrier"
+        manager = AuraRuntimeSafetyFreezeManualApprovalBarrierFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-safety-freeze-manual-approval-barrier-status":
+            self.print_runtime_safety_freeze_manual_approval_barrier_packet("AURA Runtime Safety Freeze Manual Approval Barrier Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-safety-freeze-manual-approval-barrier-context":
+            self.print_runtime_safety_freeze_manual_approval_barrier_packet("AURA Runtime Safety Freeze Manual Approval Barrier Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "safety-freeze-candidate-inventory-plan": ("AURA Safety Freeze Candidate Inventory Plan", manager.safety_freeze_candidate_inventory_plan),
+            "manual-approval-barrier-input-plan": ("AURA Manual Approval Barrier Input Plan", manager.manual_approval_barrier_input_plan),
+            "freeze-condition-check-plan": ("AURA Freeze Condition Check Plan", manager.freeze_condition_check_plan),
+            "approval-requirement-rule-plan": ("AURA Approval Requirement Rule Plan", manager.approval_requirement_rule_plan),
+            "blocked-runtime-catalog-plan": ("AURA Blocked Runtime Catalog Plan", manager.blocked_runtime_catalog_plan),
+            "user-confirmation-barrier-plan": ("AURA User Confirmation Barrier Plan", manager.user_confirmation_barrier_plan),
+            "emergency-stop-requirement-plan": ("AURA Emergency Stop Requirement Plan", manager.emergency_stop_requirement_plan),
+            "audit-freeze-packet-preview-plan": ("AURA Audit Freeze Packet Preview Plan", manager.audit_freeze_packet_preview_plan),
+            "dashboard-barrier-payload-plan": ("AURA Dashboard Barrier Payload Plan", manager.dashboard_barrier_payload_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_safety_freeze_manual_approval_barrier_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 108.0 runtime audit event packet preview shell helpers.
     def print_runtime_audit_event_packet_preview_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5762,6 +5816,9 @@ class AuraShell:
             return
 
         if self.handle_runtime_audit_event_packet_preview_shell_command(normalized):
+            return
+
+        if self.handle_runtime_safety_freeze_manual_approval_barrier_shell_command(normalized):
             return
 
         if normalized == "help":

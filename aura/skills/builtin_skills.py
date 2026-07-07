@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 109.0 runtime safety freeze manual approval barrier foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_safety_freeze_manual_approval_barrier_foundation",
+            description="Prepare planner-only, metadata-only, and barrier-blueprint-only Runtime Safety Freeze Manual Approval Barrier Foundation without activating runtime freeze, granting approvals, releasing freeze, passing barriers, dispatching actions, executing tools/commands, mutating files, starting services, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_safety_freeze_manual_approval_barrier_status",
+                "safety_freeze_candidate_inventory_plan",
+                "manual_approval_barrier_input_plan",
+                "freeze_condition_check_plan",
+                "approval_requirement_rule_plan",
+                "blocked_runtime_catalog_plan",
+                "user_confirmation_barrier_plan",
+                "emergency_stop_requirement_plan",
+                "audit_freeze_packet_preview_plan",
+                "dashboard_barrier_payload_plan",
+                "runtime_safety_freeze_manual_approval_barrier_context",
+            ],
+        )
+    )
+
     # Sprint 108.0 runtime audit event packet preview foundation skill.
     registry.register(
         AuraSkill(

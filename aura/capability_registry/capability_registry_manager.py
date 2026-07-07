@@ -605,6 +605,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and audit-packet-preview-only Runtime Audit Event Packet Preview Foundation for audit event candidates, input snapshots, runtime references, permission references, action preview references, audit payload shapes, visibility rules, retention/redaction boundaries, and dashboard audit packets without writing, emitting, streaming, sending, or persisting audit events.",
                 },
+                {
+                    "id": "aura_runtime_safety_freeze_manual_approval_barrier_foundation",
+                    "name": "AURA Runtime Safety Freeze Manual Approval Barrier Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.109.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and barrier-blueprint-only Runtime Safety Freeze Manual Approval Barrier Foundation for safety freeze candidates, manual approval barrier inputs, freeze condition checks, approval rules, blocked runtime catalog, user confirmation barriers, emergency stop requirements, audit freeze packet previews, and dashboard barrier payloads without activating freeze, granting approvals, passing barriers, or executing runtime actions.",
+                },
 ]
 
 
