@@ -98,6 +98,7 @@ from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundat
 from aura.genesis_runtime_readiness_next_block_planning.aura_genesis_runtime_readiness_next_block_planning_foundation_manager import AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager
 from aura.runtime_permission_flow_consolidation.aura_runtime_permission_flow_consolidation_foundation_manager import AuraRuntimePermissionFlowConsolidationFoundationManager
 from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_manager import AuraAuditEventReviewQueueFoundationManager
+from aura.dashboard_runtime_readiness_view_model.aura_dashboard_runtime_readiness_view_model_foundation_manager import AuraDashboardRuntimeReadinessViewModelFoundationManager
 
 
 class AuraShell:
@@ -740,6 +741,17 @@ class AuraShell:
         print("  review-outcome-catalog-plan <target> Prepare review outcome catalog plan")
         print("  future-audit-writer-boundary-plan <target> Prepare future audit writer boundary plan")
         print("  audit-event-review-queue-context Show Audit Event Review Queue context")
+        print("  dashboard-runtime-readiness-view-model-status Show Dashboard Runtime Readiness View Model Foundation status")
+        print("  runtime-readiness-summary-view-plan <target> Prepare runtime readiness summary view plan")
+        print("  permission-state-view-plan <target> Prepare permission state view plan")
+        print("  audit-review-queue-view-plan <target> Prepare audit review queue view plan")
+        print("  safety-boundary-view-plan <target> Prepare safety boundary view plan")
+        print("  orion-boundary-view-plan <target> Prepare ORION boundary view plan")
+        print("  action-preview-view-plan <target> Prepare action preview view plan")
+        print("  manual-approval-view-plan <target> Prepare manual approval view plan")
+        print("  v1-cutline-view-plan <target> Prepare v1 cutline view plan")
+        print("  control-center-payload-view-plan <target> Prepare Control Center payload view plan")
+        print("  dashboard-runtime-readiness-view-model-context Show Dashboard Runtime Readiness View Model context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4703,6 +4715,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 114.0 dashboard runtime readiness view model shell helpers.
+    def print_dashboard_runtime_readiness_view_model_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Dashboard Runtime Readiness View Model Safety Boundary"))
+
+    def handle_dashboard_runtime_readiness_view_model_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA dashboard runtime readiness view model"
+        manager = AuraDashboardRuntimeReadinessViewModelFoundationManager(project_root=self.project_root)
+
+        if command == "dashboard-runtime-readiness-view-model-status":
+            self.print_dashboard_runtime_readiness_view_model_packet("AURA Dashboard Runtime Readiness View Model Foundation Status", manager.status())
+            return True
+
+        if command == "dashboard-runtime-readiness-view-model-context":
+            self.print_dashboard_runtime_readiness_view_model_packet("AURA Dashboard Runtime Readiness View Model Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "runtime-readiness-summary-view-plan": ("AURA Runtime Readiness Summary View Plan", manager.runtime_readiness_summary_view_plan),
+            "permission-state-view-plan": ("AURA Permission State View Plan", manager.permission_state_view_plan),
+            "audit-review-queue-view-plan": ("AURA Audit Review Queue View Plan", manager.audit_review_queue_view_plan),
+            "safety-boundary-view-plan": ("AURA Safety Boundary View Plan", manager.safety_boundary_view_plan),
+            "orion-boundary-view-plan": ("AURA ORION Boundary View Plan", manager.orion_boundary_view_plan),
+            "action-preview-view-plan": ("AURA Action Preview View Plan", manager.action_preview_view_plan),
+            "manual-approval-view-plan": ("AURA Manual Approval View Plan", manager.manual_approval_view_plan),
+            "v1-cutline-view-plan": ("AURA v1 Cutline View Plan", manager.v1_cutline_view_plan),
+            "control-center-payload-view-plan": ("AURA Control Center Payload View Plan", manager.control_center_payload_view_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_dashboard_runtime_readiness_view_model_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 113.0 audit event review queue shell helpers.
     def print_audit_event_review_queue_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6047,6 +6101,9 @@ class AuraShell:
             return
 
         if self.handle_audit_event_review_queue_shell_command(normalized):
+            return
+
+        if self.handle_dashboard_runtime_readiness_view_model_shell_command(normalized):
             return
 
         if normalized == "help":

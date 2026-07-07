@@ -665,6 +665,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and review-queue-blueprint-only Audit Event Review Queue Foundation for audit event intake schema, review queue state model, triage rules, permission linkage review, runtime boundary review, redaction visibility review, dashboard review queue payloads, review outcome catalog, and future audit writer boundary without writing, emitting, streaming, sending, or persisting audit events.",
                 },
+                {
+                    "id": "aura_dashboard_runtime_readiness_view_model_foundation",
+                    "name": "AURA Dashboard Runtime Readiness View Model Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.114.0-genesis",
+                    "category": "dashboard",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and view-model-only Dashboard Runtime Readiness View Model Foundation for runtime readiness summary, permission state, audit review queue, safety boundary, ORION boundary, action preview, manual approval, v1 cutline, and Control Center payload views without starting dashboard runtime, API server, web server, frontend/backend runtime, or enabling runtime execution.",
+                },
 ]
 
 

@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 114.0 dashboard runtime readiness view model foundation actions.
+    dashboard_runtime_readiness_view_model_actions = [
+        ('dashboard_runtime_readiness_view_model.status', 'read_project', 'Show Dashboard Runtime Readiness View Model status.'),
+        ('dashboard_runtime_readiness_view_model.runtime_readiness_summary_view_plan', 'read_project', 'Prepare runtime readiness summary view plan.'),
+        ('dashboard_runtime_readiness_view_model.permission_state_view_plan', 'read_project', 'Prepare permission state view plan.'),
+        ('dashboard_runtime_readiness_view_model.audit_review_queue_view_plan', 'read_project', 'Prepare audit review queue view plan.'),
+        ('dashboard_runtime_readiness_view_model.safety_boundary_view_plan', 'read_project', 'Prepare safety boundary view plan.'),
+        ('dashboard_runtime_readiness_view_model.orion_boundary_view_plan', 'read_project', 'Prepare ORION boundary view plan.'),
+        ('dashboard_runtime_readiness_view_model.action_preview_view_plan', 'read_project', 'Prepare action preview view plan.'),
+        ('dashboard_runtime_readiness_view_model.manual_approval_view_plan', 'read_project', 'Prepare manual approval view plan.'),
+        ('dashboard_runtime_readiness_view_model.v1_cutline_view_plan', 'read_project', 'Prepare v1 cutline view plan.'),
+        ('dashboard_runtime_readiness_view_model.control_center_payload_view_plan', 'read_project', 'Prepare Control Center payload view plan.'),
+        ('dashboard_runtime_readiness_view_model.context', 'read_project', 'Show Dashboard Runtime Readiness View Model context.'),
+    ]
+
+    for action_name, permission_action, description in dashboard_runtime_readiness_view_model_actions:
+        registry.register(PluginAction(name=action_name, plugin="dashboard_runtime_readiness_view_model", description=description, permission_action=permission_action, status="online", skill="aura_dashboard_runtime_readiness_view_model_foundation"))
+
     # Sprint 113.0 audit event review queue foundation actions.
     audit_event_review_queue_actions = [
         ('audit_event_review_queue.status', 'read_project', 'Show Audit Event Review Queue status.'),

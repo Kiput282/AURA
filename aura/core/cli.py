@@ -96,6 +96,7 @@ from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundat
 from aura.genesis_runtime_readiness_next_block_planning.aura_genesis_runtime_readiness_next_block_planning_foundation_manager import AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager
 from aura.runtime_permission_flow_consolidation.aura_runtime_permission_flow_consolidation_foundation_manager import AuraRuntimePermissionFlowConsolidationFoundationManager
 from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_manager import AuraAuditEventReviewQueueFoundationManager
+from aura.dashboard_runtime_readiness_view_model.aura_dashboard_runtime_readiness_view_model_foundation_manager import AuraDashboardRuntimeReadinessViewModelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4168,6 +4169,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 114.0 dashboard runtime readiness view model CLI helpers.
+    def print_dashboard_runtime_readiness_view_model_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Dashboard Runtime Readiness View Model Safety Boundary"))
+
+    def handle_dashboard_runtime_readiness_view_model_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA dashboard runtime readiness view model"
+        manager = AuraDashboardRuntimeReadinessViewModelFoundationManager(project_root=self.project_root)
+
+        if command == "dashboard-runtime-readiness-view-model-status":
+            self.print_dashboard_runtime_readiness_view_model_packet("AURA Dashboard Runtime Readiness View Model Foundation Status", manager.status())
+            return True
+
+        if command == "dashboard-runtime-readiness-view-model-context":
+            self.print_dashboard_runtime_readiness_view_model_packet("AURA Dashboard Runtime Readiness View Model Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "runtime-readiness-summary-view-plan": ("AURA Runtime Readiness Summary View Plan", manager.runtime_readiness_summary_view_plan),
+            "permission-state-view-plan": ("AURA Permission State View Plan", manager.permission_state_view_plan),
+            "audit-review-queue-view-plan": ("AURA Audit Review Queue View Plan", manager.audit_review_queue_view_plan),
+            "safety-boundary-view-plan": ("AURA Safety Boundary View Plan", manager.safety_boundary_view_plan),
+            "orion-boundary-view-plan": ("AURA ORION Boundary View Plan", manager.orion_boundary_view_plan),
+            "action-preview-view-plan": ("AURA Action Preview View Plan", manager.action_preview_view_plan),
+            "manual-approval-view-plan": ("AURA Manual Approval View Plan", manager.manual_approval_view_plan),
+            "v1-cutline-view-plan": ("AURA v1 Cutline View Plan", manager.v1_cutline_view_plan),
+            "control-center-payload-view-plan": ("AURA Control Center Payload View Plan", manager.control_center_payload_view_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_dashboard_runtime_readiness_view_model_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 113.0 audit event review queue CLI helpers.
     def print_audit_event_review_queue_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5486,6 +5528,9 @@ class AuraCLI:
             return True
 
         if self.handle_audit_event_review_queue_cli_command(raw_args):
+            return True
+
+        if self.handle_dashboard_runtime_readiness_view_model_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

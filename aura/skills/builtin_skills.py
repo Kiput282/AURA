@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 114.0 dashboard runtime readiness view model foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_dashboard_runtime_readiness_view_model_foundation",
+            description="Prepare planner-only, metadata-only, and view-model-only Dashboard Runtime Readiness View Model Foundation without starting dashboard runtime, API server, web server, frontend/backend runtime, writing dashboard state, emitting dashboard events, dispatching actions, executing tools/commands, mutating files, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "dashboard_runtime_readiness_view_model_status",
+                "runtime_readiness_summary_view_plan",
+                "permission_state_view_plan",
+                "audit_review_queue_view_plan",
+                "safety_boundary_view_plan",
+                "orion_boundary_view_plan",
+                "action_preview_view_plan",
+                "manual_approval_view_plan",
+                "v1_cutline_view_plan",
+                "control_center_payload_view_plan",
+                "dashboard_runtime_readiness_view_model_context",
+            ],
+        )
+    )
+
     # Sprint 113.0 audit event review queue foundation skill.
     registry.register(
         AuraSkill(
