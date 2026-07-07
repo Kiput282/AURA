@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 102.0 safe runtime configuration profile foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_safe_runtime_configuration_profile_foundation",
+            description="Prepare planner-only, metadata-only, and configuration-blueprint-only AURA Safe Runtime Configuration Profile Foundation for profile types, runtime mode policies, service boundaries, permission boundaries, file system boundaries, network boundaries, dry-run requirements, rollout guards, and configuration audit visibility without reading, writing, applying, or activating runtime config; starting services, launchers, web servers, API servers, websockets, or ORION clients; changing permissions; activating dry-run runtime; binding ports; probing networks; dispatching actions; executing tools or commands; writing memory; or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "safe_runtime_configuration_profile_status",
+                "configuration_profile_type_plan",
+                "runtime_mode_policy_plan",
+                "service_configuration_boundary_plan",
+                "permission_configuration_boundary_plan",
+                "file_system_configuration_boundary_plan",
+                "network_configuration_boundary_plan",
+                "dry_run_configuration_requirement_plan",
+                "rollout_configuration_guard_plan",
+                "configuration_audit_visibility_plan",
+                "safe_runtime_configuration_profile_context",
+                "safe_runtime_configuration_profile_blueprint_metadata",
+            ],
+        )
+    )
+
     # Sprint 101.0 genesis runtime readiness baseline foundation skill.
     registry.register(
         AuraSkill(

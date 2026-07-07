@@ -2899,6 +2899,34 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 102.0 safe runtime configuration profile foundation actions.
+    safe_runtime_configuration_profile_actions = [
+        ('safe_runtime_configuration_profile.status', 'read_project', 'Show AURA Safe Runtime Configuration Profile Foundation status.'),
+        ('safe_runtime_configuration_profile.configuration_profile_type_plan', 'read_project', 'Prepare configuration profile type planning.'),
+        ('safe_runtime_configuration_profile.runtime_mode_policy_plan', 'read_project', 'Prepare runtime mode policy planning.'),
+        ('safe_runtime_configuration_profile.service_configuration_boundary_plan', 'read_project', 'Prepare service configuration boundary planning.'),
+        ('safe_runtime_configuration_profile.permission_configuration_boundary_plan', 'read_project', 'Prepare permission configuration boundary planning.'),
+        ('safe_runtime_configuration_profile.file_system_configuration_boundary_plan', 'read_project', 'Prepare file system configuration boundary planning.'),
+        ('safe_runtime_configuration_profile.network_configuration_boundary_plan', 'read_project', 'Prepare network configuration boundary planning.'),
+        ('safe_runtime_configuration_profile.dry_run_configuration_requirement_plan', 'read_project', 'Prepare dry-run configuration requirement planning.'),
+        ('safe_runtime_configuration_profile.rollout_configuration_guard_plan', 'read_project', 'Prepare rollout configuration guard planning.'),
+        ('safe_runtime_configuration_profile.configuration_audit_visibility_plan', 'read_project', 'Prepare configuration audit visibility planning.'),
+        ('safe_runtime_configuration_profile.safety_policy_plan', 'read_project', 'Prepare Safe Runtime Configuration Profile safety policy planning.'),
+        ('safe_runtime_configuration_profile.context', 'read_project', 'Show Safe Runtime Configuration Profile Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in safe_runtime_configuration_profile_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="safe_runtime_configuration_profile",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_safe_runtime_configuration_profile_foundation",
+            )
+        )
+
     # Sprint 101.0 genesis runtime readiness baseline foundation actions.
     genesis_runtime_readiness_baseline_actions = [
         ('genesis_runtime_readiness_baseline.status', 'read_project', 'Show AURA Genesis Runtime Readiness Baseline Foundation status.'),

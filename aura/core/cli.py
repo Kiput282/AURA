@@ -84,6 +84,7 @@ from aura.runtime_action_queue_review_layer.aura_runtime_action_queue_review_lay
 from aura.pre_runtime_security_audit.aura_pre_runtime_security_audit_foundation_manager import AuraPreRuntimeSecurityAuditFoundationManager
 from aura.sprint_100_review_stabilization.aura_sprint_100_review_stabilization_foundation_manager import AuraSprint100ReviewStabilizationFoundationManager
 from aura.genesis_runtime_readiness_baseline.aura_genesis_runtime_readiness_baseline_foundation_manager import AuraGenesisRuntimeReadinessBaselineFoundationManager
+from aura.safe_runtime_configuration_profile.aura_safe_runtime_configuration_profile_foundation_manager import AuraSafeRuntimeConfigurationProfileFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4144,6 +4145,70 @@ class AuraCLI:
 
 
 
+
+    # Sprint 102.0 safe runtime configuration profile foundation CLI helpers.
+    def print_safe_runtime_configuration_profile_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Safe Runtime Configuration Profile Safety Boundary"))
+
+    def handle_safe_runtime_configuration_profile_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA safe runtime configuration profile foundation"
+        manager = AuraSafeRuntimeConfigurationProfileFoundationManager(project_root=self.project_root)
+
+        if command == "safe-runtime-configuration-profile-status":
+            self.print_safe_runtime_configuration_profile_packet("AURA Safe Runtime Configuration Profile Foundation Status", manager.status())
+            return True
+
+        if command == "configuration-profile-type-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Configuration Profile Type Plan", manager.configuration_profile_type_plan(target))
+            return True
+
+        if command == "runtime-mode-policy-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Runtime Mode Policy Plan", manager.runtime_mode_policy_plan(target))
+            return True
+
+        if command == "service-configuration-boundary-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Service Configuration Boundary Plan", manager.service_configuration_boundary_plan(target))
+            return True
+
+        if command == "permission-configuration-boundary-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Permission Configuration Boundary Plan", manager.permission_configuration_boundary_plan(target))
+            return True
+
+        if command == "file-system-configuration-boundary-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA File System Configuration Boundary Plan", manager.file_system_configuration_boundary_plan(target))
+            return True
+
+        if command == "network-configuration-boundary-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Network Configuration Boundary Plan", manager.network_configuration_boundary_plan(target))
+            return True
+
+        if command == "dry-run-configuration-requirement-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Dry-Run Configuration Requirement Plan", manager.dry_run_configuration_requirement_plan(target))
+            return True
+
+        if command == "rollout-configuration-guard-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Rollout Configuration Guard Plan", manager.rollout_configuration_guard_plan(target))
+            return True
+
+        if command == "configuration-audit-visibility-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Configuration Audit Visibility Plan", manager.configuration_audit_visibility_plan(target))
+            return True
+
+        if command == "safe-runtime-configuration-profile-safety-policy-plan":
+            self.print_safe_runtime_configuration_profile_packet("AURA Safe Runtime Configuration Profile Safety Policy Plan", manager.safety_policy_plan(target))
+            return True
+
+        if command == "safe-runtime-configuration-profile-context":
+            self.print_safe_runtime_configuration_profile_packet("AURA Safe Runtime Configuration Profile Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 101.0 genesis runtime readiness baseline foundation CLI helpers.
     def print_genesis_runtime_readiness_baseline_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4923,6 +4988,9 @@ class AuraCLI:
             return True
 
         if self.handle_genesis_runtime_readiness_baseline_cli_command(raw_args):
+            return True
+
+        if self.handle_safe_runtime_configuration_profile_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

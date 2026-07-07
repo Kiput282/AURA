@@ -521,6 +521,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and readiness-blueprint-only Genesis Runtime Readiness Baseline Foundation for readiness domains, runtime candidate classification, dry-run prerequisites, permission requirement matrix, safety gate alignment, rollback and kill-switch readiness, audit and observability readiness, rollout phase recommendations, and Sprint 101-110 block alignment.",
                 },
+                {
+                    "id": "aura_safe_runtime_configuration_profile_foundation",
+                    "name": "AURA Safe Runtime Configuration Profile Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.102.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and configuration-blueprint-only Safe Runtime Configuration Profile Foundation for profile types, runtime mode policies, service boundaries, permission boundaries, file system boundaries, network boundaries, dry-run requirements, rollout guards, and configuration audit visibility.",
+                },
 ]
 
 
