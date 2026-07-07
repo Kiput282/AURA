@@ -689,6 +689,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and contract-review-only Safe Local Action Contract Review Foundation for local open contracts, controlled create contracts, controlled write preview contracts, action preview packets, permission scope contracts, side effect boundaries, rollback/cancel contracts, dashboard contract payloads, and future action runtime boundaries without executing local actions or enabling runtime execution.",
                 },
+                {
+                    "id": "aura_orion_client_boundary_contract_foundation",
+                    "name": "AURA ORION Client Boundary Contract Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.116.0-genesis",
+                    "category": "orion",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and boundary-contract-only ORION Client Boundary Contract Foundation for ORION client identity, ATLAS/ORION authority, ORION sense permission, ORION local action, emergency stop, dashboard status payload, runtime handshake, data-flow redaction, and future ORION runtime boundaries without starting ORION client runtime or enabling runtime execution.",
+                },
 ]
 
 

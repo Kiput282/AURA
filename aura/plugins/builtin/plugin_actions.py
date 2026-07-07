@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 116.0 ORION client boundary contract foundation actions.
+    orion_client_boundary_contract_actions = [
+        ('orion_client_boundary_contract.status', 'read_project', 'Show ORION Client Boundary Contract status.'),
+        ('orion_client_boundary_contract.orion_client_identity_boundary_plan', 'read_project', 'Prepare ORION client identity boundary plan.'),
+        ('orion_client_boundary_contract.atlas_orion_authority_boundary_plan', 'read_project', 'Prepare ATLAS ORION authority boundary plan.'),
+        ('orion_client_boundary_contract.orion_sense_permission_boundary_plan', 'read_project', 'Prepare ORION sense permission boundary plan.'),
+        ('orion_client_boundary_contract.orion_local_action_boundary_plan', 'read_project', 'Prepare ORION local action boundary plan.'),
+        ('orion_client_boundary_contract.orion_emergency_stop_boundary_plan', 'read_project', 'Prepare ORION emergency stop boundary plan.'),
+        ('orion_client_boundary_contract.orion_dashboard_status_boundary_plan', 'read_project', 'Prepare ORION dashboard status boundary plan.'),
+        ('orion_client_boundary_contract.orion_runtime_handshake_boundary_plan', 'read_project', 'Prepare ORION runtime handshake boundary plan.'),
+        ('orion_client_boundary_contract.orion_data_flow_redaction_boundary_plan', 'read_project', 'Prepare ORION data flow redaction boundary plan.'),
+        ('orion_client_boundary_contract.future_orion_runtime_boundary_plan', 'read_project', 'Prepare future ORION runtime boundary plan.'),
+        ('orion_client_boundary_contract.context', 'read_project', 'Show ORION Client Boundary Contract context.'),
+    ]
+
+    for action_name, permission_action, description in orion_client_boundary_contract_actions:
+        registry.register(PluginAction(name=action_name, plugin="orion_client_boundary_contract", description=description, permission_action=permission_action, status="online", skill="aura_orion_client_boundary_contract_foundation"))
+
     # Sprint 115.0 safe local action contract review foundation actions.
     safe_local_action_contract_review_actions = [
         ('safe_local_action_contract_review.status', 'read_project', 'Show Safe Local Action Contract Review status.'),

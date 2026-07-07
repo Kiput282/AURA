@@ -1,7 +1,7 @@
 # AURA Roadmap 111-120 Plan
 
 Status: ACTIVE
-Version seed: v0.115.0-genesis
+Version seed: v0.116.0-genesis
 Phase: Genesis Runtime Readiness Next Block
 Owner: Kiput
 Motto: Grow Together
@@ -49,7 +49,7 @@ Prepare dashboard view model for runtime readiness, permission state, audit prev
 
 Review safe local action contracts for open/create/write/service-start boundaries without enabling local action runtime.
 
-### Sprint 116 — ORION Client Boundary Contract
+### Sprint 116 — ORION Client Boundary Contract — completed
 
 Prepare ORION client boundary contract for future client-side observation/action with permission and emergency stop requirements.
 
@@ -184,4 +184,33 @@ Safety result:
 - runtime actions dispatched/executed: 0
 - runtime tools/commands executed: 0
 - runtime files/services/ports/network/ORION: 0
+- runtime execution features: 0
+
+## Sprint 116 Completion Summary
+
+Sprint 116 completed the ORION Client Boundary Contract Foundation.
+
+Completed foundation items:
+
+- ORION client identity boundary planning
+- ATLAS/ORION authority boundary planning
+- ORION sense permission boundary planning
+- ORION local action boundary planning
+- ORION emergency stop boundary planning
+- ORION dashboard status boundary planning
+- ORION runtime handshake boundary planning
+- ORION data-flow redaction boundary planning
+- future ORION runtime boundary planning
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime ORION clients started: 0
+- runtime ORION handshakes attempted/completed: 0
+- runtime screen/voice/avatar sessions started: 0
+- runtime local actions/desktop controls executed: 0
+- runtime ORION events/states: 0
+- runtime actions/tools/commands executed: 0
 - runtime execution features: 0

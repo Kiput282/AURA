@@ -100,6 +100,7 @@ from aura.runtime_permission_flow_consolidation.aura_runtime_permission_flow_con
 from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_manager import AuraAuditEventReviewQueueFoundationManager
 from aura.dashboard_runtime_readiness_view_model.aura_dashboard_runtime_readiness_view_model_foundation_manager import AuraDashboardRuntimeReadinessViewModelFoundationManager
 from aura.safe_local_action_contract_review.aura_safe_local_action_contract_review_foundation_manager import AuraSafeLocalActionContractReviewFoundationManager
+from aura.orion_client_boundary_contract.aura_orion_client_boundary_contract_foundation_manager import AuraOrionClientBoundaryContractFoundationManager
 
 
 class AuraShell:
@@ -764,6 +765,17 @@ class AuraShell:
         print("  dashboard-contract-payload-plan <target> Prepare dashboard contract payload plan")
         print("  future-action-runtime-boundary-plan <target> Prepare future action runtime boundary plan")
         print("  safe-local-action-contract-review-context Show Safe Local Action Contract Review context")
+        print("  orion-client-boundary-contract-status Show ORION Client Boundary Contract Foundation status")
+        print("  orion-client-identity-boundary-plan <target> Prepare ORION client identity boundary plan")
+        print("  atlas-orion-authority-boundary-plan <target> Prepare ATLAS ORION authority boundary plan")
+        print("  orion-sense-permission-boundary-plan <target> Prepare ORION sense permission boundary plan")
+        print("  orion-local-action-boundary-plan <target> Prepare ORION local action boundary plan")
+        print("  orion-emergency-stop-boundary-plan <target> Prepare ORION emergency stop boundary plan")
+        print("  orion-dashboard-status-boundary-plan <target> Prepare ORION dashboard status boundary plan")
+        print("  orion-runtime-handshake-boundary-plan <target> Prepare ORION runtime handshake boundary plan")
+        print("  orion-data-flow-redaction-boundary-plan <target> Prepare ORION data flow redaction boundary plan")
+        print("  future-orion-runtime-boundary-plan <target> Prepare future ORION runtime boundary plan")
+        print("  orion-client-boundary-contract-context Show ORION Client Boundary Contract context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4729,6 +4741,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 116.0 ORION client boundary contract shell helpers.
+    def print_orion_client_boundary_contract_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="ORION Client Boundary Contract Safety Boundary"))
+
+    def handle_orion_client_boundary_contract_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA ORION client boundary contract"
+        manager = AuraOrionClientBoundaryContractFoundationManager(project_root=self.project_root)
+
+        if command == "orion-client-boundary-contract-status":
+            self.print_orion_client_boundary_contract_packet("AURA ORION Client Boundary Contract Foundation Status", manager.status())
+            return True
+
+        if command == "orion-client-boundary-contract-context":
+            self.print_orion_client_boundary_contract_packet("AURA ORION Client Boundary Contract Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "orion-client-identity-boundary-plan": ("AURA ORION Client Identity Boundary Plan", manager.orion_client_identity_boundary_plan),
+            "atlas-orion-authority-boundary-plan": ("AURA ATLAS ORION Authority Boundary Plan", manager.atlas_orion_authority_boundary_plan),
+            "orion-sense-permission-boundary-plan": ("AURA ORION Sense Permission Boundary Plan", manager.orion_sense_permission_boundary_plan),
+            "orion-local-action-boundary-plan": ("AURA ORION Local Action Boundary Plan", manager.orion_local_action_boundary_plan),
+            "orion-emergency-stop-boundary-plan": ("AURA ORION Emergency Stop Boundary Plan", manager.orion_emergency_stop_boundary_plan),
+            "orion-dashboard-status-boundary-plan": ("AURA ORION Dashboard Status Boundary Plan", manager.orion_dashboard_status_boundary_plan),
+            "orion-runtime-handshake-boundary-plan": ("AURA ORION Runtime Handshake Boundary Plan", manager.orion_runtime_handshake_boundary_plan),
+            "orion-data-flow-redaction-boundary-plan": ("AURA ORION Data Flow Redaction Boundary Plan", manager.orion_data_flow_redaction_boundary_plan),
+            "future-orion-runtime-boundary-plan": ("AURA Future ORION Runtime Boundary Plan", manager.future_orion_runtime_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_orion_client_boundary_contract_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 115.0 safe local action contract review shell helpers.
     def print_safe_local_action_contract_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6161,6 +6215,9 @@ class AuraShell:
             return
 
         if self.handle_safe_local_action_contract_review_shell_command(normalized):
+            return
+
+        if self.handle_orion_client_boundary_contract_shell_command(normalized):
             return
 
         if normalized == "help":

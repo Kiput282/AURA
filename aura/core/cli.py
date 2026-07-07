@@ -98,6 +98,7 @@ from aura.runtime_permission_flow_consolidation.aura_runtime_permission_flow_con
 from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_manager import AuraAuditEventReviewQueueFoundationManager
 from aura.dashboard_runtime_readiness_view_model.aura_dashboard_runtime_readiness_view_model_foundation_manager import AuraDashboardRuntimeReadinessViewModelFoundationManager
 from aura.safe_local_action_contract_review.aura_safe_local_action_contract_review_foundation_manager import AuraSafeLocalActionContractReviewFoundationManager
+from aura.orion_client_boundary_contract.aura_orion_client_boundary_contract_foundation_manager import AuraOrionClientBoundaryContractFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4172,6 +4173,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 116.0 ORION client boundary contract CLI helpers.
+    def print_orion_client_boundary_contract_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="ORION Client Boundary Contract Safety Boundary"))
+
+    def handle_orion_client_boundary_contract_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA ORION client boundary contract"
+        manager = AuraOrionClientBoundaryContractFoundationManager(project_root=self.project_root)
+
+        if command == "orion-client-boundary-contract-status":
+            self.print_orion_client_boundary_contract_packet("AURA ORION Client Boundary Contract Foundation Status", manager.status())
+            return True
+
+        if command == "orion-client-boundary-contract-context":
+            self.print_orion_client_boundary_contract_packet("AURA ORION Client Boundary Contract Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "orion-client-identity-boundary-plan": ("AURA ORION Client Identity Boundary Plan", manager.orion_client_identity_boundary_plan),
+            "atlas-orion-authority-boundary-plan": ("AURA ATLAS ORION Authority Boundary Plan", manager.atlas_orion_authority_boundary_plan),
+            "orion-sense-permission-boundary-plan": ("AURA ORION Sense Permission Boundary Plan", manager.orion_sense_permission_boundary_plan),
+            "orion-local-action-boundary-plan": ("AURA ORION Local Action Boundary Plan", manager.orion_local_action_boundary_plan),
+            "orion-emergency-stop-boundary-plan": ("AURA ORION Emergency Stop Boundary Plan", manager.orion_emergency_stop_boundary_plan),
+            "orion-dashboard-status-boundary-plan": ("AURA ORION Dashboard Status Boundary Plan", manager.orion_dashboard_status_boundary_plan),
+            "orion-runtime-handshake-boundary-plan": ("AURA ORION Runtime Handshake Boundary Plan", manager.orion_runtime_handshake_boundary_plan),
+            "orion-data-flow-redaction-boundary-plan": ("AURA ORION Data Flow Redaction Boundary Plan", manager.orion_data_flow_redaction_boundary_plan),
+            "future-orion-runtime-boundary-plan": ("AURA Future ORION Runtime Boundary Plan", manager.future_orion_runtime_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_orion_client_boundary_contract_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 115.0 safe local action contract review CLI helpers.
     def print_safe_local_action_contract_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5576,6 +5618,9 @@ class AuraCLI:
             return True
 
         if self.handle_safe_local_action_contract_review_cli_command(raw_args):
+            return True
+
+        if self.handle_orion_client_boundary_contract_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
