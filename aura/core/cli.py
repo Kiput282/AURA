@@ -89,6 +89,7 @@ from aura.local_service_start_proposal_review.aura_local_service_start_proposal_
 from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_consolidation_foundation_manager import AuraDashboardApiContractConsolidationFoundationManager
 from aura.permission_decision_runtime_dry_run.aura_permission_decision_runtime_dry_run_foundation_manager import AuraPermissionDecisionRuntimeDryRunFoundationManager
 from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_preview_packet_foundation_manager import AuraRuntimeActionExecutionPreviewPacketFoundationManager
+from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate_dry_run_foundation_manager import AuraLocalRuntimeExecutionGateDryRunFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4154,6 +4155,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 107.0 local runtime execution gate dry-run CLI helpers.
+    def print_local_runtime_execution_gate_dry_run_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Runtime Execution Gate Dry-Run Safety Boundary"))
+
+    def handle_local_runtime_execution_gate_dry_run_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local runtime execution gate dry-run"
+        manager = AuraLocalRuntimeExecutionGateDryRunFoundationManager(project_root=self.project_root)
+
+        if command == "local-runtime-execution-gate-dry-run-status":
+            self.print_local_runtime_execution_gate_dry_run_packet("AURA Local Runtime Execution Gate Dry-Run Foundation Status", manager.status())
+            return True
+
+        if command == "local-runtime-execution-gate-dry-run-context":
+            self.print_local_runtime_execution_gate_dry_run_packet("AURA Local Runtime Execution Gate Dry-Run Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "execution-gate-candidate-inventory-plan": ("AURA Execution Gate Candidate Inventory Plan", manager.execution_gate_candidate_inventory_plan),
+            "runtime-gate-input-contract-plan": ("AURA Runtime Gate Input Contract Plan", manager.runtime_gate_input_contract_plan),
+            "gate-preflight-evaluation-plan": ("AURA Gate Preflight Evaluation Plan", manager.gate_preflight_evaluation_plan),
+            "safe-runtime-profile-reference-plan": ("AURA Safe Runtime Profile Reference Plan", manager.safe_runtime_profile_reference_plan),
+            "permission-gate-reference-plan": ("AURA Permission Gate Reference Plan", manager.permission_gate_reference_plan),
+            "execution-gate-decision-plan": ("AURA Execution Gate Decision Plan", manager.execution_gate_decision_plan),
+            "block-reason-catalog-plan": ("AURA Block Reason Catalog Plan", manager.block_reason_catalog_plan),
+            "audit-gate-record-plan": ("AURA Audit Gate Record Plan", manager.audit_gate_record_plan),
+            "dashboard-gate-payload-plan": ("AURA Dashboard Gate Payload Plan", manager.dashboard_gate_payload_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_runtime_execution_gate_dry_run_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 106.0 runtime action execution preview packet CLI helpers.
     def print_runtime_action_execution_preview_packet_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5171,6 +5213,9 @@ class AuraCLI:
             return True
 
         if self.handle_runtime_action_execution_preview_packet_cli_command(raw_args):
+            return True
+
+        if self.handle_local_runtime_execution_gate_dry_run_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

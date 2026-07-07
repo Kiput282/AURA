@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 107.0 local runtime execution gate dry-run foundation actions.
+    local_runtime_execution_gate_dry_run_actions = [
+        ('local_runtime_execution_gate_dry_run.status', 'read_project', 'Show Local Runtime Execution Gate Dry-Run status.'),
+        ('local_runtime_execution_gate_dry_run.execution_gate_candidate_inventory_plan', 'read_project', 'Prepare execution gate candidate inventory plan.'),
+        ('local_runtime_execution_gate_dry_run.runtime_gate_input_contract_plan', 'read_project', 'Prepare runtime gate input contract plan.'),
+        ('local_runtime_execution_gate_dry_run.gate_preflight_evaluation_plan', 'read_project', 'Prepare gate preflight evaluation plan.'),
+        ('local_runtime_execution_gate_dry_run.safe_runtime_profile_reference_plan', 'read_project', 'Prepare safe runtime profile reference plan.'),
+        ('local_runtime_execution_gate_dry_run.permission_gate_reference_plan', 'read_project', 'Prepare permission gate reference plan.'),
+        ('local_runtime_execution_gate_dry_run.execution_gate_decision_plan', 'read_project', 'Prepare execution gate decision plan.'),
+        ('local_runtime_execution_gate_dry_run.block_reason_catalog_plan', 'read_project', 'Prepare block reason catalog plan.'),
+        ('local_runtime_execution_gate_dry_run.audit_gate_record_plan', 'read_project', 'Prepare audit gate record plan.'),
+        ('local_runtime_execution_gate_dry_run.dashboard_gate_payload_plan', 'read_project', 'Prepare dashboard gate payload plan.'),
+        ('local_runtime_execution_gate_dry_run.context', 'read_project', 'Show Local Runtime Execution Gate Dry-Run context.'),
+    ]
+
+    for action_name, permission_action, description in local_runtime_execution_gate_dry_run_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_runtime_execution_gate_dry_run", description=description, permission_action=permission_action, status="online", skill="aura_local_runtime_execution_gate_dry_run_foundation"))
+
     # Sprint 106.0 runtime action execution preview packet foundation actions.
     runtime_action_execution_preview_packet_actions = [
         ('runtime_action_execution_preview_packet.status', 'read_project', 'Show Runtime Action Execution Preview Packet status.'),

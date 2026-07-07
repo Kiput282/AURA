@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 107.0 local runtime execution gate dry-run foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_runtime_execution_gate_dry_run_foundation",
+            description="Prepare planner-only, metadata-only, and dry-run-gate-blueprint-only Local Runtime Execution Gate Dry-Run Foundation without opening gates, executing actions, starting services, binding ports, probing networks, changing permissions, reading/writing files, executing tools/commands, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_runtime_execution_gate_dry_run_status",
+                "execution_gate_candidate_inventory_plan",
+                "runtime_gate_input_contract_plan",
+                "gate_preflight_evaluation_plan",
+                "safe_runtime_profile_reference_plan",
+                "permission_gate_reference_plan",
+                "execution_gate_decision_plan",
+                "block_reason_catalog_plan",
+                "audit_gate_record_plan",
+                "dashboard_gate_payload_plan",
+                "local_runtime_execution_gate_dry_run_context",
+            ],
+        )
+    )
+
     # Sprint 106.0 runtime action execution preview packet foundation skill.
     registry.register(
         AuraSkill(

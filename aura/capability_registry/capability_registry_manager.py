@@ -581,6 +581,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and preview-packet-only Runtime Action Execution Preview Packet Foundation for action candidates, execution preflight checklists, action input snapshots, permission decision references, execution step previews, side effect boundaries, rollback previews, audit preview records, and user confirmation packets without dispatching or executing runtime actions.",
                 },
+                {
+                    "id": "aura_local_runtime_execution_gate_dry_run_foundation",
+                    "name": "AURA Local Runtime Execution Gate Dry-Run Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.107.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and dry-run-gate-blueprint-only Local Runtime Execution Gate Dry-Run Foundation for execution gate candidates, runtime gate input contracts, gate preflight evaluations, safe runtime profile references, permission gate references, execution gate decisions, block reasons, audit gate records, and dashboard gate payloads without opening gates or executing runtime actions.",
+                },
 ]
 
 

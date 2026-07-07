@@ -91,6 +91,7 @@ from aura.local_service_start_proposal_review.aura_local_service_start_proposal_
 from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_consolidation_foundation_manager import AuraDashboardApiContractConsolidationFoundationManager
 from aura.permission_decision_runtime_dry_run.aura_permission_decision_runtime_dry_run_foundation_manager import AuraPermissionDecisionRuntimeDryRunFoundationManager
 from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_preview_packet_foundation_manager import AuraRuntimeActionExecutionPreviewPacketFoundationManager
+from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate_dry_run_foundation_manager import AuraLocalRuntimeExecutionGateDryRunFoundationManager
 
 
 class AuraShell:
@@ -656,6 +657,17 @@ class AuraShell:
         print("  audit-preview-record-plan <target> Prepare audit preview record plan")
         print("  user-confirmation-packet-plan <target> Prepare user confirmation packet plan")
         print("  runtime-action-execution-preview-packet-context Show Runtime Action Execution Preview Packet context")
+        print("  local-runtime-execution-gate-dry-run-status Show Local Runtime Execution Gate Dry-Run Foundation status")
+        print("  execution-gate-candidate-inventory-plan <target> Prepare execution gate candidate inventory plan")
+        print("  runtime-gate-input-contract-plan <target> Prepare runtime gate input contract plan")
+        print("  gate-preflight-evaluation-plan <target> Prepare gate preflight evaluation plan")
+        print("  safe-runtime-profile-reference-plan <target> Prepare safe runtime profile reference plan")
+        print("  permission-gate-reference-plan <target> Prepare permission gate reference plan")
+        print("  execution-gate-decision-plan <target> Prepare execution gate decision plan")
+        print("  block-reason-catalog-plan <target> Prepare block reason catalog plan")
+        print("  audit-gate-record-plan <target> Prepare audit gate record plan")
+        print("  dashboard-gate-payload-plan <target> Prepare dashboard gate payload plan")
+        print("  local-runtime-execution-gate-dry-run-context Show Local Runtime Execution Gate Dry-Run context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4612,6 +4624,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 107.0 local runtime execution gate dry-run shell helpers.
+    def print_local_runtime_execution_gate_dry_run_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Runtime Execution Gate Dry-Run Safety Boundary"))
+
+    def handle_local_runtime_execution_gate_dry_run_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA local runtime execution gate dry-run"
+        manager = AuraLocalRuntimeExecutionGateDryRunFoundationManager(project_root=self.project_root)
+
+        if command == "local-runtime-execution-gate-dry-run-status":
+            self.print_local_runtime_execution_gate_dry_run_packet("AURA Local Runtime Execution Gate Dry-Run Foundation Status", manager.status())
+            return True
+
+        if command == "local-runtime-execution-gate-dry-run-context":
+            self.print_local_runtime_execution_gate_dry_run_packet("AURA Local Runtime Execution Gate Dry-Run Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "execution-gate-candidate-inventory-plan": ("AURA Execution Gate Candidate Inventory Plan", manager.execution_gate_candidate_inventory_plan),
+            "runtime-gate-input-contract-plan": ("AURA Runtime Gate Input Contract Plan", manager.runtime_gate_input_contract_plan),
+            "gate-preflight-evaluation-plan": ("AURA Gate Preflight Evaluation Plan", manager.gate_preflight_evaluation_plan),
+            "safe-runtime-profile-reference-plan": ("AURA Safe Runtime Profile Reference Plan", manager.safe_runtime_profile_reference_plan),
+            "permission-gate-reference-plan": ("AURA Permission Gate Reference Plan", manager.permission_gate_reference_plan),
+            "execution-gate-decision-plan": ("AURA Execution Gate Decision Plan", manager.execution_gate_decision_plan),
+            "block-reason-catalog-plan": ("AURA Block Reason Catalog Plan", manager.block_reason_catalog_plan),
+            "audit-gate-record-plan": ("AURA Audit Gate Record Plan", manager.audit_gate_record_plan),
+            "dashboard-gate-payload-plan": ("AURA Dashboard Gate Payload Plan", manager.dashboard_gate_payload_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_runtime_execution_gate_dry_run_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 106.0 runtime action execution preview packet shell helpers.
     def print_runtime_action_execution_preview_packet_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5648,6 +5702,9 @@ class AuraShell:
             return
 
         if self.handle_runtime_action_execution_preview_packet_shell_command(normalized):
+            return
+
+        if self.handle_local_runtime_execution_gate_dry_run_shell_command(normalized):
             return
 
         if normalized == "help":
