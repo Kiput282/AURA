@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 111.0 genesis runtime readiness next block planning foundation actions.
+    genesis_runtime_readiness_next_block_planning_actions = [
+        ('genesis_runtime_readiness_next_block_planning.status', 'read_project', 'Show Genesis Runtime Readiness Next Block Planning status.'),
+        ('genesis_runtime_readiness_next_block_planning.next_block_sprint_candidate_plan', 'read_project', 'Prepare next block sprint candidate plan.'),
+        ('genesis_runtime_readiness_next_block_planning.runtime_readiness_continuity_plan', 'read_project', 'Prepare runtime readiness continuity plan.'),
+        ('genesis_runtime_readiness_next_block_planning.manual_approval_evolution_plan', 'read_project', 'Prepare manual approval evolution plan.'),
+        ('genesis_runtime_readiness_next_block_planning.audit_event_evolution_plan', 'read_project', 'Prepare audit event evolution plan.'),
+        ('genesis_runtime_readiness_next_block_planning.dashboard_contract_evolution_plan', 'read_project', 'Prepare dashboard contract evolution plan.'),
+        ('genesis_runtime_readiness_next_block_planning.orion_boundary_planning_plan', 'read_project', 'Prepare ORION boundary planning plan.'),
+        ('genesis_runtime_readiness_next_block_planning.safe_local_action_boundary_plan', 'read_project', 'Prepare safe local action boundary plan.'),
+        ('genesis_runtime_readiness_next_block_planning.integration_stabilization_plan', 'read_project', 'Prepare integration stabilization plan.'),
+        ('genesis_runtime_readiness_next_block_planning.v1_readiness_mapping_plan', 'read_project', 'Prepare v1 readiness mapping plan.'),
+        ('genesis_runtime_readiness_next_block_planning.context', 'read_project', 'Show Genesis Runtime Readiness Next Block Planning context.'),
+    ]
+
+    for action_name, permission_action, description in genesis_runtime_readiness_next_block_planning_actions:
+        registry.register(PluginAction(name=action_name, plugin="genesis_runtime_readiness_next_block_planning", description=description, permission_action=permission_action, status="online", skill="aura_genesis_runtime_readiness_next_block_planning_foundation"))
+
     # Sprint 110.0 review stabilization 101-110 foundation actions.
     review_stabilization_101_110_actions = [
         ('review_stabilization_101_110.status', 'read_project', 'Show Sprint 101-110 Review Stabilization status.'),

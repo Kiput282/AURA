@@ -629,6 +629,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 101-110 Foundation for sprint completion inventory, runtime readiness foundation audit, safety invariant verification, capability registry delta review, integration surface review, documentation consistency review, checkpoint risk review, deferred runtime boundary review, and next block readiness without enabling runtime execution.",
                 },
+                {
+                    "id": "aura_genesis_runtime_readiness_next_block_planning_foundation",
+                    "name": "AURA Genesis Runtime Readiness Next Block Planning Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.111.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and next-block-planning-only Genesis Runtime Readiness Next Block Planning Foundation for Sprint 111-120 candidates, runtime readiness continuity, manual approval evolution, audit event evolution, dashboard contract evolution, ORION boundary planning, safe local action boundary, integration stabilization, and v1 readiness mapping without enabling runtime execution.",
+                },
 ]
 
 

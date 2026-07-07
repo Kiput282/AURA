@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 111.0 genesis runtime readiness next block planning foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_genesis_runtime_readiness_next_block_planning_foundation",
+            description="Prepare planner-only, metadata-only, and next-block-planning-only Genesis Runtime Readiness Sprint 111-120 planning foundation without enabling runtime execution, dispatching actions, executing tools/commands, mutating files, starting services, binding ports, probing networks, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "genesis_runtime_readiness_next_block_planning_status",
+                "next_block_sprint_candidate_plan",
+                "runtime_readiness_continuity_plan",
+                "manual_approval_evolution_plan",
+                "audit_event_evolution_plan",
+                "dashboard_contract_evolution_plan",
+                "orion_boundary_planning_plan",
+                "safe_local_action_boundary_plan",
+                "integration_stabilization_plan",
+                "v1_readiness_mapping_plan",
+                "genesis_runtime_readiness_next_block_planning_context",
+            ],
+        )
+    )
+
     # Sprint 110.0 review stabilization 101-110 foundation skill.
     registry.register(
         AuraSkill(

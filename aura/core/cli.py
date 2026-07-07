@@ -93,6 +93,7 @@ from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate
 from aura.runtime_audit_event_packet_preview.aura_runtime_audit_event_packet_preview_foundation_manager import AuraRuntimeAuditEventPacketPreviewFoundationManager
 from aura.runtime_safety_freeze_manual_approval_barrier.aura_runtime_safety_freeze_manual_approval_barrier_foundation_manager import AuraRuntimeSafetyFreezeManualApprovalBarrierFoundationManager
 from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundation_manager import AuraReviewStabilization101110FoundationManager
+from aura.genesis_runtime_readiness_next_block_planning.aura_genesis_runtime_readiness_next_block_planning_foundation_manager import AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4162,6 +4163,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 111.0 genesis runtime readiness next block planning CLI helpers.
+    def print_genesis_runtime_readiness_next_block_planning_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Genesis Runtime Readiness Next Block Planning Safety Boundary"))
+
+    def handle_genesis_runtime_readiness_next_block_planning_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA Sprint 111-120 next block planning"
+        manager = AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager(project_root=self.project_root)
+
+        if command == "genesis-runtime-readiness-next-block-planning-status":
+            self.print_genesis_runtime_readiness_next_block_planning_packet("AURA Genesis Runtime Readiness Next Block Planning Foundation Status", manager.status())
+            return True
+
+        if command == "genesis-runtime-readiness-next-block-planning-context":
+            self.print_genesis_runtime_readiness_next_block_planning_packet("AURA Genesis Runtime Readiness Next Block Planning Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "next-block-sprint-candidate-plan": ("AURA Next Block Sprint Candidate Plan", manager.next_block_sprint_candidate_plan),
+            "runtime-readiness-continuity-plan": ("AURA Runtime Readiness Continuity Plan", manager.runtime_readiness_continuity_plan),
+            "manual-approval-evolution-plan": ("AURA Manual Approval Evolution Plan", manager.manual_approval_evolution_plan),
+            "audit-event-evolution-plan": ("AURA Audit Event Evolution Plan", manager.audit_event_evolution_plan),
+            "dashboard-contract-evolution-plan": ("AURA Dashboard Contract Evolution Plan", manager.dashboard_contract_evolution_plan),
+            "orion-boundary-planning-plan": ("AURA ORION Boundary Planning Plan", manager.orion_boundary_planning_plan),
+            "safe-local-action-boundary-plan": ("AURA Safe Local Action Boundary Plan", manager.safe_local_action_boundary_plan),
+            "integration-stabilization-plan": ("AURA Integration Stabilization Plan", manager.integration_stabilization_plan),
+            "v1-readiness-mapping-plan": ("AURA v1 Readiness Mapping Plan", manager.v1_readiness_mapping_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_genesis_runtime_readiness_next_block_planning_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 110.0 review stabilization 101-110 CLI helpers.
     def print_review_stabilization_101_110_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5351,6 +5393,9 @@ class AuraCLI:
             return True
 
         if self.handle_review_stabilization_101_110_cli_command(raw_args):
+            return True
+
+        if self.handle_genesis_runtime_readiness_next_block_planning_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

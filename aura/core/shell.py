@@ -95,6 +95,7 @@ from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate
 from aura.runtime_audit_event_packet_preview.aura_runtime_audit_event_packet_preview_foundation_manager import AuraRuntimeAuditEventPacketPreviewFoundationManager
 from aura.runtime_safety_freeze_manual_approval_barrier.aura_runtime_safety_freeze_manual_approval_barrier_foundation_manager import AuraRuntimeSafetyFreezeManualApprovalBarrierFoundationManager
 from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundation_manager import AuraReviewStabilization101110FoundationManager
+from aura.genesis_runtime_readiness_next_block_planning.aura_genesis_runtime_readiness_next_block_planning_foundation_manager import AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager
 
 
 class AuraShell:
@@ -704,6 +705,17 @@ class AuraShell:
         print("  deferred-runtime-boundary-plan <target> Prepare deferred runtime boundary plan")
         print("  next-block-readiness-plan <target> Prepare next block readiness plan")
         print("  review-stabilization-101-110-context Show Sprint 101-110 Review Stabilization context")
+        print("  genesis-runtime-readiness-next-block-planning-status Show Genesis Runtime Readiness Next Block Planning Foundation status")
+        print("  next-block-sprint-candidate-plan <target> Prepare next block sprint candidate plan")
+        print("  runtime-readiness-continuity-plan <target> Prepare runtime readiness continuity plan")
+        print("  manual-approval-evolution-plan <target> Prepare manual approval evolution plan")
+        print("  audit-event-evolution-plan <target> Prepare audit event evolution plan")
+        print("  dashboard-contract-evolution-plan <target> Prepare dashboard contract evolution plan")
+        print("  orion-boundary-planning-plan <target> Prepare ORION boundary planning plan")
+        print("  safe-local-action-boundary-plan <target> Prepare safe local action boundary plan")
+        print("  integration-stabilization-plan <target> Prepare integration stabilization plan")
+        print("  v1-readiness-mapping-plan <target> Prepare v1 readiness mapping plan")
+        print("  genesis-runtime-readiness-next-block-planning-context Show Genesis Runtime Readiness Next Block Planning context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4664,6 +4676,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 111.0 genesis runtime readiness next block planning shell helpers.
+    def print_genesis_runtime_readiness_next_block_planning_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Genesis Runtime Readiness Next Block Planning Safety Boundary"))
+
+    def handle_genesis_runtime_readiness_next_block_planning_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Sprint 111-120 next block planning"
+        manager = AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager(project_root=self.project_root)
+
+        if command == "genesis-runtime-readiness-next-block-planning-status":
+            self.print_genesis_runtime_readiness_next_block_planning_packet("AURA Genesis Runtime Readiness Next Block Planning Foundation Status", manager.status())
+            return True
+
+        if command == "genesis-runtime-readiness-next-block-planning-context":
+            self.print_genesis_runtime_readiness_next_block_planning_packet("AURA Genesis Runtime Readiness Next Block Planning Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "next-block-sprint-candidate-plan": ("AURA Next Block Sprint Candidate Plan", manager.next_block_sprint_candidate_plan),
+            "runtime-readiness-continuity-plan": ("AURA Runtime Readiness Continuity Plan", manager.runtime_readiness_continuity_plan),
+            "manual-approval-evolution-plan": ("AURA Manual Approval Evolution Plan", manager.manual_approval_evolution_plan),
+            "audit-event-evolution-plan": ("AURA Audit Event Evolution Plan", manager.audit_event_evolution_plan),
+            "dashboard-contract-evolution-plan": ("AURA Dashboard Contract Evolution Plan", manager.dashboard_contract_evolution_plan),
+            "orion-boundary-planning-plan": ("AURA ORION Boundary Planning Plan", manager.orion_boundary_planning_plan),
+            "safe-local-action-boundary-plan": ("AURA Safe Local Action Boundary Plan", manager.safe_local_action_boundary_plan),
+            "integration-stabilization-plan": ("AURA Integration Stabilization Plan", manager.integration_stabilization_plan),
+            "v1-readiness-mapping-plan": ("AURA v1 Readiness Mapping Plan", manager.v1_readiness_mapping_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_genesis_runtime_readiness_next_block_planning_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 110.0 review stabilization 101-110 shell helpers.
     def print_review_stabilization_101_110_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5876,6 +5930,9 @@ class AuraShell:
             return
 
         if self.handle_review_stabilization_101_110_shell_command(normalized):
+            return
+
+        if self.handle_genesis_runtime_readiness_next_block_planning_shell_command(normalized):
             return
 
         if normalized == "help":
