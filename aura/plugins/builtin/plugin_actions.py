@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 118.0 manual approval decision flow review foundation actions.
+    manual_approval_decision_flow_review_actions = [
+        ('manual_approval_decision_flow_review.status', 'read_project', 'Show Manual Approval Decision Flow Review status.'),
+        ('manual_approval_decision_flow_review.approval_request_schema_review_plan', 'read_project', 'Prepare approval request schema review plan.'),
+        ('manual_approval_decision_flow_review.approval_decision_state_review_plan', 'read_project', 'Prepare approval decision state review plan.'),
+        ('manual_approval_decision_flow_review.approval_outcome_catalog_review_plan', 'read_project', 'Prepare approval outcome catalog review plan.'),
+        ('manual_approval_decision_flow_review.approval_denial_cancellation_review_plan', 'read_project', 'Prepare approval denial cancellation review plan.'),
+        ('manual_approval_decision_flow_review.approval_escalation_boundary_review_plan', 'read_project', 'Prepare approval escalation boundary review plan.'),
+        ('manual_approval_decision_flow_review.approval_audit_reference_review_plan', 'read_project', 'Prepare approval audit reference review plan.'),
+        ('manual_approval_decision_flow_review.approval_dashboard_payload_review_plan', 'read_project', 'Prepare approval dashboard payload review plan.'),
+        ('manual_approval_decision_flow_review.approval_runtime_gate_boundary_review_plan', 'read_project', 'Prepare approval runtime gate boundary review plan.'),
+        ('manual_approval_decision_flow_review.future_manual_approval_runtime_boundary_plan', 'read_project', 'Prepare future manual approval runtime boundary plan.'),
+        ('manual_approval_decision_flow_review.context', 'read_project', 'Show Manual Approval Decision Flow Review context.'),
+    ]
+
+    for action_name, permission_action, description in manual_approval_decision_flow_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="manual_approval_decision_flow_review", description=description, permission_action=permission_action, status="online", skill="aura_manual_approval_decision_flow_review_foundation"))
+
     # Sprint 117.0 runtime error rollback preview foundation actions.
     runtime_error_rollback_preview_actions = [
         ('runtime_error_rollback_preview.status', 'read_project', 'Show Runtime Error and Rollback Preview status.'),

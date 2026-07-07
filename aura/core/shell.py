@@ -102,6 +102,7 @@ from aura.dashboard_runtime_readiness_view_model.aura_dashboard_runtime_readines
 from aura.safe_local_action_contract_review.aura_safe_local_action_contract_review_foundation_manager import AuraSafeLocalActionContractReviewFoundationManager
 from aura.orion_client_boundary_contract.aura_orion_client_boundary_contract_foundation_manager import AuraOrionClientBoundaryContractFoundationManager
 from aura.runtime_error_rollback_preview.aura_runtime_error_rollback_preview_foundation_manager import AuraRuntimeErrorRollbackPreviewFoundationManager
+from aura.manual_approval_decision_flow_review.aura_manual_approval_decision_flow_review_foundation_manager import AuraManualApprovalDecisionFlowReviewFoundationManager
 
 
 class AuraShell:
@@ -788,6 +789,17 @@ class AuraShell:
         print("  dashboard-error-rollback-payload-plan <target> Prepare dashboard error rollback payload plan")
         print("  future-runtime-recovery-boundary-plan <target> Prepare future runtime recovery boundary plan")
         print("  runtime-error-rollback-preview-context Show Runtime Error and Rollback Preview context")
+        print("  manual-approval-decision-flow-review-status Show Manual Approval Decision Flow Review Foundation status")
+        print("  approval-request-schema-review-plan <target> Prepare approval request schema review plan")
+        print("  approval-decision-state-review-plan <target> Prepare approval decision state review plan")
+        print("  approval-outcome-catalog-review-plan <target> Prepare approval outcome catalog review plan")
+        print("  approval-denial-cancellation-review-plan <target> Prepare approval denial cancellation review plan")
+        print("  approval-escalation-boundary-review-plan <target> Prepare approval escalation boundary review plan")
+        print("  approval-audit-reference-review-plan <target> Prepare approval audit reference review plan")
+        print("  approval-dashboard-payload-review-plan <target> Prepare approval dashboard payload review plan")
+        print("  approval-runtime-gate-boundary-review-plan <target> Prepare approval runtime gate boundary review plan")
+        print("  future-manual-approval-runtime-boundary-plan <target> Prepare future manual approval runtime boundary plan")
+        print("  manual-approval-decision-flow-review-context Show Manual Approval Decision Flow Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4755,6 +4767,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 118.0 manual approval decision flow review shell helpers.
+    def print_manual_approval_decision_flow_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Manual Approval Decision Flow Review Safety Boundary"))
+
+    def handle_manual_approval_decision_flow_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA manual approval decision flow review"
+        manager = AuraManualApprovalDecisionFlowReviewFoundationManager(project_root=self.project_root)
+
+        if command == "manual-approval-decision-flow-review-status":
+            self.print_manual_approval_decision_flow_review_packet("AURA Manual Approval Decision Flow Review Foundation Status", manager.status())
+            return True
+
+        if command == "manual-approval-decision-flow-review-context":
+            self.print_manual_approval_decision_flow_review_packet("AURA Manual Approval Decision Flow Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "approval-request-schema-review-plan": ("AURA Approval Request Schema Review Plan", manager.approval_request_schema_review_plan),
+            "approval-decision-state-review-plan": ("AURA Approval Decision State Review Plan", manager.approval_decision_state_review_plan),
+            "approval-outcome-catalog-review-plan": ("AURA Approval Outcome Catalog Review Plan", manager.approval_outcome_catalog_review_plan),
+            "approval-denial-cancellation-review-plan": ("AURA Approval Denial Cancellation Review Plan", manager.approval_denial_cancellation_review_plan),
+            "approval-escalation-boundary-review-plan": ("AURA Approval Escalation Boundary Review Plan", manager.approval_escalation_boundary_review_plan),
+            "approval-audit-reference-review-plan": ("AURA Approval Audit Reference Review Plan", manager.approval_audit_reference_review_plan),
+            "approval-dashboard-payload-review-plan": ("AURA Approval Dashboard Payload Review Plan", manager.approval_dashboard_payload_review_plan),
+            "approval-runtime-gate-boundary-review-plan": ("AURA Approval Runtime Gate Boundary Review Plan", manager.approval_runtime_gate_boundary_review_plan),
+            "future-manual-approval-runtime-boundary-plan": ("AURA Future Manual Approval Runtime Boundary Plan", manager.future_manual_approval_runtime_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_manual_approval_decision_flow_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 117.0 runtime error rollback preview shell helpers.
     def print_runtime_error_rollback_preview_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6275,6 +6329,9 @@ class AuraShell:
             return
 
         if self.handle_runtime_error_rollback_preview_shell_command(normalized):
+            return
+
+        if self.handle_manual_approval_decision_flow_review_shell_command(normalized):
             return
 
         if normalized == "help":

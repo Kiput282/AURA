@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 118.0 manual approval decision flow review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_manual_approval_decision_flow_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Manual Approval Decision Flow Review Foundation without creating approval requests at runtime, persisting approval state, applying approval grants/denials/cancellations/escalations, changing permission, writing audit events, dispatching actions, executing tools/commands, mutating files, starting services, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "manual_approval_decision_flow_review_status",
+                "approval_request_schema_review_plan",
+                "approval_decision_state_review_plan",
+                "approval_outcome_catalog_review_plan",
+                "approval_denial_cancellation_review_plan",
+                "approval_escalation_boundary_review_plan",
+                "approval_audit_reference_review_plan",
+                "approval_dashboard_payload_review_plan",
+                "approval_runtime_gate_boundary_review_plan",
+                "future_manual_approval_runtime_boundary_plan",
+                "manual_approval_decision_flow_review_context",
+            ],
+        )
+    )
+
     # Sprint 117.0 runtime error rollback preview foundation skill.
     registry.register(
         AuraSkill(

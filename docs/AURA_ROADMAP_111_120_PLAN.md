@@ -1,7 +1,7 @@
 # AURA Roadmap 111-120 Plan
 
 Status: ACTIVE
-Version seed: v0.117.0-genesis
+Version seed: v0.118.0-genesis
 Phase: Genesis Runtime Readiness Next Block
 Owner: Kiput
 Motto: Grow Together
@@ -57,7 +57,7 @@ Prepare ORION client boundary contract for future client-side observation/action
 
 Prepare runtime error, rollback, cancellation, and recovery preview packets without executing runtime actions.
 
-### Sprint 118 — Manual Approval Decision Flow Review
+### Sprint 118 — Manual Approval Decision Flow Review — completed
 
 Review manual approval decision flow, user confirmation UX, denial reasons, and approval barrier state.
 
@@ -239,6 +239,34 @@ Safety result:
 - runtime error events/states/rollback packets written: 0
 - runtime rollbacks/recoveries/cancellations executed: 0
 - runtime partial execution commits: 0
+- runtime actions/tools/commands executed: 0
+- runtime files/services/ports/network/ORION: 0
+- runtime execution features: 0
+
+## Sprint 118 Completion Summary
+
+Sprint 118 completed the Manual Approval Decision Flow Review Foundation.
+
+Completed foundation items:
+
+- approval request schema review planning
+- approval decision state review planning
+- approval outcome catalog review planning
+- approval denial/cancellation review planning
+- approval escalation boundary review planning
+- approval audit reference review planning
+- approval dashboard payload review planning
+- approval runtime gate boundary review planning
+- future manual approval runtime boundary planning
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime approval requests/states/decisions written: 0
+- runtime approval grants/denials/cancellations/escalations applied: 0
+- runtime permissions/audit/dashboard events: 0
 - runtime actions/tools/commands executed: 0
 - runtime files/services/ports/network/ORION: 0
 - runtime execution features: 0

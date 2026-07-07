@@ -713,6 +713,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and preview-only Runtime Error and Rollback Preview Foundation for runtime error taxonomy, rollback preview packets, failure recovery state models, cancellation boundaries, partial execution guards, permission error reviews, audit error references, dashboard error rollback payloads, and future runtime recovery boundaries without executing rollback, recovery, cancellation, or runtime mutation.",
                 },
+                {
+                    "id": "aura_manual_approval_decision_flow_review_foundation",
+                    "name": "AURA Manual Approval Decision Flow Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.118.0-genesis",
+                    "category": "permission",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Manual Approval Decision Flow Review Foundation for approval request schema, decision state, outcome catalog, denial/cancellation, escalation boundary, audit reference, dashboard payload, runtime gate, and future approval runtime boundaries without creating approval requests, persisting approval state, applying approval decisions, changing permission, or enabling runtime execution.",
+                },
 ]
 
 
