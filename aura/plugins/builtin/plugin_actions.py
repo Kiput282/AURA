@@ -2899,6 +2899,34 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 99.0 pre-runtime security audit foundation actions.
+    pre_runtime_security_audit_actions = [
+        ('pre_runtime_security_audit.status', 'read_project', 'Show AURA Pre-Runtime Security Audit Foundation status.'),
+        ('pre_runtime_security_audit.security_audit_domain_plan', 'read_project', 'Prepare security audit domain planning.'),
+        ('pre_runtime_security_audit.runtime_gate_check_plan', 'read_project', 'Prepare runtime gate check planning.'),
+        ('pre_runtime_security_audit.permission_boundary_check_plan', 'read_project', 'Prepare permission boundary check planning.'),
+        ('pre_runtime_security_audit.file_system_safety_check_plan', 'read_project', 'Prepare file system safety check planning.'),
+        ('pre_runtime_security_audit.network_surface_check_plan', 'read_project', 'Prepare network surface check planning.'),
+        ('pre_runtime_security_audit.action_execution_safety_check_plan', 'read_project', 'Prepare action execution safety check planning.'),
+        ('pre_runtime_security_audit.orion_boundary_check_plan', 'read_project', 'Prepare ORION boundary check planning.'),
+        ('pre_runtime_security_audit.audit_visibility_check_plan', 'read_project', 'Prepare audit visibility check planning.'),
+        ('pre_runtime_security_audit.stabilization_readiness_check_plan', 'read_project', 'Prepare Sprint 100 stabilization readiness check planning.'),
+        ('pre_runtime_security_audit.safety_policy_plan', 'read_project', 'Prepare pre-runtime security audit safety policy planning.'),
+        ('pre_runtime_security_audit.context', 'read_project', 'Show Pre-Runtime Security Audit Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in pre_runtime_security_audit_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="pre_runtime_security_audit",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_pre_runtime_security_audit_foundation",
+            )
+        )
+
     # Sprint 98.0 runtime action queue review layer foundation actions.
     runtime_action_queue_review_layer_actions = [
         ('runtime_action_queue_review_layer.status', 'read_project', 'Show AURA Runtime Action Queue Review Layer Foundation status.'),

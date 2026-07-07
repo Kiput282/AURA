@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 99.0 pre-runtime security audit foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_pre_runtime_security_audit_foundation",
+            description="Prepare planner-only, review-only, and audit-blueprint-only AURA Pre-Runtime Security Audit Foundation for security audit domains, runtime gate checks, permission boundary checks, file system safety checks, network surface checks, action execution safety checks, ORION boundary checks, audit visibility checks, and Sprint 100 stabilization readiness checks without executing security scans, reading files, probing ports, mutating gates, changing permissions, dispatching actions, executing commands, invoking tools, or changing runtime behavior.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "pre_runtime_security_audit_status",
+                "security_audit_domain_plan",
+                "runtime_gate_check_plan",
+                "permission_boundary_check_plan",
+                "file_system_safety_check_plan",
+                "network_surface_check_plan",
+                "action_execution_safety_check_plan",
+                "orion_boundary_check_plan",
+                "audit_visibility_check_plan",
+                "stabilization_readiness_check_plan",
+                "pre_runtime_security_audit_context",
+                "pre_runtime_security_audit_blueprint_metadata",
+            ],
+        )
+    )
+
     # Sprint 98.0 runtime action queue review layer foundation skill.
     registry.register(
         AuraSkill(

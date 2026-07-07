@@ -81,6 +81,7 @@ from aura.chat_session_persistence_planner.aura_chat_session_persistence_planner
 from aura.safe_local_web_runtime_gate.aura_safe_local_web_runtime_gate_foundation_manager import AuraSafeLocalWebRuntimeGateFoundationManager
 from aura.controlled_file_write_approval_draft.aura_controlled_file_write_approval_draft_foundation_manager import AuraControlledFileWriteApprovalDraftFoundationManager
 from aura.runtime_action_queue_review_layer.aura_runtime_action_queue_review_layer_foundation_manager import AuraRuntimeActionQueueReviewLayerFoundationManager
+from aura.pre_runtime_security_audit.aura_pre_runtime_security_audit_foundation_manager import AuraPreRuntimeSecurityAuditFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4138,6 +4139,70 @@ class AuraCLI:
 
 
 
+
+    # Sprint 99.0 pre-runtime security audit foundation CLI helpers.
+    def print_pre_runtime_security_audit_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Pre-Runtime Security Audit Safety Boundary"))
+
+    def handle_pre_runtime_security_audit_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA pre-runtime security audit foundation"
+        manager = AuraPreRuntimeSecurityAuditFoundationManager(project_root=self.project_root)
+
+        if command == "pre-runtime-security-audit-status":
+            self.print_pre_runtime_security_audit_packet("AURA Pre-Runtime Security Audit Foundation Status", manager.status())
+            return True
+
+        if command == "security-audit-domain-plan":
+            self.print_pre_runtime_security_audit_packet("AURA Security Audit Domain Plan", manager.security_audit_domain_plan(target))
+            return True
+
+        if command == "runtime-gate-check-plan":
+            self.print_pre_runtime_security_audit_packet("AURA Runtime Gate Check Plan", manager.runtime_gate_check_plan(target))
+            return True
+
+        if command == "permission-boundary-check-plan":
+            self.print_pre_runtime_security_audit_packet("AURA Permission Boundary Check Plan", manager.permission_boundary_check_plan(target))
+            return True
+
+        if command == "file-system-safety-check-plan":
+            self.print_pre_runtime_security_audit_packet("AURA File System Safety Check Plan", manager.file_system_safety_check_plan(target))
+            return True
+
+        if command == "network-surface-check-plan":
+            self.print_pre_runtime_security_audit_packet("AURA Network Surface Check Plan", manager.network_surface_check_plan(target))
+            return True
+
+        if command == "action-execution-safety-check-plan":
+            self.print_pre_runtime_security_audit_packet("AURA Action Execution Safety Check Plan", manager.action_execution_safety_check_plan(target))
+            return True
+
+        if command == "orion-boundary-check-plan":
+            self.print_pre_runtime_security_audit_packet("AURA ORION Boundary Check Plan", manager.orion_boundary_check_plan(target))
+            return True
+
+        if command == "audit-visibility-check-plan":
+            self.print_pre_runtime_security_audit_packet("AURA Audit Visibility Check Plan", manager.audit_visibility_check_plan(target))
+            return True
+
+        if command == "stabilization-readiness-check-plan":
+            self.print_pre_runtime_security_audit_packet("AURA Stabilization Readiness Check Plan", manager.stabilization_readiness_check_plan(target))
+            return True
+
+        if command == "pre-runtime-security-audit-safety-policy-plan":
+            self.print_pre_runtime_security_audit_packet("AURA Pre-Runtime Security Audit Safety Policy Plan", manager.safety_policy_plan(target))
+            return True
+
+        if command == "pre-runtime-security-audit-context":
+            self.print_pre_runtime_security_audit_packet("AURA Pre-Runtime Security Audit Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 98.0 runtime action queue review layer foundation CLI helpers.
     def print_runtime_action_queue_review_layer_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4719,6 +4784,9 @@ class AuraCLI:
             return True
 
         if self.handle_runtime_action_queue_review_layer_cli_command(raw_args):
+            return True
+
+        if self.handle_pre_runtime_security_audit_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

@@ -485,6 +485,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, review-only, and proposal-only runtime action queue review layer foundation for action queue item blueprints, queue state blueprints, review priority rules, dependency/blocker contracts, permission link requirements, execution preflight check blueprints, approval/denial transition rules, timeout/expiry policies, runtime action audit visibility, and safety policy.",
                 },
+                {
+                    "id": "aura_pre_runtime_security_audit_foundation",
+                    "name": "AURA Pre-Runtime Security Audit Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.99.0-genesis",
+                    "category": "security",
+                    "control_center_visible": True,
+                    "description": "Planner-only, review-only, and audit-blueprint-only pre-runtime security audit foundation for audit domains, runtime gate checks, permission boundary checks, file system safety checks, network surface checks, action execution safety checks, ORION boundary checks, audit visibility checks, and Sprint 100 stabilization readiness checks.",
+                },
 ]
 
 

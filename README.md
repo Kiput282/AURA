@@ -1452,7 +1452,7 @@ Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes
 ## Sprint 93.0 — Control Center Data Aggregator Foundation
 
 Status: completed
-Version: v0.98.0-genesis
+Version: v0.99.0-genesis
 
 Sprint 93 adds the planner-only AURA Control Center Data Aggregator Foundation.
 
@@ -1490,7 +1490,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 94.0 — Permission Request Review Queue Foundation
 
 Status: completed
-Version: v0.98.0-genesis
+Version: v0.99.0-genesis
 
 Sprint 94 adds the planner-only AURA Permission Request Review Queue Foundation.
 
@@ -1535,7 +1535,7 @@ Safety remains foundation-only, proposal-only, metadata-only, planner-only, and 
 ## Sprint 95.0 — Chat Session Persistence Planner Foundation
 
 Status: completed
-Version: v0.98.0-genesis
+Version: v0.99.0-genesis
 
 Sprint 95 adds the planner-only AURA Chat Session Persistence Planner Foundation.
 
@@ -1576,7 +1576,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 96.0 — Safe Local Web Runtime Gate Foundation
 
 Status: completed
-Version: v0.98.0-genesis
+Version: v0.99.0-genesis
 
 Sprint 96 adds the planner-only and pre-runtime AURA Safe Local Web Runtime Gate Foundation.
 
@@ -1625,7 +1625,7 @@ Safety remains foundation-only, pre-runtime, metadata-only, planner-only, and sa
 ## Sprint 97.0 — Controlled File Write Approval Draft Foundation
 
 Status: completed
-Version: v0.98.0-genesis
+Version: v0.99.0-genesis
 
 Sprint 97 adds the planner-only and draft-only AURA Controlled File Write Approval Draft Foundation.
 
@@ -1668,7 +1668,7 @@ Safety remains foundation-only, draft-only, pre-runtime, metadata-only, planner-
 ## Sprint 98.0 — Runtime Action Queue Review Layer Foundation
 
 Status: completed
-Version: v0.98.0-genesis
+Version: v0.99.0-genesis
 
 Sprint 98 adds the planner-only, review-only, and proposal-only AURA Runtime Action Queue Review Layer Foundation.
 
@@ -1706,3 +1706,50 @@ Counts:
 - 0 runtime execution features
 
 Safety remains foundation-only, review-only, proposal-only, metadata-only, planner-only, and safe_idle-first.
+
+## Sprint 99.0 — Pre-Runtime Security Audit Foundation
+
+Status: completed
+Version: v0.99.0-genesis
+
+Sprint 99 adds the planner-only, review-only, and audit-blueprint-only AURA Pre-Runtime Security Audit Foundation.
+
+This sprint prepares security audit blueprints for:
+
+- security audit domains
+- runtime gate checks
+- permission boundary checks
+- file system safety checks
+- network surface checks
+- action execution safety checks
+- ORION boundary checks
+- audit visibility checks
+- Sprint 100 stabilization readiness checks
+
+Counts:
+
+- 11 plan types
+- 8 security audit domains
+- 14 runtime gate checks
+- 10 permission boundary checks
+- 10 file system safety checks
+- 9 network surface checks
+- 12 action execution safety checks
+- 8 ORION boundary checks
+- 9 audit visibility checks
+- 8 stabilization readiness checks
+- 88 total security audit checks/domains
+- 0 runtime security audits executed
+- 0 runtime checks executed
+- 0 runtime gate changes applied
+- 0 runtime permissions granted/denied
+- 0 runtime permission scopes activated
+- 0 runtime network scans executed
+- 0 runtime ports probed
+- 0 runtime files read/written
+- 0 runtime commands/actions/tools executed
+- 0 runtime memory writes
+- 0 runtime git operations
+- 0 runtime execution features
+
+Safety remains foundation-only, review-only, audit-blueprint-only, metadata-only, planner-only, and safe_idle-first.
