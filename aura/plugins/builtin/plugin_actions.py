@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 119.0 v1 runtime readiness cutline review foundation actions.
+    v1_runtime_readiness_cutline_review_actions = [
+        ('v1_runtime_readiness_cutline_review.status', 'read_project', 'Show v1 Runtime Readiness Cutline Review status.'),
+        ('v1_runtime_readiness_cutline_review.v1_allowed_capability_cutline_plan', 'read_project', 'Prepare v1 allowed capability cutline plan.'),
+        ('v1_runtime_readiness_cutline_review.v1_deferred_capability_cutline_plan', 'read_project', 'Prepare v1 deferred capability cutline plan.'),
+        ('v1_runtime_readiness_cutline_review.v1_runtime_gate_cutline_plan', 'read_project', 'Prepare v1 runtime gate cutline plan.'),
+        ('v1_runtime_readiness_cutline_review.v1_permission_audit_cutline_plan', 'read_project', 'Prepare v1 permission audit cutline plan.'),
+        ('v1_runtime_readiness_cutline_review.v1_orion_boundary_cutline_plan', 'read_project', 'Prepare v1 ORION boundary cutline plan.'),
+        ('v1_runtime_readiness_cutline_review.v1_dashboard_visibility_cutline_plan', 'read_project', 'Prepare v1 dashboard visibility cutline plan.'),
+        ('v1_runtime_readiness_cutline_review.v1_release_blocker_cutline_plan', 'read_project', 'Prepare v1 release blocker cutline plan.'),
+        ('v1_runtime_readiness_cutline_review.v1_safe_idle_acceptance_cutline_plan', 'read_project', 'Prepare v1 safe idle acceptance cutline plan.'),
+        ('v1_runtime_readiness_cutline_review.future_v1_runtime_activation_boundary_plan', 'read_project', 'Prepare future v1 runtime activation boundary plan.'),
+        ('v1_runtime_readiness_cutline_review.context', 'read_project', 'Show v1 Runtime Readiness Cutline Review context.'),
+    ]
+
+    for action_name, permission_action, description in v1_runtime_readiness_cutline_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="v1_runtime_readiness_cutline_review", description=description, permission_action=permission_action, status="online", skill="aura_v1_runtime_readiness_cutline_review_foundation"))
+
     # Sprint 118.0 manual approval decision flow review foundation actions.
     manual_approval_decision_flow_review_actions = [
         ('manual_approval_decision_flow_review.status', 'read_project', 'Show Manual Approval Decision Flow Review status.'),

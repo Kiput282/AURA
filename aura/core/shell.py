@@ -103,6 +103,7 @@ from aura.safe_local_action_contract_review.aura_safe_local_action_contract_revi
 from aura.orion_client_boundary_contract.aura_orion_client_boundary_contract_foundation_manager import AuraOrionClientBoundaryContractFoundationManager
 from aura.runtime_error_rollback_preview.aura_runtime_error_rollback_preview_foundation_manager import AuraRuntimeErrorRollbackPreviewFoundationManager
 from aura.manual_approval_decision_flow_review.aura_manual_approval_decision_flow_review_foundation_manager import AuraManualApprovalDecisionFlowReviewFoundationManager
+from aura.v1_runtime_readiness_cutline_review.aura_v1_runtime_readiness_cutline_review_foundation_manager import AuraV1RuntimeReadinessCutlineReviewFoundationManager
 
 
 class AuraShell:
@@ -800,6 +801,17 @@ class AuraShell:
         print("  approval-runtime-gate-boundary-review-plan <target> Prepare approval runtime gate boundary review plan")
         print("  future-manual-approval-runtime-boundary-plan <target> Prepare future manual approval runtime boundary plan")
         print("  manual-approval-decision-flow-review-context Show Manual Approval Decision Flow Review context")
+        print("  v1-runtime-readiness-cutline-review-status Show v1 Runtime Readiness Cutline Review Foundation status")
+        print("  v1-allowed-capability-cutline-plan <target> Prepare v1 allowed capability cutline plan")
+        print("  v1-deferred-capability-cutline-plan <target> Prepare v1 deferred capability cutline plan")
+        print("  v1-runtime-gate-cutline-plan <target> Prepare v1 runtime gate cutline plan")
+        print("  v1-permission-audit-cutline-plan <target> Prepare v1 permission audit cutline plan")
+        print("  v1-orion-boundary-cutline-plan <target> Prepare v1 ORION boundary cutline plan")
+        print("  v1-dashboard-visibility-cutline-plan <target> Prepare v1 dashboard visibility cutline plan")
+        print("  v1-release-blocker-cutline-plan <target> Prepare v1 release blocker cutline plan")
+        print("  v1-safe-idle-acceptance-cutline-plan <target> Prepare v1 safe idle acceptance cutline plan")
+        print("  future-v1-runtime-activation-boundary-plan <target> Prepare future v1 runtime activation boundary plan")
+        print("  v1-runtime-readiness-cutline-review-context Show v1 Runtime Readiness Cutline Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4768,6 +4780,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 119.0 v1 runtime readiness cutline review shell helpers.
+    def print_v1_runtime_readiness_cutline_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="v1 Runtime Readiness Cutline Review Safety Boundary"))
+
+    def handle_v1_runtime_readiness_cutline_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA v1 runtime readiness cutline review"
+        manager = AuraV1RuntimeReadinessCutlineReviewFoundationManager(project_root=self.project_root)
+
+        if command == "v1-runtime-readiness-cutline-review-status":
+            self.print_v1_runtime_readiness_cutline_review_packet("AURA v1 Runtime Readiness Cutline Review Foundation Status", manager.status())
+            return True
+
+        if command == "v1-runtime-readiness-cutline-review-context":
+            self.print_v1_runtime_readiness_cutline_review_packet("AURA v1 Runtime Readiness Cutline Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "v1-allowed-capability-cutline-plan": ("AURA v1 Allowed Capability Cutline Plan", manager.v1_allowed_capability_cutline_plan),
+            "v1-deferred-capability-cutline-plan": ("AURA v1 Deferred Capability Cutline Plan", manager.v1_deferred_capability_cutline_plan),
+            "v1-runtime-gate-cutline-plan": ("AURA v1 Runtime Gate Cutline Plan", manager.v1_runtime_gate_cutline_plan),
+            "v1-permission-audit-cutline-plan": ("AURA v1 Permission Audit Cutline Plan", manager.v1_permission_audit_cutline_plan),
+            "v1-orion-boundary-cutline-plan": ("AURA v1 ORION Boundary Cutline Plan", manager.v1_orion_boundary_cutline_plan),
+            "v1-dashboard-visibility-cutline-plan": ("AURA v1 Dashboard Visibility Cutline Plan", manager.v1_dashboard_visibility_cutline_plan),
+            "v1-release-blocker-cutline-plan": ("AURA v1 Release Blocker Cutline Plan", manager.v1_release_blocker_cutline_plan),
+            "v1-safe-idle-acceptance-cutline-plan": ("AURA v1 Safe Idle Acceptance Cutline Plan", manager.v1_safe_idle_acceptance_cutline_plan),
+            "future-v1-runtime-activation-boundary-plan": ("AURA Future v1 Runtime Activation Boundary Plan", manager.future_v1_runtime_activation_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_v1_runtime_readiness_cutline_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 118.0 manual approval decision flow review shell helpers.
     def print_manual_approval_decision_flow_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6332,6 +6386,9 @@ class AuraShell:
             return
 
         if self.handle_manual_approval_decision_flow_review_shell_command(normalized):
+            return
+
+        if self.handle_v1_runtime_readiness_cutline_review_shell_command(normalized):
             return
 
         if normalized == "help":

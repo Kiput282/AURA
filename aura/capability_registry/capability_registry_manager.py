@@ -725,6 +725,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and review-only Manual Approval Decision Flow Review Foundation for approval request schema, decision state, outcome catalog, denial/cancellation, escalation boundary, audit reference, dashboard payload, runtime gate, and future approval runtime boundaries without creating approval requests, persisting approval state, applying approval decisions, changing permission, or enabling runtime execution.",
                 },
+                {
+                    "id": "aura_v1_runtime_readiness_cutline_review_foundation",
+                    "name": "AURA v1 Runtime Readiness Cutline Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.119.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only v1 Runtime Readiness Cutline Review Foundation for allowed capabilities, deferred capabilities, runtime gates, permission/audit requirements, ORION boundaries, dashboard visibility, release blockers, safe idle acceptance, and future v1 runtime activation boundaries without approving v1 runtime, opening release gates, enabling features, or enabling runtime execution.",
+                },
 ]
 
 

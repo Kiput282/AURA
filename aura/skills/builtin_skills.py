@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 119.0 v1 runtime readiness cutline review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_v1_runtime_readiness_cutline_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only v1 Runtime Readiness Cutline Review Foundation without approving v1 runtime, opening release gates, enabling runtime features, changing permissions, writing audit events, dispatching actions, executing tools/commands, mutating files, starting services, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "v1_runtime_readiness_cutline_review_status",
+                "v1_allowed_capability_cutline_plan",
+                "v1_deferred_capability_cutline_plan",
+                "v1_runtime_gate_cutline_plan",
+                "v1_permission_audit_cutline_plan",
+                "v1_orion_boundary_cutline_plan",
+                "v1_dashboard_visibility_cutline_plan",
+                "v1_release_blocker_cutline_plan",
+                "v1_safe_idle_acceptance_cutline_plan",
+                "future_v1_runtime_activation_boundary_plan",
+                "v1_runtime_readiness_cutline_review_context",
+            ],
+        )
+    )
+
     # Sprint 118.0 manual approval decision flow review foundation skill.
     registry.register(
         AuraSkill(
