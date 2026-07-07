@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.119.0-genesis
+Target: v0.120.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1338,3 +1338,11 @@ Status: completed
 AURA now includes a planner-only, metadata-only, and review-only v1 Runtime Readiness Cutline Review Foundation.
 
 This foundation prepares v1 allowed capabilities, deferred capabilities, runtime gates, permission/audit requirements, ORION boundaries, dashboard visibility, release blockers, safe idle acceptance, and future v1 runtime activation boundaries without approving v1 runtime, opening release gates, enabling features, or enabling runtime execution.
+
+## v0.120.0 Genesis — Review Stabilization 111-120 Foundation
+
+Status: completed
+
+AURA now includes a planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation.
+
+This foundation closes the Sprint 111-120 runtime readiness block by stabilizing completion review, capability registry review, runtime safety zero-state review, integration surface review, documentation/roadmap review, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.

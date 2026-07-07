@@ -737,6 +737,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and review-only v1 Runtime Readiness Cutline Review Foundation for allowed capabilities, deferred capabilities, runtime gates, permission/audit requirements, ORION boundaries, dashboard visibility, release blockers, safe idle acceptance, and future v1 runtime activation boundaries without approving v1 runtime, opening release gates, enabling features, or enabling runtime execution.",
                 },
+                {
+                    "id": "aura_review_stabilization_111_120_foundation",
+                    "name": "AURA Review Stabilization 111-120 Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.120.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
+                },
 ]
 
 

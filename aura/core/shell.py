@@ -104,6 +104,7 @@ from aura.orion_client_boundary_contract.aura_orion_client_boundary_contract_fou
 from aura.runtime_error_rollback_preview.aura_runtime_error_rollback_preview_foundation_manager import AuraRuntimeErrorRollbackPreviewFoundationManager
 from aura.manual_approval_decision_flow_review.aura_manual_approval_decision_flow_review_foundation_manager import AuraManualApprovalDecisionFlowReviewFoundationManager
 from aura.v1_runtime_readiness_cutline_review.aura_v1_runtime_readiness_cutline_review_foundation_manager import AuraV1RuntimeReadinessCutlineReviewFoundationManager
+from aura.review_stabilization_111_120.aura_review_stabilization_111_120_foundation_manager import AuraReviewStabilization111120FoundationManager
 
 
 class AuraShell:
@@ -812,6 +813,17 @@ class AuraShell:
         print("  v1-safe-idle-acceptance-cutline-plan <target> Prepare v1 safe idle acceptance cutline plan")
         print("  future-v1-runtime-activation-boundary-plan <target> Prepare future v1 runtime activation boundary plan")
         print("  v1-runtime-readiness-cutline-review-context Show v1 Runtime Readiness Cutline Review context")
+        print("  review-stabilization-111-120-status Show Review Stabilization 111-120 Foundation status")
+        print("  sprint-111-120-completion-review-plan <target> Prepare Sprint 111-120 completion review plan")
+        print("  capability-registry-stabilization-review-plan <target> Prepare capability registry stabilization review plan")
+        print("  runtime-safety-zero-state-review-plan <target> Prepare runtime safety zero-state review plan")
+        print("  integration-surface-stabilization-review-plan <target> Prepare integration surface stabilization review plan")
+        print("  documentation-roadmap-stabilization-review-plan <target> Prepare documentation roadmap stabilization review plan")
+        print("  v1-runtime-readiness-blocker-review-plan <target> Prepare v1 runtime readiness blocker review plan")
+        print("  release-cutline-consistency-review-plan <target> Prepare release cutline consistency review plan")
+        print("  next-block-121-130-boundary-plan <target> Prepare next block 121-130 boundary plan")
+        print("  checkpoint-120-acceptance-review-plan <target> Prepare checkpoint 120 acceptance review plan")
+        print("  review-stabilization-111-120-context Show Review Stabilization 111-120 context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4781,6 +4793,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 120.0 review stabilization 111-120 shell helpers.
+    def print_review_stabilization_111_120_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Review Stabilization 111-120 Safety Boundary"))
+
+    def handle_review_stabilization_111_120_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA review stabilization 111-120"
+        manager = AuraReviewStabilization111120FoundationManager(project_root=self.project_root)
+
+        if command == "review-stabilization-111-120-status":
+            self.print_review_stabilization_111_120_packet("AURA Review Stabilization 111-120 Foundation Status", manager.status())
+            return True
+
+        if command == "review-stabilization-111-120-context":
+            self.print_review_stabilization_111_120_packet("AURA Review Stabilization 111-120 Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "sprint-111-120-completion-review-plan": ("AURA Sprint 111-120 Completion Review Plan", manager.sprint_111_120_completion_review_plan),
+            "capability-registry-stabilization-review-plan": ("AURA Capability Registry Stabilization Review Plan", manager.capability_registry_stabilization_review_plan),
+            "runtime-safety-zero-state-review-plan": ("AURA Runtime Safety Zero-State Review Plan", manager.runtime_safety_zero_state_review_plan),
+            "integration-surface-stabilization-review-plan": ("AURA Integration Surface Stabilization Review Plan", manager.integration_surface_stabilization_review_plan),
+            "documentation-roadmap-stabilization-review-plan": ("AURA Documentation Roadmap Stabilization Review Plan", manager.documentation_roadmap_stabilization_review_plan),
+            "v1-runtime-readiness-blocker-review-plan": ("AURA v1 Runtime Readiness Blocker Review Plan", manager.v1_runtime_readiness_blocker_review_plan),
+            "release-cutline-consistency-review-plan": ("AURA Release Cutline Consistency Review Plan", manager.release_cutline_consistency_review_plan),
+            "next-block-121-130-boundary-plan": ("AURA Next Block 121-130 Boundary Plan", manager.next_block_121_130_boundary_plan),
+            "checkpoint-120-acceptance-review-plan": ("AURA Checkpoint 120 Acceptance Review Plan", manager.checkpoint_120_acceptance_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_review_stabilization_111_120_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 119.0 v1 runtime readiness cutline review shell helpers.
     def print_v1_runtime_readiness_cutline_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6389,6 +6443,9 @@ class AuraShell:
             return
 
         if self.handle_v1_runtime_readiness_cutline_review_shell_command(normalized):
+            return
+
+        if self.handle_review_stabilization_111_120_shell_command(normalized):
             return
 
         if normalized == "help":

@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 120.0 review stabilization 111-120 foundation actions.
+    review_stabilization_111_120_actions = [
+        ('review_stabilization_111_120.status', 'read_project', 'Show Review Stabilization 111-120 status.'),
+        ('review_stabilization_111_120.sprint_111_120_completion_review_plan', 'read_project', 'Prepare Sprint 111-120 completion review plan.'),
+        ('review_stabilization_111_120.capability_registry_stabilization_review_plan', 'read_project', 'Prepare capability registry stabilization review plan.'),
+        ('review_stabilization_111_120.runtime_safety_zero_state_review_plan', 'read_project', 'Prepare runtime safety zero-state review plan.'),
+        ('review_stabilization_111_120.integration_surface_stabilization_review_plan', 'read_project', 'Prepare integration surface stabilization review plan.'),
+        ('review_stabilization_111_120.documentation_roadmap_stabilization_review_plan', 'read_project', 'Prepare documentation roadmap stabilization review plan.'),
+        ('review_stabilization_111_120.v1_runtime_readiness_blocker_review_plan', 'read_project', 'Prepare v1 runtime readiness blocker review plan.'),
+        ('review_stabilization_111_120.release_cutline_consistency_review_plan', 'read_project', 'Prepare release cutline consistency review plan.'),
+        ('review_stabilization_111_120.next_block_121_130_boundary_plan', 'read_project', 'Prepare next block 121-130 boundary plan.'),
+        ('review_stabilization_111_120.checkpoint_120_acceptance_review_plan', 'read_project', 'Prepare checkpoint 120 acceptance review plan.'),
+        ('review_stabilization_111_120.context', 'read_project', 'Show Review Stabilization 111-120 context.'),
+    ]
+
+    for action_name, permission_action, description in review_stabilization_111_120_actions:
+        registry.register(PluginAction(name=action_name, plugin="review_stabilization_111_120", description=description, permission_action=permission_action, status="online", skill="aura_review_stabilization_111_120_foundation"))
+
     # Sprint 119.0 v1 runtime readiness cutline review foundation actions.
     v1_runtime_readiness_cutline_review_actions = [
         ('v1_runtime_readiness_cutline_review.status', 'read_project', 'Show v1 Runtime Readiness Cutline Review status.'),
