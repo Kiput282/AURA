@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 105.0 permission decision runtime dry-run foundation actions.
+    permission_decision_runtime_dry_run_actions = [
+        ('permission_decision_runtime_dry_run.status', 'read_project', 'Show Permission Decision Runtime Dry-Run status.'),
+        ('permission_decision_runtime_dry_run.permission_decision_candidate_inventory_plan', 'read_project', 'Prepare permission decision candidate inventory plan.'),
+        ('permission_decision_runtime_dry_run.permission_decision_input_contract_plan', 'read_project', 'Prepare permission decision input contract plan.'),
+        ('permission_decision_runtime_dry_run.permission_decision_dry_run_evaluation_plan', 'read_project', 'Prepare permission decision dry-run evaluation plan.'),
+        ('permission_decision_runtime_dry_run.permission_scope_mapping_plan', 'read_project', 'Prepare permission scope mapping plan.'),
+        ('permission_decision_runtime_dry_run.approval_denial_outcome_plan', 'read_project', 'Prepare approval/denial outcome plan.'),
+        ('permission_decision_runtime_dry_run.risk_review_rule_plan', 'read_project', 'Prepare risk review rule plan.'),
+        ('permission_decision_runtime_dry_run.audit_record_blueprint_plan', 'read_project', 'Prepare audit record blueprint plan.'),
+        ('permission_decision_runtime_dry_run.dashboard_review_payload_plan', 'read_project', 'Prepare dashboard review payload plan.'),
+        ('permission_decision_runtime_dry_run.dry_run_safety_boundary_plan', 'read_project', 'Prepare dry-run safety boundary plan.'),
+        ('permission_decision_runtime_dry_run.context', 'read_project', 'Show Permission Decision Runtime Dry-Run context.'),
+    ]
+
+    for action_name, permission_action, description in permission_decision_runtime_dry_run_actions:
+        registry.register(PluginAction(name=action_name, plugin="permission_decision_runtime_dry_run", description=description, permission_action=permission_action, status="online", skill="aura_permission_decision_runtime_dry_run_foundation"))
+
     # Sprint 104.0 dashboard API contract consolidation foundation actions.
     dashboard_api_contract_consolidation_actions = [
         ('dashboard_api_contract_consolidation.status', 'read_project', 'Show Dashboard API Contract Consolidation status.'),

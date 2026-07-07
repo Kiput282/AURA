@@ -89,6 +89,7 @@ from aura.genesis_runtime_readiness_baseline.aura_genesis_runtime_readiness_base
 from aura.safe_runtime_configuration_profile.aura_safe_runtime_configuration_profile_foundation_manager import AuraSafeRuntimeConfigurationProfileFoundationManager
 from aura.local_service_start_proposal_review.aura_local_service_start_proposal_review_foundation_manager import AuraLocalServiceStartProposalReviewFoundationManager
 from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_consolidation_foundation_manager import AuraDashboardApiContractConsolidationFoundationManager
+from aura.permission_decision_runtime_dry_run.aura_permission_decision_runtime_dry_run_foundation_manager import AuraPermissionDecisionRuntimeDryRunFoundationManager
 
 
 class AuraShell:
@@ -632,6 +633,17 @@ class AuraShell:
         print("  frontend-backend-contract-boundary-plan <target> Prepare frontend/backend contract boundary plan")
         print("  contract-validation-checklist-plan <target> Prepare contract validation checklist plan")
         print("  dashboard-api-contract-consolidation-context Show Dashboard API Contract Consolidation context")
+        print("  permission-decision-runtime-dry-run-status Show Permission Decision Runtime Dry-Run Foundation status")
+        print("  permission-decision-candidate-inventory-plan <target> Prepare permission decision candidate inventory plan")
+        print("  permission-decision-input-contract-plan <target> Prepare permission decision input contract plan")
+        print("  permission-decision-dry-run-evaluation-plan <target> Prepare permission decision dry-run evaluation plan")
+        print("  permission-scope-mapping-plan <target> Prepare permission scope mapping plan")
+        print("  approval-denial-outcome-plan <target> Prepare approval/denial outcome plan")
+        print("  permission-risk-review-rule-plan <target> Prepare permission risk review rule plan")
+        print("  permission-audit-record-blueprint-plan <target> Prepare permission audit record blueprint plan")
+        print("  permission-dashboard-review-payload-plan <target> Prepare permission dashboard review payload plan")
+        print("  permission-dry-run-safety-boundary-plan <target> Prepare permission dry-run safety boundary plan")
+        print("  permission-decision-runtime-dry-run-context Show Permission Decision Runtime Dry-Run context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4586,6 +4598,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 105.0 permission decision runtime dry-run shell helpers.
+    def print_permission_decision_runtime_dry_run_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Permission Decision Runtime Dry-Run Safety Boundary"))
+
+    def handle_permission_decision_runtime_dry_run_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA permission decision runtime dry-run"
+        manager = AuraPermissionDecisionRuntimeDryRunFoundationManager(project_root=self.project_root)
+
+        if command == "permission-decision-runtime-dry-run-status":
+            self.print_permission_decision_runtime_dry_run_packet("AURA Permission Decision Runtime Dry-Run Foundation Status", manager.status())
+            return True
+
+        if command == "permission-decision-runtime-dry-run-context":
+            self.print_permission_decision_runtime_dry_run_packet("AURA Permission Decision Runtime Dry-Run Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "permission-decision-candidate-inventory-plan": ("AURA Permission Decision Candidate Inventory Plan", manager.permission_decision_candidate_inventory_plan),
+            "permission-decision-input-contract-plan": ("AURA Permission Decision Input Contract Plan", manager.permission_decision_input_contract_plan),
+            "permission-decision-dry-run-evaluation-plan": ("AURA Permission Decision Dry-Run Evaluation Plan", manager.permission_decision_dry_run_evaluation_plan),
+            "permission-scope-mapping-plan": ("AURA Permission Scope Mapping Plan", manager.permission_scope_mapping_plan),
+            "approval-denial-outcome-plan": ("AURA Approval Denial Outcome Plan", manager.approval_denial_outcome_plan),
+            "permission-risk-review-rule-plan": ("AURA Permission Risk Review Rule Plan", manager.risk_review_rule_plan),
+            "permission-audit-record-blueprint-plan": ("AURA Permission Audit Record Blueprint Plan", manager.audit_record_blueprint_plan),
+            "permission-dashboard-review-payload-plan": ("AURA Permission Dashboard Review Payload Plan", manager.dashboard_review_payload_plan),
+            "permission-dry-run-safety-boundary-plan": ("AURA Permission Dry-Run Safety Boundary Plan", manager.dry_run_safety_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_permission_decision_runtime_dry_run_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 104.0 dashboard API contract consolidation shell helpers.
     def print_dashboard_api_contract_consolidation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5534,6 +5588,9 @@ class AuraShell:
             return
 
         if self.handle_dashboard_api_contract_consolidation_shell_command(normalized):
+            return
+
+        if self.handle_permission_decision_runtime_dry_run_shell_command(normalized):
             return
 
         if normalized == "help":

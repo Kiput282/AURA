@@ -557,6 +557,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and contract-blueprint-only Dashboard API Contract Consolidation Foundation for API contracts, endpoint schemas, request/response contracts, permission mappings, dashboard payloads, error responses, mock API boundaries, frontend/backend boundaries, and contract validation without starting API runtime.",
                 },
+                {
+                    "id": "aura_permission_decision_runtime_dry_run_foundation",
+                    "name": "AURA Permission Decision Runtime Dry-Run Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.105.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and dry-run-blueprint-only Permission Decision Runtime Dry-Run Foundation for permission decision candidates, input contracts, dry-run evaluations, permission scope mappings, approval/denial outcomes, risk review rules, audit record blueprints, dashboard review payloads, and dry-run safety boundaries without changing real permissions.",
+                },
 ]
 
 

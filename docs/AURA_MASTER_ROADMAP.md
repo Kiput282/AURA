@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.104.0-genesis
+Target: v0.105.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1218,3 +1218,11 @@ Status: completed
 AURA now includes a planner-only, metadata-only, and contract-blueprint-only Dashboard API Contract Consolidation Foundation.
 
 This foundation consolidates future dashboard API contracts without starting API/web servers, binding ports, handling requests, probing networks, dispatching actions, executing tools/commands, connecting ORION, writing memory, or performing git runtime.
+
+## v0.105.0 Genesis — Permission Decision Runtime Dry-Run Foundation
+
+Status: completed
+
+AURA now includes a planner-only, metadata-only, and dry-run-blueprint-only Permission Decision Runtime Dry-Run Foundation.
+
+This foundation simulates future permission decisions without changing, granting, denying, activating, or revoking real permissions and without executing runtime actions.

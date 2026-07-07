@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 105.0 permission decision runtime dry-run foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_permission_decision_runtime_dry_run_foundation",
+            description="Prepare planner-only, metadata-only, and dry-run-blueprint-only Permission Decision Runtime Dry-Run Foundation without changing, granting, denying, activating, or executing real permissions, actions, files, services, tools, commands, ORION handshakes, memory writes, or git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "permission_decision_runtime_dry_run_status",
+                "permission_decision_candidate_inventory_plan",
+                "permission_decision_input_contract_plan",
+                "permission_decision_dry_run_evaluation_plan",
+                "permission_scope_mapping_plan",
+                "approval_denial_outcome_plan",
+                "risk_review_rule_plan",
+                "audit_record_blueprint_plan",
+                "dashboard_review_payload_plan",
+                "dry_run_safety_boundary_plan",
+                "permission_decision_runtime_dry_run_context",
+            ],
+        )
+    )
+
     # Sprint 104.0 dashboard API contract consolidation foundation skill.
     registry.register(
         AuraSkill(
