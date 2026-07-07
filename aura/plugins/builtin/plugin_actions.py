@@ -2899,6 +2899,34 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 101.0 genesis runtime readiness baseline foundation actions.
+    genesis_runtime_readiness_baseline_actions = [
+        ('genesis_runtime_readiness_baseline.status', 'read_project', 'Show AURA Genesis Runtime Readiness Baseline Foundation status.'),
+        ('genesis_runtime_readiness_baseline.readiness_domain_inventory_plan', 'read_project', 'Prepare readiness domain inventory planning.'),
+        ('genesis_runtime_readiness_baseline.runtime_candidate_classification_plan', 'read_project', 'Prepare runtime candidate classification planning.'),
+        ('genesis_runtime_readiness_baseline.dry_run_prerequisite_plan', 'read_project', 'Prepare dry-run prerequisite planning.'),
+        ('genesis_runtime_readiness_baseline.permission_requirement_matrix_plan', 'read_project', 'Prepare permission requirement matrix planning.'),
+        ('genesis_runtime_readiness_baseline.safety_gate_alignment_plan', 'read_project', 'Prepare safety gate alignment planning.'),
+        ('genesis_runtime_readiness_baseline.rollback_and_kill_switch_readiness_plan', 'read_project', 'Prepare rollback and kill-switch readiness planning.'),
+        ('genesis_runtime_readiness_baseline.audit_and_observability_readiness_plan', 'read_project', 'Prepare audit and observability readiness planning.'),
+        ('genesis_runtime_readiness_baseline.rollout_phase_recommendation_plan', 'read_project', 'Prepare rollout phase recommendation planning.'),
+        ('genesis_runtime_readiness_baseline.block_101_110_alignment_plan', 'read_project', 'Prepare Sprint 101-110 block alignment planning.'),
+        ('genesis_runtime_readiness_baseline.safety_policy_plan', 'read_project', 'Prepare Genesis Runtime Readiness Baseline safety policy planning.'),
+        ('genesis_runtime_readiness_baseline.context', 'read_project', 'Show Genesis Runtime Readiness Baseline Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in genesis_runtime_readiness_baseline_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="genesis_runtime_readiness_baseline",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_genesis_runtime_readiness_baseline_foundation",
+            )
+        )
+
     # Sprint 100.0 review and stabilization foundation actions.
     sprint_100_review_stabilization_actions = [
         ('sprint_100_review_stabilization.status', 'read_project', 'Show AURA Sprint 100 Review & Stabilization Foundation status.'),

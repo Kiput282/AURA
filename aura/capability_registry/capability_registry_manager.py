@@ -509,6 +509,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, review-only, and checkpoint-blueprint-only Sprint 100 Review & Stabilization Foundation for Sprint 91-100 block review, completed feature inventory, active vs foundation-only boundaries, runtime-zero safety checks, capability registry stabilization, documentation stabilization, unresolved future features, roadmap 101-110 seed planning, and release readiness.",
                 },
+                {
+                    "id": "aura_genesis_runtime_readiness_baseline_foundation",
+                    "name": "AURA Genesis Runtime Readiness Baseline Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.101.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and readiness-blueprint-only Genesis Runtime Readiness Baseline Foundation for readiness domains, runtime candidate classification, dry-run prerequisites, permission requirement matrix, safety gate alignment, rollback and kill-switch readiness, audit and observability readiness, rollout phase recommendations, and Sprint 101-110 block alignment.",
+                },
 ]
 
 

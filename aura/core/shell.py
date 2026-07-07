@@ -85,6 +85,7 @@ from aura.controlled_file_write_approval_draft.aura_controlled_file_write_approv
 from aura.runtime_action_queue_review_layer.aura_runtime_action_queue_review_layer_foundation_manager import AuraRuntimeActionQueueReviewLayerFoundationManager
 from aura.pre_runtime_security_audit.aura_pre_runtime_security_audit_foundation_manager import AuraPreRuntimeSecurityAuditFoundationManager
 from aura.sprint_100_review_stabilization.aura_sprint_100_review_stabilization_foundation_manager import AuraSprint100ReviewStabilizationFoundationManager
+from aura.genesis_runtime_readiness_baseline.aura_genesis_runtime_readiness_baseline_foundation_manager import AuraGenesisRuntimeReadinessBaselineFoundationManager
 
 
 class AuraShell:
@@ -580,6 +581,18 @@ class AuraShell:
         print("  sprint-100-release-readiness-plan <target> Prepare Sprint 100 release readiness plan")
         print("  sprint-100-review-stabilization-safety-policy-plan <target> Prepare Sprint 100 review stabilization safety policy plan")
         print("  sprint-100-review-stabilization-context Show Sprint 100 Review & Stabilization Foundation context")
+        print("  genesis-runtime-readiness-baseline-status Show Genesis Runtime Readiness Baseline Foundation status")
+        print("  readiness-domain-inventory-plan <target> Prepare readiness domain inventory plan")
+        print("  runtime-candidate-classification-plan <target> Prepare runtime candidate classification plan")
+        print("  dry-run-prerequisite-plan <target> Prepare dry-run prerequisite plan")
+        print("  permission-requirement-matrix-plan <target> Prepare permission requirement matrix plan")
+        print("  safety-gate-alignment-plan <target> Prepare safety gate alignment plan")
+        print("  rollback-and-kill-switch-readiness-plan <target> Prepare rollback and kill-switch readiness plan")
+        print("  audit-and-observability-readiness-plan <target> Prepare audit and observability readiness plan")
+        print("  rollout-phase-recommendation-plan <target> Prepare rollout phase recommendation plan")
+        print("  block-101-110-alignment-plan <target> Prepare Sprint 101-110 block alignment plan")
+        print("  genesis-runtime-readiness-baseline-safety-policy-plan <target> Prepare Genesis runtime readiness baseline safety policy plan")
+        print("  genesis-runtime-readiness-baseline-context Show Genesis Runtime Readiness Baseline Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4530,6 +4543,71 @@ class AuraShell:
 
 
 
+
+    # Sprint 101.0 genesis runtime readiness baseline foundation shell helpers.
+    def print_genesis_runtime_readiness_baseline_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Genesis Runtime Readiness Baseline Safety Boundary"))
+
+    def handle_genesis_runtime_readiness_baseline_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Genesis runtime readiness baseline foundation"
+        manager = AuraGenesisRuntimeReadinessBaselineFoundationManager(project_root=self.project_root)
+
+        if command == "genesis-runtime-readiness-baseline-status":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Genesis Runtime Readiness Baseline Foundation Status", manager.status())
+            return True
+
+        if command == "readiness-domain-inventory-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Readiness Domain Inventory Plan", manager.readiness_domain_inventory_plan(target))
+            return True
+
+        if command == "runtime-candidate-classification-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Runtime Candidate Classification Plan", manager.runtime_candidate_classification_plan(target))
+            return True
+
+        if command == "dry-run-prerequisite-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Dry-Run Prerequisite Plan", manager.dry_run_prerequisite_plan(target))
+            return True
+
+        if command == "permission-requirement-matrix-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Permission Requirement Matrix Plan", manager.permission_requirement_matrix_plan(target))
+            return True
+
+        if command == "safety-gate-alignment-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Safety Gate Alignment Plan", manager.safety_gate_alignment_plan(target))
+            return True
+
+        if command == "rollback-and-kill-switch-readiness-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Rollback and Kill-Switch Readiness Plan", manager.rollback_and_kill_switch_readiness_plan(target))
+            return True
+
+        if command == "audit-and-observability-readiness-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Audit and Observability Readiness Plan", manager.audit_and_observability_readiness_plan(target))
+            return True
+
+        if command == "rollout-phase-recommendation-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Rollout Phase Recommendation Plan", manager.rollout_phase_recommendation_plan(target))
+            return True
+
+        if command == "block-101-110-alignment-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Block 101-110 Alignment Plan", manager.block_101_110_alignment_plan(target))
+            return True
+
+        if command == "genesis-runtime-readiness-baseline-safety-policy-plan":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Genesis Runtime Readiness Baseline Safety Policy Plan", manager.safety_policy_plan(target))
+            return True
+
+        if command == "genesis-runtime-readiness-baseline-context":
+            self.print_genesis_runtime_readiness_baseline_packet("AURA Genesis Runtime Readiness Baseline Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 100.0 review and stabilization foundation shell helpers.
     def print_sprint_100_review_stabilization_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5256,6 +5334,9 @@ class AuraShell:
             return
 
         if self.handle_sprint_100_review_stabilization_shell_command(normalized):
+            return
+
+        if self.handle_genesis_runtime_readiness_baseline_shell_command(normalized):
             return
 
         if normalized == "help":
