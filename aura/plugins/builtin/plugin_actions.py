@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 110.0 review stabilization 101-110 foundation actions.
+    review_stabilization_101_110_actions = [
+        ('review_stabilization_101_110.status', 'read_project', 'Show Sprint 101-110 Review Stabilization status.'),
+        ('review_stabilization_101_110.sprint_completion_inventory_plan', 'read_project', 'Prepare sprint completion inventory plan.'),
+        ('review_stabilization_101_110.runtime_readiness_foundation_audit_plan', 'read_project', 'Prepare runtime readiness foundation audit plan.'),
+        ('review_stabilization_101_110.safety_invariant_verification_plan', 'read_project', 'Prepare safety invariant verification plan.'),
+        ('review_stabilization_101_110.capability_registry_delta_review_plan', 'read_project', 'Prepare capability registry delta review plan.'),
+        ('review_stabilization_101_110.integration_surface_review_plan', 'read_project', 'Prepare integration surface review plan.'),
+        ('review_stabilization_101_110.documentation_roadmap_consistency_plan', 'read_project', 'Prepare documentation roadmap consistency plan.'),
+        ('review_stabilization_101_110.checkpoint_risk_review_plan', 'read_project', 'Prepare checkpoint risk review plan.'),
+        ('review_stabilization_101_110.deferred_runtime_boundary_plan', 'read_project', 'Prepare deferred runtime boundary plan.'),
+        ('review_stabilization_101_110.next_block_readiness_plan', 'read_project', 'Prepare next block readiness plan.'),
+        ('review_stabilization_101_110.context', 'read_project', 'Show Sprint 101-110 Review Stabilization context.'),
+    ]
+
+    for action_name, permission_action, description in review_stabilization_101_110_actions:
+        registry.register(PluginAction(name=action_name, plugin="review_stabilization_101_110", description=description, permission_action=permission_action, status="online", skill="aura_review_stabilization_101_110_foundation"))
+
     # Sprint 109.0 runtime safety freeze manual approval barrier foundation actions.
     runtime_safety_freeze_manual_approval_barrier_actions = [
         ('runtime_safety_freeze_manual_approval_barrier.status', 'read_project', 'Show Runtime Safety Freeze Manual Approval Barrier status.'),

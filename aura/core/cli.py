@@ -92,6 +92,7 @@ from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_
 from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate_dry_run_foundation_manager import AuraLocalRuntimeExecutionGateDryRunFoundationManager
 from aura.runtime_audit_event_packet_preview.aura_runtime_audit_event_packet_preview_foundation_manager import AuraRuntimeAuditEventPacketPreviewFoundationManager
 from aura.runtime_safety_freeze_manual_approval_barrier.aura_runtime_safety_freeze_manual_approval_barrier_foundation_manager import AuraRuntimeSafetyFreezeManualApprovalBarrierFoundationManager
+from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundation_manager import AuraReviewStabilization101110FoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4160,6 +4161,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 110.0 review stabilization 101-110 CLI helpers.
+    def print_review_stabilization_101_110_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Review Stabilization 101-110 Safety Boundary"))
+
+    def handle_review_stabilization_101_110_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA Sprint 101-110 review stabilization"
+        manager = AuraReviewStabilization101110FoundationManager(project_root=self.project_root)
+
+        if command == "review-stabilization-101-110-status":
+            self.print_review_stabilization_101_110_packet("AURA Review Stabilization 101-110 Foundation Status", manager.status())
+            return True
+
+        if command == "review-stabilization-101-110-context":
+            self.print_review_stabilization_101_110_packet("AURA Review Stabilization 101-110 Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "sprint-completion-inventory-plan": ("AURA Sprint Completion Inventory Plan", manager.sprint_completion_inventory_plan),
+            "runtime-readiness-foundation-audit-plan": ("AURA Runtime Readiness Foundation Audit Plan", manager.runtime_readiness_foundation_audit_plan),
+            "safety-invariant-verification-plan": ("AURA Safety Invariant Verification Plan", manager.safety_invariant_verification_plan),
+            "capability-registry-delta-review-plan": ("AURA Capability Registry Delta Review Plan", manager.capability_registry_delta_review_plan),
+            "integration-surface-review-plan": ("AURA Integration Surface Review Plan", manager.integration_surface_review_plan),
+            "documentation-roadmap-consistency-plan": ("AURA Documentation Roadmap Consistency Plan", manager.documentation_roadmap_consistency_plan),
+            "checkpoint-risk-review-plan": ("AURA Checkpoint Risk Review Plan", manager.checkpoint_risk_review_plan),
+            "deferred-runtime-boundary-plan": ("AURA Deferred Runtime Boundary Plan", manager.deferred_runtime_boundary_plan),
+            "next-block-readiness-plan": ("AURA Next Block Readiness Plan", manager.next_block_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_review_stabilization_101_110_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 109.0 runtime safety freeze manual approval barrier CLI helpers.
     def print_runtime_safety_freeze_manual_approval_barrier_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5306,6 +5348,9 @@ class AuraCLI:
             return True
 
         if self.handle_runtime_safety_freeze_manual_approval_barrier_cli_command(raw_args):
+            return True
+
+        if self.handle_review_stabilization_101_110_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

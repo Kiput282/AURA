@@ -617,6 +617,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and barrier-blueprint-only Runtime Safety Freeze Manual Approval Barrier Foundation for safety freeze candidates, manual approval barrier inputs, freeze condition checks, approval rules, blocked runtime catalog, user confirmation barriers, emergency stop requirements, audit freeze packet previews, and dashboard barrier payloads without activating freeze, granting approvals, passing barriers, or executing runtime actions.",
                 },
+                {
+                    "id": "aura_review_stabilization_101_110_foundation",
+                    "name": "AURA Review Stabilization 101-110 Foundation",
+                    "state": "online",
+                    "runtime_level": "review_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.110.0-genesis",
+                    "category": "stabilization",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 101-110 Foundation for sprint completion inventory, runtime readiness foundation audit, safety invariant verification, capability registry delta review, integration surface review, documentation consistency review, checkpoint risk review, deferred runtime boundary review, and next block readiness without enabling runtime execution.",
+                },
 ]
 
 

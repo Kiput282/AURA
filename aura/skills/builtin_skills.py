@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 110.0 review stabilization 101-110 foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_review_stabilization_101_110_foundation",
+            description="Prepare planner-only, metadata-only, and checkpoint-review-only Sprint 101-110 review stabilization foundation without executing runtime actions, changing permissions, mutating files, starting services, binding ports, probing networks, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "review_stabilization_101_110_status",
+                "sprint_completion_inventory_plan",
+                "runtime_readiness_foundation_audit_plan",
+                "safety_invariant_verification_plan",
+                "capability_registry_delta_review_plan",
+                "integration_surface_review_plan",
+                "documentation_roadmap_consistency_plan",
+                "checkpoint_risk_review_plan",
+                "deferred_runtime_boundary_plan",
+                "next_block_readiness_plan",
+                "review_stabilization_101_110_context",
+            ],
+        )
+    )
+
     # Sprint 109.0 runtime safety freeze manual approval barrier foundation skill.
     registry.register(
         AuraSkill(

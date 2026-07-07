@@ -94,6 +94,7 @@ from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_
 from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate_dry_run_foundation_manager import AuraLocalRuntimeExecutionGateDryRunFoundationManager
 from aura.runtime_audit_event_packet_preview.aura_runtime_audit_event_packet_preview_foundation_manager import AuraRuntimeAuditEventPacketPreviewFoundationManager
 from aura.runtime_safety_freeze_manual_approval_barrier.aura_runtime_safety_freeze_manual_approval_barrier_foundation_manager import AuraRuntimeSafetyFreezeManualApprovalBarrierFoundationManager
+from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundation_manager import AuraReviewStabilization101110FoundationManager
 
 
 class AuraShell:
@@ -692,6 +693,17 @@ class AuraShell:
         print("  audit-freeze-packet-preview-plan <target> Prepare audit freeze packet preview plan")
         print("  dashboard-barrier-payload-plan <target> Prepare dashboard barrier payload plan")
         print("  runtime-safety-freeze-manual-approval-barrier-context Show Runtime Safety Freeze Manual Approval Barrier context")
+        print("  review-stabilization-101-110-status Show Sprint 101-110 Review Stabilization Foundation status")
+        print("  sprint-completion-inventory-plan <target> Prepare sprint completion inventory plan")
+        print("  runtime-readiness-foundation-audit-plan <target> Prepare runtime readiness foundation audit plan")
+        print("  safety-invariant-verification-plan <target> Prepare safety invariant verification plan")
+        print("  capability-registry-delta-review-plan <target> Prepare capability registry delta review plan")
+        print("  integration-surface-review-plan <target> Prepare integration surface review plan")
+        print("  documentation-roadmap-consistency-plan <target> Prepare documentation roadmap consistency plan")
+        print("  checkpoint-risk-review-plan <target> Prepare checkpoint risk review plan")
+        print("  deferred-runtime-boundary-plan <target> Prepare deferred runtime boundary plan")
+        print("  next-block-readiness-plan <target> Prepare next block readiness plan")
+        print("  review-stabilization-101-110-context Show Sprint 101-110 Review Stabilization context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4651,6 +4663,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 110.0 review stabilization 101-110 shell helpers.
+    def print_review_stabilization_101_110_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Review Stabilization 101-110 Safety Boundary"))
+
+    def handle_review_stabilization_101_110_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Sprint 101-110 review stabilization"
+        manager = AuraReviewStabilization101110FoundationManager(project_root=self.project_root)
+
+        if command == "review-stabilization-101-110-status":
+            self.print_review_stabilization_101_110_packet("AURA Review Stabilization 101-110 Foundation Status", manager.status())
+            return True
+
+        if command == "review-stabilization-101-110-context":
+            self.print_review_stabilization_101_110_packet("AURA Review Stabilization 101-110 Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "sprint-completion-inventory-plan": ("AURA Sprint Completion Inventory Plan", manager.sprint_completion_inventory_plan),
+            "runtime-readiness-foundation-audit-plan": ("AURA Runtime Readiness Foundation Audit Plan", manager.runtime_readiness_foundation_audit_plan),
+            "safety-invariant-verification-plan": ("AURA Safety Invariant Verification Plan", manager.safety_invariant_verification_plan),
+            "capability-registry-delta-review-plan": ("AURA Capability Registry Delta Review Plan", manager.capability_registry_delta_review_plan),
+            "integration-surface-review-plan": ("AURA Integration Surface Review Plan", manager.integration_surface_review_plan),
+            "documentation-roadmap-consistency-plan": ("AURA Documentation Roadmap Consistency Plan", manager.documentation_roadmap_consistency_plan),
+            "checkpoint-risk-review-plan": ("AURA Checkpoint Risk Review Plan", manager.checkpoint_risk_review_plan),
+            "deferred-runtime-boundary-plan": ("AURA Deferred Runtime Boundary Plan", manager.deferred_runtime_boundary_plan),
+            "next-block-readiness-plan": ("AURA Next Block Readiness Plan", manager.next_block_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_review_stabilization_101_110_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 109.0 runtime safety freeze manual approval barrier shell helpers.
     def print_runtime_safety_freeze_manual_approval_barrier_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5819,6 +5873,9 @@ class AuraShell:
             return
 
         if self.handle_runtime_safety_freeze_manual_approval_barrier_shell_command(normalized):
+            return
+
+        if self.handle_review_stabilization_101_110_shell_command(normalized):
             return
 
         if normalized == "help":
