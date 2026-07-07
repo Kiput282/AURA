@@ -1452,7 +1452,7 @@ Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes
 ## Sprint 93.0 — Control Center Data Aggregator Foundation
 
 Status: completed
-Version: v0.94.0-genesis
+Version: v0.95.0-genesis
 
 Sprint 93 adds the planner-only AURA Control Center Data Aggregator Foundation.
 
@@ -1490,7 +1490,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 94.0 — Permission Request Review Queue Foundation
 
 Status: completed
-Version: v0.94.0-genesis
+Version: v0.95.0-genesis
 
 Sprint 94 adds the planner-only AURA Permission Request Review Queue Foundation.
 
@@ -1531,3 +1531,44 @@ Counts:
 - 0 runtime execution features
 
 Safety remains foundation-only, proposal-only, metadata-only, planner-only, and safe_idle-first.
+
+## Sprint 95.0 — Chat Session Persistence Planner Foundation
+
+Status: completed
+Version: v0.95.0-genesis
+
+Sprint 95 adds the planner-only AURA Chat Session Persistence Planner Foundation.
+
+This sprint prepares persistence blueprints for:
+
+- session records
+- storage boundaries
+- retention policies
+- privacy/redaction rules
+- session lifecycle states
+- recovery indexes
+- export/migration notes
+- audit visibility fields
+
+Counts:
+
+- 11 plan types
+- 10 session record blueprints
+- 8 storage boundary blueprints
+- 8 retention policy blueprints
+- 8 privacy redaction rules
+- 8 session lifecycle blueprints
+- 7 recovery index blueprints
+- 6 export/migration notes
+- 8 audit visibility fields
+- 63 total persistence blueprints/fields
+- 0 runtime sessions created/resumed/recovered
+- 0 runtime session records/messages/turns written
+- 0 runtime database connections opened
+- 0 runtime database migrations run
+- 0 runtime files written/read
+- 0 runtime exports/archives/deletes
+- 0 runtime memory writes
+- 0 runtime execution features
+
+Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first.

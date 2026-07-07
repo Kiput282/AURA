@@ -2899,6 +2899,33 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 95.0 chat session persistence planner foundation actions.
+    chat_session_persistence_planner_actions = [
+        ('chat_session_persistence_planner.status', 'read_project', 'Show AURA Chat Session Persistence Planner Foundation status.'),
+        ('chat_session_persistence_planner.session_record_blueprint_plan', 'read_project', 'Prepare session record blueprint planning.'),
+        ('chat_session_persistence_planner.storage_boundary_blueprint_plan', 'read_project', 'Prepare storage boundary blueprint planning.'),
+        ('chat_session_persistence_planner.retention_policy_blueprint_plan', 'read_project', 'Prepare retention policy blueprint planning.'),
+        ('chat_session_persistence_planner.privacy_redaction_rule_plan', 'read_project', 'Prepare privacy redaction rule planning.'),
+        ('chat_session_persistence_planner.session_lifecycle_blueprint_plan', 'read_project', 'Prepare session lifecycle blueprint planning.'),
+        ('chat_session_persistence_planner.recovery_index_blueprint_plan', 'read_project', 'Prepare recovery index blueprint planning.'),
+        ('chat_session_persistence_planner.export_migration_note_plan', 'read_project', 'Prepare export and migration note planning.'),
+        ('chat_session_persistence_planner.safety_policy_plan', 'read_project', 'Prepare chat persistence safety policy planning.'),
+        ('chat_session_persistence_planner.status_packet', 'read_project', 'Prepare chat session persistence status packet.'),
+        ('chat_session_persistence_planner.context', 'read_project', 'Show Chat Session Persistence Planner Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in chat_session_persistence_planner_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="chat_session_persistence_planner",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_chat_session_persistence_planner_foundation",
+            )
+        )
+
     # Sprint 94.0 permission request review queue foundation actions.
     permission_request_review_queue_actions = [
         ('permission_request_review_queue.status', 'read_project', 'Show AURA Permission Request Review Queue Foundation status.'),

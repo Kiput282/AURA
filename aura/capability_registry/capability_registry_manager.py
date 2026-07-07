@@ -437,6 +437,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only permission request review queue foundation for permission request blueprints, queue state blueprints, review packet fields, scope boundaries, decision proposal contracts, reviewer checklist items, audit visibility fields, and permission request safety policy.",
                 },
+                {
+                    "id": "aura_chat_session_persistence_planner_foundation",
+                    "name": "AURA Chat Session Persistence Planner Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.95.0-genesis",
+                    "category": "chat",
+                    "control_center_visible": True,
+                    "description": "Planner-only chat session persistence planner foundation for session record blueprints, storage boundaries, retention policy blueprints, privacy redaction rules, session lifecycle states, recovery index blueprints, export/migration notes, audit visibility fields, and persistence safety policy.",
+                },
 ]
 
 

@@ -64,7 +64,7 @@ Purpose:
 
 Runtime execution: 0
 
-### Sprint 95 — Chat Session Persistence Planner
+### Sprint 95 — Chat Session Persistence Planner — completed
 
 Purpose:
 
@@ -202,7 +202,7 @@ Core rule: AURA Local Console Static Prototype may prepare static blueprints, bu
 ## Sprint 92 Update — AURA Local Console API Schema Foundation
 
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
-Target version: v0.94.0-genesis
+Target version: v0.95.0-genesis
 
 Sprint 92 adds a planner-only AURA Local Console API Schema Foundation for API schema catalog planning, endpoint blueprint planning, response envelope planning, request schema blueprint planning, validation rule planning, permission boundary schema planning, error contract planning, schema versioning planning, and API schema safety policy.
 
@@ -336,4 +336,39 @@ Safety result:
 - runtime permission scopes activated: 0
 - runtime permission scopes revoked: 0
 - runtime actions triggered: 0
+- runtime execution features: 0
+
+## Sprint 95 Completion Summary
+
+Sprint 95 completed the Chat Session Persistence Planner Foundation.
+
+Completed foundation items:
+
+- chat session persistence planner module
+- planner-only persistence manager
+- session record blueprint plan
+- storage boundary blueprint plan
+- retention policy blueprint plan
+- privacy redaction rule plan
+- session lifecycle blueprint plan
+- recovery index blueprint plan
+- export/migration note plan
+- chat persistence safety policy plan
+- skill registry integration
+- plugin action registry integration
+- system status integration
+- CLI integration
+- shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime sessions created/resumed/recovered: 0
+- runtime session records written: 0
+- runtime messages persisted: 0
+- runtime turns persisted: 0
+- runtime database connections opened: 0
+- runtime files written/read: 0
+- runtime memory writes: 0
 - runtime execution features: 0

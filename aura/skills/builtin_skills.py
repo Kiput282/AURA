@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 95.0 chat session persistence planner foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_chat_session_persistence_planner_foundation",
+            description="Prepare planner-only AURA Chat Session Persistence Planner Foundation for session record blueprint planning, storage boundary blueprint planning, retention policy blueprint planning, privacy redaction rule planning, session lifecycle blueprint planning, recovery index blueprint planning, export/migration note planning, audit visibility field planning, and chat persistence safety policy without creating chat runtime, session runtime, database runtime, file write runtime, memory write runtime, recovery runtime, exports, archives, deletes, or runtime persistence.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "chat_session_persistence_planner_status",
+                "session_record_blueprint_plan",
+                "storage_boundary_blueprint_plan",
+                "retention_policy_blueprint_plan",
+                "privacy_redaction_rule_plan",
+                "session_lifecycle_blueprint_plan",
+                "recovery_index_blueprint_plan",
+                "export_migration_note_plan",
+                "chat_persistence_safety_policy_plan",
+                "chat_session_persistence_context",
+                "chat_session_persistence_status_packet",
+                "chat_session_persistence_blueprint_metadata",
+            ],
+        )
+    )
+
     # Sprint 94.0 permission request review queue foundation skill.
     registry.register(
         AuraSkill(

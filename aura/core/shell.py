@@ -79,6 +79,7 @@ from aura.local_console_static_prototype.aura_local_console_static_prototype_fou
 from aura.local_console_api_schema.aura_local_console_api_schema_foundation_manager import AuraLocalConsoleAPISchemaFoundationManager
 from aura.control_center_data_aggregator.aura_control_center_data_aggregator_foundation_manager import AuraControlCenterDataAggregatorFoundationManager
 from aura.permission_request_review_queue.aura_permission_request_review_queue_foundation_manager import AuraPermissionRequestReviewQueueFoundationManager
+from aura.chat_session_persistence_planner.aura_chat_session_persistence_planner_foundation_manager import AuraChatSessionPersistencePlannerFoundationManager
 
 
 class AuraShell:
@@ -504,6 +505,17 @@ class AuraShell:
         print("  permission-request-safety-policy-plan <target> Prepare permission request safety policy plan")
         print("  permission-request-review-queue-status-packet Show Permission Request Review Queue status packet")
         print("  permission-request-review-queue-context Show Permission Request Review Queue Foundation context")
+        print("  chat-session-persistence-planner-status Show Chat Session Persistence Planner Foundation status")
+        print("  session-record-blueprint-plan <target> Prepare session record blueprint plan")
+        print("  storage-boundary-blueprint-plan <target> Prepare storage boundary blueprint plan")
+        print("  retention-policy-blueprint-plan <target> Prepare retention policy blueprint plan")
+        print("  privacy-redaction-rule-plan <target> Prepare privacy redaction rule plan")
+        print("  session-lifecycle-blueprint-plan <target> Prepare session lifecycle blueprint plan")
+        print("  recovery-index-blueprint-plan <target> Prepare recovery index blueprint plan")
+        print("  export-migration-note-plan <target> Prepare export and migration note plan")
+        print("  chat-persistence-safety-policy-plan <target> Prepare chat persistence safety policy plan")
+        print("  chat-session-persistence-status-packet Show Chat Session Persistence status packet")
+        print("  chat-session-persistence-context Show Chat Session Persistence Planner Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4448,6 +4460,67 @@ class AuraShell:
 
 
 
+
+    # Sprint 95.0 chat session persistence planner foundation shell helpers.
+    def print_chat_session_persistence_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Chat Session Persistence Safety Boundary"))
+
+    def handle_chat_session_persistence_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA chat session persistence planner foundation"
+        manager = AuraChatSessionPersistencePlannerFoundationManager(project_root=self.project_root)
+
+        if command == "chat-session-persistence-planner-status":
+            self.print_chat_session_persistence_packet("AURA Chat Session Persistence Planner Foundation Status", manager.status())
+            return True
+
+        if command == "session-record-blueprint-plan":
+            self.print_chat_session_persistence_packet("AURA Session Record Blueprint Plan", manager.session_record_blueprint_plan(target))
+            return True
+
+        if command == "storage-boundary-blueprint-plan":
+            self.print_chat_session_persistence_packet("AURA Storage Boundary Blueprint Plan", manager.storage_boundary_blueprint_plan(target))
+            return True
+
+        if command == "retention-policy-blueprint-plan":
+            self.print_chat_session_persistence_packet("AURA Retention Policy Blueprint Plan", manager.retention_policy_blueprint_plan(target))
+            return True
+
+        if command == "privacy-redaction-rule-plan":
+            self.print_chat_session_persistence_packet("AURA Privacy Redaction Rule Plan", manager.privacy_redaction_rule_plan(target))
+            return True
+
+        if command == "session-lifecycle-blueprint-plan":
+            self.print_chat_session_persistence_packet("AURA Session Lifecycle Blueprint Plan", manager.session_lifecycle_blueprint_plan(target))
+            return True
+
+        if command == "recovery-index-blueprint-plan":
+            self.print_chat_session_persistence_packet("AURA Recovery Index Blueprint Plan", manager.recovery_index_blueprint_plan(target))
+            return True
+
+        if command == "export-migration-note-plan":
+            self.print_chat_session_persistence_packet("AURA Export Migration Note Plan", manager.export_migration_note_plan(target))
+            return True
+
+        if command == "chat-persistence-safety-policy-plan":
+            self.print_chat_session_persistence_packet("AURA Chat Persistence Safety Policy Plan", manager.chat_persistence_safety_policy_plan(target))
+            return True
+
+        if command == "chat-session-persistence-status-packet":
+            self.print_chat_session_persistence_packet("AURA Chat Session Persistence Status Packet", manager.status_packet())
+            return True
+
+        if command == "chat-session-persistence-context":
+            self.print_chat_session_persistence_packet("AURA Chat Session Persistence Planner Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 94.0 permission request review queue foundation shell helpers.
     def print_permission_request_review_queue_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4780,6 +4853,9 @@ class AuraShell:
             return
 
         if self.handle_permission_request_review_queue_shell_command(normalized):
+            return
+
+        if self.handle_chat_session_persistence_shell_command(normalized):
             return
 
         if normalized == "help":
