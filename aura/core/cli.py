@@ -97,6 +97,7 @@ from aura.genesis_runtime_readiness_next_block_planning.aura_genesis_runtime_rea
 from aura.runtime_permission_flow_consolidation.aura_runtime_permission_flow_consolidation_foundation_manager import AuraRuntimePermissionFlowConsolidationFoundationManager
 from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_manager import AuraAuditEventReviewQueueFoundationManager
 from aura.dashboard_runtime_readiness_view_model.aura_dashboard_runtime_readiness_view_model_foundation_manager import AuraDashboardRuntimeReadinessViewModelFoundationManager
+from aura.safe_local_action_contract_review.aura_safe_local_action_contract_review_foundation_manager import AuraSafeLocalActionContractReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4170,6 +4171,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 115.0 safe local action contract review CLI helpers.
+    def print_safe_local_action_contract_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Safe Local Action Contract Review Safety Boundary"))
+
+    def handle_safe_local_action_contract_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA safe local action contract review"
+        manager = AuraSafeLocalActionContractReviewFoundationManager(project_root=self.project_root)
+
+        if command == "safe-local-action-contract-review-status":
+            self.print_safe_local_action_contract_review_packet("AURA Safe Local Action Contract Review Foundation Status", manager.status())
+            return True
+
+        if command == "safe-local-action-contract-review-context":
+            self.print_safe_local_action_contract_review_packet("AURA Safe Local Action Contract Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "local-open-contract-review-plan": ("AURA Local Open Contract Review Plan", manager.local_open_contract_review_plan),
+            "controlled-create-contract-review-plan": ("AURA Controlled Create Contract Review Plan", manager.controlled_create_contract_review_plan),
+            "controlled-write-preview-contract-review-plan": ("AURA Controlled Write Preview Contract Review Plan", manager.controlled_write_preview_contract_review_plan),
+            "action-preview-packet-contract-plan": ("AURA Action Preview Packet Contract Plan", manager.action_preview_packet_contract_plan),
+            "permission-scope-contract-review-plan": ("AURA Permission Scope Contract Review Plan", manager.permission_scope_contract_review_plan),
+            "side-effect-boundary-contract-plan": ("AURA Side Effect Boundary Contract Plan", manager.side_effect_boundary_contract_plan),
+            "rollback-cancel-contract-review-plan": ("AURA Rollback Cancel Contract Review Plan", manager.rollback_cancel_contract_review_plan),
+            "dashboard-contract-payload-plan": ("AURA Dashboard Contract Payload Plan", manager.dashboard_contract_payload_plan),
+            "future-action-runtime-boundary-plan": ("AURA Future Action Runtime Boundary Plan", manager.future_action_runtime_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_safe_local_action_contract_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 114.0 dashboard runtime readiness view model CLI helpers.
     def print_dashboard_runtime_readiness_view_model_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5531,6 +5573,9 @@ class AuraCLI:
             return True
 
         if self.handle_dashboard_runtime_readiness_view_model_cli_command(raw_args):
+            return True
+
+        if self.handle_safe_local_action_contract_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

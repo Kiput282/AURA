@@ -677,6 +677,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and view-model-only Dashboard Runtime Readiness View Model Foundation for runtime readiness summary, permission state, audit review queue, safety boundary, ORION boundary, action preview, manual approval, v1 cutline, and Control Center payload views without starting dashboard runtime, API server, web server, frontend/backend runtime, or enabling runtime execution.",
                 },
+                {
+                    "id": "aura_safe_local_action_contract_review_foundation",
+                    "name": "AURA Safe Local Action Contract Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.115.0-genesis",
+                    "category": "local_action",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and contract-review-only Safe Local Action Contract Review Foundation for local open contracts, controlled create contracts, controlled write preview contracts, action preview packets, permission scope contracts, side effect boundaries, rollback/cancel contracts, dashboard contract payloads, and future action runtime boundaries without executing local actions or enabling runtime execution.",
+                },
 ]
 
 

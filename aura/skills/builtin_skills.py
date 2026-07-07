@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 115.0 safe local action contract review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_safe_local_action_contract_review_foundation",
+            description="Prepare planner-only, metadata-only, and contract-review-only Safe Local Action Contract Review Foundation without opening files/folders/software, creating files/folders, writing files, starting services, dispatching actions, executing tools/commands, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "safe_local_action_contract_review_status",
+                "local_open_contract_review_plan",
+                "controlled_create_contract_review_plan",
+                "controlled_write_preview_contract_review_plan",
+                "action_preview_packet_contract_plan",
+                "permission_scope_contract_review_plan",
+                "side_effect_boundary_contract_plan",
+                "rollback_cancel_contract_review_plan",
+                "dashboard_contract_payload_plan",
+                "future_action_runtime_boundary_plan",
+                "safe_local_action_contract_review_context",
+            ],
+        )
+    )
+
     # Sprint 114.0 dashboard runtime readiness view model foundation skill.
     registry.register(
         AuraSkill(

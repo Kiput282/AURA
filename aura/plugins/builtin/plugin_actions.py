@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 115.0 safe local action contract review foundation actions.
+    safe_local_action_contract_review_actions = [
+        ('safe_local_action_contract_review.status', 'read_project', 'Show Safe Local Action Contract Review status.'),
+        ('safe_local_action_contract_review.local_open_contract_review_plan', 'read_project', 'Prepare local open contract review plan.'),
+        ('safe_local_action_contract_review.controlled_create_contract_review_plan', 'read_project', 'Prepare controlled create contract review plan.'),
+        ('safe_local_action_contract_review.controlled_write_preview_contract_review_plan', 'read_project', 'Prepare controlled write preview contract review plan.'),
+        ('safe_local_action_contract_review.action_preview_packet_contract_plan', 'read_project', 'Prepare action preview packet contract plan.'),
+        ('safe_local_action_contract_review.permission_scope_contract_review_plan', 'read_project', 'Prepare permission scope contract review plan.'),
+        ('safe_local_action_contract_review.side_effect_boundary_contract_plan', 'read_project', 'Prepare side effect boundary contract plan.'),
+        ('safe_local_action_contract_review.rollback_cancel_contract_review_plan', 'read_project', 'Prepare rollback cancel contract review plan.'),
+        ('safe_local_action_contract_review.dashboard_contract_payload_plan', 'read_project', 'Prepare dashboard contract payload plan.'),
+        ('safe_local_action_contract_review.future_action_runtime_boundary_plan', 'read_project', 'Prepare future action runtime boundary plan.'),
+        ('safe_local_action_contract_review.context', 'read_project', 'Show Safe Local Action Contract Review context.'),
+    ]
+
+    for action_name, permission_action, description in safe_local_action_contract_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="safe_local_action_contract_review", description=description, permission_action=permission_action, status="online", skill="aura_safe_local_action_contract_review_foundation"))
+
     # Sprint 114.0 dashboard runtime readiness view model foundation actions.
     dashboard_runtime_readiness_view_model_actions = [
         ('dashboard_runtime_readiness_view_model.status', 'read_project', 'Show Dashboard Runtime Readiness View Model status.'),
