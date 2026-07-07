@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 98.0 runtime action queue review layer foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_action_queue_review_layer_foundation",
+            description="Prepare planner-only, review-only, and proposal-only AURA Runtime Action Queue Review Layer Foundation for action queue item blueprints, queue state blueprints, review priority rules, dependency/blocker contracts, permission link requirements, execution preflight check blueprints, approval/denial transition rules, timeout/expiry policies, runtime action audit visibility, and safety policy without creating runtime queue items, dispatching actions, executing actions, running plugins, writing files, executing commands, controlling desktop, invoking tools, or triggering ORION/local actions.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_action_queue_review_layer_status",
+                "action_queue_item_blueprint_plan",
+                "queue_state_blueprint_plan",
+                "review_priority_rule_plan",
+                "dependency_blocker_contract_plan",
+                "permission_link_requirement_plan",
+                "execution_preflight_check_blueprint_plan",
+                "approval_denial_transition_rule_plan",
+                "timeout_expiry_policy_plan",
+                "runtime_action_audit_visibility_plan",
+                "runtime_action_queue_review_layer_context",
+                "runtime_action_queue_review_layer_blueprint_metadata",
+            ],
+        )
+    )
+
     # Sprint 97.0 controlled file write approval draft foundation skill.
     registry.register(
         AuraSkill(

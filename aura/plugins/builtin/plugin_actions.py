@@ -2899,6 +2899,34 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 98.0 runtime action queue review layer foundation actions.
+    runtime_action_queue_review_layer_actions = [
+        ('runtime_action_queue_review_layer.status', 'read_project', 'Show AURA Runtime Action Queue Review Layer Foundation status.'),
+        ('runtime_action_queue_review_layer.action_queue_item_blueprint_plan', 'read_project', 'Prepare action queue item blueprint planning.'),
+        ('runtime_action_queue_review_layer.queue_state_blueprint_plan', 'read_project', 'Prepare queue state blueprint planning.'),
+        ('runtime_action_queue_review_layer.review_priority_rule_plan', 'read_project', 'Prepare review priority rule planning.'),
+        ('runtime_action_queue_review_layer.dependency_blocker_contract_plan', 'read_project', 'Prepare dependency and blocker contract planning.'),
+        ('runtime_action_queue_review_layer.permission_link_requirement_plan', 'read_project', 'Prepare permission link requirement planning.'),
+        ('runtime_action_queue_review_layer.execution_preflight_check_blueprint_plan', 'read_project', 'Prepare execution preflight check blueprint planning.'),
+        ('runtime_action_queue_review_layer.approval_denial_transition_rule_plan', 'read_project', 'Prepare approval and denial transition rule planning.'),
+        ('runtime_action_queue_review_layer.timeout_expiry_policy_plan', 'read_project', 'Prepare timeout and expiry policy planning.'),
+        ('runtime_action_queue_review_layer.runtime_action_audit_visibility_plan', 'read_project', 'Prepare runtime action audit visibility planning.'),
+        ('runtime_action_queue_review_layer.safety_policy_plan', 'read_project', 'Prepare runtime action queue review layer safety policy planning.'),
+        ('runtime_action_queue_review_layer.context', 'read_project', 'Show Runtime Action Queue Review Layer Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_action_queue_review_layer_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="runtime_action_queue_review_layer",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_runtime_action_queue_review_layer_foundation",
+            )
+        )
+
     # Sprint 97.0 controlled file write approval draft foundation actions.
     controlled_file_write_approval_draft_actions = [
         ('controlled_file_write_approval_draft.status', 'read_project', 'Show AURA Controlled File Write Approval Draft Foundation status.'),

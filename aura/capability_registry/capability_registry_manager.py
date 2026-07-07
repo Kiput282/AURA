@@ -473,6 +473,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only and draft-only controlled file write approval foundation for file write proposal drafts, target path policies, diff preview contracts, overwrite rules, backup requirements, approval checklist items, rollback notes, file write audit visibility, and safety policy.",
                 },
+                {
+                    "id": "aura_runtime_action_queue_review_layer_foundation",
+                    "name": "AURA Runtime Action Queue Review Layer Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.98.0-genesis",
+                    "category": "runtime",
+                    "control_center_visible": True,
+                    "description": "Planner-only, review-only, and proposal-only runtime action queue review layer foundation for action queue item blueprints, queue state blueprints, review priority rules, dependency/blocker contracts, permission link requirements, execution preflight check blueprints, approval/denial transition rules, timeout/expiry policies, runtime action audit visibility, and safety policy.",
+                },
 ]
 
 

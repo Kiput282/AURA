@@ -1452,7 +1452,7 @@ Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes
 ## Sprint 93.0 — Control Center Data Aggregator Foundation
 
 Status: completed
-Version: v0.97.0-genesis
+Version: v0.98.0-genesis
 
 Sprint 93 adds the planner-only AURA Control Center Data Aggregator Foundation.
 
@@ -1490,7 +1490,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 94.0 — Permission Request Review Queue Foundation
 
 Status: completed
-Version: v0.97.0-genesis
+Version: v0.98.0-genesis
 
 Sprint 94 adds the planner-only AURA Permission Request Review Queue Foundation.
 
@@ -1535,7 +1535,7 @@ Safety remains foundation-only, proposal-only, metadata-only, planner-only, and 
 ## Sprint 95.0 — Chat Session Persistence Planner Foundation
 
 Status: completed
-Version: v0.97.0-genesis
+Version: v0.98.0-genesis
 
 Sprint 95 adds the planner-only AURA Chat Session Persistence Planner Foundation.
 
@@ -1576,7 +1576,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 96.0 — Safe Local Web Runtime Gate Foundation
 
 Status: completed
-Version: v0.97.0-genesis
+Version: v0.98.0-genesis
 
 Sprint 96 adds the planner-only and pre-runtime AURA Safe Local Web Runtime Gate Foundation.
 
@@ -1625,7 +1625,7 @@ Safety remains foundation-only, pre-runtime, metadata-only, planner-only, and sa
 ## Sprint 97.0 — Controlled File Write Approval Draft Foundation
 
 Status: completed
-Version: v0.97.0-genesis
+Version: v0.98.0-genesis
 
 Sprint 97 adds the planner-only and draft-only AURA Controlled File Write Approval Draft Foundation.
 
@@ -1664,3 +1664,45 @@ Counts:
 - 0 runtime execution features
 
 Safety remains foundation-only, draft-only, pre-runtime, metadata-only, planner-only, and safe_idle-first.
+
+## Sprint 98.0 — Runtime Action Queue Review Layer Foundation
+
+Status: completed
+Version: v0.98.0-genesis
+
+Sprint 98 adds the planner-only, review-only, and proposal-only AURA Runtime Action Queue Review Layer Foundation.
+
+This sprint prepares review layer blueprints for:
+
+- action queue item blueprints
+- queue state blueprints
+- review priority rules
+- dependency/blocker contracts
+- permission link requirements
+- execution preflight check blueprints
+- approval/denial transition rules
+- timeout/expiry policies
+- runtime action audit visibility
+- runtime action queue review safety policy
+
+Counts:
+
+- 11 plan types
+- 9 action queue item blueprints
+- 8 queue state blueprints
+- 7 review priority rules
+- 8 dependency/blocker contracts
+- 7 permission link requirements
+- 9 execution preflight check blueprints
+- 8 approval/denial transition rules
+- 6 timeout/expiry policies
+- 10 audit visibility fields
+- 72 total review layer blueprints/fields
+- 0 runtime queue items created/persisted/mutated/submitted/reviewed
+- 0 runtime queue items approved/denied/cancelled/expired
+- 0 runtime actions dispatched/executed
+- 0 runtime local/plugin/file/command/tool/desktop/ORION actions executed
+- 0 runtime emergency stops triggered
+- 0 runtime execution features
+
+Safety remains foundation-only, review-only, proposal-only, metadata-only, planner-only, and safe_idle-first.

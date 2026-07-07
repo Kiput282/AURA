@@ -82,6 +82,7 @@ from aura.permission_request_review_queue.aura_permission_request_review_queue_f
 from aura.chat_session_persistence_planner.aura_chat_session_persistence_planner_foundation_manager import AuraChatSessionPersistencePlannerFoundationManager
 from aura.safe_local_web_runtime_gate.aura_safe_local_web_runtime_gate_foundation_manager import AuraSafeLocalWebRuntimeGateFoundationManager
 from aura.controlled_file_write_approval_draft.aura_controlled_file_write_approval_draft_foundation_manager import AuraControlledFileWriteApprovalDraftFoundationManager
+from aura.runtime_action_queue_review_layer.aura_runtime_action_queue_review_layer_foundation_manager import AuraRuntimeActionQueueReviewLayerFoundationManager
 
 
 class AuraShell:
@@ -541,6 +542,18 @@ class AuraShell:
         print("  file-write-audit-visibility-plan <target> Prepare file write audit visibility plan")
         print("  file-write-safety-policy-plan <target> Prepare file write safety policy plan")
         print("  controlled-file-write-approval-draft-context Show Controlled File Write Approval Draft Foundation context")
+        print("  runtime-action-queue-review-layer-status Show Runtime Action Queue Review Layer Foundation status")
+        print("  action-queue-item-blueprint-plan <target> Prepare action queue item blueprint plan")
+        print("  queue-state-blueprint-plan <target> Prepare queue state blueprint plan")
+        print("  review-priority-rule-plan <target> Prepare review priority rule plan")
+        print("  dependency-blocker-contract-plan <target> Prepare dependency/blocker contract plan")
+        print("  permission-link-requirement-plan <target> Prepare permission link requirement plan")
+        print("  execution-preflight-check-blueprint-plan <target> Prepare execution preflight check blueprint plan")
+        print("  approval-denial-transition-rule-plan <target> Prepare approval/denial transition rule plan")
+        print("  timeout-expiry-policy-plan <target> Prepare timeout/expiry policy plan")
+        print("  runtime-action-audit-visibility-plan <target> Prepare runtime action audit visibility plan")
+        print("  runtime-action-queue-review-layer-safety-policy-plan <target> Prepare runtime action queue review layer safety policy plan")
+        print("  runtime-action-queue-review-layer-context Show Runtime Action Queue Review Layer Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4488,6 +4501,71 @@ class AuraShell:
 
 
 
+
+    # Sprint 98.0 runtime action queue review layer foundation shell helpers.
+    def print_runtime_action_queue_review_layer_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Action Queue Review Layer Safety Boundary"))
+
+    def handle_runtime_action_queue_review_layer_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime action queue review layer foundation"
+        manager = AuraRuntimeActionQueueReviewLayerFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-action-queue-review-layer-status":
+            self.print_runtime_action_queue_review_layer_packet("AURA Runtime Action Queue Review Layer Foundation Status", manager.status())
+            return True
+
+        if command == "action-queue-item-blueprint-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Action Queue Item Blueprint Plan", manager.action_queue_item_blueprint_plan(target))
+            return True
+
+        if command == "queue-state-blueprint-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Queue State Blueprint Plan", manager.queue_state_blueprint_plan(target))
+            return True
+
+        if command == "review-priority-rule-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Review Priority Rule Plan", manager.review_priority_rule_plan(target))
+            return True
+
+        if command == "dependency-blocker-contract-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Dependency Blocker Contract Plan", manager.dependency_blocker_contract_plan(target))
+            return True
+
+        if command == "permission-link-requirement-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Permission Link Requirement Plan", manager.permission_link_requirement_plan(target))
+            return True
+
+        if command == "execution-preflight-check-blueprint-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Execution Preflight Check Blueprint Plan", manager.execution_preflight_check_blueprint_plan(target))
+            return True
+
+        if command == "approval-denial-transition-rule-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Approval Denial Transition Rule Plan", manager.approval_denial_transition_rule_plan(target))
+            return True
+
+        if command == "timeout-expiry-policy-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Timeout Expiry Policy Plan", manager.timeout_expiry_policy_plan(target))
+            return True
+
+        if command == "runtime-action-audit-visibility-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Runtime Action Audit Visibility Plan", manager.runtime_action_audit_visibility_plan(target))
+            return True
+
+        if command == "runtime-action-queue-review-layer-safety-policy-plan":
+            self.print_runtime_action_queue_review_layer_packet("AURA Runtime Action Queue Review Layer Safety Policy Plan", manager.safety_policy_plan(target))
+            return True
+
+        if command == "runtime-action-queue-review-layer-context":
+            self.print_runtime_action_queue_review_layer_packet("AURA Runtime Action Queue Review Layer Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 97.0 controlled file write approval draft foundation shell helpers.
     def print_controlled_file_write_approval_draft_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5013,6 +5091,9 @@ class AuraShell:
             return
 
         if self.handle_controlled_file_write_approval_draft_shell_command(normalized):
+            return
+
+        if self.handle_runtime_action_queue_review_layer_shell_command(normalized):
             return
 
         if normalized == "help":
