@@ -569,6 +569,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and dry-run-blueprint-only Permission Decision Runtime Dry-Run Foundation for permission decision candidates, input contracts, dry-run evaluations, permission scope mappings, approval/denial outcomes, risk review rules, audit record blueprints, dashboard review payloads, and dry-run safety boundaries without changing real permissions.",
                 },
+                {
+                    "id": "aura_runtime_action_execution_preview_packet_foundation",
+                    "name": "AURA Runtime Action Execution Preview Packet Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.106.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and preview-packet-only Runtime Action Execution Preview Packet Foundation for action candidates, execution preflight checklists, action input snapshots, permission decision references, execution step previews, side effect boundaries, rollback previews, audit preview records, and user confirmation packets without dispatching or executing runtime actions.",
+                },
 ]
 
 

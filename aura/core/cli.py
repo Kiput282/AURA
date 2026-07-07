@@ -88,6 +88,7 @@ from aura.safe_runtime_configuration_profile.aura_safe_runtime_configuration_pro
 from aura.local_service_start_proposal_review.aura_local_service_start_proposal_review_foundation_manager import AuraLocalServiceStartProposalReviewFoundationManager
 from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_consolidation_foundation_manager import AuraDashboardApiContractConsolidationFoundationManager
 from aura.permission_decision_runtime_dry_run.aura_permission_decision_runtime_dry_run_foundation_manager import AuraPermissionDecisionRuntimeDryRunFoundationManager
+from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_preview_packet_foundation_manager import AuraRuntimeActionExecutionPreviewPacketFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4152,6 +4153,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 106.0 runtime action execution preview packet CLI helpers.
+    def print_runtime_action_execution_preview_packet_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Action Execution Preview Packet Safety Boundary"))
+
+    def handle_runtime_action_execution_preview_packet_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA runtime action execution preview packet"
+        manager = AuraRuntimeActionExecutionPreviewPacketFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-action-execution-preview-packet-status":
+            self.print_runtime_action_execution_preview_packet_packet("AURA Runtime Action Execution Preview Packet Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-action-execution-preview-packet-context":
+            self.print_runtime_action_execution_preview_packet_packet("AURA Runtime Action Execution Preview Packet Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "action-candidate-inventory-plan": ("AURA Action Candidate Inventory Plan", manager.action_candidate_inventory_plan),
+            "execution-preflight-checklist-plan": ("AURA Execution Preflight Checklist Plan", manager.execution_preflight_checklist_plan),
+            "action-input-snapshot-plan": ("AURA Action Input Snapshot Plan", manager.action_input_snapshot_plan),
+            "permission-decision-reference-plan": ("AURA Permission Decision Reference Plan", manager.permission_decision_reference_plan),
+            "execution-step-preview-plan": ("AURA Execution Step Preview Plan", manager.execution_step_preview_plan),
+            "side-effect-boundary-plan": ("AURA Side Effect Boundary Plan", manager.side_effect_boundary_plan),
+            "rollback-preview-plan": ("AURA Rollback Preview Plan", manager.rollback_preview_plan),
+            "audit-preview-record-plan": ("AURA Audit Preview Record Plan", manager.audit_preview_record_plan),
+            "user-confirmation-packet-plan": ("AURA User Confirmation Packet Plan", manager.user_confirmation_packet_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_action_execution_preview_packet_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 105.0 permission decision runtime dry-run CLI helpers.
     def print_permission_decision_runtime_dry_run_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5126,6 +5168,9 @@ class AuraCLI:
             return True
 
         if self.handle_permission_decision_runtime_dry_run_cli_command(raw_args):
+            return True
+
+        if self.handle_runtime_action_execution_preview_packet_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

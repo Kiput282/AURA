@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 106.0 runtime action execution preview packet foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_action_execution_preview_packet_foundation",
+            description="Prepare planner-only, metadata-only, and preview-packet-only Runtime Action Execution Preview Packet Foundation without dispatching actions, executing actions, executing tools/commands, changing permissions, reading/writing files, starting services, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_action_execution_preview_packet_status",
+                "action_candidate_inventory_plan",
+                "execution_preflight_checklist_plan",
+                "action_input_snapshot_plan",
+                "permission_decision_reference_plan",
+                "execution_step_preview_plan",
+                "side_effect_boundary_plan",
+                "rollback_preview_plan",
+                "audit_preview_record_plan",
+                "user_confirmation_packet_plan",
+                "runtime_action_execution_preview_packet_context",
+            ],
+        )
+    )
+
     # Sprint 105.0 permission decision runtime dry-run foundation skill.
     registry.register(
         AuraSkill(

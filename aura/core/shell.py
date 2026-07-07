@@ -90,6 +90,7 @@ from aura.safe_runtime_configuration_profile.aura_safe_runtime_configuration_pro
 from aura.local_service_start_proposal_review.aura_local_service_start_proposal_review_foundation_manager import AuraLocalServiceStartProposalReviewFoundationManager
 from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_consolidation_foundation_manager import AuraDashboardApiContractConsolidationFoundationManager
 from aura.permission_decision_runtime_dry_run.aura_permission_decision_runtime_dry_run_foundation_manager import AuraPermissionDecisionRuntimeDryRunFoundationManager
+from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_preview_packet_foundation_manager import AuraRuntimeActionExecutionPreviewPacketFoundationManager
 
 
 class AuraShell:
@@ -644,6 +645,17 @@ class AuraShell:
         print("  permission-dashboard-review-payload-plan <target> Prepare permission dashboard review payload plan")
         print("  permission-dry-run-safety-boundary-plan <target> Prepare permission dry-run safety boundary plan")
         print("  permission-decision-runtime-dry-run-context Show Permission Decision Runtime Dry-Run context")
+        print("  runtime-action-execution-preview-packet-status Show Runtime Action Execution Preview Packet Foundation status")
+        print("  action-candidate-inventory-plan <target> Prepare action candidate inventory plan")
+        print("  execution-preflight-checklist-plan <target> Prepare execution preflight checklist plan")
+        print("  action-input-snapshot-plan <target> Prepare action input snapshot plan")
+        print("  permission-decision-reference-plan <target> Prepare permission decision reference plan")
+        print("  execution-step-preview-plan <target> Prepare execution step preview plan")
+        print("  side-effect-boundary-plan <target> Prepare side effect boundary plan")
+        print("  rollback-preview-plan <target> Prepare rollback preview plan")
+        print("  audit-preview-record-plan <target> Prepare audit preview record plan")
+        print("  user-confirmation-packet-plan <target> Prepare user confirmation packet plan")
+        print("  runtime-action-execution-preview-packet-context Show Runtime Action Execution Preview Packet context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4599,6 +4611,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 106.0 runtime action execution preview packet shell helpers.
+    def print_runtime_action_execution_preview_packet_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Action Execution Preview Packet Safety Boundary"))
+
+    def handle_runtime_action_execution_preview_packet_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime action execution preview packet"
+        manager = AuraRuntimeActionExecutionPreviewPacketFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-action-execution-preview-packet-status":
+            self.print_runtime_action_execution_preview_packet_packet("AURA Runtime Action Execution Preview Packet Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-action-execution-preview-packet-context":
+            self.print_runtime_action_execution_preview_packet_packet("AURA Runtime Action Execution Preview Packet Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "action-candidate-inventory-plan": ("AURA Action Candidate Inventory Plan", manager.action_candidate_inventory_plan),
+            "execution-preflight-checklist-plan": ("AURA Execution Preflight Checklist Plan", manager.execution_preflight_checklist_plan),
+            "action-input-snapshot-plan": ("AURA Action Input Snapshot Plan", manager.action_input_snapshot_plan),
+            "permission-decision-reference-plan": ("AURA Permission Decision Reference Plan", manager.permission_decision_reference_plan),
+            "execution-step-preview-plan": ("AURA Execution Step Preview Plan", manager.execution_step_preview_plan),
+            "side-effect-boundary-plan": ("AURA Side Effect Boundary Plan", manager.side_effect_boundary_plan),
+            "rollback-preview-plan": ("AURA Rollback Preview Plan", manager.rollback_preview_plan),
+            "audit-preview-record-plan": ("AURA Audit Preview Record Plan", manager.audit_preview_record_plan),
+            "user-confirmation-packet-plan": ("AURA User Confirmation Packet Plan", manager.user_confirmation_packet_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_action_execution_preview_packet_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 105.0 permission decision runtime dry-run shell helpers.
     def print_permission_decision_runtime_dry_run_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5591,6 +5645,9 @@ class AuraShell:
             return
 
         if self.handle_permission_decision_runtime_dry_run_shell_command(normalized):
+            return
+
+        if self.handle_runtime_action_execution_preview_packet_shell_command(normalized):
             return
 
         if normalized == "help":

@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 106.0 runtime action execution preview packet foundation actions.
+    runtime_action_execution_preview_packet_actions = [
+        ('runtime_action_execution_preview_packet.status', 'read_project', 'Show Runtime Action Execution Preview Packet status.'),
+        ('runtime_action_execution_preview_packet.action_candidate_inventory_plan', 'read_project', 'Prepare action candidate inventory plan.'),
+        ('runtime_action_execution_preview_packet.execution_preflight_checklist_plan', 'read_project', 'Prepare execution preflight checklist plan.'),
+        ('runtime_action_execution_preview_packet.action_input_snapshot_plan', 'read_project', 'Prepare action input snapshot plan.'),
+        ('runtime_action_execution_preview_packet.permission_decision_reference_plan', 'read_project', 'Prepare permission decision reference plan.'),
+        ('runtime_action_execution_preview_packet.execution_step_preview_plan', 'read_project', 'Prepare execution step preview plan.'),
+        ('runtime_action_execution_preview_packet.side_effect_boundary_plan', 'read_project', 'Prepare side effect boundary plan.'),
+        ('runtime_action_execution_preview_packet.rollback_preview_plan', 'read_project', 'Prepare rollback preview plan.'),
+        ('runtime_action_execution_preview_packet.audit_preview_record_plan', 'read_project', 'Prepare audit preview record plan.'),
+        ('runtime_action_execution_preview_packet.user_confirmation_packet_plan', 'read_project', 'Prepare user confirmation packet plan.'),
+        ('runtime_action_execution_preview_packet.context', 'read_project', 'Show Runtime Action Execution Preview Packet context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_action_execution_preview_packet_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_action_execution_preview_packet", description=description, permission_action=permission_action, status="online", skill="aura_runtime_action_execution_preview_packet_foundation"))
+
     # Sprint 105.0 permission decision runtime dry-run foundation actions.
     permission_decision_runtime_dry_run_actions = [
         ('permission_decision_runtime_dry_run.status', 'read_project', 'Show Permission Decision Runtime Dry-Run status.'),
