@@ -82,6 +82,7 @@ from aura.safe_local_web_runtime_gate.aura_safe_local_web_runtime_gate_foundatio
 from aura.controlled_file_write_approval_draft.aura_controlled_file_write_approval_draft_foundation_manager import AuraControlledFileWriteApprovalDraftFoundationManager
 from aura.runtime_action_queue_review_layer.aura_runtime_action_queue_review_layer_foundation_manager import AuraRuntimeActionQueueReviewLayerFoundationManager
 from aura.pre_runtime_security_audit.aura_pre_runtime_security_audit_foundation_manager import AuraPreRuntimeSecurityAuditFoundationManager
+from aura.sprint_100_review_stabilization.aura_sprint_100_review_stabilization_foundation_manager import AuraSprint100ReviewStabilizationFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4140,6 +4141,70 @@ class AuraCLI:
 
 
 
+
+    # Sprint 100.0 review and stabilization foundation CLI helpers.
+    def print_sprint_100_review_stabilization_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Sprint 100 Review Stabilization Safety Boundary"))
+
+    def handle_sprint_100_review_stabilization_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA Sprint 100 review stabilization foundation"
+        manager = AuraSprint100ReviewStabilizationFoundationManager(project_root=self.project_root)
+
+        if command == "sprint-100-review-stabilization-status":
+            self.print_sprint_100_review_stabilization_packet("AURA Sprint 100 Review & Stabilization Foundation Status", manager.status())
+            return True
+
+        if command == "sprint-block-review-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Sprint Block Review Plan", manager.sprint_block_review_plan(target))
+            return True
+
+        if command == "completed-feature-inventory-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Completed Feature Inventory Plan", manager.completed_feature_inventory_plan(target))
+            return True
+
+        if command == "active-vs-foundation-boundary-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Active vs Foundation Boundary Plan", manager.active_vs_foundation_boundary_plan(target))
+            return True
+
+        if command == "runtime-zero-safety-check-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Runtime Zero Safety Check Plan", manager.runtime_zero_safety_check_plan(target))
+            return True
+
+        if command == "capability-registry-stabilization-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Capability Registry Stabilization Plan", manager.capability_registry_stabilization_plan(target))
+            return True
+
+        if command == "documentation-stabilization-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Documentation Stabilization Plan", manager.documentation_stabilization_plan(target))
+            return True
+
+        if command == "unresolved-future-feature-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Unresolved Future Feature Plan", manager.unresolved_future_feature_plan(target))
+            return True
+
+        if command == "roadmap-101-110-seed-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Roadmap 101-110 Seed Plan", manager.roadmap_101_110_seed_plan(target))
+            return True
+
+        if command == "sprint-100-release-readiness-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Sprint 100 Release Readiness Plan", manager.sprint_100_release_readiness_plan(target))
+            return True
+
+        if command == "sprint-100-review-stabilization-safety-policy-plan":
+            self.print_sprint_100_review_stabilization_packet("AURA Sprint 100 Review Stabilization Safety Policy Plan", manager.safety_policy_plan(target))
+            return True
+
+        if command == "sprint-100-review-stabilization-context":
+            self.print_sprint_100_review_stabilization_packet("AURA Sprint 100 Review & Stabilization Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 99.0 pre-runtime security audit foundation CLI helpers.
     def print_pre_runtime_security_audit_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4787,6 +4852,9 @@ class AuraCLI:
             return True
 
         if self.handle_pre_runtime_security_audit_cli_command(raw_args):
+            return True
+
+        if self.handle_sprint_100_review_stabilization_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

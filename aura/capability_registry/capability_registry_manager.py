@@ -497,6 +497,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, review-only, and audit-blueprint-only pre-runtime security audit foundation for audit domains, runtime gate checks, permission boundary checks, file system safety checks, network surface checks, action execution safety checks, ORION boundary checks, audit visibility checks, and Sprint 100 stabilization readiness checks.",
                 },
+                {
+                    "id": "aura_sprint_100_review_stabilization_foundation",
+                    "name": "AURA Sprint 100 Review & Stabilization Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.100.0-genesis",
+                    "category": "stabilization",
+                    "control_center_visible": True,
+                    "description": "Planner-only, review-only, and checkpoint-blueprint-only Sprint 100 Review & Stabilization Foundation for Sprint 91-100 block review, completed feature inventory, active vs foundation-only boundaries, runtime-zero safety checks, capability registry stabilization, documentation stabilization, unresolved future features, roadmap 101-110 seed planning, and release readiness.",
+                },
 ]
 
 

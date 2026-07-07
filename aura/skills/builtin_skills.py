@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 100.0 review and stabilization foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_sprint_100_review_stabilization_foundation",
+            description="Prepare planner-only, review-only, and checkpoint-blueprint-only AURA Sprint 100 Review & Stabilization Foundation for Sprint 91-100 checkpoint review, completed feature inventory, active vs foundation-only boundaries, runtime-zero safety checks, capability registry stabilization, documentation stabilization, unresolved future features, roadmap 101-110 seed planning, and Sprint 100 release readiness without executing runtime behavior, reading files, probing ports, mutating permissions, dispatching actions, invoking tools, writing memory, or changing system behavior.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "sprint_100_review_stabilization_status",
+                "sprint_block_review_plan",
+                "completed_feature_inventory_plan",
+                "active_vs_foundation_boundary_plan",
+                "runtime_zero_safety_check_plan",
+                "capability_registry_stabilization_plan",
+                "documentation_stabilization_plan",
+                "unresolved_future_feature_plan",
+                "roadmap_101_110_seed_plan",
+                "sprint_100_release_readiness_plan",
+                "sprint_100_review_stabilization_context",
+                "sprint_100_review_stabilization_blueprint_metadata",
+            ],
+        )
+    )
+
     # Sprint 99.0 pre-runtime security audit foundation skill.
     registry.register(
         AuraSkill(

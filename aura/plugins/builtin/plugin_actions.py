@@ -2899,6 +2899,34 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 100.0 review and stabilization foundation actions.
+    sprint_100_review_stabilization_actions = [
+        ('sprint_100_review_stabilization.status', 'read_project', 'Show AURA Sprint 100 Review & Stabilization Foundation status.'),
+        ('sprint_100_review_stabilization.sprint_block_review_plan', 'read_project', 'Prepare Sprint 91-100 block review planning.'),
+        ('sprint_100_review_stabilization.completed_feature_inventory_plan', 'read_project', 'Prepare completed feature inventory planning.'),
+        ('sprint_100_review_stabilization.active_vs_foundation_boundary_plan', 'read_project', 'Prepare active vs foundation-only boundary planning.'),
+        ('sprint_100_review_stabilization.runtime_zero_safety_check_plan', 'read_project', 'Prepare runtime-zero safety check planning.'),
+        ('sprint_100_review_stabilization.capability_registry_stabilization_plan', 'read_project', 'Prepare capability registry stabilization planning.'),
+        ('sprint_100_review_stabilization.documentation_stabilization_plan', 'read_project', 'Prepare documentation stabilization planning.'),
+        ('sprint_100_review_stabilization.unresolved_future_feature_plan', 'read_project', 'Prepare unresolved future feature planning.'),
+        ('sprint_100_review_stabilization.roadmap_101_110_seed_plan', 'read_project', 'Prepare roadmap 101-110 seed planning.'),
+        ('sprint_100_review_stabilization.sprint_100_release_readiness_plan', 'read_project', 'Prepare Sprint 100 release readiness planning.'),
+        ('sprint_100_review_stabilization.safety_policy_plan', 'read_project', 'Prepare Sprint 100 review stabilization safety policy planning.'),
+        ('sprint_100_review_stabilization.context', 'read_project', 'Show Sprint 100 Review & Stabilization Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in sprint_100_review_stabilization_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="sprint_100_review_stabilization",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_sprint_100_review_stabilization_foundation",
+            )
+        )
+
     # Sprint 99.0 pre-runtime security audit foundation actions.
     pre_runtime_security_audit_actions = [
         ('pre_runtime_security_audit.status', 'read_project', 'Show AURA Pre-Runtime Security Audit Foundation status.'),
