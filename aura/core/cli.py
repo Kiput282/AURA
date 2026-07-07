@@ -79,6 +79,7 @@ from aura.control_center_data_aggregator.aura_control_center_data_aggregator_fou
 from aura.permission_request_review_queue.aura_permission_request_review_queue_foundation_manager import AuraPermissionRequestReviewQueueFoundationManager
 from aura.chat_session_persistence_planner.aura_chat_session_persistence_planner_foundation_manager import AuraChatSessionPersistencePlannerFoundationManager
 from aura.safe_local_web_runtime_gate.aura_safe_local_web_runtime_gate_foundation_manager import AuraSafeLocalWebRuntimeGateFoundationManager
+from aura.controlled_file_write_approval_draft.aura_controlled_file_write_approval_draft_foundation_manager import AuraControlledFileWriteApprovalDraftFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4134,6 +4135,66 @@ class AuraCLI:
 
 
 
+
+    # Sprint 97.0 controlled file write approval draft foundation CLI helpers.
+    def print_controlled_file_write_approval_draft_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Controlled File Write Approval Draft Safety Boundary"))
+
+    def handle_controlled_file_write_approval_draft_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA controlled file write approval draft foundation"
+        manager = AuraControlledFileWriteApprovalDraftFoundationManager(project_root=self.project_root)
+
+        if command == "controlled-file-write-approval-draft-status":
+            self.print_controlled_file_write_approval_draft_packet("AURA Controlled File Write Approval Draft Foundation Status", manager.status())
+            return True
+
+        if command == "file-write-proposal-draft-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA File Write Proposal Draft Plan", manager.file_write_proposal_draft_plan(target))
+            return True
+
+        if command == "target-path-policy-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Target Path Policy Plan", manager.target_path_policy_plan(target))
+            return True
+
+        if command == "diff-preview-contract-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Diff Preview Contract Plan", manager.diff_preview_contract_plan(target))
+            return True
+
+        if command == "overwrite-rule-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Overwrite Rule Plan", manager.overwrite_rule_plan(target))
+            return True
+
+        if command == "backup-requirement-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Backup Requirement Plan", manager.backup_requirement_plan(target))
+            return True
+
+        if command == "approval-checklist-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Approval Checklist Plan", manager.approval_checklist_plan(target))
+            return True
+
+        if command == "rollback-note-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Rollback Note Plan", manager.rollback_note_plan(target))
+            return True
+
+        if command == "file-write-audit-visibility-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA File Write Audit Visibility Plan", manager.file_write_audit_visibility_plan(target))
+            return True
+
+        if command == "file-write-safety-policy-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA File Write Safety Policy Plan", manager.file_write_safety_policy_plan(target))
+            return True
+
+        if command == "controlled-file-write-approval-draft-context":
+            self.print_controlled_file_write_approval_draft_packet("AURA Controlled File Write Approval Draft Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 96.0 safe local web runtime gate foundation CLI helpers.
     def print_safe_local_web_runtime_gate_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4587,6 +4648,9 @@ class AuraCLI:
             return True
 
         if self.handle_safe_local_web_runtime_gate_cli_command(raw_args):
+            return True
+
+        if self.handle_controlled_file_write_approval_draft_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

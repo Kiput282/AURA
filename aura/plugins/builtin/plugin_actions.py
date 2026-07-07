@@ -2899,6 +2899,33 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 97.0 controlled file write approval draft foundation actions.
+    controlled_file_write_approval_draft_actions = [
+        ('controlled_file_write_approval_draft.status', 'read_project', 'Show AURA Controlled File Write Approval Draft Foundation status.'),
+        ('controlled_file_write_approval_draft.file_write_proposal_draft_plan', 'read_project', 'Prepare file write proposal draft planning.'),
+        ('controlled_file_write_approval_draft.target_path_policy_plan', 'read_project', 'Prepare target path policy planning.'),
+        ('controlled_file_write_approval_draft.diff_preview_contract_plan', 'read_project', 'Prepare diff preview contract planning.'),
+        ('controlled_file_write_approval_draft.overwrite_rule_plan', 'read_project', 'Prepare overwrite rule planning.'),
+        ('controlled_file_write_approval_draft.backup_requirement_plan', 'read_project', 'Prepare backup requirement planning.'),
+        ('controlled_file_write_approval_draft.approval_checklist_plan', 'read_project', 'Prepare approval checklist planning.'),
+        ('controlled_file_write_approval_draft.rollback_note_plan', 'read_project', 'Prepare rollback note planning.'),
+        ('controlled_file_write_approval_draft.file_write_audit_visibility_plan', 'read_project', 'Prepare file write audit visibility planning.'),
+        ('controlled_file_write_approval_draft.safety_policy_plan', 'read_project', 'Prepare file write safety policy planning.'),
+        ('controlled_file_write_approval_draft.context', 'read_project', 'Show Controlled File Write Approval Draft Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in controlled_file_write_approval_draft_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="controlled_file_write_approval_draft",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_controlled_file_write_approval_draft_foundation",
+            )
+        )
+
     # Sprint 96.0 safe local web runtime gate foundation actions.
     safe_local_web_runtime_gate_actions = [
         ('safe_local_web_runtime_gate.status', 'read_project', 'Show AURA Safe Local Web Runtime Gate Foundation status.'),

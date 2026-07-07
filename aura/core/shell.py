@@ -81,6 +81,7 @@ from aura.control_center_data_aggregator.aura_control_center_data_aggregator_fou
 from aura.permission_request_review_queue.aura_permission_request_review_queue_foundation_manager import AuraPermissionRequestReviewQueueFoundationManager
 from aura.chat_session_persistence_planner.aura_chat_session_persistence_planner_foundation_manager import AuraChatSessionPersistencePlannerFoundationManager
 from aura.safe_local_web_runtime_gate.aura_safe_local_web_runtime_gate_foundation_manager import AuraSafeLocalWebRuntimeGateFoundationManager
+from aura.controlled_file_write_approval_draft.aura_controlled_file_write_approval_draft_foundation_manager import AuraControlledFileWriteApprovalDraftFoundationManager
 
 
 class AuraShell:
@@ -529,6 +530,17 @@ class AuraShell:
         print("  web-runtime-audit-visibility-plan <target> Prepare web runtime audit visibility plan")
         print("  safe-local-web-runtime-gate-safety-policy-plan <target> Prepare safe local web runtime gate safety policy plan")
         print("  safe-local-web-runtime-gate-context Show Safe Local Web Runtime Gate Foundation context")
+        print("  controlled-file-write-approval-draft-status Show Controlled File Write Approval Draft Foundation status")
+        print("  file-write-proposal-draft-plan <target> Prepare file write proposal draft plan")
+        print("  target-path-policy-plan <target> Prepare target path policy plan")
+        print("  diff-preview-contract-plan <target> Prepare diff preview contract plan")
+        print("  overwrite-rule-plan <target> Prepare overwrite rule plan")
+        print("  backup-requirement-plan <target> Prepare backup requirement plan")
+        print("  approval-checklist-plan <target> Prepare approval checklist plan")
+        print("  rollback-note-plan <target> Prepare rollback note plan")
+        print("  file-write-audit-visibility-plan <target> Prepare file write audit visibility plan")
+        print("  file-write-safety-policy-plan <target> Prepare file write safety policy plan")
+        print("  controlled-file-write-approval-draft-context Show Controlled File Write Approval Draft Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4475,6 +4487,67 @@ class AuraShell:
 
 
 
+
+    # Sprint 97.0 controlled file write approval draft foundation shell helpers.
+    def print_controlled_file_write_approval_draft_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Controlled File Write Approval Draft Safety Boundary"))
+
+    def handle_controlled_file_write_approval_draft_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA controlled file write approval draft foundation"
+        manager = AuraControlledFileWriteApprovalDraftFoundationManager(project_root=self.project_root)
+
+        if command == "controlled-file-write-approval-draft-status":
+            self.print_controlled_file_write_approval_draft_packet("AURA Controlled File Write Approval Draft Foundation Status", manager.status())
+            return True
+
+        if command == "file-write-proposal-draft-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA File Write Proposal Draft Plan", manager.file_write_proposal_draft_plan(target))
+            return True
+
+        if command == "target-path-policy-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Target Path Policy Plan", manager.target_path_policy_plan(target))
+            return True
+
+        if command == "diff-preview-contract-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Diff Preview Contract Plan", manager.diff_preview_contract_plan(target))
+            return True
+
+        if command == "overwrite-rule-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Overwrite Rule Plan", manager.overwrite_rule_plan(target))
+            return True
+
+        if command == "backup-requirement-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Backup Requirement Plan", manager.backup_requirement_plan(target))
+            return True
+
+        if command == "approval-checklist-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Approval Checklist Plan", manager.approval_checklist_plan(target))
+            return True
+
+        if command == "rollback-note-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA Rollback Note Plan", manager.rollback_note_plan(target))
+            return True
+
+        if command == "file-write-audit-visibility-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA File Write Audit Visibility Plan", manager.file_write_audit_visibility_plan(target))
+            return True
+
+        if command == "file-write-safety-policy-plan":
+            self.print_controlled_file_write_approval_draft_packet("AURA File Write Safety Policy Plan", manager.file_write_safety_policy_plan(target))
+            return True
+
+        if command == "controlled-file-write-approval-draft-context":
+            self.print_controlled_file_write_approval_draft_packet("AURA Controlled File Write Approval Draft Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 96.0 safe local web runtime gate foundation shell helpers.
     def print_safe_local_web_runtime_gate_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4937,6 +5010,9 @@ class AuraShell:
             return
 
         if self.handle_safe_local_web_runtime_gate_shell_command(normalized):
+            return
+
+        if self.handle_controlled_file_write_approval_draft_shell_command(normalized):
             return
 
         if normalized == "help":

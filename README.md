@@ -1452,7 +1452,7 @@ Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes
 ## Sprint 93.0 — Control Center Data Aggregator Foundation
 
 Status: completed
-Version: v0.96.0-genesis
+Version: v0.97.0-genesis
 
 Sprint 93 adds the planner-only AURA Control Center Data Aggregator Foundation.
 
@@ -1490,7 +1490,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 94.0 — Permission Request Review Queue Foundation
 
 Status: completed
-Version: v0.96.0-genesis
+Version: v0.97.0-genesis
 
 Sprint 94 adds the planner-only AURA Permission Request Review Queue Foundation.
 
@@ -1535,7 +1535,7 @@ Safety remains foundation-only, proposal-only, metadata-only, planner-only, and 
 ## Sprint 95.0 — Chat Session Persistence Planner Foundation
 
 Status: completed
-Version: v0.96.0-genesis
+Version: v0.97.0-genesis
 
 Sprint 95 adds the planner-only AURA Chat Session Persistence Planner Foundation.
 
@@ -1576,7 +1576,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 96.0 — Safe Local Web Runtime Gate Foundation
 
 Status: completed
-Version: v0.96.0-genesis
+Version: v0.97.0-genesis
 
 Sprint 96 adds the planner-only and pre-runtime AURA Safe Local Web Runtime Gate Foundation.
 
@@ -1621,3 +1621,46 @@ Counts:
 - 0 runtime execution features
 
 Safety remains foundation-only, pre-runtime, metadata-only, planner-only, and safe_idle-first.
+
+## Sprint 97.0 — Controlled File Write Approval Draft Foundation
+
+Status: completed
+Version: v0.97.0-genesis
+
+Sprint 97 adds the planner-only and draft-only AURA Controlled File Write Approval Draft Foundation.
+
+This sprint prepares approval draft blueprints for:
+
+- file write proposal drafts
+- target path policies
+- diff preview contracts
+- overwrite rules
+- backup requirements
+- approval checklist items
+- rollback notes
+- file write audit visibility
+- file write safety policy
+
+Counts:
+
+- 11 plan types
+- 8 file write proposal drafts
+- 8 target path policies
+- 8 diff preview contracts
+- 7 overwrite rules
+- 7 backup requirements
+- 9 approval checklist items
+- 7 rollback notes
+- 10 audit visibility fields
+- 64 total approval draft blueprints/fields
+- 0 runtime files created/appended/replaced/patched/overwritten
+- 0 runtime files read/modified/deleted/moved/copied
+- 0 runtime backups/restores/rollbacks
+- 0 runtime diffs generated
+- 0 runtime paths probed
+- 0 runtime approvals granted/denied
+- 0 runtime permission scopes activated
+- 0 runtime actions triggered
+- 0 runtime execution features
+
+Safety remains foundation-only, draft-only, pre-runtime, metadata-only, planner-only, and safe_idle-first.

@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 97.0 controlled file write approval draft foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_controlled_file_write_approval_draft_foundation",
+            description="Prepare planner-only and draft-only AURA Controlled File Write Approval Draft Foundation for file write proposal drafts, target path policy planning, diff preview contract planning, overwrite rule planning, backup requirement planning, approval checklist planning, rollback note planning, file write audit visibility planning, and file write safety policy without reading, writing, modifying, deleting, backing up, overwriting, rolling back files, granting approvals, or executing commands.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "controlled_file_write_approval_draft_status",
+                "file_write_proposal_draft_plan",
+                "target_path_policy_plan",
+                "diff_preview_contract_plan",
+                "overwrite_rule_plan",
+                "backup_requirement_plan",
+                "approval_checklist_plan",
+                "rollback_note_plan",
+                "file_write_audit_visibility_plan",
+                "file_write_safety_policy_plan",
+                "controlled_file_write_approval_draft_context",
+                "controlled_file_write_approval_draft_blueprint_metadata",
+            ],
+        )
+    )
+
     # Sprint 96.0 safe local web runtime gate foundation skill.
     registry.register(
         AuraSkill(

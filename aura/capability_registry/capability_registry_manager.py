@@ -461,6 +461,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only and pre-runtime safe local web runtime gate foundation for localhost binding policies, port policies, permission requirements, runtime preflight checks, start/stop proposal contracts, route boundaries, static asset boundaries, kill switch policies, and web runtime audit visibility.",
                 },
+                {
+                    "id": "aura_controlled_file_write_approval_draft_foundation",
+                    "name": "AURA Controlled File Write Approval Draft Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.97.0-genesis",
+                    "category": "file_ops",
+                    "control_center_visible": True,
+                    "description": "Planner-only and draft-only controlled file write approval foundation for file write proposal drafts, target path policies, diff preview contracts, overwrite rules, backup requirements, approval checklist items, rollback notes, file write audit visibility, and safety policy.",
+                },
 ]
 
 
