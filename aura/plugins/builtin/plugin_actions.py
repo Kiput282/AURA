@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 112.0 runtime permission flow consolidation foundation actions.
+    runtime_permission_flow_consolidation_actions = [
+        ('runtime_permission_flow_consolidation.status', 'read_project', 'Show Runtime Permission Flow Consolidation status.'),
+        ('runtime_permission_flow_consolidation.permission_request_schema_consolidation_plan', 'read_project', 'Prepare permission request schema consolidation plan.'),
+        ('runtime_permission_flow_consolidation.permission_decision_state_model_plan', 'read_project', 'Prepare permission decision state model plan.'),
+        ('runtime_permission_flow_consolidation.manual_approval_checkpoint_plan', 'read_project', 'Prepare manual approval checkpoint plan.'),
+        ('runtime_permission_flow_consolidation.denial_cancellation_flow_plan', 'read_project', 'Prepare denial cancellation flow plan.'),
+        ('runtime_permission_flow_consolidation.permission_scope_boundary_plan', 'read_project', 'Prepare permission scope boundary plan.'),
+        ('runtime_permission_flow_consolidation.high_risk_escalation_rule_plan', 'read_project', 'Prepare high risk escalation rule plan.'),
+        ('runtime_permission_flow_consolidation.approval_audit_reference_plan', 'read_project', 'Prepare approval audit reference plan.'),
+        ('runtime_permission_flow_consolidation.dashboard_permission_flow_payload_plan', 'read_project', 'Prepare dashboard permission flow payload plan.'),
+        ('runtime_permission_flow_consolidation.future_runtime_grant_boundary_plan', 'read_project', 'Prepare future runtime grant boundary plan.'),
+        ('runtime_permission_flow_consolidation.context', 'read_project', 'Show Runtime Permission Flow Consolidation context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_permission_flow_consolidation_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_permission_flow_consolidation", description=description, permission_action=permission_action, status="online", skill="aura_runtime_permission_flow_consolidation_foundation"))
+
     # Sprint 111.0 genesis runtime readiness next block planning foundation actions.
     genesis_runtime_readiness_next_block_planning_actions = [
         ('genesis_runtime_readiness_next_block_planning.status', 'read_project', 'Show Genesis Runtime Readiness Next Block Planning status.'),

@@ -96,6 +96,7 @@ from aura.runtime_audit_event_packet_preview.aura_runtime_audit_event_packet_pre
 from aura.runtime_safety_freeze_manual_approval_barrier.aura_runtime_safety_freeze_manual_approval_barrier_foundation_manager import AuraRuntimeSafetyFreezeManualApprovalBarrierFoundationManager
 from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundation_manager import AuraReviewStabilization101110FoundationManager
 from aura.genesis_runtime_readiness_next_block_planning.aura_genesis_runtime_readiness_next_block_planning_foundation_manager import AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager
+from aura.runtime_permission_flow_consolidation.aura_runtime_permission_flow_consolidation_foundation_manager import AuraRuntimePermissionFlowConsolidationFoundationManager
 
 
 class AuraShell:
@@ -716,6 +717,17 @@ class AuraShell:
         print("  integration-stabilization-plan <target> Prepare integration stabilization plan")
         print("  v1-readiness-mapping-plan <target> Prepare v1 readiness mapping plan")
         print("  genesis-runtime-readiness-next-block-planning-context Show Genesis Runtime Readiness Next Block Planning context")
+        print("  runtime-permission-flow-consolidation-status Show Runtime Permission Flow Consolidation Foundation status")
+        print("  permission-request-schema-consolidation-plan <target> Prepare permission request schema consolidation plan")
+        print("  permission-decision-state-model-plan <target> Prepare permission decision state model plan")
+        print("  manual-approval-checkpoint-plan <target> Prepare manual approval checkpoint plan")
+        print("  denial-cancellation-flow-plan <target> Prepare denial cancellation flow plan")
+        print("  permission-scope-boundary-plan <target> Prepare permission scope boundary plan")
+        print("  high-risk-escalation-rule-plan <target> Prepare high risk escalation rule plan")
+        print("  approval-audit-reference-plan <target> Prepare approval audit reference plan")
+        print("  dashboard-permission-flow-payload-plan <target> Prepare dashboard permission flow payload plan")
+        print("  future-runtime-grant-boundary-plan <target> Prepare future runtime grant boundary plan")
+        print("  runtime-permission-flow-consolidation-context Show Runtime Permission Flow Consolidation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4677,6 +4689,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 112.0 runtime permission flow consolidation shell helpers.
+    def print_runtime_permission_flow_consolidation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Permission Flow Consolidation Safety Boundary"))
+
+    def handle_runtime_permission_flow_consolidation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime permission flow consolidation"
+        manager = AuraRuntimePermissionFlowConsolidationFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-permission-flow-consolidation-status":
+            self.print_runtime_permission_flow_consolidation_packet("AURA Runtime Permission Flow Consolidation Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-permission-flow-consolidation-context":
+            self.print_runtime_permission_flow_consolidation_packet("AURA Runtime Permission Flow Consolidation Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "permission-request-schema-consolidation-plan": ("AURA Permission Request Schema Consolidation Plan", manager.permission_request_schema_consolidation_plan),
+            "permission-decision-state-model-plan": ("AURA Permission Decision State Model Plan", manager.permission_decision_state_model_plan),
+            "manual-approval-checkpoint-plan": ("AURA Manual Approval Checkpoint Plan", manager.manual_approval_checkpoint_plan),
+            "denial-cancellation-flow-plan": ("AURA Denial Cancellation Flow Plan", manager.denial_cancellation_flow_plan),
+            "permission-scope-boundary-plan": ("AURA Permission Scope Boundary Plan", manager.permission_scope_boundary_plan),
+            "high-risk-escalation-rule-plan": ("AURA High Risk Escalation Rule Plan", manager.high_risk_escalation_rule_plan),
+            "approval-audit-reference-plan": ("AURA Approval Audit Reference Plan", manager.approval_audit_reference_plan),
+            "dashboard-permission-flow-payload-plan": ("AURA Dashboard Permission Flow Payload Plan", manager.dashboard_permission_flow_payload_plan),
+            "future-runtime-grant-boundary-plan": ("AURA Future Runtime Grant Boundary Plan", manager.future_runtime_grant_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_permission_flow_consolidation_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 111.0 genesis runtime readiness next block planning shell helpers.
     def print_genesis_runtime_readiness_next_block_planning_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5933,6 +5987,9 @@ class AuraShell:
             return
 
         if self.handle_genesis_runtime_readiness_next_block_planning_shell_command(normalized):
+            return
+
+        if self.handle_runtime_permission_flow_consolidation_shell_command(normalized):
             return
 
         if normalized == "help":

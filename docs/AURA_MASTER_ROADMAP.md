@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.111.0-genesis
+Target: v0.112.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1274,3 +1274,11 @@ Status: completed
 AURA now includes a planner-only, metadata-only, and next-block-planning-only Genesis Runtime Readiness Next Block Planning Foundation.
 
 This foundation opens Sprint 111-120 planning after the Sprint 101-110 checkpoint. Runtime execution remains disabled and future runtime upgrades remain deferred behind manual approval and safety gates.
+
+## v0.112.0 Genesis — Runtime Permission Flow Consolidation Foundation
+
+Status: completed
+
+AURA now includes a planner-only, metadata-only, and permission-flow-consolidation-only Runtime Permission Flow Consolidation Foundation.
+
+This foundation consolidates future runtime permission request, decision, approval, denial, cancellation, scope, high-risk escalation, audit reference, dashboard payload, and future runtime grant boundaries without changing permissions or enabling runtime execution.

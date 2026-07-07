@@ -641,6 +641,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and next-block-planning-only Genesis Runtime Readiness Next Block Planning Foundation for Sprint 111-120 candidates, runtime readiness continuity, manual approval evolution, audit event evolution, dashboard contract evolution, ORION boundary planning, safe local action boundary, integration stabilization, and v1 readiness mapping without enabling runtime execution.",
                 },
+                {
+                    "id": "aura_runtime_permission_flow_consolidation_foundation",
+                    "name": "AURA Runtime Permission Flow Consolidation Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.112.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and permission-flow-consolidation-only Runtime Permission Flow Consolidation Foundation for permission request schema, permission decision states, manual approval checkpoints, denial and cancellation flow, permission scope boundaries, high-risk escalation rules, approval audit references, dashboard permission flow payloads, and future runtime grant boundaries without changing permissions or enabling runtime execution.",
+                },
 ]
 
 

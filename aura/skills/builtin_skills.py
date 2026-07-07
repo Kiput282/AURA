@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 112.0 runtime permission flow consolidation foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_permission_flow_consolidation_foundation",
+            description="Prepare planner-only, metadata-only, and permission-flow-consolidation-only Runtime Permission Flow Consolidation Foundation without changing permissions, granting approvals, denying runtime, activating future grants, writing audit events, dispatching actions, executing tools/commands, mutating files, starting services, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_permission_flow_consolidation_status",
+                "permission_request_schema_consolidation_plan",
+                "permission_decision_state_model_plan",
+                "manual_approval_checkpoint_plan",
+                "denial_cancellation_flow_plan",
+                "permission_scope_boundary_plan",
+                "high_risk_escalation_rule_plan",
+                "approval_audit_reference_plan",
+                "dashboard_permission_flow_payload_plan",
+                "future_runtime_grant_boundary_plan",
+                "runtime_permission_flow_consolidation_context",
+            ],
+        )
+    )
+
     # Sprint 111.0 genesis runtime readiness next block planning foundation skill.
     registry.register(
         AuraSkill(
