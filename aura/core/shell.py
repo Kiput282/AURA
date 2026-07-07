@@ -78,6 +78,7 @@ from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundatio
 from aura.local_console_static_prototype.aura_local_console_static_prototype_foundation_manager import AuraLocalConsoleStaticPrototypeFoundationManager
 from aura.local_console_api_schema.aura_local_console_api_schema_foundation_manager import AuraLocalConsoleAPISchemaFoundationManager
 from aura.control_center_data_aggregator.aura_control_center_data_aggregator_foundation_manager import AuraControlCenterDataAggregatorFoundationManager
+from aura.permission_request_review_queue.aura_permission_request_review_queue_foundation_manager import AuraPermissionRequestReviewQueueFoundationManager
 
 
 class AuraShell:
@@ -492,6 +493,17 @@ class AuraShell:
         print("  audit-event-visibility-packet-plan <target> Prepare audit event visibility packet plan")
         print("  data-aggregator-safety-policy-plan <target> Prepare data aggregator safety policy plan")
         print("  control-center-data-aggregator-context Show Control Center Data Aggregator Foundation context")
+        print("  permission-request-review-queue-status Show Permission Request Review Queue Foundation status")
+        print("  permission-request-blueprint-plan <target> Prepare permission request blueprint plan")
+        print("  queue-state-blueprint-plan <target> Prepare queue state blueprint plan")
+        print("  review-packet-field-plan <target> Prepare review packet field plan")
+        print("  permission-scope-boundary-plan <target> Prepare permission scope boundary plan")
+        print("  decision-proposal-contract-plan <target> Prepare decision proposal contract plan")
+        print("  reviewer-checklist-plan <target> Prepare reviewer checklist plan")
+        print("  audit-visibility-field-plan <target> Prepare audit visibility field plan")
+        print("  permission-request-safety-policy-plan <target> Prepare permission request safety policy plan")
+        print("  permission-request-review-queue-status-packet Show Permission Request Review Queue status packet")
+        print("  permission-request-review-queue-context Show Permission Request Review Queue Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4435,6 +4447,67 @@ class AuraShell:
 
 
 
+
+    # Sprint 94.0 permission request review queue foundation shell helpers.
+    def print_permission_request_review_queue_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Permission Request Review Queue Safety Boundary"))
+
+    def handle_permission_request_review_queue_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA permission request review queue foundation"
+        manager = AuraPermissionRequestReviewQueueFoundationManager(project_root=self.project_root)
+
+        if command == "permission-request-review-queue-status":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Review Queue Foundation Status", manager.status())
+            return True
+
+        if command == "permission-request-blueprint-plan":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Blueprint Plan", manager.permission_request_blueprint_plan(target))
+            return True
+
+        if command == "queue-state-blueprint-plan":
+            self.print_permission_request_review_queue_packet("AURA Queue State Blueprint Plan", manager.queue_state_blueprint_plan(target))
+            return True
+
+        if command == "review-packet-field-plan":
+            self.print_permission_request_review_queue_packet("AURA Review Packet Field Plan", manager.review_packet_field_plan(target))
+            return True
+
+        if command == "permission-scope-boundary-plan":
+            self.print_permission_request_review_queue_packet("AURA Permission Scope Boundary Plan", manager.permission_scope_boundary_plan(target))
+            return True
+
+        if command == "decision-proposal-contract-plan":
+            self.print_permission_request_review_queue_packet("AURA Decision Proposal Contract Plan", manager.decision_proposal_contract_plan(target))
+            return True
+
+        if command == "reviewer-checklist-plan":
+            self.print_permission_request_review_queue_packet("AURA Reviewer Checklist Plan", manager.reviewer_checklist_plan(target))
+            return True
+
+        if command == "audit-visibility-field-plan":
+            self.print_permission_request_review_queue_packet("AURA Audit Visibility Field Plan", manager.audit_visibility_field_plan(target))
+            return True
+
+        if command == "permission-request-safety-policy-plan":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Safety Policy Plan", manager.permission_request_safety_policy_plan(target))
+            return True
+
+        if command == "permission-request-review-queue-status-packet":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Review Queue Status Packet", manager.status_packet())
+            return True
+
+        if command == "permission-request-review-queue-context":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Review Queue Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 93.0 control center data aggregator foundation shell helpers.
     def print_control_center_data_aggregator_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4704,6 +4777,9 @@ class AuraShell:
             return
 
         if self.handle_control_center_data_aggregator_shell_command(normalized):
+            return
+
+        if self.handle_permission_request_review_queue_shell_command(normalized):
             return
 
         if normalized == "help":

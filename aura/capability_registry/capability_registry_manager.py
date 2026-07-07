@@ -425,6 +425,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only Control Center data aggregator foundation for ATLAS core packets, ORION client packets, client bridge packets, dashboard view packets, permission scope packets, health snapshot packets, audit event visibility fields, and metadata-only aggregator safety policy.",
                 },
+                {
+                    "id": "aura_permission_request_review_queue_foundation",
+                    "name": "AURA Permission Request Review Queue Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.94.0-genesis",
+                    "category": "permission",
+                    "control_center_visible": True,
+                    "description": "Planner-only permission request review queue foundation for permission request blueprints, queue state blueprints, review packet fields, scope boundaries, decision proposal contracts, reviewer checklist items, audit visibility fields, and permission request safety policy.",
+                },
 ]
 
 

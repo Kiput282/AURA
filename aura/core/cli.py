@@ -76,6 +76,7 @@ from aura.plugin_permission_dashboard.aura_plugin_permission_dashboard_foundatio
 from aura.local_console_static_prototype.aura_local_console_static_prototype_foundation_manager import AuraLocalConsoleStaticPrototypeFoundationManager
 from aura.local_console_api_schema.aura_local_console_api_schema_foundation_manager import AuraLocalConsoleAPISchemaFoundationManager
 from aura.control_center_data_aggregator.aura_control_center_data_aggregator_foundation_manager import AuraControlCenterDataAggregatorFoundationManager
+from aura.permission_request_review_queue.aura_permission_request_review_queue_foundation_manager import AuraPermissionRequestReviewQueueFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4128,6 +4129,66 @@ class AuraCLI:
 
 
 
+
+    # Sprint 94.0 permission request review queue foundation CLI helpers.
+    def print_permission_request_review_queue_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Permission Request Review Queue Safety Boundary"))
+
+    def handle_permission_request_review_queue_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA permission request review queue foundation"
+        manager = AuraPermissionRequestReviewQueueFoundationManager(project_root=self.project_root)
+
+        if command == "permission-request-review-queue-status":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Review Queue Foundation Status", manager.status())
+            return True
+
+        if command == "permission-request-blueprint-plan":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Blueprint Plan", manager.permission_request_blueprint_plan(target))
+            return True
+
+        if command == "queue-state-blueprint-plan":
+            self.print_permission_request_review_queue_packet("AURA Queue State Blueprint Plan", manager.queue_state_blueprint_plan(target))
+            return True
+
+        if command == "review-packet-field-plan":
+            self.print_permission_request_review_queue_packet("AURA Review Packet Field Plan", manager.review_packet_field_plan(target))
+            return True
+
+        if command == "permission-scope-boundary-plan":
+            self.print_permission_request_review_queue_packet("AURA Permission Scope Boundary Plan", manager.permission_scope_boundary_plan(target))
+            return True
+
+        if command == "decision-proposal-contract-plan":
+            self.print_permission_request_review_queue_packet("AURA Decision Proposal Contract Plan", manager.decision_proposal_contract_plan(target))
+            return True
+
+        if command == "reviewer-checklist-plan":
+            self.print_permission_request_review_queue_packet("AURA Reviewer Checklist Plan", manager.reviewer_checklist_plan(target))
+            return True
+
+        if command == "audit-visibility-field-plan":
+            self.print_permission_request_review_queue_packet("AURA Audit Visibility Field Plan", manager.audit_visibility_field_plan(target))
+            return True
+
+        if command == "permission-request-safety-policy-plan":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Safety Policy Plan", manager.permission_request_safety_policy_plan(target))
+            return True
+
+        if command == "permission-request-review-queue-status-packet":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Review Queue Status Packet", manager.status_packet())
+            return True
+
+        if command == "permission-request-review-queue-context":
+            self.print_permission_request_review_queue_packet("AURA Permission Request Review Queue Foundation Context", manager.context())
+            return True
+
+        return False
+
     # Sprint 93.0 control center data aggregator foundation CLI helpers.
     def print_control_center_data_aggregator_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4391,6 +4452,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_data_aggregator_cli_command(raw_args):
+            return True
+
+        if self.handle_permission_request_review_queue_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

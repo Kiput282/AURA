@@ -1452,7 +1452,7 @@ Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes
 ## Sprint 93.0 — Control Center Data Aggregator Foundation
 
 Status: completed
-Version: v0.93.0-genesis
+Version: v0.94.0-genesis
 
 Sprint 93 adds the planner-only AURA Control Center Data Aggregator Foundation.
 
@@ -1486,3 +1486,48 @@ Counts:
 - 0 runtime execution features
 
 Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first.
+
+## Sprint 94.0 — Permission Request Review Queue Foundation
+
+Status: completed
+Version: v0.94.0-genesis
+
+Sprint 94 adds the planner-only AURA Permission Request Review Queue Foundation.
+
+This sprint prepares review queue blueprints for:
+
+- screen capture permission request
+- short recording permission request
+- voice bridge permission request
+- ORION client bridge permission request
+- avatar and 3D environment permission request
+- Blender bridge permission request
+- VS Code project bridge permission request
+- local file action permission request
+- app open permission request
+- OBS and streaming bridge permission request
+- game companion permission request
+- plugin action permission request
+
+Counts:
+
+- 11 plan types
+- 12 permission request blueprints
+- 8 queue states
+- 10 review packet fields
+- 8 permission scope boundaries
+- 6 decision proposal contracts
+- 9 reviewer checklist items
+- 8 audit visibility fields
+- 61 total review queue blueprints/fields
+- 0 runtime permission requests created
+- 0 runtime permission requests reviewed
+- 0 runtime permissions granted
+- 0 runtime permissions denied
+- 0 runtime permissions resolved
+- 0 runtime permission scopes activated
+- 0 runtime permission scopes revoked
+- 0 runtime actions triggered
+- 0 runtime execution features
+
+Safety remains foundation-only, proposal-only, metadata-only, planner-only, and safe_idle-first.

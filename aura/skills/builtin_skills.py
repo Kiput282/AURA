@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 94.0 permission request review queue foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_permission_request_review_queue_foundation",
+            description="Prepare planner-only AURA Permission Request Review Queue Foundation for permission request blueprint planning, queue state blueprint planning, review packet field planning, permission scope boundary planning, decision proposal contract planning, reviewer checklist planning, audit visibility field planning, and permission request safety policy without creating, collecting, persisting, mutating, submitting, reviewing, granting, denying, resolving, activating, revoking, or executing runtime permissions/actions.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "permission_request_review_queue_status",
+                "permission_request_blueprint_plan",
+                "queue_state_blueprint_plan",
+                "review_packet_field_plan",
+                "permission_scope_boundary_plan",
+                "decision_proposal_contract_plan",
+                "reviewer_checklist_plan",
+                "audit_visibility_field_plan",
+                "permission_request_safety_policy_plan",
+                "permission_request_review_queue_context",
+                "permission_request_review_queue_status_packet",
+                "permission_review_queue_blueprint_metadata",
+            ],
+        )
+    )
+
     # Sprint 93.0 control center data aggregator foundation skill.
     registry.register(
         AuraSkill(

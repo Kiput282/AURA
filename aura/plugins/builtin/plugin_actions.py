@@ -2899,6 +2899,33 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 94.0 permission request review queue foundation actions.
+    permission_request_review_queue_actions = [
+        ('permission_request_review_queue.status', 'read_project', 'Show AURA Permission Request Review Queue Foundation status.'),
+        ('permission_request_review_queue.request_blueprint_plan', 'read_project', 'Prepare permission request blueprint planning.'),
+        ('permission_request_review_queue.queue_state_blueprint_plan', 'read_project', 'Prepare queue state blueprint planning.'),
+        ('permission_request_review_queue.review_packet_field_plan', 'read_project', 'Prepare review packet field planning.'),
+        ('permission_request_review_queue.scope_boundary_plan', 'read_project', 'Prepare permission scope boundary planning.'),
+        ('permission_request_review_queue.decision_proposal_contract_plan', 'read_project', 'Prepare decision proposal contract planning.'),
+        ('permission_request_review_queue.reviewer_checklist_plan', 'read_project', 'Prepare reviewer checklist planning.'),
+        ('permission_request_review_queue.audit_visibility_field_plan', 'read_project', 'Prepare audit visibility field planning.'),
+        ('permission_request_review_queue.safety_policy_plan', 'read_project', 'Prepare permission request safety policy planning.'),
+        ('permission_request_review_queue.status_packet', 'read_project', 'Prepare permission request review queue status packet.'),
+        ('permission_request_review_queue.context', 'read_project', 'Show Permission Request Review Queue Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in permission_request_review_queue_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="permission_request_review_queue",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_permission_request_review_queue_foundation",
+            )
+        )
+
     # Sprint 93.0 control center data aggregator foundation actions.
     control_center_data_aggregator_actions = [
         ('control_center_data_aggregator.status', 'read_project', 'Show AURA Control Center Data Aggregator Foundation status.'),
