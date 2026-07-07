@@ -653,6 +653,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and permission-flow-consolidation-only Runtime Permission Flow Consolidation Foundation for permission request schema, permission decision states, manual approval checkpoints, denial and cancellation flow, permission scope boundaries, high-risk escalation rules, approval audit references, dashboard permission flow payloads, and future runtime grant boundaries without changing permissions or enabling runtime execution.",
                 },
+                {
+                    "id": "aura_audit_event_review_queue_foundation",
+                    "name": "AURA Audit Event Review Queue Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.113.0-genesis",
+                    "category": "audit",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-queue-blueprint-only Audit Event Review Queue Foundation for audit event intake schema, review queue state model, triage rules, permission linkage review, runtime boundary review, redaction visibility review, dashboard review queue payloads, review outcome catalog, and future audit writer boundary without writing, emitting, streaming, sending, or persisting audit events.",
+                },
 ]
 
 

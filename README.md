@@ -1452,7 +1452,7 @@ Core rule: AURA thinks on ATLAS, while ORION sees, hears, displays, and executes
 ## Sprint 93.0 — Control Center Data Aggregator Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 93 adds the planner-only AURA Control Center Data Aggregator Foundation.
 
@@ -1490,7 +1490,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 94.0 — Permission Request Review Queue Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 94 adds the planner-only AURA Permission Request Review Queue Foundation.
 
@@ -1535,7 +1535,7 @@ Safety remains foundation-only, proposal-only, metadata-only, planner-only, and 
 ## Sprint 95.0 — Chat Session Persistence Planner Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 95 adds the planner-only AURA Chat Session Persistence Planner Foundation.
 
@@ -1576,7 +1576,7 @@ Safety remains foundation-only, metadata-only, planner-only, and safe_idle-first
 ## Sprint 96.0 — Safe Local Web Runtime Gate Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 96 adds the planner-only and pre-runtime AURA Safe Local Web Runtime Gate Foundation.
 
@@ -1625,7 +1625,7 @@ Safety remains foundation-only, pre-runtime, metadata-only, planner-only, and sa
 ## Sprint 97.0 — Controlled File Write Approval Draft Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 97 adds the planner-only and draft-only AURA Controlled File Write Approval Draft Foundation.
 
@@ -1668,7 +1668,7 @@ Safety remains foundation-only, draft-only, pre-runtime, metadata-only, planner-
 ## Sprint 98.0 — Runtime Action Queue Review Layer Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 98 adds the planner-only, review-only, and proposal-only AURA Runtime Action Queue Review Layer Foundation.
 
@@ -1710,7 +1710,7 @@ Safety remains foundation-only, review-only, proposal-only, metadata-only, plann
 ## Sprint 99.0 — Pre-Runtime Security Audit Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 99 adds the planner-only, review-only, and audit-blueprint-only AURA Pre-Runtime Security Audit Foundation.
 
@@ -1757,7 +1757,7 @@ Safety remains foundation-only, review-only, audit-blueprint-only, metadata-only
 ## Sprint 100.0 — Review & Stabilization 91–100 Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 100 completes the Sprint 91–100 checkpoint.
 
@@ -1803,7 +1803,7 @@ Sprint 100 confirms AURA remains safe_idle-first, permission-first, local-first,
 ## Sprint 101.0 — Genesis Runtime Readiness Baseline Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 101 starts the Genesis Runtime Readiness block.
 
@@ -1853,7 +1853,7 @@ Sprint 101 does not activate runtime or dry-run runtime. It only establishes the
 ## Sprint 102.0 — Safe Runtime Configuration Profile Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 102 adds a planner-only, metadata-only, configuration-blueprint-only Safe Runtime Configuration Profile Foundation.
 
@@ -1900,7 +1900,7 @@ Sprint 102 does not activate runtime configuration. It only defines safe profile
 ## Sprint 103.0 — Local Service Start Proposal Review Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 103 adds a planner-only, metadata-only, and proposal-review-only Local Service Start Proposal Review Foundation.
 
@@ -1929,7 +1929,7 @@ Counts:
 ## Sprint 104.0 — Dashboard API Contract Consolidation Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 104 adds a planner-only, metadata-only, and contract-blueprint-only Dashboard API Contract Consolidation Foundation.
 
@@ -1954,7 +1954,7 @@ Counts:
 ## Sprint 105.0 — Permission Decision Runtime Dry-Run Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 105 adds a planner-only, metadata-only, and dry-run-blueprint-only Permission Decision Runtime Dry-Run Foundation.
 
@@ -1974,7 +1974,7 @@ Counts:
 ## Sprint 106.0 — Runtime Action Execution Preview Packet Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 106 adds a planner-only, metadata-only, and preview-packet-only Runtime Action Execution Preview Packet Foundation.
 
@@ -1996,7 +1996,7 @@ Counts:
 ## Sprint 107.0 — Local Runtime Execution Gate Dry-Run Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 107 adds a planner-only, metadata-only, and dry-run-gate-blueprint-only Local Runtime Execution Gate Dry-Run Foundation.
 
@@ -2020,7 +2020,7 @@ Counts:
 ## Sprint 108.0 — Runtime Audit Event Packet Preview Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 108 adds a planner-only, metadata-only, and audit-packet-preview-only Runtime Audit Event Packet Preview Foundation.
 
@@ -2043,7 +2043,7 @@ Counts:
 ## Sprint 109.0 — Runtime Safety Freeze Manual Approval Barrier Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 109 adds a planner-only, metadata-only, and barrier-blueprint-only Runtime Safety Freeze Manual Approval Barrier Foundation.
 
@@ -2068,7 +2068,7 @@ Counts:
 ## Sprint 110.0 — Review Stabilization 101-110 Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 110 closes the Genesis Runtime Readiness block from Sprint 101 through Sprint 110 with a planner-only, metadata-only, and checkpoint-review-only stabilization foundation.
 
@@ -2097,7 +2097,7 @@ Checkpoint result:
 ## Sprint 111.0 — Genesis Runtime Readiness Next Block Planning Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 111 opens the next Genesis Runtime Readiness block for Sprint 111 through Sprint 120 with a planner-only, metadata-only, and next-block-planning-only foundation.
 
@@ -2128,7 +2128,7 @@ Checkpoint result:
 ## Sprint 112.0 — Runtime Permission Flow Consolidation Foundation
 
 Status: completed
-Version: v0.112.0-genesis
+Version: v0.113.0-genesis
 
 Sprint 112 adds a planner-only, metadata-only, and permission-flow-consolidation-only Runtime Permission Flow Consolidation Foundation.
 
@@ -2155,3 +2155,32 @@ Safety result:
 - runtime upgrade deferred
 - future runtime still requires manual approval
 - no runtime permission mutation enabled
+
+## Sprint 113.0 — Audit Event Review Queue Foundation
+
+Status: completed
+Version: v0.113.0-genesis
+
+Sprint 113 adds a planner-only, metadata-only, and review-queue-blueprint-only Audit Event Review Queue Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total audit event review queue blueprints/items
+- 0 runtime audit review queues activated
+- 0 runtime audit events written/emitted/streamed/sent/persisted
+- 0 runtime audit writers activated
+- 0 runtime review outcomes persisted
+- 0 runtime permissions changed
+- 0 runtime actions dispatched/executed
+- 0 runtime tools/commands executed
+- 0 runtime files/services/ports/network/ORION
+- 0 runtime memory writes/git operations
+- 0 runtime execution features
+
+Safety result:
+
+- review queue only
+- runtime upgrade deferred
+- future runtime still requires manual approval
+- no audit writer enabled

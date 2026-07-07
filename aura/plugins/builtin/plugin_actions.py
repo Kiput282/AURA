@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 113.0 audit event review queue foundation actions.
+    audit_event_review_queue_actions = [
+        ('audit_event_review_queue.status', 'read_project', 'Show Audit Event Review Queue status.'),
+        ('audit_event_review_queue.audit_event_intake_schema_plan', 'read_project', 'Prepare audit event intake schema plan.'),
+        ('audit_event_review_queue.review_queue_state_model_plan', 'read_project', 'Prepare review queue state model plan.'),
+        ('audit_event_review_queue.audit_event_triage_rule_plan', 'read_project', 'Prepare audit event triage rule plan.'),
+        ('audit_event_review_queue.permission_linkage_review_plan', 'read_project', 'Prepare permission linkage review plan.'),
+        ('audit_event_review_queue.runtime_boundary_review_plan', 'read_project', 'Prepare runtime boundary review plan.'),
+        ('audit_event_review_queue.redaction_visibility_review_plan', 'read_project', 'Prepare redaction visibility review plan.'),
+        ('audit_event_review_queue.dashboard_review_queue_payload_plan', 'read_project', 'Prepare dashboard review queue payload plan.'),
+        ('audit_event_review_queue.review_outcome_catalog_plan', 'read_project', 'Prepare review outcome catalog plan.'),
+        ('audit_event_review_queue.future_audit_writer_boundary_plan', 'read_project', 'Prepare future audit writer boundary plan.'),
+        ('audit_event_review_queue.context', 'read_project', 'Show Audit Event Review Queue context.'),
+    ]
+
+    for action_name, permission_action, description in audit_event_review_queue_actions:
+        registry.register(PluginAction(name=action_name, plugin="audit_event_review_queue", description=description, permission_action=permission_action, status="online", skill="aura_audit_event_review_queue_foundation"))
+
     # Sprint 112.0 runtime permission flow consolidation foundation actions.
     runtime_permission_flow_consolidation_actions = [
         ('runtime_permission_flow_consolidation.status', 'read_project', 'Show Runtime Permission Flow Consolidation status.'),

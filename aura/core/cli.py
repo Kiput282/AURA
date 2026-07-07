@@ -95,6 +95,7 @@ from aura.runtime_safety_freeze_manual_approval_barrier.aura_runtime_safety_free
 from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundation_manager import AuraReviewStabilization101110FoundationManager
 from aura.genesis_runtime_readiness_next_block_planning.aura_genesis_runtime_readiness_next_block_planning_foundation_manager import AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager
 from aura.runtime_permission_flow_consolidation.aura_runtime_permission_flow_consolidation_foundation_manager import AuraRuntimePermissionFlowConsolidationFoundationManager
+from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_manager import AuraAuditEventReviewQueueFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4166,6 +4167,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 113.0 audit event review queue CLI helpers.
+    def print_audit_event_review_queue_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Audit Event Review Queue Safety Boundary"))
+
+    def handle_audit_event_review_queue_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA audit event review queue"
+        manager = AuraAuditEventReviewQueueFoundationManager(project_root=self.project_root)
+
+        if command == "audit-event-review-queue-status":
+            self.print_audit_event_review_queue_packet("AURA Audit Event Review Queue Foundation Status", manager.status())
+            return True
+
+        if command == "audit-event-review-queue-context":
+            self.print_audit_event_review_queue_packet("AURA Audit Event Review Queue Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "audit-event-intake-schema-plan": ("AURA Audit Event Intake Schema Plan", manager.audit_event_intake_schema_plan),
+            "review-queue-state-model-plan": ("AURA Review Queue State Model Plan", manager.review_queue_state_model_plan),
+            "audit-event-triage-rule-plan": ("AURA Audit Event Triage Rule Plan", manager.audit_event_triage_rule_plan),
+            "permission-linkage-review-plan": ("AURA Permission Linkage Review Plan", manager.permission_linkage_review_plan),
+            "runtime-boundary-review-plan": ("AURA Runtime Boundary Review Plan", manager.runtime_boundary_review_plan),
+            "redaction-visibility-review-plan": ("AURA Redaction Visibility Review Plan", manager.redaction_visibility_review_plan),
+            "dashboard-review-queue-payload-plan": ("AURA Dashboard Review Queue Payload Plan", manager.dashboard_review_queue_payload_plan),
+            "review-outcome-catalog-plan": ("AURA Review Outcome Catalog Plan", manager.review_outcome_catalog_plan),
+            "future-audit-writer-boundary-plan": ("AURA Future Audit Writer Boundary Plan", manager.future_audit_writer_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_audit_event_review_queue_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 112.0 runtime permission flow consolidation CLI helpers.
     def print_runtime_permission_flow_consolidation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5441,6 +5483,9 @@ class AuraCLI:
             return True
 
         if self.handle_runtime_permission_flow_consolidation_cli_command(raw_args):
+            return True
+
+        if self.handle_audit_event_review_queue_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 113.0 audit event review queue foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_audit_event_review_queue_foundation",
+            description="Prepare planner-only, metadata-only, and review-queue-blueprint-only Audit Event Review Queue Foundation without writing, emitting, streaming, sending, or persisting audit events; without activating audit writers, persisting review outcomes, dispatching actions, executing tools/commands, mutating files, starting services, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "audit_event_review_queue_status",
+                "audit_event_intake_schema_plan",
+                "review_queue_state_model_plan",
+                "audit_event_triage_rule_plan",
+                "permission_linkage_review_plan",
+                "runtime_boundary_review_plan",
+                "redaction_visibility_review_plan",
+                "dashboard_review_queue_payload_plan",
+                "review_outcome_catalog_plan",
+                "future_audit_writer_boundary_plan",
+                "audit_event_review_queue_context",
+            ],
+        )
+    )
+
     # Sprint 112.0 runtime permission flow consolidation foundation skill.
     registry.register(
         AuraSkill(

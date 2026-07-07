@@ -97,6 +97,7 @@ from aura.runtime_safety_freeze_manual_approval_barrier.aura_runtime_safety_free
 from aura.review_stabilization_101_110.aura_review_stabilization_101_110_foundation_manager import AuraReviewStabilization101110FoundationManager
 from aura.genesis_runtime_readiness_next_block_planning.aura_genesis_runtime_readiness_next_block_planning_foundation_manager import AuraGenesisRuntimeReadinessNextBlockPlanningFoundationManager
 from aura.runtime_permission_flow_consolidation.aura_runtime_permission_flow_consolidation_foundation_manager import AuraRuntimePermissionFlowConsolidationFoundationManager
+from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_manager import AuraAuditEventReviewQueueFoundationManager
 
 
 class AuraShell:
@@ -728,6 +729,17 @@ class AuraShell:
         print("  dashboard-permission-flow-payload-plan <target> Prepare dashboard permission flow payload plan")
         print("  future-runtime-grant-boundary-plan <target> Prepare future runtime grant boundary plan")
         print("  runtime-permission-flow-consolidation-context Show Runtime Permission Flow Consolidation context")
+        print("  audit-event-review-queue-status Show Audit Event Review Queue Foundation status")
+        print("  audit-event-intake-schema-plan <target> Prepare audit event intake schema plan")
+        print("  review-queue-state-model-plan <target> Prepare review queue state model plan")
+        print("  audit-event-triage-rule-plan <target> Prepare audit event triage rule plan")
+        print("  permission-linkage-review-plan <target> Prepare permission linkage review plan")
+        print("  runtime-boundary-review-plan <target> Prepare runtime boundary review plan")
+        print("  redaction-visibility-review-plan <target> Prepare redaction visibility review plan")
+        print("  dashboard-review-queue-payload-plan <target> Prepare dashboard review queue payload plan")
+        print("  review-outcome-catalog-plan <target> Prepare review outcome catalog plan")
+        print("  future-audit-writer-boundary-plan <target> Prepare future audit writer boundary plan")
+        print("  audit-event-review-queue-context Show Audit Event Review Queue context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4690,6 +4702,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 113.0 audit event review queue shell helpers.
+    def print_audit_event_review_queue_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Audit Event Review Queue Safety Boundary"))
+
+    def handle_audit_event_review_queue_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA audit event review queue"
+        manager = AuraAuditEventReviewQueueFoundationManager(project_root=self.project_root)
+
+        if command == "audit-event-review-queue-status":
+            self.print_audit_event_review_queue_packet("AURA Audit Event Review Queue Foundation Status", manager.status())
+            return True
+
+        if command == "audit-event-review-queue-context":
+            self.print_audit_event_review_queue_packet("AURA Audit Event Review Queue Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "audit-event-intake-schema-plan": ("AURA Audit Event Intake Schema Plan", manager.audit_event_intake_schema_plan),
+            "review-queue-state-model-plan": ("AURA Review Queue State Model Plan", manager.review_queue_state_model_plan),
+            "audit-event-triage-rule-plan": ("AURA Audit Event Triage Rule Plan", manager.audit_event_triage_rule_plan),
+            "permission-linkage-review-plan": ("AURA Permission Linkage Review Plan", manager.permission_linkage_review_plan),
+            "runtime-boundary-review-plan": ("AURA Runtime Boundary Review Plan", manager.runtime_boundary_review_plan),
+            "redaction-visibility-review-plan": ("AURA Redaction Visibility Review Plan", manager.redaction_visibility_review_plan),
+            "dashboard-review-queue-payload-plan": ("AURA Dashboard Review Queue Payload Plan", manager.dashboard_review_queue_payload_plan),
+            "review-outcome-catalog-plan": ("AURA Review Outcome Catalog Plan", manager.review_outcome_catalog_plan),
+            "future-audit-writer-boundary-plan": ("AURA Future Audit Writer Boundary Plan", manager.future_audit_writer_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_audit_event_review_queue_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 112.0 runtime permission flow consolidation shell helpers.
     def print_runtime_permission_flow_consolidation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5990,6 +6044,9 @@ class AuraShell:
             return
 
         if self.handle_runtime_permission_flow_consolidation_shell_command(normalized):
+            return
+
+        if self.handle_audit_event_review_queue_shell_command(normalized):
             return
 
         if normalized == "help":
