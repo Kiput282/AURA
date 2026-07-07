@@ -90,6 +90,7 @@ from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_conso
 from aura.permission_decision_runtime_dry_run.aura_permission_decision_runtime_dry_run_foundation_manager import AuraPermissionDecisionRuntimeDryRunFoundationManager
 from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_preview_packet_foundation_manager import AuraRuntimeActionExecutionPreviewPacketFoundationManager
 from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate_dry_run_foundation_manager import AuraLocalRuntimeExecutionGateDryRunFoundationManager
+from aura.runtime_audit_event_packet_preview.aura_runtime_audit_event_packet_preview_foundation_manager import AuraRuntimeAuditEventPacketPreviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4156,6 +4157,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 108.0 runtime audit event packet preview CLI helpers.
+    def print_runtime_audit_event_packet_preview_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Audit Event Packet Preview Safety Boundary"))
+
+    def handle_runtime_audit_event_packet_preview_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA runtime audit event packet preview"
+        manager = AuraRuntimeAuditEventPacketPreviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-audit-event-packet-preview-status":
+            self.print_runtime_audit_event_packet_preview_packet("AURA Runtime Audit Event Packet Preview Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-audit-event-packet-preview-context":
+            self.print_runtime_audit_event_packet_preview_packet("AURA Runtime Audit Event Packet Preview Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "audit-event-candidate-inventory-plan": ("AURA Audit Event Candidate Inventory Plan", manager.audit_event_candidate_inventory_plan),
+            "audit-event-input-snapshot-plan": ("AURA Audit Event Input Snapshot Plan", manager.audit_event_input_snapshot_plan),
+            "runtime-reference-mapping-plan": ("AURA Runtime Reference Mapping Plan", manager.runtime_reference_mapping_plan),
+            "permission-reference-mapping-plan": ("AURA Permission Reference Mapping Plan", manager.permission_reference_mapping_plan),
+            "action-preview-reference-plan": ("AURA Action Preview Reference Plan", manager.action_preview_reference_plan),
+            "audit-payload-shape-plan": ("AURA Audit Payload Shape Plan", manager.audit_payload_shape_plan),
+            "audit-visibility-rule-plan": ("AURA Audit Visibility Rule Plan", manager.audit_visibility_rule_plan),
+            "retention-redaction-boundary-plan": ("AURA Retention Redaction Boundary Plan", manager.retention_redaction_boundary_plan),
+            "dashboard-audit-packet-plan": ("AURA Dashboard Audit Packet Plan", manager.dashboard_audit_packet_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_audit_event_packet_preview_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 107.0 local runtime execution gate dry-run CLI helpers.
     def print_local_runtime_execution_gate_dry_run_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5216,6 +5258,9 @@ class AuraCLI:
             return True
 
         if self.handle_local_runtime_execution_gate_dry_run_cli_command(raw_args):
+            return True
+
+        if self.handle_runtime_audit_event_packet_preview_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

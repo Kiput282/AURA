@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 108.0 runtime audit event packet preview foundation actions.
+    runtime_audit_event_packet_preview_actions = [
+        ('runtime_audit_event_packet_preview.status', 'read_project', 'Show Runtime Audit Event Packet Preview status.'),
+        ('runtime_audit_event_packet_preview.audit_event_candidate_inventory_plan', 'read_project', 'Prepare audit event candidate inventory plan.'),
+        ('runtime_audit_event_packet_preview.audit_event_input_snapshot_plan', 'read_project', 'Prepare audit event input snapshot plan.'),
+        ('runtime_audit_event_packet_preview.runtime_reference_mapping_plan', 'read_project', 'Prepare runtime reference mapping plan.'),
+        ('runtime_audit_event_packet_preview.permission_reference_mapping_plan', 'read_project', 'Prepare permission reference mapping plan.'),
+        ('runtime_audit_event_packet_preview.action_preview_reference_plan', 'read_project', 'Prepare action preview reference plan.'),
+        ('runtime_audit_event_packet_preview.audit_payload_shape_plan', 'read_project', 'Prepare audit payload shape plan.'),
+        ('runtime_audit_event_packet_preview.audit_visibility_rule_plan', 'read_project', 'Prepare audit visibility rule plan.'),
+        ('runtime_audit_event_packet_preview.retention_redaction_boundary_plan', 'read_project', 'Prepare retention redaction boundary plan.'),
+        ('runtime_audit_event_packet_preview.dashboard_audit_packet_plan', 'read_project', 'Prepare dashboard audit packet plan.'),
+        ('runtime_audit_event_packet_preview.context', 'read_project', 'Show Runtime Audit Event Packet Preview context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_audit_event_packet_preview_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_audit_event_packet_preview", description=description, permission_action=permission_action, status="online", skill="aura_runtime_audit_event_packet_preview_foundation"))
+
     # Sprint 107.0 local runtime execution gate dry-run foundation actions.
     local_runtime_execution_gate_dry_run_actions = [
         ('local_runtime_execution_gate_dry_run.status', 'read_project', 'Show Local Runtime Execution Gate Dry-Run status.'),

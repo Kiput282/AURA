@@ -593,6 +593,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and dry-run-gate-blueprint-only Local Runtime Execution Gate Dry-Run Foundation for execution gate candidates, runtime gate input contracts, gate preflight evaluations, safe runtime profile references, permission gate references, execution gate decisions, block reasons, audit gate records, and dashboard gate payloads without opening gates or executing runtime actions.",
                 },
+                {
+                    "id": "aura_runtime_audit_event_packet_preview_foundation",
+                    "name": "AURA Runtime Audit Event Packet Preview Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.108.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and audit-packet-preview-only Runtime Audit Event Packet Preview Foundation for audit event candidates, input snapshots, runtime references, permission references, action preview references, audit payload shapes, visibility rules, retention/redaction boundaries, and dashboard audit packets without writing, emitting, streaming, sending, or persisting audit events.",
+                },
 ]
 
 

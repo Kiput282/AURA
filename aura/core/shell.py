@@ -92,6 +92,7 @@ from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_conso
 from aura.permission_decision_runtime_dry_run.aura_permission_decision_runtime_dry_run_foundation_manager import AuraPermissionDecisionRuntimeDryRunFoundationManager
 from aura.runtime_action_execution_preview_packet.aura_runtime_action_execution_preview_packet_foundation_manager import AuraRuntimeActionExecutionPreviewPacketFoundationManager
 from aura.local_runtime_execution_gate_dry_run.aura_local_runtime_execution_gate_dry_run_foundation_manager import AuraLocalRuntimeExecutionGateDryRunFoundationManager
+from aura.runtime_audit_event_packet_preview.aura_runtime_audit_event_packet_preview_foundation_manager import AuraRuntimeAuditEventPacketPreviewFoundationManager
 
 
 class AuraShell:
@@ -668,6 +669,17 @@ class AuraShell:
         print("  audit-gate-record-plan <target> Prepare audit gate record plan")
         print("  dashboard-gate-payload-plan <target> Prepare dashboard gate payload plan")
         print("  local-runtime-execution-gate-dry-run-context Show Local Runtime Execution Gate Dry-Run context")
+        print("  runtime-audit-event-packet-preview-status Show Runtime Audit Event Packet Preview Foundation status")
+        print("  audit-event-candidate-inventory-plan <target> Prepare audit event candidate inventory plan")
+        print("  audit-event-input-snapshot-plan <target> Prepare audit event input snapshot plan")
+        print("  runtime-reference-mapping-plan <target> Prepare runtime reference mapping plan")
+        print("  permission-reference-mapping-plan <target> Prepare permission reference mapping plan")
+        print("  action-preview-reference-plan <target> Prepare action preview reference plan")
+        print("  audit-payload-shape-plan <target> Prepare audit payload shape plan")
+        print("  audit-visibility-rule-plan <target> Prepare audit visibility rule plan")
+        print("  retention-redaction-boundary-plan <target> Prepare retention redaction boundary plan")
+        print("  dashboard-audit-packet-plan <target> Prepare dashboard audit packet plan")
+        print("  runtime-audit-event-packet-preview-context Show Runtime Audit Event Packet Preview context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4625,6 +4637,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 108.0 runtime audit event packet preview shell helpers.
+    def print_runtime_audit_event_packet_preview_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Audit Event Packet Preview Safety Boundary"))
+
+    def handle_runtime_audit_event_packet_preview_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime audit event packet preview"
+        manager = AuraRuntimeAuditEventPacketPreviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-audit-event-packet-preview-status":
+            self.print_runtime_audit_event_packet_preview_packet("AURA Runtime Audit Event Packet Preview Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-audit-event-packet-preview-context":
+            self.print_runtime_audit_event_packet_preview_packet("AURA Runtime Audit Event Packet Preview Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "audit-event-candidate-inventory-plan": ("AURA Audit Event Candidate Inventory Plan", manager.audit_event_candidate_inventory_plan),
+            "audit-event-input-snapshot-plan": ("AURA Audit Event Input Snapshot Plan", manager.audit_event_input_snapshot_plan),
+            "runtime-reference-mapping-plan": ("AURA Runtime Reference Mapping Plan", manager.runtime_reference_mapping_plan),
+            "permission-reference-mapping-plan": ("AURA Permission Reference Mapping Plan", manager.permission_reference_mapping_plan),
+            "action-preview-reference-plan": ("AURA Action Preview Reference Plan", manager.action_preview_reference_plan),
+            "audit-payload-shape-plan": ("AURA Audit Payload Shape Plan", manager.audit_payload_shape_plan),
+            "audit-visibility-rule-plan": ("AURA Audit Visibility Rule Plan", manager.audit_visibility_rule_plan),
+            "retention-redaction-boundary-plan": ("AURA Retention Redaction Boundary Plan", manager.retention_redaction_boundary_plan),
+            "dashboard-audit-packet-plan": ("AURA Dashboard Audit Packet Plan", manager.dashboard_audit_packet_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_audit_event_packet_preview_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 107.0 local runtime execution gate dry-run shell helpers.
     def print_local_runtime_execution_gate_dry_run_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5705,6 +5759,9 @@ class AuraShell:
             return
 
         if self.handle_local_runtime_execution_gate_dry_run_shell_command(normalized):
+            return
+
+        if self.handle_runtime_audit_event_packet_preview_shell_command(normalized):
             return
 
         if normalized == "help":

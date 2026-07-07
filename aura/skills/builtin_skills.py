@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 108.0 runtime audit event packet preview foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_audit_event_packet_preview_foundation",
+            description="Prepare planner-only, metadata-only, and audit-packet-preview-only Runtime Audit Event Packet Preview Foundation without writing audit logs, emitting events, streaming events, persisting records, writing files, dispatching actions, executing tools/commands, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_audit_event_packet_preview_status",
+                "audit_event_candidate_inventory_plan",
+                "audit_event_input_snapshot_plan",
+                "runtime_reference_mapping_plan",
+                "permission_reference_mapping_plan",
+                "action_preview_reference_plan",
+                "audit_payload_shape_plan",
+                "audit_visibility_rule_plan",
+                "retention_redaction_boundary_plan",
+                "dashboard_audit_packet_plan",
+                "runtime_audit_event_packet_preview_context",
+            ],
+        )
+    )
+
     # Sprint 107.0 local runtime execution gate dry-run foundation skill.
     registry.register(
         AuraSkill(
