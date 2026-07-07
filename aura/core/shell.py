@@ -88,6 +88,7 @@ from aura.sprint_100_review_stabilization.aura_sprint_100_review_stabilization_f
 from aura.genesis_runtime_readiness_baseline.aura_genesis_runtime_readiness_baseline_foundation_manager import AuraGenesisRuntimeReadinessBaselineFoundationManager
 from aura.safe_runtime_configuration_profile.aura_safe_runtime_configuration_profile_foundation_manager import AuraSafeRuntimeConfigurationProfileFoundationManager
 from aura.local_service_start_proposal_review.aura_local_service_start_proposal_review_foundation_manager import AuraLocalServiceStartProposalReviewFoundationManager
+from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_consolidation_foundation_manager import AuraDashboardApiContractConsolidationFoundationManager
 
 
 class AuraShell:
@@ -620,6 +621,17 @@ class AuraShell:
         print("  local-service-start-pro Prepare audit event plan")
         print("  user-approval-decision-plan <target> Prepare user approval decision plan")
         print("  local-service-start-proposal-review-context Show Local Service Start Proposal Review context")
+        print("  dashboard-api-contract-consolidation-status Show Dashboard API Contract Consolidation Foundation status")
+        print("  api-contract-inventory-plan <target> Prepare API contract inventory plan")
+        print("  endpoint-schema-alignment-plan <target> Prepare endpoint schema alignment plan")
+        print("  request-response-contract-plan <target> Prepare request/response contract plan")
+        print("  permission-contract-mapping-plan <target> Prepare permission contract mapping plan")
+        print("  dashboard-status-payload-plan <target> Prepare dashboard status payload plan")
+        print("  error-response-contract-plan <target> Prepare error response contract plan")
+        print("  mock-api-boundary-plan <target> Prepare mock API boundary plan")
+        print("  frontend-backend-contract-boundary-plan <target> Prepare frontend/backend contract boundary plan")
+        print("  contract-validation-checklist-plan <target> Prepare contract validation checklist plan")
+        print("  dashboard-api-contract-consolidation-context Show Dashboard API Contract Consolidation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4573,6 +4585,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 104.0 dashboard API contract consolidation shell helpers.
+    def print_dashboard_api_contract_consolidation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Dashboard API Contract Consolidation Safety Boundary"))
+
+    def handle_dashboard_api_contract_consolidation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Dashboard API contract consolidation"
+        manager = AuraDashboardApiContractConsolidationFoundationManager(project_root=self.project_root)
+
+        if command == "dashboard-api-contract-consolidation-status":
+            self.print_dashboard_api_contract_consolidation_packet("AURA Dashboard API Contract Consolidation Foundation Status", manager.status())
+            return True
+
+        if command == "dashboard-api-contract-consolidation-context":
+            self.print_dashboard_api_contract_consolidation_packet("AURA Dashboard API Contract Consolidation Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "api-contract-inventory-plan": ("AURA API Contract Inventory Plan", manager.api_contract_inventory_plan),
+            "endpoint-schema-alignment-plan": ("AURA Endpoint Schema Alignment Plan", manager.endpoint_schema_alignment_plan),
+            "request-response-contract-plan": ("AURA Request Response Contract Plan", manager.request_response_contract_plan),
+            "permission-contract-mapping-plan": ("AURA Permission Contract Mapping Plan", manager.permission_contract_mapping_plan),
+            "dashboard-status-payload-plan": ("AURA Dashboard Status Payload Plan", manager.dashboard_status_payload_plan),
+            "error-response-contract-plan": ("AURA Error Response Contract Plan", manager.error_response_contract_plan),
+            "mock-api-boundary-plan": ("AURA Mock API Boundary Plan", manager.mock_api_boundary_plan),
+            "frontend-backend-contract-boundary-plan": ("AURA Frontend Backend Contract Boundary Plan", manager.frontend_backend_contract_boundary_plan),
+            "contract-validation-checklist-plan": ("AURA Contract Validation Checklist Plan", manager.contract_validation_checklist_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_dashboard_api_contract_consolidation_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 103.0 local service start proposal review shell helpers.
     def print_local_service_start_proposal_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5477,6 +5531,9 @@ class AuraShell:
             return
 
         if self.handle_local_service_start_proposal_review_shell_command(normalized):
+            return
+
+        if self.handle_dashboard_api_contract_consolidation_shell_command(normalized):
             return
 
         if normalized == "help":

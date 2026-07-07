@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 104.0 dashboard API contract consolidation foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_dashboard_api_contract_consolidation_foundation",
+            description="Prepare planner-only, metadata-only, and contract-blueprint-only Dashboard API Contract Consolidation Foundation without starting API/web servers, binding ports, handling requests, probing networks, reading/writing runtime files, dispatching actions, executing tools/commands, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "dashboard_api_contract_consolidation_status",
+                "api_contract_inventory_plan",
+                "endpoint_schema_alignment_plan",
+                "request_response_contract_plan",
+                "permission_contract_mapping_plan",
+                "dashboard_status_payload_plan",
+                "error_response_contract_plan",
+                "mock_api_boundary_plan",
+                "frontend_backend_contract_boundary_plan",
+                "contract_validation_checklist_plan",
+                "dashboard_api_contract_consolidation_context",
+            ],
+        )
+    )
+
     # Sprint 103.0 local service start proposal review foundation skill.
     registry.register(
         AuraSkill(

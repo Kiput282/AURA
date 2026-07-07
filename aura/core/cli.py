@@ -86,6 +86,7 @@ from aura.sprint_100_review_stabilization.aura_sprint_100_review_stabilization_f
 from aura.genesis_runtime_readiness_baseline.aura_genesis_runtime_readiness_baseline_foundation_manager import AuraGenesisRuntimeReadinessBaselineFoundationManager
 from aura.safe_runtime_configuration_profile.aura_safe_runtime_configuration_profile_foundation_manager import AuraSafeRuntimeConfigurationProfileFoundationManager
 from aura.local_service_start_proposal_review.aura_local_service_start_proposal_review_foundation_manager import AuraLocalServiceStartProposalReviewFoundationManager
+from aura.dashboard_api_contract_consolidation.aura_dashboard_api_contract_consolidation_foundation_manager import AuraDashboardApiContractConsolidationFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4148,6 +4149,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 104.0 dashboard API contract consolidation CLI helpers.
+    def print_dashboard_api_contract_consolidation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Dashboard API Contract Consolidation Safety Boundary"))
+
+    def handle_dashboard_api_contract_consolidation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA Dashboard API contract consolidation"
+        manager = AuraDashboardApiContractConsolidationFoundationManager(project_root=self.project_root)
+
+        if command == "dashboard-api-contract-consolidation-status":
+            self.print_dashboard_api_contract_consolidation_packet("AURA Dashboard API Contract Consolidation Foundation Status", manager.status())
+            return True
+
+        if command == "dashboard-api-contract-consolidation-context":
+            self.print_dashboard_api_contract_consolidation_packet("AURA Dashboard API Contract Consolidation Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "api-contract-inventory-plan": ("AURA API Contract Inventory Plan", manager.api_contract_inventory_plan),
+            "endpoint-schema-alignment-plan": ("AURA Endpoint Schema Alignment Plan", manager.endpoint_schema_alignment_plan),
+            "request-response-contract-plan": ("AURA Request Response Contract Plan", manager.request_response_contract_plan),
+            "permission-contract-mapping-plan": ("AURA Permission Contract Mapping Plan", manager.permission_contract_mapping_plan),
+            "dashboard-status-payload-plan": ("AURA Dashboard Status Payload Plan", manager.dashboard_status_payload_plan),
+            "error-response-contract-plan": ("AURA Error Response Contract Plan", manager.error_response_contract_plan),
+            "mock-api-boundary-plan": ("AURA Mock API Boundary Plan", manager.mock_api_boundary_plan),
+            "frontend-backend-contract-boundary-plan": ("AURA Frontend Backend Contract Boundary Plan", manager.frontend_backend_contract_boundary_plan),
+            "contract-validation-checklist-plan": ("AURA Contract Validation Checklist Plan", manager.contract_validation_checklist_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_dashboard_api_contract_consolidation_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 103.0 local service start proposal review CLI helpers.
     def print_local_service_start_proposal_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5036,6 +5078,9 @@ class AuraCLI:
             return True
 
         if self.handle_local_service_start_proposal_review_cli_command(raw_args):
+            return True
+
+        if self.handle_dashboard_api_contract_consolidation_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

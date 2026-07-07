@@ -545,6 +545,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and proposal-review-only Local Service Start Proposal Review Foundation for future local service start proposals, service candidates, preflight requirements, port binding review, process launch boundaries, permission requirements, risk classification, rollback/kill-switch planning, audit events, and user approval decisions without starting services or activating runtime.",
                 },
+                {
+                    "id": "aura_dashboard_api_contract_consolidation_foundation",
+                    "name": "AURA Dashboard API Contract Consolidation Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.104.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and contract-blueprint-only Dashboard API Contract Consolidation Foundation for API contracts, endpoint schemas, request/response contracts, permission mappings, dashboard payloads, error responses, mock API boundaries, frontend/backend boundaries, and contract validation without starting API runtime.",
+                },
 ]
 
 

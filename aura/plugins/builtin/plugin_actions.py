@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 104.0 dashboard API contract consolidation foundation actions.
+    dashboard_api_contract_consolidation_actions = [
+        ('dashboard_api_contract_consolidation.status', 'read_project', 'Show Dashboard API Contract Consolidation status.'),
+        ('dashboard_api_contract_consolidation.api_contract_inventory_plan', 'read_project', 'Prepare API contract inventory plan.'),
+        ('dashboard_api_contract_consolidation.endpoint_schema_alignment_plan', 'read_project', 'Prepare endpoint schema alignment plan.'),
+        ('dashboard_api_contract_consolidation.request_response_contract_plan', 'read_project', 'Prepare request/response contract plan.'),
+        ('dashboard_api_contract_consolidation.permission_contract_mapping_plan', 'read_project', 'Prepare permission contract mapping plan.'),
+        ('dashboard_api_contract_consolidation.dashboard_status_payload_plan', 'read_project', 'Prepare dashboard status payload plan.'),
+        ('dashboard_api_contract_consolidation.error_response_contract_plan', 'read_project', 'Prepare error response contract plan.'),
+        ('dashboard_api_contract_consolidation.mock_api_boundary_plan', 'read_project', 'Prepare mock API boundary plan.'),
+        ('dashboard_api_contract_consolidation.frontend_backend_contract_boundary_plan', 'read_project', 'Prepare frontend/backend contract boundary plan.'),
+        ('dashboard_api_contract_consolidation.contract_validation_checklist_plan', 'read_project', 'Prepare contract validation checklist plan.'),
+        ('dashboard_api_contract_consolidation.context', 'read_project', 'Show Dashboard API Contract Consolidation context.'),
+    ]
+
+    for action_name, permission_action, description in dashboard_api_contract_consolidation_actions:
+        registry.register(PluginAction(name=action_name, plugin="dashboard_api_contract_consolidation", description=description, permission_action=permission_action, status="online", skill="aura_dashboard_api_contract_consolidation_foundation"))
+
     # Sprint 103.0 local service start proposal review foundation actions.
     local_service_start_proposal_review_actions = [
         ('local_service_start_proposal_review.status', 'read_project', 'Show Local Service Start Proposal Review status.'),
