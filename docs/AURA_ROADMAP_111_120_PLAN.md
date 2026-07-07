@@ -1,7 +1,7 @@
 # AURA Roadmap 111-120 Plan
 
 Status: ACTIVE
-Version seed: v0.116.0-genesis
+Version seed: v0.117.0-genesis
 Phase: Genesis Runtime Readiness Next Block
 Owner: Kiput
 Motto: Grow Together
@@ -53,7 +53,7 @@ Review safe local action contracts for open/create/write/service-start boundarie
 
 Prepare ORION client boundary contract for future client-side observation/action with permission and emergency stop requirements.
 
-### Sprint 117 — Runtime Error and Rollback Preview
+### Sprint 117 — Runtime Error and Rollback Preview — completed
 
 Prepare runtime error, rollback, cancellation, and recovery preview packets without executing runtime actions.
 
@@ -213,4 +213,32 @@ Safety result:
 - runtime local actions/desktop controls executed: 0
 - runtime ORION events/states: 0
 - runtime actions/tools/commands executed: 0
+- runtime execution features: 0
+
+## Sprint 117 Completion Summary
+
+Sprint 117 completed the Runtime Error and Rollback Preview Foundation.
+
+Completed foundation items:
+
+- runtime error taxonomy preview planning
+- rollback preview packet planning
+- failure recovery state model planning
+- cancellation boundary preview planning
+- partial execution guard preview planning
+- permission error review planning
+- audit error reference preview planning
+- dashboard error rollback payload planning
+- future runtime recovery boundary planning
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime error events/states/rollback packets written: 0
+- runtime rollbacks/recoveries/cancellations executed: 0
+- runtime partial execution commits: 0
+- runtime actions/tools/commands executed: 0
+- runtime files/services/ports/network/ORION: 0
 - runtime execution features: 0

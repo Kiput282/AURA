@@ -101,6 +101,7 @@ from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_mana
 from aura.dashboard_runtime_readiness_view_model.aura_dashboard_runtime_readiness_view_model_foundation_manager import AuraDashboardRuntimeReadinessViewModelFoundationManager
 from aura.safe_local_action_contract_review.aura_safe_local_action_contract_review_foundation_manager import AuraSafeLocalActionContractReviewFoundationManager
 from aura.orion_client_boundary_contract.aura_orion_client_boundary_contract_foundation_manager import AuraOrionClientBoundaryContractFoundationManager
+from aura.runtime_error_rollback_preview.aura_runtime_error_rollback_preview_foundation_manager import AuraRuntimeErrorRollbackPreviewFoundationManager
 
 
 class AuraShell:
@@ -776,6 +777,17 @@ class AuraShell:
         print("  orion-data-flow-redaction-boundary-plan <target> Prepare ORION data flow redaction boundary plan")
         print("  future-orion-runtime-boundary-plan <target> Prepare future ORION runtime boundary plan")
         print("  orion-client-boundary-contract-context Show ORION Client Boundary Contract context")
+        print("  runtime-error-rollback-preview-status Show Runtime Error and Rollback Preview Foundation status")
+        print("  runtime-error-taxonomy-preview-plan <target> Prepare runtime error taxonomy preview plan")
+        print("  rollback-preview-packet-plan <target> Prepare rollback preview packet plan")
+        print("  failure-recovery-state-model-plan <target> Prepare failure recovery state model plan")
+        print("  cancellation-boundary-preview-plan <target> Prepare cancellation boundary preview plan")
+        print("  partial-execution-guard-preview-plan <target> Prepare partial execution guard preview plan")
+        print("  permission-error-review-plan <target> Prepare permission error review plan")
+        print("  audit-error-reference-preview-plan <target> Prepare audit error reference preview plan")
+        print("  dashboard-error-rollback-payload-plan <target> Prepare dashboard error rollback payload plan")
+        print("  future-runtime-recovery-boundary-plan <target> Prepare future runtime recovery boundary plan")
+        print("  runtime-error-rollback-preview-context Show Runtime Error and Rollback Preview context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4742,6 +4754,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 117.0 runtime error rollback preview shell helpers.
+    def print_runtime_error_rollback_preview_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Error and Rollback Preview Safety Boundary"))
+
+    def handle_runtime_error_rollback_preview_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime error rollback preview"
+        manager = AuraRuntimeErrorRollbackPreviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-error-rollback-preview-status":
+            self.print_runtime_error_rollback_preview_packet("AURA Runtime Error and Rollback Preview Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-error-rollback-preview-context":
+            self.print_runtime_error_rollback_preview_packet("AURA Runtime Error and Rollback Preview Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "runtime-error-taxonomy-preview-plan": ("AURA Runtime Error Taxonomy Preview Plan", manager.runtime_error_taxonomy_preview_plan),
+            "rollback-preview-packet-plan": ("AURA Rollback Preview Packet Plan", manager.rollback_preview_packet_plan),
+            "failure-recovery-state-model-plan": ("AURA Failure Recovery State Model Plan", manager.failure_recovery_state_model_plan),
+            "cancellation-boundary-preview-plan": ("AURA Cancellation Boundary Preview Plan", manager.cancellation_boundary_preview_plan),
+            "partial-execution-guard-preview-plan": ("AURA Partial Execution Guard Preview Plan", manager.partial_execution_guard_preview_plan),
+            "permission-error-review-plan": ("AURA Permission Error Review Plan", manager.permission_error_review_plan),
+            "audit-error-reference-preview-plan": ("AURA Audit Error Reference Preview Plan", manager.audit_error_reference_preview_plan),
+            "dashboard-error-rollback-payload-plan": ("AURA Dashboard Error Rollback Payload Plan", manager.dashboard_error_rollback_payload_plan),
+            "future-runtime-recovery-boundary-plan": ("AURA Future Runtime Recovery Boundary Plan", manager.future_runtime_recovery_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_error_rollback_preview_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 116.0 ORION client boundary contract shell helpers.
     def print_orion_client_boundary_contract_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6218,6 +6272,9 @@ class AuraShell:
             return
 
         if self.handle_orion_client_boundary_contract_shell_command(normalized):
+            return
+
+        if self.handle_runtime_error_rollback_preview_shell_command(normalized):
             return
 
         if normalized == "help":

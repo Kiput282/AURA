@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 117.0 runtime error rollback preview foundation actions.
+    runtime_error_rollback_preview_actions = [
+        ('runtime_error_rollback_preview.status', 'read_project', 'Show Runtime Error and Rollback Preview status.'),
+        ('runtime_error_rollback_preview.runtime_error_taxonomy_preview_plan', 'read_project', 'Prepare runtime error taxonomy preview plan.'),
+        ('runtime_error_rollback_preview.rollback_preview_packet_plan', 'read_project', 'Prepare rollback preview packet plan.'),
+        ('runtime_error_rollback_preview.failure_recovery_state_model_plan', 'read_project', 'Prepare failure recovery state model plan.'),
+        ('runtime_error_rollback_preview.cancellation_boundary_preview_plan', 'read_project', 'Prepare cancellation boundary preview plan.'),
+        ('runtime_error_rollback_preview.partial_execution_guard_preview_plan', 'read_project', 'Prepare partial execution guard preview plan.'),
+        ('runtime_error_rollback_preview.permission_error_review_plan', 'read_project', 'Prepare permission error review plan.'),
+        ('runtime_error_rollback_preview.audit_error_reference_preview_plan', 'read_project', 'Prepare audit error reference preview plan.'),
+        ('runtime_error_rollback_preview.dashboard_error_rollback_payload_plan', 'read_project', 'Prepare dashboard error rollback payload plan.'),
+        ('runtime_error_rollback_preview.future_runtime_recovery_boundary_plan', 'read_project', 'Prepare future runtime recovery boundary plan.'),
+        ('runtime_error_rollback_preview.context', 'read_project', 'Show Runtime Error and Rollback Preview context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_error_rollback_preview_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_error_rollback_preview", description=description, permission_action=permission_action, status="online", skill="aura_runtime_error_rollback_preview_foundation"))
+
     # Sprint 116.0 ORION client boundary contract foundation actions.
     orion_client_boundary_contract_actions = [
         ('orion_client_boundary_contract.status', 'read_project', 'Show ORION Client Boundary Contract status.'),

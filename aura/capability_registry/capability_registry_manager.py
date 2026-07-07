@@ -701,6 +701,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and boundary-contract-only ORION Client Boundary Contract Foundation for ORION client identity, ATLAS/ORION authority, ORION sense permission, ORION local action, emergency stop, dashboard status payload, runtime handshake, data-flow redaction, and future ORION runtime boundaries without starting ORION client runtime or enabling runtime execution.",
                 },
+                {
+                    "id": "aura_runtime_error_rollback_preview_foundation",
+                    "name": "AURA Runtime Error and Rollback Preview Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.117.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and preview-only Runtime Error and Rollback Preview Foundation for runtime error taxonomy, rollback preview packets, failure recovery state models, cancellation boundaries, partial execution guards, permission error reviews, audit error references, dashboard error rollback payloads, and future runtime recovery boundaries without executing rollback, recovery, cancellation, or runtime mutation.",
+                },
 ]
 
 

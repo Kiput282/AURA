@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 117.0 runtime error rollback preview foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_error_rollback_preview_foundation",
+            description="Prepare planner-only, metadata-only, and preview-only Runtime Error and Rollback Preview Foundation without executing rollback, performing recovery, persisting error state, writing audit events, dispatching actions, executing tools/commands, mutating files, starting services, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_error_rollback_preview_status",
+                "runtime_error_taxonomy_preview_plan",
+                "rollback_preview_packet_plan",
+                "failure_recovery_state_model_plan",
+                "cancellation_boundary_preview_plan",
+                "partial_execution_guard_preview_plan",
+                "permission_error_review_plan",
+                "audit_error_reference_preview_plan",
+                "dashboard_error_rollback_payload_plan",
+                "future_runtime_recovery_boundary_plan",
+                "runtime_error_rollback_preview_context",
+            ],
+        )
+    )
+
     # Sprint 116.0 ORION client boundary contract foundation skill.
     registry.register(
         AuraSkill(

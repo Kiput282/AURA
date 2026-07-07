@@ -99,6 +99,7 @@ from aura.audit_event_review_queue.aura_audit_event_review_queue_foundation_mana
 from aura.dashboard_runtime_readiness_view_model.aura_dashboard_runtime_readiness_view_model_foundation_manager import AuraDashboardRuntimeReadinessViewModelFoundationManager
 from aura.safe_local_action_contract_review.aura_safe_local_action_contract_review_foundation_manager import AuraSafeLocalActionContractReviewFoundationManager
 from aura.orion_client_boundary_contract.aura_orion_client_boundary_contract_foundation_manager import AuraOrionClientBoundaryContractFoundationManager
+from aura.runtime_error_rollback_preview.aura_runtime_error_rollback_preview_foundation_manager import AuraRuntimeErrorRollbackPreviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4174,6 +4175,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 117.0 runtime error rollback preview CLI helpers.
+    def print_runtime_error_rollback_preview_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Error and Rollback Preview Safety Boundary"))
+
+    def handle_runtime_error_rollback_preview_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA runtime error rollback preview"
+        manager = AuraRuntimeErrorRollbackPreviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-error-rollback-preview-status":
+            self.print_runtime_error_rollback_preview_packet("AURA Runtime Error and Rollback Preview Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-error-rollback-preview-context":
+            self.print_runtime_error_rollback_preview_packet("AURA Runtime Error and Rollback Preview Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "runtime-error-taxonomy-preview-plan": ("AURA Runtime Error Taxonomy Preview Plan", manager.runtime_error_taxonomy_preview_plan),
+            "rollback-preview-packet-plan": ("AURA Rollback Preview Packet Plan", manager.rollback_preview_packet_plan),
+            "failure-recovery-state-model-plan": ("AURA Failure Recovery State Model Plan", manager.failure_recovery_state_model_plan),
+            "cancellation-boundary-preview-plan": ("AURA Cancellation Boundary Preview Plan", manager.cancellation_boundary_preview_plan),
+            "partial-execution-guard-preview-plan": ("AURA Partial Execution Guard Preview Plan", manager.partial_execution_guard_preview_plan),
+            "permission-error-review-plan": ("AURA Permission Error Review Plan", manager.permission_error_review_plan),
+            "audit-error-reference-preview-plan": ("AURA Audit Error Reference Preview Plan", manager.audit_error_reference_preview_plan),
+            "dashboard-error-rollback-payload-plan": ("AURA Dashboard Error Rollback Payload Plan", manager.dashboard_error_rollback_payload_plan),
+            "future-runtime-recovery-boundary-plan": ("AURA Future Runtime Recovery Boundary Plan", manager.future_runtime_recovery_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_error_rollback_preview_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 116.0 ORION client boundary contract CLI helpers.
     def print_orion_client_boundary_contract_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5621,6 +5663,9 @@ class AuraCLI:
             return True
 
         if self.handle_orion_client_boundary_contract_cli_command(raw_args):
+            return True
+
+        if self.handle_runtime_error_rollback_preview_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
