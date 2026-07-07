@@ -533,6 +533,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and configuration-blueprint-only Safe Runtime Configuration Profile Foundation for profile types, runtime mode policies, service boundaries, permission boundaries, file system boundaries, network boundaries, dry-run requirements, rollout guards, and configuration audit visibility.",
                 },
+                {
+                    "id": "aura_local_service_start_proposal_review_foundation",
+                    "name": "AURA Local Service Start Proposal Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "medium",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.103.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and proposal-review-only Local Service Start Proposal Review Foundation for future local service start proposals, service candidates, preflight requirements, port binding review, process launch boundaries, permission requirements, risk classification, rollback/kill-switch planning, audit events, and user approval decisions without starting services or activating runtime.",
+                },
 ]
 
 

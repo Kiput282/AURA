@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 103.0 local service start proposal review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_service_start_proposal_review_foundation",
+            description="Prepare planner-only, metadata-only, and proposal-review-only AURA Local Service Start Proposal Review Foundation for future local service start proposals without starting services, binding ports, probing networks, changing permissions, dispatching actions, executing tools or commands, connecting ORION, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_service_start_proposal_review_status",
+                "service_start_candidate_inventory_plan",
+                "service_start_preflight_requirement_plan",
+                "port_binding_review_plan",
+                "process_launch_boundary_plan",
+                "permission_requirement_plan",
+                "risk_classification_plan",
+                "rollback_kill_switch_plan",
+                "audit_event_plan",
+                "user_approval_decision_plan",
+                "local_service_start_proposal_review_context",
+            ],
+        )
+    )
+
     # Sprint 102.0 safe runtime configuration profile foundation skill.
     registry.register(
         AuraSkill(

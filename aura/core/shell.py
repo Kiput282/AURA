@@ -87,6 +87,7 @@ from aura.pre_runtime_security_audit.aura_pre_runtime_security_audit_foundation_
 from aura.sprint_100_review_stabilization.aura_sprint_100_review_stabilization_foundation_manager import AuraSprint100ReviewStabilizationFoundationManager
 from aura.genesis_runtime_readiness_baseline.aura_genesis_runtime_readiness_baseline_foundation_manager import AuraGenesisRuntimeReadinessBaselineFoundationManager
 from aura.safe_runtime_configuration_profile.aura_safe_runtime_configuration_profile_foundation_manager import AuraSafeRuntimeConfigurationProfileFoundationManager
+from aura.local_service_start_proposal_review.aura_local_service_start_proposal_review_foundation_manager import AuraLocalServiceStartProposalReviewFoundationManager
 
 
 class AuraShell:
@@ -606,6 +607,19 @@ class AuraShell:
         print("  configuration-audit-visibility-plan <target> Prepare configuration audit visibility plan")
         print("  safe-runtime-configuration-profile-safety-policy-plan <target> Prepare Safe Runtime Configuration Profile safety policy plan")
         print("  safe-runtime-configuration-profile-context Show Safe Runtime Configuration Profile Foundation context")
+        print("  local-service-start-proposal-review-status Show Local Service Start Proposal Review Foundation status")
+        print("  service-start-candidate-inventory-plan <target> Prepare service start candidate inventory plan")
+        print("  service-start-preflight-requirement-plan <target> Prepare service start preflight requirement plan")
+        print("  port-binding-review-plan <target> Prepare port binding review plan")
+        print("  process-launch-boundary-plan <target> Prepare process launch boundary plan")
+        print("  permission-requirement-plan <target> Prepare permission requirement plan")
+        print("  risk-classification-plan <target> Prepare risk classification plan")
+        print("  rollback-kill-switch-plan <target> Prepare rollback kill-switch plan")
+        print("  audit-event-plan <target> Prepare audit event plan")
+        print("  user-approval-decision-plan <target> Prepare user approval decision plan")
+        print("  local-service-start-pro Prepare audit event plan")
+        print("  user-approval-decision-plan <target> Prepare user approval decision plan")
+        print("  local-service-start-proposal-review-context Show Local Service Start Proposal Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4558,6 +4572,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 103.0 local service start proposal review shell helpers.
+    def print_local_service_start_proposal_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Start Proposal Review Safety Boundary"))
+
+    def handle_local_service_start_proposal_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA local service start proposal review"
+        manager = AuraLocalServiceStartProposalReviewFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-start-proposal-review-status":
+            self.print_local_service_start_proposal_review_packet("AURA Local Service Start Proposal Review Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-start-proposal-review-context":
+            self.print_local_service_start_proposal_review_packet("AURA Local Service Start Proposal Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-start-candidate-inventory-plan": ("AURA Service Start Candidate Inventory Plan", manager.service_start_candidate_inventory_plan),
+            "service-start-preflight-requirement-plan": ("AURA Service Start Preflight Requirement Plan", manager.service_start_preflight_requirement_plan),
+            "port-binding-review-plan": ("AURA Port Binding Review Plan", manager.port_binding_review_plan),
+            "process-launch-boundary-plan": ("AURA Process Launch Boundary Plan", manager.process_launch_boundary_plan),
+            "permission-requirement-plan": ("AURA Permission Requirement Plan", manager.permission_requirement_plan),
+            "risk-classification-plan": ("AURA Risk Classification Plan", manager.risk_classification_plan),
+            "rollback-kill-switch-plan": ("AURA Rollback Kill-Switch Plan", manager.rollback_kill_switch_plan),
+            "audit-event-plan": ("AURA Audit Event Plan", manager.audit_event_plan),
+            "user-approval-decision-plan": ("AURA User Approval Decision Plan", manager.user_approval_decision_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_start_proposal_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 102.0 safe runtime configuration profile foundation shell helpers.
     def print_safe_runtime_configuration_profile_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5418,6 +5474,9 @@ class AuraShell:
             return
 
         if self.handle_safe_runtime_configuration_profile_shell_command(normalized):
+            return
+
+        if self.handle_local_service_start_proposal_review_shell_command(normalized):
             return
 
         if normalized == "help":

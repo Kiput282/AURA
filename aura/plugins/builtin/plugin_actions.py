@@ -2899,6 +2899,33 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 103.0 local service start proposal review foundation actions.
+    local_service_start_proposal_review_actions = [
+        ('local_service_start_proposal_review.status', 'read_project', 'Show Local Service Start Proposal Review status.'),
+        ('local_service_start_proposal_review.service_start_candidate_inventory_plan', 'read_project', 'Prepare service start candidate inventory plan.'),
+        ('local_service_start_proposal_review.service_start_preflight_requirement_plan', 'read_project', 'Prepare service start preflight requirement plan.'),
+        ('local_service_start_proposal_review.port_binding_review_plan', 'read_project', 'Prepare port binding review plan.'),
+        ('local_service_start_proposal_review.process_launch_boundary_plan', 'read_project', 'Prepare process launch boundary plan.'),
+        ('local_service_start_proposal_review.permission_requirement_plan', 'read_project', 'Prepare permission requirement plan.'),
+        ('local_service_start_proposal_review.risk_classification_plan', 'read_project', 'Prepare risk classification plan.'),
+        ('local_service_start_proposal_review.rollback_kill_switch_plan', 'read_project', 'Prepare rollback and kill-switch plan.'),
+        ('local_service_start_proposal_review.audit_event_plan', 'read_project', 'Prepare audit event plan.'),
+        ('local_service_start_proposal_review.user_approval_decision_plan', 'read_project', 'Prepare user approval decision plan.'),
+        ('local_service_start_proposal_review.context', 'read_project', 'Show Local Service Start Proposal Review context.'),
+    ]
+
+    for action_name, permission_action, description in local_service_start_proposal_review_actions:
+        registry.register(
+            PluginAction(
+                name=action_name,
+                plugin="local_service_start_proposal_review",
+                description=description,
+                permission_action=permission_action,
+                status="online",
+                skill="aura_local_service_start_proposal_review_foundation",
+            )
+        )
+
     # Sprint 102.0 safe runtime configuration profile foundation actions.
     safe_runtime_configuration_profile_actions = [
         ('safe_runtime_configuration_profile.status', 'read_project', 'Show AURA Safe Runtime Configuration Profile Foundation status.'),

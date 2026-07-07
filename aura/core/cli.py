@@ -85,6 +85,7 @@ from aura.pre_runtime_security_audit.aura_pre_runtime_security_audit_foundation_
 from aura.sprint_100_review_stabilization.aura_sprint_100_review_stabilization_foundation_manager import AuraSprint100ReviewStabilizationFoundationManager
 from aura.genesis_runtime_readiness_baseline.aura_genesis_runtime_readiness_baseline_foundation_manager import AuraGenesisRuntimeReadinessBaselineFoundationManager
 from aura.safe_runtime_configuration_profile.aura_safe_runtime_configuration_profile_foundation_manager import AuraSafeRuntimeConfigurationProfileFoundationManager
+from aura.local_service_start_proposal_review.aura_local_service_start_proposal_review_foundation_manager import AuraLocalServiceStartProposalReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4146,6 +4147,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 103.0 local service start proposal review CLI helpers.
+    def print_local_service_start_proposal_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Start Proposal Review Safety Boundary"))
+
+    def handle_local_service_start_proposal_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local service start proposal review"
+        manager = AuraLocalServiceStartProposalReviewFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-start-proposal-review-status":
+            self.print_local_service_start_proposal_review_packet("AURA Local Service Start Proposal Review Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-start-proposal-review-context":
+            self.print_local_service_start_proposal_review_packet("AURA Local Service Start Proposal Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-start-candidate-inventory-plan": ("AURA Service Start Candidate Inventory Plan", manager.service_start_candidate_inventory_plan),
+            "service-start-preflight-requirement-plan": ("AURA Service Start Preflight Requirement Plan", manager.service_start_preflight_requirement_plan),
+            "port-binding-review-plan": ("AURA Port Binding Review Plan", manager.port_binding_review_plan),
+            "process-launch-boundary-plan": ("AURA Process Launch Boundary Plan", manager.process_launch_boundary_plan),
+            "permission-requirement-plan": ("AURA Permission Requirement Plan", manager.permission_requirement_plan),
+            "risk-classification-plan": ("AURA Risk Classification Plan", manager.risk_classification_plan),
+            "rollback-kill-switch-plan": ("AURA Rollback Kill-Switch Plan", manager.rollback_kill_switch_plan),
+            "audit-event-plan": ("AURA Audit Event Plan", manager.audit_event_plan),
+            "user-approval-decision-plan": ("AURA User Approval Decision Plan", manager.user_approval_decision_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_start_proposal_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 102.0 safe runtime configuration profile foundation CLI helpers.
     def print_safe_runtime_configuration_profile_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -4991,6 +5033,9 @@ class AuraCLI:
             return True
 
         if self.handle_safe_runtime_configuration_profile_cli_command(raw_args):
+            return True
+
+        if self.handle_local_service_start_proposal_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
