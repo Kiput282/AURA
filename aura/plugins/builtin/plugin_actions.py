@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 129.0 runtime activation blocker register boundary review foundation actions.
+    runtime_activation_blocker_register_boundary_review_actions = [
+        ('runtime_activation_blocker_register_boundary_review.status', 'read_project', 'Show Runtime Activation Blocker Register Boundary Review status.'),
+        ('runtime_activation_blocker_register_boundary_review.blocker_register_schema_boundary_review_plan', 'read_project', 'Prepare blocker register schema boundary review plan.'),
+        ('runtime_activation_blocker_register_boundary_review.blocker_source_classification_boundary_review_plan', 'read_project', 'Prepare blocker source classification boundary review plan.'),
+        ('runtime_activation_blocker_register_boundary_review.blocker_severity_policy_boundary_review_plan', 'read_project', 'Prepare blocker severity policy boundary review plan.'),
+        ('runtime_activation_blocker_register_boundary_review.blocker_activation_gate_link_boundary_review_plan', 'read_project', 'Prepare blocker activation gate link boundary review plan.'),
+        ('runtime_activation_blocker_register_boundary_review.blocker_resolution_evidence_boundary_review_plan', 'read_project', 'Prepare blocker resolution evidence boundary review plan.'),
+        ('runtime_activation_blocker_register_boundary_review.blocker_dashboard_visibility_boundary_review_plan', 'read_project', 'Prepare blocker dashboard visibility boundary review plan.'),
+        ('runtime_activation_blocker_register_boundary_review.blocker_audit_link_boundary_review_plan', 'read_project', 'Prepare blocker audit link boundary review plan.'),
+        ('runtime_activation_blocker_register_boundary_review.blocker_failure_safe_idle_boundary_review_plan', 'read_project', 'Prepare blocker failure safe idle boundary review plan.'),
+        ('runtime_activation_blocker_register_boundary_review.future_runtime_activation_unblock_boundary_plan', 'read_project', 'Prepare future runtime activation unblock boundary plan.'),
+        ('runtime_activation_blocker_register_boundary_review.context', 'read_project', 'Show Runtime Activation Blocker Register Boundary Review context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_activation_blocker_register_boundary_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_activation_blocker_register_boundary_review", description=description, permission_action=permission_action, status="online", skill="aura_runtime_activation_blocker_register_boundary_review_foundation"))
+
     # Sprint 128.0 dashboard runtime readiness boundary review foundation actions.
     dashboard_runtime_readiness_boundary_review_actions = [
         ('dashboard_runtime_readiness_boundary_review.status', 'read_project', 'Show Dashboard Runtime Readiness Boundary Review status.'),

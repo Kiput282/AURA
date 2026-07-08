@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 129.0 runtime activation blocker register boundary review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_activation_blocker_register_boundary_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Runtime Activation Blocker Register Boundary Review Foundation without creating, updating, deleting, resolving, or unblocking runtime activation blockers, opening runtime gates, activating runtime, writing audit events, emitting dashboard events, dispatching actions, executing tools/commands, using file runtime, starting services, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_activation_blocker_register_boundary_review_status",
+                "blocker_register_schema_boundary_review_plan",
+                "blocker_source_classification_boundary_review_plan",
+                "blocker_severity_policy_boundary_review_plan",
+                "blocker_activation_gate_link_boundary_review_plan",
+                "blocker_resolution_evidence_boundary_review_plan",
+                "blocker_dashboard_visibility_boundary_review_plan",
+                "blocker_audit_link_boundary_review_plan",
+                "blocker_failure_safe_idle_boundary_review_plan",
+                "future_runtime_activation_unblock_boundary_plan",
+                "runtime_activation_blocker_register_boundary_review_context",
+            ],
+        )
+    )
+
     # Sprint 128.0 dashboard runtime readiness boundary review foundation skill.
     registry.register(
         AuraSkill(

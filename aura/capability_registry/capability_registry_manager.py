@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_runtime_activation_blocker_register_boundary_review_foundation",
+                    "name": "AURA Runtime Activation Blocker Register Boundary Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.129.0-genesis",
+                    "category": "runtime",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Runtime Activation Blocker Register Boundary Review Foundation for blocker register schema, blocker source classification, blocker severity policy, blocker activation gate link, blocker resolution evidence, blocker dashboard visibility, blocker audit link, blocker failure safe idle, and future runtime activation unblock boundaries without creating, updating, deleting, resolving, or unblocking runtime activation blockers; opening runtime gates; activating runtime; writing audit events; emitting dashboard events; dispatching actions; or enabling runtime execution.",
+                },
+                {
                     "id": "aura_dashboard_runtime_readiness_boundary_review_foundation",
                     "name": "AURA Dashboard Runtime Readiness Boundary Review Foundation",
                     "state": "online",

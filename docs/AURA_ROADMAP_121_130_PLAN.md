@@ -1,7 +1,7 @@
 # AURA Roadmap 121-130 Plan
 
 Status: PLANNED
-Version seed: v0.128.0-genesis
+Version seed: v0.129.0-genesis
 Phase: Genesis Runtime Readiness Continuation
 Owner: Kiput
 Motto: Grow Together
@@ -325,5 +325,35 @@ Safety result:
 - runtime dashboard events/permission commands/actions dispatched: 0
 - runtime permissions changed: 0
 - runtime dashboard/audit events: 0
+- runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
+- runtime execution features: 0
+
+## Sprint 129 Completion Summary
+
+Sprint 129 completed the Runtime Activation Blocker Register Boundary Review Foundation.
+
+Completed foundation items:
+
+- blocker register schema boundary review
+- blocker source classification boundary review
+- blocker severity policy boundary review
+- blocker activation gate link boundary review
+- blocker resolution evidence boundary review
+- blocker dashboard visibility boundary review
+- blocker audit link boundary review
+- blocker failure safe idle boundary review
+- future runtime activation unblock boundary review
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime activation blocker registers created: 0
+- runtime activation blockers added/updated/deleted/resolved: 0
+- runtime activation gates unblocked/opened: 0
+- runtime activations started: 0
+- runtime blocker dashboard/audit events: 0
+- runtime permissions changed: 0
 - runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
 - runtime execution features: 0

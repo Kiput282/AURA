@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.128.0-genesis  
+Current version: v0.129.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.128.0-genesis
+- v0.129.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.128.0-genesis
+    Version  : 0.129.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -667,4 +667,50 @@ Safety result:
 - file/service/network/ORION runtime disabled
 - release gate closed
 - runtime activation disabled
+- future runtime still requires manual approval
+
+## Sprint 129.0 — Runtime Activation Blocker Register Boundary Review Foundation
+
+Status: completed
+Version: v0.129.0-genesis
+
+Sprint 129 adds a planner-only, metadata-only, and review-only Runtime Activation Blocker Register Boundary Review Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total runtime activation blocker register boundary review blueprints/items
+- 0 runtime activation blocker registers created
+- 0 runtime activation blockers added
+- 0 runtime activation blockers updated
+- 0 runtime activation blockers deleted
+- 0 runtime activation blockers resolved
+- 0 runtime activation gate links created
+- 0 runtime activation gates unblocked
+- 0 runtime activation gates opened
+- 0 runtime activations started
+- 0 runtime blocker resolution evidence writes
+- 0 runtime blocker dashboard events emitted
+- 0 runtime blocker audit events written
+- 0 runtime blocker failure recoveries
+- 0 runtime blocker runtime gates opened
+- 0 runtime permissions changed
+- 0 runtime actions/tools/commands/files/services/network/ORION/memory/git
+- 0 runtime execution features
+
+Safety result:
+
+- runtime activation blocker register boundary review only
+- runtime activation blocker register runtime disabled
+- blocker register mutation disabled
+- blocker resolution runtime disabled
+- runtime gate unblock disabled
+- runtime gate open disabled
+- runtime activation disabled
+- permission mutation disabled
+- audit write disabled
+- dashboard event emit disabled
+- action dispatch/execution disabled
+- file/service/network/ORION runtime disabled
+- release gate closed
 - future runtime still requires manual approval

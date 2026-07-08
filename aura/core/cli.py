@@ -111,6 +111,7 @@ from aura.safe_local_action_allowlist_boundary_review.aura_safe_local_action_all
 from aura.runtime_grant_expiry_boundary_review.aura_runtime_grant_expiry_boundary_review_foundation_manager import AuraRuntimeGrantExpiryBoundaryReviewFoundationManager
 from aura.runtime_recovery_drill_boundary_review.aura_runtime_recovery_drill_boundary_review_foundation_manager import AuraRuntimeRecoveryDrillBoundaryReviewFoundationManager
 from aura.dashboard_runtime_readiness_boundary_review.aura_dashboard_runtime_readiness_boundary_review_foundation_manager import AuraDashboardRuntimeReadinessBoundaryReviewFoundationManager
+from aura.runtime_activation_blocker_register_boundary_review.aura_runtime_activation_blocker_register_boundary_review_foundation_manager import AuraRuntimeActivationBlockerRegisterBoundaryReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4198,6 +4199,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 129.0 runtime activation blocker register boundary review CLI helpers.
+    def print_runtime_activation_blocker_register_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Activation Blocker Register Boundary Review Safety Boundary"))
+
+    def handle_runtime_activation_blocker_register_boundary_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA runtime activation blocker register boundary review"
+        manager = AuraRuntimeActivationBlockerRegisterBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-activation-blocker-register-boundary-review-status":
+            self.print_runtime_activation_blocker_register_boundary_review_packet("AURA Runtime Activation Blocker Register Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-activation-blocker-register-boundary-review-context":
+            self.print_runtime_activation_blocker_register_boundary_review_packet("AURA Runtime Activation Blocker Register Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "blocker-register-schema-boundary-review-plan": ("AURA Blocker Register Schema Boundary Review Plan", manager.blocker_register_schema_boundary_review_plan),
+            "blocker-source-classification-boundary-review-plan": ("AURA Blocker Source Classification Boundary Review Plan", manager.blocker_source_classification_boundary_review_plan),
+            "blocker-severity-policy-boundary-review-plan": ("AURA Blocker Severity Policy Boundary Review Plan", manager.blocker_severity_policy_boundary_review_plan),
+            "blocker-activation-gate-link-boundary-review-plan": ("AURA Blocker Activation Gate Link Boundary Review Plan", manager.blocker_activation_gate_link_boundary_review_plan),
+            "blocker-resolution-evidence-boundary-review-plan": ("AURA Blocker Resolution Evidence Boundary Review Plan", manager.blocker_resolution_evidence_boundary_review_plan),
+            "blocker-dashboard-visibility-boundary-review-plan": ("AURA Blocker Dashboard Visibility Boundary Review Plan", manager.blocker_dashboard_visibility_boundary_review_plan),
+            "blocker-audit-link-boundary-review-plan": ("AURA Blocker Audit Link Boundary Review Plan", manager.blocker_audit_link_boundary_review_plan),
+            "blocker-failure-safe-idle-boundary-review-plan": ("AURA Blocker Failure Safe Idle Boundary Review Plan", manager.blocker_failure_safe_idle_boundary_review_plan),
+            "future-runtime-activation-unblock-boundary-plan": ("AURA Future Runtime Activation Unblock Boundary Plan", manager.future_runtime_activation_unblock_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_activation_blocker_register_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 128.0 dashboard runtime readiness boundary review CLI helpers.
     def print_dashboard_runtime_readiness_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6161,6 +6203,9 @@ class AuraCLI:
             return True
 
         if self.handle_dashboard_runtime_readiness_boundary_review_cli_command(raw_args):
+            return True
+
+        if self.handle_runtime_activation_blocker_register_boundary_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
