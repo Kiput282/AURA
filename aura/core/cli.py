@@ -116,6 +116,7 @@ from aura.review_stabilization_121_130.aura_review_stabilization_121_130_foundat
 from aura.post_checkpoint_130_next_block_foundation.aura_post_checkpoint_130_next_block_foundation_manager import AuraPostCheckpoint130NextBlockFoundationManager
 from aura.final_genesis_acceptance_criteria_foundation.aura_final_genesis_acceptance_criteria_foundation_manager import AuraFinalGenesisAcceptanceCriteriaFoundationManager
 from aura.runtime_activation_path_proposal_review.aura_runtime_activation_path_proposal_review_foundation_manager import AuraRuntimeActivationPathProposalReviewFoundationManager
+from aura.local_service_boot_plan_review.aura_local_service_boot_plan_review_foundation_manager import AuraLocalServiceBootPlanReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4208,6 +4209,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 134.0 local service boot plan review CLI helpers.
+    def print_local_service_boot_plan_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Boot Plan Review Safety Boundary"))
+
+    def handle_local_service_boot_plan_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local service boot plan review"
+        manager = AuraLocalServiceBootPlanReviewFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-boot-plan-review-status":
+            self.print_local_service_boot_plan_review_packet("AURA Local Service Boot Plan Review Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-boot-plan-review-context":
+            self.print_local_service_boot_plan_review_packet("AURA Local Service Boot Plan Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "local-service-manual-start-review-plan": ("AURA Local Service Manual Start Review Plan", manager.local_service_manual_start_review_plan),
+            "local-service-manual-stop-review-plan": ("AURA Local Service Manual Stop Review Plan", manager.local_service_manual_stop_review_plan),
+            "local-service-health-monitor-review-plan": ("AURA Local Service Health Monitor Review Plan", manager.local_service_health_monitor_review_plan),
+            "local-service-safe-shutdown-review-plan": ("AURA Local Service Safe Shutdown Review Plan", manager.local_service_safe_shutdown_review_plan),
+            "local-service-config-contract-review-plan": ("AURA Local Service Config Contract Review Plan", manager.local_service_config_contract_review_plan),
+            "local-service-log-visibility-review-plan": ("AURA Local Service Log Visibility Review Plan", manager.local_service_log_visibility_review_plan),
+            "local-service-localhost-only-review-plan": ("AURA Local Service Localhost Only Review Plan", manager.local_service_localhost_only_review_plan),
+            "local-service-autostart-guard-review-plan": ("AURA Local Service Autostart Guard Review Plan", manager.local_service_autostart_guard_review_plan),
+            "local-service-failure-safe-idle-review-plan": ("AURA Local Service Failure Safe Idle Review Plan", manager.local_service_failure_safe_idle_review_plan),
+            "local-service-no-port-binding-review-plan": ("AURA Local Service No Port Binding Review Plan", manager.local_service_no_port_binding_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_boot_plan_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 133.0 runtime activation path proposal review CLI helpers.
     def print_runtime_activation_path_proposal_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6390,6 +6433,9 @@ class AuraCLI:
             return True
 
         if self.handle_runtime_activation_path_proposal_review_cli_command(raw_args):
+            return True
+
+        if self.handle_local_service_boot_plan_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

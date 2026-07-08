@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.133.0-genesis  
+Current version: v0.134.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.133.0-genesis
+- v0.134.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.133.0-genesis
+    Version  : 0.134.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -884,6 +884,52 @@ Safety result:
 - release candidate runtime disabled
 - local service/dashboard/chat/memory runtime disabled
 - permission/audit/blocker register runtime disabled
+- action/tool/command execution disabled
+- file/service/network/ORION runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 134.0 — Local Service Boot Plan Review Foundation
+
+Status: completed
+Version: v0.134.0-genesis
+
+Sprint 134 adds a planner-only, metadata-only, and review-only Local Service Boot Plan Review Foundation for ATLAS.
+
+Counts:
+
+- 12 plan types
+- 100 total local service boot plan review blueprints/items
+- 0 runtime local service boot plans applied
+- 0 runtime local services booted
+- 0 runtime local services started/stopped
+- 0 runtime service autostarts enabled
+- 0 runtime service units created/modified/deleted
+- 0 runtime health monitors/checks
+- 0 runtime safe shutdowns
+- 0 runtime config/log file reads or writes
+- 0 runtime ports bound
+- 0 runtime API/web/dashboard servers started
+- 0 runtime chat loops started
+- 0 runtime memory reads/writes
+- 0 runtime permission grants created/applied
+- 0 runtime audit writers/events
+- 0 runtime dashboard events emitted
+- 0 runtime actions/tools/commands/files/services/network/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- local service boot plan apply disabled
+- local service boot/start/stop disabled
+- service autostart disabled
+- service unit mutation disabled
+- health monitor/check runtime disabled
+- safe shutdown runtime disabled
+- config/log file runtime disabled
+- port binding disabled
+- API/web/dashboard/chat/memory runtime disabled
+- permission/audit runtime disabled
 - action/tool/command execution disabled
 - file/service/network/ORION runtime disabled
 - release gate closed

@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 134.0 local service boot plan review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_service_boot_plan_review_foundation",
+            description="Prepare planner-only and review-only Local Service Boot Plan Review Foundation for ATLAS without creating service units, modifying startup configuration, enabling autostart, starting services, binding ports, starting API/web/dashboard/chat/memory/permission/audit runtime, dispatching actions, executing tools/commands, using file runtime, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_service_boot_plan_review_status",
+                "local_service_manual_start_review_plan",
+                "local_service_manual_stop_review_plan",
+                "local_service_health_monitor_review_plan",
+                "local_service_safe_shutdown_review_plan",
+                "local_service_config_contract_review_plan",
+                "local_service_log_visibility_review_plan",
+                "local_service_localhost_only_review_plan",
+                "local_service_autostart_guard_review_plan",
+                "local_service_failure_safe_idle_review_plan",
+                "local_service_no_port_binding_review_plan",
+                "local_service_boot_plan_review_context",
+            ],
+        )
+    )
+
     # Sprint 133.0 runtime activation path proposal review foundation skill.
     registry.register(
         AuraSkill(

@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 134.0 local service boot plan review foundation actions.
+    local_service_boot_plan_review_actions = [
+        ('local_service_boot_plan_review.status', 'read_project', 'Show Local Service Boot Plan Review status.'),
+        ('local_service_boot_plan_review.local_service_manual_start_review_plan', 'read_project', 'Prepare local service manual start review plan.'),
+        ('local_service_boot_plan_review.local_service_manual_stop_review_plan', 'read_project', 'Prepare local service manual stop review plan.'),
+        ('local_service_boot_plan_review.local_service_health_monitor_review_plan', 'read_project', 'Prepare local service health monitor review plan.'),
+        ('local_service_boot_plan_review.local_service_safe_shutdown_review_plan', 'read_project', 'Prepare local service safe shutdown review plan.'),
+        ('local_service_boot_plan_review.local_service_config_contract_review_plan', 'read_project', 'Prepare local service config contract review plan.'),
+        ('local_service_boot_plan_review.local_service_log_visibility_review_plan', 'read_project', 'Prepare local service log visibility review plan.'),
+        ('local_service_boot_plan_review.local_service_localhost_only_review_plan', 'read_project', 'Prepare local service localhost-only review plan.'),
+        ('local_service_boot_plan_review.local_service_autostart_guard_review_plan', 'read_project', 'Prepare local service autostart guard review plan.'),
+        ('local_service_boot_plan_review.local_service_failure_safe_idle_review_plan', 'read_project', 'Prepare local service failure safe idle review plan.'),
+        ('local_service_boot_plan_review.local_service_no_port_binding_review_plan', 'read_project', 'Prepare local service no-port-binding review plan.'),
+        ('local_service_boot_plan_review.context', 'read_project', 'Show Local Service Boot Plan Review context.'),
+    ]
+
+    for action_name, permission_action, description in local_service_boot_plan_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_service_boot_plan_review", description=description, permission_action=permission_action, status="online", skill="aura_local_service_boot_plan_review_foundation"))
+
     # Sprint 133.0 runtime activation path proposal review foundation actions.
     runtime_activation_path_proposal_review_actions = [
         ('runtime_activation_path_proposal_review.status', 'read_project', 'Show Runtime Activation Path Proposal Review status.'),
