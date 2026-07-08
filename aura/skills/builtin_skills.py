@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 131.0 post-checkpoint 130 next block foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_post_checkpoint_130_next_block_foundation",
+            description="Prepare planner-only and review-only Sprint 131-140 Post-Checkpoint 130 Next Block Foundation toward Final Genesis without activating runtime, starting services, starting dashboard/chat/memory runtime, creating permission grants, starting audit writers, writing audit events, emitting dashboard events, dispatching actions, executing tools/commands, using file runtime, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "post_checkpoint_130_next_block_status",
+                "sprint_131_140_sequence_foundation_plan",
+                "final_genesis_acceptance_criteria_foundation_plan",
+                "runtime_activation_path_proposal_review_plan",
+                "local_service_boot_plan_review_plan",
+                "control_center_runtime_entry_review_plan",
+                "chat_runtime_minimal_loop_review_plan",
+                "memory_runtime_write_gate_review_plan",
+                "permission_runtime_grant_gate_review_plan",
+                "audit_runtime_writer_activation_review_plan",
+                "review_stabilization_131_140_checkpoint_plan",
+                "post_checkpoint_130_next_block_context",
+            ],
+        )
+    )
+
     # Sprint 130.0 review stabilization 121-130 foundation skill.
     registry.register(
         AuraSkill(

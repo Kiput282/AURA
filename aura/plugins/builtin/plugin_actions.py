@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 131.0 post-checkpoint 130 next block foundation actions.
+    post_checkpoint_130_next_block_actions = [
+        ('post_checkpoint_130_next_block.status', 'read_project', 'Show Post-Checkpoint 130 Next Block Foundation status.'),
+        ('post_checkpoint_130_next_block.sprint_131_140_sequence_foundation_plan', 'read_project', 'Prepare Sprint 131-140 sequence foundation plan.'),
+        ('post_checkpoint_130_next_block.final_genesis_acceptance_criteria_foundation_plan', 'read_project', 'Prepare Final Genesis acceptance criteria foundation plan.'),
+        ('post_checkpoint_130_next_block.runtime_activation_path_proposal_review_plan', 'read_project', 'Prepare runtime activation path proposal review plan.'),
+        ('post_checkpoint_130_next_block.local_service_boot_plan_review_plan', 'read_project', 'Prepare local service boot plan review plan.'),
+        ('post_checkpoint_130_next_block.control_center_runtime_entry_review_plan', 'read_project', 'Prepare Control Center runtime entry review plan.'),
+        ('post_checkpoint_130_next_block.chat_runtime_minimal_loop_review_plan', 'read_project', 'Prepare chat runtime minimal loop review plan.'),
+        ('post_checkpoint_130_next_block.memory_runtime_write_gate_review_plan', 'read_project', 'Prepare memory runtime write gate review plan.'),
+        ('post_checkpoint_130_next_block.permission_runtime_grant_gate_review_plan', 'read_project', 'Prepare permission runtime grant gate review plan.'),
+        ('post_checkpoint_130_next_block.audit_runtime_writer_activation_review_plan', 'read_project', 'Prepare audit runtime writer activation review plan.'),
+        ('post_checkpoint_130_next_block.review_stabilization_131_140_checkpoint_plan', 'read_project', 'Prepare review stabilization 131-140 checkpoint plan.'),
+        ('post_checkpoint_130_next_block.context', 'read_project', 'Show Post-Checkpoint 130 Next Block Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in post_checkpoint_130_next_block_actions:
+        registry.register(PluginAction(name=action_name, plugin="post_checkpoint_130_next_block", description=description, permission_action=permission_action, status="online", skill="aura_post_checkpoint_130_next_block_foundation"))
+
     # Sprint 130.0 review stabilization 121-130 foundation actions.
     review_stabilization_121_130_actions = [
         ('review_stabilization_121_130.status', 'read_project', 'Show Review Stabilization 121-130 status.'),

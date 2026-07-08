@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_post_checkpoint_130_next_block_foundation",
+                    "name": "AURA Post-Checkpoint 130 Next Block Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.131.0-genesis",
+                    "category": "planning",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Post-Checkpoint 130 Next Block Foundation for the Sprint 131-140 block toward Final Genesis, including sprint sequence, Final Genesis acceptance criteria direction, runtime activation path proposal, local service boot plan, Control Center runtime entry, chat runtime minimal loop, memory runtime write gate, permission runtime grant gate, audit runtime writer activation, and Sprint 140 stabilization checkpoint without runtime activation, service boot, dashboard/chat/memory runtime, permission grant runtime, audit writer runtime, action dispatch, tool/command execution, file/service/network/ORION/git runtime, or runtime execution features.",
+                },
+                {
                     "id": "aura_review_stabilization_121_130_foundation",
                     "name": "AURA Review Stabilization 121-130 Foundation",
                     "state": "online",

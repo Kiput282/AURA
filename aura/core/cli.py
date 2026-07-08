@@ -113,6 +113,7 @@ from aura.runtime_recovery_drill_boundary_review.aura_runtime_recovery_drill_bou
 from aura.dashboard_runtime_readiness_boundary_review.aura_dashboard_runtime_readiness_boundary_review_foundation_manager import AuraDashboardRuntimeReadinessBoundaryReviewFoundationManager
 from aura.runtime_activation_blocker_register_boundary_review.aura_runtime_activation_blocker_register_boundary_review_foundation_manager import AuraRuntimeActivationBlockerRegisterBoundaryReviewFoundationManager
 from aura.review_stabilization_121_130.aura_review_stabilization_121_130_foundation_manager import AuraReviewStabilization121130FoundationManager
+from aura.post_checkpoint_130_next_block_foundation.aura_post_checkpoint_130_next_block_foundation_manager import AuraPostCheckpoint130NextBlockFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4202,6 +4203,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 131.0 post-checkpoint 130 next block CLI helpers.
+    def print_post_checkpoint_130_next_block_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Post-Checkpoint 130 Next Block Safety Boundary"))
+
+    def handle_post_checkpoint_130_next_block_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA post-checkpoint 130 next block"
+        manager = AuraPostCheckpoint130NextBlockFoundationManager(project_root=self.project_root)
+
+        if command == "post-checkpoint-130-next-block-status":
+            self.print_post_checkpoint_130_next_block_packet("AURA Post-Checkpoint 130 Next Block Foundation Status", manager.status())
+            return True
+
+        if command == "post-checkpoint-130-next-block-context":
+            self.print_post_checkpoint_130_next_block_packet("AURA Post-Checkpoint 130 Next Block Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "sprint-131-140-sequence-foundation-plan": ("AURA Sprint 131-140 Sequence Foundation Plan", manager.sprint_131_140_sequence_foundation_plan),
+            "final-genesis-acceptance-criteria-foundation-plan": ("AURA Final Genesis Acceptance Criteria Foundation Plan", manager.final_genesis_acceptance_criteria_foundation_plan),
+            "runtime-activation-path-proposal-review-plan": ("AURA Runtime Activation Path Proposal Review Plan", manager.runtime_activation_path_proposal_review_plan),
+            "local-service-boot-plan-review-plan": ("AURA Local Service Boot Plan Review Plan", manager.local_service_boot_plan_review_plan),
+            "control-center-runtime-entry-review-plan": ("AURA Control Center Runtime Entry Review Plan", manager.control_center_runtime_entry_review_plan),
+            "chat-runtime-minimal-loop-review-plan": ("AURA Chat Runtime Minimal Loop Review Plan", manager.chat_runtime_minimal_loop_review_plan),
+            "memory-runtime-write-gate-review-plan": ("AURA Memory Runtime Write Gate Review Plan", manager.memory_runtime_write_gate_review_plan),
+            "permission-runtime-grant-gate-review-plan": ("AURA Permission Runtime Grant Gate Review Plan", manager.permission_runtime_grant_gate_review_plan),
+            "audit-runtime-writer-activation-review-plan": ("AURA Audit Runtime Writer Activation Review Plan", manager.audit_runtime_writer_activation_review_plan),
+            "review-stabilization-131-140-checkpoint-plan": ("AURA Review Stabilization 131-140 Checkpoint Plan", manager.review_stabilization_131_140_checkpoint_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_post_checkpoint_130_next_block_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 130.0 review stabilization 121-130 CLI helpers.
     def print_review_stabilization_121_130_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6252,6 +6295,9 @@ class AuraCLI:
             return True
 
         if self.handle_review_stabilization_121_130_cli_command(raw_args):
+            return True
+
+        if self.handle_post_checkpoint_130_next_block_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

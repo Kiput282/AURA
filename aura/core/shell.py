@@ -115,6 +115,7 @@ from aura.runtime_recovery_drill_boundary_review.aura_runtime_recovery_drill_bou
 from aura.dashboard_runtime_readiness_boundary_review.aura_dashboard_runtime_readiness_boundary_review_foundation_manager import AuraDashboardRuntimeReadinessBoundaryReviewFoundationManager
 from aura.runtime_activation_blocker_register_boundary_review.aura_runtime_activation_blocker_register_boundary_review_foundation_manager import AuraRuntimeActivationBlockerRegisterBoundaryReviewFoundationManager
 from aura.review_stabilization_121_130.aura_review_stabilization_121_130_foundation_manager import AuraReviewStabilization121130FoundationManager
+from aura.post_checkpoint_130_next_block_foundation.aura_post_checkpoint_130_next_block_foundation_manager import AuraPostCheckpoint130NextBlockFoundationManager
 
 
 class AuraShell:
@@ -945,6 +946,18 @@ class AuraShell:
         print("  known-deferred-runtime-review-plan <target> Prepare known deferred runtime review plan")
         print("  future-sprint-131-140-readiness-plan <target> Prepare future Sprint 131-140 readiness plan")
         print("  review-stabilization-121-130-context Show Review Stabilization 121-130 context")
+        print("  post-checkpoint-130-next-block-status Show Post-Checkpoint 130 Next Block Foundation status")
+        print("  sprint-131-140-sequence-foundation-plan <target> Prepare Sprint 131-140 sequence foundation plan")
+        print("  final-genesis-acceptance-criteria-foundation-plan <target> Prepare Final Genesis acceptance criteria foundation plan")
+        print("  runtime-activation-path-proposal-review-plan <target> Prepare runtime activation path proposal review plan")
+        print("  local-service-boot-plan-review-plan <target> Prepare local service boot plan review plan")
+        print("  control-center-runtime-entry-review-plan <target> Prepare Control Center runtime entry review plan")
+        print("  chat-runtime-minimal-loop-review-plan <target> Prepare chat runtime minimal loop review plan")
+        print("  memory-runtime-write-gate-review-plan <target> Prepare memory runtime write gate review plan")
+        print("  permission-runtime-grant-gate-review-plan <target> Prepare permission runtime grant gate review plan")
+        print("  audit-runtime-writer-activation-review-plan <target> Prepare audit runtime writer activation review plan")
+        print("  review-stabilization-131-140-checkpoint-plan <target> Prepare review stabilization 131-140 checkpoint plan")
+        print("  post-checkpoint-130-next-block-context Show Post-Checkpoint 130 Next Block context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4925,6 +4938,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 131.0 post-checkpoint 130 next block shell helpers.
+    def print_post_checkpoint_130_next_block_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Post-Checkpoint 130 Next Block Safety Boundary"))
+
+    def handle_post_checkpoint_130_next_block_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA post-checkpoint 130 next block"
+        manager = AuraPostCheckpoint130NextBlockFoundationManager(project_root=self.project_root)
+
+        if command == "post-checkpoint-130-next-block-status":
+            self.print_post_checkpoint_130_next_block_packet("AURA Post-Checkpoint 130 Next Block Foundation Status", manager.status())
+            return True
+
+        if command == "post-checkpoint-130-next-block-context":
+            self.print_post_checkpoint_130_next_block_packet("AURA Post-Checkpoint 130 Next Block Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "sprint-131-140-sequence-foundation-plan": ("AURA Sprint 131-140 Sequence Foundation Plan", manager.sprint_131_140_sequence_foundation_plan),
+            "final-genesis-acceptance-criteria-foundation-plan": ("AURA Final Genesis Acceptance Criteria Foundation Plan", manager.final_genesis_acceptance_criteria_foundation_plan),
+            "runtime-activation-path-proposal-review-plan": ("AURA Runtime Activation Path Proposal Review Plan", manager.runtime_activation_path_proposal_review_plan),
+            "local-service-boot-plan-review-plan": ("AURA Local Service Boot Plan Review Plan", manager.local_service_boot_plan_review_plan),
+            "control-center-runtime-entry-review-plan": ("AURA Control Center Runtime Entry Review Plan", manager.control_center_runtime_entry_review_plan),
+            "chat-runtime-minimal-loop-review-plan": ("AURA Chat Runtime Minimal Loop Review Plan", manager.chat_runtime_minimal_loop_review_plan),
+            "memory-runtime-write-gate-review-plan": ("AURA Memory Runtime Write Gate Review Plan", manager.memory_runtime_write_gate_review_plan),
+            "permission-runtime-grant-gate-review-plan": ("AURA Permission Runtime Grant Gate Review Plan", manager.permission_runtime_grant_gate_review_plan),
+            "audit-runtime-writer-activation-review-plan": ("AURA Audit Runtime Writer Activation Review Plan", manager.audit_runtime_writer_activation_review_plan),
+            "review-stabilization-131-140-checkpoint-plan": ("AURA Review Stabilization 131-140 Checkpoint Plan", manager.review_stabilization_131_140_checkpoint_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_post_checkpoint_130_next_block_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 130.0 review stabilization 121-130 shell helpers.
     def print_review_stabilization_121_130_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7018,6 +7074,9 @@ class AuraShell:
             return
 
         if self.handle_review_stabilization_121_130_shell_command(normalized):
+            return
+
+        if self.handle_post_checkpoint_130_next_block_shell_command(normalized):
             return
 
         if normalized == "help":

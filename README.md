@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.130.0-genesis  
+Current version: v0.131.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.130.0-genesis
+- v0.131.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.130.0-genesis
+    Version  : 0.131.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -756,5 +756,49 @@ Safety result:
 - tool/command execution disabled
 - file/service/network/ORION runtime disabled
 - dashboard runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 131.0 — Post-Checkpoint 130 Next Block Foundation
+
+Status: completed
+Version: v0.131.0-genesis
+
+Sprint 131 adds a planner-only, metadata-only, and review-only Post-Checkpoint 130 Next Block Foundation.
+
+Counts:
+
+- 12 plan types
+- 100 total post-checkpoint 130 next block blueprints/items
+- 0 runtime next block foundations activated
+- 0 runtime Final Genesis acceptance applied
+- 0 runtime activation paths applied
+- 0 runtime local services booted
+- 0 runtime service autostarts enabled
+- 0 runtime Control Centers started
+- 0 runtime dashboard servers started
+- 0 runtime chat loops started
+- 0 runtime memory reads/writes
+- 0 runtime permission grants created/applied
+- 0 runtime audit writers started
+- 0 runtime audit events written
+- 0 runtime dashboard events emitted
+- 0 runtime actions/tools/commands/files/services/network/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- post-checkpoint 130 next block review only
+- Final Genesis runtime activation disabled
+- local service runtime disabled
+- Control Center runtime disabled
+- chat runtime disabled
+- memory runtime disabled
+- permission runtime disabled
+- audit runtime disabled
+- runtime activation disabled
+- runtime gate open disabled
+- action/tool/command execution disabled
+- file/service/network/ORION runtime disabled
 - release gate closed
 - future runtime still requires manual approval
