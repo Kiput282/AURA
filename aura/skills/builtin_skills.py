@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 130.0 review stabilization 121-130 foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_review_stabilization_121_130_foundation",
+            description="Prepare review-only Sprint 121-130 stabilization checkpoint without activating runtime, opening runtime gates, mutating capability registry, changing permissions, writing audit events, emitting dashboard events, dispatching actions, executing tools/commands, using file runtime, starting services, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "review_stabilization_121_130_status",
+                "sprint_121_129_completion_review_plan",
+                "capability_registry_consistency_review_plan",
+                "permission_boundary_consistency_review_plan",
+                "runtime_zero_counter_review_plan",
+                "dashboard_orion_boundary_review_plan",
+                "action_permission_recovery_blocker_review_plan",
+                "documentation_roadmap_consistency_review_plan",
+                "boot_and_cli_surface_review_plan",
+                "known_deferred_runtime_review_plan",
+                "future_sprint_131_140_readiness_plan",
+                "review_stabilization_121_130_context",
+            ],
+        )
+    )
+
     # Sprint 129.0 runtime activation blocker register boundary review foundation skill.
     registry.register(
         AuraSkill(

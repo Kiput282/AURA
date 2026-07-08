@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 130.0 review stabilization 121-130 foundation actions.
+    review_stabilization_121_130_actions = [
+        ('review_stabilization_121_130.status', 'read_project', 'Show Review Stabilization 121-130 status.'),
+        ('review_stabilization_121_130.sprint_121_129_completion_review_plan', 'read_project', 'Prepare Sprint 121-129 completion review plan.'),
+        ('review_stabilization_121_130.capability_registry_consistency_review_plan', 'read_project', 'Prepare capability registry consistency review plan.'),
+        ('review_stabilization_121_130.permission_boundary_consistency_review_plan', 'read_project', 'Prepare permission boundary consistency review plan.'),
+        ('review_stabilization_121_130.runtime_zero_counter_review_plan', 'read_project', 'Prepare runtime zero counter review plan.'),
+        ('review_stabilization_121_130.dashboard_orion_boundary_review_plan', 'read_project', 'Prepare dashboard ORION boundary review plan.'),
+        ('review_stabilization_121_130.action_permission_recovery_blocker_review_plan', 'read_project', 'Prepare action permission recovery blocker review plan.'),
+        ('review_stabilization_121_130.documentation_roadmap_consistency_review_plan', 'read_project', 'Prepare documentation roadmap consistency review plan.'),
+        ('review_stabilization_121_130.boot_and_cli_surface_review_plan', 'read_project', 'Prepare boot and CLI surface review plan.'),
+        ('review_stabilization_121_130.known_deferred_runtime_review_plan', 'read_project', 'Prepare known deferred runtime review plan.'),
+        ('review_stabilization_121_130.future_sprint_131_140_readiness_plan', 'read_project', 'Prepare future Sprint 131-140 readiness plan.'),
+        ('review_stabilization_121_130.context', 'read_project', 'Show Review Stabilization 121-130 context.'),
+    ]
+
+    for action_name, permission_action, description in review_stabilization_121_130_actions:
+        registry.register(PluginAction(name=action_name, plugin="review_stabilization_121_130", description=description, permission_action=permission_action, status="online", skill="aura_review_stabilization_121_130_foundation"))
+
     # Sprint 129.0 runtime activation blocker register boundary review foundation actions.
     runtime_activation_blocker_register_boundary_review_actions = [
         ('runtime_activation_blocker_register_boundary_review.status', 'read_project', 'Show Runtime Activation Blocker Register Boundary Review status.'),

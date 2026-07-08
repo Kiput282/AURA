@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.129.0-genesis  
+Current version: v0.130.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.129.0-genesis
+- v0.130.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.129.0-genesis
+    Version  : 0.130.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -712,5 +712,49 @@ Safety result:
 - dashboard event emit disabled
 - action dispatch/execution disabled
 - file/service/network/ORION runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 130.0 — Review Stabilization 121-130 Foundation
+
+Status: completed
+Version: v0.130.0-genesis
+
+Sprint 130 adds a review-only stabilization checkpoint for Sprint 121-129 and closes the Sprint 121-130 block.
+
+Counts:
+
+- 12 plan types
+- 100 total review stabilization 121-130 blueprints/items
+- 0 runtime checkpoints applied
+- 0 runtime checkpoint mutations
+- 0 runtime capability registry mutations
+- 0 runtime permissions changed
+- 0 runtime audit events written
+- 0 runtime dashboard events emitted
+- 0 runtime actions/tools/commands/files/services/network/ORION/memory/git
+- 0 runtime dashboard/web/API/frontend/backend servers started
+- 0 runtime dashboard routes/websockets opened
+- 0 runtime activation gates opened
+- 0 runtime activations started
+- 0 runtime recovery drills started
+- 0 runtime rollbacks executed
+- 0 runtime blocker register mutations
+- 0 runtime execution features
+
+Safety result:
+
+- review stabilization 121-130 review only
+- checkpoint runtime disabled
+- runtime activation disabled
+- runtime gate open disabled
+- capability registry runtime mutation disabled
+- permission mutation disabled
+- audit write disabled
+- dashboard event emit disabled
+- action dispatch/execution disabled
+- tool/command execution disabled
+- file/service/network/ORION runtime disabled
+- dashboard runtime disabled
 - release gate closed
 - future runtime still requires manual approval

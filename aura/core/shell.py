@@ -114,6 +114,7 @@ from aura.runtime_grant_expiry_boundary_review.aura_runtime_grant_expiry_boundar
 from aura.runtime_recovery_drill_boundary_review.aura_runtime_recovery_drill_boundary_review_foundation_manager import AuraRuntimeRecoveryDrillBoundaryReviewFoundationManager
 from aura.dashboard_runtime_readiness_boundary_review.aura_dashboard_runtime_readiness_boundary_review_foundation_manager import AuraDashboardRuntimeReadinessBoundaryReviewFoundationManager
 from aura.runtime_activation_blocker_register_boundary_review.aura_runtime_activation_blocker_register_boundary_review_foundation_manager import AuraRuntimeActivationBlockerRegisterBoundaryReviewFoundationManager
+from aura.review_stabilization_121_130.aura_review_stabilization_121_130_foundation_manager import AuraReviewStabilization121130FoundationManager
 
 
 class AuraShell:
@@ -932,6 +933,18 @@ class AuraShell:
         print("  blocker-failure-safe-idle-boundary-review-plan <target> Prepare blocker failure safe idle boundary review plan")
         print("  future-runtime-activation-unblock-boundary-plan <target> Prepare future runtime activation unblock boundary plan")
         print("  runtime-activation-blocker-register-boundary-review-context Show Runtime Activation Blocker Register Boundary Review context")
+        print("  review-stabilization-121-130-status Show Review Stabilization 121-130 Foundation status")
+        print("  sprint-121-129-completion-review-plan <target> Prepare Sprint 121-129 completion review plan")
+        print("  capability-registry-consistency-review-plan <target> Prepare capability registry consistency review plan")
+        print("  permission-boundary-consistency-review-plan <target> Prepare permission boundary consistency review plan")
+        print("  runtime-zero-counter-review-plan <target> Prepare runtime zero counter review plan")
+        print("  dashboard-orion-boundary-review-plan <target> Prepare dashboard ORION boundary review plan")
+        print("  action-permission-recovery-blocker-review-plan <target> Prepare action permission recovery blocker review plan")
+        print("  documentation-roadmap-consistency-review-plan <target> Prepare documentation roadmap consistency review plan")
+        print("  boot-and-cli-surface-review-plan <target> Prepare boot and CLI surface review plan")
+        print("  known-deferred-runtime-review-plan <target> Prepare known deferred runtime review plan")
+        print("  future-sprint-131-140-readiness-plan <target> Prepare future Sprint 131-140 readiness plan")
+        print("  review-stabilization-121-130-context Show Review Stabilization 121-130 context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4911,6 +4924,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 130.0 review stabilization 121-130 shell helpers.
+    def print_review_stabilization_121_130_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Review Stabilization 121-130 Safety Boundary"))
+
+    def handle_review_stabilization_121_130_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA review stabilization 121-130 checkpoint"
+        manager = AuraReviewStabilization121130FoundationManager(project_root=self.project_root)
+
+        if command == "review-stabilization-121-130-status":
+            self.print_review_stabilization_121_130_packet("AURA Review Stabilization 121-130 Foundation Status", manager.status())
+            return True
+
+        if command == "review-stabilization-121-130-context":
+            self.print_review_stabilization_121_130_packet("AURA Review Stabilization 121-130 Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "sprint-121-129-completion-review-plan": ("AURA Sprint 121-129 Completion Review Plan", manager.sprint_121_129_completion_review_plan),
+            "capability-registry-consistency-review-plan": ("AURA Capability Registry Consistency Review Plan", manager.capability_registry_consistency_review_plan),
+            "permission-boundary-consistency-review-plan": ("AURA Permission Boundary Consistency Review Plan", manager.permission_boundary_consistency_review_plan),
+            "runtime-zero-counter-review-plan": ("AURA Runtime Zero Counter Review Plan", manager.runtime_zero_counter_review_plan),
+            "dashboard-orion-boundary-review-plan": ("AURA Dashboard ORION Boundary Review Plan", manager.dashboard_orion_boundary_review_plan),
+            "action-permission-recovery-blocker-review-plan": ("AURA Action Permission Recovery Blocker Review Plan", manager.action_permission_recovery_blocker_review_plan),
+            "documentation-roadmap-consistency-review-plan": ("AURA Documentation Roadmap Consistency Review Plan", manager.documentation_roadmap_consistency_review_plan),
+            "boot-and-cli-surface-review-plan": ("AURA Boot And CLI Surface Review Plan", manager.boot_and_cli_surface_review_plan),
+            "known-deferred-runtime-review-plan": ("AURA Known Deferred Runtime Review Plan", manager.known_deferred_runtime_review_plan),
+            "future-sprint-131-140-readiness-plan": ("AURA Future Sprint 131-140 Readiness Plan", manager.future_sprint_131_140_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_review_stabilization_121_130_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 129.0 runtime activation blocker register boundary review shell helpers.
     def print_runtime_activation_blocker_register_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6959,6 +7015,9 @@ class AuraShell:
             return
 
         if self.handle_runtime_activation_blocker_register_boundary_review_shell_command(normalized):
+            return
+
+        if self.handle_review_stabilization_121_130_shell_command(normalized):
             return
 
         if normalized == "help":
