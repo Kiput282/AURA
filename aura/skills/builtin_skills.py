@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 121.0 post-checkpoint 120 next block planning foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_post_checkpoint_120_next_block_planning_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Post-Checkpoint 120 Next Block Planning Foundation for Sprint 121-130 without approving runtime, opening release gates, starting dashboard runtime, enabling permission audit writer runtime, performing ORION handshakes, dispatching actions, executing tools/commands, mutating files, starting services, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "post_checkpoint_120_next_block_planning_status",
+                "checkpoint_120_output_review_plan",
+                "sprint_121_130_scope_definition_plan",
+                "runtime_readiness_continuation_plan",
+                "permission_audit_writer_boundary_plan",
+                "dashboard_control_center_boundary_plan",
+                "orion_dry_handshake_boundary_plan",
+                "safe_local_action_allowlist_boundary_plan",
+                "runtime_activation_blocker_tracking_plan",
+                "future_121_130_checkpoint_boundary_plan",
+                "post_checkpoint_120_next_block_planning_context",
+            ],
+        )
+    )
+
     # Sprint 120.0 review stabilization 111-120 foundation skill.
     registry.register(
         AuraSkill(

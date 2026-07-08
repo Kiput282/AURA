@@ -105,6 +105,7 @@ from aura.runtime_error_rollback_preview.aura_runtime_error_rollback_preview_fou
 from aura.manual_approval_decision_flow_review.aura_manual_approval_decision_flow_review_foundation_manager import AuraManualApprovalDecisionFlowReviewFoundationManager
 from aura.v1_runtime_readiness_cutline_review.aura_v1_runtime_readiness_cutline_review_foundation_manager import AuraV1RuntimeReadinessCutlineReviewFoundationManager
 from aura.review_stabilization_111_120.aura_review_stabilization_111_120_foundation_manager import AuraReviewStabilization111120FoundationManager
+from aura.post_checkpoint_120_next_block_planning.aura_post_checkpoint_120_next_block_planning_foundation_manager import AuraPostCheckpoint120NextBlockPlanningFoundationManager
 
 
 class AuraShell:
@@ -824,6 +825,17 @@ class AuraShell:
         print("  next-block-121-130-boundary-plan <target> Prepare next block 121-130 boundary plan")
         print("  checkpoint-120-acceptance-review-plan <target> Prepare checkpoint 120 acceptance review plan")
         print("  review-stabilization-111-120-context Show Review Stabilization 111-120 context")
+        print("  post-checkpoint-120-next-block-planning-status Show Post-Checkpoint 120 Next Block Planning Foundation status")
+        print("  checkpoint-120-output-review-plan <target> Prepare checkpoint 120 output review plan")
+        print("  sprint-121-130-scope-definition-plan <target> Prepare Sprint 121-130 scope definition plan")
+        print("  runtime-readiness-continuation-plan <target> Prepare runtime readiness continuation plan")
+        print("  permission-audit-writer-boundary-plan <target> Prepare permission audit writer boundary plan")
+        print("  dashboard-control-center-boundary-plan <target> Prepare dashboard control center boundary plan")
+        print("  orion-dry-handshake-boundary-plan <target> Prepare ORION dry handshake boundary plan")
+        print("  safe-local-action-allowlist-boundary-plan <target> Prepare safe local action allowlist boundary plan")
+        print("  runtime-activation-blocker-tracking-plan <target> Prepare runtime activation blocker tracking plan")
+        print("  future-121-130-checkpoint-boundary-plan <target> Prepare future 121-130 checkpoint boundary plan")
+        print("  post-checkpoint-120-next-block-planning-context Show Post-Checkpoint 120 Next Block Planning context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4794,6 +4806,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 121.0 post-checkpoint 120 next block planning shell helpers.
+    def print_post_checkpoint_120_next_block_planning_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Post-Checkpoint 120 Next Block Planning Safety Boundary"))
+
+    def handle_post_checkpoint_120_next_block_planning_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA post-checkpoint 120 next block planning"
+        manager = AuraPostCheckpoint120NextBlockPlanningFoundationManager(project_root=self.project_root)
+
+        if command == "post-checkpoint-120-next-block-planning-status":
+            self.print_post_checkpoint_120_next_block_planning_packet("AURA Post-Checkpoint 120 Next Block Planning Foundation Status", manager.status())
+            return True
+
+        if command == "post-checkpoint-120-next-block-planning-context":
+            self.print_post_checkpoint_120_next_block_planning_packet("AURA Post-Checkpoint 120 Next Block Planning Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "checkpoint-120-output-review-plan": ("AURA Checkpoint 120 Output Review Plan", manager.checkpoint_120_output_review_plan),
+            "sprint-121-130-scope-definition-plan": ("AURA Sprint 121-130 Scope Definition Plan", manager.sprint_121_130_scope_definition_plan),
+            "runtime-readiness-continuation-plan": ("AURA Runtime Readiness Continuation Plan", manager.runtime_readiness_continuation_plan),
+            "permission-audit-writer-boundary-plan": ("AURA Permission Audit Writer Boundary Plan", manager.permission_audit_writer_boundary_plan),
+            "dashboard-control-center-boundary-plan": ("AURA Dashboard Control Center Boundary Plan", manager.dashboard_control_center_boundary_plan),
+            "orion-dry-handshake-boundary-plan": ("AURA ORION Dry Handshake Boundary Plan", manager.orion_dry_handshake_boundary_plan),
+            "safe-local-action-allowlist-boundary-plan": ("AURA Safe Local Action Allowlist Boundary Plan", manager.safe_local_action_allowlist_boundary_plan),
+            "runtime-activation-blocker-tracking-plan": ("AURA Runtime Activation Blocker Tracking Plan", manager.runtime_activation_blocker_tracking_plan),
+            "future-121-130-checkpoint-boundary-plan": ("AURA Future 121-130 Checkpoint Boundary Plan", manager.future_121_130_checkpoint_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_post_checkpoint_120_next_block_planning_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 120.0 review stabilization 111-120 shell helpers.
     def print_review_stabilization_111_120_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6446,6 +6500,9 @@ class AuraShell:
             return
 
         if self.handle_review_stabilization_111_120_shell_command(normalized):
+            return
+
+        if self.handle_post_checkpoint_120_next_block_planning_shell_command(normalized):
             return
 
         if normalized == "help":

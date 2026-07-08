@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.120.0-genesis  
+Current version: v0.121.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.120.0-genesis
+- v0.121.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.120.0-genesis
+    Version  : 0.121.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -352,3 +352,38 @@ The priority is not to make AURA powerful as fast as possible.
 The priority is to make AURA feel alive, trustworthy, safe, local-first, useful, and clearly permission-bound.
 
 AURA should grow together with Kiput.
+
+## Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
+
+Status: completed
+Version: v0.121.0-genesis
+
+Sprint 121 opens the Sprint 121-130 runtime readiness continuation block with a planner-only, metadata-only, and review-only Post-Checkpoint 120 Next Block Planning Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total post-checkpoint 120 next block planning blueprints/items
+- 0 runtime post-checkpoint plannings activated
+- 0 runtime next block approvals written
+- 0 runtime release gates opened
+- 0 runtime v1 runtimes activated
+- 0 runtime permission audit writers started
+- 0 runtime audit writer writes
+- 0 runtime dashboard control centers started
+- 0 runtime ORION dry handshakes or handshakes
+- 0 runtime safe action allowlists applied
+- 0 runtime safe actions executed
+- 0 runtime grant expiries or recovery drills
+- 0 runtime blocker state mutations
+- 0 runtime actions/tools/commands/files/services/network/memory/git
+- 0 runtime execution features
+
+Safety result:
+
+- next block planning only
+- checkpoint followup review only
+- release gate closed
+- runtime activation disabled
+- runtime upgrade deferred
+- future runtime still requires manual approval

@@ -749,6 +749,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
+                {
+                    "id": "aura_post_checkpoint_120_next_block_planning_foundation",
+                    "name": "AURA Post-Checkpoint 120 Next Block Planning Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.121.0-genesis",
+                    "category": "runtime_readiness",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Post-Checkpoint 120 Next Block Planning Foundation for checkpoint 120 output review, Sprint 121-130 scope definition, runtime readiness continuation, permission audit writer boundaries, dashboard control center boundaries, ORION dry handshake boundaries, safe local action allowlist boundaries, runtime activation blocker tracking, and future checkpoint 130 boundaries without approving runtime, opening release gates, starting dashboard runtime, enabling audit writer runtime, performing ORION handshakes, or enabling runtime execution.",
+                },
 ]
 
 

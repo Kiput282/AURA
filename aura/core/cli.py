@@ -103,6 +103,7 @@ from aura.runtime_error_rollback_preview.aura_runtime_error_rollback_preview_fou
 from aura.manual_approval_decision_flow_review.aura_manual_approval_decision_flow_review_foundation_manager import AuraManualApprovalDecisionFlowReviewFoundationManager
 from aura.v1_runtime_readiness_cutline_review.aura_v1_runtime_readiness_cutline_review_foundation_manager import AuraV1RuntimeReadinessCutlineReviewFoundationManager
 from aura.review_stabilization_111_120.aura_review_stabilization_111_120_foundation_manager import AuraReviewStabilization111120FoundationManager
+from aura.post_checkpoint_120_next_block_planning.aura_post_checkpoint_120_next_block_planning_foundation_manager import AuraPostCheckpoint120NextBlockPlanningFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4182,6 +4183,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 121.0 post-checkpoint 120 next block planning CLI helpers.
+    def print_post_checkpoint_120_next_block_planning_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Post-Checkpoint 120 Next Block Planning Safety Boundary"))
+
+    def handle_post_checkpoint_120_next_block_planning_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA post-checkpoint 120 next block planning"
+        manager = AuraPostCheckpoint120NextBlockPlanningFoundationManager(project_root=self.project_root)
+
+        if command == "post-checkpoint-120-next-block-planning-status":
+            self.print_post_checkpoint_120_next_block_planning_packet("AURA Post-Checkpoint 120 Next Block Planning Foundation Status", manager.status())
+            return True
+
+        if command == "post-checkpoint-120-next-block-planning-context":
+            self.print_post_checkpoint_120_next_block_planning_packet("AURA Post-Checkpoint 120 Next Block Planning Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "checkpoint-120-output-review-plan": ("AURA Checkpoint 120 Output Review Plan", manager.checkpoint_120_output_review_plan),
+            "sprint-121-130-scope-definition-plan": ("AURA Sprint 121-130 Scope Definition Plan", manager.sprint_121_130_scope_definition_plan),
+            "runtime-readiness-continuation-plan": ("AURA Runtime Readiness Continuation Plan", manager.runtime_readiness_continuation_plan),
+            "permission-audit-writer-boundary-plan": ("AURA Permission Audit Writer Boundary Plan", manager.permission_audit_writer_boundary_plan),
+            "dashboard-control-center-boundary-plan": ("AURA Dashboard Control Center Boundary Plan", manager.dashboard_control_center_boundary_plan),
+            "orion-dry-handshake-boundary-plan": ("AURA ORION Dry Handshake Boundary Plan", manager.orion_dry_handshake_boundary_plan),
+            "safe-local-action-allowlist-boundary-plan": ("AURA Safe Local Action Allowlist Boundary Plan", manager.safe_local_action_allowlist_boundary_plan),
+            "runtime-activation-blocker-tracking-plan": ("AURA Runtime Activation Blocker Tracking Plan", manager.runtime_activation_blocker_tracking_plan),
+            "future-121-130-checkpoint-boundary-plan": ("AURA Future 121-130 Checkpoint Boundary Plan", manager.future_121_130_checkpoint_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_post_checkpoint_120_next_block_planning_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 120.0 review stabilization 111-120 CLI helpers.
     def print_review_stabilization_111_120_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5801,6 +5843,9 @@ class AuraCLI:
             return True
 
         if self.handle_review_stabilization_111_120_cli_command(raw_args):
+            return True
+
+        if self.handle_post_checkpoint_120_next_block_planning_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
