@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.136.0-genesis  
+Current version: v0.137.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.136.0-genesis
+- v0.137.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.136.0-genesis
+    Version  : 0.137.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -1015,6 +1015,54 @@ Safety result:
 - model request/inference runtime disabled
 - dashboard event emit disabled
 - action/tool/command execution disabled
+- file/service/port/network/ORION runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 137.0 — Memory Runtime Write Gate Review Foundation
+
+Status: completed
+Version: v0.137.0-genesis
+
+Sprint 137 adds a planner-only, metadata-only, and review-only Memory Runtime Write Gate Review Foundation.
+
+Counts:
+
+- 12 plan types
+- 100 total memory runtime write gate review blueprints/items
+- 0 runtime memory write gate plans applied
+- 0 runtime memory write requests received
+- 0 runtime memory write intents classified
+- 0 runtime memory write approvals requested/applied
+- 0 runtime memory scopes applied
+- 0 runtime memory redactions executed
+- 0 runtime memory conflict resolutions executed
+- 0 runtime memory reads/writes
+- 0 runtime memory records created/updated/deleted
+- 0 runtime memory indexes updated
+- 0 runtime memory files/databases/caches written
+- 0 runtime memory rollbacks/session links
+- 0 runtime permission grants created/applied
+- 0 runtime audit writers/events
+- 0 runtime safe idle recoveries
+- 0 runtime dashboard events/actions
+- 0 runtime tools/commands/files/services/ports/network/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- memory write gate apply disabled
+- memory write request receive disabled
+- memory write intent classification disabled
+- memory write approval runtime disabled
+- memory scope/redaction/conflict runtime disabled
+- memory read/write disabled
+- memory record mutation disabled
+- memory index update disabled
+- memory persistence disabled
+- memory rollback/session link runtime disabled
+- permission/audit/dashboard/action runtime disabled
+- tool/command execution disabled
 - file/service/port/network/ORION runtime disabled
 - release gate closed
 - future runtime still requires manual approval

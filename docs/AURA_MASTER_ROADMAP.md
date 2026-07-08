@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.136.0-genesis
+Target: v0.137.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1474,3 +1474,11 @@ Status: completed
 AURA now includes a planner-only, metadata-only, and review-only Chat Runtime Minimal Loop Review Foundation.
 
 This foundation reviews chat input boundary, response boundary, session state, permission prompts, memory read/write gates, audit events, safe idle fallback, error recovery, manual approval runtime entry, and no-model-execution requirements without starting chat runtime, receiving or processing runtime messages, generating or sending responses, mutating sessions, reading or writing memory, creating permission prompts, starting audit writers, executing model requests or inference, dispatching actions, executing tools or commands, or enabling runtime execution.
+
+## v0.137.0 Genesis — Memory Runtime Write Gate Review Foundation
+
+Status: completed
+
+AURA now includes a planner-only, metadata-only, and review-only Memory Runtime Write Gate Review Foundation.
+
+This foundation reviews memory write intent classification, manual approval, scope boundary, redaction, conflict resolution, audit events, rollback, safe idle failure, session links, and no-persistence requirements without reading memory, writing memory, mutating memory records, creating permission grants, starting audit writers, executing rollback/recovery, dispatching actions, executing tools or commands, or enabling runtime execution.

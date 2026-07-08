@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 137.0 memory runtime write gate review foundation actions.
+    memory_runtime_write_gate_review_actions = [
+        ('memory_runtime_write_gate_review.status', 'read_project', 'Show Memory Runtime Write Gate Review status.'),
+        ('memory_runtime_write_gate_review.memory_write_intent_classification_review_plan', 'read_project', 'Prepare memory write intent classification review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_manual_approval_review_plan', 'read_project', 'Prepare memory write manual approval review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_scope_boundary_review_plan', 'read_project', 'Prepare memory write scope boundary review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_redaction_review_plan', 'read_project', 'Prepare memory write redaction review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_conflict_resolution_review_plan', 'read_project', 'Prepare memory write conflict resolution review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_audit_event_review_plan', 'read_project', 'Prepare memory write audit event review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_rollback_review_plan', 'read_project', 'Prepare memory write rollback review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_safe_idle_failure_review_plan', 'read_project', 'Prepare memory write safe idle failure review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_session_link_review_plan', 'read_project', 'Prepare memory write session link review plan.'),
+        ('memory_runtime_write_gate_review.memory_write_no_persistence_review_plan', 'read_project', 'Prepare memory write no-persistence review plan.'),
+        ('memory_runtime_write_gate_review.context', 'read_project', 'Show Memory Runtime Write Gate Review context.'),
+    ]
+
+    for action_name, permission_action, description in memory_runtime_write_gate_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="memory_runtime_write_gate_review", description=description, permission_action=permission_action, status="online", skill="aura_memory_runtime_write_gate_review_foundation"))
+
     # Sprint 136.0 chat runtime minimal loop review foundation actions.
     chat_runtime_minimal_loop_review_actions = [
         ('chat_runtime_minimal_loop_review.status', 'read_project', 'Show Chat Runtime Minimal Loop Review status.'),

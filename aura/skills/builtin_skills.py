@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 137.0 memory runtime write gate review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_memory_runtime_write_gate_review_foundation",
+            description="Prepare planner-only and review-only Memory Runtime Write Gate Review Foundation without reading memory, writing memory, creating/updating/deleting memory records, receiving runtime memory write requests, creating permission grants, starting audit writers, writing audit events, executing rollback/recovery, emitting dashboard events, dispatching actions, executing tools/commands, using file runtime, starting services, binding ports, probing network, performing ORION handshakes, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "memory_runtime_write_gate_review_status",
+                "memory_write_intent_classification_review_plan",
+                "memory_write_manual_approval_review_plan",
+                "memory_write_scope_boundary_review_plan",
+                "memory_write_redaction_review_plan",
+                "memory_write_conflict_resolution_review_plan",
+                "memory_write_audit_event_review_plan",
+                "memory_write_rollback_review_plan",
+                "memory_write_safe_idle_failure_review_plan",
+                "memory_write_session_link_review_plan",
+                "memory_write_no_persistence_review_plan",
+                "memory_runtime_write_gate_review_context",
+            ],
+        )
+    )
+
     # Sprint 136.0 chat runtime minimal loop review foundation skill.
     registry.register(
         AuraSkill(

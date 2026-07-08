@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_memory_runtime_write_gate_review_foundation",
+                    "name": "AURA Memory Runtime Write Gate Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.137.0-genesis",
+                    "category": "memory",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Memory Runtime Write Gate Review Foundation covering memory write intent classification, manual approval, scope boundary, redaction, conflict resolution, audit event, rollback, safe idle failure, session link, and no-persistence review without reading memory, writing memory, creating/updating/deleting memory records, receiving runtime memory write requests, creating permission grants, starting audit writers, writing audit events, rollback/recovery execution, dashboard event emit, action dispatch, tool/command execution, file/service/port/network/ORION/git runtime, or runtime execution features.",
+                },
+                {
                     "id": "aura_chat_runtime_minimal_loop_review_foundation",
                     "name": "AURA Chat Runtime Minimal Loop Review Foundation",
                     "state": "online",

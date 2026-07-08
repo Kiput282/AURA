@@ -121,6 +121,7 @@ from aura.runtime_activation_path_proposal_review.aura_runtime_activation_path_p
 from aura.local_service_boot_plan_review.aura_local_service_boot_plan_review_foundation_manager import AuraLocalServiceBootPlanReviewFoundationManager
 from aura.control_center_runtime_entry_review.aura_control_center_runtime_entry_review_foundation_manager import AuraControlCenterRuntimeEntryReviewFoundationManager
 from aura.chat_runtime_minimal_loop_review.aura_chat_runtime_minimal_loop_review_foundation_manager import AuraChatRuntimeMinimalLoopReviewFoundationManager
+from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review_foundation_manager import AuraMemoryRuntimeWriteGateReviewFoundationManager
 
 
 class AuraShell:
@@ -1023,6 +1024,18 @@ class AuraShell:
         print("  chat-manual-approval-runtime-entry-review-plan <target> Prepare chat manual approval runtime entry review plan")
         print("  chat-no-model-execution-review-plan <target> Prepare chat no-model-execution review plan")
         print("  chat-runtime-minimal-loop-review-context Show Chat Runtime Minimal Loop Review context")
+        print("  memory-runtime-write-gate-review-status Show Memory Runtime Write Gate Review Foundation status")
+        print("  memory-write-intent-classification-review-plan <target> Prepare memory write intent classification review plan")
+        print("  memory-write-manual-approval-review-plan <target> Prepare memory write manual approval review plan")
+        print("  memory-write-scope-boundary-review-plan <target> Prepare memory write scope boundary review plan")
+        print("  memory-write-redaction-review-plan <target> Prepare memory write redaction review plan")
+        print("  memory-write-conflict-resolution-review-plan <target> Prepare memory write conflict resolution review plan")
+        print("  memory-write-audit-event-review-plan <target> Prepare memory write audit event review plan")
+        print("  memory-write-rollback-review-plan <target> Prepare memory write rollback review plan")
+        print("  memory-write-safe-idle-failure-review-plan <target> Prepare memory write safe idle failure review plan")
+        print("  memory-write-session-link-review-plan <target> Prepare memory write session link review plan")
+        print("  memory-write-no-persistence-review-plan <target> Prepare memory write no-persistence review plan")
+        print("  memory-runtime-write-gate-review-context Show Memory Runtime Write Gate Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5009,6 +5022,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 137.0 memory runtime write gate review shell helpers.
+    def print_memory_runtime_write_gate_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Runtime Write Gate Review Safety Boundary"))
+
+    def handle_memory_runtime_write_gate_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA memory runtime write gate review"
+        manager = AuraMemoryRuntimeWriteGateReviewFoundationManager(project_root=self.project_root)
+
+        if command == "memory-runtime-write-gate-review-status":
+            self.print_memory_runtime_write_gate_review_packet("AURA Memory Runtime Write Gate Review Foundation Status", manager.status())
+            return True
+
+        if command == "memory-runtime-write-gate-review-context":
+            self.print_memory_runtime_write_gate_review_packet("AURA Memory Runtime Write Gate Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "memory-write-intent-classification-review-plan": ("AURA Memory Write Intent Classification Review Plan", manager.memory_write_intent_classification_review_plan),
+            "memory-write-manual-approval-review-plan": ("AURA Memory Write Manual Approval Review Plan", manager.memory_write_manual_approval_review_plan),
+            "memory-write-scope-boundary-review-plan": ("AURA Memory Write Scope Boundary Review Plan", manager.memory_write_scope_boundary_review_plan),
+            "memory-write-redaction-review-plan": ("AURA Memory Write Redaction Review Plan", manager.memory_write_redaction_review_plan),
+            "memory-write-conflict-resolution-review-plan": ("AURA Memory Write Conflict Resolution Review Plan", manager.memory_write_conflict_resolution_review_plan),
+            "memory-write-audit-event-review-plan": ("AURA Memory Write Audit Event Review Plan", manager.memory_write_audit_event_review_plan),
+            "memory-write-rollback-review-plan": ("AURA Memory Write Rollback Review Plan", manager.memory_write_rollback_review_plan),
+            "memory-write-safe-idle-failure-review-plan": ("AURA Memory Write Safe Idle Failure Review Plan", manager.memory_write_safe_idle_failure_review_plan),
+            "memory-write-session-link-review-plan": ("AURA Memory Write Session Link Review Plan", manager.memory_write_session_link_review_plan),
+            "memory-write-no-persistence-review-plan": ("AURA Memory Write No Persistence Review Plan", manager.memory_write_no_persistence_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_runtime_write_gate_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 136.0 chat runtime minimal loop review shell helpers.
     def print_chat_runtime_minimal_loop_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7372,6 +7428,9 @@ class AuraShell:
             return
 
         if self.handle_chat_runtime_minimal_loop_review_shell_command(normalized):
+            return
+
+        if self.handle_memory_runtime_write_gate_review_shell_command(normalized):
             return
 
         if normalized == "help":
