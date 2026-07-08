@@ -1,7 +1,7 @@
 # AURA Roadmap 121-130 Plan
 
 Status: PLANNED
-Version seed: v0.124.0-genesis
+Version seed: v0.125.0-genesis
 Phase: Genesis Runtime Readiness Continuation
 Owner: Kiput
 Motto: Grow Together
@@ -204,6 +204,35 @@ Safety result:
 - runtime ORION status heartbeats sent: 0
 - runtime network probes: 0
 - runtime dashboard events emitted: 0
+- runtime permissions changed: 0
+- runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
+- runtime execution features: 0
+
+## Sprint 125 Completion Summary
+
+Sprint 125 completed the Safe Local Action Allowlist Boundary Review Foundation.
+
+Completed foundation items:
+
+- safe action catalog boundary review
+- safe action scope boundary review
+- safe action permission boundary review
+- safe action risk level boundary review
+- safe action rollback boundary review
+- safe action audit/dashboard boundary review
+- safe action denied action boundary review
+- safe action runtime gate boundary review
+- future safe local action runtime boundary review
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime safe action allowlists applied: 0
+- runtime safe action permission requests created: 0
+- runtime safe actions dispatched/executed: 0
+- runtime safe action audit/dashboard events: 0
 - runtime permissions changed: 0
 - runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
 - runtime execution features: 0

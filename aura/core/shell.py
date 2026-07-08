@@ -109,6 +109,7 @@ from aura.post_checkpoint_120_next_block_planning.aura_post_checkpoint_120_next_
 from aura.runtime_permission_audit_writer_boundary_review.aura_runtime_permission_audit_writer_boundary_review_foundation_manager import AuraRuntimePermissionAuditWriterBoundaryReviewFoundationManager
 from aura.dashboard_control_center_boundary_review.aura_dashboard_control_center_boundary_review_foundation_manager import AuraDashboardControlCenterBoundaryReviewFoundationManager
 from aura.orion_dry_handshake_boundary_review.aura_orion_dry_handshake_boundary_review_foundation_manager import AuraOrionDryHandshakeBoundaryReviewFoundationManager
+from aura.safe_local_action_allowlist_boundary_review.aura_safe_local_action_allowlist_boundary_review_foundation_manager import AuraSafeLocalActionAllowlistBoundaryReviewFoundationManager
 
 
 class AuraShell:
@@ -872,6 +873,17 @@ class AuraShell:
         print("  orion-failure-safe-idle-boundary-review-plan <target> Prepare ORION failure safe idle boundary review plan")
         print("  future-orion-handshake-runtime-boundary-plan <target> Prepare future ORION handshake runtime boundary plan")
         print("  orion-dry-handshake-boundary-review-context Show ORION Dry Handshake Boundary Review context")
+        print("  safe-local-action-allowlist-boundary-review-status Show Safe Local Action Allowlist Boundary Review Foundation status")
+        print("  safe-action-catalog-boundary-review-plan <target> Prepare safe action catalog boundary review plan")
+        print("  safe-action-scope-boundary-review-plan <target> Prepare safe action scope boundary review plan")
+        print("  safe-action-permission-boundary-review-plan <target> Prepare safe action permission boundary review plan")
+        print("  safe-action-risk-level-boundary-review-plan <target> Prepare safe action risk level boundary review plan")
+        print("  safe-action-rollback-boundary-review-plan <target> Prepare safe action rollback boundary review plan")
+        print("  safe-action-audit-dashboard-boundary-review-plan <target> Prepare safe action audit/dashboard boundary review plan")
+        print("  safe-action-denied-action-boundary-review-plan <target> Prepare safe action denied action boundary review plan")
+        print("  safe-action-runtime-gate-boundary-review-plan <target> Prepare safe action runtime gate boundary review plan")
+        print("  future-safe-local-action-runtime-boundary-plan <target> Prepare future safe local action runtime boundary plan")
+        print("  safe-local-action-allowlist-boundary-review-context Show Safe Local Action Allowlist Boundary Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4846,6 +4858,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 125.0 safe local action allowlist boundary review shell helpers.
+    def print_safe_local_action_allowlist_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Safe Local Action Allowlist Boundary Review Safety Boundary"))
+
+    def handle_safe_local_action_allowlist_boundary_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA safe local action allowlist boundary review"
+        manager = AuraSafeLocalActionAllowlistBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "safe-local-action-allowlist-boundary-review-status":
+            self.print_safe_local_action_allowlist_boundary_review_packet("AURA Safe Local Action Allowlist Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "safe-local-action-allowlist-boundary-review-context":
+            self.print_safe_local_action_allowlist_boundary_review_packet("AURA Safe Local Action Allowlist Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "safe-action-catalog-boundary-review-plan": ("AURA Safe Action Catalog Boundary Review Plan", manager.safe_action_catalog_boundary_review_plan),
+            "safe-action-scope-boundary-review-plan": ("AURA Safe Action Scope Boundary Review Plan", manager.safe_action_scope_boundary_review_plan),
+            "safe-action-permission-boundary-review-plan": ("AURA Safe Action Permission Boundary Review Plan", manager.safe_action_permission_boundary_review_plan),
+            "safe-action-risk-level-boundary-review-plan": ("AURA Safe Action Risk Level Boundary Review Plan", manager.safe_action_risk_level_boundary_review_plan),
+            "safe-action-rollback-boundary-review-plan": ("AURA Safe Action Rollback Boundary Review Plan", manager.safe_action_rollback_boundary_review_plan),
+            "safe-action-audit-dashboard-boundary-review-plan": ("AURA Safe Action Audit Dashboard Boundary Review Plan", manager.safe_action_audit_dashboard_boundary_review_plan),
+            "safe-action-denied-action-boundary-review-plan": ("AURA Safe Action Denied Action Boundary Review Plan", manager.safe_action_denied_action_boundary_review_plan),
+            "safe-action-runtime-gate-boundary-review-plan": ("AURA Safe Action Runtime Gate Boundary Review Plan", manager.safe_action_runtime_gate_boundary_review_plan),
+            "future-safe-local-action-runtime-boundary-plan": ("AURA Future Safe Local Action Runtime Boundary Plan", manager.future_safe_local_action_runtime_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_safe_local_action_allowlist_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 124.0 ORION dry handshake boundary review shell helpers.
     def print_orion_dry_handshake_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6674,6 +6728,9 @@ class AuraShell:
             return
 
         if self.handle_orion_dry_handshake_boundary_review_shell_command(normalized):
+            return
+
+        if self.handle_safe_local_action_allowlist_boundary_review_shell_command(normalized):
             return
 
         if normalized == "help":

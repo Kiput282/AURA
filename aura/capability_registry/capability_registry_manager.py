@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_safe_local_action_allowlist_boundary_review_foundation",
+                    "name": "AURA Safe Local Action Allowlist Boundary Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.125.0-genesis",
+                    "category": "actions",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Safe Local Action Allowlist Boundary Review Foundation for safe action catalog, action scope, permission requirements, risk levels, rollback references, audit/dashboard visibility, denied action policy, runtime gates, and future safe local action runtime boundaries without applying allowlists, creating permission requests, dispatching actions, executing actions, writing audit events, emitting dashboard events, using file runtime, starting services, probing network, performing ORION handshakes, or enabling runtime execution.",
+                },
+                {
                     "id": "aura_orion_dry_handshake_boundary_review_foundation",
                     "name": "AURA ORION Dry Handshake Boundary Review Foundation",
                     "state": "online",

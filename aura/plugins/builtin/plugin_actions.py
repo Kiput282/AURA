@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 125.0 safe local action allowlist boundary review foundation actions.
+    safe_local_action_allowlist_boundary_review_actions = [
+        ('safe_local_action_allowlist_boundary_review.status', 'read_project', 'Show Safe Local Action Allowlist Boundary Review status.'),
+        ('safe_local_action_allowlist_boundary_review.safe_action_catalog_boundary_review_plan', 'read_project', 'Prepare safe action catalog boundary review plan.'),
+        ('safe_local_action_allowlist_boundary_review.safe_action_scope_boundary_review_plan', 'read_project', 'Prepare safe action scope boundary review plan.'),
+        ('safe_local_action_allowlist_boundary_review.safe_action_permission_boundary_review_plan', 'read_project', 'Prepare safe action permission boundary review plan.'),
+        ('safe_local_action_allowlist_boundary_review.safe_action_risk_level_boundary_review_plan', 'read_project', 'Prepare safe action risk level boundary review plan.'),
+        ('safe_local_action_allowlist_boundary_review.safe_action_rollback_boundary_review_plan', 'read_project', 'Prepare safe action rollback boundary review plan.'),
+        ('safe_local_action_allowlist_boundary_review.safe_action_audit_dashboard_boundary_review_plan', 'read_project', 'Prepare safe action audit/dashboard boundary review plan.'),
+        ('safe_local_action_allowlist_boundary_review.safe_action_denied_action_boundary_review_plan', 'read_project', 'Prepare safe action denied action boundary review plan.'),
+        ('safe_local_action_allowlist_boundary_review.safe_action_runtime_gate_boundary_review_plan', 'read_project', 'Prepare safe action runtime gate boundary review plan.'),
+        ('safe_local_action_allowlist_boundary_review.future_safe_local_action_runtime_boundary_plan', 'read_project', 'Prepare future safe local action runtime boundary plan.'),
+        ('safe_local_action_allowlist_boundary_review.context', 'read_project', 'Show Safe Local Action Allowlist Boundary Review context.'),
+    ]
+
+    for action_name, permission_action, description in safe_local_action_allowlist_boundary_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="safe_local_action_allowlist_boundary_review", description=description, permission_action=permission_action, status="online", skill="aura_safe_local_action_allowlist_boundary_review_foundation"))
+
     # Sprint 124.0 ORION dry handshake boundary review foundation actions.
     orion_dry_handshake_boundary_review_actions = [
         ('orion_dry_handshake_boundary_review.status', 'read_project', 'Show ORION Dry Handshake Boundary Review status.'),

@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.124.0-genesis  
+Current version: v0.125.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.124.0-genesis
+- v0.125.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.124.0-genesis
+    Version  : 0.125.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -488,6 +488,48 @@ Safety result:
 - ORION authority mutation disabled
 - dashboard event emit disabled
 - permission mutation disabled
+- release gate closed
+- runtime activation disabled
+- future runtime still requires manual approval
+
+## Sprint 125.0 — Safe Local Action Allowlist Boundary Review Foundation
+
+Status: completed
+Version: v0.125.0-genesis
+
+Sprint 125 adds a planner-only, metadata-only, and review-only Safe Local Action Allowlist Boundary Review Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total safe local action allowlist boundary review blueprints/items
+- 0 runtime safe action catalogs applied
+- 0 runtime safe action allowlists applied
+- 0 runtime safe action permission requests created
+- 0 runtime safe action risk evaluations
+- 0 runtime safe action rollback snapshots
+- 0 runtime safe action audit writes
+- 0 runtime safe action dashboard events emitted
+- 0 runtime safe actions dispatched
+- 0 runtime safe actions executed
+- 0 runtime permissions changed
+- 0 runtime actions/tools/commands/files/services/network/ORION/memory/git
+- 0 runtime execution features
+
+Safety result:
+
+- safe action allowlist boundary review only
+- safe action runtime disabled
+- safe action allowlist apply disabled
+- safe action dispatch disabled
+- safe action execution disabled
+- permission request runtime disabled
+- audit write disabled
+- dashboard event emit disabled
+- file runtime disabled
+- service runtime disabled
+- network probe disabled
+- ORION handshake runtime disabled
 - release gate closed
 - runtime activation disabled
 - future runtime still requires manual approval

@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 125.0 safe local action allowlist boundary review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_safe_local_action_allowlist_boundary_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Safe Local Action Allowlist Boundary Review Foundation without applying allowlists, creating permission requests, dispatching actions, executing actions, writing audit events, emitting dashboard events, using file runtime, starting services, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "safe_local_action_allowlist_boundary_review_status",
+                "safe_action_catalog_boundary_review_plan",
+                "safe_action_scope_boundary_review_plan",
+                "safe_action_permission_boundary_review_plan",
+                "safe_action_risk_level_boundary_review_plan",
+                "safe_action_rollback_boundary_review_plan",
+                "safe_action_audit_dashboard_boundary_review_plan",
+                "safe_action_denied_action_boundary_review_plan",
+                "safe_action_runtime_gate_boundary_review_plan",
+                "future_safe_local_action_runtime_boundary_plan",
+                "safe_local_action_allowlist_boundary_review_context",
+            ],
+        )
+    )
+
     # Sprint 124.0 ORION dry handshake boundary review foundation skill.
     registry.register(
         AuraSkill(
