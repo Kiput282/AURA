@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 127.0 runtime recovery drill boundary review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_recovery_drill_boundary_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Runtime Recovery Drill Boundary Review Foundation without starting recovery drills, executing recovery actions, applying rollback, restarting services, mutating permissions, writing audit events, emitting dashboard events, dispatching actions, executing tools/commands, using file runtime, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_recovery_drill_boundary_review_status",
+                "recovery_drill_scenario_catalog_boundary_review_plan",
+                "recovery_trigger_boundary_review_plan",
+                "recovery_safe_idle_boundary_review_plan",
+                "rollback_preview_boundary_review_plan",
+                "recovery_audit_dashboard_boundary_review_plan",
+                "recovery_permission_boundary_review_plan",
+                "orion_recovery_disconnect_boundary_review_plan",
+                "recovery_failure_escalation_boundary_review_plan",
+                "future_runtime_recovery_drill_boundary_plan",
+                "runtime_recovery_drill_boundary_review_context",
+            ],
+        )
+    )
+
     # Sprint 126.0 runtime grant expiry boundary review foundation skill.
     registry.register(
         AuraSkill(

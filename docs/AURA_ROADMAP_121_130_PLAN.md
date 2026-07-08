@@ -1,7 +1,7 @@
 # AURA Roadmap 121-130 Plan
 
 Status: PLANNED
-Version seed: v0.126.0-genesis
+Version seed: v0.127.0-genesis
 Phase: Genesis Runtime Readiness Continuation
 Owner: Kiput
 Motto: Grow Together
@@ -264,5 +264,35 @@ Safety result:
 - runtime grant renewal/revocation requests applied: 0
 - runtime dashboard/audit grant events: 0
 - runtime permissions changed: 0
+- runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
+- runtime execution features: 0
+
+## Sprint 127 Completion Summary
+
+Sprint 127 completed the Runtime Recovery Drill Boundary Review Foundation.
+
+Completed foundation items:
+
+- recovery drill scenario catalog boundary review
+- recovery trigger boundary review
+- recovery safe idle boundary review
+- rollback preview boundary review
+- recovery audit/dashboard boundary review
+- recovery permission boundary review
+- ORION recovery disconnect boundary review
+- recovery failure escalation boundary review
+- future runtime recovery drill boundary review
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime recovery drills started/executed: 0
+- runtime rollbacks executed: 0
+- runtime services restarted: 0
+- runtime ORION recovery disconnects/handshakes: 0
+- runtime permissions changed: 0
+- runtime dashboard/audit events: 0
 - runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
 - runtime execution features: 0

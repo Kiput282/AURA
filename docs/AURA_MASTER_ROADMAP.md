@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.126.0-genesis
+Target: v0.127.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1394,3 +1394,11 @@ Status: completed
 AURA now includes a planner-only, metadata-only, and review-only Runtime Grant Expiry Boundary Review Foundation.
 
 This foundation prepares future permission grant expiry boundaries for grant schema, grant lifetime policy, renewal, revocation, expired grant denial, dashboard visibility, audit links, failure safe idle behavior, and future grant expiry runtime requirements without creating grants, renewing grants, revoking grants, applying expiry state, mutating permissions, writing audit events, emitting dashboard events, dispatching actions, or enabling runtime execution.
+
+## v0.127.0 Genesis — Runtime Recovery Drill Boundary Review Foundation
+
+Status: completed
+
+AURA now includes a planner-only, metadata-only, and review-only Runtime Recovery Drill Boundary Review Foundation.
+
+This foundation prepares future recovery drill boundaries for scenario catalog, recovery triggers, safe idle transitions, rollback previews, recovery audit/dashboard visibility, recovery permission boundaries, ORION recovery disconnect, failure escalation, and future recovery runtime requirements without starting recovery drills, executing recovery actions, applying rollback, restarting services, mutating permissions, writing audit events, emitting dashboard events, dispatching actions, or enabling runtime execution.

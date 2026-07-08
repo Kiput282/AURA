@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.126.0-genesis  
+Current version: v0.127.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.126.0-genesis
+- v0.127.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.126.0-genesis
+    Version  : 0.127.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -574,6 +574,51 @@ Safety result:
 - dashboard event emit disabled
 - action dispatch/execution disabled
 - file/service/network/ORION runtime disabled
+- release gate closed
+- runtime activation disabled
+- future runtime still requires manual approval
+
+## Sprint 127.0 — Runtime Recovery Drill Boundary Review Foundation
+
+Status: completed
+Version: v0.127.0-genesis
+
+Sprint 127 adds a planner-only, metadata-only, and review-only Runtime Recovery Drill Boundary Review Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total runtime recovery drill boundary review blueprints/items
+- 0 runtime recovery drills started
+- 0 runtime recovery drills executed
+- 0 runtime recovery triggers applied
+- 0 runtime recovery safe idle transitions
+- 0 runtime rollback previews applied
+- 0 runtime rollbacks executed
+- 0 runtime recovery audit writes
+- 0 runtime recovery dashboard events emitted
+- 0 runtime recovery permission requests created
+- 0 runtime recovery permissions mutated
+- 0 runtime ORION recovery disconnects/handshakes
+- 0 runtime recovery failure escalations
+- 0 runtime recovery runtime gates opened
+- 0 runtime permissions changed
+- 0 runtime actions/tools/commands/files/services/network/ORION/memory/git
+- 0 runtime execution features
+
+Safety result:
+
+- recovery drill boundary review only
+- recovery drill runtime disabled
+- recovery execution disabled
+- rollback runtime disabled
+- service restart runtime disabled
+- permission mutation disabled
+- audit write disabled
+- dashboard event emit disabled
+- action dispatch/execution disabled
+- file/service/network/ORION runtime disabled
+- ORION recovery runtime disabled
 - release gate closed
 - runtime activation disabled
 - future runtime still requires manual approval

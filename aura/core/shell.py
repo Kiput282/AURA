@@ -111,6 +111,7 @@ from aura.dashboard_control_center_boundary_review.aura_dashboard_control_center
 from aura.orion_dry_handshake_boundary_review.aura_orion_dry_handshake_boundary_review_foundation_manager import AuraOrionDryHandshakeBoundaryReviewFoundationManager
 from aura.safe_local_action_allowlist_boundary_review.aura_safe_local_action_allowlist_boundary_review_foundation_manager import AuraSafeLocalActionAllowlistBoundaryReviewFoundationManager
 from aura.runtime_grant_expiry_boundary_review.aura_runtime_grant_expiry_boundary_review_foundation_manager import AuraRuntimeGrantExpiryBoundaryReviewFoundationManager
+from aura.runtime_recovery_drill_boundary_review.aura_runtime_recovery_drill_boundary_review_foundation_manager import AuraRuntimeRecoveryDrillBoundaryReviewFoundationManager
 
 
 class AuraShell:
@@ -896,6 +897,17 @@ class AuraShell:
         print("  grant-expiry-failure-safe-idle-boundary-review-plan <target> Prepare grant expiry failure safe idle boundary review plan")
         print("  future-runtime-grant-expiry-boundary-plan <target> Prepare future runtime grant expiry boundary plan")
         print("  runtime-grant-expiry-boundary-review-context Show Runtime Grant Expiry Boundary Review context")
+        print("  runtime-recovery-drill-boundary-review-status Show Runtime Recovery Drill Boundary Review Foundation status")
+        print("  recovery-drill-scenario-catalog-boundary-review-plan <target> Prepare recovery drill scenario catalog boundary review plan")
+        print("  recovery-trigger-boundary-review-plan <target> Prepare recovery trigger boundary review plan")
+        print("  recovery-safe-idle-boundary-review-plan <target> Prepare recovery safe idle boundary review plan")
+        print("  rollback-preview-boundary-review-plan <target> Prepare rollback preview boundary review plan")
+        print("  recovery-audit-dashboard-boundary-review-plan <target> Prepare recovery audit/dashboard boundary review plan")
+        print("  recovery-permission-boundary-review-plan <target> Prepare recovery permission boundary review plan")
+        print("  orion-recovery-disconnect-boundary-review-plan <target> Prepare ORION recovery disconnect boundary review plan")
+        print("  recovery-failure-escalation-boundary-review-plan <target> Prepare recovery failure escalation boundary review plan")
+        print("  future-runtime-recovery-drill-boundary-plan <target> Prepare future runtime recovery drill boundary plan")
+        print("  runtime-recovery-drill-boundary-review-context Show Runtime Recovery Drill Boundary Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4872,6 +4884,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 127.0 runtime recovery drill boundary review shell helpers.
+    def print_runtime_recovery_drill_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Recovery Drill Boundary Review Safety Boundary"))
+
+    def handle_runtime_recovery_drill_boundary_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime recovery drill boundary review"
+        manager = AuraRuntimeRecoveryDrillBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-recovery-drill-boundary-review-status":
+            self.print_runtime_recovery_drill_boundary_review_packet("AURA Runtime Recovery Drill Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-recovery-drill-boundary-review-context":
+            self.print_runtime_recovery_drill_boundary_review_packet("AURA Runtime Recovery Drill Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "recovery-drill-scenario-catalog-boundary-review-plan": ("AURA Recovery Drill Scenario Catalog Boundary Review Plan", manager.recovery_drill_scenario_catalog_boundary_review_plan),
+            "recovery-trigger-boundary-review-plan": ("AURA Recovery Trigger Boundary Review Plan", manager.recovery_trigger_boundary_review_plan),
+            "recovery-safe-idle-boundary-review-plan": ("AURA Recovery Safe Idle Boundary Review Plan", manager.recovery_safe_idle_boundary_review_plan),
+            "rollback-preview-boundary-review-plan": ("AURA Rollback Preview Boundary Review Plan", manager.rollback_preview_boundary_review_plan),
+            "recovery-audit-dashboard-boundary-review-plan": ("AURA Recovery Audit Dashboard Boundary Review Plan", manager.recovery_audit_dashboard_boundary_review_plan),
+            "recovery-permission-boundary-review-plan": ("AURA Recovery Permission Boundary Review Plan", manager.recovery_permission_boundary_review_plan),
+            "orion-recovery-disconnect-boundary-review-plan": ("AURA ORION Recovery Disconnect Boundary Review Plan", manager.orion_recovery_disconnect_boundary_review_plan),
+            "recovery-failure-escalation-boundary-review-plan": ("AURA Recovery Failure Escalation Boundary Review Plan", manager.recovery_failure_escalation_boundary_review_plan),
+            "future-runtime-recovery-drill-boundary-plan": ("AURA Future Runtime Recovery Drill Boundary Plan", manager.future_runtime_recovery_drill_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_recovery_drill_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 126.0 runtime grant expiry boundary review shell helpers.
     def print_runtime_grant_expiry_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6788,6 +6842,9 @@ class AuraShell:
             return
 
         if self.handle_runtime_grant_expiry_boundary_review_shell_command(normalized):
+            return
+
+        if self.handle_runtime_recovery_drill_boundary_review_shell_command(normalized):
             return
 
         if normalized == "help":

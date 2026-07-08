@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 127.0 runtime recovery drill boundary review foundation actions.
+    runtime_recovery_drill_boundary_review_actions = [
+        ('runtime_recovery_drill_boundary_review.status', 'read_project', 'Show Runtime Recovery Drill Boundary Review status.'),
+        ('runtime_recovery_drill_boundary_review.recovery_drill_scenario_catalog_boundary_review_plan', 'read_project', 'Prepare recovery drill scenario catalog boundary review plan.'),
+        ('runtime_recovery_drill_boundary_review.recovery_trigger_boundary_review_plan', 'read_project', 'Prepare recovery trigger boundary review plan.'),
+        ('runtime_recovery_drill_boundary_review.recovery_safe_idle_boundary_review_plan', 'read_project', 'Prepare recovery safe idle boundary review plan.'),
+        ('runtime_recovery_drill_boundary_review.rollback_preview_boundary_review_plan', 'read_project', 'Prepare rollback preview boundary review plan.'),
+        ('runtime_recovery_drill_boundary_review.recovery_audit_dashboard_boundary_review_plan', 'read_project', 'Prepare recovery audit/dashboard boundary review plan.'),
+        ('runtime_recovery_drill_boundary_review.recovery_permission_boundary_review_plan', 'read_project', 'Prepare recovery permission boundary review plan.'),
+        ('runtime_recovery_drill_boundary_review.orion_recovery_disconnect_boundary_review_plan', 'read_project', 'Prepare ORION recovery disconnect boundary review plan.'),
+        ('runtime_recovery_drill_boundary_review.recovery_failure_escalation_boundary_review_plan', 'read_project', 'Prepare recovery failure escalation boundary review plan.'),
+        ('runtime_recovery_drill_boundary_review.future_runtime_recovery_drill_boundary_plan', 'read_project', 'Prepare future runtime recovery drill boundary plan.'),
+        ('runtime_recovery_drill_boundary_review.context', 'read_project', 'Show Runtime Recovery Drill Boundary Review context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_recovery_drill_boundary_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_recovery_drill_boundary_review", description=description, permission_action=permission_action, status="online", skill="aura_runtime_recovery_drill_boundary_review_foundation"))
+
     # Sprint 126.0 runtime grant expiry boundary review foundation actions.
     runtime_grant_expiry_boundary_review_actions = [
         ('runtime_grant_expiry_boundary_review.status', 'read_project', 'Show Runtime Grant Expiry Boundary Review status.'),

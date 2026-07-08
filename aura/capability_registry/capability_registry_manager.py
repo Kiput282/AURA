@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_runtime_recovery_drill_boundary_review_foundation",
+                    "name": "AURA Runtime Recovery Drill Boundary Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.127.0-genesis",
+                    "category": "runtime",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Runtime Recovery Drill Boundary Review Foundation for recovery drill scenario catalog, recovery trigger, recovery safe idle, rollback preview, recovery audit/dashboard, recovery permission, ORION recovery disconnect, recovery failure escalation, and future runtime recovery drill boundaries without starting recovery drills, executing recovery actions, applying rollback, restarting services, mutating permissions, writing audit events, emitting dashboard events, dispatching actions, or enabling runtime execution.",
+                },
+                {
                     "id": "aura_runtime_grant_expiry_boundary_review_foundation",
                     "name": "AURA Runtime Grant Expiry Boundary Review Foundation",
                     "state": "online",
