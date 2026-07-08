@@ -105,6 +105,7 @@ from aura.v1_runtime_readiness_cutline_review.aura_v1_runtime_readiness_cutline_
 from aura.review_stabilization_111_120.aura_review_stabilization_111_120_foundation_manager import AuraReviewStabilization111120FoundationManager
 from aura.post_checkpoint_120_next_block_planning.aura_post_checkpoint_120_next_block_planning_foundation_manager import AuraPostCheckpoint120NextBlockPlanningFoundationManager
 from aura.runtime_permission_audit_writer_boundary_review.aura_runtime_permission_audit_writer_boundary_review_foundation_manager import AuraRuntimePermissionAuditWriterBoundaryReviewFoundationManager
+from aura.dashboard_control_center_boundary_review.aura_dashboard_control_center_boundary_review_foundation_manager import AuraDashboardControlCenterBoundaryReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4186,6 +4187,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 123.0 dashboard control center boundary review CLI helpers.
+    def print_dashboard_control_center_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Dashboard Control Center Boundary Review Safety Boundary"))
+
+    def handle_dashboard_control_center_boundary_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA dashboard control center boundary review"
+        manager = AuraDashboardControlCenterBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "dashboard-control-center-boundary-review-status":
+            self.print_dashboard_control_center_boundary_review_packet("AURA Dashboard Control Center Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "dashboard-control-center-boundary-review-context":
+            self.print_dashboard_control_center_boundary_review_packet("AURA Dashboard Control Center Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "control-center-shell-layout-boundary-review-plan": ("AURA Control Center Shell Layout Boundary Review Plan", manager.control_center_shell_layout_boundary_review_plan),
+            "dashboard-status-payload-boundary-review-plan": ("AURA Dashboard Status Payload Boundary Review Plan", manager.dashboard_status_payload_boundary_review_plan),
+            "permission-panel-boundary-review-plan": ("AURA Permission Panel Boundary Review Plan", manager.permission_panel_boundary_review_plan),
+            "audit-panel-boundary-review-plan": ("AURA Audit Panel Boundary Review Plan", manager.audit_panel_boundary_review_plan),
+            "action-proposal-panel-boundary-review-plan": ("AURA Action Proposal Panel Boundary Review Plan", manager.action_proposal_panel_boundary_review_plan),
+            "orion-client-panel-boundary-review-plan": ("AURA ORION Client Panel Boundary Review Plan", manager.orion_client_panel_boundary_review_plan),
+            "runtime-gate-panel-boundary-review-plan": ("AURA Runtime Gate Panel Boundary Review Plan", manager.runtime_gate_panel_boundary_review_plan),
+            "dashboard-failure-safe-idle-boundary-review-plan": ("AURA Dashboard Failure Safe Idle Boundary Review Plan", manager.dashboard_failure_safe_idle_boundary_review_plan),
+            "future-dashboard-control-center-runtime-boundary-plan": ("AURA Future Dashboard Control Center Runtime Boundary Plan", manager.future_dashboard_control_center_runtime_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_dashboard_control_center_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 122.0 runtime permission audit writer boundary review CLI helpers.
     def print_runtime_permission_audit_writer_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5891,6 +5933,9 @@ class AuraCLI:
             return True
 
         if self.handle_runtime_permission_audit_writer_boundary_review_cli_command(raw_args):
+            return True
+
+        if self.handle_dashboard_control_center_boundary_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

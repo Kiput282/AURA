@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 123.0 dashboard control center boundary review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_dashboard_control_center_boundary_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Dashboard Control Center Boundary Review Foundation without starting dashboard runtime, web/API/frontend/backend services, route/port binding, dashboard events, permission changes, ORION handshakes, action dispatch, tool/command execution, file runtime, service runtime, memory writes, or git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "dashboard_control_center_boundary_review_status",
+                "control_center_shell_layout_boundary_review_plan",
+                "dashboard_status_payload_boundary_review_plan",
+                "permission_panel_boundary_review_plan",
+                "audit_panel_boundary_review_plan",
+                "action_proposal_panel_boundary_review_plan",
+                "orion_client_panel_boundary_review_plan",
+                "runtime_gate_panel_boundary_review_plan",
+                "dashboard_failure_safe_idle_boundary_review_plan",
+                "future_dashboard_control_center_runtime_boundary_plan",
+                "dashboard_control_center_boundary_review_context",
+            ],
+        )
+    )
+
     # Sprint 122.0 runtime permission audit writer boundary review foundation skill.
     registry.register(
         AuraSkill(

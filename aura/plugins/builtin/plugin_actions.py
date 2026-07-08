@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 123.0 dashboard control center boundary review foundation actions.
+    dashboard_control_center_boundary_review_actions = [
+        ('dashboard_control_center_boundary_review.status', 'read_project', 'Show Dashboard Control Center Boundary Review status.'),
+        ('dashboard_control_center_boundary_review.control_center_shell_layout_boundary_review_plan', 'read_project', 'Prepare control center shell layout boundary review plan.'),
+        ('dashboard_control_center_boundary_review.dashboard_status_payload_boundary_review_plan', 'read_project', 'Prepare dashboard status payload boundary review plan.'),
+        ('dashboard_control_center_boundary_review.permission_panel_boundary_review_plan', 'read_project', 'Prepare permission panel boundary review plan.'),
+        ('dashboard_control_center_boundary_review.audit_panel_boundary_review_plan', 'read_project', 'Prepare audit panel boundary review plan.'),
+        ('dashboard_control_center_boundary_review.action_proposal_panel_boundary_review_plan', 'read_project', 'Prepare action proposal panel boundary review plan.'),
+        ('dashboard_control_center_boundary_review.orion_client_panel_boundary_review_plan', 'read_project', 'Prepare ORION client panel boundary review plan.'),
+        ('dashboard_control_center_boundary_review.runtime_gate_panel_boundary_review_plan', 'read_project', 'Prepare runtime gate panel boundary review plan.'),
+        ('dashboard_control_center_boundary_review.dashboard_failure_safe_idle_boundary_review_plan', 'read_project', 'Prepare dashboard failure safe idle boundary review plan.'),
+        ('dashboard_control_center_boundary_review.future_dashboard_control_center_runtime_boundary_plan', 'read_project', 'Prepare future dashboard control center runtime boundary plan.'),
+        ('dashboard_control_center_boundary_review.context', 'read_project', 'Show Dashboard Control Center Boundary Review context.'),
+    ]
+
+    for action_name, permission_action, description in dashboard_control_center_boundary_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="dashboard_control_center_boundary_review", description=description, permission_action=permission_action, status="online", skill="aura_dashboard_control_center_boundary_review_foundation"))
+
     # Sprint 122.0 runtime permission audit writer boundary review foundation actions.
     runtime_permission_audit_writer_boundary_review_actions = [
         ('runtime_permission_audit_writer_boundary_review.status', 'read_project', 'Show Runtime Permission Audit Writer Boundary Review status.'),

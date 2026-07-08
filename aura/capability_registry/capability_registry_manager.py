@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_dashboard_control_center_boundary_review_foundation",
+                    "name": "AURA Dashboard Control Center Boundary Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.123.0-genesis",
+                    "category": "dashboard",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Dashboard Control Center Boundary Review Foundation for shell layout, status payload, permission panel, audit panel, action proposal panel, ORION client panel, runtime gate panel, dashboard failure safe idle policy, and future dashboard control center runtime boundaries without starting dashboard runtime, starting web/API/frontend/backend services, binding routes or ports, emitting dashboard events, changing permissions, performing ORION handshakes, or enabling runtime execution.",
+                },
+                {
                     "id": "aura_runtime_permission_audit_writer_boundary_review_foundation",
                     "name": "AURA Runtime Permission Audit Writer Boundary Review Foundation",
                     "state": "online",

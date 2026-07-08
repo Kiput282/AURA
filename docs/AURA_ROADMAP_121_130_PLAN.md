@@ -1,7 +1,7 @@
 # AURA Roadmap 121-130 Plan
 
 Status: PLANNED
-Version seed: v0.122.0-genesis
+Version seed: v0.123.0-genesis
 Phase: Genesis Runtime Readiness Continuation
 Owner: Kiput
 Motto: Grow Together
@@ -30,7 +30,7 @@ Planned focus:
 - audit writer boundary review
 - no audit writer runtime
 
-### Sprint 123 — Dashboard Control Center Boundary Review
+### Sprint 123 — Dashboard Control Center Boundary Review — completed
 
 Planned focus:
 
@@ -143,5 +143,36 @@ Safety result:
 - runtime permissions changed: 0
 - runtime audit events written: 0
 - runtime dashboard audit payloads/events emitted: 0
+- runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
+- runtime execution features: 0
+
+## Sprint 123 Completion Summary
+
+Sprint 123 completed the Dashboard Control Center Boundary Review Foundation.
+
+Completed foundation items:
+
+- control center shell layout boundary review
+- dashboard status payload boundary review
+- permission panel boundary review
+- audit panel boundary review
+- action proposal panel boundary review
+- ORION client panel boundary review
+- runtime gate panel boundary review
+- dashboard failure safe idle boundary review
+- future dashboard control center runtime boundary review
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime dashboard control centers started: 0
+- runtime dashboard web/API/frontend/backend services started: 0
+- runtime dashboard routes or ports bound: 0
+- runtime dashboard events emitted: 0
+- runtime dashboard permission commands/action dispatches/audit writes: 0
+- runtime dashboard ORION handshakes: 0
+- runtime permissions changed: 0
 - runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
 - runtime execution features: 0
