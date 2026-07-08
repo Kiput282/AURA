@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 126.0 runtime grant expiry boundary review foundation actions.
+    runtime_grant_expiry_boundary_review_actions = [
+        ('runtime_grant_expiry_boundary_review.status', 'read_project', 'Show Runtime Grant Expiry Boundary Review status.'),
+        ('runtime_grant_expiry_boundary_review.grant_expiry_schema_boundary_review_plan', 'read_project', 'Prepare grant expiry schema boundary review plan.'),
+        ('runtime_grant_expiry_boundary_review.grant_lifetime_policy_boundary_review_plan', 'read_project', 'Prepare grant lifetime policy boundary review plan.'),
+        ('runtime_grant_expiry_boundary_review.grant_renewal_request_boundary_review_plan', 'read_project', 'Prepare grant renewal request boundary review plan.'),
+        ('runtime_grant_expiry_boundary_review.grant_revocation_boundary_review_plan', 'read_project', 'Prepare grant revocation boundary review plan.'),
+        ('runtime_grant_expiry_boundary_review.expired_grant_denial_boundary_review_plan', 'read_project', 'Prepare expired grant denial boundary review plan.'),
+        ('runtime_grant_expiry_boundary_review.dashboard_grant_visibility_boundary_review_plan', 'read_project', 'Prepare dashboard grant visibility boundary review plan.'),
+        ('runtime_grant_expiry_boundary_review.audit_grant_expiry_boundary_review_plan', 'read_project', 'Prepare audit grant expiry boundary review plan.'),
+        ('runtime_grant_expiry_boundary_review.grant_expiry_failure_safe_idle_boundary_review_plan', 'read_project', 'Prepare grant expiry failure safe idle boundary review plan.'),
+        ('runtime_grant_expiry_boundary_review.future_runtime_grant_expiry_boundary_plan', 'read_project', 'Prepare future runtime grant expiry boundary plan.'),
+        ('runtime_grant_expiry_boundary_review.context', 'read_project', 'Show Runtime Grant Expiry Boundary Review context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_grant_expiry_boundary_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_grant_expiry_boundary_review", description=description, permission_action=permission_action, status="online", skill="aura_runtime_grant_expiry_boundary_review_foundation"))
+
     # Sprint 125.0 safe local action allowlist boundary review foundation actions.
     safe_local_action_allowlist_boundary_review_actions = [
         ('safe_local_action_allowlist_boundary_review.status', 'read_project', 'Show Safe Local Action Allowlist Boundary Review status.'),

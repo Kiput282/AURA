@@ -108,6 +108,7 @@ from aura.runtime_permission_audit_writer_boundary_review.aura_runtime_permissio
 from aura.dashboard_control_center_boundary_review.aura_dashboard_control_center_boundary_review_foundation_manager import AuraDashboardControlCenterBoundaryReviewFoundationManager
 from aura.orion_dry_handshake_boundary_review.aura_orion_dry_handshake_boundary_review_foundation_manager import AuraOrionDryHandshakeBoundaryReviewFoundationManager
 from aura.safe_local_action_allowlist_boundary_review.aura_safe_local_action_allowlist_boundary_review_foundation_manager import AuraSafeLocalActionAllowlistBoundaryReviewFoundationManager
+from aura.runtime_grant_expiry_boundary_review.aura_runtime_grant_expiry_boundary_review_foundation_manager import AuraRuntimeGrantExpiryBoundaryReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4192,6 +4193,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 126.0 runtime grant expiry boundary review CLI helpers.
+    def print_runtime_grant_expiry_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Grant Expiry Boundary Review Safety Boundary"))
+
+    def handle_runtime_grant_expiry_boundary_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA runtime grant expiry boundary review"
+        manager = AuraRuntimeGrantExpiryBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-grant-expiry-boundary-review-status":
+            self.print_runtime_grant_expiry_boundary_review_packet("AURA Runtime Grant Expiry Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-grant-expiry-boundary-review-context":
+            self.print_runtime_grant_expiry_boundary_review_packet("AURA Runtime Grant Expiry Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "grant-expiry-schema-boundary-review-plan": ("AURA Grant Expiry Schema Boundary Review Plan", manager.grant_expiry_schema_boundary_review_plan),
+            "grant-lifetime-policy-boundary-review-plan": ("AURA Grant Lifetime Policy Boundary Review Plan", manager.grant_lifetime_policy_boundary_review_plan),
+            "grant-renewal-request-boundary-review-plan": ("AURA Grant Renewal Request Boundary Review Plan", manager.grant_renewal_request_boundary_review_plan),
+            "grant-revocation-boundary-review-plan": ("AURA Grant Revocation Boundary Review Plan", manager.grant_revocation_boundary_review_plan),
+            "expired-grant-denial-boundary-review-plan": ("AURA Expired Grant Denial Boundary Review Plan", manager.expired_grant_denial_boundary_review_plan),
+            "dashboard-grant-visibility-boundary-review-plan": ("AURA Dashboard Grant Visibility Boundary Review Plan", manager.dashboard_grant_visibility_boundary_review_plan),
+            "audit-grant-expiry-boundary-review-plan": ("AURA Audit Grant Expiry Boundary Review Plan", manager.audit_grant_expiry_boundary_review_plan),
+            "grant-expiry-failure-safe-idle-boundary-review-plan": ("AURA Grant Expiry Failure Safe Idle Boundary Review Plan", manager.grant_expiry_failure_safe_idle_boundary_review_plan),
+            "future-runtime-grant-expiry-boundary-plan": ("AURA Future Runtime Grant Expiry Boundary Plan", manager.future_runtime_grant_expiry_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_grant_expiry_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 125.0 safe local action allowlist boundary review CLI helpers.
     def print_safe_local_action_allowlist_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6026,6 +6068,9 @@ class AuraCLI:
             return True
 
         if self.handle_safe_local_action_allowlist_boundary_review_cli_command(raw_args):
+            return True
+
+        if self.handle_runtime_grant_expiry_boundary_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

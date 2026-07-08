@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.125.0-genesis  
+Current version: v0.126.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.125.0-genesis
+- v0.126.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.125.0-genesis
+    Version  : 0.126.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -530,6 +530,50 @@ Safety result:
 - service runtime disabled
 - network probe disabled
 - ORION handshake runtime disabled
+- release gate closed
+- runtime activation disabled
+- future runtime still requires manual approval
+
+## Sprint 126.0 — Runtime Grant Expiry Boundary Review Foundation
+
+Status: completed
+Version: v0.126.0-genesis
+
+Sprint 126 adds a planner-only, metadata-only, and review-only Runtime Grant Expiry Boundary Review Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total runtime grant expiry boundary review blueprints/items
+- 0 runtime grants created
+- 0 runtime grants renewed
+- 0 runtime grants revoked
+- 0 runtime grant expiries applied
+- 0 runtime expired grant denials applied
+- 0 runtime grant states mutated
+- 0 runtime grant renewal requests created
+- 0 runtime grant revocations applied
+- 0 runtime dashboard grant events emitted
+- 0 runtime audit grant events written
+- 0 runtime grant runtime gates opened
+- 0 runtime permissions changed
+- 0 runtime actions/tools/commands/files/services/network/ORION/memory/git
+- 0 runtime execution features
+
+Safety result:
+
+- grant expiry boundary review only
+- grant expiry runtime disabled
+- grant creation runtime disabled
+- grant renewal runtime disabled
+- grant revocation runtime disabled
+- grant state mutation disabled
+- expired grant denial runtime disabled
+- permission mutation disabled
+- audit write disabled
+- dashboard event emit disabled
+- action dispatch/execution disabled
+- file/service/network/ORION runtime disabled
 - release gate closed
 - runtime activation disabled
 - future runtime still requires manual approval

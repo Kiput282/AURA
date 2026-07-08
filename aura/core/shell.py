@@ -110,6 +110,7 @@ from aura.runtime_permission_audit_writer_boundary_review.aura_runtime_permissio
 from aura.dashboard_control_center_boundary_review.aura_dashboard_control_center_boundary_review_foundation_manager import AuraDashboardControlCenterBoundaryReviewFoundationManager
 from aura.orion_dry_handshake_boundary_review.aura_orion_dry_handshake_boundary_review_foundation_manager import AuraOrionDryHandshakeBoundaryReviewFoundationManager
 from aura.safe_local_action_allowlist_boundary_review.aura_safe_local_action_allowlist_boundary_review_foundation_manager import AuraSafeLocalActionAllowlistBoundaryReviewFoundationManager
+from aura.runtime_grant_expiry_boundary_review.aura_runtime_grant_expiry_boundary_review_foundation_manager import AuraRuntimeGrantExpiryBoundaryReviewFoundationManager
 
 
 class AuraShell:
@@ -884,6 +885,17 @@ class AuraShell:
         print("  safe-action-runtime-gate-boundary-review-plan <target> Prepare safe action runtime gate boundary review plan")
         print("  future-safe-local-action-runtime-boundary-plan <target> Prepare future safe local action runtime boundary plan")
         print("  safe-local-action-allowlist-boundary-review-context Show Safe Local Action Allowlist Boundary Review context")
+        print("  runtime-grant-expiry-boundary-review-status Show Runtime Grant Expiry Boundary Review Foundation status")
+        print("  grant-expiry-schema-boundary-review-plan <target> Prepare grant expiry schema boundary review plan")
+        print("  grant-lifetime-policy-boundary-review-plan <target> Prepare grant lifetime policy boundary review plan")
+        print("  grant-renewal-request-boundary-review-plan <target> Prepare grant renewal request boundary review plan")
+        print("  grant-revocation-boundary-review-plan <target> Prepare grant revocation boundary review plan")
+        print("  expired-grant-denial-boundary-review-plan <target> Prepare expired grant denial boundary review plan")
+        print("  dashboard-grant-visibility-boundary-review-plan <target> Prepare dashboard grant visibility boundary review plan")
+        print("  audit-grant-expiry-boundary-review-plan <target> Prepare audit grant expiry boundary review plan")
+        print("  grant-expiry-failure-safe-idle-boundary-review-plan <target> Prepare grant expiry failure safe idle boundary review plan")
+        print("  future-runtime-grant-expiry-boundary-plan <target> Prepare future runtime grant expiry boundary plan")
+        print("  runtime-grant-expiry-boundary-review-context Show Runtime Grant Expiry Boundary Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4859,6 +4871,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 126.0 runtime grant expiry boundary review shell helpers.
+    def print_runtime_grant_expiry_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Grant Expiry Boundary Review Safety Boundary"))
+
+    def handle_runtime_grant_expiry_boundary_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime grant expiry boundary review"
+        manager = AuraRuntimeGrantExpiryBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-grant-expiry-boundary-review-status":
+            self.print_runtime_grant_expiry_boundary_review_packet("AURA Runtime Grant Expiry Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-grant-expiry-boundary-review-context":
+            self.print_runtime_grant_expiry_boundary_review_packet("AURA Runtime Grant Expiry Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "grant-expiry-schema-boundary-review-plan": ("AURA Grant Expiry Schema Boundary Review Plan", manager.grant_expiry_schema_boundary_review_plan),
+            "grant-lifetime-policy-boundary-review-plan": ("AURA Grant Lifetime Policy Boundary Review Plan", manager.grant_lifetime_policy_boundary_review_plan),
+            "grant-renewal-request-boundary-review-plan": ("AURA Grant Renewal Request Boundary Review Plan", manager.grant_renewal_request_boundary_review_plan),
+            "grant-revocation-boundary-review-plan": ("AURA Grant Revocation Boundary Review Plan", manager.grant_revocation_boundary_review_plan),
+            "expired-grant-denial-boundary-review-plan": ("AURA Expired Grant Denial Boundary Review Plan", manager.expired_grant_denial_boundary_review_plan),
+            "dashboard-grant-visibility-boundary-review-plan": ("AURA Dashboard Grant Visibility Boundary Review Plan", manager.dashboard_grant_visibility_boundary_review_plan),
+            "audit-grant-expiry-boundary-review-plan": ("AURA Audit Grant Expiry Boundary Review Plan", manager.audit_grant_expiry_boundary_review_plan),
+            "grant-expiry-failure-safe-idle-boundary-review-plan": ("AURA Grant Expiry Failure Safe Idle Boundary Review Plan", manager.grant_expiry_failure_safe_idle_boundary_review_plan),
+            "future-runtime-grant-expiry-boundary-plan": ("AURA Future Runtime Grant Expiry Boundary Plan", manager.future_runtime_grant_expiry_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_grant_expiry_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 125.0 safe local action allowlist boundary review shell helpers.
     def print_safe_local_action_allowlist_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6731,6 +6785,9 @@ class AuraShell:
             return
 
         if self.handle_safe_local_action_allowlist_boundary_review_shell_command(normalized):
+            return
+
+        if self.handle_runtime_grant_expiry_boundary_review_shell_command(normalized):
             return
 
         if normalized == "help":

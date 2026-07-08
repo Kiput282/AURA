@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_runtime_grant_expiry_boundary_review_foundation",
+                    "name": "AURA Runtime Grant Expiry Boundary Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.126.0-genesis",
+                    "category": "permission",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Runtime Grant Expiry Boundary Review Foundation for grant expiry schema, grant lifetime policy, grant renewal request, grant revocation, expired grant denial, dashboard grant visibility, audit grant expiry, grant expiry failure safe idle, and future runtime grant expiry boundaries without creating grants, renewing grants, revoking grants, applying expiry state, mutating permissions, writing audit events, emitting dashboard events, dispatching actions, or enabling runtime execution.",
+                },
+                {
                     "id": "aura_safe_local_action_allowlist_boundary_review_foundation",
                     "name": "AURA Safe Local Action Allowlist Boundary Review Foundation",
                     "state": "online",

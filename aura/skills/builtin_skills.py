@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 126.0 runtime grant expiry boundary review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_grant_expiry_boundary_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Runtime Grant Expiry Boundary Review Foundation without creating grants, renewing grants, revoking grants, applying expiry state, mutating permissions, writing audit events, emitting dashboard events, dispatching actions, executing tools/commands, using file runtime, starting services, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_grant_expiry_boundary_review_status",
+                "grant_expiry_schema_boundary_review_plan",
+                "grant_lifetime_policy_boundary_review_plan",
+                "grant_renewal_request_boundary_review_plan",
+                "grant_revocation_boundary_review_plan",
+                "expired_grant_denial_boundary_review_plan",
+                "dashboard_grant_visibility_boundary_review_plan",
+                "audit_grant_expiry_boundary_review_plan",
+                "grant_expiry_failure_safe_idle_boundary_review_plan",
+                "future_runtime_grant_expiry_boundary_plan",
+                "runtime_grant_expiry_boundary_review_context",
+            ],
+        )
+    )
+
     # Sprint 125.0 safe local action allowlist boundary review foundation skill.
     registry.register(
         AuraSkill(

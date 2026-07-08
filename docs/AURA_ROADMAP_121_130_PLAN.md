@@ -1,7 +1,7 @@
 # AURA Roadmap 121-130 Plan
 
 Status: PLANNED
-Version seed: v0.125.0-genesis
+Version seed: v0.126.0-genesis
 Phase: Genesis Runtime Readiness Continuation
 Owner: Kiput
 Motto: Grow Together
@@ -233,6 +233,36 @@ Safety result:
 - runtime safe action permission requests created: 0
 - runtime safe actions dispatched/executed: 0
 - runtime safe action audit/dashboard events: 0
+- runtime permissions changed: 0
+- runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
+- runtime execution features: 0
+
+## Sprint 126 Completion Summary
+
+Sprint 126 completed the Runtime Grant Expiry Boundary Review Foundation.
+
+Completed foundation items:
+
+- grant expiry schema boundary review
+- grant lifetime policy boundary review
+- grant renewal request boundary review
+- grant revocation boundary review
+- expired grant denial boundary review
+- dashboard grant visibility boundary review
+- audit grant expiry boundary review
+- grant expiry failure safe idle boundary review
+- future runtime grant expiry boundary review
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime grants created/renewed/revoked: 0
+- runtime grant expiries applied: 0
+- runtime grant states mutated: 0
+- runtime grant renewal/revocation requests applied: 0
+- runtime dashboard/audit grant events: 0
 - runtime permissions changed: 0
 - runtime actions/tools/commands/files/services/network/ORION/memory/git: 0
 - runtime execution features: 0
