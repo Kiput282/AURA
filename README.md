@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.121.0-genesis  
+Current version: v0.122.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.121.0-genesis
+- v0.122.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.121.0-genesis
+    Version  : 0.122.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -386,4 +386,35 @@ Safety result:
 - release gate closed
 - runtime activation disabled
 - runtime upgrade deferred
+- future runtime still requires manual approval
+
+## Sprint 122.0 — Runtime Permission Audit Writer Boundary Review Foundation
+
+Status: completed
+Version: v0.122.0-genesis
+
+Sprint 122 adds a planner-only, metadata-only, and review-only Runtime Permission Audit Writer Boundary Review Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total runtime permission audit writer boundary review blueprints/items
+- 0 runtime audit writers started
+- 0 runtime audit writer writes
+- 0 runtime audit records persisted
+- 0 runtime audit files written
+- 0 runtime permissions changed
+- 0 runtime dashboard audit payloads emitted
+- 0 runtime dashboard events emitted
+- 0 runtime actions/tools/commands/files/services/network/ORION/memory/git
+- 0 runtime execution features
+
+Safety result:
+
+- audit writer boundary review only
+- audit writer runtime disabled
+- audit record persistence disabled
+- permission mutation disabled
+- release gate closed
+- runtime activation disabled
 - future runtime still requires manual approval

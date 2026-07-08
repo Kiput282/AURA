@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 122.0 runtime permission audit writer boundary review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_permission_audit_writer_boundary_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Runtime Permission Audit Writer Boundary Review Foundation without starting audit writer runtime, writing audit events, persisting audit records, writing audit files, changing permissions, starting dashboard/control center runtime, performing ORION handshakes, dispatching actions, executing tools/commands, mutating files, starting services, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_permission_audit_writer_boundary_review_status",
+                "audit_writer_schema_boundary_review_plan",
+                "audit_writer_storage_boundary_review_plan",
+                "audit_writer_redaction_boundary_review_plan",
+                "audit_writer_visibility_boundary_review_plan",
+                "permission_decision_audit_link_review_plan",
+                "dashboard_audit_payload_boundary_review_plan",
+                "audit_writer_failure_boundary_review_plan",
+                "audit_writer_runtime_gate_boundary_review_plan",
+                "future_permission_audit_writer_runtime_boundary_plan",
+                "runtime_permission_audit_writer_boundary_review_context",
+            ],
+        )
+    )
+
     # Sprint 121.0 post-checkpoint 120 next block planning foundation skill.
     registry.register(
         AuraSkill(

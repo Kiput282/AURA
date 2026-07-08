@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 122.0 runtime permission audit writer boundary review foundation actions.
+    runtime_permission_audit_writer_boundary_review_actions = [
+        ('runtime_permission_audit_writer_boundary_review.status', 'read_project', 'Show Runtime Permission Audit Writer Boundary Review status.'),
+        ('runtime_permission_audit_writer_boundary_review.audit_writer_schema_boundary_review_plan', 'read_project', 'Prepare audit writer schema boundary review plan.'),
+        ('runtime_permission_audit_writer_boundary_review.audit_writer_storage_boundary_review_plan', 'read_project', 'Prepare audit writer storage boundary review plan.'),
+        ('runtime_permission_audit_writer_boundary_review.audit_writer_redaction_boundary_review_plan', 'read_project', 'Prepare audit writer redaction boundary review plan.'),
+        ('runtime_permission_audit_writer_boundary_review.audit_writer_visibility_boundary_review_plan', 'read_project', 'Prepare audit writer visibility boundary review plan.'),
+        ('runtime_permission_audit_writer_boundary_review.permission_decision_audit_link_review_plan', 'read_project', 'Prepare permission decision audit link review plan.'),
+        ('runtime_permission_audit_writer_boundary_review.dashboard_audit_payload_boundary_review_plan', 'read_project', 'Prepare dashboard audit payload boundary review plan.'),
+        ('runtime_permission_audit_writer_boundary_review.audit_writer_failure_boundary_review_plan', 'read_project', 'Prepare audit writer failure boundary review plan.'),
+        ('runtime_permission_audit_writer_boundary_review.audit_writer_runtime_gate_boundary_review_plan', 'read_project', 'Prepare audit writer runtime gate boundary review plan.'),
+        ('runtime_permission_audit_writer_boundary_review.future_permission_audit_writer_runtime_boundary_plan', 'read_project', 'Prepare future permission audit writer runtime boundary plan.'),
+        ('runtime_permission_audit_writer_boundary_review.context', 'read_project', 'Show Runtime Permission Audit Writer Boundary Review context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_permission_audit_writer_boundary_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_permission_audit_writer_boundary_review", description=description, permission_action=permission_action, status="online", skill="aura_runtime_permission_audit_writer_boundary_review_foundation"))
+
     # Sprint 121.0 post-checkpoint 120 next block planning foundation actions.
     post_checkpoint_120_next_block_planning_actions = [
         ('post_checkpoint_120_next_block_planning.status', 'read_project', 'Show Post-Checkpoint 120 Next Block Planning status.'),

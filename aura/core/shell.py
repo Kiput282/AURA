@@ -106,6 +106,7 @@ from aura.manual_approval_decision_flow_review.aura_manual_approval_decision_flo
 from aura.v1_runtime_readiness_cutline_review.aura_v1_runtime_readiness_cutline_review_foundation_manager import AuraV1RuntimeReadinessCutlineReviewFoundationManager
 from aura.review_stabilization_111_120.aura_review_stabilization_111_120_foundation_manager import AuraReviewStabilization111120FoundationManager
 from aura.post_checkpoint_120_next_block_planning.aura_post_checkpoint_120_next_block_planning_foundation_manager import AuraPostCheckpoint120NextBlockPlanningFoundationManager
+from aura.runtime_permission_audit_writer_boundary_review.aura_runtime_permission_audit_writer_boundary_review_foundation_manager import AuraRuntimePermissionAuditWriterBoundaryReviewFoundationManager
 
 
 class AuraShell:
@@ -836,6 +837,17 @@ class AuraShell:
         print("  runtime-activation-blocker-tracking-plan <target> Prepare runtime activation blocker tracking plan")
         print("  future-121-130-checkpoint-boundary-plan <target> Prepare future 121-130 checkpoint boundary plan")
         print("  post-checkpoint-120-next-block-planning-context Show Post-Checkpoint 120 Next Block Planning context")
+        print("  runtime-permission-audit-writer-boundary-review-status Show Runtime Permission Audit Writer Boundary Review Foundation status")
+        print("  audit-writer-schema-boundary-review-plan <target> Prepare audit writer schema boundary review plan")
+        print("  audit-writer-storage-boundary-review-plan <target> Prepare audit writer storage boundary review plan")
+        print("  audit-writer-redaction-boundary-review-plan <target> Prepare audit writer redaction boundary review plan")
+        print("  audit-writer-visibility-boundary-review-plan <target> Prepare audit writer visibility boundary review plan")
+        print("  permission-decision-audit-link-review-plan <target> Prepare permission decision audit link review plan")
+        print("  dashboard-audit-payload-boundary-review-plan <target> Prepare dashboard audit payload boundary review plan")
+        print("  audit-writer-failure-boundary-review-plan <target> Prepare audit writer failure boundary review plan")
+        print("  audit-writer-runtime-gate-boundary-review-plan <target> Prepare audit writer runtime gate boundary review plan")
+        print("  future-permission-audit-writer-runtime-boundary-plan <target> Prepare future permission audit writer runtime boundary plan")
+        print("  runtime-permission-audit-writer-boundary-review-context Show Runtime Permission Audit Writer Boundary Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4807,6 +4819,48 @@ class AuraShell:
 
 
 
+
+    # Sprint 122.0 runtime permission audit writer boundary review shell helpers.
+    def print_runtime_permission_audit_writer_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Permission Audit Writer Boundary Review Safety Boundary"))
+
+    def handle_runtime_permission_audit_writer_boundary_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime permission audit writer boundary review"
+        manager = AuraRuntimePermissionAuditWriterBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-permission-audit-writer-boundary-review-status":
+            self.print_runtime_permission_audit_writer_boundary_review_packet("AURA Runtime Permission Audit Writer Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-permission-audit-writer-boundary-review-context":
+            self.print_runtime_permission_audit_writer_boundary_review_packet("AURA Runtime Permission Audit Writer Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "audit-writer-schema-boundary-review-plan": ("AURA Audit Writer Schema Boundary Review Plan", manager.audit_writer_schema_boundary_review_plan),
+            "audit-writer-storage-boundary-review-plan": ("AURA Audit Writer Storage Boundary Review Plan", manager.audit_writer_storage_boundary_review_plan),
+            "audit-writer-redaction-boundary-review-plan": ("AURA Audit Writer Redaction Boundary Review Plan", manager.audit_writer_redaction_boundary_review_plan),
+            "audit-writer-visibility-boundary-review-plan": ("AURA Audit Writer Visibility Boundary Review Plan", manager.audit_writer_visibility_boundary_review_plan),
+            "permission-decision-audit-link-review-plan": ("AURA Permission Decision Audit Link Review Plan", manager.permission_decision_audit_link_review_plan),
+            "dashboard-audit-payload-boundary-review-plan": ("AURA Dashboard Audit Payload Boundary Review Plan", manager.dashboard_audit_payload_boundary_review_plan),
+            "audit-writer-failure-boundary-review-plan": ("AURA Audit Writer Failure Boundary Review Plan", manager.audit_writer_failure_boundary_review_plan),
+            "audit-writer-runtime-gate-boundary-review-plan": ("AURA Audit Writer Runtime Gate Boundary Review Plan", manager.audit_writer_runtime_gate_boundary_review_plan),
+            "future-permission-audit-writer-runtime-boundary-plan": ("AURA Future Permission Audit Writer Runtime Boundary Plan", manager.future_permission_audit_writer_runtime_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_permission_audit_writer_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 121.0 post-checkpoint 120 next block planning shell helpers.
     def print_post_checkpoint_120_next_block_planning_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6503,6 +6557,9 @@ class AuraShell:
             return
 
         if self.handle_post_checkpoint_120_next_block_planning_shell_command(normalized):
+            return
+
+        if self.handle_runtime_permission_audit_writer_boundary_review_shell_command(normalized):
             return
 
         if normalized == "help":
