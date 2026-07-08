@@ -2409,3 +2409,11 @@ Safety result:
 - runtime upgrade deferred
 - future runtime still requires manual approval
 - no checkpoint approval or v1 runtime activation enabled
+
+## AURA Product Direction Note
+
+The active product direction for AURA is documented in:
+
+- `docs/AURA_PRODUCT_DIRECTION_NOTE.md`
+
+This note records AURA's direction as a local-first anime-girl companion, ATLAS/ORION architecture, future YouTube channel split, Game Mode, Relaxed Translator Mode, dashboard direction, storage direction, and v1 product boundaries.
