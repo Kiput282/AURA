@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.127.0-genesis  
+Current version: v0.128.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.127.0-genesis
+- v0.128.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.127.0-genesis
+    Version  : 0.128.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -619,6 +619,52 @@ Safety result:
 - action dispatch/execution disabled
 - file/service/network/ORION runtime disabled
 - ORION recovery runtime disabled
+- release gate closed
+- runtime activation disabled
+- future runtime still requires manual approval
+
+## Sprint 128.0 — Dashboard Runtime Readiness Boundary Review Foundation
+
+Status: completed
+Version: v0.128.0-genesis
+
+Sprint 128 adds a planner-only, metadata-only, and review-only Dashboard Runtime Readiness Boundary Review Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total dashboard runtime readiness boundary review blueprints/items
+- 0 runtime dashboard servers started
+- 0 runtime web/API/frontend/backend servers started
+- 0 runtime dashboard routes registered
+- 0 runtime dashboard ports bound
+- 0 runtime dashboard browsers opened
+- 0 runtime dashboard websockets opened
+- 0 runtime dashboard events emitted
+- 0 runtime dashboard permission commands sent
+- 0 runtime dashboard audit writes
+- 0 runtime dashboard actions dispatched
+- 0 runtime dashboard runtime gates opened
+- 0 runtime permissions changed
+- 0 runtime actions/tools/commands/files/services/network/ORION/memory/git
+- 0 runtime execution features
+
+Safety result:
+
+- dashboard runtime readiness boundary review only
+- dashboard runtime disabled
+- dashboard/web/API/frontend/backend server start disabled
+- dashboard route register disabled
+- dashboard port bind disabled
+- dashboard browser open disabled
+- dashboard websocket open disabled
+- dashboard event emit disabled
+- dashboard permission command disabled
+- dashboard action dispatch disabled
+- permission mutation disabled
+- audit write disabled
+- action dispatch/execution disabled
+- file/service/network/ORION runtime disabled
 - release gate closed
 - runtime activation disabled
 - future runtime still requires manual approval

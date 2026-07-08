@@ -110,6 +110,7 @@ from aura.orion_dry_handshake_boundary_review.aura_orion_dry_handshake_boundary_
 from aura.safe_local_action_allowlist_boundary_review.aura_safe_local_action_allowlist_boundary_review_foundation_manager import AuraSafeLocalActionAllowlistBoundaryReviewFoundationManager
 from aura.runtime_grant_expiry_boundary_review.aura_runtime_grant_expiry_boundary_review_foundation_manager import AuraRuntimeGrantExpiryBoundaryReviewFoundationManager
 from aura.runtime_recovery_drill_boundary_review.aura_runtime_recovery_drill_boundary_review_foundation_manager import AuraRuntimeRecoveryDrillBoundaryReviewFoundationManager
+from aura.dashboard_runtime_readiness_boundary_review.aura_dashboard_runtime_readiness_boundary_review_foundation_manager import AuraDashboardRuntimeReadinessBoundaryReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4196,6 +4197,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 128.0 dashboard runtime readiness boundary review CLI helpers.
+    def print_dashboard_runtime_readiness_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Dashboard Runtime Readiness Boundary Review Safety Boundary"))
+
+    def handle_dashboard_runtime_readiness_boundary_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA dashboard runtime readiness boundary review"
+        manager = AuraDashboardRuntimeReadinessBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "dashboard-runtime-readiness-boundary-review-status":
+            self.print_dashboard_runtime_readiness_boundary_review_packet("AURA Dashboard Runtime Readiness Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "dashboard-runtime-readiness-boundary-review-context":
+            self.print_dashboard_runtime_readiness_boundary_review_packet("AURA Dashboard Runtime Readiness Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "dashboard-runtime-entrypoint-boundary-review-plan": ("AURA Dashboard Runtime Entrypoint Boundary Review Plan", manager.dashboard_runtime_entrypoint_boundary_review_plan),
+            "dashboard-route-contract-boundary-review-plan": ("AURA Dashboard Route Contract Boundary Review Plan", manager.dashboard_route_contract_boundary_review_plan),
+            "dashboard-api-contract-boundary-review-plan": ("AURA Dashboard API Contract Boundary Review Plan", manager.dashboard_api_contract_boundary_review_plan),
+            "dashboard-websocket-event-boundary-review-plan": ("AURA Dashboard Websocket Event Boundary Review Plan", manager.dashboard_websocket_event_boundary_review_plan),
+            "dashboard-permission-panel-runtime-boundary-review-plan": ("AURA Dashboard Permission Panel Runtime Boundary Review Plan", manager.dashboard_permission_panel_runtime_boundary_review_plan),
+            "dashboard-audit-panel-runtime-boundary-review-plan": ("AURA Dashboard Audit Panel Runtime Boundary Review Plan", manager.dashboard_audit_panel_runtime_boundary_review_plan),
+            "dashboard-action-panel-runtime-boundary-review-plan": ("AURA Dashboard Action Panel Runtime Boundary Review Plan", manager.dashboard_action_panel_runtime_boundary_review_plan),
+            "dashboard-failure-safe-idle-boundary-review-plan": ("AURA Dashboard Failure Safe Idle Boundary Review Plan", manager.dashboard_failure_safe_idle_boundary_review_plan),
+            "future-dashboard-runtime-activation-boundary-plan": ("AURA Future Dashboard Runtime Activation Boundary Plan", manager.future_dashboard_runtime_activation_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_dashboard_runtime_readiness_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 127.0 runtime recovery drill boundary review CLI helpers.
     def print_runtime_recovery_drill_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6116,6 +6158,9 @@ class AuraCLI:
             return True
 
         if self.handle_runtime_recovery_drill_boundary_review_cli_command(raw_args):
+            return True
+
+        if self.handle_dashboard_runtime_readiness_boundary_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

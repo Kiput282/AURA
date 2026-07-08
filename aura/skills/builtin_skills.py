@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 128.0 dashboard runtime readiness boundary review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_dashboard_runtime_readiness_boundary_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only Dashboard Runtime Readiness Boundary Review Foundation without starting dashboard/web/API/frontend/backend servers, binding ports, opening browsers, registering runtime routes, opening websockets, emitting dashboard events, changing permissions, writing audit events, dispatching actions, executing tools/commands, using file runtime, starting services, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "dashboard_runtime_readiness_boundary_review_status",
+                "dashboard_runtime_entrypoint_boundary_review_plan",
+                "dashboard_route_contract_boundary_review_plan",
+                "dashboard_api_contract_boundary_review_plan",
+                "dashboard_websocket_event_boundary_review_plan",
+                "dashboard_permission_panel_runtime_boundary_review_plan",
+                "dashboard_audit_panel_runtime_boundary_review_plan",
+                "dashboard_action_panel_runtime_boundary_review_plan",
+                "dashboard_failure_safe_idle_boundary_review_plan",
+                "future_dashboard_runtime_activation_boundary_plan",
+                "dashboard_runtime_readiness_boundary_review_context",
+            ],
+        )
+    )
+
     # Sprint 127.0 runtime recovery drill boundary review foundation skill.
     registry.register(
         AuraSkill(

@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 128.0 dashboard runtime readiness boundary review foundation actions.
+    dashboard_runtime_readiness_boundary_review_actions = [
+        ('dashboard_runtime_readiness_boundary_review.status', 'read_project', 'Show Dashboard Runtime Readiness Boundary Review status.'),
+        ('dashboard_runtime_readiness_boundary_review.dashboard_runtime_entrypoint_boundary_review_plan', 'read_project', 'Prepare dashboard runtime entrypoint boundary review plan.'),
+        ('dashboard_runtime_readiness_boundary_review.dashboard_route_contract_boundary_review_plan', 'read_project', 'Prepare dashboard route contract boundary review plan.'),
+        ('dashboard_runtime_readiness_boundary_review.dashboard_api_contract_boundary_review_plan', 'read_project', 'Prepare dashboard API contract boundary review plan.'),
+        ('dashboard_runtime_readiness_boundary_review.dashboard_websocket_event_boundary_review_plan', 'read_project', 'Prepare dashboard websocket event boundary review plan.'),
+        ('dashboard_runtime_readiness_boundary_review.dashboard_permission_panel_runtime_boundary_review_plan', 'read_project', 'Prepare dashboard permission panel runtime boundary review plan.'),
+        ('dashboard_runtime_readiness_boundary_review.dashboard_audit_panel_runtime_boundary_review_plan', 'read_project', 'Prepare dashboard audit panel runtime boundary review plan.'),
+        ('dashboard_runtime_readiness_boundary_review.dashboard_action_panel_runtime_boundary_review_plan', 'read_project', 'Prepare dashboard action panel runtime boundary review plan.'),
+        ('dashboard_runtime_readiness_boundary_review.dashboard_failure_safe_idle_boundary_review_plan', 'read_project', 'Prepare dashboard failure safe idle boundary review plan.'),
+        ('dashboard_runtime_readiness_boundary_review.future_dashboard_runtime_activation_boundary_plan', 'read_project', 'Prepare future dashboard runtime activation boundary plan.'),
+        ('dashboard_runtime_readiness_boundary_review.context', 'read_project', 'Show Dashboard Runtime Readiness Boundary Review context.'),
+    ]
+
+    for action_name, permission_action, description in dashboard_runtime_readiness_boundary_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="dashboard_runtime_readiness_boundary_review", description=description, permission_action=permission_action, status="online", skill="aura_dashboard_runtime_readiness_boundary_review_foundation"))
+
     # Sprint 127.0 runtime recovery drill boundary review foundation actions.
     runtime_recovery_drill_boundary_review_actions = [
         ('runtime_recovery_drill_boundary_review.status', 'read_project', 'Show Runtime Recovery Drill Boundary Review status.'),
