@@ -116,6 +116,7 @@ from aura.dashboard_runtime_readiness_boundary_review.aura_dashboard_runtime_rea
 from aura.runtime_activation_blocker_register_boundary_review.aura_runtime_activation_blocker_register_boundary_review_foundation_manager import AuraRuntimeActivationBlockerRegisterBoundaryReviewFoundationManager
 from aura.review_stabilization_121_130.aura_review_stabilization_121_130_foundation_manager import AuraReviewStabilization121130FoundationManager
 from aura.post_checkpoint_130_next_block_foundation.aura_post_checkpoint_130_next_block_foundation_manager import AuraPostCheckpoint130NextBlockFoundationManager
+from aura.final_genesis_acceptance_criteria_foundation.aura_final_genesis_acceptance_criteria_foundation_manager import AuraFinalGenesisAcceptanceCriteriaFoundationManager
 
 
 class AuraShell:
@@ -958,6 +959,18 @@ class AuraShell:
         print("  audit-runtime-writer-activation-review-plan <target> Prepare audit runtime writer activation review plan")
         print("  review-stabilization-131-140-checkpoint-plan <target> Prepare review stabilization 131-140 checkpoint plan")
         print("  post-checkpoint-130-next-block-context Show Post-Checkpoint 130 Next Block context")
+        print("  final-genesis-acceptance-criteria-status Show Final Genesis Acceptance Criteria Foundation status")
+        print("  boot-stability-acceptance-criteria-plan <target> Prepare boot stability acceptance criteria plan")
+        print("  local-service-acceptance-criteria-plan <target> Prepare local service acceptance criteria plan")
+        print("  control-center-acceptance-criteria-plan <target> Prepare Control Center acceptance criteria plan")
+        print("  local-chat-acceptance-criteria-plan <target> Prepare local chat acceptance criteria plan")
+        print("  memory-acceptance-criteria-plan <target> Prepare memory acceptance criteria plan")
+        print("  permission-audit-acceptance-criteria-plan <target> Prepare permission audit acceptance criteria plan")
+        print("  safe-idle-recovery-acceptance-criteria-plan <target> Prepare safe idle recovery acceptance criteria plan")
+        print("  optional-orion-voice-vision-avatar-boundary-criteria-plan <target> Prepare optional ORION voice vision avatar boundary criteria plan")
+        print("  final-genesis-go-no-go-criteria-plan <target> Prepare Final Genesis go/no-go criteria plan")
+        print("  future-runtime-release-candidate-criteria-plan <target> Prepare future runtime release candidate criteria plan")
+        print("  final-genesis-acceptance-criteria-context Show Final Genesis Acceptance Criteria context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4939,6 +4952,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 132.0 final genesis acceptance criteria shell helpers.
+    def print_final_genesis_acceptance_criteria_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Final Genesis Acceptance Criteria Safety Boundary"))
+
+    def handle_final_genesis_acceptance_criteria_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Final Genesis acceptance criteria"
+        manager = AuraFinalGenesisAcceptanceCriteriaFoundationManager(project_root=self.project_root)
+
+        if command == "final-genesis-acceptance-criteria-status":
+            self.print_final_genesis_acceptance_criteria_packet("AURA Final Genesis Acceptance Criteria Foundation Status", manager.status())
+            return True
+
+        if command == "final-genesis-acceptance-criteria-context":
+            self.print_final_genesis_acceptance_criteria_packet("AURA Final Genesis Acceptance Criteria Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "boot-stability-acceptance-criteria-plan": ("AURA Boot Stability Acceptance Criteria Plan", manager.boot_stability_acceptance_criteria_plan),
+            "local-service-acceptance-criteria-plan": ("AURA Local Service Acceptance Criteria Plan", manager.local_service_acceptance_criteria_plan),
+            "control-center-acceptance-criteria-plan": ("AURA Control Center Acceptance Criteria Plan", manager.control_center_acceptance_criteria_plan),
+            "local-chat-acceptance-criteria-plan": ("AURA Local Chat Acceptance Criteria Plan", manager.local_chat_acceptance_criteria_plan),
+            "memory-acceptance-criteria-plan": ("AURA Memory Acceptance Criteria Plan", manager.memory_acceptance_criteria_plan),
+            "permission-audit-acceptance-criteria-plan": ("AURA Permission Audit Acceptance Criteria Plan", manager.permission_audit_acceptance_criteria_plan),
+            "safe-idle-recovery-acceptance-criteria-plan": ("AURA Safe Idle Recovery Acceptance Criteria Plan", manager.safe_idle_recovery_acceptance_criteria_plan),
+            "optional-orion-voice-vision-avatar-boundary-criteria-plan": ("AURA Optional ORION Voice Vision Avatar Boundary Criteria Plan", manager.optional_orion_voice_vision_avatar_boundary_criteria_plan),
+            "final-genesis-go-no-go-criteria-plan": ("AURA Final Genesis Go No Go Criteria Plan", manager.final_genesis_go_no_go_criteria_plan),
+            "future-runtime-release-candidate-criteria-plan": ("AURA Future Runtime Release Candidate Criteria Plan", manager.future_runtime_release_candidate_criteria_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_final_genesis_acceptance_criteria_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 131.0 post-checkpoint 130 next block shell helpers.
     def print_post_checkpoint_130_next_block_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7077,6 +7133,9 @@ class AuraShell:
             return
 
         if self.handle_post_checkpoint_130_next_block_shell_command(normalized):
+            return
+
+        if self.handle_final_genesis_acceptance_criteria_shell_command(normalized):
             return
 
         if normalized == "help":

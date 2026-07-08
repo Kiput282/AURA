@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.131.0-genesis
+Target: v0.132.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1434,3 +1434,11 @@ Status: completed
 AURA now includes a planner-only, metadata-only, and review-only Post-Checkpoint 130 Next Block Foundation.
 
 This foundation opens the Sprint 131-140 planning block toward Final Genesis by defining the next sprint sequence, Final Genesis acceptance direction, runtime activation path proposal review, local service boot plan review, Control Center runtime entry review, chat runtime minimal loop review, memory runtime write gate review, permission runtime grant gate review, audit runtime writer activation review, and Sprint 140 stabilization checkpoint without activating runtime, opening runtime gates, starting services, starting dashboard/chat/memory runtime, changing permissions, writing audit events, emitting dashboard events, dispatching actions, or enabling runtime execution.
+
+## v0.132.0 Genesis — Final Genesis Acceptance Criteria Foundation
+
+Status: completed
+
+AURA now includes a planner-only, metadata-only, and review-only Final Genesis Acceptance Criteria Foundation.
+
+This foundation formalizes boot stability, local service, Control Center, local chat, memory, permission/audit, safe idle/recovery, optional ORION/voice/vision/avatar boundary, go/no-go, and future release candidate criteria without releasing Final Genesis, starting release candidates, booting services, starting dashboard/chat/memory runtime, creating permission grants, starting audit writers, dispatching actions, executing tools or commands, or enabling runtime execution.

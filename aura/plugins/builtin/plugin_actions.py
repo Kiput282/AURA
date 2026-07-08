@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 132.0 final genesis acceptance criteria foundation actions.
+    final_genesis_acceptance_criteria_actions = [
+        ('final_genesis_acceptance_criteria.status', 'read_project', 'Show Final Genesis Acceptance Criteria Foundation status.'),
+        ('final_genesis_acceptance_criteria.boot_stability_acceptance_criteria_plan', 'read_project', 'Prepare boot stability acceptance criteria plan.'),
+        ('final_genesis_acceptance_criteria.local_service_acceptance_criteria_plan', 'read_project', 'Prepare local service acceptance criteria plan.'),
+        ('final_genesis_acceptance_criteria.control_center_acceptance_criteria_plan', 'read_project', 'Prepare Control Center acceptance criteria plan.'),
+        ('final_genesis_acceptance_criteria.local_chat_acceptance_criteria_plan', 'read_project', 'Prepare local chat acceptance criteria plan.'),
+        ('final_genesis_acceptance_criteria.memory_acceptance_criteria_plan', 'read_project', 'Prepare memory acceptance criteria plan.'),
+        ('final_genesis_acceptance_criteria.permission_audit_acceptance_criteria_plan', 'read_project', 'Prepare permission and audit acceptance criteria plan.'),
+        ('final_genesis_acceptance_criteria.safe_idle_recovery_acceptance_criteria_plan', 'read_project', 'Prepare safe idle recovery acceptance criteria plan.'),
+        ('final_genesis_acceptance_criteria.optional_orion_voice_vision_avatar_boundary_criteria_plan', 'read_project', 'Prepare optional ORION voice vision avatar boundary criteria plan.'),
+        ('final_genesis_acceptance_criteria.final_genesis_go_no_go_criteria_plan', 'read_project', 'Prepare Final Genesis go/no-go criteria plan.'),
+        ('final_genesis_acceptance_criteria.future_runtime_release_candidate_criteria_plan', 'read_project', 'Prepare future runtime release candidate criteria plan.'),
+        ('final_genesis_acceptance_criteria.context', 'read_project', 'Show Final Genesis Acceptance Criteria Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in final_genesis_acceptance_criteria_actions:
+        registry.register(PluginAction(name=action_name, plugin="final_genesis_acceptance_criteria", description=description, permission_action=permission_action, status="online", skill="aura_final_genesis_acceptance_criteria_foundation"))
+
     # Sprint 131.0 post-checkpoint 130 next block foundation actions.
     post_checkpoint_130_next_block_actions = [
         ('post_checkpoint_130_next_block.status', 'read_project', 'Show Post-Checkpoint 130 Next Block Foundation status.'),

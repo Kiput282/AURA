@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.131.0-genesis  
+Current version: v0.132.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.131.0-genesis
+- v0.132.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.131.0-genesis
+    Version  : 0.132.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -800,5 +800,47 @@ Safety result:
 - runtime gate open disabled
 - action/tool/command execution disabled
 - file/service/network/ORION runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 132.0 — Final Genesis Acceptance Criteria Foundation
+
+Status: completed
+Version: v0.132.0-genesis
+
+Sprint 132 adds a planner-only, metadata-only, and review-only Final Genesis Acceptance Criteria Foundation.
+
+Counts:
+
+- 12 plan types
+- 100 total Final Genesis acceptance criteria blueprints/items
+- 0 runtime Final Genesis releases started
+- 0 runtime Final Genesis acceptance applied
+- 0 runtime go/no-go applied
+- 0 runtime release candidates started
+- 0 runtime local services booted
+- 0 runtime service autostarts enabled
+- 0 runtime Control Centers started
+- 0 runtime dashboard servers started
+- 0 runtime chat loops started
+- 0 runtime memory reads/writes
+- 0 runtime permission grants created/applied
+- 0 runtime audit writers started
+- 0 runtime safe idle/recovery/rollback/emergency stop
+- 0 runtime ORION/voice/vision/avatar/streaming
+- 0 runtime actions/tools/commands/files/services/network/git
+- 0 runtime execution features
+
+Safety result:
+
+- Final Genesis release disabled
+- release candidate runtime disabled
+- local service runtime disabled
+- Control Center/dashboard/chat/memory runtime disabled
+- permission/audit runtime disabled
+- safe idle recovery runtime disabled
+- ORION/voice/vision/avatar/streaming runtime disabled
+- action/tool/command execution disabled
+- file/service/network runtime disabled
 - release gate closed
 - future runtime still requires manual approval

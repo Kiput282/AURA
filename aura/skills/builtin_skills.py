@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 132.0 final genesis acceptance criteria foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_final_genesis_acceptance_criteria_foundation",
+            description="Prepare planner-only and review-only Final Genesis Acceptance Criteria Foundation without releasing Final Genesis, starting release candidates, booting local services, starting Control Center/dashboard/chat/memory runtime, creating permission grants, starting audit writers, starting safe idle recovery runtime, dispatching actions, executing tools/commands, using file runtime, probing network, performing ORION/voice/vision/avatar runtime, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "final_genesis_acceptance_criteria_status",
+                "boot_stability_acceptance_criteria_plan",
+                "local_service_acceptance_criteria_plan",
+                "control_center_acceptance_criteria_plan",
+                "local_chat_acceptance_criteria_plan",
+                "memory_acceptance_criteria_plan",
+                "permission_audit_acceptance_criteria_plan",
+                "safe_idle_recovery_acceptance_criteria_plan",
+                "optional_orion_voice_vision_avatar_boundary_criteria_plan",
+                "final_genesis_go_no_go_criteria_plan",
+                "future_runtime_release_candidate_criteria_plan",
+                "final_genesis_acceptance_criteria_context",
+            ],
+        )
+    )
+
     # Sprint 131.0 post-checkpoint 130 next block foundation skill.
     registry.register(
         AuraSkill(

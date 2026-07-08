@@ -114,6 +114,7 @@ from aura.dashboard_runtime_readiness_boundary_review.aura_dashboard_runtime_rea
 from aura.runtime_activation_blocker_register_boundary_review.aura_runtime_activation_blocker_register_boundary_review_foundation_manager import AuraRuntimeActivationBlockerRegisterBoundaryReviewFoundationManager
 from aura.review_stabilization_121_130.aura_review_stabilization_121_130_foundation_manager import AuraReviewStabilization121130FoundationManager
 from aura.post_checkpoint_130_next_block_foundation.aura_post_checkpoint_130_next_block_foundation_manager import AuraPostCheckpoint130NextBlockFoundationManager
+from aura.final_genesis_acceptance_criteria_foundation.aura_final_genesis_acceptance_criteria_foundation_manager import AuraFinalGenesisAcceptanceCriteriaFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4204,6 +4205,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 132.0 final genesis acceptance criteria CLI helpers.
+    def print_final_genesis_acceptance_criteria_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Final Genesis Acceptance Criteria Safety Boundary"))
+
+    def handle_final_genesis_acceptance_criteria_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA Final Genesis acceptance criteria"
+        manager = AuraFinalGenesisAcceptanceCriteriaFoundationManager(project_root=self.project_root)
+
+        if command == "final-genesis-acceptance-criteria-status":
+            self.print_final_genesis_acceptance_criteria_packet("AURA Final Genesis Acceptance Criteria Foundation Status", manager.status())
+            return True
+
+        if command == "final-genesis-acceptance-criteria-context":
+            self.print_final_genesis_acceptance_criteria_packet("AURA Final Genesis Acceptance Criteria Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "boot-stability-acceptance-criteria-plan": ("AURA Boot Stability Acceptance Criteria Plan", manager.boot_stability_acceptance_criteria_plan),
+            "local-service-acceptance-criteria-plan": ("AURA Local Service Acceptance Criteria Plan", manager.local_service_acceptance_criteria_plan),
+            "control-center-acceptance-criteria-plan": ("AURA Control Center Acceptance Criteria Plan", manager.control_center_acceptance_criteria_plan),
+            "local-chat-acceptance-criteria-plan": ("AURA Local Chat Acceptance Criteria Plan", manager.local_chat_acceptance_criteria_plan),
+            "memory-acceptance-criteria-plan": ("AURA Memory Acceptance Criteria Plan", manager.memory_acceptance_criteria_plan),
+            "permission-audit-acceptance-criteria-plan": ("AURA Permission Audit Acceptance Criteria Plan", manager.permission_audit_acceptance_criteria_plan),
+            "safe-idle-recovery-acceptance-criteria-plan": ("AURA Safe Idle Recovery Acceptance Criteria Plan", manager.safe_idle_recovery_acceptance_criteria_plan),
+            "optional-orion-voice-vision-avatar-boundary-criteria-plan": ("AURA Optional ORION Voice Vision Avatar Boundary Criteria Plan", manager.optional_orion_voice_vision_avatar_boundary_criteria_plan),
+            "final-genesis-go-no-go-criteria-plan": ("AURA Final Genesis Go No Go Criteria Plan", manager.final_genesis_go_no_go_criteria_plan),
+            "future-runtime-release-candidate-criteria-plan": ("AURA Future Runtime Release Candidate Criteria Plan", manager.future_runtime_release_candidate_criteria_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_final_genesis_acceptance_criteria_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 131.0 post-checkpoint 130 next block CLI helpers.
     def print_post_checkpoint_130_next_block_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6298,6 +6341,9 @@ class AuraCLI:
             return True
 
         if self.handle_post_checkpoint_130_next_block_cli_command(raw_args):
+            return True
+
+        if self.handle_final_genesis_acceptance_criteria_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

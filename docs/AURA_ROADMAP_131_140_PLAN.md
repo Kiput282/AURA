@@ -1,6 +1,6 @@
 # AURA Roadmap 131-140 Plan
 
-Version seed: v0.131.0-genesis
+Version seed: v0.132.0-genesis
 Status: active
 Phase: Genesis Final Path Planning
 Owner: Kiput
@@ -48,7 +48,7 @@ Expected output:
 - 100 blueprints/items
 - 0 runtime execution features
 
-### Sprint 132.0 — Final Genesis Acceptance Criteria Foundation
+### Sprint 132.0 — Final Genesis Acceptance Criteria Foundation — completed
 
 Purpose:
 
@@ -242,3 +242,32 @@ The block is complete when:
 - runtime activation path is reviewed but not executed
 - local service, Control Center, chat, memory, permission, and audit runtime paths are reviewed
 - Sprint 140 checkpoint confirms safety
+
+## Sprint 132 Completion Summary
+
+Sprint 132 completed the Final Genesis Acceptance Criteria Foundation.
+
+Completed foundation items:
+
+- boot stability acceptance criteria
+- local service acceptance criteria
+- Control Center acceptance criteria
+- local chat acceptance criteria
+- memory acceptance criteria
+- permission/audit acceptance criteria
+- safe idle/recovery acceptance criteria
+- optional ORION/voice/vision/avatar boundary criteria
+- Final Genesis go/no-go criteria
+- future runtime release candidate criteria
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime Final Genesis release/acceptance/go-no-go/release candidate: 0
+- runtime service/dashboard/chat/memory/permission/audit: 0
+- runtime safe idle/recovery/rollback/emergency stop: 0
+- runtime ORION/voice/vision/avatar/streaming: 0
+- runtime actions/tools/commands/files/services/network/git: 0
+- runtime execution features: 0
