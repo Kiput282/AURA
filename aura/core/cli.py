@@ -115,6 +115,7 @@ from aura.runtime_activation_blocker_register_boundary_review.aura_runtime_activ
 from aura.review_stabilization_121_130.aura_review_stabilization_121_130_foundation_manager import AuraReviewStabilization121130FoundationManager
 from aura.post_checkpoint_130_next_block_foundation.aura_post_checkpoint_130_next_block_foundation_manager import AuraPostCheckpoint130NextBlockFoundationManager
 from aura.final_genesis_acceptance_criteria_foundation.aura_final_genesis_acceptance_criteria_foundation_manager import AuraFinalGenesisAcceptanceCriteriaFoundationManager
+from aura.runtime_activation_path_proposal_review.aura_runtime_activation_path_proposal_review_foundation_manager import AuraRuntimeActivationPathProposalReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4206,6 +4207,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 133.0 runtime activation path proposal review CLI helpers.
+    def print_runtime_activation_path_proposal_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Activation Path Proposal Review Safety Boundary"))
+
+    def handle_runtime_activation_path_proposal_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA runtime activation path proposal review"
+        manager = AuraRuntimeActivationPathProposalReviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-activation-path-proposal-review-status":
+            self.print_runtime_activation_path_proposal_review_packet("AURA Runtime Activation Path Proposal Review Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-activation-path-proposal-review-context":
+            self.print_runtime_activation_path_proposal_review_packet("AURA Runtime Activation Path Proposal Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "runtime-activation-stage-model-review-plan": ("AURA Runtime Activation Stage Model Review Plan", manager.runtime_activation_stage_model_review_plan),
+            "manual-approval-chain-review-plan": ("AURA Manual Approval Chain Review Plan", manager.manual_approval_chain_review_plan),
+            "activation-blocker-register-link-review-plan": ("AURA Activation Blocker Register Link Review Plan", manager.activation_blocker_register_link_review_plan),
+            "permission-contract-activation-review-plan": ("AURA Permission Contract Activation Review Plan", manager.permission_contract_activation_review_plan),
+            "audit-contract-activation-review-plan": ("AURA Audit Contract Activation Review Plan", manager.audit_contract_activation_review_plan),
+            "dashboard-visibility-activation-review-plan": ("AURA Dashboard Visibility Activation Review Plan", manager.dashboard_visibility_activation_review_plan),
+            "safe-idle-rollback-activation-review-plan": ("AURA Safe Idle Rollback Activation Review Plan", manager.safe_idle_rollback_activation_review_plan),
+            "emergency-stop-activation-review-plan": ("AURA Emergency Stop Activation Review Plan", manager.emergency_stop_activation_review_plan),
+            "release-candidate-transition-review-plan": ("AURA Release Candidate Transition Review Plan", manager.release_candidate_transition_review_plan),
+            "activation-denial-deferment-review-plan": ("AURA Activation Denial Deferment Review Plan", manager.activation_denial_deferment_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_activation_path_proposal_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 132.0 final genesis acceptance criteria CLI helpers.
     def print_final_genesis_acceptance_criteria_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6344,6 +6387,9 @@ class AuraCLI:
             return True
 
         if self.handle_final_genesis_acceptance_criteria_cli_command(raw_args):
+            return True
+
+        if self.handle_runtime_activation_path_proposal_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

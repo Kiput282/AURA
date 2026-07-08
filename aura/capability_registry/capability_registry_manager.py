@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_runtime_activation_path_proposal_review_foundation",
+                    "name": "AURA Runtime Activation Path Proposal Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.133.0-genesis",
+                    "category": "runtime",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Runtime Activation Path Proposal Review Foundation for runtime activation stage model, manual approval chain, activation blocker register links, permission contract activation, audit contract activation, dashboard visibility activation, safe idle rollback activation, emergency stop activation, release candidate transition, and activation denial/deferment review without applying activation paths, enabling stages, opening runtime gates, starting runtime activation, release candidates, local services, dashboard/chat/memory/permission/audit runtime, blocker mutations, action dispatch, tool/command execution, file/service/network/ORION/git runtime, or runtime execution features.",
+                },
+                {
                     "id": "aura_final_genesis_acceptance_criteria_foundation",
                     "name": "AURA Final Genesis Acceptance Criteria Foundation",
                     "state": "online",

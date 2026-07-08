@@ -117,6 +117,7 @@ from aura.runtime_activation_blocker_register_boundary_review.aura_runtime_activ
 from aura.review_stabilization_121_130.aura_review_stabilization_121_130_foundation_manager import AuraReviewStabilization121130FoundationManager
 from aura.post_checkpoint_130_next_block_foundation.aura_post_checkpoint_130_next_block_foundation_manager import AuraPostCheckpoint130NextBlockFoundationManager
 from aura.final_genesis_acceptance_criteria_foundation.aura_final_genesis_acceptance_criteria_foundation_manager import AuraFinalGenesisAcceptanceCriteriaFoundationManager
+from aura.runtime_activation_path_proposal_review.aura_runtime_activation_path_proposal_review_foundation_manager import AuraRuntimeActivationPathProposalReviewFoundationManager
 
 
 class AuraShell:
@@ -971,6 +972,18 @@ class AuraShell:
         print("  final-genesis-go-no-go-criteria-plan <target> Prepare Final Genesis go/no-go criteria plan")
         print("  future-runtime-release-candidate-criteria-plan <target> Prepare future runtime release candidate criteria plan")
         print("  final-genesis-acceptance-criteria-context Show Final Genesis Acceptance Criteria context")
+        print("  runtime-activation-path-proposal-review-status Show Runtime Activation Path Proposal Review Foundation status")
+        print("  runtime-activation-stage-model-review-plan <target> Prepare runtime activation stage model review plan")
+        print("  manual-approval-chain-review-plan <target> Prepare manual approval chain review plan")
+        print("  activation-blocker-register-link-review-plan <target> Prepare activation blocker register link review plan")
+        print("  permission-contract-activation-review-plan <target> Prepare permission contract activation review plan")
+        print("  audit-contract-activation-review-plan <target> Prepare audit contract activation review plan")
+        print("  dashboard-visibility-activation-review-plan <target> Prepare dashboard visibility activation review plan")
+        print("  safe-idle-rollback-activation-review-plan <target> Prepare safe idle rollback activation review plan")
+        print("  emergency-stop-activation-review-plan <target> Prepare emergency stop activation review plan")
+        print("  release-candidate-transition-review-plan <target> Prepare release candidate transition review plan")
+        print("  activation-denial-deferment-review-plan <target> Prepare activation denial deferment review plan")
+        print("  runtime-activation-path-proposal-review-context Show Runtime Activation Path Proposal Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4953,6 +4966,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 133.0 runtime activation path proposal review shell helpers.
+    def print_runtime_activation_path_proposal_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Runtime Activation Path Proposal Review Safety Boundary"))
+
+    def handle_runtime_activation_path_proposal_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA runtime activation path proposal review"
+        manager = AuraRuntimeActivationPathProposalReviewFoundationManager(project_root=self.project_root)
+
+        if command == "runtime-activation-path-proposal-review-status":
+            self.print_runtime_activation_path_proposal_review_packet("AURA Runtime Activation Path Proposal Review Foundation Status", manager.status())
+            return True
+
+        if command == "runtime-activation-path-proposal-review-context":
+            self.print_runtime_activation_path_proposal_review_packet("AURA Runtime Activation Path Proposal Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "runtime-activation-stage-model-review-plan": ("AURA Runtime Activation Stage Model Review Plan", manager.runtime_activation_stage_model_review_plan),
+            "manual-approval-chain-review-plan": ("AURA Manual Approval Chain Review Plan", manager.manual_approval_chain_review_plan),
+            "activation-blocker-register-link-review-plan": ("AURA Activation Blocker Register Link Review Plan", manager.activation_blocker_register_link_review_plan),
+            "permission-contract-activation-review-plan": ("AURA Permission Contract Activation Review Plan", manager.permission_contract_activation_review_plan),
+            "audit-contract-activation-review-plan": ("AURA Audit Contract Activation Review Plan", manager.audit_contract_activation_review_plan),
+            "dashboard-visibility-activation-review-plan": ("AURA Dashboard Visibility Activation Review Plan", manager.dashboard_visibility_activation_review_plan),
+            "safe-idle-rollback-activation-review-plan": ("AURA Safe Idle Rollback Activation Review Plan", manager.safe_idle_rollback_activation_review_plan),
+            "emergency-stop-activation-review-plan": ("AURA Emergency Stop Activation Review Plan", manager.emergency_stop_activation_review_plan),
+            "release-candidate-transition-review-plan": ("AURA Release Candidate Transition Review Plan", manager.release_candidate_transition_review_plan),
+            "activation-denial-deferment-review-plan": ("AURA Activation Denial Deferment Review Plan", manager.activation_denial_deferment_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_runtime_activation_path_proposal_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 132.0 final genesis acceptance criteria shell helpers.
     def print_final_genesis_acceptance_criteria_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7136,6 +7192,9 @@ class AuraShell:
             return
 
         if self.handle_final_genesis_acceptance_criteria_shell_command(normalized):
+            return
+
+        if self.handle_runtime_activation_path_proposal_review_shell_command(normalized):
             return
 
         if normalized == "help":

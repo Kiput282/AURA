@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 133.0 runtime activation path proposal review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_runtime_activation_path_proposal_review_foundation",
+            description="Prepare planner-only and review-only Runtime Activation Path Proposal Review Foundation without applying activation paths, enabling stages, opening runtime gates, starting runtime activation, starting release candidates, booting local services, starting dashboard/chat/memory/permission/audit runtime, mutating blockers, dispatching actions, executing tools/commands, using file runtime, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "runtime_activation_path_proposal_review_status",
+                "runtime_activation_stage_model_review_plan",
+                "manual_approval_chain_review_plan",
+                "activation_blocker_register_link_review_plan",
+                "permission_contract_activation_review_plan",
+                "audit_contract_activation_review_plan",
+                "dashboard_visibility_activation_review_plan",
+                "safe_idle_rollback_activation_review_plan",
+                "emergency_stop_activation_review_plan",
+                "release_candidate_transition_review_plan",
+                "activation_denial_deferment_review_plan",
+                "runtime_activation_path_proposal_review_context",
+            ],
+        )
+    )
+
     # Sprint 132.0 final genesis acceptance criteria foundation skill.
     registry.register(
         AuraSkill(

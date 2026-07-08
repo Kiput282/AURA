@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.132.0-genesis  
+Current version: v0.133.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.132.0-genesis
+- v0.133.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.132.0-genesis
+    Version  : 0.133.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -842,5 +842,49 @@ Safety result:
 - ORION/voice/vision/avatar/streaming runtime disabled
 - action/tool/command execution disabled
 - file/service/network runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 133.0 — Runtime Activation Path Proposal Review Foundation
+
+Status: completed
+Version: v0.133.0-genesis
+
+Sprint 133 adds a planner-only, metadata-only, and review-only Runtime Activation Path Proposal Review Foundation.
+
+Counts:
+
+- 12 plan types
+- 100 total runtime activation path proposal review blueprints/items
+- 0 runtime activation path proposals applied
+- 0 runtime activation stages enabled
+- 0 runtime activation gates opened
+- 0 runtime activations started
+- 0 runtime release candidates started
+- 0 runtime local services booted
+- 0 runtime service autostarts enabled
+- 0 runtime Control Centers started
+- 0 runtime dashboard servers started
+- 0 runtime chat loops started
+- 0 runtime memory reads/writes
+- 0 runtime permission grants created/applied
+- 0 runtime audit writers started
+- 0 runtime blocker register mutations
+- 0 runtime blockers resolved
+- 0 runtime safe idle/recovery/rollback/emergency stop
+- 0 runtime actions/tools/commands/files/services/network/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- runtime activation path apply disabled
+- runtime activation stage enable disabled
+- runtime activation gate open disabled
+- runtime activation start disabled
+- release candidate runtime disabled
+- local service/dashboard/chat/memory runtime disabled
+- permission/audit/blocker register runtime disabled
+- action/tool/command execution disabled
+- file/service/network/ORION runtime disabled
 - release gate closed
 - future runtime still requires manual approval

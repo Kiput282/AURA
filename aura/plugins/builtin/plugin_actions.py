@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 133.0 runtime activation path proposal review foundation actions.
+    runtime_activation_path_proposal_review_actions = [
+        ('runtime_activation_path_proposal_review.status', 'read_project', 'Show Runtime Activation Path Proposal Review status.'),
+        ('runtime_activation_path_proposal_review.runtime_activation_stage_model_review_plan', 'read_project', 'Prepare runtime activation stage model review plan.'),
+        ('runtime_activation_path_proposal_review.manual_approval_chain_review_plan', 'read_project', 'Prepare manual approval chain review plan.'),
+        ('runtime_activation_path_proposal_review.activation_blocker_register_link_review_plan', 'read_project', 'Prepare activation blocker register link review plan.'),
+        ('runtime_activation_path_proposal_review.permission_contract_activation_review_plan', 'read_project', 'Prepare permission contract activation review plan.'),
+        ('runtime_activation_path_proposal_review.audit_contract_activation_review_plan', 'read_project', 'Prepare audit contract activation review plan.'),
+        ('runtime_activation_path_proposal_review.dashboard_visibility_activation_review_plan', 'read_project', 'Prepare dashboard visibility activation review plan.'),
+        ('runtime_activation_path_proposal_review.safe_idle_rollback_activation_review_plan', 'read_project', 'Prepare safe idle rollback activation review plan.'),
+        ('runtime_activation_path_proposal_review.emergency_stop_activation_review_plan', 'read_project', 'Prepare emergency stop activation review plan.'),
+        ('runtime_activation_path_proposal_review.release_candidate_transition_review_plan', 'read_project', 'Prepare release candidate transition review plan.'),
+        ('runtime_activation_path_proposal_review.activation_denial_deferment_review_plan', 'read_project', 'Prepare activation denial deferment review plan.'),
+        ('runtime_activation_path_proposal_review.context', 'read_project', 'Show Runtime Activation Path Proposal Review context.'),
+    ]
+
+    for action_name, permission_action, description in runtime_activation_path_proposal_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="runtime_activation_path_proposal_review", description=description, permission_action=permission_action, status="online", skill="aura_runtime_activation_path_proposal_review_foundation"))
+
     # Sprint 132.0 final genesis acceptance criteria foundation actions.
     final_genesis_acceptance_criteria_actions = [
         ('final_genesis_acceptance_criteria.status', 'read_project', 'Show Final Genesis Acceptance Criteria Foundation status.'),
