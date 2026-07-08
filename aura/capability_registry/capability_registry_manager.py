@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_chat_runtime_minimal_loop_review_foundation",
+                    "name": "AURA Chat Runtime Minimal Loop Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.136.0-genesis",
+                    "category": "chat",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Chat Runtime Minimal Loop Review Foundation covering chat input boundary, response boundary, session state, permission prompts, memory read/write gates, audit events, safe idle fallback, error recovery, manual approval runtime entry, and no-model-execution review without starting chat runtime, receiving or processing runtime messages, generating or sending responses, mutating sessions, reading/writing memory, creating permission prompts, starting audit writers, model request/inference execution, action dispatch, tool/command execution, file/service/port/network/ORION/git runtime, or runtime execution features.",
+                },
+                {
                     "id": "aura_control_center_runtime_entry_review_foundation",
                     "name": "AURA Control Center Runtime Entry Review Foundation",
                     "state": "online",

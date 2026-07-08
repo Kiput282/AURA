@@ -120,6 +120,7 @@ from aura.final_genesis_acceptance_criteria_foundation.aura_final_genesis_accept
 from aura.runtime_activation_path_proposal_review.aura_runtime_activation_path_proposal_review_foundation_manager import AuraRuntimeActivationPathProposalReviewFoundationManager
 from aura.local_service_boot_plan_review.aura_local_service_boot_plan_review_foundation_manager import AuraLocalServiceBootPlanReviewFoundationManager
 from aura.control_center_runtime_entry_review.aura_control_center_runtime_entry_review_foundation_manager import AuraControlCenterRuntimeEntryReviewFoundationManager
+from aura.chat_runtime_minimal_loop_review.aura_chat_runtime_minimal_loop_review_foundation_manager import AuraChatRuntimeMinimalLoopReviewFoundationManager
 
 
 class AuraShell:
@@ -1010,6 +1011,18 @@ class AuraShell:
         print("  control-center-manual-approval-entry-review-plan <target> Prepare Control Center manual approval entry review plan")
         print("  control-center-no-server-start-review-plan <target> Prepare Control Center no-server-start review plan")
         print("  control-center-runtime-entry-review-context Show Control Center Runtime Entry Review context")
+        print("  chat-runtime-minimal-loop-review-status Show Chat Runtime Minimal Loop Review Foundation status")
+        print("  chat-input-boundary-review-plan <target> Prepare chat input boundary review plan")
+        print("  chat-response-boundary-review-plan <target> Prepare chat response boundary review plan")
+        print("  chat-session-state-review-plan <target> Prepare chat session state review plan")
+        print("  chat-permission-prompt-review-plan <target> Prepare chat permission prompt review plan")
+        print("  chat-memory-read-write-gate-review-plan <target> Prepare chat memory read/write gate review plan")
+        print("  chat-audit-event-review-plan <target> Prepare chat audit event review plan")
+        print("  chat-safe-idle-fallback-review-plan <target> Prepare chat safe idle fallback review plan")
+        print("  chat-error-recovery-review-plan <target> Prepare chat error recovery review plan")
+        print("  chat-manual-approval-runtime-entry-review-plan <target> Prepare chat manual approval runtime entry review plan")
+        print("  chat-no-model-execution-review-plan <target> Prepare chat no-model-execution review plan")
+        print("  chat-runtime-minimal-loop-review-context Show Chat Runtime Minimal Loop Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4995,6 +5008,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 136.0 chat runtime minimal loop review shell helpers.
+    def print_chat_runtime_minimal_loop_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Chat Runtime Minimal Loop Review Safety Boundary"))
+
+    def handle_chat_runtime_minimal_loop_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA chat runtime minimal loop review"
+        manager = AuraChatRuntimeMinimalLoopReviewFoundationManager(project_root=self.project_root)
+
+        if command == "chat-runtime-minimal-loop-review-status":
+            self.print_chat_runtime_minimal_loop_review_packet("AURA Chat Runtime Minimal Loop Review Foundation Status", manager.status())
+            return True
+
+        if command == "chat-runtime-minimal-loop-review-context":
+            self.print_chat_runtime_minimal_loop_review_packet("AURA Chat Runtime Minimal Loop Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "chat-input-boundary-review-plan": ("AURA Chat Input Boundary Review Plan", manager.chat_input_boundary_review_plan),
+            "chat-response-boundary-review-plan": ("AURA Chat Response Boundary Review Plan", manager.chat_response_boundary_review_plan),
+            "chat-session-state-review-plan": ("AURA Chat Session State Review Plan", manager.chat_session_state_review_plan),
+            "chat-permission-prompt-review-plan": ("AURA Chat Permission Prompt Review Plan", manager.chat_permission_prompt_review_plan),
+            "chat-memory-read-write-gate-review-plan": ("AURA Chat Memory Read Write Gate Review Plan", manager.chat_memory_read_write_gate_review_plan),
+            "chat-audit-event-review-plan": ("AURA Chat Audit Event Review Plan", manager.chat_audit_event_review_plan),
+            "chat-safe-idle-fallback-review-plan": ("AURA Chat Safe Idle Fallback Review Plan", manager.chat_safe_idle_fallback_review_plan),
+            "chat-error-recovery-review-plan": ("AURA Chat Error Recovery Review Plan", manager.chat_error_recovery_review_plan),
+            "chat-manual-approval-runtime-entry-review-plan": ("AURA Chat Manual Approval Runtime Entry Review Plan", manager.chat_manual_approval_runtime_entry_review_plan),
+            "chat-no-model-execution-review-plan": ("AURA Chat No Model Execution Review Plan", manager.chat_no_model_execution_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_chat_runtime_minimal_loop_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 135.0 control center runtime entry review shell helpers.
     def print_control_center_runtime_entry_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7313,6 +7369,9 @@ class AuraShell:
             return
 
         if self.handle_control_center_runtime_entry_review_shell_command(normalized):
+            return
+
+        if self.handle_chat_runtime_minimal_loop_review_shell_command(normalized):
             return
 
         if normalized == "help":

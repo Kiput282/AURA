@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 136.0 chat runtime minimal loop review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_chat_runtime_minimal_loop_review_foundation",
+            description="Prepare planner-only and review-only Chat Runtime Minimal Loop Review Foundation without starting chat runtime, receiving or processing runtime messages, generating or sending runtime responses, mutating sessions, reading/writing memory, creating permission prompts, starting audit writers, emitting dashboard events, executing model requests/inference, dispatching actions, executing tools/commands, using file runtime, starting services, binding ports, probing network, performing ORION handshakes, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "chat_runtime_minimal_loop_review_status",
+                "chat_input_boundary_review_plan",
+                "chat_response_boundary_review_plan",
+                "chat_session_state_review_plan",
+                "chat_permission_prompt_review_plan",
+                "chat_memory_read_write_gate_review_plan",
+                "chat_audit_event_review_plan",
+                "chat_safe_idle_fallback_review_plan",
+                "chat_error_recovery_review_plan",
+                "chat_manual_approval_runtime_entry_review_plan",
+                "chat_no_model_execution_review_plan",
+                "chat_runtime_minimal_loop_review_context",
+            ],
+        )
+    )
+
     # Sprint 135.0 control center runtime entry review foundation skill.
     registry.register(
         AuraSkill(

@@ -1,6 +1,6 @@
 # AURA Roadmap 131-140 Plan
 
-Version seed: v0.135.0-genesis
+Version seed: v0.136.0-genesis
 Status: active
 Phase: Genesis Final Path Planning
 Owner: Kiput
@@ -123,7 +123,7 @@ Expected focus:
 - safe idle/error panel
 - runtime status visibility
 
-### Sprint 136.0 — Chat Runtime Minimal Loop Review
+### Sprint 136.0 — Chat Runtime Minimal Loop Review — completed
 
 Purpose:
 
@@ -364,4 +364,35 @@ Safety result:
 - runtime panels started: 0
 - runtime permission/audit/action/chat/memory: 0
 - runtime tools/commands/files/services/network/ORION/git: 0
+- runtime execution features: 0
+
+## Sprint 136 Completion Summary
+
+Sprint 136 completed the Chat Runtime Minimal Loop Review Foundation.
+
+Completed foundation items:
+
+- chat input boundary review
+- chat response boundary review
+- chat session state review
+- chat permission prompt review
+- chat memory read/write gate review
+- chat audit event review
+- chat safe idle fallback review
+- chat error recovery review
+- chat manual approval runtime entry review
+- chat no-model-execution review
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime chat minimal loop plans applied: 0
+- runtime chat loops started: 0
+- runtime chat messages received/processed: 0
+- runtime chat responses generated/sent: 0
+- runtime chat sessions created/updated/deleted: 0
+- runtime permission prompt/memory/audit/safe idle/error/model: 0
+- runtime actions/tools/commands/files/services/ports/network/ORION/git: 0
 - runtime execution features: 0

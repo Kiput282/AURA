@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 136.0 chat runtime minimal loop review foundation actions.
+    chat_runtime_minimal_loop_review_actions = [
+        ('chat_runtime_minimal_loop_review.status', 'read_project', 'Show Chat Runtime Minimal Loop Review status.'),
+        ('chat_runtime_minimal_loop_review.chat_input_boundary_review_plan', 'read_project', 'Prepare chat input boundary review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_response_boundary_review_plan', 'read_project', 'Prepare chat response boundary review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_session_state_review_plan', 'read_project', 'Prepare chat session state review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_permission_prompt_review_plan', 'read_project', 'Prepare chat permission prompt review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_memory_read_write_gate_review_plan', 'read_project', 'Prepare chat memory read/write gate review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_audit_event_review_plan', 'read_project', 'Prepare chat audit event review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_safe_idle_fallback_review_plan', 'read_project', 'Prepare chat safe idle fallback review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_error_recovery_review_plan', 'read_project', 'Prepare chat error recovery review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_manual_approval_runtime_entry_review_plan', 'read_project', 'Prepare chat manual approval runtime entry review plan.'),
+        ('chat_runtime_minimal_loop_review.chat_no_model_execution_review_plan', 'read_project', 'Prepare chat no-model-execution review plan.'),
+        ('chat_runtime_minimal_loop_review.context', 'read_project', 'Show Chat Runtime Minimal Loop Review context.'),
+    ]
+
+    for action_name, permission_action, description in chat_runtime_minimal_loop_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="chat_runtime_minimal_loop_review", description=description, permission_action=permission_action, status="online", skill="aura_chat_runtime_minimal_loop_review_foundation"))
+
     # Sprint 135.0 control center runtime entry review foundation actions.
     control_center_runtime_entry_review_actions = [
         ('control_center_runtime_entry_review.status', 'read_project', 'Show Control Center Runtime Entry Review status.'),

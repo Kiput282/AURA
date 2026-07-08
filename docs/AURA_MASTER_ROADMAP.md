@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.135.0-genesis
+Target: v0.136.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1466,3 +1466,11 @@ Status: completed
 AURA now includes a planner-only, metadata-only, and review-only Control Center Runtime Entry Review Foundation.
 
 This foundation reviews Control Center entry routes, localhost boundary, read-only defaults, status panel entry, permission panel entry, audit panel entry, action proposal panel entry, safe idle/error panel entry, manual approval entry, and no-server-start requirements without creating routes, binding routes, starting Control Center, starting dashboard/API/web/frontend/backend servers, binding ports, starting panels, emitting dashboard events, creating permission grants, starting audit writers, dispatching actions, executing tools or commands, or enabling runtime execution.
+
+## v0.136.0 Genesis — Chat Runtime Minimal Loop Review Foundation
+
+Status: completed
+
+AURA now includes a planner-only, metadata-only, and review-only Chat Runtime Minimal Loop Review Foundation.
+
+This foundation reviews chat input boundary, response boundary, session state, permission prompts, memory read/write gates, audit events, safe idle fallback, error recovery, manual approval runtime entry, and no-model-execution requirements without starting chat runtime, receiving or processing runtime messages, generating or sending responses, mutating sessions, reading or writing memory, creating permission prompts, starting audit writers, executing model requests or inference, dispatching actions, executing tools or commands, or enabling runtime execution.

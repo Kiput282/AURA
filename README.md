@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.135.0-genesis  
+Current version: v0.136.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.135.0-genesis
+- v0.136.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.135.0-genesis
+    Version  : 0.136.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -973,5 +973,48 @@ Safety result:
 - permission/audit/action/chat/memory runtime disabled
 - action/tool/command execution disabled
 - file/service/network/ORION runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 136.0 — Chat Runtime Minimal Loop Review Foundation
+
+Status: completed
+Version: v0.136.0-genesis
+
+Sprint 136 adds a planner-only, metadata-only, and review-only Chat Runtime Minimal Loop Review Foundation.
+
+Counts:
+
+- 12 plan types
+- 100 total chat runtime minimal loop review blueprints/items
+- 0 runtime chat minimal loop plans applied
+- 0 runtime chat loops started
+- 0 runtime chat messages received/processed
+- 0 runtime chat responses generated/sent
+- 0 runtime chat sessions created/updated/deleted
+- 0 runtime permission prompts created/applied
+- 0 runtime memory reads/writes
+- 0 runtime audit writers/events
+- 0 runtime safe idle recoveries
+- 0 runtime error recoveries
+- 0 runtime model requests/inferences
+- 0 runtime tools/commands/files/services/ports/network/ORION/git
+- 0 runtime dashboard events/actions
+- 0 runtime execution features
+
+Safety result:
+
+- chat minimal loop apply disabled
+- chat loop start disabled
+- chat message receive/process disabled
+- chat response generate/send disabled
+- chat session mutation disabled
+- permission prompt runtime disabled
+- memory/audit runtime disabled
+- safe idle/error recovery runtime disabled
+- model request/inference runtime disabled
+- dashboard event emit disabled
+- action/tool/command execution disabled
+- file/service/port/network/ORION runtime disabled
 - release gate closed
 - future runtime still requires manual approval
