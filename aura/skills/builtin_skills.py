@@ -1435,6 +1435,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 124.0 ORION dry handshake boundary review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_orion_dry_handshake_boundary_review_foundation",
+            description="Prepare planner-only, metadata-only, and review-only ORION Dry Handshake Boundary Review Foundation without starting ORION client runtime, performing ORION handshakes, sending identity/capability/permission packets, sending heartbeats, probing network, emitting dashboard events, changing permissions, dispatching actions, executing tools/commands, mutating files, starting services, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "orion_dry_handshake_boundary_review_status",
+                "orion_client_identity_packet_boundary_review_plan",
+                "orion_capability_packet_boundary_review_plan",
+                "orion_permission_scope_packet_boundary_review_plan",
+                "orion_status_heartbeat_boundary_review_plan",
+                "orion_redaction_boundary_review_plan",
+                "orion_emergency_stop_boundary_review_plan",
+                "atlas_orion_authority_boundary_review_plan",
+                "orion_failure_safe_idle_boundary_review_plan",
+                "future_orion_handshake_runtime_boundary_plan",
+                "orion_dry_handshake_boundary_review_context",
+            ],
+        )
+    )
+
     # Sprint 123.0 dashboard control center boundary review foundation skill.
     registry.register(
         AuraSkill(

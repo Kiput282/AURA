@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.123.0-genesis  
+Current version: v0.124.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.123.0-genesis
+- v0.124.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.123.0-genesis
+    Version  : 0.124.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -450,6 +450,43 @@ Safety result:
 - dashboard API server disabled
 - dashboard route binding disabled
 - dashboard port binding disabled
+- permission mutation disabled
+- release gate closed
+- runtime activation disabled
+- future runtime still requires manual approval
+
+## Sprint 124.0 — ORION Dry Handshake Boundary Review Foundation
+
+Status: completed
+Version: v0.124.0-genesis
+
+Sprint 124 adds a planner-only, metadata-only, and review-only ORION Dry Handshake Boundary Review Foundation.
+
+Counts:
+
+- 11 plan types
+- 72 total ORION dry handshake boundary review blueprints/items
+- 0 runtime ORION clients started
+- 0 runtime ORION handshakes started
+- 0 runtime ORION dry handshakes started
+- 0 runtime ORION identity/capability/permission packets sent
+- 0 runtime ORION status heartbeats sent
+- 0 runtime ORION redactions applied
+- 0 runtime ORION emergency stops triggered
+- 0 runtime ATLAS/ORION authorities mutated
+- 0 runtime dashboard events emitted
+- 0 runtime permissions changed
+- 0 runtime actions/tools/commands/files/services/network/ORION/memory/git
+- 0 runtime execution features
+
+Safety result:
+
+- ORION boundary review only
+- ORION client runtime disabled
+- ORION handshake runtime disabled
+- ORION network probe disabled
+- ORION authority mutation disabled
+- dashboard event emit disabled
 - permission mutation disabled
 - release gate closed
 - runtime activation disabled

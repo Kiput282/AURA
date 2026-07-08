@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_orion_dry_handshake_boundary_review_foundation",
+                    "name": "AURA ORION Dry Handshake Boundary Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.124.0-genesis",
+                    "category": "orion",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only ORION Dry Handshake Boundary Review Foundation for client identity packets, capability packets, permission scope packets, status heartbeat, redaction, emergency stop, ATLAS/ORION authority, ORION failure safe idle, and future ORION handshake runtime boundaries without starting ORION client runtime, performing handshakes, sending packets, probing network, emitting dashboard events, changing permissions, or enabling runtime execution.",
+                },
+                {
                     "id": "aura_dashboard_control_center_boundary_review_foundation",
                     "name": "AURA Dashboard Control Center Boundary Review Foundation",
                     "state": "online",

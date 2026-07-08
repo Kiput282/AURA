@@ -106,6 +106,7 @@ from aura.review_stabilization_111_120.aura_review_stabilization_111_120_foundat
 from aura.post_checkpoint_120_next_block_planning.aura_post_checkpoint_120_next_block_planning_foundation_manager import AuraPostCheckpoint120NextBlockPlanningFoundationManager
 from aura.runtime_permission_audit_writer_boundary_review.aura_runtime_permission_audit_writer_boundary_review_foundation_manager import AuraRuntimePermissionAuditWriterBoundaryReviewFoundationManager
 from aura.dashboard_control_center_boundary_review.aura_dashboard_control_center_boundary_review_foundation_manager import AuraDashboardControlCenterBoundaryReviewFoundationManager
+from aura.orion_dry_handshake_boundary_review.aura_orion_dry_handshake_boundary_review_foundation_manager import AuraOrionDryHandshakeBoundaryReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4188,6 +4189,47 @@ class AuraCLI:
 
 
 
+
+    # Sprint 124.0 ORION dry handshake boundary review CLI helpers.
+    def print_orion_dry_handshake_boundary_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="ORION Dry Handshake Boundary Review Safety Boundary"))
+
+    def handle_orion_dry_handshake_boundary_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA ORION dry handshake boundary review"
+        manager = AuraOrionDryHandshakeBoundaryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "orion-dry-handshake-boundary-review-status":
+            self.print_orion_dry_handshake_boundary_review_packet("AURA ORION Dry Handshake Boundary Review Foundation Status", manager.status())
+            return True
+
+        if command == "orion-dry-handshake-boundary-review-context":
+            self.print_orion_dry_handshake_boundary_review_packet("AURA ORION Dry Handshake Boundary Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "orion-client-identity-packet-boundary-review-plan": ("AURA ORION Client Identity Packet Boundary Review Plan", manager.orion_client_identity_packet_boundary_review_plan),
+            "orion-capability-packet-boundary-review-plan": ("AURA ORION Capability Packet Boundary Review Plan", manager.orion_capability_packet_boundary_review_plan),
+            "orion-permission-scope-packet-boundary-review-plan": ("AURA ORION Permission Scope Packet Boundary Review Plan", manager.orion_permission_scope_packet_boundary_review_plan),
+            "orion-status-heartbeat-boundary-review-plan": ("AURA ORION Status Heartbeat Boundary Review Plan", manager.orion_status_heartbeat_boundary_review_plan),
+            "orion-redaction-boundary-review-plan": ("AURA ORION Redaction Boundary Review Plan", manager.orion_redaction_boundary_review_plan),
+            "orion-emergency-stop-boundary-review-plan": ("AURA ORION Emergency Stop Boundary Review Plan", manager.orion_emergency_stop_boundary_review_plan),
+            "atlas-orion-authority-boundary-review-plan": ("AURA ATLAS/ORION Authority Boundary Review Plan", manager.atlas_orion_authority_boundary_review_plan),
+            "orion-failure-safe-idle-boundary-review-plan": ("AURA ORION Failure Safe Idle Boundary Review Plan", manager.orion_failure_safe_idle_boundary_review_plan),
+            "future-orion-handshake-runtime-boundary-plan": ("AURA Future ORION Handshake Runtime Boundary Plan", manager.future_orion_handshake_runtime_boundary_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_orion_dry_handshake_boundary_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 123.0 dashboard control center boundary review CLI helpers.
     def print_dashboard_control_center_boundary_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -5936,6 +5978,9 @@ class AuraCLI:
             return True
 
         if self.handle_dashboard_control_center_boundary_review_cli_command(raw_args):
+            return True
+
+        if self.handle_orion_dry_handshake_boundary_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

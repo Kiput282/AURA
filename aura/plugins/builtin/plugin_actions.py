@@ -2899,6 +2899,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 124.0 ORION dry handshake boundary review foundation actions.
+    orion_dry_handshake_boundary_review_actions = [
+        ('orion_dry_handshake_boundary_review.status', 'read_project', 'Show ORION Dry Handshake Boundary Review status.'),
+        ('orion_dry_handshake_boundary_review.orion_client_identity_packet_boundary_review_plan', 'read_project', 'Prepare ORION client identity packet boundary review plan.'),
+        ('orion_dry_handshake_boundary_review.orion_capability_packet_boundary_review_plan', 'read_project', 'Prepare ORION capability packet boundary review plan.'),
+        ('orion_dry_handshake_boundary_review.orion_permission_scope_packet_boundary_review_plan', 'read_project', 'Prepare ORION permission scope packet boundary review plan.'),
+        ('orion_dry_handshake_boundary_review.orion_status_heartbeat_boundary_review_plan', 'read_project', 'Prepare ORION status heartbeat boundary review plan.'),
+        ('orion_dry_handshake_boundary_review.orion_redaction_boundary_review_plan', 'read_project', 'Prepare ORION redaction boundary review plan.'),
+        ('orion_dry_handshake_boundary_review.orion_emergency_stop_boundary_review_plan', 'read_project', 'Prepare ORION emergency stop boundary review plan.'),
+        ('orion_dry_handshake_boundary_review.atlas_orion_authority_boundary_review_plan', 'read_project', 'Prepare ATLAS/ORION authority boundary review plan.'),
+        ('orion_dry_handshake_boundary_review.orion_failure_safe_idle_boundary_review_plan', 'read_project', 'Prepare ORION failure safe idle boundary review plan.'),
+        ('orion_dry_handshake_boundary_review.future_orion_handshake_runtime_boundary_plan', 'read_project', 'Prepare future ORION handshake runtime boundary plan.'),
+        ('orion_dry_handshake_boundary_review.context', 'read_project', 'Show ORION Dry Handshake Boundary Review context.'),
+    ]
+
+    for action_name, permission_action, description in orion_dry_handshake_boundary_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="orion_dry_handshake_boundary_review", description=description, permission_action=permission_action, status="online", skill="aura_orion_dry_handshake_boundary_review_foundation"))
+
     # Sprint 123.0 dashboard control center boundary review foundation actions.
     dashboard_control_center_boundary_review_actions = [
         ('dashboard_control_center_boundary_review.status', 'read_project', 'Show Dashboard Control Center Boundary Review status.'),
