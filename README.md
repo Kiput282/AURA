@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.134.0-genesis  
+Current version: v0.135.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.134.0-genesis
+- v0.135.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.134.0-genesis
+    Version  : 0.135.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -930,6 +930,47 @@ Safety result:
 - port binding disabled
 - API/web/dashboard/chat/memory runtime disabled
 - permission/audit runtime disabled
+- action/tool/command execution disabled
+- file/service/network/ORION runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 135.0 — Control Center Runtime Entry Review Foundation
+
+Status: completed
+Version: v0.135.0-genesis
+
+Sprint 135 adds a planner-only, metadata-only, and review-only Control Center Runtime Entry Review Foundation.
+
+Counts:
+
+- 12 plan types
+- 100 total Control Center runtime entry review blueprints/items
+- 0 runtime Control Center entries applied
+- 0 runtime Control Centers started
+- 0 runtime Control Center routes created/bound
+- 0 runtime dashboard/API/web/frontend/backend servers started
+- 0 runtime ports bound
+- 0 runtime status/permission/audit/action/safe-idle/manual approval panels started
+- 0 runtime dashboard events emitted
+- 0 runtime permission grants created/applied
+- 0 runtime audit writers/events
+- 0 runtime actions dispatched/executed
+- 0 runtime chat loops started
+- 0 runtime memory reads/writes
+- 0 runtime tools/commands/files/services/network/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- Control Center runtime entry apply disabled
+- Control Center start disabled
+- Control Center route mutation/binding disabled
+- dashboard/API/web/frontend/backend runtime disabled
+- port binding disabled
+- all panel runtime disabled
+- dashboard event emit disabled
+- permission/audit/action/chat/memory runtime disabled
 - action/tool/command execution disabled
 - file/service/network/ORION runtime disabled
 - release gate closed

@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 135.0 control center runtime entry review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_control_center_runtime_entry_review_foundation",
+            description="Prepare planner-only and review-only Control Center Runtime Entry Review Foundation without creating routes, binding routes, starting Control Center, starting dashboard/API/web/frontend/backend servers, binding ports, starting panels, emitting dashboard events, creating permission grants, starting audit writers, dispatching actions, executing tools/commands, using file runtime, probing network, performing ORION handshakes, writing memory, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_runtime_entry_review_status",
+                "control_center_entry_route_review_plan",
+                "control_center_localhost_boundary_review_plan",
+                "control_center_read_only_default_review_plan",
+                "control_center_status_panel_runtime_entry_review_plan",
+                "control_center_permission_panel_runtime_entry_review_plan",
+                "control_center_audit_panel_runtime_entry_review_plan",
+                "control_center_action_proposal_panel_runtime_entry_review_plan",
+                "control_center_safe_idle_error_panel_runtime_entry_review_plan",
+                "control_center_manual_approval_entry_review_plan",
+                "control_center_no_server_start_review_plan",
+                "control_center_runtime_entry_review_context",
+            ],
+        )
+    )
+
     # Sprint 134.0 local service boot plan review foundation skill.
     registry.register(
         AuraSkill(

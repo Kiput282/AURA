@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_control_center_runtime_entry_review_foundation",
+                    "name": "AURA Control Center Runtime Entry Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.135.0-genesis",
+                    "category": "dashboard",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Control Center Runtime Entry Review Foundation covering entry route, localhost boundary, read-only default, status panel runtime entry, permission panel runtime entry, audit panel runtime entry, action proposal panel runtime entry, safe idle/error panel runtime entry, manual approval entry, and no-server-start review without creating routes, binding routes, starting Control Center, starting dashboard/API/web/frontend/backend servers, binding ports, starting panels, emitting dashboard events, creating permission grants, starting audit writers, action dispatch, tool/command execution, file/service/network/ORION/git runtime, or runtime execution features.",
+                },
+                {
                     "id": "aura_local_service_boot_plan_review_foundation",
                     "name": "AURA Local Service Boot Plan Review Foundation",
                     "state": "online",

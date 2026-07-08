@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 135.0 control center runtime entry review foundation actions.
+    control_center_runtime_entry_review_actions = [
+        ('control_center_runtime_entry_review.status', 'read_project', 'Show Control Center Runtime Entry Review status.'),
+        ('control_center_runtime_entry_review.control_center_entry_route_review_plan', 'read_project', 'Prepare Control Center entry route review plan.'),
+        ('control_center_runtime_entry_review.control_center_localhost_boundary_review_plan', 'read_project', 'Prepare Control Center localhost boundary review plan.'),
+        ('control_center_runtime_entry_review.control_center_read_only_default_review_plan', 'read_project', 'Prepare Control Center read-only default review plan.'),
+        ('control_center_runtime_entry_review.control_center_status_panel_runtime_entry_review_plan', 'read_project', 'Prepare Control Center status panel runtime entry review plan.'),
+        ('control_center_runtime_entry_review.control_center_permission_panel_runtime_entry_review_plan', 'read_project', 'Prepare Control Center permission panel runtime entry review plan.'),
+        ('control_center_runtime_entry_review.control_center_audit_panel_runtime_entry_review_plan', 'read_project', 'Prepare Control Center audit panel runtime entry review plan.'),
+        ('control_center_runtime_entry_review.control_center_action_proposal_panel_runtime_entry_review_plan', 'read_project', 'Prepare Control Center action proposal panel runtime entry review plan.'),
+        ('control_center_runtime_entry_review.control_center_safe_idle_error_panel_runtime_entry_review_plan', 'read_project', 'Prepare Control Center safe idle error panel runtime entry review plan.'),
+        ('control_center_runtime_entry_review.control_center_manual_approval_entry_review_plan', 'read_project', 'Prepare Control Center manual approval entry review plan.'),
+        ('control_center_runtime_entry_review.control_center_no_server_start_review_plan', 'read_project', 'Prepare Control Center no-server-start review plan.'),
+        ('control_center_runtime_entry_review.context', 'read_project', 'Show Control Center Runtime Entry Review context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_runtime_entry_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_runtime_entry_review", description=description, permission_action=permission_action, status="online", skill="aura_control_center_runtime_entry_review_foundation"))
+
     # Sprint 134.0 local service boot plan review foundation actions.
     local_service_boot_plan_review_actions = [
         ('local_service_boot_plan_review.status', 'read_project', 'Show Local Service Boot Plan Review status.'),

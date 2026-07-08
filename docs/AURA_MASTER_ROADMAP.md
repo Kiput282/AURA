@@ -1092,7 +1092,7 @@ No web server runtime, frontend/backend/API runtime, route creation runtime, sta
 
 ## Sprint 92.0 — AURA Local Console API Schema Foundation
 
-Target: v0.134.0-genesis
+Target: v0.135.0-genesis
 Status: LOCAL CONSOLE API SCHEMA FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console API Schema Foundation planning for API schema catalog, endpoint blueprints, response envelopes, request schema blueprints, validation rules, permission boundary schemas, error contracts, schema versioning, and API schema safety policy.
@@ -1458,3 +1458,11 @@ Status: completed
 AURA now includes a planner-only, metadata-only, and review-only Local Service Boot Plan Review Foundation.
 
 This foundation reviews manual start, manual stop, health monitoring, safe shutdown, config contracts, log visibility, localhost-only behavior, autostart guard, failure safe idle, and no-port-binding requirements for a future AURA local service on ATLAS without creating service units, enabling autostart, starting services, binding ports, starting API/web/dashboard/chat/memory/permission/audit runtime, dispatching actions, executing tools or commands, or enabling runtime execution.
+
+## v0.135.0 Genesis — Control Center Runtime Entry Review Foundation
+
+Status: completed
+
+AURA now includes a planner-only, metadata-only, and review-only Control Center Runtime Entry Review Foundation.
+
+This foundation reviews Control Center entry routes, localhost boundary, read-only defaults, status panel entry, permission panel entry, audit panel entry, action proposal panel entry, safe idle/error panel entry, manual approval entry, and no-server-start requirements without creating routes, binding routes, starting Control Center, starting dashboard/API/web/frontend/backend servers, binding ports, starting panels, emitting dashboard events, creating permission grants, starting audit writers, dispatching actions, executing tools or commands, or enabling runtime execution.

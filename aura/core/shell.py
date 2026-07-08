@@ -119,6 +119,7 @@ from aura.post_checkpoint_130_next_block_foundation.aura_post_checkpoint_130_nex
 from aura.final_genesis_acceptance_criteria_foundation.aura_final_genesis_acceptance_criteria_foundation_manager import AuraFinalGenesisAcceptanceCriteriaFoundationManager
 from aura.runtime_activation_path_proposal_review.aura_runtime_activation_path_proposal_review_foundation_manager import AuraRuntimeActivationPathProposalReviewFoundationManager
 from aura.local_service_boot_plan_review.aura_local_service_boot_plan_review_foundation_manager import AuraLocalServiceBootPlanReviewFoundationManager
+from aura.control_center_runtime_entry_review.aura_control_center_runtime_entry_review_foundation_manager import AuraControlCenterRuntimeEntryReviewFoundationManager
 
 
 class AuraShell:
@@ -997,6 +998,18 @@ class AuraShell:
         print("  local-service-failure-safe-idle-review-plan <target> Prepare local service failure safe idle review plan")
         print("  local-service-no-port-binding-review-plan <target> Prepare local service no-port-binding review plan")
         print("  local-service-boot-plan-review-context Show Local Service Boot Plan Review context")
+        print("  control-center-runtime-entry-review-status Show Control Center Runtime Entry Review Foundation status")
+        print("  control-center-entry-route-review-plan <target> Prepare Control Center entry route review plan")
+        print("  control-center-localhost-boundary-review-plan <target> Prepare Control Center localhost boundary review plan")
+        print("  control-center-read-only-default-review-plan <target> Prepare Control Center read-only default review plan")
+        print("  control-center-status-panel-runtime-entry-review-plan <target> Prepare Control Center status panel runtime entry review plan")
+        print("  control-center-permission-panel-runtime-entry-review-plan <target> Prepare Control Center permission panel runtime entry review plan")
+        print("  control-center-audit-panel-runtime-entry-review-plan <target> Prepare Control Center audit panel runtime entry review plan")
+        print("  control-center-action-proposal-panel-runtime-entry-review-plan <target> Prepare Control Center action proposal panel runtime entry review plan")
+        print("  control-center-safe-idle-error-panel-runtime-entry-review-plan <target> Prepare Control Center safe idle error panel runtime entry review plan")
+        print("  control-center-manual-approval-entry-review-plan <target> Prepare Control Center manual approval entry review plan")
+        print("  control-center-no-server-start-review-plan <target> Prepare Control Center no-server-start review plan")
+        print("  control-center-runtime-entry-review-context Show Control Center Runtime Entry Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -4981,6 +4994,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 135.0 control center runtime entry review shell helpers.
+    def print_control_center_runtime_entry_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Runtime Entry Review Safety Boundary"))
+
+    def handle_control_center_runtime_entry_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA Control Center runtime entry review"
+        manager = AuraControlCenterRuntimeEntryReviewFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-runtime-entry-review-status":
+            self.print_control_center_runtime_entry_review_packet("AURA Control Center Runtime Entry Review Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-runtime-entry-review-context":
+            self.print_control_center_runtime_entry_review_packet("AURA Control Center Runtime Entry Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "control-center-entry-route-review-plan": ("AURA Control Center Entry Route Review Plan", manager.control_center_entry_route_review_plan),
+            "control-center-localhost-boundary-review-plan": ("AURA Control Center Localhost Boundary Review Plan", manager.control_center_localhost_boundary_review_plan),
+            "control-center-read-only-default-review-plan": ("AURA Control Center Read Only Default Review Plan", manager.control_center_read_only_default_review_plan),
+            "control-center-status-panel-runtime-entry-review-plan": ("AURA Control Center Status Panel Runtime Entry Review Plan", manager.control_center_status_panel_runtime_entry_review_plan),
+            "control-center-permission-panel-runtime-entry-review-plan": ("AURA Control Center Permission Panel Runtime Entry Review Plan", manager.control_center_permission_panel_runtime_entry_review_plan),
+            "control-center-audit-panel-runtime-entry-review-plan": ("AURA Control Center Audit Panel Runtime Entry Review Plan", manager.control_center_audit_panel_runtime_entry_review_plan),
+            "control-center-action-proposal-panel-runtime-entry-review-plan": ("AURA Control Center Action Proposal Panel Runtime Entry Review Plan", manager.control_center_action_proposal_panel_runtime_entry_review_plan),
+            "control-center-safe-idle-error-panel-runtime-entry-review-plan": ("AURA Control Center Safe Idle Error Panel Runtime Entry Review Plan", manager.control_center_safe_idle_error_panel_runtime_entry_review_plan),
+            "control-center-manual-approval-entry-review-plan": ("AURA Control Center Manual Approval Entry Review Plan", manager.control_center_manual_approval_entry_review_plan),
+            "control-center-no-server-start-review-plan": ("AURA Control Center No Server Start Review Plan", manager.control_center_no_server_start_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_runtime_entry_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 134.0 local service boot plan review shell helpers.
     def print_local_service_boot_plan_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7254,6 +7310,9 @@ class AuraShell:
             return
 
         if self.handle_local_service_boot_plan_review_shell_command(normalized):
+            return
+
+        if self.handle_control_center_runtime_entry_review_shell_command(normalized):
             return
 
         if normalized == "help":
