@@ -144,6 +144,7 @@ from aura.control_center_action_log_panel_foundation.aura_control_center_action_
 from aura.control_center_read_only_route_map_foundation.aura_control_center_read_only_route_map_foundation_manager import AuraControlCenterReadOnlyRouteMapFoundationManager
 from aura.control_center_runtime_review_stabilization_151_160.aura_control_center_runtime_review_stabilization_151_160_manager import AuraControlCenterRuntimeReviewStabilization151160Manager
 from aura.local_chat_runtime_foundation.aura_local_chat_runtime_foundation_manager import AuraLocalChatRuntimeFoundationManager
+from aura.local_chat_cli_session_alpha.aura_local_chat_cli_session_alpha_manager import AuraLocalChatCliSessionAlphaManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4308,6 +4309,57 @@ class AuraCLI:
 
 
 
+
+    # Sprint 162.0 local chat CLI session alpha helpers.
+    def print_local_chat_cli_session_alpha_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat CLI Session Alpha Safety Boundary"))
+
+    def handle_local_chat_cli_session_alpha_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat CLI session alpha"
+        manager = AuraLocalChatCliSessionAlphaManager(project_root=self.project_root)
+
+        if command in {"local-chat-alpha", "local-chat"}:
+            if not target or target == "AURA local chat CLI session alpha":
+                print("AURA Local Chat CLI Alpha")
+                print("===========================")
+                print('Usage: python3 main.py local-chat-alpha "Aura kamu aktif?"')
+                return True
+            print(manager.render_alpha_turn(target))
+            return True
+
+        if command == "local-chat-cli-session-alpha-status":
+            self.print_local_chat_cli_session_alpha_packet("AURA Local Chat CLI Session Alpha Status", manager.status())
+            return True
+
+        if command == "local-chat-cli-session-alpha-context":
+            self.print_local_chat_cli_session_alpha_packet("AURA Local Chat CLI Session Alpha Context", manager.context())
+            return True
+
+        command_map = {
+            "local-chat-alpha-session-runtime-plan": ("AURA Local Chat Alpha Session Runtime Plan", manager.local_chat_alpha_session_runtime_plan),
+            "local-chat-alpha-message-acceptance-plan": ("AURA Local Chat Alpha Message Acceptance Plan", manager.local_chat_alpha_message_acceptance_plan),
+            "local-chat-alpha-persona-response-plan": ("AURA Local Chat Alpha Persona Response Plan", manager.local_chat_alpha_persona_response_plan),
+            "local-chat-alpha-transient-history-plan": ("AURA Local Chat Alpha Transient History Plan", manager.local_chat_alpha_transient_history_plan),
+            "local-chat-alpha-command-safety-plan": ("AURA Local Chat Alpha Command Safety Plan", manager.local_chat_alpha_command_safety_plan),
+            "local-chat-alpha-model-runtime-boundary-plan": ("AURA Local Chat Alpha Model Runtime Boundary Plan", manager.local_chat_alpha_model_runtime_boundary_plan),
+            "local-chat-alpha-permission-audit-boundary-plan": ("AURA Local Chat Alpha Permission Audit Boundary Plan", manager.local_chat_alpha_permission_audit_boundary_plan),
+            "local-chat-alpha-cli-usage-plan": ("AURA Local Chat Alpha CLI Usage Plan", manager.local_chat_alpha_cli_usage_plan),
+            "no-local-chat-cli-alpha-unsafe-runtime-plan": ("AURA No Local Chat CLI Alpha Unsafe Runtime Plan", manager.no_local_chat_cli_alpha_unsafe_runtime_plan),
+            "local-chat-alpha-next-sprint-readiness-plan": ("AURA Local Chat Alpha Next Sprint Readiness Plan", manager.local_chat_alpha_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_cli_session_alpha_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 161.0 local chat runtime foundation CLI helpers.
     def print_local_chat_runtime_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7668,6 +7720,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_cli_session_alpha_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_runtime_foundation_cli_command(raw_args):

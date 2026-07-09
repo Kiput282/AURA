@@ -2911,6 +2911,16 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    # Sprint 162.0 Local Chat CLI Session Alpha actions.
+    local_chat_cli_session_alpha_actions = [
+        ('local_chat_cli_session_alpha.status', 'user_confirmation', 'Show Local Chat CLI Session Alpha status.'),
+        ('local_chat_cli_session_alpha.alpha_turn', 'user_confirmation', 'Run one safe transient local chat alpha turn.'),
+        ('local_chat_cli_session_alpha.no_unsafe_runtime_plan', 'user_confirmation', 'Show no unsafe runtime activation plan for local chat alpha.'),
+        ('local_chat_cli_session_alpha.context', 'user_confirmation', 'Show Local Chat CLI Session Alpha context.'),
+    ]
+    for action_name, permission_action, description in local_chat_cli_session_alpha_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_cli_session_alpha", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_cli_session_alpha"))
+
     # Sprint 161.0 Local Chat Runtime Foundation actions.
     local_chat_runtime_foundation_actions = [
         ('local_chat_runtime_foundation.status', 'user_confirmation', 'Show Local Chat Runtime Foundation status.'),

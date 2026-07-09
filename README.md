@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.161.0-genesis  
+Current version: v0.162.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Ru
 
 Latest completed checkpoint:
 
-- v0.161.0-genesis
+- v0.162.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
@@ -1219,7 +1219,7 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.161.0-genesis
+- Version: v0.162.0-genesis
 - Current completed sprint: Sprint 161.0 — Local Chat Runtime Foundation
 - Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
@@ -1272,7 +1272,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.161.0-genesis, AURA can:
+At v0.162.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1291,7 +1291,7 @@ At v0.161.0-genesis, AURA can:
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.161.0-genesis, AURA cannot yet:
+At v0.162.0-genesis, AURA cannot yet:
 
 - start active local service runtime
 - serve a real web Control Center
@@ -1528,7 +1528,7 @@ Next planned sprint:
 
 ## Sprint 147.0 — Service Control Command Review Foundation
 
-Version: v0.161.0-genesis
+Version: v0.162.0-genesis
 
 Sprint 147 defines the Service Control Command Review Foundation for AURA's future ATLAS service control path. It prepares planner-only and metadata-only start/stop/restart/status command review scopes, proposal contracts, permission boundaries, audit links, Control Center command surfaces, failure safe-idle behavior, and no-service-control-command-runtime-activation review.
 
@@ -1550,7 +1550,7 @@ Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 ## Sprint 148.0 — Service Recovery and Restart Policy Foundation
 
-Version: v0.161.0-genesis
+Version: v0.162.0-genesis
 
 Sprint 148 defines the Service Recovery and Restart Policy Foundation for AURA's future ATLAS service runtime. It prepares planner-only and metadata-only failure classification, safe-idle recovery policy, restart approval policy, retry cooldown policy, rollback visibility, Control Center recovery surfaces, permission links, audit links, error boundaries, and no-recovery-restart-runtime-activation review.
 
@@ -1560,7 +1560,7 @@ Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 ## Sprint 149.0 — Service Security and Localhost Binding Review
 
-Version: v0.161.0-genesis
+Version: v0.162.0-genesis
 
 Sprint 149 defines the Service Security and Localhost Binding Review foundation for AURA's future ATLAS service runtime. It prepares planner-only and metadata-only localhost-only binding policy, public network exposure block policy, origin/host allowlist policy, loopback interface policy, deferred TLS/CORS/external-access review, permission/audit links, port-binding preflight security, Control Center security surfaces, security error boundaries, and no-security-localhost-runtime-activation review.
 
@@ -1575,6 +1575,23 @@ Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 
 
+
+
+## Sprint 162 — Local Chat CLI Session Alpha
+
+Sprint 162 adds the first safe thin runtime in the Local Chat block. AURA can
+now be tried from the CLI with a one-turn transient local chat alpha:
+
+```bash
+python3 main.py local-chat-alpha "Aura kamu aktif?"
+```
+
+This creates an in-memory/transient session packet, accepts one manual message,
+and returns a deterministic safe AURA persona response. It does not persist chat
+history, dispatch model requests, write memory, mutate permissions, write audit
+logs, execute commands/tools, launch applications, create folders, mutate files,
+start servers, bind ports, use voice, capture screens, or perform autonomous
+actions.
 
 ## Sprint 161 — Local Chat Runtime Foundation
 

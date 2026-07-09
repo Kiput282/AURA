@@ -1452,6 +1452,24 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_local_chat_cli_session_alpha",
+            description="Run a safe one-turn local chat CLI alpha with transient session packet and deterministic AURA persona response, without model runtime, memory persistence, command execution, file mutation, desktop control, voice, vision, or network access.",
+            role="companion",
+            permission_action="user_confirmation",
+            status="online",
+            capabilities=[
+                "local_chat_alpha_single_turn",
+                "local_chat_alpha_transient_session",
+                "safe_persona_response",
+                "no_model_runtime",
+                "no_command_execution",
+                "no_file_mutation",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_local_chat_runtime_foundation",
             description="Prepare local chat session contracts, message schema, chat loop boundaries, persona response boundaries, history boundaries, permission/audit links, model adapter boundaries, and CLI alpha readiness without accepting runtime chat messages, persisting history, dispatching model requests, executing commands, or mutating files.",
             role="companion",

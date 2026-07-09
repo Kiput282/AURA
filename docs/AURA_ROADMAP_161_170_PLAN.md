@@ -31,3 +31,13 @@ vision, and action layers.
 The block must keep command execution, file mutation, plugin action execution,
 desktop control, public network exposure, and autonomous actions disabled until
 later explicitly gated runtime blocks.
+
+
+## Sprint 162 Direction — Local Chat CLI Session Alpha
+
+Sprint 162 introduces the first safe thin runtime for AURA local chat: a one-turn
+CLI alpha that creates a transient in-memory session packet and returns a safe
+AURA persona response. It keeps message persistence, model runtime, memory
+runtime, command execution, file mutation, desktop control, voice, vision,
+network access, and autonomous actions disabled. Sprint 163 should add the local
+chat message store.

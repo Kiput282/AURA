@@ -1,7 +1,7 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.161.0-genesis
+Current Canonical Version: v0.162.0-genesis
 Current Canonical Sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
 Next Planned Sprint: Sprint 147.0 — Service Control Command Review Foundation
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
@@ -24,7 +24,7 @@ AURA must grow gradually. Runtime capability must be introduced only through exp
 
 AURA is currently at:
 
-- Version: v0.161.0-genesis
+- Version: v0.162.0-genesis
 - Sprint: Sprint 144.0
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
@@ -517,3 +517,13 @@ chat → memory → voice → vision → action. Sprint 161 remains a safe found
 for session/message/chat-loop contracts and Sprint 162 CLI alpha readiness. It
 does not enable model runtime, command execution, file mutation, desktop
 control, voice, vision, or autonomous actions.
+
+
+## Sprint 162 Direction — Local Chat CLI Session Alpha
+
+Sprint 162 introduces the first safe thin runtime for AURA local chat: a one-turn
+CLI alpha that creates a transient in-memory session packet and returns a safe
+AURA persona response. It keeps message persistence, model runtime, memory
+runtime, command execution, file mutation, desktop control, voice, vision,
+network access, and autonomous actions disabled. Sprint 163 should add the local
+chat message store.

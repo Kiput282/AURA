@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_local_chat_cli_session_alpha",
+                    "name": "AURA Local Chat CLI Session Alpha",
+                    "state": "online",
+                    "runtime_level": "permission_gated_alpha_runtime",
+                    "risk_level": "medium",
+                    "permission_required": "user_confirmation",
+                    "introduced_in": "0.162.0-genesis",
+                    "category": "local_chat_runtime",
+                    "control_center_visible": True,
+                    "description": "Safe thin local chat CLI alpha that accepts one manual CLI message, creates a transient in-memory session packet, and returns a deterministic AURA persona response without persisting history, dispatching model requests, writing memory/audit, executing commands, mutating files, launching apps, starting servers, binding ports, or performing autonomous actions.",
+                },
+                {
                     "id": "aura_local_chat_runtime_foundation",
                     "name": "AURA Local Chat Runtime Foundation",
                     "state": "online",
