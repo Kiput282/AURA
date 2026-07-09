@@ -148,6 +148,7 @@ from aura.local_chat_cli_session_alpha.aura_local_chat_cli_session_alpha_manager
 from aura.local_chat_message_store.aura_local_chat_message_store_manager import AuraLocalChatMessageStoreManager
 from aura.local_chat_persona_response_layer.aura_local_chat_persona_response_layer_manager import AuraLocalChatPersonaResponseLayerManager
 from aura.local_chat_model_adapter_boundary.aura_local_chat_model_adapter_boundary_manager import AuraLocalChatModelAdapterBoundaryManager
+from aura.local_chat_permission_gated_model_request.aura_local_chat_permission_gated_model_request_manager import AuraLocalChatPermissionGatedModelRequestManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4316,6 +4317,57 @@ class AuraCLI:
 
 
 
+
+    # Sprint 166.0 permission-gated model request helpers.
+    def print_local_chat_permission_gated_model_request_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat Permission-Gated Model Request Safety Boundary"))
+
+    def handle_local_chat_permission_gated_model_request_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat permission-gated model request"
+        manager = AuraLocalChatPermissionGatedModelRequestManager(project_root=self.project_root)
+
+        if command in {"local-chat-permission-model-dry-run", "local-chat-model-permission-dry-run", "local-chat-permission-model"}:
+            if not target or target == "AURA local chat permission-gated model request":
+                print("AURA Local Chat Permission-Gated Model Request Dry Run")
+                print("=======================================================")
+                print('Usage: python3 main.py local-chat-permission-model-dry-run "Aura boleh pakai model?"')
+                return True
+            print(manager.render_permission_model_dry_run(target))
+            return True
+
+        if command == "local-chat-permission-gated-model-request-status":
+            self.print_local_chat_permission_gated_model_request_packet("AURA Local Chat Permission-Gated Model Request Status", manager.status())
+            return True
+
+        if command == "local-chat-permission-gated-model-request-context":
+            self.print_local_chat_permission_gated_model_request_packet("AURA Local Chat Permission-Gated Model Request Context", manager.context())
+            return True
+
+        command_map = {
+            "permission-gated-model-request-runtime-plan": ("AURA Permission-Gated Model Request Runtime Plan", manager.permission_gated_model_request_runtime_plan),
+            "model-permission-preview-packet-plan": ("AURA Model Permission Preview Packet Plan", manager.model_permission_preview_packet_plan),
+            "model-request-envelope-gate-plan": ("AURA Model Request Envelope Gate Plan", manager.model_request_envelope_gate_plan),
+            "model-provider-selection-gate-plan": ("AURA Model Provider Selection Gate Plan", manager.model_provider_selection_gate_plan),
+            "model-credential-network-gate-plan": ("AURA Model Credential Network Gate Plan", manager.model_credential_network_gate_plan),
+            "model-grant-decision-boundary-plan": ("AURA Model Grant Decision Boundary Plan", manager.model_grant_decision_boundary_plan),
+            "model-audit-memory-boundary-plan": ("AURA Model Audit Memory Boundary Plan", manager.model_audit_memory_boundary_plan),
+            "model-denial-fallback-plan": ("AURA Model Denial Fallback Plan", manager.model_denial_fallback_plan),
+            "no-local-chat-permission-model-unsafe-runtime-plan": ("AURA No Local Chat Permission Model Unsafe Runtime Plan", manager.no_local_chat_permission_model_unsafe_runtime_plan),
+            "local-chat-permission-model-next-sprint-readiness-plan": ("AURA Local Chat Permission Model Next Sprint Readiness Plan", manager.local_chat_permission_model_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_permission_gated_model_request_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 165.0 local chat model adapter boundary helpers.
     def print_local_chat_model_adapter_boundary_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7876,6 +7928,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_permission_gated_model_request_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_model_adapter_boundary_cli_command(raw_args):

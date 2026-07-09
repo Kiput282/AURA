@@ -66,6 +66,7 @@ class CapabilityRegistryManager:
             "command_execution_permission",
             "dependency_download_permission",
             "internet_search_permission",
+            "model_request_permission",
             "desktop_control_permission",
             "git_operation_permission",
         ]
@@ -749,6 +750,18 @@ class CapabilityRegistryManager:
                     "control_center_visible": True,
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
+            {
+                "id": "aura_local_chat_permission_gated_model_request",
+                "name": "AURA Local Chat Permission-Gated Model Request",
+                "state": "online",
+                "runtime_level": "permission_gate_dry_run_alpha",
+                "risk_level": "medium",
+                "permission_required": "model_request_permission",
+                "category": "local_chat_runtime",
+                "introduced_in": "0.166.0-genesis",
+                "control_center_visible": True,
+                "description": "Permission-gated local chat model request dry-run that creates a permission preview packet, request envelope, and blocked gate decision without dispatching model requests, receiving model responses, reading credentials, using network, writing memory, executing commands, or mutating arbitrary files.",
+            },
             {
                 "id": "aura_local_chat_model_adapter_boundary",
                 "name": "AURA Local Chat Model Adapter Boundary",

@@ -1452,6 +1452,28 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+    # Sprint 166.0 local chat permission-gated model request skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_chat_permission_gated_model_request",
+            description="Create permission preview packets and blocked model request envelopes for local chat without dispatching model calls, reading credentials, using network, writing memory, executing commands, or mutating arbitrary files.",
+            role="companion",
+            permission_action="model_request_permission",
+            status="online",
+            capabilities=[
+                "local_chat_permission_gated_model_request",
+                "permission_preview_packet",
+                "model_request_envelope_dry_run",
+                "blocked_model_gate_decision",
+                "no_model_request_dispatch",
+                "no_network_request",
+                "no_credential_read",
+                "no_command_execution",
+            ],
+        )
+    )
+
     # Sprint 165.0 local chat model adapter boundary skill.
     registry.register(
         AuraSkill(

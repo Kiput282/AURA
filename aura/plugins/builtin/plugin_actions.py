@@ -2913,6 +2913,17 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+    # Sprint 166.0 Local Chat Permission-Gated Model Request actions.
+    local_chat_permission_gated_model_request_actions = [
+        ('local_chat_permission_gated_model_request.status', 'model_request_permission', 'Show Local Chat Permission-Gated Model Request status.'),
+        ('local_chat_permission_gated_model_request.dry_run', 'model_request_permission', 'Create one permission preview and blocked model request envelope without dispatching a model request.'),
+        ('local_chat_permission_gated_model_request.no_unsafe_runtime_plan', 'model_request_permission', 'Show no unsafe runtime activation plan for permission-gated model request.'),
+        ('local_chat_permission_gated_model_request.context', 'model_request_permission', 'Show Local Chat Permission-Gated Model Request context.'),
+    ]
+    for action_name, permission_action, description in local_chat_permission_gated_model_request_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_permission_gated_model_request", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_permission_gated_model_request"))
+
     # Sprint 165.0 Local Chat Model Adapter Boundary actions.
     local_chat_model_adapter_boundary_actions = [
         ('local_chat_model_adapter_boundary.status', 'future_model_permission_gate', 'Show Local Chat Model Adapter Boundary status.'),

@@ -11,7 +11,7 @@ vision, and action layers.
 - Sprint 162 — Local Chat CLI Session Alpha
 - Sprint 163 — Local Chat Message Store
 - Sprint 164 — AURA Persona Response Layer
-- Sprint 165 — Model Adapter Boundary
+- Sprint 166 — Permission-Gated Model Request
 - Sprint 166 — Permission-Gated Model Request
 - Sprint 167 — Chat Safety + Uncertainty Layer
 - Sprint 168 — Chat History Viewer Contract
@@ -60,15 +60,22 @@ capability-aware responses, politely refuses action requests, and continues to
 append controlled local chat turns to the JSONL message store. Model runtime,
 memory runtime, command execution, arbitrary file mutation, desktop action,
 voice, vision, network access, and autonomous actions remain disabled. Sprint
-165 should add the Model Adapter Boundary without automatically dispatching
+165 should add the Permission-Gated Model Request without automatically dispatching
 model requests.
 
 
-## Sprint 165 Direction — Model Adapter Boundary
+## Sprint 166 Direction — Permission-Gated Model Request
 
-Sprint 165 defines the model adapter boundary for AURA local chat. It introduces
+Sprint 166 defines the model adapter boundary for AURA local chat. It introduces
 a dry-run adapter packet, provider metadata contract, prompt envelope contract,
 response envelope contract, model error boundary, credential/network boundary,
 and Sprint 166 permission handoff. It does not dispatch model requests, call
 local or remote providers, read credentials, write memory, execute commands, or
 mutate arbitrary files.
+
+
+## Sprint 166 — Permission-Gated Model Request
+
+Sprint 166 adds the permission-gated model request dry-run layer. AURA can create a permission preview packet and a model request envelope, but the gate decision remains blocked without explicit grant. No model request is dispatched, no local LLM process starts, no remote API/network call occurs, no credential is read, no memory is written, no command executes, and no arbitrary file mutation happens.
+
+Next: Sprint 167 — Chat Safety + Uncertainty Layer.

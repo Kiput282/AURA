@@ -150,6 +150,7 @@ from aura.local_chat_cli_session_alpha.aura_local_chat_cli_session_alpha_manager
 from aura.local_chat_message_store.aura_local_chat_message_store_manager import AuraLocalChatMessageStoreManager
 from aura.local_chat_persona_response_layer.aura_local_chat_persona_response_layer_manager import AuraLocalChatPersonaResponseLayerManager
 from aura.local_chat_model_adapter_boundary.aura_local_chat_model_adapter_boundary_manager import AuraLocalChatModelAdapterBoundaryManager
+from aura.local_chat_permission_gated_model_request.aura_local_chat_permission_gated_model_request_manager import AuraLocalChatPermissionGatedModelRequestManager
 
 
 class AuraShell:
@@ -5257,6 +5258,7 @@ class AuraShell:
             "aura-persona-response-boundary-plan": ("AURA Persona Response Boundary Plan", manager.aura_persona_response_boundary_plan),
             "local-chat-history-boundary-plan": ("AURA Local Chat History Boundary Plan", manager.local_chat_history_boundary_plan),
             "local-chat-permission-audit-link-plan": ("AURA Local Chat Permission Audit Link Plan", manager.local_chat_permission_audit_link_plan),
+            "local-chat-permission-gated-model-request-plan": ("AURA Local Chat Permission-Gated Model Request Plan", AuraLocalChatPermissionGatedModelRequestManager(project_root=self.project_root).permission_gated_model_request_runtime_plan),
             "local-chat-model-adapter-boundary-plan": ("AURA Local Chat Model Adapter Boundary Plan", manager.local_chat_model_adapter_boundary_plan),
             "local-chat-cli-alpha-readiness-plan": ("AURA Local Chat CLI Alpha Readiness Plan", manager.local_chat_cli_alpha_readiness_plan),
             "no-local-chat-runtime-activation-plan": ("AURA No Local Chat Runtime Activation Plan", manager.no_local_chat_runtime_activation_plan),
