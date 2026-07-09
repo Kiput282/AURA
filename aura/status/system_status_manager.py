@@ -121,6 +121,7 @@ from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manag
 from aura.service_control_command_review_foundation.aura_service_control_command_review_foundation_manager import AuraServiceControlCommandReviewFoundationManager
 from aura.service_recovery_restart_policy_foundation.aura_service_recovery_restart_policy_foundation_manager import AuraServiceRecoveryRestartPolicyFoundationManager
 from aura.service_security_localhost_binding_review.aura_service_security_localhost_binding_review_manager import AuraServiceSecurityLocalhostBindingReviewManager
+from aura.service_review_stabilization_141_150.aura_service_review_stabilization_141_150_manager import AuraServiceReviewStabilization141150Manager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -303,6 +304,7 @@ class SystemStatusManager:
         service_control_command_review_foundation_status = AuraServiceControlCommandReviewFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         service_recovery_restart_policy_foundation_status = AuraServiceRecoveryRestartPolicyFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         service_security_localhost_binding_review_status = AuraServiceSecurityLocalhostBindingReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        service_review_stabilization_141_150_status = AuraServiceReviewStabilization141150Manager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
             "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
@@ -330,6 +332,14 @@ class SystemStatusManager:
             "service_security_localhost_runtime_public_network_listeners_started": service_security_localhost_binding_review_status["runtime_public_network_listeners_started"],
             "service_security_localhost_runtime_ports_bound": service_security_localhost_binding_review_status["runtime_ports_bound"],
             "service_security_localhost_runtime_execution_features": service_security_localhost_binding_review_status["runtime_execution_features"],
+            "service_review_stabilization_141_150_ready": service_review_stabilization_141_150_status["service_review_stabilization_141_150_ready"],
+            "service_review_stabilization_141_150_data_ready": service_review_stabilization_141_150_status["service_review_stabilization_141_150_data_ready"],
+            "service_review_stabilization_141_150_plan_type_count": service_review_stabilization_141_150_status["plan_type_count"],
+            "service_review_stabilization_141_150_total_blueprint_count": service_review_stabilization_141_150_status["total_service_review_stabilization_141_150_blueprint_count"],
+            "service_review_stabilization_141_150_runtime_stabilization_records_written": service_review_stabilization_141_150_status["runtime_stabilization_records_written"],
+            "service_review_stabilization_141_150_runtime_release_gates_opened": service_review_stabilization_141_150_status["runtime_release_gates_opened"],
+            "service_review_stabilization_141_150_runtime_next_block_activations": service_review_stabilization_141_150_status["runtime_next_block_activations"],
+            "service_review_stabilization_141_150_runtime_execution_features": service_review_stabilization_141_150_status["runtime_execution_features"],
         })
 
         service_audit_link_foundation_status = AuraServiceAuditLinkFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()

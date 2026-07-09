@@ -134,6 +134,7 @@ from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manag
 from aura.service_control_command_review_foundation.aura_service_control_command_review_foundation_manager import AuraServiceControlCommandReviewFoundationManager
 from aura.service_recovery_restart_policy_foundation.aura_service_recovery_restart_policy_foundation_manager import AuraServiceRecoveryRestartPolicyFoundationManager
 from aura.service_security_localhost_binding_review.aura_service_security_localhost_binding_review_manager import AuraServiceSecurityLocalhostBindingReviewManager
+from aura.service_review_stabilization_141_150.aura_service_review_stabilization_141_150_manager import AuraServiceReviewStabilization141150Manager
 
 
 class AuraShell:
@@ -5202,6 +5203,47 @@ class AuraShell:
 
 
 
+
+
+    # Sprint 150.0 service review stabilization 141-150 shell helpers.
+    def print_service_review_stabilization_141_150_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Review Stabilization 141-150 Safety Boundary"))
+
+    def handle_service_review_stabilization_141_150_shell_command(self, normalized: str) -> bool:
+        manager = AuraServiceReviewStabilization141150Manager(project_root=self.project_root)
+        command = normalized.strip()
+        target = "AURA service review stabilization 141-150"
+
+        if command == "service-review-stabilization-141-150-status":
+            self.print_service_review_stabilization_141_150_packet("AURA Service Review Stabilization 141-150 Status", manager.status())
+            return True
+
+        if command == "service-review-stabilization-141-150-context":
+            self.print_service_review_stabilization_141_150_packet("AURA Service Review Stabilization 141-150 Context", manager.context())
+            return True
+
+        command_map = {
+            "service-141-150-completion-review-plan": ("AURA Service 141-150 Completion Review Plan", manager.service_141_150_completion_review_plan),
+            "service-runtime-zero-counter-review-plan": ("AURA Service Runtime Zero Counter Review Plan", manager.service_runtime_zero_counter_review_plan),
+            "service-permission-audit-security-review-plan": ("AURA Service Permission Audit Security Review Plan", manager.service_permission_audit_security_review_plan),
+            "service-control-health-config-review-plan": ("AURA Service Control Health Config Review Plan", manager.service_control_health_config_review_plan),
+            "service-recovery-security-review-plan": ("AURA Service Recovery Security Review Plan", manager.service_recovery_security_review_plan),
+            "service-capability-registry-stabilization-plan": ("AURA Service Capability Registry Stabilization Plan", manager.service_capability_registry_stabilization_plan),
+            "service-documentation-roadmap-stabilization-plan": ("AURA Service Documentation Roadmap Stabilization Plan", manager.service_documentation_roadmap_stabilization_plan),
+            "service-next-block-readiness-plan": ("AURA Service Next Block Readiness Plan", manager.service_next_block_readiness_plan),
+            "service-release-gate-continuity-review-plan": ("AURA Service Release Gate Continuity Review Plan", manager.service_release_gate_continuity_review_plan),
+            "no-service-stabilization-runtime-activation-plan": ("AURA No Service Stabilization Runtime Activation Plan", manager.no_service_stabilization_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_service_review_stabilization_141_150_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 149.0 service security and localhost binding review shell helpers.
     def print_service_security_localhost_binding_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8110,6 +8152,9 @@ class AuraShell:
             return
 
         if self.handle_service_security_localhost_binding_review_shell_command(normalized):
+            return
+
+        if self.handle_service_review_stabilization_141_150_shell_command(normalized):
             return
 
         if normalized == "help":

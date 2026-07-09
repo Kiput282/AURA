@@ -1443,6 +1443,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+    # Sprint 150.0 service review stabilization 141-150 skill.
+    registry.register(
+        AuraSkill(
+            name="aura_service_review_stabilization_141_150",
+            description="Prepare planner-only Service Review Stabilization 141-150 without runtime activation.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "service_review_stabilization_141_150_status",
+                "service_141_150_completion_review_plan",
+                "service_runtime_zero_counter_review_plan",
+                "service_permission_audit_security_review_plan",
+                "service_control_health_config_review_plan",
+                "service_recovery_security_review_plan",
+                "service_capability_registry_stabilization_plan",
+                "service_documentation_roadmap_stabilization_plan",
+                "service_next_block_readiness_plan",
+                "service_release_gate_continuity_review_plan",
+                "no_service_stabilization_runtime_activation_plan",
+                "service_review_stabilization_141_150_context",
+            ],
+        )
+    )
+
     # Sprint 149.0 service security and localhost binding review skill.
     registry.register(
         AuraSkill(

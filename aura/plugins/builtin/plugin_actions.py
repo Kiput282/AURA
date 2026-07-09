@@ -2908,6 +2908,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
     # Sprint 149.0 service security and localhost binding review actions.
+    service_review_stabilization_141_150_actions = [
+        ('service_review_stabilization_141_150.status', 'read_project', 'Show Service Review Stabilization 141-150 status.'),
+        ('service_review_stabilization_141_150.service_141_150_completion_review_plan', 'read_project', 'Prepare service 141-150 completion review plan.'),
+        ('service_review_stabilization_141_150.service_runtime_zero_counter_review_plan', 'read_project', 'Prepare service runtime zero counter review plan.'),
+        ('service_review_stabilization_141_150.service_permission_audit_security_review_plan', 'read_project', 'Prepare service permission/audit/security review plan.'),
+        ('service_review_stabilization_141_150.service_control_health_config_review_plan', 'read_project', 'Prepare service control/health/config review plan.'),
+        ('service_review_stabilization_141_150.service_recovery_security_review_plan', 'read_project', 'Prepare service recovery/security review plan.'),
+        ('service_review_stabilization_141_150.service_capability_registry_stabilization_plan', 'read_project', 'Prepare service capability registry stabilization plan.'),
+        ('service_review_stabilization_141_150.service_documentation_roadmap_stabilization_plan', 'read_project', 'Prepare service documentation roadmap stabilization plan.'),
+        ('service_review_stabilization_141_150.service_next_block_readiness_plan', 'read_project', 'Prepare service next block readiness plan.'),
+        ('service_review_stabilization_141_150.service_release_gate_continuity_review_plan', 'read_project', 'Prepare service release gate continuity review plan.'),
+        ('service_review_stabilization_141_150.no_service_stabilization_runtime_activation_plan', 'read_project', 'Prepare no service stabilization runtime activation plan.'),
+        ('service_review_stabilization_141_150.context', 'read_project', 'Show Service Review Stabilization 141-150 context.'),
+    ]
+
+    for action_name, permission_action, description in service_review_stabilization_141_150_actions:
+        registry.register(PluginAction(name=action_name, plugin="service_review_stabilization_141_150", description=description, permission_action=permission_action, status="online", skill="aura_service_review_stabilization_141_150"))
+
     service_security_localhost_binding_review_actions = [
         ('service_security_localhost_binding_review.status', 'read_project', 'Show Service Security and Localhost Binding Review status.'),
         ('service_security_localhost_binding_review.service_localhost_binding_policy_plan', 'read_project', 'Prepare service localhost binding policy plan.'),
