@@ -112,6 +112,7 @@ from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review
 from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gate_review_foundation_manager import AuraPermissionRuntimeGrantGateReviewFoundationManager
 from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
 from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
+from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -286,9 +287,21 @@ class SystemStatusManager:
         permission_runtime_grant_gate_review_status = AuraPermissionRuntimeGrantGateReviewFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         audit_runtime_writer_activation_review_status = AuraAuditRuntimeWriterActivationReviewFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         review_stabilization_131_140_status = AuraReviewStabilization131140FoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        local_service_runtime_foundation_status = AuraLocalServiceRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
+            "local_service_runtime_foundation_ready": local_service_runtime_foundation_status["local_service_runtime_foundation_ready"],
+            "local_service_runtime_foundation_data_ready": local_service_runtime_foundation_status["local_service_runtime_foundation_data_ready"],
+            "local_service_runtime_foundation_plan_type_count": local_service_runtime_foundation_status["plan_type_count"],
+            "local_service_runtime_foundation_total_blueprint_count": local_service_runtime_foundation_status["total_local_service_runtime_foundation_blueprint_count"],
+            "local_service_runtime_foundation_safe_idle_default": local_service_runtime_foundation_status["safe_idle_default"],
+            "local_service_runtime_foundation_localhost_only_policy": local_service_runtime_foundation_status["localhost_only_policy"],
+            "local_service_runtime_foundation_service_start_runtime_disabled": local_service_runtime_foundation_status["service_start_runtime_disabled"],
+            "local_service_runtime_foundation_port_binding_disabled": local_service_runtime_foundation_status["port_binding_disabled"],
+            "local_service_runtime_foundation_runtime_services_started": local_service_runtime_foundation_status["runtime_services_started"],
+            "local_service_runtime_foundation_runtime_ports_bound": local_service_runtime_foundation_status["runtime_ports_bound"],
+            "local_service_runtime_foundation_runtime_execution_features": local_service_runtime_foundation_status["runtime_execution_features"],
             "identity": {
                 "name": identity.get("name", "AURA"),
                 "version": identity.get("version", "unknown"),

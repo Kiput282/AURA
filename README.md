@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.140.0-genesis  
+Current version: v0.141.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -35,23 +35,24 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed the Sprint 111-120 runtime readiness block.
+AURA has completed Sprint 141.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
 
 Latest completed checkpoint:
 
-- v0.140.0-genesis
-- Sprint 120: Review Stabilization 111-120 Foundation
-- Sprint 111-120 block: closed
-- Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
+- v0.141.0-genesis
+- Sprint 141: Local Service Runtime Foundation
+- Sprint 131-140 block: closed as a stabilized planning block
+- Sprint 141-150 block: active
+- Next planned sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary
 
 Current capability registry summary:
 
-- total capabilities: 51
-- online capabilities: 49
-- foundation-only capabilities: 38
+- total capabilities: 72
+- online capabilities: 70
+- foundation-only capabilities: 58
 - planner-only capabilities: 7
 - permission-gated capabilities: 2
-- review-only capabilities: 2
+- review-only capabilities: 3
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 0
@@ -218,6 +219,8 @@ Important project areas:
       status/
       personality/
       review_stabilization_111_120/
+      review_stabilization_131_140/
+      local_service_runtime_foundation/
       v1_runtime_readiness_cutline_review/
       manual_approval_decision_flow_review/
       runtime_error_rollback_preview/
@@ -233,7 +236,10 @@ Important project areas:
       AURA_MASTER_ROADMAP.md
       AURA_ROADMAP_111_120_PLAN.md
       AURA_ROADMAP_121_130_PLAN.md
-      AURA_REVIEW_STABILIZATION_111_120_FOUNDATION.md
+      AURA_ROADMAP_131_140_PLAN.md
+      AURA_ROADMAP_141_150_PLAN.md
+      AURA_REVIEW_STABILIZATION_131_140_FOUNDATION.md
+      AURA_LOCAL_SERVICE_RUNTIME_FOUNDATION.md
 
 ---
 
@@ -284,16 +290,16 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.140.0-genesis
+    Version  : 0.141.0-genesis
     Status   : READY
 
 Check a foundation status example:
 
-    python3 main.py review-stabilization-111-120-status
+    python3 main.py local-service-runtime-foundation-status
 
 Check capability registry summary:
 
-    python3 main.py capability-summary
+    python3 main.py capability-registry-status
 
 ---
 
@@ -311,20 +317,22 @@ Every 10 sprints, AURA performs a review stabilization checkpoint.
 
 Completed recent block:
 
-- Sprint 111: Genesis Runtime Readiness Next Block Planning
-- Sprint 112: Runtime Permission Flow Consolidation
-- Sprint 113: Audit Event Review Queue
-- Sprint 114: Dashboard Runtime Readiness View Model
-- Sprint 115: Safe Local Action Contract Review
-- Sprint 116: ORION Client Boundary Contract
-- Sprint 117: Runtime Error and Rollback Preview
-- Sprint 118: Manual Approval Decision Flow Review
-- Sprint 119: v1 Runtime Readiness Cutline Review
-- Sprint 120: Review Stabilization 111-120
+- Sprint 131: Post-Checkpoint 130 Next Block Foundation
+- Sprint 132: Final Genesis Acceptance Criteria Foundation
+- Sprint 133: Runtime Activation Path Proposal Review
+- Sprint 134: Local Service Boot Plan Review
+- Sprint 135: Control Center Runtime Entry Review
+- Sprint 136: Chat Runtime Minimal Loop Review
+- Sprint 137: Memory Runtime Write Gate Review
+- Sprint 138: Permission Runtime Grant Gate Review
+- Sprint 139: Audit Runtime Writer Activation Review
+- Sprint 140: Review & Stabilization 131-140
 
-Next block:
+Active block:
 
-- Sprint 121-130 Runtime Readiness Continuation
+- Sprint 141-150 Local Service Runtime Foundation
+- Sprint 141: Local Service Runtime Foundation completed
+- Next: Sprint 142 Local Service Safe Idle Boot Boundary
 
 ---
 
@@ -336,7 +344,10 @@ Primary docs:
 - docs/AURA_MASTER_ROADMAP.md
 - docs/AURA_ROADMAP_111_120_PLAN.md
 - docs/AURA_ROADMAP_121_130_PLAN.md
-- docs/AURA_REVIEW_STABILIZATION_111_120_FOUNDATION.md
+- docs/AURA_ROADMAP_131_140_PLAN.md
+- docs/AURA_ROADMAP_141_150_PLAN.md
+- docs/AURA_REVIEW_STABILIZATION_131_140_FOUNDATION.md
+- docs/AURA_LOCAL_SERVICE_RUNTIME_FOUNDATION.md
 
 Archived full README history:
 
@@ -1249,7 +1260,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.140.0-genesis, AURA can:
+At v0.141.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1263,9 +1274,9 @@ At v0.140.0-genesis, AURA can:
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.140.0-genesis, AURA cannot yet:
+At v0.141.0-genesis, AURA cannot yet:
 
-- run active local service runtime
+- start active local service runtime
 - serve a real web Control Center
 - run real chat runtime
 - read/write memory at runtime
@@ -1276,3 +1287,41 @@ At v0.140.0-genesis, AURA cannot yet:
 - execute tools or commands autonomously
 - read/write/modify/delete files at runtime
 - bind ports or expose network services as active runtime
+
+## Sprint 141.0 — Local Service Runtime Foundation
+
+Status: completed  
+Version: v0.141.0-genesis
+
+Sprint 141 opens the Sprint 141-150 Local Service Runtime Foundation block.
+
+It adds a planner-only, metadata-only, and foundation-only Local Service Runtime Foundation for ATLAS safe-idle service identity, localhost-only boundary, lifecycle state, configuration contract, health surface, permission gate link, audit link, control command boundary, and no-start activation review.
+
+Counts:
+
+- 12 plan types
+- 100 total local service runtime foundation blueprint/items
+- 0 runtime services started
+- 0 runtime sockets opened
+- 0 runtime ports bound
+- 0 runtime health endpoints started
+- 0 runtime systemd units created or enabled
+- 0 runtime permission mutations
+- 0 runtime audit events written
+- 0 runtime actions/tools/commands/files/services/network/memory/model/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- foundation-only local service planning
+- safe-idle default preserved
+- localhost-only policy documented
+- no silent port binding
+- no service start activation
+- release gate closed
+- future runtime still requires manual approval
+
+Next planned sprint:
+
+- Sprint 142.0 — Local Service Safe Idle Boot Boundary
+

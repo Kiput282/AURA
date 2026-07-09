@@ -123,6 +123,7 @@ from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review
 from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gate_review_foundation_manager import AuraPermissionRuntimeGrantGateReviewFoundationManager
 from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
 from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
+from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4222,6 +4223,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 141.0 local service runtime foundation CLI helpers.
+    def print_local_service_runtime_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Runtime Foundation Safety Boundary"))
+
+    def handle_local_service_runtime_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local service runtime foundation"
+        manager = AuraLocalServiceRuntimeFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-runtime-foundation-status":
+            self.print_local_service_runtime_foundation_packet("AURA Local Service Runtime Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-runtime-foundation-context":
+            self.print_local_service_runtime_foundation_packet("AURA Local Service Runtime Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-foundation-scope-plan": ("AURA Service Foundation Scope Plan", manager.service_foundation_scope_plan),
+            "service-safe-idle-entry-plan": ("AURA Service Safe Idle Entry Plan", manager.service_safe_idle_entry_plan),
+            "localhost-binding-boundary-plan": ("AURA Localhost Binding Boundary Plan", manager.localhost_binding_boundary_plan),
+            "service-lifecycle-state-plan": ("AURA Service Lifecycle State Plan", manager.service_lifecycle_state_plan),
+            "service-config-contract-plan": ("AURA Service Config Contract Plan", manager.service_config_contract_plan),
+            "service-health-surface-plan": ("AURA Service Health Surface Plan", manager.service_health_surface_plan),
+            "service-permission-gate-link-plan": ("AURA Service Permission Gate Link Plan", manager.service_permission_gate_link_plan),
+            "service-audit-link-plan": ("AURA Service Audit Link Plan", manager.service_audit_link_plan),
+            "service-control-command-boundary-plan": ("AURA Service Control Command Boundary Plan", manager.service_control_command_boundary_plan),
+            "service-no-start-activation-plan": ("AURA Service No-Start Activation Plan", manager.service_no_start_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_runtime_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 140.0 review stabilization 131-140 CLI helpers.
     def print_review_stabilization_131_140_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6712,6 +6755,9 @@ class AuraCLI:
             return True
 
         if self.handle_review_stabilization_131_140_cli_command(raw_args):
+            return True
+
+        if self.handle_local_service_runtime_foundation_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

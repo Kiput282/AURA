@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.140.0-genesis
-Current Canonical Sprint: Sprint 140.0 — Review & Stabilization 131-140 Foundation
-Next Planned Sprint: Sprint 141.0 — Local Service Runtime Foundation
+Current Canonical Version: v0.141.0-genesis
+Current Canonical Sprint: Sprint 141.0 — Local Service Runtime Foundation
+Next Planned Sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -24,11 +24,12 @@ AURA must grow gradually. Runtime capability must be introduced only through exp
 
 AURA is currently at:
 
-- Version: v0.140.0-genesis
-- Sprint: Sprint 140.0
+- Version: v0.141.0-genesis
+- Sprint: Sprint 141.0
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
-- Next block: Sprint 141-150 Local Service Runtime Foundation
+- Active block: Sprint 141-150 Local Service Runtime Foundation
+- Next sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary
 
 Current AURA is not yet an active autonomous runtime system.
 

@@ -1509,9 +1509,21 @@ This checkpoint closes the 131-140 runtime planning block by validating scope co
 
 The next block is Sprint 141-150: Local Service Runtime Foundation.
 
+## v0.141.0 Genesis — Local Service Runtime Foundation
+
+Status: completed
+
+AURA now includes the Local Service Runtime Foundation.
+
+This foundation prepares safe-idle ATLAS local service identity, localhost-only service boundary, service lifecycle state, configuration contract, health/status surface, permission gate link, audit link, service control command boundary, and no-start activation review.
+
+No service process is started, no socket is opened, no port is bound, no API/web/dashboard/health endpoint is started, no systemd unit is created or enabled, no permission/audit/file/command/tool/action/ORION/git runtime is activated, and runtime execution features remain 0.
+
+Next planned sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary.
+
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.140.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.141.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 

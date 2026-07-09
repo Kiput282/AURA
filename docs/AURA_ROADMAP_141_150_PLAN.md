@@ -1,7 +1,7 @@
 # AURA Roadmap 141-150 — Local Service Runtime Foundation
 
-Status: planned
-Version seed: v0.140.0-genesis
+Status: active
+Version seed: v0.141.0-genesis
 Owner: Kiput
 Motto: Grow Together
 
@@ -22,7 +22,11 @@ This block should transition AURA from planning-only foundations toward a contro
 
 ### Sprint 141.0 — Local Service Runtime Foundation
 
-Plan the first safe-idle local service foundation.
+Status: completed
+
+Adds the planner-only, metadata-only, and foundation-only Local Service Runtime Foundation for safe-idle ATLAS service identity, localhost-only boundary, lifecycle state, configuration contract, health surface, permission gate link, audit link, control command boundary, and no-start activation review.
+
+No service is started, no port is bound, no socket is opened, no systemd unit is created, and runtime execution features remain 0.
 
 ### Sprint 142.0 — Local Service Safe Idle Boot Boundary
 

@@ -125,6 +125,7 @@ from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review
 from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gate_review_foundation_manager import AuraPermissionRuntimeGrantGateReviewFoundationManager
 from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
 from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
+from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
 
 
 class AuraShell:
@@ -1075,6 +1076,18 @@ class AuraShell:
         print("  next-block-readiness-review-plan <target> Prepare next block readiness review plan")
         print("  no-runtime-activation-review-plan <target> Prepare no runtime activation review plan")
         print("  review-stabilization-131-140-context Show Review Stabilization 131-140 context")
+        print("  local-service-runtime-foundation-status Show Local Service Runtime Foundation status")
+        print("  service-foundation-scope-plan <target> Prepare service foundation scope plan")
+        print("  service-safe-idle-entry-plan <target> Prepare service safe-idle entry plan")
+        print("  localhost-binding-boundary-plan <target> Prepare localhost binding boundary plan")
+        print("  service-lifecycle-state-plan <target> Prepare service lifecycle state plan")
+        print("  service-config-contract-plan <target> Prepare service config contract plan")
+        print("  service-health-surface-plan <target> Prepare service health surface plan")
+        print("  service-permission-gate-link-plan <target> Prepare service permission gate link plan")
+        print("  service-audit-link-plan <target> Prepare service audit link plan")
+        print("  service-control-command-boundary-plan <target> Prepare service control command boundary plan")
+        print("  service-no-start-activation-plan <target> Prepare service no-start activation plan")
+        print("  local-service-runtime-foundation-context Show Local Service Runtime Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5065,6 +5078,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 141.0 local service runtime foundation shell helpers.
+    def print_local_service_runtime_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Runtime Foundation Safety Boundary"))
+
+    def handle_local_service_runtime_foundation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA local service runtime foundation"
+        manager = AuraLocalServiceRuntimeFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-runtime-foundation-status":
+            self.print_local_service_runtime_foundation_packet("AURA Local Service Runtime Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-runtime-foundation-context":
+            self.print_local_service_runtime_foundation_packet("AURA Local Service Runtime Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-foundation-scope-plan": ("AURA Service Foundation Scope Plan", manager.service_foundation_scope_plan),
+            "service-safe-idle-entry-plan": ("AURA Service Safe Idle Entry Plan", manager.service_safe_idle_entry_plan),
+            "localhost-binding-boundary-plan": ("AURA Localhost Binding Boundary Plan", manager.localhost_binding_boundary_plan),
+            "service-lifecycle-state-plan": ("AURA Service Lifecycle State Plan", manager.service_lifecycle_state_plan),
+            "service-config-contract-plan": ("AURA Service Config Contract Plan", manager.service_config_contract_plan),
+            "service-health-surface-plan": ("AURA Service Health Surface Plan", manager.service_health_surface_plan),
+            "service-permission-gate-link-plan": ("AURA Service Permission Gate Link Plan", manager.service_permission_gate_link_plan),
+            "service-audit-link-plan": ("AURA Service Audit Link Plan", manager.service_audit_link_plan),
+            "service-control-command-boundary-plan": ("AURA Service Control Command Boundary Plan", manager.service_control_command_boundary_plan),
+            "service-no-start-activation-plan": ("AURA Service No-Start Activation Plan", manager.service_no_start_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_runtime_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 140.0 review stabilization 131-140 shell helpers.
     def print_review_stabilization_131_140_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7608,6 +7664,9 @@ class AuraShell:
             return
 
         if self.handle_review_stabilization_131_140_shell_command(normalized):
+            return
+
+        if self.handle_local_service_runtime_foundation_shell_command(normalized):
             return
 
         if normalized == "help":

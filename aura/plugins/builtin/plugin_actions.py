@@ -2899,6 +2899,26 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+
+    # Sprint 141.0 local service runtime foundation actions.
+    local_service_runtime_foundation_actions = [
+        ('local_service_runtime_foundation.status', 'read_project', 'Show Local Service Runtime Foundation status.'),
+        ('local_service_runtime_foundation.service_foundation_scope_plan', 'read_project', 'Prepare service foundation scope plan.'),
+        ('local_service_runtime_foundation.service_safe_idle_entry_plan', 'read_project', 'Prepare service safe-idle entry plan.'),
+        ('local_service_runtime_foundation.localhost_binding_boundary_plan', 'read_project', 'Prepare localhost binding boundary plan.'),
+        ('local_service_runtime_foundation.service_lifecycle_state_plan', 'read_project', 'Prepare service lifecycle state plan.'),
+        ('local_service_runtime_foundation.service_config_contract_plan', 'read_project', 'Prepare service config contract plan.'),
+        ('local_service_runtime_foundation.service_health_surface_plan', 'read_project', 'Prepare service health surface plan.'),
+        ('local_service_runtime_foundation.service_permission_gate_link_plan', 'read_project', 'Prepare service permission gate link plan.'),
+        ('local_service_runtime_foundation.service_audit_link_plan', 'read_project', 'Prepare service audit link plan.'),
+        ('local_service_runtime_foundation.service_control_command_boundary_plan', 'read_project', 'Prepare service control command boundary plan.'),
+        ('local_service_runtime_foundation.service_no_start_activation_plan', 'read_project', 'Prepare service no-start activation plan.'),
+        ('local_service_runtime_foundation.context', 'read_project', 'Show Local Service Runtime Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in local_service_runtime_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_service_runtime_foundation", description=description, permission_action=permission_action, status="online", skill="aura_local_service_runtime_foundation"))
+
     # Sprint 140.0 review stabilization 131-140 foundation actions.
     review_stabilization_131_140_actions = [
         ('review_stabilization_131_140.status', 'read_project', 'Show Review Stabilization 131-140 status.'),

@@ -1435,6 +1435,32 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+
+    # Sprint 141.0 local service runtime foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_service_runtime_foundation",
+            description="Prepare planner-only, metadata-only, and foundation-only ATLAS Local Service Runtime Foundation for safe-idle service identity, localhost-only boundary, lifecycle state, configuration contract, health surface, permission gate link, audit link, control command boundary, and no-start activation review without starting services, opening sockets, binding ports, creating systemd units, dispatching actions, executing tools/commands, using file/memory/model/permission/audit/ORION/git runtime, or enabling runtime execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_service_runtime_foundation_status",
+                "service_foundation_scope_plan",
+                "service_safe_idle_entry_plan",
+                "localhost_binding_boundary_plan",
+                "service_lifecycle_state_plan",
+                "service_config_contract_plan",
+                "service_health_surface_plan",
+                "service_permission_gate_link_plan",
+                "service_audit_link_plan",
+                "service_control_command_boundary_plan",
+                "service_no_start_activation_plan",
+                "local_service_runtime_foundation_context",
+            ],
+        )
+    )
+
     # Sprint 140.0 review stabilization 131-140 foundation skill.
     registry.register(
         AuraSkill(
