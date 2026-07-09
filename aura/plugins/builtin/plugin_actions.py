@@ -2911,6 +2911,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    control_center_plugin_panel_foundation_actions = [
+        ('control_center_plugin_panel_foundation.status', 'read_project', 'Show Control Center Plugin Panel Foundation status.'),
+        ('control_center_plugin_panel_foundation.plugin_panel_layout_contract_plan', 'read_project', 'Prepare plugin panel layout contract plan.'),
+        ('control_center_plugin_panel_foundation.plugin_registry_summary_contract_plan', 'read_project', 'Prepare plugin registry summary contract plan.'),
+        ('control_center_plugin_panel_foundation.plugin_action_status_semantics_plan', 'read_project', 'Prepare plugin action status semantics plan.'),
+        ('control_center_plugin_panel_foundation.plugin_permission_boundary_visibility_plan', 'read_project', 'Prepare plugin permission boundary visibility plan.'),
+        ('control_center_plugin_panel_foundation.plugin_filter_grouping_plan', 'read_project', 'Prepare plugin filter grouping plan.'),
+        ('control_center_plugin_panel_foundation.plugin_panel_error_boundary_plan', 'read_project', 'Prepare plugin panel error boundary plan.'),
+        ('control_center_plugin_panel_foundation.plugin_panel_accessibility_contract_plan', 'read_project', 'Prepare plugin panel accessibility contract plan.'),
+        ('control_center_plugin_panel_foundation.plugin_panel_security_review_plan', 'read_project', 'Prepare plugin panel security review plan.'),
+        ('control_center_plugin_panel_foundation.plugin_panel_next_service_monitor_readiness_plan', 'read_project', 'Prepare next service-monitor readiness plan.'),
+        ('control_center_plugin_panel_foundation.no_control_center_plugin_panel_runtime_activation_plan', 'read_project', 'Prepare no plugin panel runtime activation plan.'),
+        ('control_center_plugin_panel_foundation.context', 'read_project', 'Show Control Center Plugin Panel Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_plugin_panel_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_plugin_panel_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_plugin_panel_foundation"))
+
     control_center_capability_viewer_foundation_actions = [
         ('control_center_capability_viewer_foundation.status', 'read_project', 'Show Control Center Capability Viewer Foundation status.'),
         ('control_center_capability_viewer_foundation.capability_viewer_layout_contract_plan', 'read_project', 'Prepare capability viewer layout contract plan.'),

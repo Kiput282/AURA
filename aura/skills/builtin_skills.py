@@ -1452,6 +1452,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_control_center_plugin_panel_foundation",
+            description="Prepare planner-only and metadata-only Control Center plugin panel foundation plans for plugin layout, plugin registry summary, action status semantics, permission boundary visibility, filtering/grouping, error boundaries, accessibility, security review, next service-monitor readiness, and no plugin panel runtime activation without starting servers, reading live plugin runtime data, rendering panels, mounting routes, serving requests, binding ports, dispatching actions, mutating permissions, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_plugin_panel_foundation_status",
+                "plugin_panel_layout_contract_plan",
+                "plugin_registry_summary_contract_plan",
+                "plugin_action_status_semantics_plan",
+                "plugin_permission_boundary_visibility_plan",
+                "plugin_filter_grouping_plan",
+                "plugin_panel_error_boundary_plan",
+                "plugin_panel_accessibility_contract_plan",
+                "plugin_panel_security_review_plan",
+                "plugin_panel_next_service_monitor_readiness_plan",
+                "no_control_center_plugin_panel_runtime_activation_plan",
+                "control_center_plugin_panel_foundation_context",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_control_center_capability_viewer_foundation",
             description="Prepare planner-only and metadata-only Control Center capability viewer foundation plans for capability layout, registry summary contract, state indicators, filtering/grouping, runtime boundary visibility, permission/audit visibility, error boundaries, accessibility, next service-monitor readiness, and no capability viewer runtime activation without starting servers, reading live runtime data, rendering live panels, mounting routes, serving requests, binding ports, or enabling runtime execution.",
             role="dashboard",

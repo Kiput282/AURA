@@ -136,6 +136,7 @@ from aura.service_review_stabilization_141_150.aura_service_review_stabilization
 from aura.control_center_runtime_foundation.aura_control_center_runtime_foundation_manager import AuraControlCenterRuntimeFoundationManager
 from aura.control_center_read_only_status_panel_foundation.aura_control_center_read_only_status_panel_foundation_manager import AuraControlCenterReadOnlyStatusPanelFoundationManager
 from aura.control_center_capability_viewer_foundation.aura_control_center_capability_viewer_foundation_manager import AuraControlCenterCapabilityViewerFoundationManager
+from aura.control_center_plugin_panel_foundation.aura_control_center_plugin_panel_foundation_manager import AuraControlCenterPluginPanelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4298,6 +4299,49 @@ class AuraCLI:
 
 
 
+
+    # Sprint 154.0 control center plugin panel foundation CLI helpers.
+    def print_control_center_plugin_panel_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Plugin Panel Foundation Safety Boundary"))
+
+    def handle_control_center_plugin_panel_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center plugin panel foundation"
+        manager = AuraControlCenterPluginPanelFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-plugin-panel-foundation-status":
+            self.print_control_center_plugin_panel_foundation_packet("AURA Control Center Plugin Panel Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-plugin-panel-foundation-context":
+            self.print_control_center_plugin_panel_foundation_packet("AURA Control Center Plugin Panel Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "plugin-panel-layout-contract-plan": ("AURA Plugin Panel Layout Contract Plan", manager.plugin_panel_layout_contract_plan),
+            "plugin-registry-summary-contract-plan": ("AURA Plugin Registry Summary Contract Plan", manager.plugin_registry_summary_contract_plan),
+            "plugin-action-status-semantics-plan": ("AURA Plugin Action Status Semantics Plan", manager.plugin_action_status_semantics_plan),
+            "plugin-permission-boundary-visibility-plan": ("AURA Plugin Permission Boundary Visibility Plan", manager.plugin_permission_boundary_visibility_plan),
+            "plugin-filter-grouping-plan": ("AURA Plugin Filter Grouping Plan", manager.plugin_filter_grouping_plan),
+            "plugin-panel-error-boundary-plan": ("AURA Plugin Panel Error Boundary Plan", manager.plugin_panel_error_boundary_plan),
+            "plugin-panel-accessibility-contract-plan": ("AURA Plugin Panel Accessibility Contract Plan", manager.plugin_panel_accessibility_contract_plan),
+            "plugin-panel-security-review-plan": ("AURA Plugin Panel Security Review Plan", manager.plugin_panel_security_review_plan),
+            "plugin-panel-next-service-monitor-readiness-plan": ("AURA Plugin Panel Next Service Monitor Readiness Plan", manager.plugin_panel_next_service_monitor_readiness_plan),
+            "no-control-center-plugin-panel-runtime-activation-plan": ("AURA No Control Center Plugin Panel Runtime Activation Plan", manager.no_control_center_plugin_panel_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_plugin_panel_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 153.0 control center capability viewer foundation CLI helpers.
     def print_control_center_capability_viewer_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7322,6 +7366,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_plugin_panel_foundation_cli_command(raw_args):
             return True
 
         if self.handle_control_center_capability_viewer_foundation_cli_command(raw_args):
