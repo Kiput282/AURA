@@ -128,6 +128,7 @@ from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boo
 from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
 from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
 from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_runtime_boundary_manager import AuraServicePermissionGateRuntimeBoundaryManager
+from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manager import AuraServiceAuditLinkFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4276,6 +4277,49 @@ class AuraCLI:
 
 
 
+    # Sprint 146.0 service audit link foundation CLI helpers.
+    def print_service_audit_link_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Audit Link Foundation Safety Boundary"))
+
+    def handle_service_audit_link_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA service audit link foundation"
+        manager = AuraServiceAuditLinkFoundationManager(project_root=self.project_root)
+
+        if command == "service-audit-link-foundation-status":
+            self.print_service_audit_link_foundation_packet("AURA Service Audit Link Foundation Status", manager.status())
+            return True
+
+        if command == "service-audit-link-foundation-context":
+            self.print_service_audit_link_foundation_packet("AURA Service Audit Link Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-audit-event-reference-plan": ("AURA Service Audit Event Reference Plan", manager.service_audit_event_reference_plan),
+            "service-audit-link-contract-plan": ("AURA Service Audit Link Contract Plan", manager.service_audit_link_contract_plan),
+            "service-audit-traceability-chain-plan": ("AURA Service Audit Traceability Chain Plan", manager.service_audit_traceability_chain_plan),
+            "service-audit-permission-link-plan": ("AURA Service Audit Permission Link Plan", manager.service_audit_permission_link_plan),
+            "service-audit-control-center-surface-plan": ("AURA Service Audit Control Center Surface Plan", manager.service_audit_control_center_surface_plan),
+            "service-audit-redaction-boundary-plan": ("AURA Service Audit Redaction Boundary Plan", manager.service_audit_redaction_boundary_plan),
+            "service-audit-failure-safe-idle-plan": ("AURA Service Audit Failure Safe Idle Plan", manager.service_audit_failure_safe_idle_plan),
+            "service-audit-retention-boundary-plan": ("AURA Service Audit Retention Boundary Plan", manager.service_audit_retention_boundary_plan),
+            "service-audit-error-boundary-plan": ("AURA Service Audit Error Boundary Plan", manager.service_audit_error_boundary_plan),
+            "no-audit-link-runtime-activation-plan": ("AURA No Audit Link Runtime Activation Plan", manager.no_audit_link_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_service_audit_link_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
+
     # Sprint 145.0 service permission gate runtime boundary CLI helpers.
     def print_service_permission_gate_runtime_boundary_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6942,6 +6986,9 @@ class AuraCLI:
             return True
 
         if self.handle_service_permission_gate_runtime_boundary_cli_command(raw_args):
+            return True
+
+        if self.handle_service_audit_link_foundation_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

@@ -1438,6 +1438,33 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+    # Sprint 146.0 service audit link foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_service_audit_link_foundation",
+            description="Prepare planner-only, metadata-only, and foundation-only ATLAS Service Audit Link Foundation for future service audit event references, audit link contracts, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no audit link runtime activation review without creating audit link records, writing audit events, appending audit logs, executing redaction runtime, writing trace chains, starting services, binding ports, executing tools/commands, using file/memory/model/permission/audit/ORION/git runtime, or enabling runtime execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "service_audit_link_foundation_status",
+                "service_audit_event_reference_plan",
+                "service_audit_link_contract_plan",
+                "service_audit_traceability_chain_plan",
+                "service_audit_permission_link_plan",
+                "service_audit_control_center_surface_plan",
+                "service_audit_redaction_boundary_plan",
+                "service_audit_failure_safe_idle_plan",
+                "service_audit_retention_boundary_plan",
+                "service_audit_error_boundary_plan",
+                "no_audit_link_runtime_activation_plan",
+                "service_audit_link_foundation_context",
+            ],
+        )
+    )
+
+
+
     # Sprint 145.0 service permission gate runtime boundary skill.
     registry.register(
         AuraSkill(

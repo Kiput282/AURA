@@ -1,7 +1,7 @@
 # AURA Roadmap 141-150 — Local Service Runtime Foundation
 
 Status: active
-Version seed: v0.145.0-genesis
+Version seed: v0.146.0-genesis
 Owner: Kiput
 Motto: Grow Together
 
@@ -54,11 +54,19 @@ No config file runtime is read or written, no port registry file is written, no 
 
 ### Sprint 145.0 — Service Permission Gate Runtime Boundary
 
-Plan permission-gated service operation boundaries.
+Status: completed
+
+Adds the planner-only, metadata-only, and foundation-only Service Permission Gate Runtime Boundary for future service permission scopes, request contracts, grant preflight, denial safe-idle behavior, Control Center permission visibility, audit linkage, grant expiry review, error boundary, manual approval boundary, and no-permission-runtime-activation review.
+
+No permission request is created, no grant is applied, no permission mutation occurs, no audit event is written, no service is started, no port is bound, and runtime execution features remain 0.
 
 ### Sprint 146.0 — Service Audit Link Foundation
 
-Plan audit linkage for service lifecycle and service-visible actions.
+Status: completed
+
+Adds the planner-only, metadata-only, and foundation-only Service Audit Link Foundation for future service audit event references, audit link contracts, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no-audit-link-runtime-activation review.
+
+No audit link record is created, no audit event reference is created, no audit event is written, no audit log is appended, no redaction runtime is executed, no trace chain is written, no service is started, no port is bound, and runtime execution features remain 0.
 
 ### Sprint 147.0 — Service Control Command Review Foundation
 
@@ -120,7 +128,7 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 146.0 — Service Audit Link Foundation.
+Next planned sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation.
 
 
 ## Sprint 144.0 completion note
@@ -147,9 +155,45 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 146.0 — Service Audit Link Foundation.
+Next planned sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary.
 
 
 ## Sprint 145.0 completion note
 
 Sprint 145 adds the Service Permission Gate Runtime Boundary. It prepares service permission scope catalog, permission request contract, grant preflight, denial safe-idle behavior, Control Center permission surface, audit linkage, grant expiry review, error boundary, manual approval boundary, and no-permission-runtime-activation review while keeping runtime permission requests, grants, mutations, audit writes, service starts, port binds, HTTP listeners, command/tool execution, and runtime execution features at 0.
+
+Runtime remains disabled by design:
+
+- no permission request creation
+- no permission grant application
+- no permission mutation
+- no permission store read/write
+- no audit event write
+- no service start
+- no port bind
+- no action/tool/command/file/memory/model/ORION/git runtime
+- no runtime execution features
+
+Next planned sprint: Sprint 146.0 — Service Audit Link Foundation.
+
+
+## Sprint 146.0 completion note
+
+Sprint 146 adds the Service Audit Link Foundation. It prepares service audit event reference plans, audit link contracts, traceability chain metadata, permission/audit pairing, Control Center audit surfaces, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no-audit-link-runtime-activation review while keeping runtime audit link records, audit event references, audit events, audit logs, redactions, trace chains, permission/audit writes, service starts, port binds, command/tool execution, and runtime execution features at 0.
+
+Runtime remains disabled by design:
+
+- no audit link record creation/read/write/modify/delete
+- no audit event reference creation
+- no audit event write
+- no audit log append
+- no runtime redaction execution
+- no trace chain write
+- no permission/audit link write
+- no service start
+- no port bind
+- no HTTP listener start
+- no action/tool/command/file/memory/model/ORION/git runtime
+- no runtime execution features
+
+Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.

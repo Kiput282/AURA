@@ -2902,6 +2902,27 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    # Sprint 146.0 service audit link foundation actions.
+    service_audit_link_foundation_actions = [
+        ('service_audit_link_foundation.status', 'read_project', 'Show Service Audit Link Foundation status.'),
+        ('service_audit_link_foundation.service_audit_event_reference_plan', 'read_project', 'Prepare service audit event reference plan.'),
+        ('service_audit_link_foundation.service_audit_link_contract_plan', 'read_project', 'Prepare service audit link contract plan.'),
+        ('service_audit_link_foundation.service_audit_traceability_chain_plan', 'read_project', 'Prepare service audit traceability chain plan.'),
+        ('service_audit_link_foundation.service_audit_permission_link_plan', 'read_project', 'Prepare service audit permission link plan.'),
+        ('service_audit_link_foundation.service_audit_control_center_surface_plan', 'read_project', 'Prepare service audit Control Center surface plan.'),
+        ('service_audit_link_foundation.service_audit_redaction_boundary_plan', 'read_project', 'Prepare service audit redaction boundary plan.'),
+        ('service_audit_link_foundation.service_audit_failure_safe_idle_plan', 'read_project', 'Prepare service audit failure safe-idle plan.'),
+        ('service_audit_link_foundation.service_audit_retention_boundary_plan', 'read_project', 'Prepare service audit retention boundary plan.'),
+        ('service_audit_link_foundation.service_audit_error_boundary_plan', 'read_project', 'Prepare service audit error boundary plan.'),
+        ('service_audit_link_foundation.no_audit_link_runtime_activation_plan', 'read_project', 'Prepare no audit link runtime activation plan.'),
+        ('service_audit_link_foundation.context', 'read_project', 'Show Service Audit Link Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in service_audit_link_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="service_audit_link_foundation", description=description, permission_action=permission_action, status="online", skill="aura_service_audit_link_foundation"))
+
+
+
     # Sprint 145.0 service permission gate runtime boundary actions.
     service_permission_gate_runtime_boundary_actions = [
         ('service_permission_gate_runtime_boundary.status', 'read_project', 'Show Service Permission Gate Runtime Boundary status.'),

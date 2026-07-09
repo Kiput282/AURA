@@ -130,6 +130,7 @@ from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boo
 from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
 from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
 from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_runtime_boundary_manager import AuraServicePermissionGateRuntimeBoundaryManager
+from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manager import AuraServiceAuditLinkFoundationManager
 
 
 class AuraShell:
@@ -1140,6 +1141,18 @@ class AuraShell:
         print("  service-permission-manual-approval-boundary-plan <target> Prepare service permission manual approval boundary plan")
         print("  no-permission-runtime-activation-plan <target> Prepare no permission runtime activation plan")
         print("  service-permission-gate-runtime-boundary-context Show Service Permission Gate Runtime Boundary context")
+        print("  service-audit-link-foundation-status Show Service Audit Link Foundation status")
+        print("  service-audit-event-reference-plan <target> Prepare service audit event reference plan")
+        print("  service-audit-link-contract-plan <target> Prepare service audit link contract plan")
+        print("  service-audit-traceability-chain-plan <target> Prepare service audit traceability chain plan")
+        print("  service-audit-permission-link-plan <target> Prepare service audit permission link plan")
+        print("  service-audit-control-center-surface-plan <target> Prepare service audit Control Center surface plan")
+        print("  service-audit-redaction-boundary-plan <target> Prepare service audit redaction boundary plan")
+        print("  service-audit-failure-safe-idle-plan <target> Prepare service audit failure safe-idle plan")
+        print("  service-audit-retention-boundary-plan <target> Prepare service audit retention boundary plan")
+        print("  service-audit-error-boundary-plan <target> Prepare service audit error boundary plan")
+        print("  no-audit-link-runtime-activation-plan <target> Prepare no audit link runtime activation plan")
+        print("  service-audit-link-foundation-context Show Service Audit Link Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5180,6 +5193,50 @@ class AuraShell:
 
 
 
+    # Sprint 146.0 service audit link foundation shell helpers.
+    def print_service_audit_link_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Audit Link Foundation Safety Boundary"))
+
+    def handle_service_audit_link_foundation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA service audit link foundation"
+        manager = AuraServiceAuditLinkFoundationManager(project_root=self.project_root)
+
+        if command == "service-audit-link-foundation-status":
+            self.print_service_audit_link_foundation_packet("AURA Service Audit Link Foundation Status", manager.status())
+            return True
+
+        if command == "service-audit-link-foundation-context":
+            self.print_service_audit_link_foundation_packet("AURA Service Audit Link Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-audit-event-reference-plan": ("AURA Service Audit Event Reference Plan", manager.service_audit_event_reference_plan),
+            "service-audit-link-contract-plan": ("AURA Service Audit Link Contract Plan", manager.service_audit_link_contract_plan),
+            "service-audit-traceability-chain-plan": ("AURA Service Audit Traceability Chain Plan", manager.service_audit_traceability_chain_plan),
+            "service-audit-permission-link-plan": ("AURA Service Audit Permission Link Plan", manager.service_audit_permission_link_plan),
+            "service-audit-control-center-surface-plan": ("AURA Service Audit Control Center Surface Plan", manager.service_audit_control_center_surface_plan),
+            "service-audit-redaction-boundary-plan": ("AURA Service Audit Redaction Boundary Plan", manager.service_audit_redaction_boundary_plan),
+            "service-audit-failure-safe-idle-plan": ("AURA Service Audit Failure Safe Idle Plan", manager.service_audit_failure_safe_idle_plan),
+            "service-audit-retention-boundary-plan": ("AURA Service Audit Retention Boundary Plan", manager.service_audit_retention_boundary_plan),
+            "service-audit-error-boundary-plan": ("AURA Service Audit Error Boundary Plan", manager.service_audit_error_boundary_plan),
+            "no-audit-link-runtime-activation-plan": ("AURA No Audit Link Runtime Activation Plan", manager.no_audit_link_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_service_audit_link_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
+
     # Sprint 145.0 service permission gate runtime boundary shell helpers.
     def print_service_permission_gate_runtime_boundary_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7903,6 +7960,9 @@ class AuraShell:
             return
 
         if self.handle_service_permission_gate_runtime_boundary_shell_command(normalized):
+            return
+
+        if self.handle_service_audit_link_foundation_shell_command(normalized):
             return
 
         if normalized == "help":

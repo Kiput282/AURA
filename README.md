@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.145.0-genesis  
+Current version: v0.146.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -35,21 +35,21 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 145.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
+AURA has completed Sprint 146.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
 
 Latest completed checkpoint:
 
-- v0.145.0-genesis
-- Sprint 144: Service Configuration and Port Registry Foundation
+- v0.146.0-genesis
+- Sprint 146: Service Audit Link Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: active
-- Next planned sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary
+- Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation
 
 Current capability registry summary:
 
-- total capabilities: 74
-- online capabilities: 72
+- total capabilities: 77
+- online capabilities: 75
 - foundation-only capabilities: 60
 - planner-only capabilities: 7
 - permission-gated capabilities: 2
@@ -336,7 +336,7 @@ Active block:
 - Sprint 142: Local Service Safe Idle Boot Boundary completed
 - Sprint 143: Local Service Health Endpoint Foundation completed
 - Sprint 144: Service Configuration and Port Registry Foundation completed
-- Next: Sprint 145 Service Permission Gate Runtime Boundary
+- Next: Sprint 147 Service Control Command Review Foundation
 
 ---
 
@@ -1211,9 +1211,9 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.145.0-genesis
-- Current completed sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary
-- Next planned sprint: Sprint 146.0 — Service Audit Link Foundation
+- Version: v0.146.0-genesis
+- Current completed sprint: Sprint 146.0 — Service Audit Link Foundation
+- Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1264,7 +1264,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.145.0-genesis, AURA can:
+At v0.146.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1278,10 +1278,12 @@ At v0.145.0-genesis, AURA can:
 - define future local service safe-idle boot boundary plans
 - define future local service health endpoint foundation plans
 - define future service configuration and port registry foundation plans
+- define future service permission gate runtime boundary plans
+- define future service audit link foundation plans
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.145.0-genesis, AURA cannot yet:
+At v0.146.0-genesis, AURA cannot yet:
 
 - start active local service runtime
 - serve a real web Control Center
@@ -1419,7 +1421,7 @@ Next planned sprint:
 ## Sprint 144.0 — Service Configuration and Port Registry Foundation
 
 Status: completed  
-Version: v0.145.0-genesis
+Version: v0.144.0-genesis
 
 Sprint 144 defines the future service configuration and port registry foundation for AURA's ATLAS service path.
 
@@ -1464,8 +1466,53 @@ Next planned sprint:
 
 ## Sprint 145.0 — Service Permission Gate Runtime Boundary
 
+Status: completed  
+Version: v0.145.0-genesis
+
 Sprint 145 defines the Service Permission Gate Runtime Boundary for AURA's future ATLAS service path.
 
 This checkpoint adds planner-only and metadata-only contracts for service permission scopes, grant preflight, denial behavior, safe-idle fallback, Control Center permission visibility, audit linkage, grant expiry awareness, and no-permission-runtime-activation review. It does not create permission requests, grant permissions, mutate permissions, start services, bind ports, write audit logs, execute tools or commands, or enable runtime execution features.
 
 Sprint 145 keeps AURA safe by default: service runtime remains disabled, permission runtime remains disabled, and any future service activation must pass explicit review, permission, audit, localhost-only, and safe-idle boundaries.
+
+
+## Sprint 146.0 — Service Audit Link Foundation
+
+Status: completed  
+Version: v0.146.0-genesis
+
+Sprint 146 defines the Service Audit Link Foundation for AURA's future ATLAS service path.
+
+This checkpoint adds planner-only and metadata-only contracts for service audit event references, audit link records, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error handling, and no-audit-link-runtime-activation review.
+
+Counts:
+
+- 12 plan types
+- 100 total service audit link blueprint/items
+- 0 runtime audit link records created/read/written/modified/deleted
+- 0 runtime audit event references created
+- 0 runtime audit events written
+- 0 runtime audit logs appended
+- 0 runtime audit redactions executed
+- 0 runtime audit trace chains written
+- 0 runtime permission audit links written
+- 0 runtime services started
+- 0 runtime ports bound
+- 0 runtime execution features
+
+Safety result:
+
+- audit link foundation remains metadata-only
+- audit writer runtime remains disabled
+- audit event runtime remains disabled
+- audit log runtime remains disabled
+- permission/audit link writes remain disabled
+- service start remains disabled
+- socket and port binding remain disabled
+- public network exposure remains disabled
+- release gate closed
+- future runtime still requires manual approval
+
+Next planned sprint:
+
+- Sprint 147.0 — Service Control Command Review Foundation

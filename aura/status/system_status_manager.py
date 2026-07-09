@@ -117,6 +117,7 @@ from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boo
 from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
 from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
 from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_runtime_boundary_manager import AuraServicePermissionGateRuntimeBoundaryManager
+from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manager import AuraServiceAuditLinkFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -296,9 +297,21 @@ class SystemStatusManager:
         local_service_health_endpoint_foundation_status = AuraLocalServiceHealthEndpointFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_service_configuration_port_registry_foundation_status = AuraLocalServiceConfigurationPortRegistryFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         service_permission_gate_runtime_boundary_status = AuraServicePermissionGateRuntimeBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        service_audit_link_foundation_status = AuraServiceAuditLinkFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
+            "service_audit_link_foundation_ready": service_audit_link_foundation_status["service_audit_link_foundation_ready"],
+            "service_audit_link_foundation_data_ready": service_audit_link_foundation_status["service_audit_link_foundation_data_ready"],
+            "service_audit_link_foundation_plan_type_count": service_audit_link_foundation_status["plan_type_count"],
+            "service_audit_link_foundation_total_blueprint_count": service_audit_link_foundation_status["total_service_audit_link_foundation_blueprint_count"],
+            "service_audit_link_foundation_audit_runtime_disabled": service_audit_link_foundation_status["audit_runtime_disabled"],
+            "service_audit_link_foundation_audit_link_runtime_disabled": service_audit_link_foundation_status["audit_link_runtime_disabled"],
+            "service_audit_link_foundation_safe_idle_default": service_audit_link_foundation_status["safe_idle_default"],
+            "service_audit_link_foundation_runtime_audit_link_records_created": service_audit_link_foundation_status["runtime_audit_link_records_created"],
+            "service_audit_link_foundation_runtime_audit_events_written": service_audit_link_foundation_status["runtime_audit_events_written"],
+            "service_audit_link_foundation_runtime_audit_logs_appended": service_audit_link_foundation_status["runtime_audit_logs_appended"],
+            "service_audit_link_foundation_runtime_execution_features": service_audit_link_foundation_status["runtime_execution_features"],
             "service_permission_gate_runtime_boundary_ready": service_permission_gate_runtime_boundary_status["service_permission_gate_runtime_boundary_ready"],
             "service_permission_gate_runtime_boundary_data_ready": service_permission_gate_runtime_boundary_status["service_permission_gate_runtime_boundary_data_ready"],
             "service_permission_gate_runtime_boundary_plan_type_count": service_permission_gate_runtime_boundary_status["plan_type_count"],

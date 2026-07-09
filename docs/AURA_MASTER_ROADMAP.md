@@ -1519,11 +1519,11 @@ This foundation prepares safe-idle ATLAS local service identity, localhost-only 
 
 No service process is started, no socket is opened, no port is bound, no API/web/dashboard/health endpoint is started, no systemd unit is created or enabled, no permission/audit/file/command/tool/action/ORION/git runtime is activated, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 146.0 — Service Audit Link Foundation.
+Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.145.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.146.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 
@@ -1588,7 +1588,7 @@ AURA now has planner-only metadata for:
 
 Runtime remains disabled by design. No service, autostart, systemd, socket, port, health endpoint, readiness probe network call, permission mutation, audit writer, action/tool/command/file/memory/model/ORION/git runtime, or runtime execution feature is enabled.
 
-Next planned sprint: Sprint 146.0 — Service Audit Link Foundation.
+Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 
 
 ## Sprint 143.0 Update
@@ -1602,4 +1602,16 @@ Status: completed
 
 Sprint 144.0 adds Service Configuration and Port Registry Foundation planning for the future ATLAS local service. It keeps service configuration and port registry behavior as metadata-only planning and does not read/write runtime config, reserve ports, open sockets, bind ports, start HTTP listeners, start services, mutate environment state, write audit events, or enable runtime execution.
 
-Next planned sprint: Sprint 146.0 — Service Audit Link Foundation.
+Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
+
+
+## Sprint 146.0 — Service Audit Link Foundation
+
+Status: completed  
+Version: v0.146.0-genesis
+
+Sprint 146 adds a planner-only, metadata-only, and foundation-only Service Audit Link Foundation for future service audit event references, audit link contracts, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no-audit-link-runtime-activation review.
+
+Runtime remains disabled by design: no audit link record creation, no audit event reference creation, no audit event write, no audit log append, no runtime redaction, no trace chain write, no permission/audit link write, no service start, no port bind, no action/tool/command execution, and 0 runtime execution features.
+
+Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
