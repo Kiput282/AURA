@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.141.0-genesis  
+Current version: v0.142.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -35,21 +35,22 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 141.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
+AURA has completed Sprint 142.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
 
 Latest completed checkpoint:
 
-- v0.141.0-genesis
-- Sprint 141: Local Service Runtime Foundation
+- v0.142.0-genesis
+- Sprint 142: Local Service Safe Idle Boot Boundary
 - Sprint 131-140 block: closed as a stabilized planning block
+- Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: active
-- Next planned sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary
+- Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
 
 Current capability registry summary:
 
-- total capabilities: 72
-- online capabilities: 70
-- foundation-only capabilities: 58
+- total capabilities: 73
+- online capabilities: 71
+- foundation-only capabilities: 59
 - planner-only capabilities: 7
 - permission-gated capabilities: 2
 - review-only capabilities: 3
@@ -290,12 +291,12 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.141.0-genesis
+    Version  : 0.142.0-genesis
     Status   : READY
 
 Check a foundation status example:
 
-    python3 main.py local-service-runtime-foundation-status
+    python3 main.py local-service-safe-idle-boot-boundary-status
 
 Check capability registry summary:
 
@@ -332,7 +333,8 @@ Active block:
 
 - Sprint 141-150 Local Service Runtime Foundation
 - Sprint 141: Local Service Runtime Foundation completed
-- Next: Sprint 142 Local Service Safe Idle Boot Boundary
+- Sprint 142: Local Service Safe Idle Boot Boundary completed
+- Next: Sprint 143 Local Service Health Endpoint Foundation
 
 ---
 
@@ -1199,7 +1201,7 @@ Safety result:
 
 Next planned sprint:
 
-- Sprint 141.0 — Local Service Runtime Foundation
+- Sprint 143.0 — Local Service Health Endpoint Foundation
 
 ## Product Direction: Genesis to Post-Genesis
 
@@ -1207,9 +1209,9 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.140.0-genesis
-- Current completed block: Sprint 131-140 Review & Stabilization
-- Next planned sprint: Sprint 141.0 — Local Service Runtime Foundation
+- Version: v0.142.0-genesis
+- Current completed sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary
+- Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1260,7 +1262,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.141.0-genesis, AURA can:
+At v0.142.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1271,10 +1273,11 @@ At v0.141.0-genesis, AURA can:
 - maintain roadmap and journal records
 - define safety boundaries
 - define future runtime plans
+- define future local service safe-idle boot boundary plans
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.141.0-genesis, AURA cannot yet:
+At v0.142.0-genesis, AURA cannot yet:
 
 - start active local service runtime
 - serve a real web Control Center
@@ -1324,4 +1327,45 @@ Safety result:
 Next planned sprint:
 
 - Sprint 142.0 — Local Service Safe Idle Boot Boundary
+
+## Sprint 142.0 — Local Service Safe Idle Boot Boundary
+
+Status: completed  
+Version: v0.142.0-genesis
+
+Sprint 142 defines the safe-idle boot boundary for AURA's future ATLAS local service.
+
+It adds a planner-only, metadata-only, and foundation-only Local Service Safe Idle Boot Boundary for boot entry states, safe-idle guard conditions, boot failure fallback, no-autostart policy, read-only readiness probes, Control Center idle visibility, permission denial idle behavior, audit failure idle behavior, and no-boot-activation review.
+
+Counts:
+
+- 12 plan types
+- 100 total local service safe-idle boot boundary blueprint/items
+- 0 runtime services started
+- 0 runtime autostarts enabled
+- 0 runtime systemd units created, enabled, or started
+- 0 runtime sockets opened
+- 0 runtime ports bound
+- 0 runtime health endpoints started
+- 0 runtime permission mutations
+- 0 runtime audit events written
+- 0 runtime actions/tools/commands/files/services/network/memory/model/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- safe-idle boot default preserved
+- boot runtime activation disabled
+- no autostart activation
+- no service start at boot
+- no silent port binding
+- readiness probe remains metadata-only
+- permission denial keeps service idle
+- audit failure keeps service idle
+- release gate closed
+- future runtime still requires manual approval
+
+Next planned sprint:
+
+- Sprint 143.0 — Local Service Health Endpoint Foundation
 

@@ -1,7 +1,7 @@
 # AURA Roadmap 141-150 — Local Service Runtime Foundation
 
 Status: active
-Version seed: v0.141.0-genesis
+Version seed: v0.142.0-genesis
 Owner: Kiput
 Motto: Grow Together
 
@@ -63,3 +63,26 @@ Plan service security and localhost-only binding verification.
 ### Sprint 150.0 — Review & Stabilization 141-150
 
 Review and stabilize the 141-150 Local Service Runtime Foundation block.
+
+
+## Sprint 142.0 completion note
+
+Sprint 142 adds the Local Service Safe Idle Boot Boundary foundation.
+
+It defines safe-idle boot scope, boot entry state contracts, safe-idle guard conditions, boot failure fallback behavior, no-autostart boundary, read-only readiness probe planning, Control Center idle visibility, permission denial idle behavior, audit failure idle behavior, and no-boot-activation review.
+
+Runtime remains disabled by design:
+
+- no service start
+- no autostart enablement
+- no systemd unit creation, enablement, or start
+- no socket open
+- no port binding
+- no health endpoint runtime
+- no readiness probe network call
+- no permission mutation
+- no audit writer runtime
+- no action/tool/command/file/memory/model/ORION/git runtime
+- no runtime execution features
+
+Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation.

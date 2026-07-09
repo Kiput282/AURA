@@ -126,6 +126,7 @@ from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gat
 from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
 from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
 from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
+from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
 
 
 class AuraShell:
@@ -1088,6 +1089,18 @@ class AuraShell:
         print("  service-control-command-boundary-plan <target> Prepare service control command boundary plan")
         print("  service-no-start-activation-plan <target> Prepare service no-start activation plan")
         print("  local-service-runtime-foundation-context Show Local Service Runtime Foundation context")
+        print("  local-service-safe-idle-boot-boundary-status Show Local Service Safe Idle Boot Boundary status")
+        print("  safe-idle-boot-scope-plan <target> Prepare safe-idle boot scope plan")
+        print("  boot-entry-state-contract-plan <target> Prepare boot entry state contract plan")
+        print("  safe-idle-guard-condition-plan <target> Prepare safe-idle guard condition plan")
+        print("  boot-failure-fallback-plan <target> Prepare boot failure fallback plan")
+        print("  service-no-autostart-boundary-plan <target> Prepare service no-autostart boundary plan")
+        print("  readiness-probe-read-only-plan <target> Prepare readiness probe read-only plan")
+        print("  control-center-idle-visibility-plan <target> Prepare Control Center idle visibility plan")
+        print("  permission-denial-idle-plan <target> Prepare permission denial idle plan")
+        print("  audit-failure-idle-plan <target> Prepare audit failure idle plan")
+        print("  no-boot-activation-plan <target> Prepare no boot activation plan")
+        print("  local-service-safe-idle-boot-boundary-context Show Local Service Safe Idle Boot Boundary context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5079,6 +5092,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 142.0 local service safe idle boot boundary shell helpers.
+    def print_local_service_safe_idle_boot_boundary_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Safe Idle Boot Boundary Safety Boundary"))
+
+    def handle_local_service_safe_idle_boot_boundary_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA local service safe idle boot boundary"
+        manager = AuraLocalServiceSafeIdleBootBoundaryManager(project_root=self.project_root)
+
+        if command == "local-service-safe-idle-boot-boundary-status":
+            self.print_local_service_safe_idle_boot_boundary_packet("AURA Local Service Safe Idle Boot Boundary Status", manager.status())
+            return True
+
+        if command == "local-service-safe-idle-boot-boundary-context":
+            self.print_local_service_safe_idle_boot_boundary_packet("AURA Local Service Safe Idle Boot Boundary Context", manager.context())
+            return True
+
+        command_map = {
+            "safe-idle-boot-scope-plan": ("AURA Safe Idle Boot Scope Plan", manager.safe_idle_boot_scope_plan),
+            "boot-entry-state-contract-plan": ("AURA Boot Entry State Contract Plan", manager.boot_entry_state_contract_plan),
+            "safe-idle-guard-condition-plan": ("AURA Safe Idle Guard Condition Plan", manager.safe_idle_guard_condition_plan),
+            "boot-failure-fallback-plan": ("AURA Boot Failure Fallback Plan", manager.boot_failure_fallback_plan),
+            "service-no-autostart-boundary-plan": ("AURA Service No-Autostart Boundary Plan", manager.service_no_autostart_boundary_plan),
+            "readiness-probe-read-only-plan": ("AURA Readiness Probe Read-Only Plan", manager.readiness_probe_read_only_plan),
+            "control-center-idle-visibility-plan": ("AURA Control Center Idle Visibility Plan", manager.control_center_idle_visibility_plan),
+            "permission-denial-idle-plan": ("AURA Permission Denial Idle Plan", manager.permission_denial_idle_plan),
+            "audit-failure-idle-plan": ("AURA Audit Failure Idle Plan", manager.audit_failure_idle_plan),
+            "no-boot-activation-plan": ("AURA No Boot Activation Plan", manager.no_boot_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_safe_idle_boot_boundary_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 141.0 local service runtime foundation shell helpers.
     def print_local_service_runtime_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7667,6 +7723,9 @@ class AuraShell:
             return
 
         if self.handle_local_service_runtime_foundation_shell_command(normalized):
+            return
+
+        if self.handle_local_service_safe_idle_boot_boundary_shell_command(normalized):
             return
 
         if normalized == "help":

@@ -2900,6 +2900,26 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
         )
 
 
+
+    # Sprint 142.0 local service safe idle boot boundary actions.
+    local_service_safe_idle_boot_boundary_actions = [
+        ('local_service_safe_idle_boot_boundary.status', 'read_project', 'Show Local Service Safe Idle Boot Boundary status.'),
+        ('local_service_safe_idle_boot_boundary.safe_idle_boot_scope_plan', 'read_project', 'Prepare safe-idle boot scope plan.'),
+        ('local_service_safe_idle_boot_boundary.boot_entry_state_contract_plan', 'read_project', 'Prepare boot entry state contract plan.'),
+        ('local_service_safe_idle_boot_boundary.safe_idle_guard_condition_plan', 'read_project', 'Prepare safe-idle guard condition plan.'),
+        ('local_service_safe_idle_boot_boundary.boot_failure_fallback_plan', 'read_project', 'Prepare boot failure fallback plan.'),
+        ('local_service_safe_idle_boot_boundary.service_no_autostart_boundary_plan', 'read_project', 'Prepare service no-autostart boundary plan.'),
+        ('local_service_safe_idle_boot_boundary.readiness_probe_read_only_plan', 'read_project', 'Prepare readiness probe read-only plan.'),
+        ('local_service_safe_idle_boot_boundary.control_center_idle_visibility_plan', 'read_project', 'Prepare Control Center idle visibility plan.'),
+        ('local_service_safe_idle_boot_boundary.permission_denial_idle_plan', 'read_project', 'Prepare permission denial idle plan.'),
+        ('local_service_safe_idle_boot_boundary.audit_failure_idle_plan', 'read_project', 'Prepare audit failure idle plan.'),
+        ('local_service_safe_idle_boot_boundary.no_boot_activation_plan', 'read_project', 'Prepare no boot activation plan.'),
+        ('local_service_safe_idle_boot_boundary.context', 'read_project', 'Show Local Service Safe Idle Boot Boundary context.'),
+    ]
+
+    for action_name, permission_action, description in local_service_safe_idle_boot_boundary_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_service_safe_idle_boot_boundary", description=description, permission_action=permission_action, status="online", skill="aura_local_service_safe_idle_boot_boundary"))
+
     # Sprint 141.0 local service runtime foundation actions.
     local_service_runtime_foundation_actions = [
         ('local_service_runtime_foundation.status', 'read_project', 'Show Local Service Runtime Foundation status.'),

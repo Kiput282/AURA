@@ -1519,11 +1519,11 @@ This foundation prepares safe-idle ATLAS local service identity, localhost-only 
 
 No service process is started, no socket is opened, no port is bound, no API/web/dashboard/health endpoint is started, no systemd unit is created or enabled, no permission/audit/file/command/tool/action/ORION/git runtime is activated, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary.
+Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation.
 
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.141.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.142.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 
@@ -1567,3 +1567,25 @@ Canonical planning docs:
 
 - docs/AURA_GENESIS_TO_POST_GENESIS_PRODUCT_PLAN.md
 - docs/AURA_GAME_COMPANION_SAFETY_POLICY.md
+
+
+## v0.142.0 Genesis — Local Service Safe Idle Boot Boundary
+
+Sprint 142 completes the Local Service Safe Idle Boot Boundary foundation.
+
+AURA now has planner-only metadata for:
+
+- safe-idle boot scope
+- boot entry state contracts
+- safe-idle guard conditions
+- boot failure fallback
+- service no-autostart boundary
+- read-only readiness probe planning
+- Control Center idle visibility
+- permission denial idle behavior
+- audit failure idle behavior
+- no-boot-activation review
+
+Runtime remains disabled by design. No service, autostart, systemd, socket, port, health endpoint, readiness probe network call, permission mutation, audit writer, action/tool/command/file/memory/model/ORION/git runtime, or runtime execution feature is enabled.
+
+Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation.

@@ -1436,6 +1436,32 @@ def build_builtin_skill_registry() -> SkillRegistry:
     )
 
 
+
+    # Sprint 142.0 local service safe idle boot boundary skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_service_safe_idle_boot_boundary",
+            description="Prepare planner-only, metadata-only, and foundation-only ATLAS Local Service Safe Idle Boot Boundary for safe-idle boot scope, boot entry states, guard conditions, boot failure fallback, no-autostart boundary, read-only readiness probes, Control Center idle visibility, permission denial idle behavior, audit failure idle behavior, and no-boot-activation review without starting services, autostarting, opening sockets, binding ports, creating or starting systemd units, dispatching actions, executing tools/commands, using file/memory/model/permission/audit/ORION/git runtime, or enabling runtime execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_service_safe_idle_boot_boundary_status",
+                "safe_idle_boot_scope_plan",
+                "boot_entry_state_contract_plan",
+                "safe_idle_guard_condition_plan",
+                "boot_failure_fallback_plan",
+                "service_no_autostart_boundary_plan",
+                "readiness_probe_read_only_plan",
+                "control_center_idle_visibility_plan",
+                "permission_denial_idle_plan",
+                "audit_failure_idle_plan",
+                "no_boot_activation_plan",
+                "local_service_safe_idle_boot_boundary_context",
+            ],
+        )
+    )
+
     # Sprint 141.0 local service runtime foundation skill.
     registry.register(
         AuraSkill(

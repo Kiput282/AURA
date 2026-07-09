@@ -124,6 +124,7 @@ from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gat
 from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
 from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
 from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
+from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4224,6 +4225,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 142.0 local service safe idle boot boundary CLI helpers.
+    def print_local_service_safe_idle_boot_boundary_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Safe Idle Boot Boundary Safety Boundary"))
+
+    def handle_local_service_safe_idle_boot_boundary_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local service safe idle boot boundary"
+        manager = AuraLocalServiceSafeIdleBootBoundaryManager(project_root=self.project_root)
+
+        if command == "local-service-safe-idle-boot-boundary-status":
+            self.print_local_service_safe_idle_boot_boundary_packet("AURA Local Service Safe Idle Boot Boundary Status", manager.status())
+            return True
+
+        if command == "local-service-safe-idle-boot-boundary-context":
+            self.print_local_service_safe_idle_boot_boundary_packet("AURA Local Service Safe Idle Boot Boundary Context", manager.context())
+            return True
+
+        command_map = {
+            "safe-idle-boot-scope-plan": ("AURA Safe Idle Boot Scope Plan", manager.safe_idle_boot_scope_plan),
+            "boot-entry-state-contract-plan": ("AURA Boot Entry State Contract Plan", manager.boot_entry_state_contract_plan),
+            "safe-idle-guard-condition-plan": ("AURA Safe Idle Guard Condition Plan", manager.safe_idle_guard_condition_plan),
+            "boot-failure-fallback-plan": ("AURA Boot Failure Fallback Plan", manager.boot_failure_fallback_plan),
+            "service-no-autostart-boundary-plan": ("AURA Service No-Autostart Boundary Plan", manager.service_no_autostart_boundary_plan),
+            "readiness-probe-read-only-plan": ("AURA Readiness Probe Read-Only Plan", manager.readiness_probe_read_only_plan),
+            "control-center-idle-visibility-plan": ("AURA Control Center Idle Visibility Plan", manager.control_center_idle_visibility_plan),
+            "permission-denial-idle-plan": ("AURA Permission Denial Idle Plan", manager.permission_denial_idle_plan),
+            "audit-failure-idle-plan": ("AURA Audit Failure Idle Plan", manager.audit_failure_idle_plan),
+            "no-boot-activation-plan": ("AURA No Boot Activation Plan", manager.no_boot_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_safe_idle_boot_boundary_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 141.0 local service runtime foundation CLI helpers.
     def print_local_service_runtime_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6758,6 +6801,9 @@ class AuraCLI:
             return True
 
         if self.handle_local_service_runtime_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_service_safe_idle_boot_boundary_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

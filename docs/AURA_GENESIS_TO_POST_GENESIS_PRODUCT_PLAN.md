@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.141.0-genesis
-Current Canonical Sprint: Sprint 141.0 — Local Service Runtime Foundation
-Next Planned Sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary
+Current Canonical Version: v0.142.0-genesis
+Current Canonical Sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary
+Next Planned Sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -492,3 +492,8 @@ Every major capability must pass through:
 5. safe-idle fallback
 6. Control Center visibility
 7. Creator approval
+
+
+## Sprint 142.0 Update
+
+Sprint 142.0 adds safe-idle boot boundary planning for the future ATLAS local service. It preserves safe-idle as the default boot posture, blocks autostart and service activation, keeps readiness probes read-only, and ensures permission or audit failure keeps AURA idle. Runtime execution remains 0.

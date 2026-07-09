@@ -113,6 +113,7 @@ from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gat
 from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
 from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
 from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
+from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -288,9 +289,21 @@ class SystemStatusManager:
         audit_runtime_writer_activation_review_status = AuraAuditRuntimeWriterActivationReviewFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         review_stabilization_131_140_status = AuraReviewStabilization131140FoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_service_runtime_foundation_status = AuraLocalServiceRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        local_service_safe_idle_boot_boundary_status = AuraLocalServiceSafeIdleBootBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
+            "local_service_safe_idle_boot_boundary_ready": local_service_safe_idle_boot_boundary_status["local_service_safe_idle_boot_boundary_ready"],
+            "local_service_safe_idle_boot_boundary_data_ready": local_service_safe_idle_boot_boundary_status["local_service_safe_idle_boot_boundary_data_ready"],
+            "local_service_safe_idle_boot_boundary_plan_type_count": local_service_safe_idle_boot_boundary_status["plan_type_count"],
+            "local_service_safe_idle_boot_boundary_total_blueprint_count": local_service_safe_idle_boot_boundary_status["total_local_service_safe_idle_boot_boundary_blueprint_count"],
+            "local_service_safe_idle_boot_boundary_safe_idle_boot_default": local_service_safe_idle_boot_boundary_status["safe_idle_boot_default"],
+            "local_service_safe_idle_boot_boundary_boot_runtime_activation_disabled": local_service_safe_idle_boot_boundary_status["boot_runtime_activation_disabled"],
+            "local_service_safe_idle_boot_boundary_service_autostart_disabled": local_service_safe_idle_boot_boundary_status["service_autostart_disabled"],
+            "local_service_safe_idle_boot_boundary_runtime_services_started": local_service_safe_idle_boot_boundary_status["runtime_services_started"],
+            "local_service_safe_idle_boot_boundary_runtime_autostarts_enabled": local_service_safe_idle_boot_boundary_status["runtime_autostarts_enabled"],
+            "local_service_safe_idle_boot_boundary_runtime_ports_bound": local_service_safe_idle_boot_boundary_status["runtime_ports_bound"],
+            "local_service_safe_idle_boot_boundary_runtime_execution_features": local_service_safe_idle_boot_boundary_status["runtime_execution_features"],
             "local_service_runtime_foundation_ready": local_service_runtime_foundation_status["local_service_runtime_foundation_ready"],
             "local_service_runtime_foundation_data_ready": local_service_runtime_foundation_status["local_service_runtime_foundation_data_ready"],
             "local_service_runtime_foundation_plan_type_count": local_service_runtime_foundation_status["plan_type_count"],
