@@ -118,6 +118,7 @@ from aura.local_service_health_endpoint_foundation.aura_local_service_health_end
 from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
 from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_runtime_boundary_manager import AuraServicePermissionGateRuntimeBoundaryManager
 from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manager import AuraServiceAuditLinkFoundationManager
+from aura.service_control_command_review_foundation.aura_service_control_command_review_foundation_manager import AuraServiceControlCommandReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -297,6 +298,20 @@ class SystemStatusManager:
         local_service_health_endpoint_foundation_status = AuraLocalServiceHealthEndpointFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_service_configuration_port_registry_foundation_status = AuraLocalServiceConfigurationPortRegistryFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         service_permission_gate_runtime_boundary_status = AuraServicePermissionGateRuntimeBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        service_control_command_review_foundation_status = AuraServiceControlCommandReviewFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        data.update({
+            "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
+            "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
+            "service_control_command_review_foundation_plan_type_count": service_control_command_review_foundation_status["plan_type_count"],
+            "service_control_command_review_foundation_total_blueprint_count": service_control_command_review_foundation_status["total_service_control_command_review_foundation_blueprint_count"],
+            "service_control_command_review_foundation_runtime_start_commands_executed": service_control_command_review_foundation_status["runtime_start_commands_executed"],
+            "service_control_command_review_foundation_runtime_stop_commands_executed": service_control_command_review_foundation_status["runtime_stop_commands_executed"],
+            "service_control_command_review_foundation_runtime_restart_commands_executed": service_control_command_review_foundation_status["runtime_restart_commands_executed"],
+            "service_control_command_review_foundation_runtime_systemd_commands_executed": service_control_command_review_foundation_status["runtime_systemd_commands_executed"],
+            "service_control_command_review_foundation_runtime_shell_commands_executed": service_control_command_review_foundation_status["runtime_shell_commands_executed"],
+            "service_control_command_review_foundation_runtime_execution_features": service_control_command_review_foundation_status["runtime_execution_features"],
+        })
+
         service_audit_link_foundation_status = AuraServiceAuditLinkFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {

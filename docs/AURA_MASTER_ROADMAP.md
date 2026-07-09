@@ -1523,7 +1523,7 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.146.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.147.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 
@@ -1608,10 +1608,15 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 ## Sprint 146.0 — Service Audit Link Foundation
 
 Status: completed  
-Version: v0.146.0-genesis
+Version: v0.147.0-genesis
 
 Sprint 146 adds a planner-only, metadata-only, and foundation-only Service Audit Link Foundation for future service audit event references, audit link contracts, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no-audit-link-runtime-activation review.
 
 Runtime remains disabled by design: no audit link record creation, no audit event reference creation, no audit event write, no audit log append, no runtime redaction, no trace chain write, no permission/audit link write, no service start, no port bind, no action/tool/command execution, and 0 runtime execution features.
 
 Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
+
+
+## Sprint 147.0 — Service Control Command Review Foundation
+
+Sprint 147 adds planner-only, metadata-only service control command review boundaries for future start/stop/restart/status service commands. Runtime remains disabled: no command execution, no systemd execution, no service start/stop/restart, no process status probe, no socket open, no port bind, and no runtime execution features.

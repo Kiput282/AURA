@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.146.0-genesis  
+Current version: v0.147.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -35,7 +35,7 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 146.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
+AURA has completed Sprint 147.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
 
 Latest completed checkpoint:
 
@@ -336,7 +336,7 @@ Active block:
 - Sprint 142: Local Service Safe Idle Boot Boundary completed
 - Sprint 143: Local Service Health Endpoint Foundation completed
 - Sprint 144: Service Configuration and Port Registry Foundation completed
-- Next: Sprint 147 Service Control Command Review Foundation
+- Next: Sprint 148 Service Recovery and Restart Policy Foundation
 
 ---
 
@@ -1211,9 +1211,9 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.146.0-genesis
-- Current completed sprint: Sprint 146.0 — Service Audit Link Foundation
-- Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation
+- Version: v0.147.0-genesis
+- Current completed sprint: Sprint 147.0 — Service Control Command Review Foundation
+- Next planned sprint: Sprint 148.0 — Service Recovery and Restart Policy Foundation
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1264,7 +1264,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.146.0-genesis, AURA can:
+At v0.147.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1283,7 +1283,7 @@ At v0.146.0-genesis, AURA can:
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.146.0-genesis, AURA cannot yet:
+At v0.147.0-genesis, AURA cannot yet:
 
 - start active local service runtime
 - serve a real web Control Center
@@ -1516,3 +1516,26 @@ Safety result:
 Next planned sprint:
 
 - Sprint 147.0 — Service Control Command Review Foundation
+
+
+## Sprint 147.0 — Service Control Command Review Foundation
+
+Version: v0.147.0-genesis
+
+Sprint 147 defines the Service Control Command Review Foundation for AURA's future ATLAS service control path. It prepares planner-only and metadata-only start/stop/restart/status command review scopes, proposal contracts, permission boundaries, audit links, Control Center command surfaces, failure safe-idle behavior, and no-service-control-command-runtime-activation review.
+
+Runtime remains disabled by design:
+
+- no service start/stop/restart command execution
+- no runtime process status probe
+- no systemd command execution
+- no shell command execution
+- no socket open
+- no port binding
+- no HTTP listener start
+- no audit event write
+- no permission mutation
+- no action/tool/command/file/memory/model/ORION/git runtime
+- no runtime execution features
+
+Next planned sprint: Sprint 148.0 — Service Recovery and Restart Policy Foundation.

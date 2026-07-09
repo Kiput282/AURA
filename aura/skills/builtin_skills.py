@@ -1438,6 +1438,39 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+    # Sprint 147.0 service control command review foundation skill.
+    registry.register(
+        Skill(
+            name="aura_service_control_command_review_foundation",
+            description="Service Control Command Review Foundation for future start/stop/restart/status command review boundaries without runtime command execution.",
+            category="service",
+            permissions=["read_project"],
+            actions=[
+                "service_control_command_review_foundation_status",
+                "service_control_scope_catalog_plan",
+                "service_start_command_review_plan",
+                "service_stop_command_review_plan",
+                "service_restart_command_review_plan",
+                "service_status_command_review_plan",
+                "service_control_permission_boundary_plan",
+                "service_control_audit_link_plan",
+                "service_control_center_command_surface_plan",
+                "service_control_failure_safe_idle_plan",
+                "no_service_control_command_runtime_activation_plan",
+                "service_control_command_review_foundation_context",
+            ],
+            status="online",
+            safety_notes=[
+                "Planner-only and metadata-only.",
+                "No service command runtime is executed.",
+                "No systemd or shell command is executed.",
+                "No service is started, stopped, or restarted.",
+                "Runtime execution features remain 0.",
+            ],
+        )
+    )
+
     # Sprint 146.0 service audit link foundation skill.
     registry.register(
         AuraSkill(

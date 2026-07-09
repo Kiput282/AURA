@@ -70,7 +70,11 @@ No audit link record is created, no audit event reference is created, no audit e
 
 ### Sprint 147.0 — Service Control Command Review Foundation
 
-Plan start/stop/restart/status command review boundaries.
+Status: completed
+
+Adds the planner-only, metadata-only, and foundation-only Service Control Command Review Foundation for future service start/stop/restart/status command review scopes, command proposal contracts, permission boundaries, audit links, Control Center command surfaces, failure safe-idle behavior, and no service control command runtime activation review.
+
+No service start/stop/restart/status command is executed, no runtime process probe occurs, no systemd command is executed, no shell command is executed, no socket is opened, no port is bound, no audit event is written, and runtime execution features remain 0.
 
 ### Sprint 148.0 — Service Recovery and Restart Policy Foundation
 
@@ -196,4 +200,27 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
+Next planned sprint: Sprint 148.0 — Service Recovery and Restart Policy Foundation.
+
+
+## Sprint 147.0 completion note
+
+Sprint 147 adds the Service Control Command Review Foundation. It prepares start, stop, restart, and status command review boundaries; command proposal contracts; permission-gated command review; audit-linked command traceability; Control Center command surfaces; failure safe-idle behavior; and no-service-control-command-runtime-activation review while keeping runtime service commands, systemd commands, shell commands, status probes, sockets, port binds, audit writes, permission mutations, and runtime execution features at 0.
+
+Runtime remains disabled by design:
+
+- no service start command execution
+- no service stop command execution
+- no service restart command execution
+- no runtime service status process probe
+- no systemd command execution
+- no shell command execution
+- no socket open
+- no port bind
+- no HTTP listener start
+- no audit event write
+- no permission mutation
+- no action/tool/command/file/memory/model/ORION/git runtime
+- no runtime execution features
+
+Next planned sprint: Sprint 148.0 — Service Recovery and Restart Policy Foundation.

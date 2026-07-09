@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_service_control_command_review_foundation",
+                    "name": "AURA Service Control Command Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "critical",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.147.0-genesis",
+                    "category": "service",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and foundation-only Service Control Command Review Foundation for future service start/stop/restart/status command review scopes, command proposal contracts, permission boundaries, audit links, Control Center command surfaces, failure safe-idle behavior, and no service control command runtime activation review without executing service commands, probing process state, calling systemd or shell commands, starting services, binding ports, writing audit events, mutating permissions, executing tools/commands, using file/memory/model/ORION/git runtime, or enabling runtime execution features.",
+                },
+                {
                     "id": "aura_service_audit_link_foundation",
                     "name": "AURA Service Audit Link Foundation",
                     "state": "online",

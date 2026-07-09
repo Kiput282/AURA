@@ -131,6 +131,7 @@ from aura.local_service_health_endpoint_foundation.aura_local_service_health_end
 from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
 from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_runtime_boundary_manager import AuraServicePermissionGateRuntimeBoundaryManager
 from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manager import AuraServiceAuditLinkFoundationManager
+from aura.service_control_command_review_foundation.aura_service_control_command_review_foundation_manager import AuraServiceControlCommandReviewFoundationManager
 
 
 class AuraShell:
@@ -5193,6 +5194,51 @@ class AuraShell:
 
 
 
+
+
+    # Sprint 147.0 service control command review foundation shell helpers.
+    def print_service_control_command_review_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Control Command Review Foundation Safety Boundary"))
+
+    def handle_service_control_command_review_foundation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA service control command review foundation"
+        manager = AuraServiceControlCommandReviewFoundationManager(project_root=self.project_root)
+
+        if command == "service-control-command-review-foundation-status":
+            self.print_service_control_command_review_foundation_packet("AURA Service Control Command Review Foundation Status", manager.status())
+            return True
+
+        if command == "service-control-command-review-foundation-context":
+            self.print_service_control_command_review_foundation_packet("AURA Service Control Command Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-control-scope-catalog-plan": ("AURA Service Control Scope Catalog Plan", manager.service_control_scope_catalog_plan),
+            "service-start-command-review-plan": ("AURA Service Start Command Review Plan", manager.service_start_command_review_plan),
+            "service-stop-command-review-plan": ("AURA Service Stop Command Review Plan", manager.service_stop_command_review_plan),
+            "service-restart-command-review-plan": ("AURA Service Restart Command Review Plan", manager.service_restart_command_review_plan),
+            "service-status-command-review-plan": ("AURA Service Status Command Review Plan", manager.service_status_command_review_plan),
+            "service-control-permission-boundary-plan": ("AURA Service Control Permission Boundary Plan", manager.service_control_permission_boundary_plan),
+            "service-control-audit-link-plan": ("AURA Service Control Audit Link Plan", manager.service_control_audit_link_plan),
+            "service-control-center-command-surface-plan": ("AURA Service Control Center Command Surface Plan", manager.service_control_center_command_surface_plan),
+            "service-control-failure-safe-idle-plan": ("AURA Service Control Failure Safe Idle Plan", manager.service_control_failure_safe_idle_plan),
+            "no-service-control-command-runtime-activation-plan": ("AURA No Service Control Command Runtime Activation Plan", manager.no_service_control_command_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_service_control_command_review_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 146.0 service audit link foundation shell helpers.
     def print_service_audit_link_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7963,6 +8009,9 @@ class AuraShell:
             return
 
         if self.handle_service_audit_link_foundation_shell_command(normalized):
+            return
+
+        if self.handle_service_control_command_review_foundation_shell_command(normalized):
             return
 
         if normalized == "help":

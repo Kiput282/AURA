@@ -2902,6 +2902,26 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+    # Sprint 147.0 service control command review foundation actions.
+    service_control_command_review_foundation_actions = [
+        ('service_control_command_review_foundation.status', 'read_project', 'Show Service Control Command Review Foundation status.'),
+        ('service_control_command_review_foundation.service_control_scope_catalog_plan', 'read_project', 'Prepare service control scope catalog plan.'),
+        ('service_control_command_review_foundation.service_start_command_review_plan', 'read_project', 'Prepare service start command review plan.'),
+        ('service_control_command_review_foundation.service_stop_command_review_plan', 'read_project', 'Prepare service stop command review plan.'),
+        ('service_control_command_review_foundation.service_restart_command_review_plan', 'read_project', 'Prepare service restart command review plan.'),
+        ('service_control_command_review_foundation.service_status_command_review_plan', 'read_project', 'Prepare service status command review plan.'),
+        ('service_control_command_review_foundation.service_control_permission_boundary_plan', 'read_project', 'Prepare service control permission boundary plan.'),
+        ('service_control_command_review_foundation.service_control_audit_link_plan', 'read_project', 'Prepare service control audit link plan.'),
+        ('service_control_command_review_foundation.service_control_center_command_surface_plan', 'read_project', 'Prepare service Control Center command surface plan.'),
+        ('service_control_command_review_foundation.service_control_failure_safe_idle_plan', 'read_project', 'Prepare service control failure safe-idle plan.'),
+        ('service_control_command_review_foundation.no_service_control_command_runtime_activation_plan', 'read_project', 'Prepare no service control command runtime activation plan.'),
+        ('service_control_command_review_foundation.context', 'read_project', 'Show Service Control Command Review Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in service_control_command_review_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="service_control_command_review_foundation", description=description, permission_action=permission_action, status="online", skill="aura_service_control_command_review_foundation"))
+
     # Sprint 146.0 service audit link foundation actions.
     service_audit_link_foundation_actions = [
         ('service_audit_link_foundation.status', 'read_project', 'Show Service Audit Link Foundation status.'),

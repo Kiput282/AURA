@@ -1,7 +1,7 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.146.0-genesis
+Current Canonical Version: v0.147.0-genesis
 Current Canonical Sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
 Next Planned Sprint: Sprint 147.0 — Service Control Command Review Foundation
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
@@ -24,7 +24,7 @@ AURA must grow gradually. Runtime capability must be introduced only through exp
 
 AURA is currently at:
 
-- Version: v0.146.0-genesis
+- Version: v0.147.0-genesis
 - Sprint: Sprint 144.0
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
@@ -49,6 +49,7 @@ Planned direction:
 - Sprint 144.0 — Service Configuration and Port Registry Foundation
 - Sprint 145.0 — Service Permission Gate Runtime Boundary
 - Sprint 146.0 — Service Audit Link Foundation completed
+- Sprint 147.0 — Service Control Command Review Foundation completed
 - Sprint 147.0 — Service Control Command Review Foundation
 - Sprint 148.0 — Service Recovery and Restart Policy Foundation
 - Sprint 149.0 — Service Security and Localhost Binding Review
@@ -502,3 +503,8 @@ Sprint 142.0 adds safe-idle boot boundary planning for the future ATLAS local se
 ## Sprint 143.0 Update
 
 Sprint 143.0 adds health endpoint foundation planning for the future ATLAS local service. It defines a future localhost-only, read-only `/health` contract, response schema, safe-idle health states, dependency visibility, permission/audit health linkage, Control Center health card planning, and no-health-endpoint-activation boundary. Runtime execution remains 0.
+
+
+## Sprint 147.0 — Service Control Command Review Foundation
+
+Sprint 147 adds planner-only, metadata-only service control command review boundaries for future start/stop/restart/status service commands. Runtime remains disabled: no command execution, no systemd execution, no service start/stop/restart, no process status probe, no socket open, no port bind, and no runtime execution features.
