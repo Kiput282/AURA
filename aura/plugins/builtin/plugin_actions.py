@@ -2905,6 +2905,27 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+
+    # Sprint 149.0 service security and localhost binding review actions.
+    service_security_localhost_binding_review_actions = [
+        ('service_security_localhost_binding_review.status', 'read_project', 'Show Service Security and Localhost Binding Review status.'),
+        ('service_security_localhost_binding_review.service_localhost_binding_policy_plan', 'read_project', 'Prepare service localhost binding policy plan.'),
+        ('service_security_localhost_binding_review.service_public_network_exposure_block_plan', 'read_project', 'Prepare service public network exposure block plan.'),
+        ('service_security_localhost_binding_review.service_origin_host_allowlist_policy_plan', 'read_project', 'Prepare service origin host allowlist policy plan.'),
+        ('service_security_localhost_binding_review.service_loopback_interface_policy_plan', 'read_project', 'Prepare service loopback interface policy plan.'),
+        ('service_security_localhost_binding_review.service_tls_cors_external_access_defer_plan', 'read_project', 'Prepare service TLS/CORS/external access defer plan.'),
+        ('service_security_localhost_binding_review.service_security_permission_audit_link_plan', 'read_project', 'Prepare service security permission audit link plan.'),
+        ('service_security_localhost_binding_review.service_port_binding_preflight_security_plan', 'read_project', 'Prepare service port binding preflight security plan.'),
+        ('service_security_localhost_binding_review.service_control_center_security_surface_plan', 'read_project', 'Prepare service Control Center security surface plan.'),
+        ('service_security_localhost_binding_review.service_security_error_boundary_plan', 'read_project', 'Prepare service security error boundary plan.'),
+        ('service_security_localhost_binding_review.no_security_localhost_runtime_activation_plan', 'read_project', 'Prepare no security localhost runtime activation plan.'),
+        ('service_security_localhost_binding_review.context', 'read_project', 'Show Service Security and Localhost Binding Review context.'),
+    ]
+
+    for action_name, permission_action, description in service_security_localhost_binding_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="service_security_localhost_binding_review", description=description, permission_action=permission_action, status="online", skill="aura_service_security_localhost_binding_review"))
+
     # Sprint 148.0 service recovery and restart policy foundation actions.
     service_recovery_restart_policy_foundation_actions = [
         ('service_recovery_restart_policy_foundation.status', 'read_project', 'Show Service Recovery and Restart Policy Foundation status.'),

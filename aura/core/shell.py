@@ -133,6 +133,7 @@ from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_
 from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manager import AuraServiceAuditLinkFoundationManager
 from aura.service_control_command_review_foundation.aura_service_control_command_review_foundation_manager import AuraServiceControlCommandReviewFoundationManager
 from aura.service_recovery_restart_policy_foundation.aura_service_recovery_restart_policy_foundation_manager import AuraServiceRecoveryRestartPolicyFoundationManager
+from aura.service_security_localhost_binding_review.aura_service_security_localhost_binding_review_manager import AuraServiceSecurityLocalhostBindingReviewManager
 
 
 class AuraShell:
@@ -5199,6 +5200,51 @@ class AuraShell:
 
 
 
+
+
+    # Sprint 149.0 service security and localhost binding review shell helpers.
+    def print_service_security_localhost_binding_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Security and Localhost Binding Review Safety Boundary"))
+
+    def handle_service_security_localhost_binding_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA service security and localhost binding review"
+        manager = AuraServiceSecurityLocalhostBindingReviewManager(project_root=self.project_root)
+
+        if command == "service-security-localhost-binding-review-status":
+            self.print_service_security_localhost_binding_review_packet("AURA Service Security and Localhost Binding Review Status", manager.status())
+            return True
+
+        if command == "service-security-localhost-binding-review-context":
+            self.print_service_security_localhost_binding_review_packet("AURA Service Security and Localhost Binding Review Context", manager.context())
+            return True
+
+        command_map = {
+            "service-localhost-binding-policy-plan": ("AURA Service Localhost Binding Policy Plan", manager.service_localhost_binding_policy_plan),
+            "service-public-network-exposure-block-plan": ("AURA Service Public Network Exposure Block Plan", manager.service_public_network_exposure_block_plan),
+            "service-origin-host-allowlist-policy-plan": ("AURA Service Origin Host Allowlist Policy Plan", manager.service_origin_host_allowlist_policy_plan),
+            "service-loopback-interface-policy-plan": ("AURA Service Loopback Interface Policy Plan", manager.service_loopback_interface_policy_plan),
+            "service-tls-cors-external-access-defer-plan": ("AURA Service TLS CORS External Access Defer Plan", manager.service_tls_cors_external_access_defer_plan),
+            "service-security-permission-audit-link-plan": ("AURA Service Security Permission Audit Link Plan", manager.service_security_permission_audit_link_plan),
+            "service-port-binding-preflight-security-plan": ("AURA Service Port Binding Preflight Security Plan", manager.service_port_binding_preflight_security_plan),
+            "service-control-center-security-surface-plan": ("AURA Service Control Center Security Surface Plan", manager.service_control_center_security_surface_plan),
+            "service-security-error-boundary-plan": ("AURA Service Security Error Boundary Plan", manager.service_security_error_boundary_plan),
+            "no-security-localhost-runtime-activation-plan": ("AURA No Security Localhost Runtime Activation Plan", manager.no_security_localhost_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_service_security_localhost_binding_review_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 148.0 service recovery and restart policy foundation shell helpers.
     def print_service_recovery_restart_policy_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8061,6 +8107,9 @@ class AuraShell:
             return
 
         if self.handle_service_recovery_restart_policy_foundation_shell_command(normalized):
+            return
+
+        if self.handle_service_security_localhost_binding_review_shell_command(normalized):
             return
 
         if normalized == "help":

@@ -1441,6 +1441,33 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+
+    # Sprint 149.0 service security and localhost binding review skill.
+    registry.register(
+        AuraSkill(
+            name="aura_service_security_localhost_binding_review",
+            description="Prepare planner-only Service Security and Localhost Binding Review without socket, listener, port, public-network, or security config runtime activation.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "service_security_localhost_binding_review_status",
+                "service_localhost_binding_policy_plan",
+                "service_public_network_exposure_block_plan",
+                "service_origin_host_allowlist_policy_plan",
+                "service_loopback_interface_policy_plan",
+                "service_tls_cors_external_access_defer_plan",
+                "service_security_permission_audit_link_plan",
+                "service_port_binding_preflight_security_plan",
+                "service_control_center_security_surface_plan",
+                "service_security_error_boundary_plan",
+                "no_security_localhost_runtime_activation_plan",
+                "service_security_localhost_binding_review_context",
+            ],
+        )
+    )
+
     # Sprint 148.0 service recovery and restart policy foundation skill.
     registry.register(
         AuraSkill(
