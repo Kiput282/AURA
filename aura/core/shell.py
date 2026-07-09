@@ -129,6 +129,7 @@ from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation
 from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
 from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
 from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
+from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_runtime_boundary_manager import AuraServicePermissionGateRuntimeBoundaryManager
 
 
 class AuraShell:
@@ -1127,6 +1128,18 @@ class AuraShell:
         print("  permission-audit-config-link-plan <target> Prepare permission/audit config link plan")
         print("  no-config-port-runtime-activation-plan <target> Prepare no config/port runtime activation plan")
         print("  local-service-configuration-port-registry-foundation-context Show Service Configuration and Port Registry Foundation context")
+        print("  service-permission-gate-runtime-boundary-status Show Service Permission Gate Runtime Boundary status")
+        print("  service-permission-scope-catalog-plan <target> Prepare service permission scope catalog plan")
+        print("  service-permission-request-contract-plan <target> Prepare service permission request contract plan")
+        print("  service-permission-grant-preflight-plan <target> Prepare service permission grant preflight plan")
+        print("  service-permission-denial-safe-idle-plan <target> Prepare service permission denial safe-idle plan")
+        print("  service-permission-control-center-surface-plan <target> Prepare service permission Control Center surface plan")
+        print("  service-permission-audit-link-plan <target> Prepare service permission audit link plan")
+        print("  service-permission-expiry-review-plan <target> Prepare service permission expiry review plan")
+        print("  service-permission-error-boundary-plan <target> Prepare service permission error boundary plan")
+        print("  service-permission-manual-approval-boundary-plan <target> Prepare service permission manual approval boundary plan")
+        print("  no-permission-runtime-activation-plan <target> Prepare no permission runtime activation plan")
+        print("  service-permission-gate-runtime-boundary-context Show Service Permission Gate Runtime Boundary context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5165,6 +5178,49 @@ class AuraShell:
         return False
 
 
+
+
+    # Sprint 145.0 service permission gate runtime boundary shell helpers.
+    def print_service_permission_gate_runtime_boundary_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Permission Gate Runtime Boundary Safety Boundary"))
+
+    def handle_service_permission_gate_runtime_boundary_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA service permission gate runtime boundary"
+        manager = AuraServicePermissionGateRuntimeBoundaryManager(project_root=self.project_root)
+
+        if command == "service-permission-gate-runtime-boundary-status":
+            self.print_service_permission_gate_runtime_boundary_packet("AURA Service Permission Gate Runtime Boundary Status", manager.status())
+            return True
+
+        if command == "service-permission-gate-runtime-boundary-context":
+            self.print_service_permission_gate_runtime_boundary_packet("AURA Service Permission Gate Runtime Boundary Context", manager.context())
+            return True
+
+        command_map = {
+            "service-permission-scope-catalog-plan": ("AURA Service Permission Scope Catalog Plan", manager.service_permission_scope_catalog_plan),
+            "service-permission-request-contract-plan": ("AURA Service Permission Request Contract Plan", manager.service_permission_request_contract_plan),
+            "service-permission-grant-preflight-plan": ("AURA Service Permission Grant Preflight Plan", manager.service_permission_grant_preflight_plan),
+            "service-permission-denial-safe-idle-plan": ("AURA Service Permission Denial Safe Idle Plan", manager.service_permission_denial_safe_idle_plan),
+            "service-permission-control-center-surface-plan": ("AURA Service Permission Control Center Surface Plan", manager.service_permission_control_center_surface_plan),
+            "service-permission-audit-link-plan": ("AURA Service Permission Audit Link Plan", manager.service_permission_audit_link_plan),
+            "service-permission-expiry-review-plan": ("AURA Service Permission Expiry Review Plan", manager.service_permission_expiry_review_plan),
+            "service-permission-error-boundary-plan": ("AURA Service Permission Error Boundary Plan", manager.service_permission_error_boundary_plan),
+            "service-permission-manual-approval-boundary-plan": ("AURA Service Permission Manual Approval Boundary Plan", manager.service_permission_manual_approval_boundary_plan),
+            "no-permission-runtime-activation-plan": ("AURA No Permission Runtime Activation Plan", manager.no_permission_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_service_permission_gate_runtime_boundary_packet(title, handler(target))
+            return True
+
+        return False
     # Sprint 143.0 local service health endpoint foundation shell helpers.
     def print_local_service_health_endpoint_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7844,6 +7900,9 @@ class AuraShell:
             return
 
         if self.handle_local_service_configuration_port_registry_foundation_shell_command(normalized):
+            return
+
+        if self.handle_service_permission_gate_runtime_boundary_shell_command(normalized):
             return
 
         if normalized == "help":

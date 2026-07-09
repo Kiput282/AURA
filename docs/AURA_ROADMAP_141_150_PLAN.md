@@ -1,7 +1,7 @@
 # AURA Roadmap 141-150 — Local Service Runtime Foundation
 
 Status: active
-Version seed: v0.144.0-genesis
+Version seed: v0.145.0-genesis
 Owner: Kiput
 Motto: Grow Together
 
@@ -120,7 +120,7 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary.
+Next planned sprint: Sprint 146.0 — Service Audit Link Foundation.
 
 
 ## Sprint 144.0 completion note
@@ -147,4 +147,9 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary.
+Next planned sprint: Sprint 146.0 — Service Audit Link Foundation.
+
+
+## Sprint 145.0 completion note
+
+Sprint 145 adds the Service Permission Gate Runtime Boundary. It prepares service permission scope catalog, permission request contract, grant preflight, denial safe-idle behavior, Control Center permission surface, audit linkage, grant expiry review, error boundary, manual approval boundary, and no-permission-runtime-activation review while keeping runtime permission requests, grants, mutations, audit writes, service starts, port binds, HTTP listeners, command/tool execution, and runtime execution features at 0.

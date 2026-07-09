@@ -1438,6 +1438,33 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+    # Sprint 145.0 service permission gate runtime boundary skill.
+    registry.register(
+        AuraSkill(
+            name="aura_service_permission_gate_runtime_boundary",
+            description="Prepare planner-only, metadata-only, and foundation-only ATLAS Service Permission Gate Runtime Boundary for future service permission scopes, request contracts, grant preflight, denial safe-idle behavior, Control Center permission visibility, audit linkage, grant expiry review, error boundary, manual approval boundary, and no permission runtime activation review without creating permission requests, applying grants, mutating permissions, writing audit events, starting services, binding ports, executing tools/commands, using file/memory/model/permission/audit/ORION/git runtime, or enabling runtime execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "service_permission_gate_runtime_boundary_status",
+                "service_permission_scope_catalog_plan",
+                "service_permission_request_contract_plan",
+                "service_permission_grant_preflight_plan",
+                "service_permission_denial_safe_idle_plan",
+                "service_permission_control_center_surface_plan",
+                "service_permission_audit_link_plan",
+                "service_permission_expiry_review_plan",
+                "service_permission_error_boundary_plan",
+                "service_permission_manual_approval_boundary_plan",
+                "no_permission_runtime_activation_plan",
+                "service_permission_gate_runtime_boundary_context",
+            ],
+        )
+    )
+
+
+
     # Sprint 144.0 service configuration and port registry foundation skill.
     registry.register(
         AuraSkill(

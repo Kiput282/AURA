@@ -116,6 +116,7 @@ from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation
 from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
 from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
 from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
+from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_runtime_boundary_manager import AuraServicePermissionGateRuntimeBoundaryManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -294,9 +295,21 @@ class SystemStatusManager:
         local_service_safe_idle_boot_boundary_status = AuraLocalServiceSafeIdleBootBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_service_health_endpoint_foundation_status = AuraLocalServiceHealthEndpointFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_service_configuration_port_registry_foundation_status = AuraLocalServiceConfigurationPortRegistryFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        service_permission_gate_runtime_boundary_status = AuraServicePermissionGateRuntimeBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
+            "service_permission_gate_runtime_boundary_ready": service_permission_gate_runtime_boundary_status["service_permission_gate_runtime_boundary_ready"],
+            "service_permission_gate_runtime_boundary_data_ready": service_permission_gate_runtime_boundary_status["service_permission_gate_runtime_boundary_data_ready"],
+            "service_permission_gate_runtime_boundary_plan_type_count": service_permission_gate_runtime_boundary_status["plan_type_count"],
+            "service_permission_gate_runtime_boundary_total_blueprint_count": service_permission_gate_runtime_boundary_status["total_service_permission_gate_runtime_boundary_blueprint_count"],
+            "service_permission_gate_runtime_boundary_permission_runtime_disabled": service_permission_gate_runtime_boundary_status["permission_runtime_disabled"],
+            "service_permission_gate_runtime_boundary_permission_grant_runtime_disabled": service_permission_gate_runtime_boundary_status["permission_grant_runtime_disabled"],
+            "service_permission_gate_runtime_boundary_safe_idle_default": service_permission_gate_runtime_boundary_status["safe_idle_default"],
+            "service_permission_gate_runtime_boundary_runtime_permission_requests_created": service_permission_gate_runtime_boundary_status["runtime_permission_requests_created"],
+            "service_permission_gate_runtime_boundary_runtime_permission_grants_applied": service_permission_gate_runtime_boundary_status["runtime_permission_grants_applied"],
+            "service_permission_gate_runtime_boundary_runtime_permission_mutations": service_permission_gate_runtime_boundary_status["runtime_permission_mutations"],
+            "service_permission_gate_runtime_boundary_runtime_execution_features": service_permission_gate_runtime_boundary_status["runtime_execution_features"],
             "local_service_configuration_port_registry_foundation_ready": local_service_configuration_port_registry_foundation_status["local_service_configuration_port_registry_foundation_ready"],
             "local_service_configuration_port_registry_foundation_data_ready": local_service_configuration_port_registry_foundation_status["local_service_configuration_port_registry_foundation_data_ready"],
             "local_service_configuration_port_registry_foundation_plan_type_count": local_service_configuration_port_registry_foundation_status["plan_type_count"],
