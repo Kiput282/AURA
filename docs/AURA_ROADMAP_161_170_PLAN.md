@@ -15,7 +15,7 @@ vision, and action layers.
 - Sprint 166 — Permission-Gated Model Request
 - Sprint 167 — Chat Safety + Uncertainty Layer
 - Sprint 168 — Chat History Viewer Contract
-- Sprint 169 — Local Chat Integration Review
+- Sprint 170 — Local Chat Runtime Stabilization
 - Sprint 170 — Local Chat Runtime Stabilization
 
 ## Deferred capabilities
@@ -81,8 +81,8 @@ Sprint 166 adds the permission-gated model request dry-run layer. AURA can creat
 Next: Sprint 167 — Chat Safety + Uncertainty Layer.
 
 
-### Sprint 169 — Local Chat Integration Review
+### Sprint 170 — Local Chat Runtime Stabilization
 
-Status: completed in v0.169.0-genesis.
+Status: completed in v0.170.0-genesis.
 
-Sprint 169 reviews the local chat alpha chain and verifies that CLI session alpha, message store, persona response, model adapter boundary, permission-gated model request, safety/uncertainty, and history viewer remain integrated behind safe boundaries. The review is metadata-only and read-only: no model dispatch, network, credentials, memory writes, audit writes, command execution, arbitrary file access, desktop action, voice, vision, or full chat runtime activation.
+Sprint 170 reviews the local chat alpha chain and verifies that CLI session alpha, message store, persona response, model adapter boundary, permission-gated model request, safety/uncertainty, and history viewer remain integrated behind safe boundaries. The review is metadata-only and read-only: no model dispatch, network, credentials, memory writes, audit writes, command execution, arbitrary file access, desktop action, voice, vision, or full chat runtime activation.

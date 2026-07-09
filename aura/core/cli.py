@@ -152,6 +152,7 @@ from aura.local_chat_permission_gated_model_request.aura_local_chat_permission_g
 from aura.local_chat_safety_uncertainty_layer.aura_local_chat_safety_uncertainty_layer_manager import AuraLocalChatSafetyUncertaintyLayerManager
 from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_contract_manager import AuraLocalChatHistoryViewerContractManager
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
+from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4323,6 +4324,52 @@ class AuraCLI:
 
 
 
+
+
+    # Sprint 170.0 local chat runtime stabilization helpers.
+    def print_local_chat_runtime_stabilization_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat Runtime Stabilization Boundary"))
+
+    def handle_local_chat_runtime_stabilization_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat runtime stabilization"
+        manager = AuraLocalChatRuntimeStabilizationManager(project_root=self.project_root)
+
+        if command in {"local-chat-stabilization-alpha", "local-chat-runtime-stabilization-alpha", "local-chat-block-stabilization"}:
+            print(manager.render_stabilization_alpha())
+            return True
+
+        if command == "local-chat-runtime-stabilization-status":
+            self.print_local_chat_runtime_stabilization_packet("AURA Local Chat Runtime Stabilization Status", manager.status())
+            return True
+
+        if command == "local-chat-runtime-stabilization-context":
+            self.print_local_chat_runtime_stabilization_packet("AURA Local Chat Runtime Stabilization Context", manager.context())
+            return True
+
+        command_map = {
+            "local-chat-block-completion-review-plan": ("AURA Local Chat Block Completion Review Plan", manager.local_chat_block_completion_review_plan),
+            "local-chat-alpha-surface-stabilization-plan": ("AURA Local Chat Alpha Surface Stabilization Plan", manager.local_chat_alpha_surface_stabilization_plan),
+            "local-chat-store-history-stabilization-plan": ("AURA Local Chat Store History Stabilization Plan", manager.local_chat_store_and_history_stabilization_plan),
+            "local-chat-persona-safety-stabilization-plan": ("AURA Local Chat Persona Safety Stabilization Plan", manager.local_chat_persona_safety_stabilization_plan),
+            "local-chat-model-permission-stabilization-plan": ("AURA Local Chat Model Permission Gate Stabilization Plan", manager.local_chat_model_permission_gate_stabilization_plan),
+            "local-chat-control-center-handoff-stabilization-plan": ("AURA Local Chat Control Center Handoff Stabilization Plan", manager.local_chat_control_center_handoff_stabilization_plan),
+            "local-chat-memory-runtime-handoff-plan": ("AURA Local Chat Memory Runtime Handoff Plan", manager.local_chat_memory_runtime_handoff_plan),
+            "local-chat-release-gate-closure-review-plan": ("AURA Local Chat Release Gate Closure Review Plan", manager.local_chat_release_gate_closure_review_plan),
+            "no-local-chat-runtime-stabilization-unsafe-runtime-plan": ("AURA No Local Chat Runtime Stabilization Unsafe Runtime Plan", manager.no_local_chat_runtime_stabilization_unsafe_runtime_plan),
+            "local-chat-next-block-171-180-readiness-plan": ("AURA Local Chat Next Block 171-180 Readiness Plan", manager.local_chat_next_block_171_180_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_runtime_stabilization_packet(title, handler(target))
+            return True
+
+        return False
     # Sprint 169.0 local chat integration review helpers.
     def print_local_chat_integration_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8075,6 +8122,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_runtime_stabilization_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_integration_review_cli_command(raw_args):

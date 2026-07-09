@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.169.0-genesis  
+Current version: v0.170.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -1219,9 +1219,9 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.169.0-genesis
+- Version: v0.170.0-genesis
 - Current completed sprint: Sprint 161.0 — Local Chat Runtime Foundation
-- Next planned sprint: Sprint 169.0 — Local Chat Integration Review
+- Next planned sprint: Sprint 170.0 — Local Chat Runtime Stabilization
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1272,7 +1272,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.169.0-genesis, AURA can:
+At v0.170.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1291,7 +1291,7 @@ At v0.169.0-genesis, AURA can:
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.169.0-genesis, AURA cannot yet:
+At v0.170.0-genesis, AURA cannot yet:
 
 - start active local service runtime
 - serve a real web Control Center
@@ -1528,7 +1528,7 @@ Next planned sprint:
 
 ## Sprint 147.0 — Service Control Command Review Foundation
 
-Version: v0.169.0-genesis
+Version: v0.170.0-genesis
 
 Sprint 147 defines the Service Control Command Review Foundation for AURA's future ATLAS service control path. It prepares planner-only and metadata-only start/stop/restart/status command review scopes, proposal contracts, permission boundaries, audit links, Control Center command surfaces, failure safe-idle behavior, and no-service-control-command-runtime-activation review.
 
@@ -1550,7 +1550,7 @@ Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 ## Sprint 148.0 — Service Recovery and Restart Policy Foundation
 
-Version: v0.169.0-genesis
+Version: v0.170.0-genesis
 
 Sprint 148 defines the Service Recovery and Restart Policy Foundation for AURA's future ATLAS service runtime. It prepares planner-only and metadata-only failure classification, safe-idle recovery policy, restart approval policy, retry cooldown policy, rollback visibility, Control Center recovery surfaces, permission links, audit links, error boundaries, and no-recovery-restart-runtime-activation review.
 
@@ -1560,7 +1560,7 @@ Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 ## Sprint 149.0 — Service Security and Localhost Binding Review
 
-Version: v0.169.0-genesis
+Version: v0.170.0-genesis
 
 Sprint 149 defines the Service Security and Localhost Binding Review foundation for AURA's future ATLAS service runtime. It prepares planner-only and metadata-only localhost-only binding policy, public network exposure block policy, origin/host allowlist policy, loopback interface policy, deferred TLS/CORS/external-access review, permission/audit links, port-binding preflight security, Control Center security surfaces, security error boundaries, and no-security-localhost-runtime-activation review.
 
@@ -1720,7 +1720,7 @@ before any real model request can be dispatched.
 
 ## Sprint 166 Local Chat Permission-Gated Model Request
 
-AURA v0.169.0-genesis adds a permission-gated model request dry-run layer for Local Chat. This sprint does **not** call a model provider. It creates a permission preview packet, a model request envelope, and a blocked gate decision showing that real model dispatch requires explicit future approval.
+AURA v0.170.0-genesis adds a permission-gated model request dry-run layer for Local Chat. This sprint does **not** call a model provider. It creates a permission preview packet, a model request envelope, and a blocked gate decision showing that real model dispatch requires explicit future approval.
 
 Safe alpha command:
 
@@ -1741,12 +1741,12 @@ Current Sprint 166 boundary:
 
 ## Sprint 168 — Chat History Viewer Contract
 
-AURA v0.169.0-genesis adds a read-only Chat History Viewer Contract for the local chat message store. The viewer can inspect AURA-owned JSONL chat history metadata and recent turns from the controlled message store path, while keeping model requests, model responses, network requests, credential reads, permission grants, memory writes, audit writes, command execution, arbitrary file reads, arbitrary file writes, desktop action, and runtime execution disabled.
+AURA v0.170.0-genesis adds a read-only Chat History Viewer Contract for the local chat message store. The viewer can inspect AURA-owned JSONL chat history metadata and recent turns from the controlled message store path, while keeping model requests, model responses, network requests, credential reads, permission grants, memory writes, audit writes, command execution, arbitrary file reads, arbitrary file writes, desktop action, and runtime execution disabled.
 
 
-## Sprint 169 — Local Chat Integration Review
+## Sprint 170 — Local Chat Runtime Stabilization
 
-AURA v0.169.0-genesis adds a Local Chat Integration Review layer for the Sprint 161-170 Local Chat Runtime block. This sprint reviews the thin local chat chain across CLI session alpha, controlled message store, persona response layer, model adapter boundary, permission-gated model request, chat safety + uncertainty, and chat history viewer. It does not dispatch model requests, receive model responses, use network, read credentials, apply permission grants, write memory, write audit events, execute commands, read arbitrary files, mutate arbitrary files, start desktop action, start voice, start vision, or open the full chat runtime gate.
+AURA v0.170.0-genesis adds a Local Chat Runtime Stabilization layer for the Sprint 161-170 Local Chat Runtime block. This sprint reviews the thin local chat chain across CLI session alpha, controlled message store, persona response layer, model adapter boundary, permission-gated model request, chat safety + uncertainty, and chat history viewer. It does not dispatch model requests, receive model responses, use network, read credentials, apply permission grants, write memory, write audit events, execute commands, read arbitrary files, mutate arbitrary files, start desktop action, start voice, start vision, or open the full chat runtime gate.
 
 New safe alpha command:
 

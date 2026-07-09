@@ -141,6 +141,7 @@ from aura.local_chat_permission_gated_model_request.aura_local_chat_permission_g
 from aura.local_chat_safety_uncertainty_layer.aura_local_chat_safety_uncertainty_layer_manager import AuraLocalChatSafetyUncertaintyLayerManager
 from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_contract_manager import AuraLocalChatHistoryViewerContractManager
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
+from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -343,6 +344,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        local_chat_runtime_stabilization_status = AuraLocalChatRuntimeStabilizationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
             "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
@@ -488,6 +490,22 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "local_chat_runtime_stabilization_ready": local_chat_runtime_stabilization_status["local_chat_runtime_stabilization_ready"],
+            "local_chat_runtime_stabilization_data_ready": local_chat_runtime_stabilization_status["local_chat_runtime_stabilization_data_ready"],
+            "local_chat_runtime_stabilization_plan_type_count": local_chat_runtime_stabilization_status["plan_type_count"],
+            "local_chat_runtime_stabilization_total_blueprint_count": local_chat_runtime_stabilization_status["total_local_chat_runtime_stabilization_blueprint_count"],
+            "local_chat_runtime_stabilization_thin_runtime_alpha": local_chat_runtime_stabilization_status["thin_runtime_alpha"],
+            "local_chat_runtime_stabilization_enabled": local_chat_runtime_stabilization_status["local_chat_runtime_stabilization_enabled"],
+            "local_chat_runtime_stabilization_components_declared": local_chat_runtime_stabilization_status["components_declared"],
+            "local_chat_runtime_stabilization_components_ready": local_chat_runtime_stabilization_status["components_ready"],
+            "local_chat_runtime_stabilization_gaps_found": local_chat_runtime_stabilization_status["stabilization_gaps_found"],
+            "local_chat_runtime_stabilization_block_161_170_completed": local_chat_runtime_stabilization_status["local_chat_block_161_170_completed"],
+            "local_chat_runtime_stabilization_next_block_ready": local_chat_runtime_stabilization_status["next_block_171_180_memory_runtime_ready"],
+            "local_chat_runtime_stabilization_runtime_model_requests_dispatched": local_chat_runtime_stabilization_status["runtime_model_requests_dispatched"],
+            "local_chat_runtime_stabilization_runtime_network_requests": local_chat_runtime_stabilization_status["runtime_network_requests"],
+            "local_chat_runtime_stabilization_runtime_memory_writes": local_chat_runtime_stabilization_status["runtime_memory_writes"],
+            "local_chat_runtime_stabilization_runtime_commands_executed": local_chat_runtime_stabilization_status["runtime_commands_executed"],
+            "local_chat_runtime_stabilization_runtime_execution_features": local_chat_runtime_stabilization_status["runtime_execution_features"],
             "local_chat_integration_review_ready": local_chat_integration_review_status["local_chat_integration_review_ready"],
             "local_chat_integration_review_data_ready": local_chat_integration_review_status["local_chat_integration_review_data_ready"],
             "local_chat_integration_review_plan_type_count": local_chat_integration_review_status["plan_type_count"],
