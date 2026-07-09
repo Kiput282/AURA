@@ -22,22 +22,22 @@ control runtime can be considered.
 - Sprint 157.0 — Control Center Service Monitor Panel Foundation completed
 - Sprint 158.0 — Control Center Action Log Panel Foundation completed
 - Sprint 159.0 — Control Center Read-Only Route Map Foundation completed
-- Sprint 160.0 — Review & Stabilization 151-160 planned
+- Sprint 160.0 — Review & Stabilization 151-160 completed
 - Sprint 156.0 — Control Center Audit Panel Foundation completed
 - Sprint 157.0 — Control Center Service Monitor Panel Foundation completed
 - Sprint 158.0 — Control Center Action Log Panel Foundation completed
 - Sprint 159.0 — Control Center Read-Only Route Map Foundation completed
-- Sprint 160.0 — Review & Stabilization 151-160 planned
+- Sprint 160.0 — Review & Stabilization 151-160 completed
 - Sprint 157.0 — Control Center Service Monitor Panel Foundation completed
 - Sprint 158.0 — Control Center Action Log Panel Foundation completed
 - Sprint 159.0 — Control Center Read-Only Route Map Foundation completed
-- Sprint 160.0 — Review & Stabilization 151-160 planned
+- Sprint 160.0 — Review & Stabilization 151-160 completed
 - Sprint 158.0 — Control Center Action Log Panel Foundation completed
 - Sprint 159.0 — Control Center Read-Only Route Map Foundation completed
-- Sprint 160.0 — Review & Stabilization 151-160 planned
-- Sprint 160.0 — Review & Stabilization 151-160 planned
+- Sprint 160.0 — Review & Stabilization 151-160 completed
+- Sprint 160.0 — Review & Stabilization 151-160 completed
 
-- Sprint 160.0 — Review & Stabilization 151-160 planned
+- Sprint 160.0 — Review & Stabilization 151-160 completed
 
 ## Boundary
 

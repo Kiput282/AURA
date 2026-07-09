@@ -1452,6 +1452,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_control_center_runtime_review_stabilization_151_160",
+            description="Prepare planner-only and metadata-only Control Center Runtime stabilization plans for Sprint 151-160 panel readiness, runtime boundary review, route/panel integration, read-only data contracts, permission/audit links, service monitor/action log surfaces, security/accessibility stabilization, no runtime activation, and next Local Chat Runtime block readiness without starting servers, mounting routes, serving requests, binding ports, dispatching actions, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_runtime_review_stabilization_151_160_status",
+                "control_center_block_completion_review_plan",
+                "control_center_panel_readiness_review_plan",
+                "control_center_runtime_boundary_review_plan",
+                "control_center_route_panel_integration_review_plan",
+                "control_center_read_only_data_contract_review_plan",
+                "control_center_permission_audit_link_review_plan",
+                "control_center_service_monitor_action_log_review_plan",
+                "control_center_security_accessibility_stabilization_plan",
+                "no_control_center_stabilization_runtime_activation_plan",
+                "control_center_runtime_review_stabilization_151_160_context",
+                "control_center_next_block_readiness_plan",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_control_center_read_only_route_map_foundation",
             description="Prepare planner-only and metadata-only Control Center read-only route map foundation plans for dashboard navigation metadata, route definitions, panel crosslinks, route guard boundaries, filtering/grouping, empty/error states, accessibility/security review, and no route map runtime activation without mounting routes, serving requests, starting servers, binding ports, dispatching actions, or enabling runtime execution.",
             role="dashboard",

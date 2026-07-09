@@ -2911,6 +2911,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    # Sprint 160.0 Control Center runtime review stabilization 151-160 actions.
+    control_center_runtime_review_stabilization_151_160_actions = [
+        ('control_center_runtime_review_stabilization_151_160.status', 'read_project', 'Show Control Center Runtime Review Stabilization 151-160 status.'),
+        ('control_center_runtime_review_stabilization_151_160.block_completion_review_plan', 'read_project', 'Prepare Control Center block completion review plan.'),
+        ('control_center_runtime_review_stabilization_151_160.panel_readiness_review_plan', 'read_project', 'Prepare Control Center panel readiness review plan.'),
+        ('control_center_runtime_review_stabilization_151_160.runtime_boundary_review_plan', 'read_project', 'Prepare Control Center runtime boundary review plan.'),
+        ('control_center_runtime_review_stabilization_151_160.route_panel_integration_review_plan', 'read_project', 'Prepare route/panel integration review plan.'),
+        ('control_center_runtime_review_stabilization_151_160.read_only_data_contract_review_plan', 'read_project', 'Prepare read-only data contract review plan.'),
+        ('control_center_runtime_review_stabilization_151_160.permission_audit_link_review_plan', 'read_project', 'Prepare permission/audit link review plan.'),
+        ('control_center_runtime_review_stabilization_151_160.service_monitor_action_log_review_plan', 'read_project', 'Prepare service monitor/action log review plan.'),
+        ('control_center_runtime_review_stabilization_151_160.security_accessibility_stabilization_plan', 'read_project', 'Prepare security/accessibility stabilization plan.'),
+        ('control_center_runtime_review_stabilization_151_160.no_runtime_activation_plan', 'read_project', 'Prepare no Control Center stabilization runtime activation plan.'),
+        ('control_center_runtime_review_stabilization_151_160.next_block_readiness_plan', 'read_project', 'Prepare next block readiness plan.'),
+        ('control_center_runtime_review_stabilization_151_160.context', 'read_project', 'Show Control Center Runtime Review Stabilization 151-160 context.'),
+    ]
+    for action_name, permission_action, description in control_center_runtime_review_stabilization_151_160_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_runtime_review_stabilization_151_160", description=description, permission_action=permission_action, status="online", skill="aura_control_center_runtime_review_stabilization_151_160"))
+
     # Sprint 159.0 Control Center read-only route map foundation actions.
     control_center_read_only_route_map_foundation_actions = [
         ('control_center_read_only_route_map_foundation.status', 'read_project', 'Show Control Center Read-Only Route Map Foundation status.'),

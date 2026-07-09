@@ -142,6 +142,7 @@ from aura.control_center_audit_panel_foundation.aura_control_center_audit_panel_
 from aura.control_center_service_monitor_panel_foundation.aura_control_center_service_monitor_panel_foundation_manager import AuraControlCenterServiceMonitorPanelFoundationManager
 from aura.control_center_action_log_panel_foundation.aura_control_center_action_log_panel_foundation_manager import AuraControlCenterActionLogPanelFoundationManager
 from aura.control_center_read_only_route_map_foundation.aura_control_center_read_only_route_map_foundation_manager import AuraControlCenterReadOnlyRouteMapFoundationManager
+from aura.control_center_runtime_review_stabilization_151_160.aura_control_center_runtime_review_stabilization_151_160_manager import AuraControlCenterRuntimeReviewStabilization151160Manager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4306,6 +4307,48 @@ class AuraCLI:
 
 
 
+    # Sprint 160.0 control center runtime review stabilization 151-160 CLI helpers.
+    def print_control_center_runtime_review_stabilization_151_160_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Runtime Review Stabilization 151-160 Safety Boundary"))
+
+    def handle_control_center_runtime_review_stabilization_151_160_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center runtime review stabilization 151-160"
+        manager = AuraControlCenterRuntimeReviewStabilization151160Manager(project_root=self.project_root)
+
+        if command == "control-center-runtime-review-stabilization-151-160-status":
+            self.print_control_center_runtime_review_stabilization_151_160_packet("AURA Control Center Runtime Review Stabilization 151-160 Status", manager.status())
+            return True
+
+        if command == "control-center-runtime-review-stabilization-151-160-context":
+            self.print_control_center_runtime_review_stabilization_151_160_packet("AURA Control Center Runtime Review Stabilization 151-160 Context", manager.context())
+            return True
+
+        command_map = {
+            "control-center-block-completion-review-plan": ("AURA Control Center Block Completion Review Plan", manager.control_center_block_completion_review_plan),
+            "control-center-panel-readiness-review-plan": ("AURA Control Center Panel Readiness Review Plan", manager.control_center_panel_readiness_review_plan),
+            "control-center-runtime-boundary-review-plan": ("AURA Control Center Runtime Boundary Review Plan", manager.control_center_runtime_boundary_review_plan),
+            "control-center-route-panel-integration-review-plan": ("AURA Control Center Route Panel Integration Review Plan", manager.control_center_route_panel_integration_review_plan),
+            "control-center-read-only-data-contract-review-plan": ("AURA Control Center Read Only Data Contract Review Plan", manager.control_center_read_only_data_contract_review_plan),
+            "control-center-permission-audit-link-review-plan": ("AURA Control Center Permission Audit Link Review Plan", manager.control_center_permission_audit_link_review_plan),
+            "control-center-service-monitor-action-log-review-plan": ("AURA Control Center Service Monitor Action Log Review Plan", manager.control_center_service_monitor_action_log_review_plan),
+            "control-center-security-accessibility-stabilization-plan": ("AURA Control Center Security Accessibility Stabilization Plan", manager.control_center_security_accessibility_stabilization_plan),
+            "no-control-center-stabilization-runtime-activation-plan": ("AURA No Control Center Stabilization Runtime Activation Plan", manager.no_control_center_stabilization_runtime_activation_plan),
+            "control-center-next-block-readiness-plan": ("AURA Control Center Next Block Readiness Plan", manager.control_center_next_block_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_runtime_review_stabilization_151_160_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 159.0 control center read-only route map foundation CLI helpers.
     def print_control_center_read_only_route_map_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7582,6 +7625,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_runtime_review_stabilization_151_160_cli_command(raw_args):
             return True
 
         if self.handle_control_center_read_only_route_map_foundation_cli_command(raw_args):
