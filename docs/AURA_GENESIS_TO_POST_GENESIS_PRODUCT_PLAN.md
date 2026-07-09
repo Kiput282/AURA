@@ -1,7 +1,7 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.162.0-genesis
+Current Canonical Version: v0.163.0-genesis
 Current Canonical Sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
 Next Planned Sprint: Sprint 147.0 — Service Control Command Review Foundation
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
@@ -24,7 +24,7 @@ AURA must grow gradually. Runtime capability must be introduced only through exp
 
 AURA is currently at:
 
-- Version: v0.162.0-genesis
+- Version: v0.163.0-genesis
 - Sprint: Sprint 144.0
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
@@ -527,3 +527,12 @@ AURA persona response. It keeps message persistence, model runtime, memory
 runtime, command execution, file mutation, desktop control, voice, vision,
 network access, and autonomous actions disabled. Sprint 163 should add the local
 chat message store.
+
+
+## Sprint 163 Direction — Local Chat Message Store
+
+Sprint 163 introduces a controlled local message store for AURA chat. It allows
+one manual CLI chat turn to be appended to an AURA-owned JSONL store while model
+runtime, memory runtime, command execution, arbitrary file mutation, desktop
+action, voice, vision, network access, and autonomous actions remain disabled.
+Sprint 164 should add the AURA Persona Response Layer.

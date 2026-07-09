@@ -1523,7 +1523,7 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.162.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.163.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 
@@ -1608,7 +1608,7 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 ## Sprint 146.0 — Service Audit Link Foundation
 
 Status: completed  
-Version: v0.162.0-genesis
+Version: v0.163.0-genesis
 
 Sprint 146 adds a planner-only, metadata-only, and foundation-only Service Audit Link Foundation for future service audit event references, audit link contracts, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no-audit-link-runtime-activation review.
 
@@ -1644,3 +1644,12 @@ AURA persona response. It keeps message persistence, model runtime, memory
 runtime, command execution, file mutation, desktop control, voice, vision,
 network access, and autonomous actions disabled. Sprint 163 should add the local
 chat message store.
+
+
+## Sprint 163 Direction — Local Chat Message Store
+
+Sprint 163 introduces a controlled local message store for AURA chat. It allows
+one manual CLI chat turn to be appended to an AURA-owned JSONL store while model
+runtime, memory runtime, command execution, arbitrary file mutation, desktop
+action, voice, vision, network access, and autonomous actions remain disabled.
+Sprint 164 should add the AURA Persona Response Layer.

@@ -145,6 +145,7 @@ from aura.control_center_read_only_route_map_foundation.aura_control_center_read
 from aura.control_center_runtime_review_stabilization_151_160.aura_control_center_runtime_review_stabilization_151_160_manager import AuraControlCenterRuntimeReviewStabilization151160Manager
 from aura.local_chat_runtime_foundation.aura_local_chat_runtime_foundation_manager import AuraLocalChatRuntimeFoundationManager
 from aura.local_chat_cli_session_alpha.aura_local_chat_cli_session_alpha_manager import AuraLocalChatCliSessionAlphaManager
+from aura.local_chat_message_store.aura_local_chat_message_store_manager import AuraLocalChatMessageStoreManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4310,6 +4311,57 @@ class AuraCLI:
 
 
 
+
+    # Sprint 163.0 local chat message store helpers.
+    def print_local_chat_message_store_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat Message Store Safety Boundary"))
+
+    def handle_local_chat_message_store_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat message store"
+        manager = AuraLocalChatMessageStoreManager(project_root=self.project_root)
+
+        if command in {"local-chat-store-alpha", "local-chat-store"}:
+            if not target or target == "AURA local chat message store":
+                print("AURA Local Chat Message Store Alpha")
+                print("===================================")
+                print('Usage: python3 main.py local-chat-store-alpha "Aura simpan pesan ini"')
+                return True
+            print(manager.render_store_turn(target))
+            return True
+
+        if command == "local-chat-message-store-status":
+            self.print_local_chat_message_store_packet("AURA Local Chat Message Store Status", manager.status())
+            return True
+
+        if command == "local-chat-message-store-context":
+            self.print_local_chat_message_store_packet("AURA Local Chat Message Store Context", manager.context())
+            return True
+
+        command_map = {
+            "local-chat-message-store-runtime-plan": ("AURA Local Chat Message Store Runtime Plan", manager.local_chat_message_store_runtime_plan),
+            "local-chat-message-schema-plan": ("AURA Local Chat Message Schema Plan", manager.local_chat_message_schema_plan),
+            "local-chat-store-path-policy-plan": ("AURA Local Chat Store Path Policy Plan", manager.local_chat_store_path_policy_plan),
+            "local-chat-store-redaction-plan": ("AURA Local Chat Store Redaction Plan", manager.local_chat_store_redaction_plan),
+            "local-chat-store-retention-plan": ("AURA Local Chat Store Retention Plan", manager.local_chat_store_retention_plan),
+            "local-chat-store-cli-alpha-plan": ("AURA Local Chat Store CLI Alpha Plan", manager.local_chat_store_cli_alpha_plan),
+            "local-chat-store-model-boundary-plan": ("AURA Local Chat Store Model Boundary Plan", manager.local_chat_store_model_boundary_plan),
+            "local-chat-store-memory-boundary-plan": ("AURA Local Chat Store Memory Boundary Plan", manager.local_chat_store_memory_boundary_plan),
+            "no-local-chat-message-store-unsafe-runtime-plan": ("AURA No Local Chat Message Store Unsafe Runtime Plan", manager.no_local_chat_message_store_unsafe_runtime_plan),
+            "local-chat-message-store-next-sprint-readiness-plan": ("AURA Local Chat Message Store Next Sprint Readiness Plan", manager.local_chat_message_store_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_message_store_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 162.0 local chat CLI session alpha helpers.
     def print_local_chat_cli_session_alpha_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7720,6 +7772,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_message_store_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_cli_session_alpha_cli_command(raw_args):

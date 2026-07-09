@@ -134,6 +134,7 @@ from aura.control_center_read_only_route_map_foundation.aura_control_center_read
 from aura.control_center_runtime_review_stabilization_151_160.aura_control_center_runtime_review_stabilization_151_160_manager import AuraControlCenterRuntimeReviewStabilization151160Manager
 from aura.local_chat_runtime_foundation.aura_local_chat_runtime_foundation_manager import AuraLocalChatRuntimeFoundationManager
 from aura.local_chat_cli_session_alpha.aura_local_chat_cli_session_alpha_manager import AuraLocalChatCliSessionAlphaManager
+from aura.local_chat_message_store.aura_local_chat_message_store_manager import AuraLocalChatMessageStoreManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -329,6 +330,7 @@ class SystemStatusManager:
         control_center_runtime_review_stabilization_151_160_status = AuraControlCenterRuntimeReviewStabilization151160Manager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_runtime_foundation_status = AuraLocalChatRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_cli_session_alpha_status = AuraLocalChatCliSessionAlphaManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        local_chat_message_store_status = AuraLocalChatMessageStoreManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
             "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
@@ -474,6 +476,20 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "local_chat_message_store_ready": local_chat_message_store_status["local_chat_message_store_ready"],
+            "local_chat_message_store_data_ready": local_chat_message_store_status["local_chat_message_store_data_ready"],
+            "local_chat_message_store_plan_type_count": local_chat_message_store_status["plan_type_count"],
+            "local_chat_message_store_total_blueprint_count": local_chat_message_store_status["total_local_chat_message_store_blueprint_count"],
+            "local_chat_message_store_thin_runtime_alpha": local_chat_message_store_status["thin_runtime_alpha"],
+            "local_chat_message_store_runtime_enabled": local_chat_message_store_status["message_store_runtime_enabled"],
+            "local_chat_message_store_jsonl_append_runtime_enabled": local_chat_message_store_status["jsonl_append_runtime_enabled"],
+            "local_chat_message_store_runtime_messages_persisted": local_chat_message_store_status["runtime_chat_messages_persisted"],
+            "local_chat_message_store_runtime_records_written": local_chat_message_store_status["runtime_message_store_records_written"],
+            "local_chat_message_store_runtime_model_requests_dispatched": local_chat_message_store_status["runtime_model_requests_dispatched"],
+            "local_chat_message_store_runtime_memory_writes": local_chat_message_store_status["runtime_memory_writes"],
+            "local_chat_message_store_runtime_commands_executed": local_chat_message_store_status["runtime_commands_executed"],
+            "local_chat_message_store_runtime_arbitrary_files_written": local_chat_message_store_status["runtime_arbitrary_files_written"],
+            "local_chat_message_store_runtime_execution_features": local_chat_message_store_status["runtime_execution_features"],
             "local_chat_cli_session_alpha_ready": local_chat_cli_session_alpha_status["local_chat_cli_session_alpha_ready"],
             "local_chat_cli_session_alpha_data_ready": local_chat_cli_session_alpha_status["local_chat_cli_session_alpha_data_ready"],
             "local_chat_cli_session_alpha_plan_type_count": local_chat_cli_session_alpha_status["plan_type_count"],

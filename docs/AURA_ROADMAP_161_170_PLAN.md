@@ -41,3 +41,12 @@ AURA persona response. It keeps message persistence, model runtime, memory
 runtime, command execution, file mutation, desktop control, voice, vision,
 network access, and autonomous actions disabled. Sprint 163 should add the local
 chat message store.
+
+
+## Sprint 163 Direction — Local Chat Message Store
+
+Sprint 163 introduces a controlled local message store for AURA chat. It allows
+one manual CLI chat turn to be appended to an AURA-owned JSONL store while model
+runtime, memory runtime, command execution, arbitrary file mutation, desktop
+action, voice, vision, network access, and autonomous actions remain disabled.
+Sprint 164 should add the AURA Persona Response Layer.

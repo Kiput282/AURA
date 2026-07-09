@@ -2911,6 +2911,16 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    # Sprint 163.0 Local Chat Message Store actions.
+    local_chat_message_store_actions = [
+        ('local_chat_message_store.status', 'user_confirmation', 'Show Local Chat Message Store status.'),
+        ('local_chat_message_store.store_turn', 'user_confirmation', 'Store one safe local chat alpha turn.'),
+        ('local_chat_message_store.no_unsafe_runtime_plan', 'user_confirmation', 'Show no unsafe runtime activation plan for local chat message store.'),
+        ('local_chat_message_store.context', 'user_confirmation', 'Show Local Chat Message Store context.'),
+    ]
+    for action_name, permission_action, description in local_chat_message_store_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_message_store", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_message_store"))
+
     # Sprint 162.0 Local Chat CLI Session Alpha actions.
     local_chat_cli_session_alpha_actions = [
         ('local_chat_cli_session_alpha.status', 'user_confirmation', 'Show Local Chat CLI Session Alpha status.'),
