@@ -134,6 +134,7 @@ from aura.service_recovery_restart_policy_foundation.aura_service_recovery_resta
 from aura.service_security_localhost_binding_review.aura_service_security_localhost_binding_review_manager import AuraServiceSecurityLocalhostBindingReviewManager
 from aura.service_review_stabilization_141_150.aura_service_review_stabilization_141_150_manager import AuraServiceReviewStabilization141150Manager
 from aura.control_center_runtime_foundation.aura_control_center_runtime_foundation_manager import AuraControlCenterRuntimeFoundationManager
+from aura.control_center_read_only_status_panel_foundation.aura_control_center_read_only_status_panel_foundation_manager import AuraControlCenterReadOnlyStatusPanelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4292,6 +4293,50 @@ class AuraCLI:
 
 
 
+
+
+    # Sprint 152.0 control center read-only status panel foundation CLI helpers.
+    def print_control_center_read_only_status_panel_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Read-Only Status Panel Foundation Safety Boundary"))
+
+    def handle_control_center_read_only_status_panel_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center read-only status panel foundation"
+        manager = AuraControlCenterReadOnlyStatusPanelFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-read-only-status-panel-foundation-status":
+            self.print_control_center_read_only_status_panel_foundation_packet("AURA Control Center Read-Only Status Panel Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-read-only-status-panel-foundation-context":
+            self.print_control_center_read_only_status_panel_foundation_packet("AURA Control Center Read-Only Status Panel Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "status-panel-layout-contract-plan": ("AURA Status Panel Layout Contract Plan", manager.status_panel_layout_contract_plan),
+            "status-summary-data-contract-plan": ("AURA Status Summary Data Contract Plan", manager.status_summary_data_contract_plan),
+            "status-indicator-semantics-plan": ("AURA Status Indicator Semantics Plan", manager.status_indicator_semantics_plan),
+            "status-panel-safe-idle-state-plan": ("AURA Status Panel Safe Idle State Plan", manager.status_panel_safe_idle_state_plan),
+            "status-panel-error-boundary-plan": ("AURA Status Panel Error Boundary Plan", manager.status_panel_error_boundary_plan),
+            "status-panel-refresh-policy-review-plan": ("AURA Status Panel Refresh Policy Review Plan", manager.status_panel_refresh_policy_review_plan),
+            "status-panel-accessibility-contract-plan": ("AURA Status Panel Accessibility Contract Plan", manager.status_panel_accessibility_contract_plan),
+            "status-panel-security-boundary-plan": ("AURA Status Panel Security Boundary Plan", manager.status_panel_security_boundary_plan),
+            "status-panel-next-capability-viewer-readiness-plan": ("AURA Status Panel Next Capability Viewer Readiness Plan", manager.status_panel_next_capability_viewer_readiness_plan),
+            "no-control-center-status-panel-runtime-activation-plan": ("AURA No Control Center Status Panel Runtime Activation Plan", manager.no_control_center_status_panel_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_read_only_status_panel_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 151.0 control center runtime foundation CLI helpers.
     def print_control_center_runtime_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7229,6 +7274,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_runtime_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

@@ -2909,6 +2909,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
     # Sprint 149.0 service security and localhost binding review actions.
 
+
+    control_center_read_only_status_panel_foundation_actions = [
+        ('control_center_read_only_status_panel_foundation.status', 'read_project', 'Show Control Center Read-Only Status Panel Foundation status.'),
+        ('control_center_read_only_status_panel_foundation.status_panel_layout_contract_plan', 'read_project', 'Prepare status panel layout contract plan.'),
+        ('control_center_read_only_status_panel_foundation.status_summary_data_contract_plan', 'read_project', 'Prepare status summary data contract plan.'),
+        ('control_center_read_only_status_panel_foundation.status_indicator_semantics_plan', 'read_project', 'Prepare status indicator semantics plan.'),
+        ('control_center_read_only_status_panel_foundation.status_panel_safe_idle_state_plan', 'read_project', 'Prepare status panel safe-idle state plan.'),
+        ('control_center_read_only_status_panel_foundation.status_panel_error_boundary_plan', 'read_project', 'Prepare status panel error boundary plan.'),
+        ('control_center_read_only_status_panel_foundation.status_panel_refresh_policy_review_plan', 'read_project', 'Prepare status panel refresh policy review plan.'),
+        ('control_center_read_only_status_panel_foundation.status_panel_accessibility_contract_plan', 'read_project', 'Prepare status panel accessibility contract plan.'),
+        ('control_center_read_only_status_panel_foundation.status_panel_security_boundary_plan', 'read_project', 'Prepare status panel security boundary plan.'),
+        ('control_center_read_only_status_panel_foundation.status_panel_next_capability_viewer_readiness_plan', 'read_project', 'Prepare next capability-viewer readiness plan.'),
+        ('control_center_read_only_status_panel_foundation.no_control_center_status_panel_runtime_activation_plan', 'read_project', 'Prepare no status panel runtime activation plan.'),
+        ('control_center_read_only_status_panel_foundation.context', 'read_project', 'Show Control Center Read-Only Status Panel Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_read_only_status_panel_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_read_only_status_panel_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_read_only_status_panel_foundation"))
+
     control_center_runtime_foundation_actions = [
         ('control_center_runtime_foundation.status', 'read_project', 'Show Control Center Runtime Foundation status.'),
         ('control_center_runtime_foundation.control_center_runtime_shell_contract_plan', 'read_project', 'Prepare Control Center runtime shell contract plan.'),

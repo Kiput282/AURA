@@ -1,6 +1,6 @@
 # AURA Roadmap 151-160 — Control Center Runtime
 
-Version opened: v0.151.0-genesis  
+Version opened: v0.152.0-genesis  
 Block status: active  
 Runtime posture: localhost-only, read-only first, release-gated
 
@@ -14,7 +14,7 @@ control runtime can be considered.
 ## Planned sprint sequence
 
 - Sprint 151.0 — Control Center Runtime Foundation completed
-- Sprint 152.0 — Control Center Read-Only Status Panel Foundation planned
+- Sprint 152.0 — Control Center Read-Only Status Panel Foundation completed
 - Sprint 153.0 — Control Center Capability Viewer Foundation planned
 - Sprint 154.0 — Control Center Service Monitor Panel Foundation planned
 - Sprint 155.0 — Control Center Permission Center Read-Only Foundation planned

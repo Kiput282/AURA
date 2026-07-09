@@ -123,6 +123,7 @@ from aura.service_recovery_restart_policy_foundation.aura_service_recovery_resta
 from aura.service_security_localhost_binding_review.aura_service_security_localhost_binding_review_manager import AuraServiceSecurityLocalhostBindingReviewManager
 from aura.service_review_stabilization_141_150.aura_service_review_stabilization_141_150_manager import AuraServiceReviewStabilization141150Manager
 from aura.control_center_runtime_foundation.aura_control_center_runtime_foundation_manager import AuraControlCenterRuntimeFoundationManager
+from aura.control_center_read_only_status_panel_foundation.aura_control_center_read_only_status_panel_foundation_manager import AuraControlCenterReadOnlyStatusPanelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -307,6 +308,7 @@ class SystemStatusManager:
         service_security_localhost_binding_review_status = AuraServiceSecurityLocalhostBindingReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         service_review_stabilization_141_150_status = AuraServiceReviewStabilization141150Manager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         control_center_runtime_foundation_status = AuraControlCenterRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        control_center_read_only_status_panel_foundation_status = AuraControlCenterReadOnlyStatusPanelFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
             "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
@@ -352,6 +354,16 @@ class SystemStatusManager:
             "control_center_runtime_foundation_runtime_routes_mounted": control_center_runtime_foundation_status["runtime_routes_mounted"],
             "control_center_runtime_foundation_runtime_dashboard_requests_served": control_center_runtime_foundation_status["runtime_dashboard_requests_served"],
             "control_center_runtime_foundation_runtime_execution_features": control_center_runtime_foundation_status["runtime_execution_features"],
+            "control_center_read_only_status_panel_foundation_ready": control_center_read_only_status_panel_foundation_status["control_center_read_only_status_panel_foundation_ready"],
+            "control_center_read_only_status_panel_foundation_data_ready": control_center_read_only_status_panel_foundation_status["control_center_read_only_status_panel_foundation_data_ready"],
+            "control_center_read_only_status_panel_foundation_plan_type_count": control_center_read_only_status_panel_foundation_status["plan_type_count"],
+            "control_center_read_only_status_panel_foundation_total_blueprint_count": control_center_read_only_status_panel_foundation_status["total_control_center_read_only_status_panel_foundation_blueprint_count"],
+            "control_center_read_only_status_panel_foundation_runtime_status_panel_renders_executed": control_center_read_only_status_panel_foundation_status["runtime_status_panel_renders_executed"],
+            "control_center_read_only_status_panel_foundation_runtime_status_data_reads": control_center_read_only_status_panel_foundation_status["runtime_status_data_reads"],
+            "control_center_read_only_status_panel_foundation_runtime_status_polls_started": control_center_read_only_status_panel_foundation_status["runtime_status_polls_started"],
+            "control_center_read_only_status_panel_foundation_runtime_dashboard_requests_served": control_center_read_only_status_panel_foundation_status["runtime_dashboard_requests_served"],
+            "control_center_read_only_status_panel_foundation_runtime_routes_mounted": control_center_read_only_status_panel_foundation_status["runtime_dashboard_routes_mounted"],
+            "control_center_read_only_status_panel_foundation_runtime_execution_features": control_center_read_only_status_panel_foundation_status["runtime_execution_features"],
         })
 
         service_audit_link_foundation_status = AuraServiceAuditLinkFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()

@@ -1446,6 +1446,32 @@ def build_builtin_skill_registry() -> SkillRegistry:
     # Sprint 150.0 service review stabilization 141-150 skill.
 
 
+
+
+    registry.register(
+        AuraSkill(
+            name="aura_control_center_read_only_status_panel_foundation",
+            description="Prepare planner-only and metadata-only Control Center read-only status panel foundation plans for status layout, summary data contract, indicator semantics, safe-idle state, error boundaries, refresh policy review, accessibility, security boundary, next capability-viewer readiness, and no status panel runtime activation without starting servers, polling status, rendering live panels, mounting routes, serving requests, binding ports, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_read_only_status_panel_foundation_status",
+                "status_panel_layout_contract_plan",
+                "status_summary_data_contract_plan",
+                "status_indicator_semantics_plan",
+                "status_panel_safe_idle_state_plan",
+                "status_panel_error_boundary_plan",
+                "status_panel_refresh_policy_review_plan",
+                "status_panel_accessibility_contract_plan",
+                "status_panel_security_boundary_plan",
+                "status_panel_next_capability_viewer_readiness_plan",
+                "no_control_center_status_panel_runtime_activation_plan",
+                "control_center_read_only_status_panel_foundation_context",
+            ],
+        )
+    )
+
     registry.register(
         AuraSkill(
             name="aura_control_center_runtime_foundation",
