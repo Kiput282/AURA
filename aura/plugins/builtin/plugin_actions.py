@@ -2911,6 +2911,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    control_center_service_monitor_panel_foundation_actions = [
+        ('control_center_service_monitor_panel_foundation.status', 'read_project', 'Show Control Center Service Monitor Panel Foundation status.'),
+        ('control_center_service_monitor_panel_foundation.service_monitor_layout_contract_plan', 'read_project', 'Prepare service monitor layout contract plan.'),
+        ('control_center_service_monitor_panel_foundation.service_runtime_state_summary_plan', 'read_project', 'Prepare service runtime state summary plan.'),
+        ('control_center_service_monitor_panel_foundation.service_process_boundary_visibility_plan', 'read_project', 'Prepare service process boundary visibility plan.'),
+        ('control_center_service_monitor_panel_foundation.service_health_signal_contract_plan', 'read_project', 'Prepare service health signal contract plan.'),
+        ('control_center_service_monitor_panel_foundation.service_restart_recovery_status_plan', 'read_project', 'Prepare service restart/recovery status plan.'),
+        ('control_center_service_monitor_panel_foundation.service_security_localhost_status_plan', 'read_project', 'Prepare service security localhost status plan.'),
+        ('control_center_service_monitor_panel_foundation.service_monitor_filter_grouping_plan', 'read_project', 'Prepare service monitor filter grouping plan.'),
+        ('control_center_service_monitor_panel_foundation.service_monitor_error_boundary_plan', 'read_project', 'Prepare service monitor error boundary plan.'),
+        ('control_center_service_monitor_panel_foundation.service_monitor_accessibility_security_review_plan', 'read_project', 'Prepare service monitor accessibility/security review plan.'),
+        ('control_center_service_monitor_panel_foundation.no_control_center_service_monitor_panel_runtime_activation_plan', 'read_project', 'Prepare no service monitor panel runtime activation plan.'),
+        ('control_center_service_monitor_panel_foundation.context', 'read_project', 'Show Control Center Service Monitor Panel Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_service_monitor_panel_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_service_monitor_panel_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_service_monitor_panel_foundation"))
+
     control_center_audit_panel_foundation_actions = [
         ('control_center_audit_panel_foundation.status', 'read_project', 'Show Control Center Audit Panel Foundation status.'),
         ('control_center_audit_panel_foundation.audit_panel_layout_contract_plan', 'read_project', 'Prepare audit panel layout contract plan.'),

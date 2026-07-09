@@ -139,6 +139,7 @@ from aura.control_center_capability_viewer_foundation.aura_control_center_capabi
 from aura.control_center_plugin_panel_foundation.aura_control_center_plugin_panel_foundation_manager import AuraControlCenterPluginPanelFoundationManager
 from aura.control_center_permission_panel_foundation.aura_control_center_permission_panel_foundation_manager import AuraControlCenterPermissionPanelFoundationManager
 from aura.control_center_audit_panel_foundation.aura_control_center_audit_panel_foundation_manager import AuraControlCenterAuditPanelFoundationManager
+from aura.control_center_service_monitor_panel_foundation.aura_control_center_service_monitor_panel_foundation_manager import AuraControlCenterServiceMonitorPanelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4303,6 +4304,48 @@ class AuraCLI:
 
 
 
+    # Sprint 157.0 control center service monitor panel foundation CLI helpers.
+    def print_control_center_service_monitor_panel_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Service Monitor Panel Foundation Safety Boundary"))
+
+    def handle_control_center_service_monitor_panel_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center service monitor panel foundation"
+        manager = AuraControlCenterServiceMonitorPanelFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-service-monitor-panel-foundation-status":
+            self.print_control_center_service_monitor_panel_foundation_packet("AURA Control Center Service Monitor Panel Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-service-monitor-panel-foundation-context":
+            self.print_control_center_service_monitor_panel_foundation_packet("AURA Control Center Service Monitor Panel Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-monitor-layout-contract-plan": ("AURA Service Monitor Layout Contract Plan", manager.service_monitor_layout_contract_plan),
+            "service-runtime-state-summary-plan": ("AURA Service Runtime State Summary Plan", manager.service_runtime_state_summary_plan),
+            "service-process-boundary-visibility-plan": ("AURA Service Process Boundary Visibility Plan", manager.service_process_boundary_visibility_plan),
+            "service-health-signal-contract-plan": ("AURA Service Health Signal Contract Plan", manager.service_health_signal_contract_plan),
+            "service-restart-recovery-status-plan": ("AURA Service Restart Recovery Status Plan", manager.service_restart_recovery_status_plan),
+            "service-security-localhost-status-plan": ("AURA Service Security Localhost Status Plan", manager.service_security_localhost_status_plan),
+            "service-monitor-filter-grouping-plan": ("AURA Service Monitor Filter Grouping Plan", manager.service_monitor_filter_grouping_plan),
+            "service-monitor-error-boundary-plan": ("AURA Service Monitor Error Boundary Plan", manager.service_monitor_error_boundary_plan),
+            "service-monitor-accessibility-security-review-plan": ("AURA Service Monitor Accessibility Security Review Plan", manager.service_monitor_accessibility_security_review_plan),
+            "no-control-center-service-monitor-panel-runtime-activation-plan": ("AURA No Control Center Service Monitor Panel Runtime Activation Plan", manager.no_control_center_service_monitor_panel_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_service_monitor_panel_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 156.0 control center audit panel foundation CLI helpers.
     def print_control_center_audit_panel_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7453,6 +7496,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_service_monitor_panel_foundation_cli_command(raw_args):
             return True
 
         if self.handle_control_center_audit_panel_foundation_cli_command(raw_args):

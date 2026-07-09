@@ -1452,6 +1452,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_control_center_service_monitor_panel_foundation",
+            description="Prepare planner-only and metadata-only Control Center service monitor panel foundation plans for service runtime state summaries, process boundary visibility, health signals, restart/recovery status, localhost/security visibility, filters/grouping, error boundaries, accessibility/security review, and no service monitor runtime activation without probing live processes, starting services, serving requests, binding ports, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_service_monitor_panel_foundation_status",
+                "service_monitor_layout_contract_plan",
+                "service_runtime_state_summary_plan",
+                "service_process_boundary_visibility_plan",
+                "service_health_signal_contract_plan",
+                "service_restart_recovery_status_plan",
+                "service_security_localhost_status_plan",
+                "service_monitor_filter_grouping_plan",
+                "service_monitor_error_boundary_plan",
+                "service_monitor_accessibility_security_review_plan",
+                "no_control_center_service_monitor_panel_runtime_activation_plan",
+                "control_center_service_monitor_panel_foundation_context",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_control_center_audit_panel_foundation",
             description="Prepare planner-only and metadata-only Control Center audit panel foundation plans for audit link summaries, event references, log boundaries, trace-chain summary, retention/redaction boundaries, filters/grouping, error boundaries, accessibility/security review, and no audit panel runtime activation without reading live logs, writing audit events, serving requests, binding ports, or enabling runtime execution.",
             role="dashboard",
