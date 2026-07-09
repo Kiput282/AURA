@@ -1451,6 +1451,28 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+    # Sprint 165.0 local chat model adapter boundary skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_chat_model_adapter_boundary",
+            description="Create dry-run prompt/provider adapter packets for local chat without dispatching model requests, reading credentials, using network, writing memory, executing commands, or mutating arbitrary files.",
+            role="companion",
+            permission_action="future_model_permission_gate",
+            status="online",
+            capabilities=[
+                "local_chat_model_adapter_boundary",
+                "dry_run_prompt_envelope",
+                "provider_contract_metadata",
+                "model_permission_handoff",
+                "no_model_request_dispatch",
+                "no_network_request",
+                "no_credential_read",
+                "no_command_execution",
+            ],
+        )
+    )
+
     # Sprint 164.0 local chat persona response layer skill.
     registry.register(
         AuraSkill(

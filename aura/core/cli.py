@@ -147,6 +147,7 @@ from aura.local_chat_runtime_foundation.aura_local_chat_runtime_foundation_manag
 from aura.local_chat_cli_session_alpha.aura_local_chat_cli_session_alpha_manager import AuraLocalChatCliSessionAlphaManager
 from aura.local_chat_message_store.aura_local_chat_message_store_manager import AuraLocalChatMessageStoreManager
 from aura.local_chat_persona_response_layer.aura_local_chat_persona_response_layer_manager import AuraLocalChatPersonaResponseLayerManager
+from aura.local_chat_model_adapter_boundary.aura_local_chat_model_adapter_boundary_manager import AuraLocalChatModelAdapterBoundaryManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4314,6 +4315,57 @@ class AuraCLI:
 
 
 
+
+    # Sprint 165.0 local chat model adapter boundary helpers.
+    def print_local_chat_model_adapter_boundary_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat Model Adapter Boundary Safety Boundary"))
+
+    def handle_local_chat_model_adapter_boundary_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat model adapter boundary"
+        manager = AuraLocalChatModelAdapterBoundaryManager(project_root=self.project_root)
+
+        if command in {"local-chat-model-adapter-dry-run", "local-chat-model-adapter"}:
+            if not target or target == "AURA local chat model adapter boundary":
+                print("AURA Local Chat Model Adapter Boundary Dry Run")
+                print("==============================================")
+                print('Usage: python3 main.py local-chat-model-adapter-dry-run "Aura coba model adapter"')
+                return True
+            print(manager.render_dry_run(target))
+            return True
+
+        if command == "local-chat-model-adapter-boundary-status":
+            self.print_local_chat_model_adapter_boundary_packet("AURA Local Chat Model Adapter Boundary Status", manager.status())
+            return True
+
+        if command == "local-chat-model-adapter-boundary-context":
+            self.print_local_chat_model_adapter_boundary_packet("AURA Local Chat Model Adapter Boundary Context", manager.context())
+            return True
+
+        command_map = {
+            "local-chat-model-adapter-boundary-runtime-plan": ("AURA Local Chat Model Adapter Boundary Runtime Plan", manager.local_chat_model_adapter_boundary_runtime_plan),
+            "model-adapter-provider-contract-plan": ("AURA Model Adapter Provider Contract Plan", manager.model_adapter_provider_contract_plan),
+            "model-prompt-envelope-contract-plan": ("AURA Model Prompt Envelope Contract Plan", manager.model_prompt_envelope_contract_plan),
+            "model-permission-handoff-plan": ("AURA Model Permission Handoff Plan", manager.model_permission_handoff_plan),
+            "model-response-envelope-contract-plan": ("AURA Model Response Envelope Contract Plan", manager.model_response_envelope_contract_plan),
+            "model-error-boundary-plan": ("AURA Model Error Boundary Plan", manager.model_error_boundary_plan),
+            "model-network-credential-boundary-plan": ("AURA Model Network Credential Boundary Plan", manager.model_network_credential_boundary_plan),
+            "model-memory-command-boundary-plan": ("AURA Model Memory Command Boundary Plan", manager.model_memory_command_boundary_plan),
+            "no-local-chat-model-adapter-unsafe-runtime-plan": ("AURA No Local Chat Model Adapter Unsafe Runtime Plan", manager.no_local_chat_model_adapter_unsafe_runtime_plan),
+            "local-chat-model-adapter-next-sprint-readiness-plan": ("AURA Local Chat Model Adapter Next Sprint Readiness Plan", manager.local_chat_model_adapter_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_model_adapter_boundary_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 164.0 local chat persona response layer helpers.
     def print_local_chat_persona_response_layer_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7824,6 +7876,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_model_adapter_boundary_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_persona_response_layer_cli_command(raw_args):

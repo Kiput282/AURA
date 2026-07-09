@@ -62,3 +62,13 @@ memory runtime, command execution, arbitrary file mutation, desktop action,
 voice, vision, network access, and autonomous actions remain disabled. Sprint
 165 should add the Model Adapter Boundary without automatically dispatching
 model requests.
+
+
+## Sprint 165 Direction — Model Adapter Boundary
+
+Sprint 165 defines the model adapter boundary for AURA local chat. It introduces
+a dry-run adapter packet, provider metadata contract, prompt envelope contract,
+response envelope contract, model error boundary, credential/network boundary,
+and Sprint 166 permission handoff. It does not dispatch model requests, call
+local or remote providers, read credentials, write memory, execute commands, or
+mutate arbitrary files.

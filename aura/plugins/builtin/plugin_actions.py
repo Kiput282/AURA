@@ -2912,6 +2912,17 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+    # Sprint 165.0 Local Chat Model Adapter Boundary actions.
+    local_chat_model_adapter_boundary_actions = [
+        ('local_chat_model_adapter_boundary.status', 'future_model_permission_gate', 'Show Local Chat Model Adapter Boundary status.'),
+        ('local_chat_model_adapter_boundary.dry_run', 'future_model_permission_gate', 'Create one dry-run local chat model adapter packet without dispatching a model request.'),
+        ('local_chat_model_adapter_boundary.no_unsafe_runtime_plan', 'future_model_permission_gate', 'Show no unsafe runtime activation plan for model adapter boundary.'),
+        ('local_chat_model_adapter_boundary.context', 'future_model_permission_gate', 'Show Local Chat Model Adapter Boundary context.'),
+    ]
+    for action_name, permission_action, description in local_chat_model_adapter_boundary_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_model_adapter_boundary", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_model_adapter_boundary"))
+
     # Sprint 164.0 Local Chat Persona Response Layer actions.
     local_chat_persona_response_layer_actions = [
         ('local_chat_persona_response_layer.status', 'user_confirmation', 'Show Local Chat Persona Response Layer status.'),
