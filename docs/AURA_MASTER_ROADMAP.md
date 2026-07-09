@@ -1508,3 +1508,50 @@ AURA now includes the Review & Stabilization 131-140 Foundation.
 This checkpoint closes the 131-140 runtime planning block by validating scope coverage, runtime boundary integrity, capability registry consistency, system status surfaces, skill/plugin/CLI/shell integrations, documentation and roadmap state, safety counter zero state, git/boot verification, next block readiness, and no-runtime-activation boundaries.
 
 The next block is Sprint 141-150: Local Service Runtime Foundation.
+
+## Product Direction — Genesis to Post-Genesis
+
+AURA's current path continues from v0.140.0-genesis toward v1.0.0-genesis.
+
+Major roadmap blocks:
+
+- Sprint 141-150: Local Service Runtime Foundation
+- Sprint 151-160: Control Center Runtime
+- Sprint 161-170: Local Chat Runtime
+- Sprint 171-180: Memory Runtime
+- Sprint 181-190: Voice Foundation Runtime
+- Sprint 191-200: Vision / Screen Awareness Runtime
+- Sprint 201-210: ORION Client Bridge
+- Sprint 211-220: Avatar / Presence Foundation
+- Sprint 221-230: Final Genesis Integration
+- Sprint 231-240: Genesis Release Candidate to v1.0.0-genesis
+
+Post-Genesis direction:
+
+- hardening and reliability
+- creative partner expansion
+- Game Companion foundation
+- streaming/avatar identity
+- advanced ORION runtime
+
+Game Companion order:
+
+1. Minecraft
+2. osu
+3. Beat Saber
+4. Monster Hunter
+
+Game Companion safety boundary:
+
+- offline/private/single-player first
+- no cheating
+- no ranked automation
+- no multiplayer farming
+- no exploit workflow
+- no silent input control
+- all future game runtime must pass through ORION, permission, audit, vision, and Control Center gates
+
+Canonical planning docs:
+
+- docs/AURA_GENESIS_TO_POST_GENESIS_PRODUCT_PLAN.md
+- docs/AURA_GAME_COMPANION_SAFETY_POLICY.md

@@ -1189,3 +1189,90 @@ Safety result:
 Next planned sprint:
 
 - Sprint 141.0 — Local Service Runtime Foundation
+
+## Product Direction: Genesis to Post-Genesis
+
+AURA is a local-first AI partner.
+
+Current canonical state:
+
+- Version: v0.140.0-genesis
+- Current completed block: Sprint 131-140 Review & Stabilization
+- Next planned sprint: Sprint 141.0 — Local Service Runtime Foundation
+- Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
+
+Roadmap summary:
+
+- Sprint 141-150: Local Service Runtime Foundation
+- Sprint 151-160: Control Center Runtime
+- Sprint 161-170: Local Chat Runtime
+- Sprint 171-180: Memory Runtime
+- Sprint 181-190: Voice Foundation Runtime
+- Sprint 191-200: Vision / Screen Awareness Runtime
+- Sprint 201-210: ORION Client Bridge
+- Sprint 211-220: Avatar / Presence Foundation
+- Sprint 221-230: Final Genesis Integration
+- Sprint 231-240: Genesis Release Candidate to v1.0.0-genesis
+
+Canonical planning docs:
+
+- docs/AURA_GENESIS_TO_POST_GENESIS_PRODUCT_PLAN.md
+- docs/AURA_GAME_COMPANION_SAFETY_POLICY.md
+
+## Future Game Companion Plan
+
+AURA Game Companion is a future post-core pillar.
+
+Planned order:
+
+1. Minecraft Companion
+2. osu Companion
+3. Beat Saber Companion
+4. Monster Hunter Companion
+
+Direction:
+
+- Minecraft: private/local sandbox companion for survival, building, resource planning, navigation, base planning, and devlog progression.
+- osu: offline rhythm learner that learns from vision/audio/feedback without using beatmap files as answer keys or submitting online scores.
+- Beat Saber: 3D rhythm performer with avatar movement, cinematic camera planning, viewer challenge queue, and livestream identity.
+- Monster Hunter: single-player Hunter Coach for observation, positioning advice, item/loadout guidance, and offline learning research.
+
+Safety boundary:
+
+- no cheating
+- no ranked/online score automation
+- no multiplayer farming
+- no exploit workflows
+- no silent game input control
+- no public server abuse
+- no ORION/game runtime before permission, audit, vision, and Control Center gates exist
+
+## Current Capability Boundary
+
+At v0.140.0-genesis, AURA can:
+
+- boot to READY
+- expose identity and version
+- show capability registry metadata
+- show skill and plugin action metadata
+- provide planner-only review packets through CLI/shell
+- document sprint progress
+- maintain roadmap and journal records
+- define safety boundaries
+- define future runtime plans
+- validate that runtime counters remain zero
+- support Git-tracked project evolution
+
+At v0.140.0-genesis, AURA cannot yet:
+
+- run active local service runtime
+- serve a real web Control Center
+- run real chat runtime
+- read/write memory at runtime
+- create/apply permission grants at runtime
+- start audit writers or write audit events
+- use microphone, camera, screen, or ORION bridge
+- control desktop apps, OBS, Blender, avatar, or games
+- execute tools or commands autonomously
+- read/write/modify/delete files at runtime
+- bind ports or expose network services as active runtime
