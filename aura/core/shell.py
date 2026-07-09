@@ -123,6 +123,7 @@ from aura.control_center_runtime_entry_review.aura_control_center_runtime_entry_
 from aura.chat_runtime_minimal_loop_review.aura_chat_runtime_minimal_loop_review_foundation_manager import AuraChatRuntimeMinimalLoopReviewFoundationManager
 from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review_foundation_manager import AuraMemoryRuntimeWriteGateReviewFoundationManager
 from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gate_review_foundation_manager import AuraPermissionRuntimeGrantGateReviewFoundationManager
+from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
 
 
 class AuraShell:
@@ -1049,6 +1050,18 @@ class AuraShell:
         print("  permission-grant-safe-idle-failure-review-plan <target> Prepare permission grant safe idle failure review plan")
         print("  permission-grant-no-mutation-review-plan <target> Prepare permission grant no-mutation review plan")
         print("  permission-runtime-grant-gate-review-context Show Permission Runtime Grant Gate Review context")
+        print("  audit-runtime-writer-activation-review-status Show Audit Runtime Writer Activation Review Foundation status")
+        print("  audit-writer-activation-scope-review-plan <target> Prepare audit writer activation scope review plan")
+        print("  audit-event-schema-review-plan <target> Prepare audit event schema review plan")
+        print("  audit-append-only-storage-review-plan <target> Prepare audit append-only storage review plan")
+        print("  audit-redaction-boundary-review-plan <target> Prepare audit redaction boundary review plan")
+        print("  audit-actor-context-review-plan <target> Prepare audit actor context review plan")
+        print("  audit-permission-link-review-plan <target> Prepare audit permission link review plan")
+        print("  audit-dashboard-visibility-review-plan <target> Prepare audit dashboard visibility review plan")
+        print("  audit-failure-safe-idle-review-plan <target> Prepare audit failure safe idle review plan")
+        print("  audit-retention-export-review-plan <target> Prepare audit retention/export review plan")
+        print("  audit-no-write-activation-review-plan <target> Prepare audit no-write activation review plan")
+        print("  audit-runtime-writer-activation-review-context Show Audit Runtime Writer Activation Review context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5037,6 +5050,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 139.0 audit runtime writer activation review shell helpers.
+    def print_audit_runtime_writer_activation_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Audit Runtime Writer Activation Review Safety Boundary"))
+
+    def handle_audit_runtime_writer_activation_review_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA audit runtime writer activation review"
+        manager = AuraAuditRuntimeWriterActivationReviewFoundationManager(project_root=self.project_root)
+
+        if command == "audit-runtime-writer-activation-review-status":
+            self.print_audit_runtime_writer_activation_review_packet("AURA Audit Runtime Writer Activation Review Foundation Status", manager.status())
+            return True
+
+        if command == "audit-runtime-writer-activation-review-context":
+            self.print_audit_runtime_writer_activation_review_packet("AURA Audit Runtime Writer Activation Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "audit-writer-activation-scope-review-plan": ("AURA Audit Writer Activation Scope Review Plan", manager.audit_writer_activation_scope_review_plan),
+            "audit-event-schema-review-plan": ("AURA Audit Event Schema Review Plan", manager.audit_event_schema_review_plan),
+            "audit-append-only-storage-review-plan": ("AURA Audit Append Only Storage Review Plan", manager.audit_append_only_storage_review_plan),
+            "audit-redaction-boundary-review-plan": ("AURA Audit Redaction Boundary Review Plan", manager.audit_redaction_boundary_review_plan),
+            "audit-actor-context-review-plan": ("AURA Audit Actor Context Review Plan", manager.audit_actor_context_review_plan),
+            "audit-permission-link-review-plan": ("AURA Audit Permission Link Review Plan", manager.audit_permission_link_review_plan),
+            "audit-dashboard-visibility-review-plan": ("AURA Audit Dashboard Visibility Review Plan", manager.audit_dashboard_visibility_review_plan),
+            "audit-failure-safe-idle-review-plan": ("AURA Audit Failure Safe Idle Review Plan", manager.audit_failure_safe_idle_review_plan),
+            "audit-retention-export-review-plan": ("AURA Audit Retention Export Review Plan", manager.audit_retention_export_review_plan),
+            "audit-no-write-activation-review-plan": ("AURA Audit No Write Activation Review Plan", manager.audit_no_write_activation_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_audit_runtime_writer_activation_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 138.0 permission runtime grant gate review shell helpers.
     def print_permission_runtime_grant_gate_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7490,6 +7546,9 @@ class AuraShell:
             return
 
         if self.handle_permission_runtime_grant_gate_review_shell_command(normalized):
+            return
+
+        if self.handle_audit_runtime_writer_activation_review_shell_command(normalized):
             return
 
         if normalized == "help":

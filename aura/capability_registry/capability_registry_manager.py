@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_audit_runtime_writer_activation_review_foundation",
+                    "name": "AURA Audit Runtime Writer Activation Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.139.0-genesis",
+                    "category": "audit",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Audit Runtime Writer Activation Review Foundation covering audit writer activation scope, event schema, append-only storage, redaction boundary, actor context, permission links, dashboard visibility, failure safe idle, retention/export, and no-write activation review without starting/stopping audit writers, receiving/writing audit events, appending logs, writing storage, redaction runtime, dashboard event emit, permission mutation, action dispatch, tool/command execution, file/service/port/network/ORION/git runtime, or runtime execution features.",
+                },
+                {
                     "id": "aura_permission_runtime_grant_gate_review_foundation",
                     "name": "AURA Permission Runtime Grant Gate Review Foundation",
                     "state": "online",

@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 139.0 audit runtime writer activation review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_audit_runtime_writer_activation_review_foundation",
+            description="Prepare planner-only and review-only Audit Runtime Writer Activation Review Foundation without starting/stopping audit writers, receiving/writing audit events, appending logs, writing storage, executing redaction runtime, emitting dashboard events, mutating permissions, dispatching actions, executing tools/commands, using file runtime, starting services, binding ports, probing network, performing ORION handshakes, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "audit_runtime_writer_activation_review_status",
+                "audit_writer_activation_scope_review_plan",
+                "audit_event_schema_review_plan",
+                "audit_append_only_storage_review_plan",
+                "audit_redaction_boundary_review_plan",
+                "audit_actor_context_review_plan",
+                "audit_permission_link_review_plan",
+                "audit_dashboard_visibility_review_plan",
+                "audit_failure_safe_idle_review_plan",
+                "audit_retention_export_review_plan",
+                "audit_no_write_activation_review_plan",
+                "audit_runtime_writer_activation_review_context",
+            ],
+        )
+    )
+
     # Sprint 138.0 permission runtime grant gate review foundation skill.
     registry.register(
         AuraSkill(

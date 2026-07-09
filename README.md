@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.138.0-genesis  
+Current version: v0.139.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.138.0-genesis
+- v0.139.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.138.0-genesis
+    Version  : 0.139.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -1109,6 +1109,51 @@ Safety result:
 - permission store/cache write disabled
 - permission mutation disabled
 - audit/dashboard/action runtime disabled
+- tool/command execution disabled
+- file/service/port/network/ORION runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 139.0 — Audit Runtime Writer Activation Review Foundation
+
+Status: completed
+Version: v0.139.0-genesis
+
+Sprint 139 adds a planner-only, metadata-only, and review-only Audit Runtime Writer Activation Review Foundation.
+
+Counts:
+
+- 12 plan types
+- 100 total audit runtime writer activation review blueprints/items
+- 0 runtime audit writer activation plans applied
+- 0 runtime audit writers started/stopped
+- 0 runtime audit events received
+- 0 runtime audit event schemas validated
+- 0 runtime audit events written
+- 0 runtime audit logs appended
+- 0 runtime audit storages/files/databases/caches written
+- 0 runtime audit redactions executed
+- 0 runtime audit actor contexts resolved
+- 0 runtime audit permission links created
+- 0 runtime audit dashboard events emitted
+- 0 runtime audit rotations/exports/retentions/corruption checks
+- 0 runtime permission mutations/grants
+- 0 runtime safe idle recoveries
+- 0 runtime dashboard events/actions
+- 0 runtime tools/commands/files/services/ports/network/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- audit writer activation apply disabled
+- audit writer start/stop disabled
+- audit event receive/schema/write disabled
+- audit log append disabled
+- audit storage/file/database/cache write disabled
+- audit redaction/actor/permission/dashboard runtime disabled
+- audit rotation/export/retention/corruption check disabled
+- permission mutation disabled
+- dashboard/action runtime disabled
 - tool/command execution disabled
 - file/service/port/network/ORION runtime disabled
 - release gate closed

@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 139.0 audit runtime writer activation review foundation actions.
+    audit_runtime_writer_activation_review_actions = [
+        ('audit_runtime_writer_activation_review.status', 'read_project', 'Show Audit Runtime Writer Activation Review status.'),
+        ('audit_runtime_writer_activation_review.audit_writer_activation_scope_review_plan', 'read_project', 'Prepare audit writer activation scope review plan.'),
+        ('audit_runtime_writer_activation_review.audit_event_schema_review_plan', 'read_project', 'Prepare audit event schema review plan.'),
+        ('audit_runtime_writer_activation_review.audit_append_only_storage_review_plan', 'read_project', 'Prepare audit append-only storage review plan.'),
+        ('audit_runtime_writer_activation_review.audit_redaction_boundary_review_plan', 'read_project', 'Prepare audit redaction boundary review plan.'),
+        ('audit_runtime_writer_activation_review.audit_actor_context_review_plan', 'read_project', 'Prepare audit actor context review plan.'),
+        ('audit_runtime_writer_activation_review.audit_permission_link_review_plan', 'read_project', 'Prepare audit permission link review plan.'),
+        ('audit_runtime_writer_activation_review.audit_dashboard_visibility_review_plan', 'read_project', 'Prepare audit dashboard visibility review plan.'),
+        ('audit_runtime_writer_activation_review.audit_failure_safe_idle_review_plan', 'read_project', 'Prepare audit failure safe idle review plan.'),
+        ('audit_runtime_writer_activation_review.audit_retention_export_review_plan', 'read_project', 'Prepare audit retention/export review plan.'),
+        ('audit_runtime_writer_activation_review.audit_no_write_activation_review_plan', 'read_project', 'Prepare audit no-write activation review plan.'),
+        ('audit_runtime_writer_activation_review.context', 'read_project', 'Show Audit Runtime Writer Activation Review context.'),
+    ]
+
+    for action_name, permission_action, description in audit_runtime_writer_activation_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="audit_runtime_writer_activation_review", description=description, permission_action=permission_action, status="online", skill="aura_audit_runtime_writer_activation_review_foundation"))
+
     # Sprint 138.0 permission runtime grant gate review foundation actions.
     permission_runtime_grant_gate_review_actions = [
         ('permission_runtime_grant_gate_review.status', 'read_project', 'Show Permission Runtime Grant Gate Review status.'),

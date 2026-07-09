@@ -121,6 +121,7 @@ from aura.control_center_runtime_entry_review.aura_control_center_runtime_entry_
 from aura.chat_runtime_minimal_loop_review.aura_chat_runtime_minimal_loop_review_foundation_manager import AuraChatRuntimeMinimalLoopReviewFoundationManager
 from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review_foundation_manager import AuraMemoryRuntimeWriteGateReviewFoundationManager
 from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gate_review_foundation_manager import AuraPermissionRuntimeGrantGateReviewFoundationManager
+from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4218,6 +4219,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 139.0 audit runtime writer activation review CLI helpers.
+    def print_audit_runtime_writer_activation_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Audit Runtime Writer Activation Review Safety Boundary"))
+
+    def handle_audit_runtime_writer_activation_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA audit runtime writer activation review"
+        manager = AuraAuditRuntimeWriterActivationReviewFoundationManager(project_root=self.project_root)
+
+        if command == "audit-runtime-writer-activation-review-status":
+            self.print_audit_runtime_writer_activation_review_packet("AURA Audit Runtime Writer Activation Review Foundation Status", manager.status())
+            return True
+
+        if command == "audit-runtime-writer-activation-review-context":
+            self.print_audit_runtime_writer_activation_review_packet("AURA Audit Runtime Writer Activation Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "audit-writer-activation-scope-review-plan": ("AURA Audit Writer Activation Scope Review Plan", manager.audit_writer_activation_scope_review_plan),
+            "audit-event-schema-review-plan": ("AURA Audit Event Schema Review Plan", manager.audit_event_schema_review_plan),
+            "audit-append-only-storage-review-plan": ("AURA Audit Append Only Storage Review Plan", manager.audit_append_only_storage_review_plan),
+            "audit-redaction-boundary-review-plan": ("AURA Audit Redaction Boundary Review Plan", manager.audit_redaction_boundary_review_plan),
+            "audit-actor-context-review-plan": ("AURA Audit Actor Context Review Plan", manager.audit_actor_context_review_plan),
+            "audit-permission-link-review-plan": ("AURA Audit Permission Link Review Plan", manager.audit_permission_link_review_plan),
+            "audit-dashboard-visibility-review-plan": ("AURA Audit Dashboard Visibility Review Plan", manager.audit_dashboard_visibility_review_plan),
+            "audit-failure-safe-idle-review-plan": ("AURA Audit Failure Safe Idle Review Plan", manager.audit_failure_safe_idle_review_plan),
+            "audit-retention-export-review-plan": ("AURA Audit Retention Export Review Plan", manager.audit_retention_export_review_plan),
+            "audit-no-write-activation-review-plan": ("AURA Audit No Write Activation Review Plan", manager.audit_no_write_activation_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_audit_runtime_writer_activation_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 138.0 permission runtime grant gate review CLI helpers.
     def print_permission_runtime_grant_gate_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6620,6 +6663,9 @@ class AuraCLI:
             return True
 
         if self.handle_permission_runtime_grant_gate_review_cli_command(raw_args):
+            return True
+
+        if self.handle_audit_runtime_writer_activation_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
