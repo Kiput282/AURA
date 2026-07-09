@@ -146,6 +146,7 @@ from aura.control_center_runtime_review_stabilization_151_160.aura_control_cente
 from aura.local_chat_runtime_foundation.aura_local_chat_runtime_foundation_manager import AuraLocalChatRuntimeFoundationManager
 from aura.local_chat_cli_session_alpha.aura_local_chat_cli_session_alpha_manager import AuraLocalChatCliSessionAlphaManager
 from aura.local_chat_message_store.aura_local_chat_message_store_manager import AuraLocalChatMessageStoreManager
+from aura.local_chat_persona_response_layer.aura_local_chat_persona_response_layer_manager import AuraLocalChatPersonaResponseLayerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4312,6 +4313,57 @@ class AuraCLI:
 
 
 
+
+    # Sprint 164.0 local chat persona response layer helpers.
+    def print_local_chat_persona_response_layer_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat Persona Response Layer Safety Boundary"))
+
+    def handle_local_chat_persona_response_layer_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat persona response layer"
+        manager = AuraLocalChatPersonaResponseLayerManager(project_root=self.project_root)
+
+        if command in {"local-chat-persona-alpha", "local-chat-persona"}:
+            if not target or target == "AURA local chat persona response layer":
+                print("AURA Local Chat Persona Response Alpha")
+                print("======================================")
+                print('Usage: python3 main.py local-chat-persona-alpha "Aura siapa kamu?"')
+                return True
+            print(manager.render_persona_turn(target))
+            return True
+
+        if command == "local-chat-persona-response-layer-status":
+            self.print_local_chat_persona_response_layer_packet("AURA Local Chat Persona Response Layer Status", manager.status())
+            return True
+
+        if command == "local-chat-persona-response-layer-context":
+            self.print_local_chat_persona_response_layer_packet("AURA Local Chat Persona Response Layer Context", manager.context())
+            return True
+
+        command_map = {
+            "local-chat-persona-response-runtime-plan": ("AURA Local Chat Persona Response Runtime Plan", manager.local_chat_persona_response_runtime_plan),
+            "aura-persona-style-contract-plan": ("AURA Persona Style Contract Plan", manager.aura_persona_style_contract_plan),
+            "persona-capability-honesty-plan": ("AURA Persona Capability Honesty Plan", manager.persona_capability_honesty_plan),
+            "persona-action-decline-plan": ("AURA Persona Action Decline Plan", manager.persona_action_decline_plan),
+            "persona-safety-boundary-plan": ("AURA Persona Safety Boundary Plan", manager.persona_safety_boundary_plan),
+            "persona-message-store-link-plan": ("AURA Persona Message Store Link Plan", manager.persona_message_store_link_plan),
+            "persona-model-boundary-plan": ("AURA Persona Model Boundary Plan", manager.persona_model_boundary_plan),
+            "persona-memory-boundary-plan": ("AURA Persona Memory Boundary Plan", manager.persona_memory_boundary_plan),
+            "no-local-chat-persona-unsafe-runtime-plan": ("AURA No Local Chat Persona Unsafe Runtime Plan", manager.no_local_chat_persona_unsafe_runtime_plan),
+            "local-chat-persona-next-sprint-readiness-plan": ("AURA Local Chat Persona Next Sprint Readiness Plan", manager.local_chat_persona_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_persona_response_layer_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 163.0 local chat message store helpers.
     def print_local_chat_message_store_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7772,6 +7824,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_persona_response_layer_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_message_store_cli_command(raw_args):

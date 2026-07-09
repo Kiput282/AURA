@@ -2911,6 +2911,17 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+    # Sprint 164.0 Local Chat Persona Response Layer actions.
+    local_chat_persona_response_layer_actions = [
+        ('local_chat_persona_response_layer.status', 'user_confirmation', 'Show Local Chat Persona Response Layer status.'),
+        ('local_chat_persona_response_layer.persona_turn', 'user_confirmation', 'Run one safe local chat persona alpha turn.'),
+        ('local_chat_persona_response_layer.no_unsafe_runtime_plan', 'user_confirmation', 'Show no unsafe runtime activation plan for local chat persona response layer.'),
+        ('local_chat_persona_response_layer.context', 'user_confirmation', 'Show Local Chat Persona Response Layer context.'),
+    ]
+    for action_name, permission_action, description in local_chat_persona_response_layer_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_persona_response_layer", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_persona_response_layer"))
+
     # Sprint 163.0 Local Chat Message Store actions.
     local_chat_message_store_actions = [
         ('local_chat_message_store.status', 'user_confirmation', 'Show Local Chat Message Store status.'),

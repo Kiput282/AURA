@@ -1450,6 +1450,28 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+    # Sprint 164.0 local chat persona response layer skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_chat_persona_response_layer",
+            description="Generate a deterministic safe AURA persona response for one local chat alpha turn, with capability honesty and controlled message store append, without model runtime, memory runtime, command execution, arbitrary file mutation, desktop control, voice, vision, or network access.",
+            role="companion",
+            permission_action="user_confirmation",
+            status="online",
+            capabilities=[
+                "local_chat_persona_alpha",
+                "persona_mode_classification",
+                "capability_honesty_response",
+                "safe_action_decline",
+                "controlled_jsonl_store_write",
+                "no_model_runtime",
+                "no_memory_runtime",
+                "no_command_execution",
+            ],
+        )
+    )
+
     registry.register(
         AuraSkill(
             name="aura_local_chat_message_store",

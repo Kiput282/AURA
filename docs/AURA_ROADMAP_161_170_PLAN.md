@@ -50,3 +50,15 @@ one manual CLI chat turn to be appended to an AURA-owned JSONL store while model
 runtime, memory runtime, command execution, arbitrary file mutation, desktop
 action, voice, vision, network access, and autonomous actions remain disabled.
 Sprint 164 should add the AURA Persona Response Layer.
+
+
+## Sprint 164 Direction — AURA Persona Response Layer
+
+Sprint 164 adds a deterministic persona response layer so AURA's local chat alpha
+feels more consistent and honest. It classifies simple persona modes, gives
+capability-aware responses, politely refuses action requests, and continues to
+append controlled local chat turns to the JSONL message store. Model runtime,
+memory runtime, command execution, arbitrary file mutation, desktop action,
+voice, vision, network access, and autonomous actions remain disabled. Sprint
+165 should add the Model Adapter Boundary without automatically dispatching
+model requests.
