@@ -122,6 +122,7 @@ from aura.service_control_command_review_foundation.aura_service_control_command
 from aura.service_recovery_restart_policy_foundation.aura_service_recovery_restart_policy_foundation_manager import AuraServiceRecoveryRestartPolicyFoundationManager
 from aura.service_security_localhost_binding_review.aura_service_security_localhost_binding_review_manager import AuraServiceSecurityLocalhostBindingReviewManager
 from aura.service_review_stabilization_141_150.aura_service_review_stabilization_141_150_manager import AuraServiceReviewStabilization141150Manager
+from aura.control_center_runtime_foundation.aura_control_center_runtime_foundation_manager import AuraControlCenterRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -305,6 +306,7 @@ class SystemStatusManager:
         service_recovery_restart_policy_foundation_status = AuraServiceRecoveryRestartPolicyFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         service_security_localhost_binding_review_status = AuraServiceSecurityLocalhostBindingReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         service_review_stabilization_141_150_status = AuraServiceReviewStabilization141150Manager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        control_center_runtime_foundation_status = AuraControlCenterRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
             "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
@@ -340,6 +342,16 @@ class SystemStatusManager:
             "service_review_stabilization_141_150_runtime_release_gates_opened": service_review_stabilization_141_150_status["runtime_release_gates_opened"],
             "service_review_stabilization_141_150_runtime_next_block_activations": service_review_stabilization_141_150_status["runtime_next_block_activations"],
             "service_review_stabilization_141_150_runtime_execution_features": service_review_stabilization_141_150_status["runtime_execution_features"],
+            "control_center_runtime_foundation_ready": control_center_runtime_foundation_status["control_center_runtime_foundation_ready"],
+            "control_center_runtime_foundation_data_ready": control_center_runtime_foundation_status["control_center_runtime_foundation_data_ready"],
+            "control_center_runtime_foundation_plan_type_count": control_center_runtime_foundation_status["plan_type_count"],
+            "control_center_runtime_foundation_total_blueprint_count": control_center_runtime_foundation_status["total_control_center_runtime_foundation_blueprint_count"],
+            "control_center_runtime_foundation_runtime_control_center_servers_started": control_center_runtime_foundation_status["runtime_control_center_servers_started"],
+            "control_center_runtime_foundation_runtime_http_listeners_started": control_center_runtime_foundation_status["runtime_http_listeners_started"],
+            "control_center_runtime_foundation_runtime_ports_bound": control_center_runtime_foundation_status["runtime_ports_bound"],
+            "control_center_runtime_foundation_runtime_routes_mounted": control_center_runtime_foundation_status["runtime_routes_mounted"],
+            "control_center_runtime_foundation_runtime_dashboard_requests_served": control_center_runtime_foundation_status["runtime_dashboard_requests_served"],
+            "control_center_runtime_foundation_runtime_execution_features": control_center_runtime_foundation_status["runtime_execution_features"],
         })
 
         service_audit_link_foundation_status = AuraServiceAuditLinkFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()

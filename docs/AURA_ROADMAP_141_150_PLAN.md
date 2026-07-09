@@ -84,7 +84,7 @@ Plan recovery, restart, and failure handling policy.
 
 Plan service security and localhost-only binding verification.
 
-### Sprint 150.0 — Review & Stabilization 141-150
+### Sprint 150.0 — Review & Stabilization 141-150 completed
 
 Review and stabilize the 141-150 Local Service Runtime Foundation block.
 
@@ -200,7 +200,7 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 151.0 — Control Center Runtime Foundation.
+Next planned sprint: Sprint 152.0 — Control Center Read-Only Status Panel Foundation.
 
 
 ## Sprint 147.0 completion note
@@ -223,4 +223,4 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 151.0 — Control Center Runtime Foundation.
+Next planned sprint: Sprint 152.0 — Control Center Read-Only Status Panel Foundation.

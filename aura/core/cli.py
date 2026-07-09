@@ -133,6 +133,7 @@ from aura.service_control_command_review_foundation.aura_service_control_command
 from aura.service_recovery_restart_policy_foundation.aura_service_recovery_restart_policy_foundation_manager import AuraServiceRecoveryRestartPolicyFoundationManager
 from aura.service_security_localhost_binding_review.aura_service_security_localhost_binding_review_manager import AuraServiceSecurityLocalhostBindingReviewManager
 from aura.service_review_stabilization_141_150.aura_service_review_stabilization_141_150_manager import AuraServiceReviewStabilization141150Manager
+from aura.control_center_runtime_foundation.aura_control_center_runtime_foundation_manager import AuraControlCenterRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4289,6 +4290,50 @@ class AuraCLI:
 
 
 
+
+
+    # Sprint 151.0 control center runtime foundation CLI helpers.
+    def print_control_center_runtime_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Runtime Foundation Safety Boundary"))
+
+    def handle_control_center_runtime_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center runtime foundation"
+        manager = AuraControlCenterRuntimeFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-runtime-foundation-status":
+            self.print_control_center_runtime_foundation_packet("AURA Control Center Runtime Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-runtime-foundation-context":
+            self.print_control_center_runtime_foundation_packet("AURA Control Center Runtime Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "control-center-runtime-shell-contract-plan": ("AURA Control Center Runtime Shell Contract Plan", manager.control_center_runtime_shell_contract_plan),
+            "control-center-localhost-entry-boundary-plan": ("AURA Control Center Localhost Entry Boundary Plan", manager.control_center_localhost_entry_boundary_plan),
+            "control-center-read-only-panel-manifest-plan": ("AURA Control Center Read-Only Panel Manifest Plan", manager.control_center_read_only_panel_manifest_plan),
+            "control-center-route-blueprint-plan": ("AURA Control Center Route Blueprint Plan", manager.control_center_route_blueprint_plan),
+            "control-center-data-source-contract-plan": ("AURA Control Center Data Source Contract Plan", manager.control_center_data_source_contract_plan),
+            "control-center-permission-audit-link-plan": ("AURA Control Center Permission Audit Link Plan", manager.control_center_permission_audit_link_plan),
+            "control-center-safe-idle-error-boundary-plan": ("AURA Control Center Safe Idle Error Boundary Plan", manager.control_center_safe_idle_error_boundary_plan),
+            "control-center-security-review-plan": ("AURA Control Center Security Review Plan", manager.control_center_security_review_plan),
+            "control-center-next-panel-readiness-plan": ("AURA Control Center Next Panel Readiness Plan", manager.control_center_next_panel_readiness_plan),
+            "no-control-center-runtime-activation-plan": ("AURA No Control Center Runtime Activation Plan", manager.no_control_center_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_runtime_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 150.0 service review stabilization 141-150 CLI helpers.
     def print_service_review_stabilization_141_150_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7181,6 +7226,9 @@ class AuraCLI:
             return True
 
         if self.handle_service_review_stabilization_141_150_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_runtime_foundation_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

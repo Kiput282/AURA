@@ -2908,6 +2908,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
     # Sprint 149.0 service security and localhost binding review actions.
+
+    control_center_runtime_foundation_actions = [
+        ('control_center_runtime_foundation.status', 'read_project', 'Show Control Center Runtime Foundation status.'),
+        ('control_center_runtime_foundation.control_center_runtime_shell_contract_plan', 'read_project', 'Prepare Control Center runtime shell contract plan.'),
+        ('control_center_runtime_foundation.control_center_localhost_entry_boundary_plan', 'read_project', 'Prepare Control Center localhost entry boundary plan.'),
+        ('control_center_runtime_foundation.control_center_read_only_panel_manifest_plan', 'read_project', 'Prepare Control Center read-only panel manifest plan.'),
+        ('control_center_runtime_foundation.control_center_route_blueprint_plan', 'read_project', 'Prepare Control Center route blueprint plan.'),
+        ('control_center_runtime_foundation.control_center_data_source_contract_plan', 'read_project', 'Prepare Control Center data-source contract plan.'),
+        ('control_center_runtime_foundation.control_center_permission_audit_link_plan', 'read_project', 'Prepare Control Center permission/audit link plan.'),
+        ('control_center_runtime_foundation.control_center_safe_idle_error_boundary_plan', 'read_project', 'Prepare Control Center safe-idle/error boundary plan.'),
+        ('control_center_runtime_foundation.control_center_security_review_plan', 'read_project', 'Prepare Control Center security review plan.'),
+        ('control_center_runtime_foundation.control_center_next_panel_readiness_plan', 'read_project', 'Prepare Control Center next panel readiness plan.'),
+        ('control_center_runtime_foundation.no_control_center_runtime_activation_plan', 'read_project', 'Prepare no Control Center runtime activation plan.'),
+        ('control_center_runtime_foundation.context', 'read_project', 'Show Control Center Runtime Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_runtime_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_runtime_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_runtime_foundation"))
+
     service_review_stabilization_141_150_actions = [
         ('service_review_stabilization_141_150.status', 'read_project', 'Show Service Review Stabilization 141-150 status.'),
         ('service_review_stabilization_141_150.service_141_150_completion_review_plan', 'read_project', 'Prepare service 141-150 completion review plan.'),

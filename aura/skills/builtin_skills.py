@@ -1444,6 +1444,32 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
     # Sprint 150.0 service review stabilization 141-150 skill.
+
+
+    registry.register(
+        AuraSkill(
+            name="aura_control_center_runtime_foundation",
+            description="Prepare planner-only and metadata-only Control Center runtime foundation plans for localhost-only read-only dashboard shell, panel manifest, route blueprints, data-source contracts, permission/audit links, safe-idle/error boundaries, security review, and no runtime activation without starting servers, binding ports, mounting routes, serving requests, dispatching actions, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_runtime_foundation_status",
+                "control_center_runtime_shell_contract_plan",
+                "control_center_localhost_entry_boundary_plan",
+                "control_center_read_only_panel_manifest_plan",
+                "control_center_route_blueprint_plan",
+                "control_center_data_source_contract_plan",
+                "control_center_permission_audit_link_plan",
+                "control_center_safe_idle_error_boundary_plan",
+                "control_center_security_review_plan",
+                "control_center_next_panel_readiness_plan",
+                "no_control_center_runtime_activation_plan",
+                "control_center_runtime_foundation_context",
+            ],
+        )
+    )
+
     registry.register(
         AuraSkill(
             name="aura_service_review_stabilization_141_150",

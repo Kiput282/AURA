@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_control_center_runtime_foundation",
+                    "name": "AURA Control Center Runtime Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "critical",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.151.0-genesis",
+                    "category": "dashboard",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and read-only Control Center Runtime Foundation for future localhost-only dashboard shell, panel manifest, route blueprints, data-source contracts, permission/audit links, safe-idle and security boundaries, and no Control Center runtime activation without starting servers, binding ports, mounting routes, serving dashboard requests, dispatching actions, writing runtime state, or enabling runtime execution features.",
+                },
+                {
                     "id": "aura_service_review_stabilization_141_150",
                     "name": "AURA Service Review Stabilization 141-150",
                     "state": "online",
