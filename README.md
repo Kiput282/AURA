@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.137.0-genesis  
+Current version: v0.138.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.137.0-genesis
+- v0.138.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.137.0-genesis
+    Version  : 0.138.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -1062,6 +1062,53 @@ Safety result:
 - memory persistence disabled
 - memory rollback/session link runtime disabled
 - permission/audit/dashboard/action runtime disabled
+- tool/command execution disabled
+- file/service/port/network/ORION runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+## Sprint 138.0 — Permission Runtime Grant Gate Review Foundation
+
+Status: completed
+Version: v0.138.0-genesis
+
+Sprint 138 adds a planner-only, metadata-only, and review-only Permission Runtime Grant Gate Review Foundation.
+
+Counts:
+
+- 12 plan types
+- 100 total permission runtime grant gate review blueprints/items
+- 0 runtime permission grant gate plans applied
+- 0 runtime permission grant requests received
+- 0 runtime permission grant scopes classified
+- 0 runtime permission grant approvals requested/applied
+- 0 runtime permission grants created/applied/updated/revoked
+- 0 runtime permission grant expiries applied
+- 0 runtime permission denials created
+- 0 runtime permission risks classified
+- 0 runtime permission audit links created
+- 0 runtime permission dashboard events emitted
+- 0 runtime permission stores/caches written
+- 0 runtime audit writers/events
+- 0 runtime safe idle recoveries
+- 0 runtime dashboard events/actions
+- 0 runtime tools/commands/files/services/ports/network/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- permission grant gate apply disabled
+- permission grant request receive disabled
+- permission grant scope classification disabled
+- permission grant approval runtime disabled
+- permission grant create/apply/update/revoke disabled
+- permission grant expiry apply disabled
+- permission denial create disabled
+- permission risk classification disabled
+- permission audit link/dashboard event runtime disabled
+- permission store/cache write disabled
+- permission mutation disabled
+- audit/dashboard/action runtime disabled
 - tool/command execution disabled
 - file/service/port/network/ORION runtime disabled
 - release gate closed

@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 138.0 permission runtime grant gate review foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_permission_runtime_grant_gate_review_foundation",
+            description="Prepare planner-only and review-only Permission Runtime Grant Gate Review Foundation without receiving runtime permission requests, creating/applying/updating/revoking grants, applying expiry, creating denials, classifying risk at runtime, starting audit writers, writing audit events, emitting dashboard events, dispatching actions, executing tools/commands, using file runtime, starting services, binding ports, probing network, performing ORION handshakes, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "permission_runtime_grant_gate_review_status",
+                "permission_grant_scope_review_plan",
+                "permission_grant_manual_approval_review_plan",
+                "permission_grant_expiry_review_plan",
+                "permission_grant_denial_review_plan",
+                "permission_grant_audit_link_review_plan",
+                "permission_grant_dashboard_visibility_review_plan",
+                "permission_grant_revocation_review_plan",
+                "permission_grant_risk_classification_review_plan",
+                "permission_grant_safe_idle_failure_review_plan",
+                "permission_grant_no_mutation_review_plan",
+                "permission_runtime_grant_gate_review_context",
+            ],
+        )
+    )
+
     # Sprint 137.0 memory runtime write gate review foundation skill.
     registry.register(
         AuraSkill(

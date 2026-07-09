@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 138.0 permission runtime grant gate review foundation actions.
+    permission_runtime_grant_gate_review_actions = [
+        ('permission_runtime_grant_gate_review.status', 'read_project', 'Show Permission Runtime Grant Gate Review status.'),
+        ('permission_runtime_grant_gate_review.permission_grant_scope_review_plan', 'read_project', 'Prepare permission grant scope review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_manual_approval_review_plan', 'read_project', 'Prepare permission grant manual approval review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_expiry_review_plan', 'read_project', 'Prepare permission grant expiry review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_denial_review_plan', 'read_project', 'Prepare permission grant denial review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_audit_link_review_plan', 'read_project', 'Prepare permission grant audit link review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_dashboard_visibility_review_plan', 'read_project', 'Prepare permission grant dashboard visibility review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_revocation_review_plan', 'read_project', 'Prepare permission grant revocation review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_risk_classification_review_plan', 'read_project', 'Prepare permission grant risk classification review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_safe_idle_failure_review_plan', 'read_project', 'Prepare permission grant safe idle failure review plan.'),
+        ('permission_runtime_grant_gate_review.permission_grant_no_mutation_review_plan', 'read_project', 'Prepare permission grant no-mutation review plan.'),
+        ('permission_runtime_grant_gate_review.context', 'read_project', 'Show Permission Runtime Grant Gate Review context.'),
+    ]
+
+    for action_name, permission_action, description in permission_runtime_grant_gate_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="permission_runtime_grant_gate_review", description=description, permission_action=permission_action, status="online", skill="aura_permission_runtime_grant_gate_review_foundation"))
+
     # Sprint 137.0 memory runtime write gate review foundation actions.
     memory_runtime_write_gate_review_actions = [
         ('memory_runtime_write_gate_review.status', 'read_project', 'Show Memory Runtime Write Gate Review status.'),

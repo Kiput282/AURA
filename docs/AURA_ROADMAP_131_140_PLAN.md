@@ -1,6 +1,6 @@
 # AURA Roadmap 131-140 Plan
 
-Version seed: v0.137.0-genesis
+Version seed: v0.138.0-genesis
 Status: active
 Phase: Genesis Final Path Planning
 Owner: Kiput
@@ -159,7 +159,7 @@ Expected focus:
 - dashboard visibility
 - no unapproved write
 
-### Sprint 138.0 — Permission Runtime Grant Gate Review
+### Sprint 138.0 — Permission Runtime Grant Gate Review — completed
 
 Purpose:
 
@@ -423,5 +423,35 @@ Safety result:
 - runtime memory write requests/approvals/scopes/redactions/conflicts: 0
 - runtime memory reads/writes/records/indexes/persistence: 0
 - runtime permission/audit/safe idle/dashboard: 0
+- runtime actions/tools/commands/files/services/ports/network/ORION/git: 0
+- runtime execution features: 0
+
+## Sprint 138 Completion Summary
+
+Sprint 138 completed the Permission Runtime Grant Gate Review Foundation.
+
+Completed foundation items:
+
+- permission grant scope review
+- permission grant manual approval review
+- permission grant expiry review
+- permission grant denial review
+- permission grant audit link review
+- permission grant dashboard visibility review
+- permission grant revocation review
+- permission grant risk classification review
+- permission grant safe idle failure review
+- permission grant no-mutation review
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime permission grant gate plans applied: 0
+- runtime permission requests/scopes/approvals: 0
+- runtime permission grants created/applied/updated/revoked: 0
+- runtime permission expiry/denial/risk/audit/dashboard/store/cache: 0
+- runtime audit/safe idle/dashboard: 0
 - runtime actions/tools/commands/files/services/ports/network/ORION/git: 0
 - runtime execution features: 0

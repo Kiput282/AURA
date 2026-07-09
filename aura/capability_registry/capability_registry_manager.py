@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_permission_runtime_grant_gate_review_foundation",
+                    "name": "AURA Permission Runtime Grant Gate Review Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.138.0-genesis",
+                    "category": "permission",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Permission Runtime Grant Gate Review Foundation covering permission grant scope, manual approval, expiry, denial, audit link, dashboard visibility, revocation, risk classification, safe idle failure, and no-mutation review without receiving runtime permission requests, creating/applying/updating/revoking grants, applying expiry, creating denials, risk classification runtime, audit writer/event runtime, dashboard event emit, action dispatch, tool/command execution, file/service/port/network/ORION/git runtime, or runtime execution features.",
+                },
+                {
                     "id": "aura_memory_runtime_write_gate_review_foundation",
                     "name": "AURA Memory Runtime Write Gate Review Foundation",
                     "state": "online",

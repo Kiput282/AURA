@@ -120,6 +120,7 @@ from aura.local_service_boot_plan_review.aura_local_service_boot_plan_review_fou
 from aura.control_center_runtime_entry_review.aura_control_center_runtime_entry_review_foundation_manager import AuraControlCenterRuntimeEntryReviewFoundationManager
 from aura.chat_runtime_minimal_loop_review.aura_chat_runtime_minimal_loop_review_foundation_manager import AuraChatRuntimeMinimalLoopReviewFoundationManager
 from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review_foundation_manager import AuraMemoryRuntimeWriteGateReviewFoundationManager
+from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gate_review_foundation_manager import AuraPermissionRuntimeGrantGateReviewFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4216,6 +4217,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 138.0 permission runtime grant gate review CLI helpers.
+    def print_permission_runtime_grant_gate_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Permission Runtime Grant Gate Review Safety Boundary"))
+
+    def handle_permission_runtime_grant_gate_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA permission runtime grant gate review"
+        manager = AuraPermissionRuntimeGrantGateReviewFoundationManager(project_root=self.project_root)
+
+        if command == "permission-runtime-grant-gate-review-status":
+            self.print_permission_runtime_grant_gate_review_packet("AURA Permission Runtime Grant Gate Review Foundation Status", manager.status())
+            return True
+
+        if command == "permission-runtime-grant-gate-review-context":
+            self.print_permission_runtime_grant_gate_review_packet("AURA Permission Runtime Grant Gate Review Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "permission-grant-scope-review-plan": ("AURA Permission Grant Scope Review Plan", manager.permission_grant_scope_review_plan),
+            "permission-grant-manual-approval-review-plan": ("AURA Permission Grant Manual Approval Review Plan", manager.permission_grant_manual_approval_review_plan),
+            "permission-grant-expiry-review-plan": ("AURA Permission Grant Expiry Review Plan", manager.permission_grant_expiry_review_plan),
+            "permission-grant-denial-review-plan": ("AURA Permission Grant Denial Review Plan", manager.permission_grant_denial_review_plan),
+            "permission-grant-audit-link-review-plan": ("AURA Permission Grant Audit Link Review Plan", manager.permission_grant_audit_link_review_plan),
+            "permission-grant-dashboard-visibility-review-plan": ("AURA Permission Grant Dashboard Visibility Review Plan", manager.permission_grant_dashboard_visibility_review_plan),
+            "permission-grant-revocation-review-plan": ("AURA Permission Grant Revocation Review Plan", manager.permission_grant_revocation_review_plan),
+            "permission-grant-risk-classification-review-plan": ("AURA Permission Grant Risk Classification Review Plan", manager.permission_grant_risk_classification_review_plan),
+            "permission-grant-safe-idle-failure-review-plan": ("AURA Permission Grant Safe Idle Failure Review Plan", manager.permission_grant_safe_idle_failure_review_plan),
+            "permission-grant-no-mutation-review-plan": ("AURA Permission Grant No Mutation Review Plan", manager.permission_grant_no_mutation_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_permission_runtime_grant_gate_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 137.0 memory runtime write gate review CLI helpers.
     def print_memory_runtime_write_gate_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6574,6 +6617,9 @@ class AuraCLI:
             return True
 
         if self.handle_memory_runtime_write_gate_review_cli_command(raw_args):
+            return True
+
+        if self.handle_permission_runtime_grant_gate_review_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
