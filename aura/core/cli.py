@@ -137,6 +137,7 @@ from aura.control_center_runtime_foundation.aura_control_center_runtime_foundati
 from aura.control_center_read_only_status_panel_foundation.aura_control_center_read_only_status_panel_foundation_manager import AuraControlCenterReadOnlyStatusPanelFoundationManager
 from aura.control_center_capability_viewer_foundation.aura_control_center_capability_viewer_foundation_manager import AuraControlCenterCapabilityViewerFoundationManager
 from aura.control_center_plugin_panel_foundation.aura_control_center_plugin_panel_foundation_manager import AuraControlCenterPluginPanelFoundationManager
+from aura.control_center_permission_panel_foundation.aura_control_center_permission_panel_foundation_manager import AuraControlCenterPermissionPanelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4300,6 +4301,49 @@ class AuraCLI:
 
 
 
+
+    # Sprint 155.0 control center permission panel foundation CLI helpers.
+    def print_control_center_permission_panel_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Permission Panel Foundation Safety Boundary"))
+
+    def handle_control_center_permission_panel_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center permission panel foundation"
+        manager = AuraControlCenterPermissionPanelFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-permission-panel-foundation-status":
+            self.print_control_center_permission_panel_foundation_packet("AURA Control Center Permission Panel Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-permission-panel-foundation-context":
+            self.print_control_center_permission_panel_foundation_packet("AURA Control Center Permission Panel Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "permission-panel-layout-contract-plan": ("AURA Permission Panel Layout Contract Plan", manager.permission_panel_layout_contract_plan),
+            "permission-request-summary-contract-plan": ("AURA Permission Request Summary Contract Plan", manager.permission_request_summary_contract_plan),
+            "permission-grant-boundary-visibility-plan": ("AURA Permission Grant Boundary Visibility Plan", manager.permission_grant_boundary_visibility_plan),
+            "permission-risk-badge-semantics-plan": ("AURA Permission Risk Badge Semantics Plan", manager.permission_risk_badge_semantics_plan),
+            "permission-filter-grouping-plan": ("AURA Permission Filter Grouping Plan", manager.permission_filter_grouping_plan),
+            "permission-panel-error-boundary-plan": ("AURA Permission Panel Error Boundary Plan", manager.permission_panel_error_boundary_plan),
+            "permission-panel-accessibility-contract-plan": ("AURA Permission Panel Accessibility Contract Plan", manager.permission_panel_accessibility_contract_plan),
+            "permission-panel-security-review-plan": ("AURA Permission Panel Security Review Plan", manager.permission_panel_security_review_plan),
+            "permission-panel-next-audit-viewer-readiness-plan": ("AURA Permission Panel Next Audit Viewer Readiness Plan", manager.permission_panel_next_audit_viewer_readiness_plan),
+            "no-control-center-permission-panel-runtime-activation-plan": ("AURA No Control Center Permission Panel Runtime Activation Plan", manager.no_control_center_permission_panel_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_permission_panel_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 154.0 control center plugin panel foundation CLI helpers.
     def print_control_center_plugin_panel_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7366,6 +7410,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_permission_panel_foundation_cli_command(raw_args):
             return True
 
         if self.handle_control_center_plugin_panel_foundation_cli_command(raw_args):

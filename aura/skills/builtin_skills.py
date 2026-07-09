@@ -1452,6 +1452,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_control_center_permission_panel_foundation",
+            description="Prepare planner-only and metadata-only Control Center permission panel foundation plans for permission request summaries, grant boundary visibility, risk badges, filters/grouping, error boundaries, accessibility, security review, next audit-viewer readiness, and no permission panel runtime activation without creating requests, applying grants, mutating permissions, reading live stores, writing audits, serving requests, binding ports, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_permission_panel_foundation_status",
+                "permission_panel_layout_contract_plan",
+                "permission_request_summary_contract_plan",
+                "permission_grant_boundary_visibility_plan",
+                "permission_risk_badge_semantics_plan",
+                "permission_filter_grouping_plan",
+                "permission_panel_error_boundary_plan",
+                "permission_panel_accessibility_contract_plan",
+                "permission_panel_security_review_plan",
+                "permission_panel_next_audit_viewer_readiness_plan",
+                "no_control_center_permission_panel_runtime_activation_plan",
+                "control_center_permission_panel_foundation_context",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_control_center_plugin_panel_foundation",
             description="Prepare planner-only and metadata-only Control Center plugin panel foundation plans for plugin layout, plugin registry summary, action status semantics, permission boundary visibility, filtering/grouping, error boundaries, accessibility, security review, next service-monitor readiness, and no plugin panel runtime activation without starting servers, reading live plugin runtime data, rendering panels, mounting routes, serving requests, binding ports, dispatching actions, mutating permissions, or enabling runtime execution.",
             role="dashboard",

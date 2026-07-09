@@ -2911,6 +2911,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    control_center_permission_panel_foundation_actions = [
+        ('control_center_permission_panel_foundation.status', 'read_project', 'Show Control Center Permission Panel Foundation status.'),
+        ('control_center_permission_panel_foundation.permission_panel_layout_contract_plan', 'read_project', 'Prepare permission panel layout contract plan.'),
+        ('control_center_permission_panel_foundation.permission_request_summary_contract_plan', 'read_project', 'Prepare permission request summary contract plan.'),
+        ('control_center_permission_panel_foundation.permission_grant_boundary_visibility_plan', 'read_project', 'Prepare permission grant boundary visibility plan.'),
+        ('control_center_permission_panel_foundation.permission_risk_badge_semantics_plan', 'read_project', 'Prepare permission risk badge semantics plan.'),
+        ('control_center_permission_panel_foundation.permission_filter_grouping_plan', 'read_project', 'Prepare permission filter grouping plan.'),
+        ('control_center_permission_panel_foundation.permission_panel_error_boundary_plan', 'read_project', 'Prepare permission panel error boundary plan.'),
+        ('control_center_permission_panel_foundation.permission_panel_accessibility_contract_plan', 'read_project', 'Prepare permission panel accessibility contract plan.'),
+        ('control_center_permission_panel_foundation.permission_panel_security_review_plan', 'read_project', 'Prepare permission panel security review plan.'),
+        ('control_center_permission_panel_foundation.permission_panel_next_audit_viewer_readiness_plan', 'read_project', 'Prepare next audit-viewer readiness plan.'),
+        ('control_center_permission_panel_foundation.no_control_center_permission_panel_runtime_activation_plan', 'read_project', 'Prepare no permission panel runtime activation plan.'),
+        ('control_center_permission_panel_foundation.context', 'read_project', 'Show Control Center Permission Panel Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_permission_panel_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_permission_panel_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_permission_panel_foundation"))
+
     control_center_plugin_panel_foundation_actions = [
         ('control_center_plugin_panel_foundation.status', 'read_project', 'Show Control Center Plugin Panel Foundation status.'),
         ('control_center_plugin_panel_foundation.plugin_panel_layout_contract_plan', 'read_project', 'Prepare plugin panel layout contract plan.'),

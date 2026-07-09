@@ -17,9 +17,10 @@ control runtime can be considered.
 - Sprint 152.0 — Control Center Read-Only Status Panel Foundation completed
 - Sprint 153.0 — Control Center Capability Viewer Foundation completed
 - Sprint 154.0 — Control Center Plugin Panel Foundation completed
-- Sprint 155.0 — Control Center Service Monitor Panel Foundation planned
-- Sprint 156.0 — Control Center Permission Center Read-Only Foundation planned
-- Sprint 157.0 — Control Center Audit Viewer Foundation planned
+- Sprint 155.0 — Control Center Permission Panel Foundation completed
+- Sprint 156.0 — Control Center Audit Viewer Foundation planned
+- Sprint 156.0 — Control Center Audit Viewer Foundation planned
+- Sprint 157.0 — Control Center Configuration and Port Registry Viewer planned
 - Sprint 158.0 — Control Center Configuration and Port Registry Viewer planned
 - Sprint 159.0 — Control Center Service Control Preview Panel planned
 - Sprint 159.5 — Control Center Security and Recovery Panel planned
