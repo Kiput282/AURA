@@ -1452,6 +1452,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_control_center_read_only_route_map_foundation",
+            description="Prepare planner-only and metadata-only Control Center read-only route map foundation plans for dashboard navigation metadata, route definitions, panel crosslinks, route guard boundaries, filtering/grouping, empty/error states, accessibility/security review, and no route map runtime activation without mounting routes, serving requests, starting servers, binding ports, dispatching actions, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_read_only_route_map_foundation_status",
+                "route_map_layout_contract_plan",
+                "dashboard_navigation_surface_plan",
+                "route_definition_summary_plan",
+                "panel_crosslink_map_plan",
+                "route_guard_boundary_plan",
+                "route_map_filter_grouping_plan",
+                "route_map_empty_error_state_plan",
+                "route_map_accessibility_security_review_plan",
+                "no_control_center_route_map_runtime_activation_plan",
+                "control_center_read_only_route_map_foundation_context",
+                "route_map_next_stabilization_readiness_plan",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_control_center_action_log_panel_foundation",
             description="Prepare planner-only and metadata-only Control Center action log panel foundation plans for action history summaries, action boundary visibility, plugin/action linkage, permission/audit linkage, filters/grouping, privacy/redaction boundaries, accessibility/security review, and no action log runtime activation without reading live stores, appending logs, dispatching actions, executing tools or commands, serving requests, binding ports, or enabling runtime execution.",
             role="dashboard",

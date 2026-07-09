@@ -2911,6 +2911,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    # Sprint 159.0 Control Center read-only route map foundation actions.
+    control_center_read_only_route_map_foundation_actions = [
+        ('control_center_read_only_route_map_foundation.status', 'read_project', 'Show Control Center Read-Only Route Map Foundation status.'),
+        ('control_center_read_only_route_map_foundation.route_map_layout_contract_plan', 'read_project', 'Prepare route map layout contract plan.'),
+        ('control_center_read_only_route_map_foundation.dashboard_navigation_surface_plan', 'read_project', 'Prepare dashboard navigation surface plan.'),
+        ('control_center_read_only_route_map_foundation.route_definition_summary_plan', 'read_project', 'Prepare route definition summary plan.'),
+        ('control_center_read_only_route_map_foundation.panel_crosslink_map_plan', 'read_project', 'Prepare panel crosslink map plan.'),
+        ('control_center_read_only_route_map_foundation.route_guard_boundary_plan', 'read_project', 'Prepare route guard boundary plan.'),
+        ('control_center_read_only_route_map_foundation.route_map_filter_grouping_plan', 'read_project', 'Prepare route map filter/grouping plan.'),
+        ('control_center_read_only_route_map_foundation.route_map_empty_error_state_plan', 'read_project', 'Prepare route map empty/error state plan.'),
+        ('control_center_read_only_route_map_foundation.route_map_accessibility_security_review_plan', 'read_project', 'Prepare route map accessibility/security review plan.'),
+        ('control_center_read_only_route_map_foundation.no_runtime_activation_plan', 'read_project', 'Prepare no Control Center route map runtime activation plan.'),
+        ('control_center_read_only_route_map_foundation.next_stabilization_readiness_plan', 'read_project', 'Prepare route map next stabilization readiness plan.'),
+        ('control_center_read_only_route_map_foundation.context', 'read_project', 'Show Control Center Read-Only Route Map Foundation context.'),
+    ]
+    for action_name, permission_action, description in control_center_read_only_route_map_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_read_only_route_map_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_read_only_route_map_foundation"))
+
     control_center_action_log_panel_foundation_actions = [
         ('control_center_action_log_panel_foundation.status', 'read_project', 'Show Control Center Action Log Panel Foundation status.'),
         ('control_center_action_log_panel_foundation.action_log_layout_contract_plan', 'read_project', 'Prepare action log layout contract plan.'),

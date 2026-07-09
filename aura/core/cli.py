@@ -141,6 +141,7 @@ from aura.control_center_permission_panel_foundation.aura_control_center_permiss
 from aura.control_center_audit_panel_foundation.aura_control_center_audit_panel_foundation_manager import AuraControlCenterAuditPanelFoundationManager
 from aura.control_center_service_monitor_panel_foundation.aura_control_center_service_monitor_panel_foundation_manager import AuraControlCenterServiceMonitorPanelFoundationManager
 from aura.control_center_action_log_panel_foundation.aura_control_center_action_log_panel_foundation_manager import AuraControlCenterActionLogPanelFoundationManager
+from aura.control_center_read_only_route_map_foundation.aura_control_center_read_only_route_map_foundation_manager import AuraControlCenterReadOnlyRouteMapFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4305,6 +4306,48 @@ class AuraCLI:
 
 
 
+    # Sprint 159.0 control center read-only route map foundation CLI helpers.
+    def print_control_center_read_only_route_map_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Read-Only Route Map Foundation Safety Boundary"))
+
+    def handle_control_center_read_only_route_map_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center read-only route map foundation"
+        manager = AuraControlCenterReadOnlyRouteMapFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-read-only-route-map-foundation-status":
+            self.print_control_center_read_only_route_map_foundation_packet("AURA Control Center Read-Only Route Map Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-read-only-route-map-foundation-context":
+            self.print_control_center_read_only_route_map_foundation_packet("AURA Control Center Read-Only Route Map Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "route-map-layout-contract-plan": ("AURA Route Map Layout Contract Plan", manager.route_map_layout_contract_plan),
+            "dashboard-navigation-surface-plan": ("AURA Dashboard Navigation Surface Plan", manager.dashboard_navigation_surface_plan),
+            "route-definition-summary-plan": ("AURA Route Definition Summary Plan", manager.route_definition_summary_plan),
+            "panel-crosslink-map-plan": ("AURA Panel Crosslink Map Plan", manager.panel_crosslink_map_plan),
+            "route-guard-boundary-plan": ("AURA Route Guard Boundary Plan", manager.route_guard_boundary_plan),
+            "route-map-filter-grouping-plan": ("AURA Route Map Filter Grouping Plan", manager.route_map_filter_grouping_plan),
+            "route-map-empty-error-state-plan": ("AURA Route Map Empty Error State Plan", manager.route_map_empty_error_state_plan),
+            "route-map-accessibility-security-review-plan": ("AURA Route Map Accessibility Security Review Plan", manager.route_map_accessibility_security_review_plan),
+            "no-control-center-route-map-runtime-activation-plan": ("AURA No Control Center Route Map Runtime Activation Plan", manager.no_control_center_route_map_runtime_activation_plan),
+            "route-map-next-stabilization-readiness-plan": ("AURA Route Map Next Stabilization Readiness Plan", manager.route_map_next_stabilization_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_read_only_route_map_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 158.0 control center action log panel foundation CLI helpers.
     def print_control_center_action_log_panel_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7539,6 +7582,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_read_only_route_map_foundation_cli_command(raw_args):
             return True
 
         if self.handle_control_center_action_log_panel_foundation_cli_command(raw_args):
