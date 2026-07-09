@@ -20,13 +20,17 @@ control runtime can be considered.
 - Sprint 155.0 — Control Center Permission Panel Foundation completed
 - Sprint 156.0 — Control Center Audit Panel Foundation completed
 - Sprint 157.0 — Control Center Service Monitor Panel Foundation completed
-- Sprint 158.0 — Control Center Configuration and Port Registry Viewer Foundation planned
+- Sprint 158.0 — Control Center Action Log Panel Foundation completed
+- Sprint 159.0 — Control Center Configuration and Port Registry Viewer Foundation planned
 - Sprint 156.0 — Control Center Audit Panel Foundation completed
 - Sprint 157.0 — Control Center Service Monitor Panel Foundation completed
-- Sprint 158.0 — Control Center Configuration and Port Registry Viewer Foundation planned
+- Sprint 158.0 — Control Center Action Log Panel Foundation completed
+- Sprint 159.0 — Control Center Configuration and Port Registry Viewer Foundation planned
 - Sprint 157.0 — Control Center Service Monitor Panel Foundation completed
-- Sprint 158.0 — Control Center Configuration and Port Registry Viewer Foundation planned
-- Sprint 158.0 — Control Center Configuration and Port Registry Viewer Foundation planned
+- Sprint 158.0 — Control Center Action Log Panel Foundation completed
+- Sprint 159.0 — Control Center Configuration and Port Registry Viewer Foundation planned
+- Sprint 158.0 — Control Center Action Log Panel Foundation completed
+- Sprint 159.0 — Control Center Configuration and Port Registry Viewer Foundation planned
 - Sprint 159.0 — Control Center Service Control Preview Panel planned
 - Sprint 159.5 — Control Center Security and Recovery Panel planned
 - Sprint 160.0 — Review & Stabilization 151-160 planned

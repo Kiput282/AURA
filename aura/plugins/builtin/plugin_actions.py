@@ -2911,6 +2911,23 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    control_center_action_log_panel_foundation_actions = [
+        ('control_center_action_log_panel_foundation.status', 'read_project', 'Show Control Center Action Log Panel Foundation status.'),
+        ('control_center_action_log_panel_foundation.action_log_layout_contract_plan', 'read_project', 'Prepare action log layout contract plan.'),
+        ('control_center_action_log_panel_foundation.action_history_summary_surface_plan', 'read_project', 'Prepare action history summary surface plan.'),
+        ('control_center_action_log_panel_foundation.action_boundary_visibility_plan', 'read_project', 'Prepare action boundary visibility plan.'),
+        ('control_center_action_log_panel_foundation.plugin_action_linkage_surface_plan', 'read_project', 'Prepare plugin/action linkage surface plan.'),
+        ('control_center_action_log_panel_foundation.permission_audit_linkage_summary_plan', 'read_project', 'Prepare permission/audit linkage summary plan.'),
+        ('control_center_action_log_panel_foundation.action_log_filter_grouping_plan', 'read_project', 'Prepare action log filter grouping plan.'),
+        ('control_center_action_log_panel_foundation.action_log_redaction_privacy_boundary_plan', 'read_project', 'Prepare action log redaction privacy boundary plan.'),
+        ('control_center_action_log_panel_foundation.action_log_empty_error_state_plan', 'read_project', 'Prepare action log empty/error state plan.'),
+        ('control_center_action_log_panel_foundation.action_log_accessibility_security_review_plan', 'read_project', 'Prepare action log accessibility/security review plan.'),
+        ('control_center_action_log_panel_foundation.no_runtime_activation_plan', 'read_project', 'Prepare no Control Center Action Log Panel runtime activation plan.'),
+        ('control_center_action_log_panel_foundation.context', 'read_project', 'Show Control Center Action Log Panel Foundation context.'),
+    ]
+    for action_name, permission_action, description in control_center_action_log_panel_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_action_log_panel_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_action_log_panel_foundation"))
+
     control_center_service_monitor_panel_foundation_actions = [
         ('control_center_service_monitor_panel_foundation.status', 'read_project', 'Show Control Center Service Monitor Panel Foundation status.'),
         ('control_center_service_monitor_panel_foundation.service_monitor_layout_contract_plan', 'read_project', 'Prepare service monitor layout contract plan.'),

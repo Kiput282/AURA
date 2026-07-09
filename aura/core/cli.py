@@ -140,6 +140,7 @@ from aura.control_center_plugin_panel_foundation.aura_control_center_plugin_pane
 from aura.control_center_permission_panel_foundation.aura_control_center_permission_panel_foundation_manager import AuraControlCenterPermissionPanelFoundationManager
 from aura.control_center_audit_panel_foundation.aura_control_center_audit_panel_foundation_manager import AuraControlCenterAuditPanelFoundationManager
 from aura.control_center_service_monitor_panel_foundation.aura_control_center_service_monitor_panel_foundation_manager import AuraControlCenterServiceMonitorPanelFoundationManager
+from aura.control_center_action_log_panel_foundation.aura_control_center_action_log_panel_foundation_manager import AuraControlCenterActionLogPanelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4304,6 +4305,48 @@ class AuraCLI:
 
 
 
+    # Sprint 158.0 control center action log panel foundation CLI helpers.
+    def print_control_center_action_log_panel_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Action Log Panel Foundation Safety Boundary"))
+
+    def handle_control_center_action_log_panel_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center action log panel foundation"
+        manager = AuraControlCenterActionLogPanelFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-action-log-panel-foundation-status":
+            self.print_control_center_action_log_panel_foundation_packet("AURA Control Center Action Log Panel Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-action-log-panel-foundation-context":
+            self.print_control_center_action_log_panel_foundation_packet("AURA Control Center Action Log Panel Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "action-log-layout-contract-plan": ("AURA Action Log Layout Contract Plan", manager.action_log_layout_contract_plan),
+            "action-history-summary-surface-plan": ("AURA Action History Summary Surface Plan", manager.action_history_summary_surface_plan),
+            "action-boundary-visibility-plan": ("AURA Action Boundary Visibility Plan", manager.action_boundary_visibility_plan),
+            "plugin-action-linkage-surface-plan": ("AURA Plugin Action Linkage Surface Plan", manager.plugin_action_linkage_surface_plan),
+            "permission-audit-linkage-summary-plan": ("AURA Permission Audit Linkage Summary Plan", manager.permission_audit_linkage_summary_plan),
+            "action-log-filter-grouping-plan": ("AURA Action Log Filter Grouping Plan", manager.action_log_filter_grouping_plan),
+            "action-log-redaction-privacy-boundary-plan": ("AURA Action Log Redaction Privacy Boundary Plan", manager.action_log_redaction_privacy_boundary_plan),
+            "action-log-empty-error-state-plan": ("AURA Action Log Empty Error State Plan", manager.action_log_empty_error_state_plan),
+            "action-log-accessibility-security-review-plan": ("AURA Action Log Accessibility Security Review Plan", manager.action_log_accessibility_security_review_plan),
+            "no-control-center-action-log-panel-runtime-activation-plan": ("AURA No Control Center Action Log Panel Runtime Activation Plan", manager.no_control_center_action_log_panel_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_action_log_panel_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 157.0 control center service monitor panel foundation CLI helpers.
     def print_control_center_service_monitor_panel_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7496,6 +7539,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_action_log_panel_foundation_cli_command(raw_args):
             return True
 
         if self.handle_control_center_service_monitor_panel_foundation_cli_command(raw_args):

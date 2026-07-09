@@ -1452,6 +1452,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_control_center_action_log_panel_foundation",
+            description="Prepare planner-only and metadata-only Control Center action log panel foundation plans for action history summaries, action boundary visibility, plugin/action linkage, permission/audit linkage, filters/grouping, privacy/redaction boundaries, accessibility/security review, and no action log runtime activation without reading live stores, appending logs, dispatching actions, executing tools or commands, serving requests, binding ports, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_action_log_panel_foundation_status",
+                "action_log_layout_contract_plan",
+                "action_history_summary_surface_plan",
+                "action_boundary_visibility_plan",
+                "plugin_action_linkage_surface_plan",
+                "permission_audit_linkage_summary_plan",
+                "action_log_filter_grouping_plan",
+                "action_log_redaction_privacy_boundary_plan",
+                "action_log_empty_error_state_plan",
+                "action_log_accessibility_security_review_plan",
+                "no_control_center_action_log_panel_runtime_activation_plan",
+                "control_center_action_log_panel_foundation_context",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_control_center_service_monitor_panel_foundation",
             description="Prepare planner-only and metadata-only Control Center service monitor panel foundation plans for service runtime state summaries, process boundary visibility, health signals, restart/recovery status, localhost/security visibility, filters/grouping, error boundaries, accessibility/security review, and no service monitor runtime activation without probing live processes, starting services, serving requests, binding ports, or enabling runtime execution.",
             role="dashboard",
