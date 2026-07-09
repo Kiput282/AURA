@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.160.0-genesis  
+Current version: v0.161.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -35,12 +35,12 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 160.0 and has closed the Sprint 151-160 Control Center Runtime block.
+AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
-- v0.160.0-genesis
-- Sprint 160: Control Center Runtime Review & Stabilization 151-160
+- v0.161.0-genesis
+- Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
@@ -49,9 +49,9 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 91
-- online capabilities: 89
-- foundation-only capabilities: 73
+- total capabilities: 92
+- online capabilities: 90
+- foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 2
 - review-only capabilities: 4
@@ -343,7 +343,7 @@ Active block:
 - Sprint 144: Service Configuration and Port Registry Foundation completed
 - Sprint 151: Control Center Runtime Foundation completed
 - Sprint 152: Control Center Read-Only Status Panel Foundation completed
-- Sprint 160: Control Center Runtime Review & Stabilization 151-160 completed
+- Sprint 161: Local Chat Runtime Foundation completed
 - Next: Sprint 154 Control Center Service Monitor Panel Foundation
 
 ---
@@ -1219,9 +1219,9 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.160.0-genesis
-- Current completed sprint: Sprint 160.0 — Control Center Runtime Review & Stabilization 151-160
-- Next planned sprint: Sprint 161.0 — Local Chat Runtime Foundation
+- Version: v0.161.0-genesis
+- Current completed sprint: Sprint 161.0 — Local Chat Runtime Foundation
+- Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1272,7 +1272,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.160.0-genesis, AURA can:
+At v0.161.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1291,7 +1291,7 @@ At v0.160.0-genesis, AURA can:
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.160.0-genesis, AURA cannot yet:
+At v0.161.0-genesis, AURA cannot yet:
 
 - start active local service runtime
 - serve a real web Control Center
@@ -1528,7 +1528,7 @@ Next planned sprint:
 
 ## Sprint 147.0 — Service Control Command Review Foundation
 
-Version: v0.160.0-genesis
+Version: v0.161.0-genesis
 
 Sprint 147 defines the Service Control Command Review Foundation for AURA's future ATLAS service control path. It prepares planner-only and metadata-only start/stop/restart/status command review scopes, proposal contracts, permission boundaries, audit links, Control Center command surfaces, failure safe-idle behavior, and no-service-control-command-runtime-activation review.
 
@@ -1546,27 +1546,27 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 161.0 — Local Chat Runtime Foundation.
+Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 ## Sprint 148.0 — Service Recovery and Restart Policy Foundation
 
-Version: v0.160.0-genesis
+Version: v0.161.0-genesis
 
 Sprint 148 defines the Service Recovery and Restart Policy Foundation for AURA's future ATLAS service runtime. It prepares planner-only and metadata-only failure classification, safe-idle recovery policy, restart approval policy, retry cooldown policy, rollback visibility, Control Center recovery surfaces, permission links, audit links, error boundaries, and no-recovery-restart-runtime-activation review.
 
 Runtime remains disabled by design: no service process is started/stopped/restarted, no retry timer or retry loop is started, no recovery state is written, no file/config/git rollback is executed, no systemd/shell command is executed, no socket or port is opened, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 161.0 — Local Chat Runtime Foundation.
+Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 ## Sprint 149.0 — Service Security and Localhost Binding Review
 
-Version: v0.160.0-genesis
+Version: v0.161.0-genesis
 
 Sprint 149 defines the Service Security and Localhost Binding Review foundation for AURA's future ATLAS service runtime. It prepares planner-only and metadata-only localhost-only binding policy, public network exposure block policy, origin/host allowlist policy, loopback interface policy, deferred TLS/CORS/external-access review, permission/audit links, port-binding preflight security, Control Center security surfaces, security error boundaries, and no-security-localhost-runtime-activation review.
 
 Runtime remains disabled by design: no socket is opened, no port is bound, no HTTP/public listener is started, no security config or allowlist is written, no network probe is executed, no service command runs, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 161.0 — Local Chat Runtime Foundation.
+Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 
 
@@ -1574,6 +1574,23 @@ Next planned sprint: Sprint 161.0 — Local Chat Runtime Foundation.
 
 
 
+
+
+## Sprint 161 — Local Chat Runtime Foundation
+
+Sprint 161 starts the Local Chat Runtime block and records the safe foundation
+for local chat sessions, message schemas, chat loop boundaries, AURA persona
+response boundaries, history boundaries, permission/audit links, model adapter
+boundaries, and Sprint 162 CLI alpha readiness. This block shifts AURA from
+blueprint-only development toward a safe thin runtime, while keeping command
+execution, file mutation, desktop control, voice, vision, model runtime, and
+autonomous actions disabled until their later gated blocks.
+
+Sprint 161 does not create chat sessions at runtime, accept chat messages,
+persist chat history, dispatch model requests, write memory, mutate permissions,
+write audit logs, execute commands/tools, mutate files, control desktop apps,
+start voice/vision runtime, start servers, mount routes, bind ports, or enable
+runtime execution features.
 
 ## Sprint 160 — Control Center Runtime Review & Stabilization 151–160
 

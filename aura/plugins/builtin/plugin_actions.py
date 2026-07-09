@@ -2911,6 +2911,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    # Sprint 161.0 Local Chat Runtime Foundation actions.
+    local_chat_runtime_foundation_actions = [
+        ('local_chat_runtime_foundation.status', 'user_confirmation', 'Show Local Chat Runtime Foundation status.'),
+        ('local_chat_runtime_foundation.session_contract_plan', 'user_confirmation', 'Prepare local chat session contract plan.'),
+        ('local_chat_runtime_foundation.message_schema_plan', 'user_confirmation', 'Prepare local chat message schema plan.'),
+        ('local_chat_runtime_foundation.loop_boundary_plan', 'user_confirmation', 'Prepare local chat loop boundary plan.'),
+        ('local_chat_runtime_foundation.persona_response_boundary_plan', 'user_confirmation', 'Prepare AURA persona response boundary plan.'),
+        ('local_chat_runtime_foundation.history_boundary_plan', 'user_confirmation', 'Prepare local chat history boundary plan.'),
+        ('local_chat_runtime_foundation.permission_audit_link_plan', 'user_confirmation', 'Prepare local chat permission/audit link plan.'),
+        ('local_chat_runtime_foundation.model_adapter_boundary_plan', 'user_confirmation', 'Prepare local chat model adapter boundary plan.'),
+        ('local_chat_runtime_foundation.cli_alpha_readiness_plan', 'user_confirmation', 'Prepare local chat CLI alpha readiness plan.'),
+        ('local_chat_runtime_foundation.no_runtime_activation_plan', 'user_confirmation', 'Prepare no local chat runtime activation plan.'),
+        ('local_chat_runtime_foundation.next_sprint_readiness_plan', 'user_confirmation', 'Prepare next sprint readiness plan.'),
+        ('local_chat_runtime_foundation.context', 'user_confirmation', 'Show Local Chat Runtime Foundation context.'),
+    ]
+    for action_name, permission_action, description in local_chat_runtime_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_runtime_foundation", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_runtime_foundation"))
+
     # Sprint 160.0 Control Center runtime review stabilization 151-160 actions.
     control_center_runtime_review_stabilization_151_160_actions = [
         ('control_center_runtime_review_stabilization_151_160.status', 'read_project', 'Show Control Center Runtime Review Stabilization 151-160 status.'),

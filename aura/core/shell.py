@@ -145,6 +145,7 @@ from aura.control_center_service_monitor_panel_foundation.aura_control_center_se
 from aura.control_center_action_log_panel_foundation.aura_control_center_action_log_panel_foundation_manager import AuraControlCenterActionLogPanelFoundationManager
 from aura.control_center_read_only_route_map_foundation.aura_control_center_read_only_route_map_foundation_manager import AuraControlCenterReadOnlyRouteMapFoundationManager
 from aura.control_center_runtime_review_stabilization_151_160.aura_control_center_runtime_review_stabilization_151_160_manager import AuraControlCenterRuntimeReviewStabilization151160Manager
+from aura.local_chat_runtime_foundation.aura_local_chat_runtime_foundation_manager import AuraLocalChatRuntimeFoundationManager
 
 
 class AuraShell:
@@ -5223,6 +5224,49 @@ class AuraShell:
 
 
 
+    # Sprint 161.0 local chat runtime foundation shell helpers.
+    def print_local_chat_runtime_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat Runtime Foundation Safety Boundary"))
+
+    def handle_local_chat_runtime_foundation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split()
+        command = parts[0]
+        target = " ".join(parts[1:]).strip() or "AURA local chat runtime foundation"
+        manager = AuraLocalChatRuntimeFoundationManager(project_root=self.project_root)
+
+        if command == "local-chat-runtime-foundation-status":
+            self.print_local_chat_runtime_foundation_packet("AURA Local Chat Runtime Foundation Status", manager.status())
+            return True
+
+        if command == "local-chat-runtime-foundation-context":
+            self.print_local_chat_runtime_foundation_packet("AURA Local Chat Runtime Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "local-chat-session-contract-plan": ("AURA Local Chat Session Contract Plan", manager.local_chat_session_contract_plan),
+            "local-chat-message-schema-plan": ("AURA Local Chat Message Schema Plan", manager.local_chat_message_schema_plan),
+            "local-chat-loop-boundary-plan": ("AURA Local Chat Loop Boundary Plan", manager.local_chat_loop_boundary_plan),
+            "aura-persona-response-boundary-plan": ("AURA Persona Response Boundary Plan", manager.aura_persona_response_boundary_plan),
+            "local-chat-history-boundary-plan": ("AURA Local Chat History Boundary Plan", manager.local_chat_history_boundary_plan),
+            "local-chat-permission-audit-link-plan": ("AURA Local Chat Permission Audit Link Plan", manager.local_chat_permission_audit_link_plan),
+            "local-chat-model-adapter-boundary-plan": ("AURA Local Chat Model Adapter Boundary Plan", manager.local_chat_model_adapter_boundary_plan),
+            "local-chat-cli-alpha-readiness-plan": ("AURA Local Chat CLI Alpha Readiness Plan", manager.local_chat_cli_alpha_readiness_plan),
+            "no-local-chat-runtime-activation-plan": ("AURA No Local Chat Runtime Activation Plan", manager.no_local_chat_runtime_activation_plan),
+            "local-chat-next-sprint-readiness-plan": ("AURA Local Chat Next Sprint Readiness Plan", manager.local_chat_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_runtime_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 160.0 control center runtime review stabilization 151-160 shell helpers.
     def print_control_center_runtime_review_stabilization_151_160_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8585,6 +8629,9 @@ class AuraShell:
             return
 
         if self.handle_control_center_read_only_status_panel_foundation_shell_command(normalized):
+            return
+
+        if self.handle_local_chat_runtime_foundation_shell_command(normalized):
             return
 
         if self.handle_control_center_runtime_review_stabilization_151_160_shell_command(normalized):

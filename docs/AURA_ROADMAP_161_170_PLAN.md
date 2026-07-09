@@ -1,26 +1,33 @@
 # AURA Roadmap 161-170 — Local Chat Runtime
 
-This block is planned after Sprint 160 and is not activated by Sprint 160.
+This block turns AURA from a blueprint-heavy system into a safe thin local chat
+runtime. The goal is not autonomy. The goal is a local, permission-aware chat
+loop that can be tested from the CLI and later connected to memory, voice,
+vision, and action layers.
 
-Planned direction:
+## Sprint sequence
 
-- Sprint 161.0 — Local Chat Runtime Foundation planned
-- Sprint 162.0 — Local Chat Session State Foundation planned
-- Sprint 163.0 — Local Chat Message Store Boundary planned
-- Sprint 164.0 — Local Chat Permission/Audit Link planned
-- Sprint 165.0 — Local Chat Minimal Loop Review planned
-- Sprint 166.0 — Local Chat Error/Recovery Boundary planned
-- Sprint 167.0 — Local Chat Control Center Panel Link planned
-- Sprint 168.0 — Local Chat Safety/Privacy Review planned
-- Sprint 169.0 — Local Chat Runtime Readiness Review planned
-- Sprint 170.0 — Review & Stabilization 161-170 planned
+- Sprint 161 — Local Chat Runtime Foundation
+- Sprint 162 — Local Chat CLI Session Alpha
+- Sprint 163 — Local Chat Message Store
+- Sprint 164 — AURA Persona Response Layer
+- Sprint 165 — Model Adapter Boundary
+- Sprint 166 — Permission-Gated Model Request
+- Sprint 167 — Chat Safety + Uncertainty Layer
+- Sprint 168 — Chat History Viewer Contract
+- Sprint 169 — Local Chat Integration Review
+- Sprint 170 — Local Chat Runtime Stabilization
 
-Runtime boundary:
+## Deferred capabilities
 
-- no chat server/runtime is activated by this planning file
-- no message loop is started
-- no memory write runtime is enabled
-- no permission/audit runtime is enabled
-- no dashboard route is mounted
-- no port is bound
-- no runtime execution feature is enabled
+- Voice starts in Sprint 181-190.
+- Vision/screen awareness starts in Sprint 191-200.
+- Local action and desktop commands, such as opening Blender, opening VS Code,
+  and creating project folders, start around Sprint 201-210 after permission,
+  audit, allowlist, and recovery boundaries are ready.
+
+## Runtime safety
+
+The block must keep command execution, file mutation, plugin action execution,
+desktop control, public network exposure, and autonomous actions disabled until
+later explicitly gated runtime blocks.

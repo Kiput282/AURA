@@ -1452,6 +1452,28 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_local_chat_runtime_foundation",
+            description="Prepare local chat session contracts, message schema, chat loop boundaries, persona response boundaries, history boundaries, permission/audit links, model adapter boundaries, and CLI alpha readiness without accepting runtime chat messages, persisting history, dispatching model requests, executing commands, or mutating files.",
+            role="companion",
+            permission_action="user_confirmation",
+            status="online",
+            capabilities=[
+                "local_chat_runtime_foundation_status",
+                "local_chat_session_contract_plan",
+                "local_chat_message_schema_plan",
+                "local_chat_loop_boundary_plan",
+                "aura_persona_response_boundary_plan",
+                "local_chat_history_boundary_plan",
+                "local_chat_permission_audit_link_plan",
+                "local_chat_model_adapter_boundary_plan",
+                "local_chat_cli_alpha_readiness_plan",
+                "no_local_chat_runtime_activation_plan",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_control_center_runtime_review_stabilization_151_160",
             description="Prepare planner-only and metadata-only Control Center Runtime stabilization plans for Sprint 151-160 panel readiness, runtime boundary review, route/panel integration, read-only data contracts, permission/audit links, service monitor/action log surfaces, security/accessibility stabilization, no runtime activation, and next Local Chat Runtime block readiness without starting servers, mounting routes, serving requests, binding ports, dispatching actions, or enabling runtime execution.",
             role="dashboard",

@@ -132,6 +132,7 @@ from aura.control_center_service_monitor_panel_foundation.aura_control_center_se
 from aura.control_center_action_log_panel_foundation.aura_control_center_action_log_panel_foundation_manager import AuraControlCenterActionLogPanelFoundationManager
 from aura.control_center_read_only_route_map_foundation.aura_control_center_read_only_route_map_foundation_manager import AuraControlCenterReadOnlyRouteMapFoundationManager
 from aura.control_center_runtime_review_stabilization_151_160.aura_control_center_runtime_review_stabilization_151_160_manager import AuraControlCenterRuntimeReviewStabilization151160Manager
+from aura.local_chat_runtime_foundation.aura_local_chat_runtime_foundation_manager import AuraLocalChatRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -325,6 +326,7 @@ class SystemStatusManager:
         control_center_action_log_panel_foundation_status = AuraControlCenterActionLogPanelFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         control_center_read_only_route_map_foundation_status = AuraControlCenterReadOnlyRouteMapFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         control_center_runtime_review_stabilization_151_160_status = AuraControlCenterRuntimeReviewStabilization151160Manager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        local_chat_runtime_foundation_status = AuraLocalChatRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
             "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
@@ -470,6 +472,18 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "local_chat_runtime_foundation_ready": local_chat_runtime_foundation_status["local_chat_runtime_foundation_ready"],
+            "local_chat_runtime_foundation_data_ready": local_chat_runtime_foundation_status["local_chat_runtime_foundation_data_ready"],
+            "local_chat_runtime_foundation_plan_type_count": local_chat_runtime_foundation_status["plan_type_count"],
+            "local_chat_runtime_foundation_total_blueprint_count": local_chat_runtime_foundation_status["total_local_chat_runtime_foundation_blueprint_count"],
+            "local_chat_runtime_foundation_runtime_chat_sessions_created": local_chat_runtime_foundation_status["runtime_chat_sessions_created"],
+            "local_chat_runtime_foundation_runtime_chat_messages_accepted": local_chat_runtime_foundation_status["runtime_chat_messages_accepted"],
+            "local_chat_runtime_foundation_runtime_chat_messages_persisted": local_chat_runtime_foundation_status["runtime_chat_messages_persisted"],
+            "local_chat_runtime_foundation_runtime_aura_replies_generated": local_chat_runtime_foundation_status["runtime_aura_replies_generated"],
+            "local_chat_runtime_foundation_runtime_model_requests_dispatched": local_chat_runtime_foundation_status["runtime_model_requests_dispatched"],
+            "local_chat_runtime_foundation_runtime_commands_executed": local_chat_runtime_foundation_status["runtime_commands_executed"],
+            "local_chat_runtime_foundation_runtime_files_written": local_chat_runtime_foundation_status["runtime_files_written"],
+            "local_chat_runtime_foundation_runtime_execution_features": local_chat_runtime_foundation_status["runtime_execution_features"],
         })
 
         service_audit_link_foundation_status = AuraServiceAuditLinkFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()

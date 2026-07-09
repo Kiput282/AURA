@@ -1,7 +1,7 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.160.0-genesis
+Current Canonical Version: v0.161.0-genesis
 Current Canonical Sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
 Next Planned Sprint: Sprint 147.0 — Service Control Command Review Foundation
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
@@ -24,7 +24,7 @@ AURA must grow gradually. Runtime capability must be introduced only through exp
 
 AURA is currently at:
 
-- Version: v0.160.0-genesis
+- Version: v0.161.0-genesis
 - Sprint: Sprint 144.0
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
@@ -508,3 +508,12 @@ Sprint 143.0 adds health endpoint foundation planning for the future ATLAS local
 ## Sprint 147.0 — Service Control Command Review Foundation
 
 Sprint 147 adds planner-only, metadata-only service control command review boundaries for future start/stop/restart/status service commands. Runtime remains disabled: no command execution, no systemd execution, no service start/stop/restart, no process status probe, no socket open, no port bind, and no runtime execution features.
+
+
+## Sprint 161 Direction — Local Chat Runtime Foundation
+
+Sprint 161 begins the Local Chat Runtime block. The agreed Genesis Final path is
+chat → memory → voice → vision → action. Sprint 161 remains a safe foundation
+for session/message/chat-loop contracts and Sprint 162 CLI alpha readiness. It
+does not enable model runtime, command execution, file mutation, desktop
+control, voice, vision, or autonomous actions.
