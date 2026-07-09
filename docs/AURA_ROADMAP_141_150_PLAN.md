@@ -200,7 +200,7 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 148.0 — Service Recovery and Restart Policy Foundation.
+Next planned sprint: Sprint 149.0 — Service Security and Localhost Binding Review.
 
 
 ## Sprint 147.0 completion note
@@ -223,4 +223,4 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 148.0 — Service Recovery and Restart Policy Foundation.
+Next planned sprint: Sprint 149.0 — Service Security and Localhost Binding Review.

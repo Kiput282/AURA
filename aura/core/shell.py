@@ -132,6 +132,7 @@ from aura.local_service_configuration_port_registry_foundation.aura_local_servic
 from aura.service_permission_gate_runtime_boundary.aura_service_permission_gate_runtime_boundary_manager import AuraServicePermissionGateRuntimeBoundaryManager
 from aura.service_audit_link_foundation.aura_service_audit_link_foundation_manager import AuraServiceAuditLinkFoundationManager
 from aura.service_control_command_review_foundation.aura_service_control_command_review_foundation_manager import AuraServiceControlCommandReviewFoundationManager
+from aura.service_recovery_restart_policy_foundation.aura_service_recovery_restart_policy_foundation_manager import AuraServiceRecoveryRestartPolicyFoundationManager
 
 
 class AuraShell:
@@ -5196,6 +5197,51 @@ class AuraShell:
 
 
 
+
+
+    # Sprint 148.0 service recovery and restart policy foundation shell helpers.
+    def print_service_recovery_restart_policy_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Recovery and Restart Policy Foundation Safety Boundary"))
+
+    def handle_service_recovery_restart_policy_foundation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA service recovery and restart policy foundation"
+        manager = AuraServiceRecoveryRestartPolicyFoundationManager(project_root=self.project_root)
+
+        if command == "service-recovery-restart-policy-foundation-status":
+            self.print_service_recovery_restart_policy_foundation_packet("AURA Service Recovery and Restart Policy Foundation Status", manager.status())
+            return True
+
+        if command == "service-recovery-restart-policy-foundation-context":
+            self.print_service_recovery_restart_policy_foundation_packet("AURA Service Recovery and Restart Policy Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-failure-classification-plan": ("AURA Service Failure Classification Plan", manager.service_failure_classification_plan),
+            "service-safe-idle-recovery-policy-plan": ("AURA Service Safe Idle Recovery Policy Plan", manager.service_safe_idle_recovery_policy_plan),
+            "service-restart-approval-policy-plan": ("AURA Service Restart Approval Policy Plan", manager.service_restart_approval_policy_plan),
+            "service-retry-cooldown-policy-plan": ("AURA Service Retry Cooldown Policy Plan", manager.service_retry_cooldown_policy_plan),
+            "service-rollback-visibility-plan": ("AURA Service Rollback Visibility Plan", manager.service_rollback_visibility_plan),
+            "service-recovery-audit-link-plan": ("AURA Service Recovery Audit Link Plan", manager.service_recovery_audit_link_plan),
+            "service-recovery-permission-boundary-plan": ("AURA Service Recovery Permission Boundary Plan", manager.service_recovery_permission_boundary_plan),
+            "service-control-center-recovery-surface-plan": ("AURA Service Control Center Recovery Surface Plan", manager.service_control_center_recovery_surface_plan),
+            "service-recovery-error-boundary-plan": ("AURA Service Recovery Error Boundary Plan", manager.service_recovery_error_boundary_plan),
+            "no-recovery-restart-runtime-activation-plan": ("AURA No Recovery Restart Runtime Activation Plan", manager.no_recovery_restart_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_service_recovery_restart_policy_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 147.0 service control command review foundation shell helpers.
     def print_service_control_command_review_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8012,6 +8058,9 @@ class AuraShell:
             return
 
         if self.handle_service_control_command_review_foundation_shell_command(normalized):
+            return
+
+        if self.handle_service_recovery_restart_policy_foundation_shell_command(normalized):
             return
 
         if normalized == "help":

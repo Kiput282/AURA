@@ -1439,9 +1439,36 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+
+    # Sprint 148.0 service recovery and restart policy foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_service_recovery_restart_policy_foundation",
+            description="Prepare planner-only Service Recovery and Restart Policy Foundation without recovery/restart runtime activation.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "service_recovery_restart_policy_foundation_status",
+                "service_failure_classification_plan",
+                "service_safe_idle_recovery_policy_plan",
+                "service_restart_approval_policy_plan",
+                "service_retry_cooldown_policy_plan",
+                "service_rollback_visibility_plan",
+                "service_recovery_audit_link_plan",
+                "service_recovery_permission_boundary_plan",
+                "service_control_center_recovery_surface_plan",
+                "service_recovery_error_boundary_plan",
+                "no_recovery_restart_runtime_activation_plan",
+                "service_recovery_restart_policy_foundation_context",
+            ],
+        )
+    )
+
     # Sprint 147.0 service control command review foundation skill.
     registry.register(
-        Skill(
+        AuraSkill(
             name="aura_service_control_command_review_foundation",
             description="Service Control Command Review Foundation for future start/stop/restart/status command review boundaries without runtime command execution.",
             category="service",

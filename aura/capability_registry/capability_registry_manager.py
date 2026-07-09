@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_service_recovery_restart_policy_foundation",
+                    "name": "AURA Service Recovery and Restart Policy Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "critical",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.148.0-genesis",
+                    "category": "service",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and foundation-only Service Recovery and Restart Policy Foundation for future service failure classification, safe-idle recovery, restart approval, retry cooldown, rollback visibility, Control Center recovery surfaces, permission links, audit links, error boundaries, and no recovery/restart runtime activation review without writing recovery state, starting retry timers, restarting services, modifying files/config, reverting git, executing systemd or shell commands, binding ports, or enabling runtime execution features.",
+                },
+                {
                     "id": "aura_service_control_command_review_foundation",
                     "name": "AURA Service Control Command Review Foundation",
                     "state": "online",

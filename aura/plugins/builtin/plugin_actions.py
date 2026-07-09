@@ -2903,6 +2903,27 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+
+    # Sprint 148.0 service recovery and restart policy foundation actions.
+    service_recovery_restart_policy_foundation_actions = [
+        ('service_recovery_restart_policy_foundation.status', 'read_project', 'Show Service Recovery and Restart Policy Foundation status.'),
+        ('service_recovery_restart_policy_foundation.service_failure_classification_plan', 'read_project', 'Prepare service failure classification plan.'),
+        ('service_recovery_restart_policy_foundation.service_safe_idle_recovery_policy_plan', 'read_project', 'Prepare service safe-idle recovery policy plan.'),
+        ('service_recovery_restart_policy_foundation.service_restart_approval_policy_plan', 'read_project', 'Prepare service restart approval policy plan.'),
+        ('service_recovery_restart_policy_foundation.service_retry_cooldown_policy_plan', 'read_project', 'Prepare service retry cooldown policy plan.'),
+        ('service_recovery_restart_policy_foundation.service_rollback_visibility_plan', 'read_project', 'Prepare service rollback visibility plan.'),
+        ('service_recovery_restart_policy_foundation.service_recovery_audit_link_plan', 'read_project', 'Prepare service recovery audit link plan.'),
+        ('service_recovery_restart_policy_foundation.service_recovery_permission_boundary_plan', 'read_project', 'Prepare service recovery permission boundary plan.'),
+        ('service_recovery_restart_policy_foundation.service_control_center_recovery_surface_plan', 'read_project', 'Prepare service Control Center recovery surface plan.'),
+        ('service_recovery_restart_policy_foundation.service_recovery_error_boundary_plan', 'read_project', 'Prepare service recovery error boundary plan.'),
+        ('service_recovery_restart_policy_foundation.no_recovery_restart_runtime_activation_plan', 'read_project', 'Prepare no recovery restart runtime activation plan.'),
+        ('service_recovery_restart_policy_foundation.context', 'read_project', 'Show Service Recovery and Restart Policy Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in service_recovery_restart_policy_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="service_recovery_restart_policy_foundation", description=description, permission_action=permission_action, status="online", skill="aura_service_recovery_restart_policy_foundation"))
+
     # Sprint 147.0 service control command review foundation actions.
     service_control_command_review_foundation_actions = [
         ('service_control_command_review_foundation.status', 'read_project', 'Show Service Control Command Review Foundation status.'),
