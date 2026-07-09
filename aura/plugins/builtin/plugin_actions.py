@@ -2910,6 +2910,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
     # Sprint 149.0 service security and localhost binding review actions.
 
 
+
+    control_center_capability_viewer_foundation_actions = [
+        ('control_center_capability_viewer_foundation.status', 'read_project', 'Show Control Center Capability Viewer Foundation status.'),
+        ('control_center_capability_viewer_foundation.capability_viewer_layout_contract_plan', 'read_project', 'Prepare capability viewer layout contract plan.'),
+        ('control_center_capability_viewer_foundation.capability_registry_summary_contract_plan', 'read_project', 'Prepare capability registry summary contract plan.'),
+        ('control_center_capability_viewer_foundation.capability_state_indicator_semantics_plan', 'read_project', 'Prepare capability state indicator semantics plan.'),
+        ('control_center_capability_viewer_foundation.capability_filter_grouping_plan', 'read_project', 'Prepare capability filter grouping plan.'),
+        ('control_center_capability_viewer_foundation.capability_runtime_boundary_visibility_plan', 'read_project', 'Prepare capability runtime boundary visibility plan.'),
+        ('control_center_capability_viewer_foundation.capability_permission_audit_visibility_plan', 'read_project', 'Prepare capability permission and audit visibility plan.'),
+        ('control_center_capability_viewer_foundation.capability_viewer_error_boundary_plan', 'read_project', 'Prepare capability viewer error boundary plan.'),
+        ('control_center_capability_viewer_foundation.capability_viewer_accessibility_contract_plan', 'read_project', 'Prepare capability viewer accessibility contract plan.'),
+        ('control_center_capability_viewer_foundation.capability_viewer_next_service_monitor_readiness_plan', 'read_project', 'Prepare next service-monitor readiness plan.'),
+        ('control_center_capability_viewer_foundation.no_control_center_capability_viewer_runtime_activation_plan', 'read_project', 'Prepare no capability viewer runtime activation plan.'),
+        ('control_center_capability_viewer_foundation.context', 'read_project', 'Show Control Center Capability Viewer Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_capability_viewer_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_capability_viewer_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_capability_viewer_foundation"))
+
     control_center_read_only_status_panel_foundation_actions = [
         ('control_center_read_only_status_panel_foundation.status', 'read_project', 'Show Control Center Read-Only Status Panel Foundation status.'),
         ('control_center_read_only_status_panel_foundation.status_panel_layout_contract_plan', 'read_project', 'Prepare status panel layout contract plan.'),

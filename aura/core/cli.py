@@ -135,6 +135,7 @@ from aura.service_security_localhost_binding_review.aura_service_security_localh
 from aura.service_review_stabilization_141_150.aura_service_review_stabilization_141_150_manager import AuraServiceReviewStabilization141150Manager
 from aura.control_center_runtime_foundation.aura_control_center_runtime_foundation_manager import AuraControlCenterRuntimeFoundationManager
 from aura.control_center_read_only_status_panel_foundation.aura_control_center_read_only_status_panel_foundation_manager import AuraControlCenterReadOnlyStatusPanelFoundationManager
+from aura.control_center_capability_viewer_foundation.aura_control_center_capability_viewer_foundation_manager import AuraControlCenterCapabilityViewerFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4295,6 +4296,50 @@ class AuraCLI:
 
 
 
+
+
+    # Sprint 153.0 control center capability viewer foundation CLI helpers.
+    def print_control_center_capability_viewer_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Capability Viewer Foundation Safety Boundary"))
+
+    def handle_control_center_capability_viewer_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center capability viewer foundation"
+        manager = AuraControlCenterCapabilityViewerFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-capability-viewer-foundation-status":
+            self.print_control_center_capability_viewer_foundation_packet("AURA Control Center Capability Viewer Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-capability-viewer-foundation-context":
+            self.print_control_center_capability_viewer_foundation_packet("AURA Control Center Capability Viewer Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "capability-viewer-layout-contract-plan": ("AURA Capability Viewer Layout Contract Plan", manager.capability_viewer_layout_contract_plan),
+            "capability-registry-summary-contract-plan": ("AURA Capability Registry Summary Contract Plan", manager.capability_registry_summary_contract_plan),
+            "capability-state-indicator-semantics-plan": ("AURA Capability State Indicator Semantics Plan", manager.capability_state_indicator_semantics_plan),
+            "capability-filter-grouping-plan": ("AURA Capability Filter Grouping Plan", manager.capability_filter_grouping_plan),
+            "capability-runtime-boundary-visibility-plan": ("AURA Capability Runtime Boundary Visibility Plan", manager.capability_runtime_boundary_visibility_plan),
+            "capability-permission-audit-visibility-plan": ("AURA Capability Permission Audit Visibility Plan", manager.capability_permission_audit_visibility_plan),
+            "capability-viewer-error-boundary-plan": ("AURA Capability Viewer Error Boundary Plan", manager.capability_viewer_error_boundary_plan),
+            "capability-viewer-accessibility-contract-plan": ("AURA Capability Viewer Accessibility Contract Plan", manager.capability_viewer_accessibility_contract_plan),
+            "capability-viewer-next-service-monitor-readiness-plan": ("AURA Capability Viewer Next Service Monitor Readiness Plan", manager.capability_viewer_next_service_monitor_readiness_plan),
+            "no-control-center-capability-viewer-runtime-activation-plan": ("AURA No Control Center Capability Viewer Runtime Activation Plan", manager.no_control_center_capability_viewer_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_capability_viewer_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 152.0 control center read-only status panel foundation CLI helpers.
     def print_control_center_read_only_status_panel_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7277,6 +7322,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_capability_viewer_foundation_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

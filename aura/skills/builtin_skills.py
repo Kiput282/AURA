@@ -1448,6 +1448,32 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+
+    registry.register(
+        AuraSkill(
+            name="aura_control_center_capability_viewer_foundation",
+            description="Prepare planner-only and metadata-only Control Center capability viewer foundation plans for capability layout, registry summary contract, state indicators, filtering/grouping, runtime boundary visibility, permission/audit visibility, error boundaries, accessibility, next service-monitor readiness, and no capability viewer runtime activation without starting servers, reading live runtime data, rendering live panels, mounting routes, serving requests, binding ports, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_capability_viewer_foundation_status",
+                "capability_viewer_layout_contract_plan",
+                "capability_registry_summary_contract_plan",
+                "capability_state_indicator_semantics_plan",
+                "capability_filter_grouping_plan",
+                "capability_runtime_boundary_visibility_plan",
+                "capability_permission_audit_visibility_plan",
+                "capability_viewer_error_boundary_plan",
+                "capability_viewer_accessibility_contract_plan",
+                "capability_viewer_next_service_monitor_readiness_plan",
+                "no_control_center_capability_viewer_runtime_activation_plan",
+                "control_center_capability_viewer_foundation_context",
+            ],
+        )
+    )
+
     registry.register(
         AuraSkill(
             name="aura_control_center_read_only_status_panel_foundation",
