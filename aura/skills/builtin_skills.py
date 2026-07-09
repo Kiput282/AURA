@@ -1453,6 +1453,28 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+    # Sprint 167.0 local chat safety + uncertainty layer skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_chat_safety_uncertainty_layer",
+            description="Review local chat messages for safety, uncertainty, freshness boundaries, and capability honesty before any future model request, without model dispatch, network, memory writes, command execution, or arbitrary file mutation.",
+            role="companion",
+            permission_action="model_request_permission",
+            status="online",
+            capabilities=[
+                "local_chat_safety_uncertainty_layer",
+                "chat_safety_classifier_alpha",
+                "chat_uncertainty_classifier_alpha",
+                "capability_honesty_reply",
+                "freshness_boundary_reply",
+                "no_model_request_dispatch",
+                "no_network_request",
+                "no_command_execution",
+            ],
+        )
+    )
+
     # Sprint 166.0 local chat permission-gated model request skill.
     registry.register(
         AuraSkill(

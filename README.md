@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.166.0-genesis  
+Current version: v0.167.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -49,8 +49,8 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 92
-- online capabilities: 90
+- total capabilities: 98
+- online capabilities: 96
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 2
@@ -343,7 +343,7 @@ Active block:
 - Sprint 144: Service Configuration and Port Registry Foundation completed
 - Sprint 151: Control Center Runtime Foundation completed
 - Sprint 152: Control Center Read-Only Status Panel Foundation completed
-- Sprint 166: Permission-Gated Model Request completed
+- Sprint 167: Chat Safety + Uncertainty Layer completed
 - Next: Sprint 154 Control Center Service Monitor Panel Foundation
 
 ---
@@ -1219,9 +1219,9 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.166.0-genesis
+- Version: v0.167.0-genesis
 - Current completed sprint: Sprint 161.0 — Local Chat Runtime Foundation
-- Next planned sprint: Sprint 166.0 — Permission-Gated Model Request
+- Next planned sprint: Sprint 168.0 — Chat History Viewer Contract
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1272,7 +1272,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.166.0-genesis, AURA can:
+At v0.167.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1291,7 +1291,7 @@ At v0.166.0-genesis, AURA can:
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.166.0-genesis, AURA cannot yet:
+At v0.167.0-genesis, AURA cannot yet:
 
 - start active local service runtime
 - serve a real web Control Center
@@ -1528,7 +1528,7 @@ Next planned sprint:
 
 ## Sprint 147.0 — Service Control Command Review Foundation
 
-Version: v0.166.0-genesis
+Version: v0.167.0-genesis
 
 Sprint 147 defines the Service Control Command Review Foundation for AURA's future ATLAS service control path. It prepares planner-only and metadata-only start/stop/restart/status command review scopes, proposal contracts, permission boundaries, audit links, Control Center command surfaces, failure safe-idle behavior, and no-service-control-command-runtime-activation review.
 
@@ -1550,7 +1550,7 @@ Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 ## Sprint 148.0 — Service Recovery and Restart Policy Foundation
 
-Version: v0.166.0-genesis
+Version: v0.167.0-genesis
 
 Sprint 148 defines the Service Recovery and Restart Policy Foundation for AURA's future ATLAS service runtime. It prepares planner-only and metadata-only failure classification, safe-idle recovery policy, restart approval policy, retry cooldown policy, rollback visibility, Control Center recovery surfaces, permission links, audit links, error boundaries, and no-recovery-restart-runtime-activation review.
 
@@ -1560,7 +1560,7 @@ Next planned sprint: Sprint 162.0 — Local Chat CLI Session Alpha.
 
 ## Sprint 149.0 — Service Security and Localhost Binding Review
 
-Version: v0.166.0-genesis
+Version: v0.167.0-genesis
 
 Sprint 149 defines the Service Security and Localhost Binding Review foundation for AURA's future ATLAS service runtime. It prepares planner-only and metadata-only localhost-only binding policy, public network exposure block policy, origin/host allowlist policy, loopback interface policy, deferred TLS/CORS/external-access review, permission/audit links, port-binding preflight security, Control Center security surfaces, security error boundaries, and no-security-localhost-runtime-activation review.
 
@@ -1720,7 +1720,7 @@ before any real model request can be dispatched.
 
 ## Sprint 166 Local Chat Permission-Gated Model Request
 
-AURA v0.166.0-genesis adds a permission-gated model request dry-run layer for Local Chat. This sprint does **not** call a model provider. It creates a permission preview packet, a model request envelope, and a blocked gate decision showing that real model dispatch requires explicit future approval.
+AURA v0.167.0-genesis adds a permission-gated model request dry-run layer for Local Chat. This sprint does **not** call a model provider. It creates a permission preview packet, a model request envelope, and a blocked gate decision showing that real model dispatch requires explicit future approval.
 
 Safe alpha command:
 

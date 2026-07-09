@@ -1,7 +1,7 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.166.0-genesis
+Current Canonical Version: v0.167.0-genesis
 Current Canonical Sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
 Next Planned Sprint: Sprint 147.0 — Service Control Command Review Foundation
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
@@ -24,7 +24,7 @@ AURA must grow gradually. Runtime capability must be introduced only through exp
 
 AURA is currently at:
 
-- Version: v0.166.0-genesis
+- Version: v0.167.0-genesis
 - Sprint: Sprint 144.0
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
@@ -536,3 +536,8 @@ one manual CLI chat turn to be appended to an AURA-owned JSONL store while model
 runtime, memory runtime, command execution, arbitrary file mutation, desktop
 action, voice, vision, network access, and autonomous actions remain disabled.
 Sprint 164 should add the AURA Persona Response Layer.
+
+
+## Sprint 167 — Chat Safety + Uncertainty Layer
+
+Sprint 167 adds a deterministic local safety and uncertainty alpha layer before any future model request. It supports one-message safety/uncertainty review, capability honesty, and freshness-boundary replies while keeping model request dispatch, network, credential reads, memory writes, command execution, and arbitrary file mutation disabled.

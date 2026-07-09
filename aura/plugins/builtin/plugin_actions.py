@@ -2914,6 +2914,17 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+    # Sprint 167.0 Local Chat Safety + Uncertainty Layer actions.
+    local_chat_safety_uncertainty_layer_actions = [
+        ('local_chat_safety_uncertainty_layer.status', 'model_request_permission', 'Show Local Chat Safety + Uncertainty Layer status.'),
+        ('local_chat_safety_uncertainty_layer.alpha', 'model_request_permission', 'Run one local safety and uncertainty alpha check without model dispatch.'),
+        ('local_chat_safety_uncertainty_layer.no_unsafe_runtime_plan', 'model_request_permission', 'Show no unsafe runtime activation plan for chat safety and uncertainty.'),
+        ('local_chat_safety_uncertainty_layer.context', 'model_request_permission', 'Show Local Chat Safety + Uncertainty Layer context.'),
+    ]
+    for action_name, permission_action, description in local_chat_safety_uncertainty_layer_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_safety_uncertainty_layer", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_safety_uncertainty_layer"))
+
     # Sprint 166.0 Local Chat Permission-Gated Model Request actions.
     local_chat_permission_gated_model_request_actions = [
         ('local_chat_permission_gated_model_request.status', 'model_request_permission', 'Show Local Chat Permission-Gated Model Request status.'),

@@ -149,6 +149,7 @@ from aura.local_chat_message_store.aura_local_chat_message_store_manager import 
 from aura.local_chat_persona_response_layer.aura_local_chat_persona_response_layer_manager import AuraLocalChatPersonaResponseLayerManager
 from aura.local_chat_model_adapter_boundary.aura_local_chat_model_adapter_boundary_manager import AuraLocalChatModelAdapterBoundaryManager
 from aura.local_chat_permission_gated_model_request.aura_local_chat_permission_gated_model_request_manager import AuraLocalChatPermissionGatedModelRequestManager
+from aura.local_chat_safety_uncertainty_layer.aura_local_chat_safety_uncertainty_layer_manager import AuraLocalChatSafetyUncertaintyLayerManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4318,6 +4319,57 @@ class AuraCLI:
 
 
 
+
+    # Sprint 167.0 chat safety + uncertainty layer helpers.
+    def print_local_chat_safety_uncertainty_layer_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat Safety + Uncertainty Layer Boundary"))
+
+    def handle_local_chat_safety_uncertainty_layer_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat safety uncertainty layer"
+        manager = AuraLocalChatSafetyUncertaintyLayerManager(project_root=self.project_root)
+
+        if command in {"local-chat-safety-alpha", "local-chat-safety-uncertainty-alpha", "local-chat-safety"}:
+            if not target or target == "AURA local chat safety uncertainty layer":
+                print("AURA Local Chat Safety + Uncertainty Alpha")
+                print("============================================")
+                print('Usage: python3 main.py local-chat-safety-alpha "Aura apakah info ini terbaru?"')
+                return True
+            print(manager.render_safety_alpha(target))
+            return True
+
+        if command == "local-chat-safety-uncertainty-layer-status":
+            self.print_local_chat_safety_uncertainty_layer_packet("AURA Local Chat Safety + Uncertainty Layer Status", manager.status())
+            return True
+
+        if command == "local-chat-safety-uncertainty-layer-context":
+            self.print_local_chat_safety_uncertainty_layer_packet("AURA Local Chat Safety + Uncertainty Layer Context", manager.context())
+            return True
+
+        command_map = {
+            "chat-safety-uncertainty-runtime-plan": ("AURA Chat Safety + Uncertainty Runtime Plan", manager.chat_safety_uncertainty_runtime_plan),
+            "chat-safety-classifier-plan": ("AURA Chat Safety Classifier Plan", manager.chat_safety_classifier_plan),
+            "chat-uncertainty-classifier-plan": ("AURA Chat Uncertainty Classifier Plan", manager.chat_uncertainty_classifier_plan),
+            "capability-honesty-response-plan": ("AURA Capability Honesty Response Plan", manager.capability_honesty_response_plan),
+            "freshness-boundary-response-plan": ("AURA Freshness Boundary Response Plan", manager.freshness_boundary_response_plan),
+            "model-gate-safety-handoff-plan": ("AURA Model Gate Safety Handoff Plan", manager.model_gate_safety_handoff_plan),
+            "memory-command-boundary-plan": ("AURA Memory Command Boundary Plan", manager.memory_command_boundary_plan),
+            "safe-fallback-response-plan": ("AURA Safe Fallback Response Plan", manager.safe_fallback_response_plan),
+            "no-local-chat-safety-uncertainty-unsafe-runtime-plan": ("AURA No Local Chat Safety + Uncertainty Unsafe Runtime Plan", manager.no_local_chat_safety_uncertainty_unsafe_runtime_plan),
+            "local-chat-safety-uncertainty-next-sprint-readiness-plan": ("AURA Local Chat Safety + Uncertainty Next Sprint Readiness Plan", manager.local_chat_safety_uncertainty_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_safety_uncertainty_layer_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 166.0 permission-gated model request helpers.
     def print_local_chat_permission_gated_model_request_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7928,6 +7980,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_safety_uncertainty_layer_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_permission_gated_model_request_cli_command(raw_args):
