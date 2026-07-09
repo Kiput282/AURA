@@ -2901,6 +2901,26 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    # Sprint 143.0 local service health endpoint foundation actions.
+    local_service_health_endpoint_foundation_actions = [
+        ('local_service_health_endpoint_foundation.status', 'read_project', 'Show Local Service Health Endpoint Foundation status.'),
+        ('local_service_health_endpoint_foundation.health_endpoint_scope_plan', 'read_project', 'Prepare health endpoint scope plan.'),
+        ('local_service_health_endpoint_foundation.health_endpoint_contract_plan', 'read_project', 'Prepare health endpoint contract plan.'),
+        ('local_service_health_endpoint_foundation.health_response_schema_plan', 'read_project', 'Prepare health response schema plan.'),
+        ('local_service_health_endpoint_foundation.localhost_health_binding_boundary_plan', 'read_project', 'Prepare localhost health binding boundary plan.'),
+        ('local_service_health_endpoint_foundation.safe_idle_health_state_plan', 'read_project', 'Prepare safe-idle health state plan.'),
+        ('local_service_health_endpoint_foundation.health_dependency_visibility_plan', 'read_project', 'Prepare health dependency visibility plan.'),
+        ('local_service_health_endpoint_foundation.permission_audit_health_link_plan', 'read_project', 'Prepare permission/audit health link plan.'),
+        ('local_service_health_endpoint_foundation.control_center_health_card_plan', 'read_project', 'Prepare Control Center health card plan.'),
+        ('local_service_health_endpoint_foundation.health_error_fallback_plan', 'read_project', 'Prepare health error fallback plan.'),
+        ('local_service_health_endpoint_foundation.no_health_endpoint_activation_plan', 'read_project', 'Prepare no health endpoint activation plan.'),
+        ('local_service_health_endpoint_foundation.context', 'read_project', 'Show Local Service Health Endpoint Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in local_service_health_endpoint_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_service_health_endpoint_foundation", description=description, permission_action=permission_action, status="online", skill="aura_local_service_health_endpoint_foundation"))
+
+
     # Sprint 142.0 local service safe idle boot boundary actions.
     local_service_safe_idle_boot_boundary_actions = [
         ('local_service_safe_idle_boot_boundary.status', 'read_project', 'Show Local Service Safe Idle Boot Boundary status.'),

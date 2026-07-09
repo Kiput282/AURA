@@ -1519,11 +1519,11 @@ This foundation prepares safe-idle ATLAS local service identity, localhost-only 
 
 No service process is started, no socket is opened, no port is bound, no API/web/dashboard/health endpoint is started, no systemd unit is created or enabled, no permission/audit/file/command/tool/action/ORION/git runtime is activated, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation.
+Next planned sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation.
 
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.142.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.143.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 
@@ -1569,9 +1569,9 @@ Canonical planning docs:
 - docs/AURA_GAME_COMPANION_SAFETY_POLICY.md
 
 
-## v0.142.0 Genesis — Local Service Safe Idle Boot Boundary
+## v0.142.0 Genesis — Local Service Health Endpoint Foundation
 
-Sprint 142 completes the Local Service Safe Idle Boot Boundary foundation.
+Sprint 143 completes the Local Service Health Endpoint Foundation foundation.
 
 AURA now has planner-only metadata for:
 
@@ -1588,4 +1588,9 @@ AURA now has planner-only metadata for:
 
 Runtime remains disabled by design. No service, autostart, systemd, socket, port, health endpoint, readiness probe network call, permission mutation, audit writer, action/tool/command/file/memory/model/ORION/git runtime, or runtime execution feature is enabled.
 
-Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation.
+Next planned sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation.
+
+
+## Sprint 143.0 Update
+
+Sprint 143.0 adds Local Service Health Endpoint Foundation planning for the future ATLAS local service. It keeps the `/health` endpoint as a localhost-only, read-only, metadata-only contract and does not start an HTTP listener, open sockets, bind ports, run network probes, or enable runtime execution.

@@ -127,6 +127,7 @@ from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activ
 from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
 from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
 from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
+from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
 
 
 class AuraShell:
@@ -1101,6 +1102,18 @@ class AuraShell:
         print("  audit-failure-idle-plan <target> Prepare audit failure idle plan")
         print("  no-boot-activation-plan <target> Prepare no boot activation plan")
         print("  local-service-safe-idle-boot-boundary-context Show Local Service Safe Idle Boot Boundary context")
+        print("  local-service-health-endpoint-foundation-status Show Local Service Health Endpoint Foundation status")
+        print("  health-endpoint-scope-plan <target> Prepare health endpoint scope plan")
+        print("  health-endpoint-contract-plan <target> Prepare health endpoint contract plan")
+        print("  health-response-schema-plan <target> Prepare health response schema plan")
+        print("  localhost-health-binding-boundary-plan <target> Prepare localhost health binding boundary plan")
+        print("  safe-idle-health-state-plan <target> Prepare safe-idle health state plan")
+        print("  health-dependency-visibility-plan <target> Prepare health dependency visibility plan")
+        print("  permission-audit-health-link-plan <target> Prepare permission/audit health link plan")
+        print("  control-center-health-card-plan <target> Prepare Control Center health card plan")
+        print("  health-error-fallback-plan <target> Prepare health error fallback plan")
+        print("  no-health-endpoint-activation-plan <target> Prepare no health endpoint activation plan")
+        print("  local-service-health-endpoint-foundation-context Show Local Service Health Endpoint Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5094,6 +5107,49 @@ class AuraShell:
 
 
     # Sprint 142.0 local service safe idle boot boundary shell helpers.
+
+
+    # Sprint 143.0 local service health endpoint foundation shell helpers.
+    def print_local_service_health_endpoint_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Health Endpoint Foundation Safety Boundary"))
+
+    def handle_local_service_health_endpoint_foundation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA local service health endpoint foundation"
+        manager = AuraLocalServiceHealthEndpointFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-health-endpoint-foundation-status":
+            self.print_local_service_health_endpoint_foundation_packet("AURA Local Service Health Endpoint Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-health-endpoint-foundation-context":
+            self.print_local_service_health_endpoint_foundation_packet("AURA Local Service Health Endpoint Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "health-endpoint-scope-plan": ("AURA Health Endpoint Scope Plan", manager.health_endpoint_scope_plan),
+            "health-endpoint-contract-plan": ("AURA Health Endpoint Contract Plan", manager.health_endpoint_contract_plan),
+            "health-response-schema-plan": ("AURA Health Response Schema Plan", manager.health_response_schema_plan),
+            "localhost-health-binding-boundary-plan": ("AURA Localhost Health Binding Boundary Plan", manager.localhost_health_binding_boundary_plan),
+            "safe-idle-health-state-plan": ("AURA Safe Idle Health State Plan", manager.safe_idle_health_state_plan),
+            "health-dependency-visibility-plan": ("AURA Health Dependency Visibility Plan", manager.health_dependency_visibility_plan),
+            "permission-audit-health-link-plan": ("AURA Permission Audit Health Link Plan", manager.permission_audit_health_link_plan),
+            "control-center-health-card-plan": ("AURA Control Center Health Card Plan", manager.control_center_health_card_plan),
+            "health-error-fallback-plan": ("AURA Health Error Fallback Plan", manager.health_error_fallback_plan),
+            "no-health-endpoint-activation-plan": ("AURA No Health Endpoint Activation Plan", manager.no_health_endpoint_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_health_endpoint_foundation_packet(title, handler(target))
+            return True
+
+        return False
     def print_local_service_safe_idle_boot_boundary_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
         print(formatter.render_packet_text(title, packet, safety_title="Local Service Safe Idle Boot Boundary Safety Boundary"))
@@ -7726,6 +7782,9 @@ class AuraShell:
             return
 
         if self.handle_local_service_safe_idle_boot_boundary_shell_command(normalized):
+            return
+
+        if self.handle_local_service_health_endpoint_foundation_shell_command(normalized):
             return
 
         if normalized == "help":

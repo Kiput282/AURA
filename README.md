@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.142.0-genesis  
+Current version: v0.143.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -35,22 +35,22 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 142.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
+AURA has completed Sprint 143.0 and is now inside the Sprint 141-150 Local Service Runtime Foundation block.
 
 Latest completed checkpoint:
 
-- v0.142.0-genesis
-- Sprint 142: Local Service Safe Idle Boot Boundary
+- v0.143.0-genesis
+- Sprint 143: Local Service Health Endpoint Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: active
-- Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
+- Next planned sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
 
 Current capability registry summary:
 
-- total capabilities: 73
-- online capabilities: 71
-- foundation-only capabilities: 59
+- total capabilities: 74
+- online capabilities: 72
+- foundation-only capabilities: 60
 - planner-only capabilities: 7
 - permission-gated capabilities: 2
 - review-only capabilities: 3
@@ -291,7 +291,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.142.0-genesis
+    Version  : 0.143.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -334,7 +334,8 @@ Active block:
 - Sprint 141-150 Local Service Runtime Foundation
 - Sprint 141: Local Service Runtime Foundation completed
 - Sprint 142: Local Service Safe Idle Boot Boundary completed
-- Next: Sprint 143 Local Service Health Endpoint Foundation
+- Sprint 143: Local Service Health Endpoint Foundation completed
+- Next: Sprint 144 Service Configuration and Port Registry Foundation
 
 ---
 
@@ -1201,7 +1202,7 @@ Safety result:
 
 Next planned sprint:
 
-- Sprint 143.0 — Local Service Health Endpoint Foundation
+- Sprint 144.0 — Service Configuration and Port Registry Foundation
 
 ## Product Direction: Genesis to Post-Genesis
 
@@ -1209,9 +1210,9 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.142.0-genesis
-- Current completed sprint: Sprint 142.0 — Local Service Safe Idle Boot Boundary
-- Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
+- Version: v0.143.0-genesis
+- Current completed sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
+- Next planned sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1262,7 +1263,7 @@ Safety boundary:
 
 ## Current Capability Boundary
 
-At v0.142.0-genesis, AURA can:
+At v0.143.0-genesis, AURA can:
 
 - boot to READY
 - expose identity and version
@@ -1274,10 +1275,11 @@ At v0.142.0-genesis, AURA can:
 - define safety boundaries
 - define future runtime plans
 - define future local service safe-idle boot boundary plans
+- define future local service health endpoint foundation plans
 - validate that runtime counters remain zero
 - support Git-tracked project evolution
 
-At v0.142.0-genesis, AURA cannot yet:
+At v0.143.0-genesis, AURA cannot yet:
 
 - start active local service runtime
 - serve a real web Control Center
@@ -1290,6 +1292,7 @@ At v0.142.0-genesis, AURA cannot yet:
 - execute tools or commands autonomously
 - read/write/modify/delete files at runtime
 - bind ports or expose network services as active runtime
+- serve a real /health endpoint as active runtime
 
 ## Sprint 141.0 — Local Service Runtime Foundation
 
@@ -1368,4 +1371,45 @@ Safety result:
 Next planned sprint:
 
 - Sprint 143.0 — Local Service Health Endpoint Foundation
+
+## Sprint 143.0 — Local Service Health Endpoint Foundation
+
+Status: completed  
+Version: v0.143.0-genesis
+
+Sprint 143 defines the future local-service health endpoint foundation for AURA's ATLAS service path.
+
+It adds a planner-only, metadata-only, and foundation-only Local Service Health Endpoint Foundation for future localhost-only health endpoint scope, read-only /health contract, health response schema, localhost binding boundary, safe-idle health state, dependency visibility, permission/audit health linkage, Control Center health card, error fallback, and no-health-endpoint-activation review.
+
+Counts:
+
+- 12 plan types
+- 100 total local service health endpoint foundation blueprint/items
+- 0 runtime health endpoint servers started
+- 0 runtime HTTP listeners started
+- 0 runtime sockets opened
+- 0 runtime ports bound
+- 0 runtime network probes
+- 0 runtime services started
+- 0 runtime permission mutations
+- 0 runtime audit events written
+- 0 runtime actions/tools/commands/files/services/network/memory/model/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- health endpoint contract remains metadata-only
+- localhost-only policy preserved
+- no HTTP listener starts
+- no socket opens
+- no port binding occurs
+- no network probe runs
+- permission/audit health linkage is read-only planning only
+- Control Center health card remains a future display contract
+- release gate closed
+- future runtime still requires manual approval
+
+Next planned sprint:
+
+- Sprint 144.0 — Service Configuration and Port Registry Foundation
 

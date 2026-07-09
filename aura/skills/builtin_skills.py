@@ -1437,6 +1437,32 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+    # Sprint 143.0 local service health endpoint foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_service_health_endpoint_foundation",
+            description="Prepare planner-only, metadata-only, and foundation-only ATLAS Local Service Health Endpoint Foundation for future localhost-only health endpoint scope, read-only /health contract, health response schema, localhost binding boundary, safe-idle health state, dependency visibility, permission/audit health linkage, Control Center health card, error fallback, and no-health-endpoint-activation review without starting servers, opening sockets, binding ports, serving HTTP, polling networks, writing files, mutating permissions, writing audit events, dispatching actions, executing tools/commands, using file/memory/model/permission/audit/ORION/git runtime, or enabling runtime execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_service_health_endpoint_foundation_status",
+                "health_endpoint_scope_plan",
+                "health_endpoint_contract_plan",
+                "health_response_schema_plan",
+                "localhost_health_binding_boundary_plan",
+                "safe_idle_health_state_plan",
+                "health_dependency_visibility_plan",
+                "permission_audit_health_link_plan",
+                "control_center_health_card_plan",
+                "health_error_fallback_plan",
+                "no_health_endpoint_activation_plan",
+                "local_service_health_endpoint_foundation_context",
+            ],
+        )
+    )
+
+
     # Sprint 142.0 local service safe idle boot boundary skill.
     registry.register(
         AuraSkill(

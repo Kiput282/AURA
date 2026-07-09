@@ -1,7 +1,7 @@
 # AURA Roadmap 141-150 — Local Service Runtime Foundation
 
 Status: active
-Version seed: v0.142.0-genesis
+Version seed: v0.143.0-genesis
 Owner: Kiput
 Motto: Grow Together
 
@@ -30,11 +30,19 @@ No service is started, no port is bound, no socket is opened, no systemd unit is
 
 ### Sprint 142.0 — Local Service Safe Idle Boot Boundary
 
-Plan safe-idle service boot behavior and startup boundaries.
+Status: completed
+
+Adds the planner-only, metadata-only, and foundation-only Local Service Safe Idle Boot Boundary for safe-idle boot scope, boot entry state contracts, safe-idle guard conditions, boot failure fallback, no-autostart boundary, read-only readiness probe planning, Control Center idle visibility, permission denial idle behavior, audit failure idle behavior, and no-boot-activation review.
+
+No service is started, no port is bound, no socket is opened, no systemd unit is created, no health endpoint runtime is started, and runtime execution features remain 0.
 
 ### Sprint 143.0 — Local Service Health Endpoint Foundation
 
-Plan local health/status endpoint behavior without public exposure.
+Status: completed
+
+Adds the planner-only, metadata-only, and foundation-only Local Service Health Endpoint Foundation for future localhost-only health endpoint scope, read-only /health contract, health response schema, localhost binding boundary, safe-idle health state, dependency visibility, permission/audit health linkage, Control Center health card, error fallback, and no-health-endpoint-activation review.
+
+No health endpoint server is started, no HTTP listener is started, no socket is opened, no port is bound, no network probe is executed, and runtime execution features remain 0.
 
 ### Sprint 144.0 — Service Configuration and Port Registry Foundation
 
@@ -86,3 +94,26 @@ Runtime remains disabled by design:
 - no runtime execution features
 
 Next planned sprint: Sprint 143.0 — Local Service Health Endpoint Foundation.
+
+
+## Sprint 143.0 completion note
+
+Sprint 143 adds the Local Service Health Endpoint Foundation.
+
+It defines future localhost-only health endpoint scope, read-only /health contract, health response schema, localhost health binding boundary, safe-idle health state, dependency visibility, permission/audit health linkage, Control Center health card planning, health error fallback behavior, and no-health-endpoint-activation review.
+
+Runtime remains disabled by design:
+
+- no health endpoint server start
+- no HTTP listener start
+- no socket open
+- no port binding
+- no network probe
+- no background health worker
+- no health polling loop
+- no permission mutation
+- no audit writer runtime
+- no action/tool/command/file/memory/model/ORION/git runtime
+- no runtime execution features
+
+Next planned sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation.

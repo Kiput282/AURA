@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_local_service_health_endpoint_foundation",
+                    "name": "AURA Local Service Health Endpoint Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "high",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.143.0-genesis",
+                    "category": "service",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and foundation-only Local Service Health Endpoint Foundation for future localhost-only health endpoint scope, read-only /health contract, health response schema, localhost binding boundary, safe-idle health state, dependency visibility, permission/audit health linkage, Control Center health card, error fallback, and no-health-endpoint-activation review without starting servers, opening sockets, binding ports, serving HTTP, polling networks, writing files, mutating permissions, writing audit events, dispatching actions, executing tools/commands, using file/memory/model/permission/audit/ORION/git runtime, or enabling runtime execution features.",
+                },
+                {
                     "id": "aura_local_service_safe_idle_boot_boundary",
                     "name": "AURA Local Service Safe Idle Boot Boundary",
                     "state": "online",

@@ -125,6 +125,7 @@ from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activ
 from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
 from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
 from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
+from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4227,6 +4228,48 @@ class AuraCLI:
 
 
     # Sprint 142.0 local service safe idle boot boundary CLI helpers.
+
+
+    # Sprint 143.0 local service health endpoint foundation CLI helpers.
+    def print_local_service_health_endpoint_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Service Health Endpoint Foundation Safety Boundary"))
+
+    def handle_local_service_health_endpoint_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local service health endpoint foundation"
+        manager = AuraLocalServiceHealthEndpointFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-health-endpoint-foundation-status":
+            self.print_local_service_health_endpoint_foundation_packet("AURA Local Service Health Endpoint Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-health-endpoint-foundation-context":
+            self.print_local_service_health_endpoint_foundation_packet("AURA Local Service Health Endpoint Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "health-endpoint-scope-plan": ("AURA Health Endpoint Scope Plan", manager.health_endpoint_scope_plan),
+            "health-endpoint-contract-plan": ("AURA Health Endpoint Contract Plan", manager.health_endpoint_contract_plan),
+            "health-response-schema-plan": ("AURA Health Response Schema Plan", manager.health_response_schema_plan),
+            "localhost-health-binding-boundary-plan": ("AURA Localhost Health Binding Boundary Plan", manager.localhost_health_binding_boundary_plan),
+            "safe-idle-health-state-plan": ("AURA Safe Idle Health State Plan", manager.safe_idle_health_state_plan),
+            "health-dependency-visibility-plan": ("AURA Health Dependency Visibility Plan", manager.health_dependency_visibility_plan),
+            "permission-audit-health-link-plan": ("AURA Permission Audit Health Link Plan", manager.permission_audit_health_link_plan),
+            "control-center-health-card-plan": ("AURA Control Center Health Card Plan", manager.control_center_health_card_plan),
+            "health-error-fallback-plan": ("AURA Health Error Fallback Plan", manager.health_error_fallback_plan),
+            "no-health-endpoint-activation-plan": ("AURA No Health Endpoint Activation Plan", manager.no_health_endpoint_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_health_endpoint_foundation_packet(title, handler(target))
+            return True
+
+        return False
     def print_local_service_safe_idle_boot_boundary_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
         print(formatter.render_packet_text(title, packet, safety_title="Local Service Safe Idle Boot Boundary Safety Boundary"))
@@ -6804,6 +6847,9 @@ class AuraCLI:
             return True
 
         if self.handle_local_service_safe_idle_boot_boundary_cli_command(raw_args):
+            return True
+
+        if self.handle_local_service_health_endpoint_foundation_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)
