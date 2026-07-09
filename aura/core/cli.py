@@ -138,6 +138,7 @@ from aura.control_center_read_only_status_panel_foundation.aura_control_center_r
 from aura.control_center_capability_viewer_foundation.aura_control_center_capability_viewer_foundation_manager import AuraControlCenterCapabilityViewerFoundationManager
 from aura.control_center_plugin_panel_foundation.aura_control_center_plugin_panel_foundation_manager import AuraControlCenterPluginPanelFoundationManager
 from aura.control_center_permission_panel_foundation.aura_control_center_permission_panel_foundation_manager import AuraControlCenterPermissionPanelFoundationManager
+from aura.control_center_audit_panel_foundation.aura_control_center_audit_panel_foundation_manager import AuraControlCenterAuditPanelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4302,6 +4303,48 @@ class AuraCLI:
 
 
 
+    # Sprint 156.0 control center audit panel foundation CLI helpers.
+    def print_control_center_audit_panel_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Control Center Audit Panel Foundation Safety Boundary"))
+
+    def handle_control_center_audit_panel_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA control center audit panel foundation"
+        manager = AuraControlCenterAuditPanelFoundationManager(project_root=self.project_root)
+
+        if command == "control-center-audit-panel-foundation-status":
+            self.print_control_center_audit_panel_foundation_packet("AURA Control Center Audit Panel Foundation Status", manager.status())
+            return True
+
+        if command == "control-center-audit-panel-foundation-context":
+            self.print_control_center_audit_panel_foundation_packet("AURA Control Center Audit Panel Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "audit-panel-layout-contract-plan": ("AURA Audit Panel Layout Contract Plan", manager.audit_panel_layout_contract_plan),
+            "audit-link-summary-contract-plan": ("AURA Audit Link Summary Contract Plan", manager.audit_link_summary_contract_plan),
+            "audit-event-reference-contract-plan": ("AURA Audit Event Reference Contract Plan", manager.audit_event_reference_contract_plan),
+            "audit-log-boundary-visibility-plan": ("AURA Audit Log Boundary Visibility Plan", manager.audit_log_boundary_visibility_plan),
+            "audit-trace-chain-summary-plan": ("AURA Audit Trace Chain Summary Plan", manager.audit_trace_chain_summary_plan),
+            "audit-retention-redaction-boundary-plan": ("AURA Audit Retention Redaction Boundary Plan", manager.audit_retention_redaction_boundary_plan),
+            "audit-filter-grouping-plan": ("AURA Audit Filter Grouping Plan", manager.audit_filter_grouping_plan),
+            "audit-panel-error-boundary-plan": ("AURA Audit Panel Error Boundary Plan", manager.audit_panel_error_boundary_plan),
+            "audit-panel-accessibility-security-review-plan": ("AURA Audit Panel Accessibility Security Review Plan", manager.audit_panel_accessibility_security_review_plan),
+            "no-control-center-audit-panel-runtime-activation-plan": ("AURA No Control Center Audit Panel Runtime Activation Plan", manager.no_control_center_audit_panel_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_control_center_audit_panel_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 155.0 control center permission panel foundation CLI helpers.
     def print_control_center_permission_panel_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7410,6 +7453,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_control_center_audit_panel_foundation_cli_command(raw_args):
             return True
 
         if self.handle_control_center_permission_panel_foundation_cli_command(raw_args):

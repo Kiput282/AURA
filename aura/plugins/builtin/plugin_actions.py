@@ -2911,6 +2911,24 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    control_center_audit_panel_foundation_actions = [
+        ('control_center_audit_panel_foundation.status', 'read_project', 'Show Control Center Audit Panel Foundation status.'),
+        ('control_center_audit_panel_foundation.audit_panel_layout_contract_plan', 'read_project', 'Prepare audit panel layout contract plan.'),
+        ('control_center_audit_panel_foundation.audit_link_summary_contract_plan', 'read_project', 'Prepare audit link summary contract plan.'),
+        ('control_center_audit_panel_foundation.audit_event_reference_contract_plan', 'read_project', 'Prepare audit event reference contract plan.'),
+        ('control_center_audit_panel_foundation.audit_log_boundary_visibility_plan', 'read_project', 'Prepare audit log boundary visibility plan.'),
+        ('control_center_audit_panel_foundation.audit_trace_chain_summary_plan', 'read_project', 'Prepare audit trace-chain summary plan.'),
+        ('control_center_audit_panel_foundation.audit_retention_redaction_boundary_plan', 'read_project', 'Prepare audit retention/redaction boundary plan.'),
+        ('control_center_audit_panel_foundation.audit_filter_grouping_plan', 'read_project', 'Prepare audit filter grouping plan.'),
+        ('control_center_audit_panel_foundation.audit_panel_error_boundary_plan', 'read_project', 'Prepare audit panel error boundary plan.'),
+        ('control_center_audit_panel_foundation.audit_panel_accessibility_security_review_plan', 'read_project', 'Prepare audit panel accessibility/security review plan.'),
+        ('control_center_audit_panel_foundation.no_control_center_audit_panel_runtime_activation_plan', 'read_project', 'Prepare no audit panel runtime activation plan.'),
+        ('control_center_audit_panel_foundation.context', 'read_project', 'Show Control Center Audit Panel Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in control_center_audit_panel_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="control_center_audit_panel_foundation", description=description, permission_action=permission_action, status="online", skill="aura_control_center_audit_panel_foundation"))
+
     control_center_permission_panel_foundation_actions = [
         ('control_center_permission_panel_foundation.status', 'read_project', 'Show Control Center Permission Panel Foundation status.'),
         ('control_center_permission_panel_foundation.permission_panel_layout_contract_plan', 'read_project', 'Prepare permission panel layout contract plan.'),

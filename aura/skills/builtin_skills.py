@@ -1452,6 +1452,30 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
     registry.register(
         AuraSkill(
+            name="aura_control_center_audit_panel_foundation",
+            description="Prepare planner-only and metadata-only Control Center audit panel foundation plans for audit link summaries, event references, log boundaries, trace-chain summary, retention/redaction boundaries, filters/grouping, error boundaries, accessibility/security review, and no audit panel runtime activation without reading live logs, writing audit events, serving requests, binding ports, or enabling runtime execution.",
+            role="dashboard",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "control_center_audit_panel_foundation_status",
+                "audit_panel_layout_contract_plan",
+                "audit_link_summary_contract_plan",
+                "audit_event_reference_contract_plan",
+                "audit_log_boundary_visibility_plan",
+                "audit_trace_chain_summary_plan",
+                "audit_retention_redaction_boundary_plan",
+                "audit_filter_grouping_plan",
+                "audit_panel_error_boundary_plan",
+                "audit_panel_accessibility_security_review_plan",
+                "no_control_center_audit_panel_runtime_activation_plan",
+                "control_center_audit_panel_foundation_context",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_control_center_permission_panel_foundation",
             description="Prepare planner-only and metadata-only Control Center permission panel foundation plans for permission request summaries, grant boundary visibility, risk badges, filters/grouping, error boundaries, accessibility, security review, next audit-viewer readiness, and no permission panel runtime activation without creating requests, applying grants, mutating permissions, reading live stores, writing audits, serving requests, binding ports, or enabling runtime execution.",
             role="dashboard",

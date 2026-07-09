@@ -127,6 +127,7 @@ from aura.control_center_read_only_status_panel_foundation.aura_control_center_r
 from aura.control_center_capability_viewer_foundation.aura_control_center_capability_viewer_foundation_manager import AuraControlCenterCapabilityViewerFoundationManager
 from aura.control_center_plugin_panel_foundation.aura_control_center_plugin_panel_foundation_manager import AuraControlCenterPluginPanelFoundationManager
 from aura.control_center_permission_panel_foundation.aura_control_center_permission_panel_foundation_manager import AuraControlCenterPermissionPanelFoundationManager
+from aura.control_center_audit_panel_foundation.aura_control_center_audit_panel_foundation_manager import AuraControlCenterAuditPanelFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -315,6 +316,7 @@ class SystemStatusManager:
         control_center_capability_viewer_foundation_status = AuraControlCenterCapabilityViewerFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         control_center_plugin_panel_foundation_status = AuraControlCenterPluginPanelFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         control_center_permission_panel_foundation_status = AuraControlCenterPermissionPanelFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        control_center_audit_panel_foundation_status = AuraControlCenterAuditPanelFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
             "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
@@ -402,6 +404,17 @@ class SystemStatusManager:
             "control_center_permission_panel_foundation_runtime_dashboard_requests_served": control_center_permission_panel_foundation_status["runtime_dashboard_requests_served"],
             "control_center_permission_panel_foundation_runtime_routes_mounted": control_center_permission_panel_foundation_status["runtime_dashboard_routes_mounted"],
             "control_center_permission_panel_foundation_runtime_execution_features": control_center_permission_panel_foundation_status["runtime_execution_features"],
+            "control_center_audit_panel_foundation_ready": control_center_audit_panel_foundation_status["control_center_audit_panel_foundation_ready"],
+            "control_center_audit_panel_foundation_data_ready": control_center_audit_panel_foundation_status["control_center_audit_panel_foundation_data_ready"],
+            "control_center_audit_panel_foundation_plan_type_count": control_center_audit_panel_foundation_status["plan_type_count"],
+            "control_center_audit_panel_foundation_total_blueprint_count": control_center_audit_panel_foundation_status["total_control_center_audit_panel_foundation_blueprint_count"],
+            "control_center_audit_panel_foundation_runtime_audit_panel_renders_executed": control_center_audit_panel_foundation_status["runtime_audit_panel_renders_executed"],
+            "control_center_audit_panel_foundation_runtime_audit_link_records_read": control_center_audit_panel_foundation_status["runtime_audit_link_records_read"],
+            "control_center_audit_panel_foundation_runtime_audit_events_written": control_center_audit_panel_foundation_status["runtime_audit_events_written"],
+            "control_center_audit_panel_foundation_runtime_audit_logs_appended": control_center_audit_panel_foundation_status["runtime_audit_logs_appended"],
+            "control_center_audit_panel_foundation_runtime_dashboard_requests_served": control_center_audit_panel_foundation_status["runtime_dashboard_requests_served"],
+            "control_center_audit_panel_foundation_runtime_routes_mounted": control_center_audit_panel_foundation_status["runtime_dashboard_routes_mounted"],
+            "control_center_audit_panel_foundation_runtime_execution_features": control_center_audit_panel_foundation_status["runtime_execution_features"],
         })
 
         service_audit_link_foundation_status = AuraServiceAuditLinkFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
