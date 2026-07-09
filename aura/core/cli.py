@@ -150,6 +150,7 @@ from aura.local_chat_persona_response_layer.aura_local_chat_persona_response_lay
 from aura.local_chat_model_adapter_boundary.aura_local_chat_model_adapter_boundary_manager import AuraLocalChatModelAdapterBoundaryManager
 from aura.local_chat_permission_gated_model_request.aura_local_chat_permission_gated_model_request_manager import AuraLocalChatPermissionGatedModelRequestManager
 from aura.local_chat_safety_uncertainty_layer.aura_local_chat_safety_uncertainty_layer_manager import AuraLocalChatSafetyUncertaintyLayerManager
+from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_contract_manager import AuraLocalChatHistoryViewerContractManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4320,6 +4321,53 @@ class AuraCLI:
 
 
 
+
+    # Sprint 168.0 chat history viewer contract helpers.
+    def print_local_chat_history_viewer_contract_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat History Viewer Boundary"))
+
+    def handle_local_chat_history_viewer_contract_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat history viewer contract"
+        manager = AuraLocalChatHistoryViewerContractManager(project_root=self.project_root)
+
+        if command in {"local-chat-history-alpha", "local-chat-history-viewer-alpha", "local-chat-history"}:
+            limit_text = raw_args[1] if len(raw_args) > 1 else None
+            print(manager.render_history_alpha(limit_text))
+            return True
+
+        if command == "local-chat-history-viewer-contract-status":
+            self.print_local_chat_history_viewer_contract_packet("AURA Local Chat History Viewer Contract Status", manager.status())
+            return True
+
+        if command == "local-chat-history-viewer-contract-context":
+            self.print_local_chat_history_viewer_contract_packet("AURA Local Chat History Viewer Contract Context", manager.context())
+            return True
+
+        command_map = {
+            "chat-history-viewer-runtime-plan": ("AURA Chat History Viewer Runtime Plan", manager.chat_history_viewer_runtime_plan),
+            "chat-history-store-read-policy-plan": ("AURA Chat History Store Read Policy Plan", manager.chat_history_store_read_policy_plan),
+            "chat-history-schema-reader-plan": ("AURA Chat History Schema Reader Plan", manager.chat_history_schema_reader_plan),
+            "chat-history-summary-renderer-plan": ("AURA Chat History Summary Renderer Plan", manager.chat_history_summary_renderer_plan),
+            "chat-history-privacy-redaction-plan": ("AURA Chat History Privacy Redaction Plan", manager.chat_history_privacy_redaction_plan),
+            "chat-history-pagination-contract-plan": ("AURA Chat History Pagination Contract Plan", manager.chat_history_pagination_contract_plan),
+            "chat-history-safety-boundary-plan": ("AURA Chat History Safety Boundary Plan", manager.chat_history_safety_boundary_plan),
+            "chat-history-control-center-handoff-plan": ("AURA Chat History Control Center Handoff Plan", manager.chat_history_control_center_handoff_plan),
+            "no-local-chat-history-viewer-unsafe-runtime-plan": ("AURA No Local Chat History Viewer Unsafe Runtime Plan", manager.no_local_chat_history_viewer_unsafe_runtime_plan),
+            "local-chat-history-viewer-next-sprint-readiness-plan": ("AURA Local Chat History Viewer Next Sprint Readiness Plan", manager.local_chat_history_viewer_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_history_viewer_contract_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 167.0 chat safety + uncertainty layer helpers.
     def print_local_chat_safety_uncertainty_layer_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7980,6 +8028,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_history_viewer_contract_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_safety_uncertainty_layer_cli_command(raw_args):

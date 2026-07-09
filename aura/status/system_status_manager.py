@@ -139,6 +139,7 @@ from aura.local_chat_persona_response_layer.aura_local_chat_persona_response_lay
 from aura.local_chat_model_adapter_boundary.aura_local_chat_model_adapter_boundary_manager import AuraLocalChatModelAdapterBoundaryManager
 from aura.local_chat_permission_gated_model_request.aura_local_chat_permission_gated_model_request_manager import AuraLocalChatPermissionGatedModelRequestManager
 from aura.local_chat_safety_uncertainty_layer.aura_local_chat_safety_uncertainty_layer_manager import AuraLocalChatSafetyUncertaintyLayerManager
+from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_contract_manager import AuraLocalChatHistoryViewerContractManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -339,6 +340,7 @@ class SystemStatusManager:
         local_chat_model_adapter_boundary_status = AuraLocalChatModelAdapterBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_permission_gated_model_request_status = AuraLocalChatPermissionGatedModelRequestManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
             "service_control_command_review_foundation_data_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_data_ready"],
@@ -484,6 +486,22 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "local_chat_history_viewer_contract_ready": local_chat_history_viewer_contract_status["local_chat_history_viewer_contract_ready"],
+            "local_chat_history_viewer_contract_data_ready": local_chat_history_viewer_contract_status["local_chat_history_viewer_contract_data_ready"],
+            "local_chat_history_viewer_contract_plan_type_count": local_chat_history_viewer_contract_status["plan_type_count"],
+            "local_chat_history_viewer_contract_total_blueprint_count": local_chat_history_viewer_contract_status["total_local_chat_history_viewer_contract_blueprint_count"],
+            "local_chat_history_viewer_contract_thin_runtime_alpha": local_chat_history_viewer_contract_status["thin_runtime_alpha"],
+            "local_chat_history_viewer_contract_enabled": local_chat_history_viewer_contract_status["chat_history_viewer_contract_enabled"],
+            "local_chat_history_viewer_contract_runtime_history_store_reads": local_chat_history_viewer_contract_status["runtime_history_store_reads"],
+            "local_chat_history_viewer_contract_runtime_history_records_read": local_chat_history_viewer_contract_status["runtime_history_records_read"],
+            "local_chat_history_viewer_contract_runtime_history_turns_displayed": local_chat_history_viewer_contract_status["runtime_history_turns_displayed"],
+            "local_chat_history_viewer_contract_runtime_model_requests_dispatched": local_chat_history_viewer_contract_status["runtime_model_requests_dispatched"],
+            "local_chat_history_viewer_contract_runtime_network_requests": local_chat_history_viewer_contract_status["runtime_network_requests"],
+            "local_chat_history_viewer_contract_runtime_credentials_read": local_chat_history_viewer_contract_status["runtime_credentials_read"],
+            "local_chat_history_viewer_contract_runtime_memory_writes": local_chat_history_viewer_contract_status["runtime_memory_writes"],
+            "local_chat_history_viewer_contract_runtime_commands_executed": local_chat_history_viewer_contract_status["runtime_commands_executed"],
+            "local_chat_history_viewer_contract_runtime_arbitrary_files_read": local_chat_history_viewer_contract_status["runtime_arbitrary_files_read"],
+            "local_chat_history_viewer_contract_runtime_execution_features": local_chat_history_viewer_contract_status["runtime_execution_features"],
             "local_chat_safety_uncertainty_layer_ready": local_chat_safety_uncertainty_layer_status["local_chat_safety_uncertainty_layer_ready"],
             "local_chat_safety_uncertainty_layer_data_ready": local_chat_safety_uncertainty_layer_status["local_chat_safety_uncertainty_layer_data_ready"],
             "local_chat_safety_uncertainty_layer_plan_type_count": local_chat_safety_uncertainty_layer_status["plan_type_count"],

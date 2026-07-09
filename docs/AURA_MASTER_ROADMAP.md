@@ -783,7 +783,7 @@ This sprint adds capability state metadata, runtime-level metadata, risk-level m
 
 Current registry summary:
 - total capabilities tracked: 18
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 3
 - planner-only capabilities: 6
 - permission-gated planner capabilities: 2
@@ -838,7 +838,7 @@ Current workflow summary:
 
 This sprint also updates the Capability Registry so Unified Permission Workflow is online:
 - total capabilities tracked: 18
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 3
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -892,7 +892,7 @@ AURA can provide planner-only Runtime Service Foundation planning for ATLAS safe
 
 Capability Registry now marks AURA Runtime Service Foundation as online:
 - total capabilities tracked: 18
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 4
 - planner-only capabilities: 7
 - planned future capabilities: 2
@@ -911,7 +911,7 @@ AURA can provide planner-only Launcher & Health Monitor Foundation planning for 
 
 Capability Registry now marks AURA Launcher & Health Monitor Foundation as online:
 - total capabilities tracked: 18
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 5
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -932,7 +932,7 @@ AURA can provide planner-only Control Center / Genesis Console UI Blueprint plan
 
 Capability Registry now marks AURA Control Center as online:
 - total capabilities tracked: 18
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 6
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -953,7 +953,7 @@ AURA can provide planner-only Local Console Web Foundation planning for localhos
 
 Capability Registry now tracks AURA Local Console Web Foundation:
 - total capabilities tracked: 19
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 7
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -974,7 +974,7 @@ AURA can provide planner-only Chat Bridge & Session State Foundation planning fo
 
 Capability Registry now tracks AURA Chat Bridge & Session State Foundation:
 - total capabilities tracked: 20
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 8
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -995,7 +995,7 @@ AURA can provide planner-only Plugin / Permission Dashboard Foundation planning 
 
 Capability Registry now tracks AURA Plugin / Permission Dashboard Foundation:
 - total capabilities tracked: 21
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 9
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -1027,7 +1027,7 @@ Completed block summary:
 
 Capability Registry stabilized summary:
 - total capabilities tracked: 21
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 9
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -1078,7 +1078,7 @@ AURA can provide planner-only Local Console Static Prototype Foundation planning
 
 Capability Registry now tracks AURA Local Console Static Prototype Foundation:
 - total capabilities tracked: 22
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 10
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -1099,7 +1099,7 @@ AURA can provide planner-only Local Console API Schema Foundation planning for A
 
 Capability Registry now tracks AURA Local Console API Schema Foundation:
 - total capabilities tracked: 23
-- online capabilities: 96
+- online capabilities: 97
 - foundation-only capabilities: 11
 - planner-only capabilities: 7
 - permission-gated planner capabilities: 2
@@ -1523,7 +1523,7 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.167.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.168.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 
@@ -1608,7 +1608,7 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 ## Sprint 146.0 — Service Audit Link Foundation
 
 Status: completed  
-Version: v0.167.0-genesis
+Version: v0.168.0-genesis
 
 Sprint 146 adds a planner-only, metadata-only, and foundation-only Service Audit Link Foundation for future service audit event references, audit link contracts, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no-audit-link-runtime-activation review.
 
@@ -1658,3 +1658,8 @@ Sprint 164 should add the AURA Persona Response Layer.
 ## Sprint 167 — Chat Safety + Uncertainty Layer
 
 Sprint 167 adds a deterministic local safety and uncertainty alpha layer before any future model request. It supports one-message safety/uncertainty review, capability honesty, and freshness-boundary replies while keeping model request dispatch, network, credential reads, memory writes, command execution, and arbitrary file mutation disabled.
+
+
+## Sprint 168 — Chat History Viewer Contract
+
+AURA v0.168.0-genesis adds a read-only Chat History Viewer Contract for the local chat message store. The viewer can inspect AURA-owned JSONL chat history metadata and recent turns from the controlled message store path, while keeping model requests, model responses, network requests, credential reads, permission grants, memory writes, audit writes, command execution, arbitrary file reads, arbitrary file writes, desktop action, and runtime execution disabled.

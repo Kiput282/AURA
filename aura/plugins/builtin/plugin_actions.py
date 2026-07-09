@@ -2915,6 +2915,17 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+    # Sprint 168.0 Local Chat History Viewer Contract actions.
+    local_chat_history_viewer_contract_actions = [
+        ('local_chat_history_viewer_contract.status', 'local_chat_history_read', 'Show Local Chat History Viewer Contract status.'),
+        ('local_chat_history_viewer_contract.alpha', 'local_chat_history_read', 'View recent controlled local chat history in read-only alpha mode.'),
+        ('local_chat_history_viewer_contract.no_unsafe_runtime_plan', 'local_chat_history_read', 'Show no unsafe runtime activation plan for chat history viewer.'),
+        ('local_chat_history_viewer_contract.context', 'local_chat_history_read', 'Show Local Chat History Viewer Contract context.'),
+    ]
+    for action_name, permission_action, description in local_chat_history_viewer_contract_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_history_viewer_contract", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_history_viewer_contract"))
+
     # Sprint 167.0 Local Chat Safety + Uncertainty Layer actions.
     local_chat_safety_uncertainty_layer_actions = [
         ('local_chat_safety_uncertainty_layer.status', 'model_request_permission', 'Show Local Chat Safety + Uncertainty Layer status.'),

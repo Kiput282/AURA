@@ -751,6 +751,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
             {
+                "id": "aura_local_chat_history_viewer_contract",
+                "name": "AURA Local Chat History Viewer Contract",
+                "state": "online",
+                "runtime_level": "read_only_history_viewer_alpha",
+                "risk_level": "medium",
+                "permission_required": "local_chat_history_read",
+                "category": "local_chat_runtime",
+                "introduced_in": "0.168.0-genesis",
+                "control_center_visible": True,
+                "description": "Read-only viewer contract for controlled AURA local chat message store history; reads only the fixed AURA store path and does not dispatch models, use network, read credentials, write memory/audit, execute commands, or mutate arbitrary files.",
+            },
+            {
                 "id": "aura_local_chat_safety_uncertainty_layer",
                 "name": "AURA Local Chat Safety + Uncertainty Layer",
                 "state": "online",
