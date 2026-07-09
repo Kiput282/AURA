@@ -115,6 +115,7 @@ from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundat
 from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
 from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
 from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
+from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -292,9 +293,21 @@ class SystemStatusManager:
         local_service_runtime_foundation_status = AuraLocalServiceRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_service_safe_idle_boot_boundary_status = AuraLocalServiceSafeIdleBootBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_service_health_endpoint_foundation_status = AuraLocalServiceHealthEndpointFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        local_service_configuration_port_registry_foundation_status = AuraLocalServiceConfigurationPortRegistryFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
 
         return {
             "project_root": str(self.project_root),
+            "local_service_configuration_port_registry_foundation_ready": local_service_configuration_port_registry_foundation_status["local_service_configuration_port_registry_foundation_ready"],
+            "local_service_configuration_port_registry_foundation_data_ready": local_service_configuration_port_registry_foundation_status["local_service_configuration_port_registry_foundation_data_ready"],
+            "local_service_configuration_port_registry_foundation_plan_type_count": local_service_configuration_port_registry_foundation_status["plan_type_count"],
+            "local_service_configuration_port_registry_foundation_total_blueprint_count": local_service_configuration_port_registry_foundation_status["total_local_service_configuration_port_registry_foundation_blueprint_count"],
+            "local_service_configuration_port_registry_foundation_configuration_runtime_disabled": local_service_configuration_port_registry_foundation_status["configuration_runtime_disabled"],
+            "local_service_configuration_port_registry_foundation_port_registry_runtime_disabled": local_service_configuration_port_registry_foundation_status["port_registry_runtime_disabled"],
+            "local_service_configuration_port_registry_foundation_localhost_only_policy": local_service_configuration_port_registry_foundation_status["localhost_only_policy"],
+            "local_service_configuration_port_registry_foundation_runtime_config_files_written": local_service_configuration_port_registry_foundation_status["runtime_config_files_written"],
+            "local_service_configuration_port_registry_foundation_runtime_port_registry_writes": local_service_configuration_port_registry_foundation_status["runtime_port_registry_writes"],
+            "local_service_configuration_port_registry_foundation_runtime_ports_bound": local_service_configuration_port_registry_foundation_status["runtime_ports_bound"],
+            "local_service_configuration_port_registry_foundation_runtime_execution_features": local_service_configuration_port_registry_foundation_status["runtime_execution_features"],
             "local_service_health_endpoint_foundation_ready": local_service_health_endpoint_foundation_status["local_service_health_endpoint_foundation_ready"],
             "local_service_health_endpoint_foundation_data_ready": local_service_health_endpoint_foundation_status["local_service_health_endpoint_foundation_data_ready"],
             "local_service_health_endpoint_foundation_plan_type_count": local_service_health_endpoint_foundation_status["plan_type_count"],

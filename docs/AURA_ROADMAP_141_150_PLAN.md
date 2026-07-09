@@ -1,7 +1,7 @@
 # AURA Roadmap 141-150 — Local Service Runtime Foundation
 
 Status: active
-Version seed: v0.143.0-genesis
+Version seed: v0.144.0-genesis
 Owner: Kiput
 Motto: Grow Together
 
@@ -46,7 +46,11 @@ No health endpoint server is started, no HTTP listener is started, no socket is 
 
 ### Sprint 144.0 — Service Configuration and Port Registry Foundation
 
-Plan service configuration, localhost-only binding, and port registry policy.
+Status: completed
+
+Adds the planner-only, metadata-only, and foundation-only Service Configuration and Port Registry Foundation for future service configuration scope, config schema, port registry schema, localhost port policy, reserved port policy, port conflict preflight, environment override boundary, Control Center config card, permission/audit config linkage, and no config/port runtime activation review.
+
+No config file runtime is read or written, no port registry file is written, no port is reserved, no socket is opened, no port is bound, no HTTP listener is started, no service is started, and runtime execution features remain 0.
 
 ### Sprint 145.0 — Service Permission Gate Runtime Boundary
 
@@ -116,4 +120,31 @@ Runtime remains disabled by design:
 - no action/tool/command/file/memory/model/ORION/git runtime
 - no runtime execution features
 
-Next planned sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation.
+Next planned sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary.
+
+
+## Sprint 144.0 completion note
+
+Sprint 144 adds the Service Configuration and Port Registry Foundation.
+
+It defines future service configuration scope, config schema, port registry schema, localhost port policy, reserved port policy, port conflict preflight metadata, environment override boundary, Control Center config card planning, permission/audit config linkage, and no config/port runtime activation review.
+
+Runtime remains disabled by design:
+
+- no runtime config file read
+- no runtime config file write
+- no runtime port registry write
+- no port reservation
+- no socket open
+- no port binding
+- no HTTP listener start
+- no service start
+- no OS port scan
+- no network probe
+- no environment mutation
+- no permission mutation
+- no audit writer runtime
+- no action/tool/command/file/memory/model/ORION/git runtime
+- no runtime execution features
+
+Next planned sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary.

@@ -126,6 +126,7 @@ from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundat
 from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
 from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
 from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
+from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4230,6 +4231,48 @@ class AuraCLI:
     # Sprint 142.0 local service safe idle boot boundary CLI helpers.
 
 
+    # Sprint 144.0 service configuration and port registry foundation CLI helpers.
+    def print_local_service_configuration_port_registry_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Configuration and Port Registry Foundation Safety Boundary"))
+
+    def handle_local_service_configuration_port_registry_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA service configuration and port registry foundation"
+        manager = AuraLocalServiceConfigurationPortRegistryFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-configuration-port-registry-foundation-status":
+            self.print_local_service_configuration_port_registry_foundation_packet("AURA Service Configuration and Port Registry Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-configuration-port-registry-foundation-context":
+            self.print_local_service_configuration_port_registry_foundation_packet("AURA Service Configuration and Port Registry Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-configuration-scope-plan": ("AURA Service Configuration Scope Plan", manager.service_configuration_scope_plan),
+            "service-config-schema-plan": ("AURA Service Config Schema Plan", manager.service_config_schema_plan),
+            "service-port-registry-schema-plan": ("AURA Service Port Registry Schema Plan", manager.service_port_registry_schema_plan),
+            "localhost-port-policy-plan": ("AURA Localhost Port Policy Plan", manager.localhost_port_policy_plan),
+            "reserved-port-policy-plan": ("AURA Reserved Port Policy Plan", manager.reserved_port_policy_plan),
+            "port-conflict-preflight-plan": ("AURA Port Conflict Preflight Plan", manager.port_conflict_preflight_plan),
+            "environment-override-boundary-plan": ("AURA Environment Override Boundary Plan", manager.environment_override_boundary_plan),
+            "control-center-config-card-plan": ("AURA Control Center Config Card Plan", manager.control_center_config_card_plan),
+            "permission-audit-config-link-plan": ("AURA Permission Audit Config Link Plan", manager.permission_audit_config_link_plan),
+            "no-config-port-runtime-activation-plan": ("AURA No Config Port Runtime Activation Plan", manager.no_config_port_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_configuration_port_registry_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 143.0 local service health endpoint foundation CLI helpers.
     def print_local_service_health_endpoint_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6850,6 +6893,9 @@ class AuraCLI:
             return True
 
         if self.handle_local_service_health_endpoint_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_service_configuration_port_registry_foundation_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

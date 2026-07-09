@@ -1437,6 +1437,32 @@ def build_builtin_skill_registry() -> SkillRegistry:
 
 
 
+
+    # Sprint 144.0 service configuration and port registry foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_local_service_configuration_port_registry_foundation",
+            description="Prepare planner-only, metadata-only, and foundation-only ATLAS Service Configuration and Port Registry Foundation for future service configuration scope, config schema, port registry schema, localhost port policy, reserved port policy, port conflict preflight, environment override boundary, Control Center config card, permission/audit config linkage, and no config/port runtime activation review without reading or writing runtime configuration, reserving ports, binding ports, opening sockets, starting servers, mutating environment state, writing files, mutating permissions, writing audit events, dispatching actions, executing tools/commands, using file/memory/model/permission/audit/ORION/git runtime, or enabling runtime execution.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_service_configuration_port_registry_foundation_status",
+                "service_configuration_scope_plan",
+                "service_config_schema_plan",
+                "service_port_registry_schema_plan",
+                "localhost_port_policy_plan",
+                "reserved_port_policy_plan",
+                "port_conflict_preflight_plan",
+                "environment_override_boundary_plan",
+                "control_center_config_card_plan",
+                "permission_audit_config_link_plan",
+                "no_config_port_runtime_activation_plan",
+                "local_service_configuration_port_registry_foundation_context",
+            ],
+        )
+    )
+
     # Sprint 143.0 local service health endpoint foundation skill.
     registry.register(
         AuraSkill(

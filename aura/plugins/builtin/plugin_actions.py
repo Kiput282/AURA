@@ -2901,6 +2901,26 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+
+    # Sprint 144.0 service configuration and port registry foundation actions.
+    local_service_configuration_port_registry_foundation_actions = [
+        ('local_service_configuration_port_registry_foundation.status', 'read_project', 'Show Service Configuration and Port Registry Foundation status.'),
+        ('local_service_configuration_port_registry_foundation.service_configuration_scope_plan', 'read_project', 'Prepare service configuration scope plan.'),
+        ('local_service_configuration_port_registry_foundation.service_config_schema_plan', 'read_project', 'Prepare service config schema plan.'),
+        ('local_service_configuration_port_registry_foundation.service_port_registry_schema_plan', 'read_project', 'Prepare service port registry schema plan.'),
+        ('local_service_configuration_port_registry_foundation.localhost_port_policy_plan', 'read_project', 'Prepare localhost port policy plan.'),
+        ('local_service_configuration_port_registry_foundation.reserved_port_policy_plan', 'read_project', 'Prepare reserved port policy plan.'),
+        ('local_service_configuration_port_registry_foundation.port_conflict_preflight_plan', 'read_project', 'Prepare port conflict preflight plan.'),
+        ('local_service_configuration_port_registry_foundation.environment_override_boundary_plan', 'read_project', 'Prepare environment override boundary plan.'),
+        ('local_service_configuration_port_registry_foundation.control_center_config_card_plan', 'read_project', 'Prepare Control Center config card plan.'),
+        ('local_service_configuration_port_registry_foundation.permission_audit_config_link_plan', 'read_project', 'Prepare permission/audit config link plan.'),
+        ('local_service_configuration_port_registry_foundation.no_config_port_runtime_activation_plan', 'read_project', 'Prepare no config/port runtime activation plan.'),
+        ('local_service_configuration_port_registry_foundation.context', 'read_project', 'Show Service Configuration and Port Registry Foundation context.'),
+    ]
+
+    for action_name, permission_action, description in local_service_configuration_port_registry_foundation_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_service_configuration_port_registry_foundation", description=description, permission_action=permission_action, status="online", skill="aura_local_service_configuration_port_registry_foundation"))
+
     # Sprint 143.0 local service health endpoint foundation actions.
     local_service_health_endpoint_foundation_actions = [
         ('local_service_health_endpoint_foundation.status', 'read_project', 'Show Local Service Health Endpoint Foundation status.'),

@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.143.0-genesis
-Current Canonical Sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
-Next Planned Sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
+Current Canonical Version: v0.144.0-genesis
+Current Canonical Sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
+Next Planned Sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -24,12 +24,12 @@ AURA must grow gradually. Runtime capability must be introduced only through exp
 
 AURA is currently at:
 
-- Version: v0.141.0-genesis
-- Sprint: Sprint 141.0
+- Version: v0.144.0-genesis
+- Sprint: Sprint 144.0
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
 - Active block: Sprint 141-150 Local Service Runtime Foundation
-- Next sprint: Sprint 143.0 — Local Service Health Endpoint Foundation
+- Next sprint: Sprint 145.0 — Service Permission Gate Runtime Boundary
 
 Current AURA is not yet an active autonomous runtime system.
 
@@ -44,7 +44,7 @@ Purpose: prepare AURA's safe local service foundation on ATLAS.
 Planned direction:
 
 - Sprint 141.0 — Local Service Runtime Foundation
-- Sprint 143.0 — Local Service Health Endpoint Foundation
+- Sprint 142.0 — Local Service Safe Idle Boot Boundary
 - Sprint 143.0 — Local Service Health Endpoint Foundation
 - Sprint 144.0 — Service Configuration and Port Registry Foundation
 - Sprint 145.0 — Service Permission Gate Runtime Boundary

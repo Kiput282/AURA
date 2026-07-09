@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_local_service_configuration_port_registry_foundation",
+                    "name": "AURA Service Configuration and Port Registry Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "high",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.144.0-genesis",
+                    "category": "service",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and foundation-only Service Configuration and Port Registry Foundation for future service configuration scope, config schema, port registry schema, localhost port policy, reserved port policy, port conflict preflight, environment override boundary, Control Center config card, permission/audit config linkage, and no config/port runtime activation review without reading or writing runtime configuration, reserving ports, binding ports, opening sockets, starting servers, mutating environment state, writing files, mutating permissions, writing audit events, dispatching actions, executing tools/commands, using file/memory/model/permission/audit/ORION/git runtime, or enabling runtime execution features.",
+                },
+                {
                     "id": "aura_local_service_health_endpoint_foundation",
                     "name": "AURA Local Service Health Endpoint Foundation",
                     "state": "online",

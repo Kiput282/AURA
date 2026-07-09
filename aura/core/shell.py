@@ -128,6 +128,7 @@ from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundat
 from aura.local_service_runtime_foundation.aura_local_service_runtime_foundation_manager import AuraLocalServiceRuntimeFoundationManager
 from aura.local_service_safe_idle_boot_boundary.aura_local_service_safe_idle_boot_boundary_manager import AuraLocalServiceSafeIdleBootBoundaryManager
 from aura.local_service_health_endpoint_foundation.aura_local_service_health_endpoint_foundation_manager import AuraLocalServiceHealthEndpointFoundationManager
+from aura.local_service_configuration_port_registry_foundation.aura_local_service_configuration_port_registry_foundation_manager import AuraLocalServiceConfigurationPortRegistryFoundationManager
 
 
 class AuraShell:
@@ -1114,6 +1115,18 @@ class AuraShell:
         print("  health-error-fallback-plan <target> Prepare health error fallback plan")
         print("  no-health-endpoint-activation-plan <target> Prepare no health endpoint activation plan")
         print("  local-service-health-endpoint-foundation-context Show Local Service Health Endpoint Foundation context")
+        print("  local-service-configuration-port-registry-foundation-status Show Service Configuration and Port Registry Foundation status")
+        print("  service-configuration-scope-plan <target> Prepare service configuration scope plan")
+        print("  service-config-schema-plan <target> Prepare service config schema plan")
+        print("  service-port-registry-schema-plan <target> Prepare service port registry schema plan")
+        print("  localhost-port-policy-plan <target> Prepare localhost port policy plan")
+        print("  reserved-port-policy-plan <target> Prepare reserved port policy plan")
+        print("  port-conflict-preflight-plan <target> Prepare port conflict preflight plan")
+        print("  environment-override-boundary-plan <target> Prepare environment override boundary plan")
+        print("  control-center-config-card-plan <target> Prepare Control Center config card plan")
+        print("  permission-audit-config-link-plan <target> Prepare permission/audit config link plan")
+        print("  no-config-port-runtime-activation-plan <target> Prepare no config/port runtime activation plan")
+        print("  local-service-configuration-port-registry-foundation-context Show Service Configuration and Port Registry Foundation context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5109,6 +5122,49 @@ class AuraShell:
     # Sprint 142.0 local service safe idle boot boundary shell helpers.
 
 
+    # Sprint 144.0 service configuration and port registry foundation shell helpers.
+    def print_local_service_configuration_port_registry_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Service Configuration and Port Registry Foundation Safety Boundary"))
+
+    def handle_local_service_configuration_port_registry_foundation_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA service configuration and port registry foundation"
+        manager = AuraLocalServiceConfigurationPortRegistryFoundationManager(project_root=self.project_root)
+
+        if command == "local-service-configuration-port-registry-foundation-status":
+            self.print_local_service_configuration_port_registry_foundation_packet("AURA Service Configuration and Port Registry Foundation Status", manager.status())
+            return True
+
+        if command == "local-service-configuration-port-registry-foundation-context":
+            self.print_local_service_configuration_port_registry_foundation_packet("AURA Service Configuration and Port Registry Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "service-configuration-scope-plan": ("AURA Service Configuration Scope Plan", manager.service_configuration_scope_plan),
+            "service-config-schema-plan": ("AURA Service Config Schema Plan", manager.service_config_schema_plan),
+            "service-port-registry-schema-plan": ("AURA Service Port Registry Schema Plan", manager.service_port_registry_schema_plan),
+            "localhost-port-policy-plan": ("AURA Localhost Port Policy Plan", manager.localhost_port_policy_plan),
+            "reserved-port-policy-plan": ("AURA Reserved Port Policy Plan", manager.reserved_port_policy_plan),
+            "port-conflict-preflight-plan": ("AURA Port Conflict Preflight Plan", manager.port_conflict_preflight_plan),
+            "environment-override-boundary-plan": ("AURA Environment Override Boundary Plan", manager.environment_override_boundary_plan),
+            "control-center-config-card-plan": ("AURA Control Center Config Card Plan", manager.control_center_config_card_plan),
+            "permission-audit-config-link-plan": ("AURA Permission Audit Config Link Plan", manager.permission_audit_config_link_plan),
+            "no-config-port-runtime-activation-plan": ("AURA No Config Port Runtime Activation Plan", manager.no_config_port_runtime_activation_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_service_configuration_port_registry_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
+
     # Sprint 143.0 local service health endpoint foundation shell helpers.
     def print_local_service_health_endpoint_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7785,6 +7841,9 @@ class AuraShell:
             return
 
         if self.handle_local_service_health_endpoint_foundation_shell_command(normalized):
+            return
+
+        if self.handle_local_service_configuration_port_registry_foundation_shell_command(normalized):
             return
 
         if normalized == "help":
