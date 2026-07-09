@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.139.0-genesis  
+Current version: v0.140.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -39,7 +39,7 @@ AURA has completed the Sprint 111-120 runtime readiness block.
 
 Latest completed checkpoint:
 
-- v0.139.0-genesis
+- v0.140.0-genesis
 - Sprint 120: Review Stabilization 111-120 Foundation
 - Sprint 111-120 block: closed
 - Next planned sprint: Sprint 121.0 — Post-Checkpoint 120 Next Block Planning Foundation
@@ -284,7 +284,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.139.0-genesis
+    Version  : 0.140.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -1158,3 +1158,34 @@ Safety result:
 - file/service/port/network/ORION runtime disabled
 - release gate closed
 - future runtime still requires manual approval
+
+## Sprint 140.0 — Review & Stabilization 131-140 Foundation
+
+Status: completed
+Version: v0.140.0-genesis
+
+Sprint 140 closes the 131-140 runtime planning block with a planner-only, metadata-only, and review-only stabilization checkpoint.
+
+Counts:
+
+- 12 plan types
+- 100 total review stabilization 131-140 blueprints/items
+- 0 runtime review stabilization plans applied
+- 0 runtime services/API/web/dashboard/control center
+- 0 runtime chat/memory/permission/audit/model
+- 0 runtime actions/tools/commands/files/ports/network/ORION/git
+- 0 runtime execution features
+
+Safety result:
+
+- service runtime disabled
+- API/web/dashboard/control center runtime disabled
+- chat/memory/permission/audit/model runtime disabled
+- action/tool/command execution disabled
+- file/port/network/ORION/git runtime disabled
+- release gate closed
+- future runtime still requires manual approval
+
+Next planned sprint:
+
+- Sprint 141.0 — Local Service Runtime Foundation

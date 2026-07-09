@@ -2899,6 +2899,25 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
             )
         )
 
+    # Sprint 140.0 review stabilization 131-140 foundation actions.
+    review_stabilization_131_140_actions = [
+        ('review_stabilization_131_140.status', 'read_project', 'Show Review Stabilization 131-140 status.'),
+        ('review_stabilization_131_140.sprint_131_140_scope_review_plan', 'read_project', 'Prepare Sprint 131-140 scope review plan.'),
+        ('review_stabilization_131_140.runtime_boundary_integrity_review_plan', 'read_project', 'Prepare runtime boundary integrity review plan.'),
+        ('review_stabilization_131_140.capability_registry_consistency_review_plan', 'read_project', 'Prepare capability registry consistency review plan.'),
+        ('review_stabilization_131_140.system_status_surface_review_plan', 'read_project', 'Prepare system status surface review plan.'),
+        ('review_stabilization_131_140.skill_plugin_cli_shell_review_plan', 'read_project', 'Prepare skill/plugin/CLI/shell review plan.'),
+        ('review_stabilization_131_140.documentation_roadmap_review_plan', 'read_project', 'Prepare documentation and roadmap review plan.'),
+        ('review_stabilization_131_140.safety_counter_zero_review_plan', 'read_project', 'Prepare safety counter zero review plan.'),
+        ('review_stabilization_131_140.git_boot_verification_review_plan', 'read_project', 'Prepare git and boot verification review plan.'),
+        ('review_stabilization_131_140.next_block_readiness_review_plan', 'read_project', 'Prepare next block readiness review plan.'),
+        ('review_stabilization_131_140.no_runtime_activation_review_plan', 'read_project', 'Prepare no runtime activation review plan.'),
+        ('review_stabilization_131_140.context', 'read_project', 'Show Review Stabilization 131-140 context.'),
+    ]
+
+    for action_name, permission_action, description in review_stabilization_131_140_actions:
+        registry.register(PluginAction(name=action_name, plugin="review_stabilization_131_140", description=description, permission_action=permission_action, status="online", skill="aura_review_stabilization_131_140_foundation"))
+
     # Sprint 139.0 audit runtime writer activation review foundation actions.
     audit_runtime_writer_activation_review_actions = [
         ('audit_runtime_writer_activation_review.status', 'read_project', 'Show Audit Runtime Writer Activation Review status.'),

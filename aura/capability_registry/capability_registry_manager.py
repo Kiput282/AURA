@@ -750,6 +750,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
                 {
+                    "id": "aura_review_stabilization_131_140_foundation",
+                    "name": "AURA Review Stabilization 131-140 Foundation",
+                    "state": "online",
+                    "runtime_level": "foundation_only",
+                    "risk_level": "low",
+                    "permission_required": "read_project",
+                    "introduced_in": "0.140.0-genesis",
+                    "category": "stabilization",
+                    "control_center_visible": True,
+                    "description": "Planner-only, metadata-only, and review-only Review & Stabilization 131-140 Foundation covering Sprint 131-140 scope, runtime boundary integrity, capability registry consistency, system status surfaces, skill/plugin/CLI/shell integration, documentation roadmap state, safety counter zero state, git/boot verification, next block readiness, and no-runtime-activation review without service/API/dashboard/chat/memory/permission/audit/model/action/tool/command/file/port/network/ORION/git runtime or runtime execution features.",
+                },
+                {
                     "id": "aura_audit_runtime_writer_activation_review_foundation",
                     "name": "AURA Audit Runtime Writer Activation Review Foundation",
                     "state": "online",

@@ -122,6 +122,7 @@ from aura.chat_runtime_minimal_loop_review.aura_chat_runtime_minimal_loop_review
 from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review_foundation_manager import AuraMemoryRuntimeWriteGateReviewFoundationManager
 from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gate_review_foundation_manager import AuraPermissionRuntimeGrantGateReviewFoundationManager
 from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
+from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4220,6 +4221,48 @@ class AuraCLI:
 
 
 
+
+    # Sprint 140.0 review stabilization 131-140 CLI helpers.
+    def print_review_stabilization_131_140_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Review Stabilization 131-140 Safety Boundary"))
+
+    def handle_review_stabilization_131_140_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA review stabilization 131-140"
+        manager = AuraReviewStabilization131140FoundationManager(project_root=self.project_root)
+
+        if command == "review-stabilization-131-140-status":
+            self.print_review_stabilization_131_140_packet("AURA Review Stabilization 131-140 Foundation Status", manager.status())
+            return True
+
+        if command == "review-stabilization-131-140-context":
+            self.print_review_stabilization_131_140_packet("AURA Review Stabilization 131-140 Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "sprint-131-140-scope-review-plan": ("AURA Sprint 131-140 Scope Review Plan", manager.sprint_131_140_scope_review_plan),
+            "runtime-boundary-integrity-review-plan": ("AURA Runtime Boundary Integrity Review Plan", manager.runtime_boundary_integrity_review_plan),
+            "capability-registry-consistency-review-plan": ("AURA Capability Registry Consistency Review Plan", manager.capability_registry_consistency_review_plan),
+            "system-status-surface-review-plan": ("AURA System Status Surface Review Plan", manager.system_status_surface_review_plan),
+            "skill-plugin-cli-shell-review-plan": ("AURA Skill Plugin CLI Shell Review Plan", manager.skill_plugin_cli_shell_review_plan),
+            "documentation-roadmap-review-plan": ("AURA Documentation Roadmap Review Plan", manager.documentation_roadmap_review_plan),
+            "safety-counter-zero-review-plan": ("AURA Safety Counter Zero Review Plan", manager.safety_counter_zero_review_plan),
+            "git-boot-verification-review-plan": ("AURA Git Boot Verification Review Plan", manager.git_boot_verification_review_plan),
+            "next-block-readiness-review-plan": ("AURA Next Block Readiness Review Plan", manager.next_block_readiness_review_plan),
+            "no-runtime-activation-review-plan": ("AURA No Runtime Activation Review Plan", manager.no_runtime_activation_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_review_stabilization_131_140_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 139.0 audit runtime writer activation review CLI helpers.
     def print_audit_runtime_writer_activation_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -6666,6 +6709,9 @@ class AuraCLI:
             return True
 
         if self.handle_audit_runtime_writer_activation_review_cli_command(raw_args):
+            return True
+
+        if self.handle_review_stabilization_131_140_cli_command(raw_args):
             return True
 
         parsed = self.parse(args)

@@ -1435,6 +1435,31 @@ def build_builtin_skill_registry() -> SkillRegistry:
         )
     )
 
+    # Sprint 140.0 review stabilization 131-140 foundation skill.
+    registry.register(
+        AuraSkill(
+            name="aura_review_stabilization_131_140_foundation",
+            description="Prepare planner-only and review-only Sprint 131-140 Review & Stabilization Checkpoint without starting services, activating runtime, opening ports, writing audit events, mutating permissions, reading/writing memory at runtime, running chat runtime, dispatching actions, executing tools/commands, using file runtime, probing network, performing ORION handshakes, or performing git runtime.",
+            role="partner",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "review_stabilization_131_140_status",
+                "sprint_131_140_scope_review_plan",
+                "runtime_boundary_integrity_review_plan",
+                "capability_registry_consistency_review_plan",
+                "system_status_surface_review_plan",
+                "skill_plugin_cli_shell_review_plan",
+                "documentation_roadmap_review_plan",
+                "safety_counter_zero_review_plan",
+                "git_boot_verification_review_plan",
+                "next_block_readiness_review_plan",
+                "no_runtime_activation_review_plan",
+                "review_stabilization_131_140_context",
+            ],
+        )
+    )
+
     # Sprint 139.0 audit runtime writer activation review foundation skill.
     registry.register(
         AuraSkill(

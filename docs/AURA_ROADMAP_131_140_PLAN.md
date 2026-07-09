@@ -1,6 +1,6 @@
 # AURA Roadmap 131-140 Plan
 
-Version seed: v0.139.0-genesis
+Version seed: v0.140.0-genesis
 Status: active
 Phase: Genesis Final Path Planning
 Owner: Kiput
@@ -195,7 +195,7 @@ Expected focus:
 - writer review
 - no audit runtime file write yet
 
-### Sprint 140.0 — Review & Stabilization Checkpoint
+### Sprint 140.0 — Review & Stabilization Checkpoint — completed
 
 Purpose:
 
@@ -486,3 +486,33 @@ Safety result:
 - runtime permission/safe idle/dashboard: 0
 - runtime actions/tools/commands/files/services/ports/network/ORION/git: 0
 - runtime execution features: 0
+
+## Sprint 140 Completion Summary
+
+Sprint 140 completed the Review & Stabilization 131-140 Foundation.
+
+Completed foundation items:
+
+- Sprint 131-140 scope review
+- runtime boundary integrity review
+- capability registry consistency review
+- system status surface review
+- skill/plugin/CLI/shell review
+- documentation roadmap review
+- safety counter zero review
+- git boot verification review
+- next block readiness review
+- no runtime activation review
+- skill/plugin/system_status/CLI/shell integration
+- documentation
+- capability registry entry
+
+Safety result:
+
+- runtime review stabilization plans applied: 0
+- runtime services/API/web/dashboard/control center: 0
+- runtime chat/memory/permission/audit/model: 0
+- runtime actions/tools/commands/files/ports/network/ORION/git: 0
+- runtime execution features: 0
+
+Sprint 131-140 is now closed as a stabilized planning block.

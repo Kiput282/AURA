@@ -124,6 +124,7 @@ from aura.chat_runtime_minimal_loop_review.aura_chat_runtime_minimal_loop_review
 from aura.memory_runtime_write_gate_review.aura_memory_runtime_write_gate_review_foundation_manager import AuraMemoryRuntimeWriteGateReviewFoundationManager
 from aura.permission_runtime_grant_gate_review.aura_permission_runtime_grant_gate_review_foundation_manager import AuraPermissionRuntimeGrantGateReviewFoundationManager
 from aura.audit_runtime_writer_activation_review.aura_audit_runtime_writer_activation_review_foundation_manager import AuraAuditRuntimeWriterActivationReviewFoundationManager
+from aura.review_stabilization_131_140.aura_review_stabilization_131_140_foundation_manager import AuraReviewStabilization131140FoundationManager
 
 
 class AuraShell:
@@ -1062,6 +1063,18 @@ class AuraShell:
         print("  audit-retention-export-review-plan <target> Prepare audit retention/export review plan")
         print("  audit-no-write-activation-review-plan <target> Prepare audit no-write activation review plan")
         print("  audit-runtime-writer-activation-review-context Show Audit Runtime Writer Activation Review context")
+        print("  review-stabilization-131-140-status Show Review Stabilization 131-140 Foundation status")
+        print("  sprint-131-140-scope-review-plan <target> Prepare Sprint 131-140 scope review plan")
+        print("  runtime-boundary-integrity-review-plan <target> Prepare runtime boundary integrity review plan")
+        print("  capability-registry-consistency-review-plan <target> Prepare capability registry consistency review plan")
+        print("  system-status-surface-review-plan <target> Prepare system status surface review plan")
+        print("  skill-plugin-cli-shell-review-plan <target> Prepare skill/plugin/CLI/shell review plan")
+        print("  documentation-roadmap-review-plan <target> Prepare documentation roadmap review plan")
+        print("  safety-counter-zero-review-plan <target> Prepare safety counter zero review plan")
+        print("  git-boot-verification-review-plan <target> Prepare git boot verification review plan")
+        print("  next-block-readiness-review-plan <target> Prepare next block readiness review plan")
+        print("  no-runtime-activation-review-plan <target> Prepare no runtime activation review plan")
+        print("  review-stabilization-131-140-context Show Review Stabilization 131-140 context")
         print("  voice-input-permission-plan <target> Prepare microphone permission plan")
         print("  voice-capture-boundary-plan <target> Prepare voice capture boundary plan")
         print("  speech-to-text-adapter-plan <target> Prepare STT adapter plan")
@@ -5051,6 +5064,49 @@ class AuraShell:
 
 
 
+
+    # Sprint 140.0 review stabilization 131-140 shell helpers.
+    def print_review_stabilization_131_140_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Review Stabilization 131-140 Safety Boundary"))
+
+    def handle_review_stabilization_131_140_shell_command(self, normalized: str) -> bool:
+        if not normalized:
+            return False
+
+        parts = normalized.split(maxsplit=1)
+        command = parts[0]
+        target = parts[1].strip() if len(parts) > 1 else "AURA review stabilization 131-140"
+        manager = AuraReviewStabilization131140FoundationManager(project_root=self.project_root)
+
+        if command == "review-stabilization-131-140-status":
+            self.print_review_stabilization_131_140_packet("AURA Review Stabilization 131-140 Foundation Status", manager.status())
+            return True
+
+        if command == "review-stabilization-131-140-context":
+            self.print_review_stabilization_131_140_packet("AURA Review Stabilization 131-140 Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "sprint-131-140-scope-review-plan": ("AURA Sprint 131-140 Scope Review Plan", manager.sprint_131_140_scope_review_plan),
+            "runtime-boundary-integrity-review-plan": ("AURA Runtime Boundary Integrity Review Plan", manager.runtime_boundary_integrity_review_plan),
+            "capability-registry-consistency-review-plan": ("AURA Capability Registry Consistency Review Plan", manager.capability_registry_consistency_review_plan),
+            "system-status-surface-review-plan": ("AURA System Status Surface Review Plan", manager.system_status_surface_review_plan),
+            "skill-plugin-cli-shell-review-plan": ("AURA Skill Plugin CLI Shell Review Plan", manager.skill_plugin_cli_shell_review_plan),
+            "documentation-roadmap-review-plan": ("AURA Documentation Roadmap Review Plan", manager.documentation_roadmap_review_plan),
+            "safety-counter-zero-review-plan": ("AURA Safety Counter Zero Review Plan", manager.safety_counter_zero_review_plan),
+            "git-boot-verification-review-plan": ("AURA Git Boot Verification Review Plan", manager.git_boot_verification_review_plan),
+            "next-block-readiness-review-plan": ("AURA Next Block Readiness Review Plan", manager.next_block_readiness_review_plan),
+            "no-runtime-activation-review-plan": ("AURA No Runtime Activation Review Plan", manager.no_runtime_activation_review_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_review_stabilization_131_140_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 139.0 audit runtime writer activation review shell helpers.
     def print_audit_runtime_writer_activation_review_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -7549,6 +7605,9 @@ class AuraShell:
             return
 
         if self.handle_audit_runtime_writer_activation_review_shell_command(normalized):
+            return
+
+        if self.handle_review_stabilization_131_140_shell_command(normalized):
             return
 
         if normalized == "help":
