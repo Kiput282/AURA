@@ -151,6 +151,7 @@ from aura.local_chat_model_adapter_boundary.aura_local_chat_model_adapter_bounda
 from aura.local_chat_permission_gated_model_request.aura_local_chat_permission_gated_model_request_manager import AuraLocalChatPermissionGatedModelRequestManager
 from aura.local_chat_safety_uncertainty_layer.aura_local_chat_safety_uncertainty_layer_manager import AuraLocalChatSafetyUncertaintyLayerManager
 from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_contract_manager import AuraLocalChatHistoryViewerContractManager
+from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4322,6 +4323,52 @@ class AuraCLI:
 
 
 
+    # Sprint 169.0 local chat integration review helpers.
+    def print_local_chat_integration_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Local Chat Integration Review Boundary"))
+
+    def handle_local_chat_integration_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA local chat integration review"
+        manager = AuraLocalChatIntegrationReviewManager(project_root=self.project_root)
+
+        if command in {"local-chat-integration-alpha", "local-chat-integration-review-alpha", "local-chat-integration"}:
+            print(manager.render_integration_review_alpha())
+            return True
+
+        if command == "local-chat-integration-review-status":
+            self.print_local_chat_integration_review_packet("AURA Local Chat Integration Review Status", manager.status())
+            return True
+
+        if command == "local-chat-integration-review-context":
+            self.print_local_chat_integration_review_packet("AURA Local Chat Integration Review Context", manager.context())
+            return True
+
+        command_map = {
+            "chat-alpha-chain-review-plan": ("AURA Chat Alpha Chain Review Plan", manager.chat_alpha_chain_review_plan),
+            "chat-cli-surface-review-plan": ("AURA Chat CLI Surface Review Plan", manager.chat_cli_surface_review_plan),
+            "chat-message-store-integration-review-plan": ("AURA Chat Message Store Integration Review Plan", manager.chat_message_store_integration_review_plan),
+            "chat-persona-integration-review-plan": ("AURA Chat Persona Integration Review Plan", manager.chat_persona_integration_review_plan),
+            "chat-model-boundary-integration-review-plan": ("AURA Chat Model Boundary Integration Review Plan", manager.chat_model_boundary_integration_review_plan),
+            "chat-permission-gate-integration-review-plan": ("AURA Chat Permission Gate Integration Review Plan", manager.chat_permission_gate_integration_review_plan),
+            "chat-safety-uncertainty-integration-review-plan": ("AURA Chat Safety Uncertainty Integration Review Plan", manager.chat_safety_uncertainty_integration_review_plan),
+            "chat-history-viewer-integration-review-plan": ("AURA Chat History Viewer Integration Review Plan", manager.chat_history_viewer_integration_review_plan),
+            "chat-control-center-handoff-review-plan": ("AURA Chat Control Center Handoff Review Plan", manager.chat_control_center_handoff_review_plan),
+            "no-local-chat-integration-unsafe-runtime-plan": ("AURA No Local Chat Integration Unsafe Runtime Plan", manager.no_local_chat_integration_unsafe_runtime_plan),
+            "local-chat-integration-next-sprint-readiness-plan": ("AURA Local Chat Integration Next Sprint Readiness Plan", manager.local_chat_integration_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_local_chat_integration_review_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 168.0 chat history viewer contract helpers.
     def print_local_chat_history_viewer_contract_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8028,6 +8075,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_local_chat_integration_review_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_history_viewer_contract_cli_command(raw_args):

@@ -79,3 +79,10 @@ mutate arbitrary files.
 Sprint 166 adds the permission-gated model request dry-run layer. AURA can create a permission preview packet and a model request envelope, but the gate decision remains blocked without explicit grant. No model request is dispatched, no local LLM process starts, no remote API/network call occurs, no credential is read, no memory is written, no command executes, and no arbitrary file mutation happens.
 
 Next: Sprint 167 — Chat Safety + Uncertainty Layer.
+
+
+### Sprint 169 — Local Chat Integration Review
+
+Status: completed in v0.169.0-genesis.
+
+Sprint 169 reviews the local chat alpha chain and verifies that CLI session alpha, message store, persona response, model adapter boundary, permission-gated model request, safety/uncertainty, and history viewer remain integrated behind safe boundaries. The review is metadata-only and read-only: no model dispatch, network, credentials, memory writes, audit writes, command execution, arbitrary file access, desktop action, voice, vision, or full chat runtime activation.

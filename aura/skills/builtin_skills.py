@@ -1458,6 +1458,29 @@ def build_builtin_skill_registry() -> SkillRegistry:
     # Sprint 168.0 local chat history viewer contract skill.
     registry.register(
         AuraSkill(
+            name="aura_local_chat_integration_review",
+            description="Review the local chat alpha chain across CLI session, controlled message store, persona response, model boundary, permission gate, safety/uncertainty, and history viewer without opening model, network, memory, command, file, desktop, voice, vision, or full chat runtime.",
+            role="companion",
+            permission_action="read_project",
+            status="online",
+            capabilities=[
+                "local_chat_integration_review_status",
+                "local_chat_integration_alpha",
+                "chat_alpha_chain_review_plan",
+                "chat_cli_surface_review_plan",
+                "chat_message_store_integration_review_plan",
+                "chat_persona_integration_review_plan",
+                "chat_model_boundary_integration_review_plan",
+                "chat_permission_gate_integration_review_plan",
+                "chat_safety_uncertainty_integration_review_plan",
+                "chat_history_viewer_integration_review_plan",
+                "no_local_chat_integration_unsafe_runtime_plan",
+            ],
+        )
+    )
+
+    registry.register(
+        AuraSkill(
             name="aura_local_chat_history_viewer_contract",
             description="Read controlled local chat message-store history in a bounded, read-only CLI alpha without arbitrary file access, model dispatch, memory writes, command execution, or network use.",
             role="companion",

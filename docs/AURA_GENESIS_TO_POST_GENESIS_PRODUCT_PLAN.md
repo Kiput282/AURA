@@ -1,7 +1,7 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: PLANNED
-Current Canonical Version: v0.168.0-genesis
+Current Canonical Version: v0.169.0-genesis
 Current Canonical Sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
 Next Planned Sprint: Sprint 147.0 — Service Control Command Review Foundation
 Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
@@ -24,7 +24,7 @@ AURA must grow gradually. Runtime capability must be introduced only through exp
 
 AURA is currently at:
 
-- Version: v0.168.0-genesis
+- Version: v0.169.0-genesis
 - Sprint: Sprint 144.0
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
@@ -545,4 +545,9 @@ Sprint 167 adds a deterministic local safety and uncertainty alpha layer before 
 
 ## Sprint 168 — Chat History Viewer Contract
 
-AURA v0.168.0-genesis adds a read-only Chat History Viewer Contract for the local chat message store. The viewer can inspect AURA-owned JSONL chat history metadata and recent turns from the controlled message store path, while keeping model requests, model responses, network requests, credential reads, permission grants, memory writes, audit writes, command execution, arbitrary file reads, arbitrary file writes, desktop action, and runtime execution disabled.
+AURA v0.169.0-genesis adds a read-only Chat History Viewer Contract for the local chat message store. The viewer can inspect AURA-owned JSONL chat history metadata and recent turns from the controlled message store path, while keeping model requests, model responses, network requests, credential reads, permission grants, memory writes, audit writes, command execution, arbitrary file reads, arbitrary file writes, desktop action, and runtime execution disabled.
+
+
+## Sprint 169 — Local Chat Integration Review
+
+AURA v0.169.0-genesis reviews the local chat runtime alpha chain introduced across Sprints 161-168. It confirms the CLI session alpha, message store, persona response layer, model adapter boundary, permission gate, safety/uncertainty layer, and history viewer are integrated as a safe thin runtime path while full model runtime, network, credentials, memory runtime, command execution, arbitrary file access, desktop action, voice, and vision remain disabled.

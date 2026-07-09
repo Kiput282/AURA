@@ -2916,6 +2916,16 @@ def build_builtin_plugin_action_registry() -> PluginActionRegistry:
 
 
 
+    # Sprint 169.0 Local Chat Integration Review actions.
+    local_chat_integration_review_actions = [
+        ('local_chat_integration_review.status', 'read_project', 'Show Local Chat Integration Review status.'),
+        ('local_chat_integration_review.alpha', 'read_project', 'Run read-only local chat integration alpha review.'),
+        ('local_chat_integration_review.no_unsafe_runtime_plan', 'read_project', 'Show no unsafe runtime activation plan for local chat integration.'),
+        ('local_chat_integration_review.context', 'read_project', 'Show Local Chat Integration Review context.'),
+    ]
+    for action_name, permission_action, description in local_chat_integration_review_actions:
+        registry.register(PluginAction(name=action_name, plugin="local_chat_integration_review", description=description, permission_action=permission_action, status="online", skill="aura_local_chat_integration_review"))
+
     # Sprint 168.0 Local Chat History Viewer Contract actions.
     local_chat_history_viewer_contract_actions = [
         ('local_chat_history_viewer_contract.status', 'local_chat_history_read', 'Show Local Chat History Viewer Contract status.'),

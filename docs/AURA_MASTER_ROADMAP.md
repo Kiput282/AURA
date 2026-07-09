@@ -1523,7 +1523,7 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.168.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.169.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 
@@ -1608,7 +1608,7 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 ## Sprint 146.0 — Service Audit Link Foundation
 
 Status: completed  
-Version: v0.168.0-genesis
+Version: v0.169.0-genesis
 
 Sprint 146 adds a planner-only, metadata-only, and foundation-only Service Audit Link Foundation for future service audit event references, audit link contracts, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no-audit-link-runtime-activation review.
 
@@ -1662,4 +1662,9 @@ Sprint 167 adds a deterministic local safety and uncertainty alpha layer before 
 
 ## Sprint 168 — Chat History Viewer Contract
 
-AURA v0.168.0-genesis adds a read-only Chat History Viewer Contract for the local chat message store. The viewer can inspect AURA-owned JSONL chat history metadata and recent turns from the controlled message store path, while keeping model requests, model responses, network requests, credential reads, permission grants, memory writes, audit writes, command execution, arbitrary file reads, arbitrary file writes, desktop action, and runtime execution disabled.
+AURA v0.169.0-genesis adds a read-only Chat History Viewer Contract for the local chat message store. The viewer can inspect AURA-owned JSONL chat history metadata and recent turns from the controlled message store path, while keeping model requests, model responses, network requests, credential reads, permission grants, memory writes, audit writes, command execution, arbitrary file reads, arbitrary file writes, desktop action, and runtime execution disabled.
+
+
+## Sprint 169 — Local Chat Integration Review
+
+AURA v0.169.0-genesis reviews the local chat runtime alpha chain introduced across Sprints 161-168. It confirms the CLI session alpha, message store, persona response layer, model adapter boundary, permission gate, safety/uncertainty layer, and history viewer are integrated as a safe thin runtime path while full model runtime, network, credentials, memory runtime, command execution, arbitrary file access, desktop action, voice, and vision remain disabled.
