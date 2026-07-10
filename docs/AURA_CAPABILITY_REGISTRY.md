@@ -394,3 +394,52 @@ Still false:
 
 Sprint 182 does not increase the runtime execution feature count because it
 controls the existing Sprint 181 localhost listener.
+
+## Sprint 183 Update — Health and Status API Runtime Online
+
+Status: UPDATED FOR v0.183.0-genesis
+
+The registry now tracks `aura_health_status_api_runtime` as an online,
+permission-gated alpha capability.
+
+Current summary:
+
+- total capabilities tracked: 114
+- online capabilities: 112
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 6
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 1
+
+New scoped availability fields:
+
+- `health_status_api_runtime: true`
+- `read_only_status_routes: true`
+- `status_route_count: 9`
+- `degraded_status_reporting: true`
+- `identity_status_runtime: true`
+- `plugin_status_runtime: true`
+- `capability_status_runtime: true`
+- `service_status_runtime: true`
+- `memory_status_runtime: true`
+- `safety_status_runtime: true`
+- `error_status_runtime: true`
+
+Still false:
+
+- `runtime_ready`
+- `execution_ready`
+- `status_api_mutation_runtime`
+- `status_api_plugin_start_runtime`
+- `status_api_memory_mutation_runtime`
+- `status_api_listener_start_probe_runtime`
+- `background_service_runtime`
+- `automatic_service_start_runtime`
+- chat, command, tool, file, memory-write, permission-grant, desktop, voice,
+  vision, and autonomous runtime gates
+
+Sprint 183 does not increase the runtime execution feature count because all
+payloads are served through the existing Sprint 181 listener.

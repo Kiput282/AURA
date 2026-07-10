@@ -1,7 +1,7 @@
 # AURA Roadmap 181-190 — Local Interaction Runtime Activation
 
-Status: ACTIVE — SPRINT 182 COMPLETE
-Current anchor: v0.182.0-genesis
+Status: ACTIVE — SPRINT 183 COMPLETE
+Current anchor: v0.183.0-genesis
 Target checkpoint: v0.190.0-genesis
 
 ## Purpose
@@ -99,17 +99,41 @@ Still disabled:
 Next: Sprint 183 — Health and Status API Runtime.
 ### Sprint 183 — Health and Status API Runtime
 
-Expose read-only runtime data for:
+Status: completed in v0.183.0-genesis.
 
-- identity and version;
-- core boot health;
-- plugin health;
+Delivered:
+
+- side-effect-free health and status aggregator;
+- nine read-only payload routes;
+- identity and version status;
+- boot prerequisite health without executing normal boot;
+- plugin availability without starting plugins;
 - capability summary;
-- service state and uptime;
-- memory availability;
-- runtime safety boundary;
-- current errors and degraded state.
+- live lifecycle state and uptime;
+- read-only memory availability and record validation;
+- consolidated safety boundary;
+- transparent errors and degraded-state reporting;
+- GET and HEAD support;
+- mutation methods rejected with 405;
+- localhost Host-header allowlist;
+- no CORS;
+- defensive no-store and browser security headers;
+- 59/59 aggregator assertions;
+- 116/116 live HTTP assertions.
 
+Runtime feature accounting remains `1` because Sprint 183 uses the same
+localhost listener introduced in Sprint 181.
+
+Still disabled:
+
+- mutation routes and remote lifecycle control;
+- plugin start and memory writes from status probes;
+- background daemon, systemd, automatic startup, and persistence;
+- public/LAN/wildcard binding;
+- chat, model, permission mutation, command, tool, action, file, desktop,
+  voice, vision, and autonomy runtime.
+
+Next: Sprint 184 — Control Center Backend Runtime.
 ### Sprint 184 — Control Center Backend Runtime
 
 Connect existing Control Center contracts to real read-only APIs for:

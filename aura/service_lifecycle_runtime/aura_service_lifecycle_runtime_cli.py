@@ -11,6 +11,9 @@ from .aura_service_lifecycle_runtime_manager import (
     AuraServiceLifecycleRuntimeManager,
     LifecycleError,
 )
+from aura.health_status_api_runtime.aura_health_status_http_runtime_manager import (
+    build_health_status_lifecycle_manager,
+)
 
 
 STATUS_COMMAND = "service-lifecycle-status"
@@ -75,7 +78,7 @@ def handle_service_lifecycle_command(
         return False
 
     extra = [str(item) for item in args[1:]]
-    manager = AuraServiceLifecycleRuntimeManager()
+    manager = build_health_status_lifecycle_manager()
 
     try:
         if command == STATUS_COMMAND:
@@ -113,6 +116,7 @@ def handle_service_lifecycle_command(
         print("Background : DISABLED")
         print("Systemd    : DISABLED")
         print("Auto-start : DISABLED")
+        print("Status API : 9 read-only payload routes")
         print()
 
         manager.run_foreground(confirmed=True)

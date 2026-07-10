@@ -6,11 +6,11 @@ foundation, what is planner-only, what requires permission, what is only a
 review/checkpoint layer, and what is still planned for the future.
 
 This registry prepares data for CLI, shell, service monitor, launcher, and
-AURA Control Center views. Sprint 181 activates a narrow localhost-only
-read-only HTTP listener, and Sprint 182 adds deterministic foreground
-lifecycle control. Chat, models, permission mutation, commands, tools,
-files, desktop control, background service, and external actions remain
-disabled.
+AURA Control Center views. Sprint 181 activates a localhost-only read-only
+HTTP listener, Sprint 182 adds deterministic lifecycle control, and Sprint
+183 adds transparent read-only health and status payloads. Chat, models,
+permission mutation, commands, tools, files, desktop control, background
+service, and external actions remain disabled.
 """
 from __future__ import annotations
 
@@ -131,6 +131,21 @@ class CapabilityRegistryManager:
                    'control_center_data_ready': True,
                    'local_web_runtime_alpha': True,
                    'service_lifecycle_runtime': True,
+                   'health_status_api_runtime': True,
+                   'read_only_status_routes': True,
+                   'status_route_count': 9,
+                   'degraded_status_reporting': True,
+                   'identity_status_runtime': True,
+                   'plugin_status_runtime': True,
+                   'capability_status_runtime': True,
+                   'service_status_runtime': True,
+                   'memory_status_runtime': True,
+                   'safety_status_runtime': True,
+                   'error_status_runtime': True,
+                   'status_api_mutation_runtime': False,
+                   'status_api_plugin_start_runtime': False,
+                   'status_api_memory_mutation_runtime': False,
+                   'status_api_listener_start_probe_runtime': False,
                    'deterministic_lifecycle_state_machine': True,
                    'single_listener_enforced': True,
                    'port_conflict_fail_closed': True,
@@ -1538,6 +1553,28 @@ class CapabilityRegistryManager:
                     "automatic startup, persistent PID/state files, remote "
                     "lifecycle mutation, chat, models, commands, tools, files, "
                     "desktop, voice, vision, and autonomy remain disabled."
+                ),
+            },
+            {
+                "id": "aura_health_status_api_runtime",
+                "name": "AURA Health and Status API Runtime",
+                "state": "online",
+                "runtime_level": "permission_gated_alpha_runtime",
+                "risk_level": "medium",
+                "permission_required": "user_confirmation",
+                "category": "local_interaction_runtime",
+                "introduced_in": "0.183.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Read-only health and status aggregation plus nine "
+                    "localhost HTTP payload routes for identity, boot "
+                    "prerequisites, plugins, capabilities, service lifecycle, "
+                    "memory availability, safety boundaries, and transparent "
+                    "error or degraded reporting. GET and HEAD are allowed; "
+                    "mutation methods, plugin start, memory writes, remote "
+                    "control, background service, systemd, auto-start, chat, "
+                    "models, commands, tools, files, desktop, voice, vision, "
+                    "and autonomy remain disabled."
                 ),
             },
 ]

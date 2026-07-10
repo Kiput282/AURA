@@ -1756,3 +1756,22 @@ files, desktop control, voice, vision, public/LAN exposure, and autonomy remain
 disabled.
 
 Next: Sprint 183 — Health and Status API Runtime.
+
+## Checkpoint v0.183.0-genesis — Health and Status API Runtime
+
+Sprint 183 adds nine transparent, read-only health and status payload routes to
+the existing localhost listener. Identity, boot prerequisites, plugin module
+availability, capability summary, live lifecycle state and uptime, memory
+availability, safety boundaries, and errors or degraded states are now visible
+without starting plugins or mutating files.
+
+GET and HEAD are permitted. Mutation methods are blocked, non-local Host
+headers are rejected, CORS remains disabled, and defensive no-store/browser
+headers are emitted. The runtime execution feature count remains `1`.
+
+Background service, systemd, automatic startup, persistence, remote lifecycle
+mutation, chat, models, permission mutation, commands, tools, actions, files,
+desktop control, voice, vision, public/LAN exposure, and autonomy remain
+disabled.
+
+Next: Sprint 184 — Control Center Backend Runtime.

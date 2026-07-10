@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.182.0-genesis
-Current status: permission-gated localhost lifecycle runtime alpha
-Current runtime state: one localhost-only read-only listener with deterministic foreground lifecycle control is available; chat, model, action, mutation, background, systemd, and auto-start runtimes remain disabled
+Current version: v0.183.0-genesis
+Current status: permission-gated localhost health and status runtime alpha
+Current runtime state: one localhost-only read-only listener with deterministic lifecycle and nine transparent status payload routes is available; chat, model, action, mutation, background, systemd, and auto-start runtimes remain disabled
 
 ---
 
@@ -35,29 +35,29 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 182 in the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 183 in the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.182.0-genesis
-- Sprint 182: Service Lifecycle Runtime
+- v0.183.0-genesis
+- Sprint 183: Health and Status API Runtime
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 183 — Health and Status API Runtime
+- Next planned sprint: Sprint 184 — Control Center Backend Runtime
 Current capability registry summary:
 
-- total capabilities: 113
-- online capabilities: 111
+- total capabilities: 114
+- online capabilities: 112
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 5
+- permission-gated capabilities: 6
 - review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
@@ -295,7 +295,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.182.0-genesis
+    Version  : 0.183.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -1940,3 +1940,52 @@ commands, tools, actions, files, desktop, voice, vision, public/LAN exposure,
 and autonomous behavior remain disabled.
 
 Next: Sprint 183 — Health and Status API Runtime.
+
+## Sprint 183 — Health and Status API Runtime
+
+Status: completed
+Version: `v0.183.0-genesis`
+
+Sprint 183 adds transparent read-only health and status data to the existing
+foreground localhost listener:
+
+- nine payload routes;
+- identity and version;
+- boot prerequisite health without executing boot;
+- plugin availability without starting plugins;
+- capability registry summary;
+- live service state and uptime;
+- memory availability and JSONL validity without writes;
+- safety boundaries;
+- explicit errors and degraded-state reporting;
+- GET and HEAD only;
+- mutation methods blocked with `405`;
+- non-local Host headers blocked with `403`;
+- CORS disabled;
+- no-store and defensive browser headers;
+- 59/59 aggregator assertions;
+- 116/116 live HTTP assertions.
+
+No-bind inspection commands:
+
+```bash
+python3 main.py health-status-api-status
+python3 main.py health-status-api-health
+python3 main.py health-status-api-self-test
+```
+
+Start the integrated listener with:
+
+```bash
+python3 main.py service-lifecycle-start --confirm-localhost
+```
+
+The runtime execution feature count remains `1` because Sprint 183 uses the
+same listener introduced in Sprint 181.
+
+Background daemon operation, systemd, automatic startup, persistent PID/state,
+remote lifecycle mutation, chat, models, memory writes, permission mutation,
+commands, tools, actions, arbitrary files, desktop, voice, vision, public/LAN
+exposure, and autonomy remain disabled.
+
+Next: Sprint 184 — Control Center Backend Runtime.
