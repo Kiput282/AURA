@@ -728,3 +728,24 @@ state mutation, audio device access, and command execution remain disabled.
 This is still not live voice. It is the explicit listen-state boundary that
 lets Sprint 193 define the local microphone capture boundary without creating
 hidden capture or background listening behavior.
+
+
+## Sprint 193 — Local Microphone Capture Boundary
+
+`v0.193.0-genesis` adds the local microphone capture boundary contract.
+
+AURA now has a safe boundary definition for future microphone capture without
+opening live recording. The contract requires microphone permission, an
+explicit listen state, and push-to-talk before any future capture. The required
+future capture state is `listening_explicit`.
+
+The checkpoint confirms that microphone capture runtime, audio device access,
+audio device discovery, device enumeration, recording, audio buffering, audio
+file writes, audio persistence, audio transmission, STT runtime, transcription,
+listen loop, background listener, wake word, always-listening, hidden capture,
+silent cloud fallback, direct voice-to-action execution, command execution, and
+speaker playback remain disabled.
+
+This is still not live voice capture. It is the local microphone capture
+boundary that lets Sprint 194 add the Speech-to-Text Adapter Runtime without
+creating hidden capture, background listening, or unintended audio retention.

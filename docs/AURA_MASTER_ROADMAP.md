@@ -2015,3 +2015,53 @@ mutate listen state through runtime controls, execute commands, mutate files,
 control the desktop, start background services, bind publicly, or add autonomy.
 
 Next: Sprint 193 — Local Microphone Capture Boundary.
+
+## Checkpoint v0.193.0-genesis — Local Microphone Capture Boundary
+
+Sprint 193 continues the Sprint 191-200 Voice Interaction Runtime block.
+
+Checkpoint state:
+
+- voice activation foundation remains ready;
+- listen-state foundation remains ready;
+- microphone boundary ready;
+- microphone capture runtime not ready;
+- microphone capture inactive;
+- microphone permission required before any future capture;
+- explicit listen state required before any future capture;
+- required future capture state is `listening_explicit`;
+- push-to-talk required before any future capture;
+- existing `microphone_listen` permission action reused;
+- audio device access disabled;
+- audio device discovery inactive;
+- device enumeration not performed;
+- sounddevice runtime not imported;
+- recording disabled;
+- recording inactive;
+- audio buffer inactive;
+- audio file write inactive;
+- audio persistence disabled;
+- audio transmission disabled;
+- STT runtime inactive;
+- transcription inactive;
+- listen loop inactive;
+- background listener inactive;
+- wake word inactive;
+- hidden capture disabled;
+- always-listening disabled;
+- silent cloud fallback disabled;
+- direct voice-to-action execution disabled;
+- command execution inactive;
+- speaker playback inactive;
+- 64 activation/listen-state/microphone-boundary assertions;
+- 0 failed activation/listen-state/microphone-boundary assertions.
+
+Sprint 193 does not install dependencies, discover audio devices, access audio
+devices, capture microphone input, record audio, buffer audio, write audio
+files, persist audio, transmit audio, run STT, transcribe speech, run TTS, play
+speaker output, start a listen loop, enable wake words, listen in the
+background, hide capture, fallback to cloud providers, execute voice actions,
+execute commands, mutate files, control the desktop, start background services,
+bind publicly, or add autonomy.
+
+Next: Sprint 194 — Speech-to-Text Adapter Runtime.

@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.192.0-genesis
-Current status: Sprint 192 Push-to-Talk and Explicit Listen State completed and ready to hand off to Sprint 193 Local Microphone Capture Boundary
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 192 adds an explicit push-to-talk listen-state foundation with idle default, nine allowed states, permission-before-listen boundaries, explicit stop requirement, and disabled microphone capture, audio buffer, STT/TTS runtime, listen loop, background listener, wake word, silent cloud fallback, direct voice-to-action execution, command execution, audio device access, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy
+Current version: v0.193.0-genesis
+Current status: Sprint 193 Local Microphone Capture Boundary completed and ready to hand off to Sprint 194 Speech-to-Text Adapter Runtime
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 193 adds a safe local microphone capture boundary contract requiring microphone permission, explicit listen state, and push-to-talk before any future capture while keeping microphone capture runtime, audio device access, device discovery, recording, audio buffer, audio file writes, STT/transcription runtime, listen loop, background listener, wake word, hidden capture, always-listening, silent cloud fallback, direct voice-to-action execution, command execution, speaker playback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 192 and continues the Sprint 191-200 Voice Interaction Runtime block with an explicit push-to-talk listen-state foundation.
+AURA has completed Sprint 193 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe local microphone capture boundary contract.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.193.0-genesis
+- Sprint 193: Local Microphone Capture Boundary
 - v0.192.0-genesis
 - Sprint 192: Push-to-Talk and Explicit Listen State
 - v0.191.0-genesis
@@ -54,7 +56,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 193 — Local Microphone Capture Boundary
+- Next planned sprint: Sprint 194 — Speech-to-Text Adapter Runtime
 Current capability registry summary:
 
 - total capabilities: 121
@@ -2448,3 +2450,55 @@ command execution, arbitrary file access, desktop control, public/LAN binding,
 background service, systemd activation, browser auto-launch, or autonomy.
 
 Next: Sprint 193 — Local Microphone Capture Boundary.
+
+## Sprint 193 — Local Microphone Capture Boundary
+
+Version: `v0.193.0-genesis`
+
+Sprint 193 adds the local microphone capture boundary contract on top of the
+Sprint 191 activation contract and Sprint 192 explicit listen-state foundation.
+
+Validated checkpoint:
+
+- microphone boundary ready;
+- microphone capture runtime not ready;
+- microphone capture inactive;
+- microphone permission required before any future capture;
+- explicit listen state required before any future capture;
+- required future capture state is `listening_explicit`;
+- push-to-talk required before any future capture;
+- existing `microphone_listen` permission action reused;
+- audio device access disabled;
+- audio device discovery inactive;
+- device enumeration not performed;
+- sounddevice runtime not imported;
+- recording disabled;
+- recording inactive;
+- audio buffer inactive;
+- audio file write inactive;
+- audio persistence disabled;
+- audio transmission disabled;
+- STT runtime inactive;
+- transcription inactive;
+- listen loop inactive;
+- background listener inactive;
+- wake word inactive;
+- hidden capture disabled;
+- always-listening disabled;
+- silent cloud fallback disabled;
+- direct voice-to-action execution disabled;
+- command execution inactive;
+- speaker playback inactive;
+- 64 total voice activation/listen-state/microphone-boundary assertions;
+- zero failed voice activation/listen-state/microphone-boundary assertions.
+
+Sprint 193 adds no dependency installation, audio device discovery, audio device
+access, microphone capture, recording, audio buffer, audio persistence, audio
+transmission, audio file output, speech-to-text execution, transcription,
+text-to-speech execution, speaker playback, wake word, background listener,
+always-listening mode, hidden capture, silent cloud fallback, direct
+voice-to-action execution, command execution, arbitrary file access, desktop
+control, public/LAN binding, background service, systemd activation, browser
+auto-launch, or autonomy.
+
+Next: Sprint 194 — Speech-to-Text Adapter Runtime.

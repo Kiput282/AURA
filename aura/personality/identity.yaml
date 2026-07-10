@@ -1,5 +1,5 @@
 name: AURA
-version: "0.192.0-genesis"
+version: "0.193.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -69,3 +69,9 @@ modes:
 # boundaries, explicit stop requirement, and disabled microphone capture,
 # audio buffer, STT runtime, listen loop, background listener, wake word,
 # state persistence, state mutation, audio device access, and command execution.
+# Sprint 193: local_microphone_capture_boundary adds a safe microphone capture
+# boundary contract requiring microphone permission, explicit listen state, and
+# push-to-talk before any future capture while keeping capture runtime, audio
+# device access, device discovery, recording, audio buffer, audio file writes,
+# STT/transcription, listen loop, background listener, wake word, hidden capture,
+# always-listening, cloud fallback, command execution, and speaker playback disabled.

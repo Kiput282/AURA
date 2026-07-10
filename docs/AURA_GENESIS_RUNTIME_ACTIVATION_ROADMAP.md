@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.192.0-genesis
+Current anchor: v0.193.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.192.0-genesis
-- Completed: Sprint 192 — Push-to-Talk and Explicit Listen State
+- Current version: v0.193.0-genesis
+- Completed: Sprint 193 — Local Microphone Capture Boundary
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: activation and explicit listen-state foundations ready; microphone capture, audio buffer, STT/TTS runtime, listen loop, and speaker playback disabled
+- Voice runtime: activation, explicit listen-state, and local microphone capture boundary foundations ready; microphone capture runtime, audio device access, device discovery, recording, audio buffer, STT/TTS runtime, transcription, listen loop, and speaker playback disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 193 — Local Microphone Capture Boundary
+- Next: Sprint 194 — Speech-to-Text Adapter Runtime
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -267,3 +267,25 @@ The voice runtime check now covers 36 activation/listen-state assertions and
 reports zero failed assertions.
 
 Next: Sprint 193 — Local Microphone Capture Boundary.
+
+## v0.193.0-genesis — Local Microphone Capture Boundary
+
+Sprint 193 adds the local microphone capture boundary contract for the Voice
+Interaction Runtime block.
+
+The checkpoint defines the future microphone capture boundary without opening
+live microphone access. It requires microphone permission, an explicit listen
+state, and push-to-talk before any future capture. The required future capture
+state is `listening_explicit`, reusing the Sprint 192 listen-state foundation.
+
+Sprint 193 preserves disabled microphone capture runtime, audio device access,
+audio device discovery, device enumeration, sounddevice runtime import,
+recording, audio buffering, audio file writes, audio persistence, audio
+transmission, STT runtime, transcription, listen loop, background listener,
+wake word, hidden capture, always-listening, silent cloud fallback, direct
+voice-to-action execution, command execution, and speaker playback.
+
+The voice runtime check now covers 64 activation/listen-state/microphone-boundary
+assertions and reports zero failed assertions.
+
+Next: Sprint 194 — Speech-to-Text Adapter Runtime.

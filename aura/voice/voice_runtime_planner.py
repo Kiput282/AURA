@@ -260,11 +260,67 @@ class VoiceRuntimePlanner:
             ],
         }
 
+
+    def microphone_capture_boundary_contract(self) -> dict[str, Any]:
+        dependency_check = self.dependency_check()
+        sounddevice_available = any(
+            package["name"] == "sounddevice" and package["installed"]
+            for package in dependency_check["python_packages"]
+        )
+
+        return {
+            "sprint": 193,
+            "name": "local_microphone_capture_boundary",
+            "microphone_boundary_ready": True,
+            "microphone_capture_runtime_ready": False,
+            "microphone_capture_active": False,
+            "microphone_permission_action": "microphone_listen",
+            "permission_required_before_capture": True,
+            "explicit_listen_state_required_before_capture": True,
+            "required_listen_state_before_capture": "listening_explicit",
+            "push_to_talk_required_before_capture": True,
+            "audio_device_access": False,
+            "audio_device_discovery_active": False,
+            "device_enumeration_performed": False,
+            "sounddevice_available": sounddevice_available,
+            "sounddevice_runtime_imported": False,
+            "recording_enabled": False,
+            "recording_active": False,
+            "audio_buffer_active": False,
+            "audio_file_write_active": False,
+            "audio_persistence_enabled": False,
+            "audio_transmission_enabled": False,
+            "stt_runtime_active": False,
+            "transcription_active": False,
+            "listen_loop_active": False,
+            "background_listener_active": False,
+            "wake_word_active": False,
+            "always_listening_enabled": False,
+            "hidden_capture_enabled": False,
+            "silent_cloud_fallback_enabled": False,
+            "direct_voice_to_action_enabled": False,
+            "command_execution_active": False,
+            "speaker_playback_active": False,
+            "capture_scope": "boundary_contract_only",
+            "retention_policy": "no_audio_retention_in_sprint_193",
+            "next_sprint": 194,
+            "next_boundary": "speech_to_text_adapter_runtime",
+            "guardrails": [
+                "No microphone capture is performed in Sprint 193.",
+                "No audio device discovery is performed in Sprint 193.",
+                "No audio buffer, recording, or audio file write is active.",
+                "No STT or transcription runtime is active.",
+                "Future capture requires explicit listen state and microphone permission.",
+                "No always-listening, hidden capture, wake word, or background listener is active.",
+            ],
+        }
+
     def status(self) -> dict[str, Any]:
         stt_candidates = self.stt_candidates()
         tts_candidates = self.tts_candidates()
         activation = self.activation_contract()
         listen_state = self.listen_state_contract()
+        microphone_boundary = self.microphone_capture_boundary_contract()
 
         return {
             "name": self.name,
@@ -276,6 +332,13 @@ class VoiceRuntimePlanner:
             "default_listen_state": listen_state["default_state"],
             "current_listen_state": listen_state["current_state"],
             "allowed_listen_states": len(listen_state["allowed_states"]),
+            "microphone_boundary_ready": microphone_boundary["microphone_boundary_ready"],
+            "microphone_capture_runtime_ready": microphone_boundary["microphone_capture_runtime_ready"],
+            "microphone_capture_active": microphone_boundary["microphone_capture_active"],
+            "audio_device_access": microphone_boundary["audio_device_access"],
+            "audio_device_discovery_active": microphone_boundary["audio_device_discovery_active"],
+            "recording_active": microphone_boundary["recording_active"],
+            "audio_buffer_active": microphone_boundary["audio_buffer_active"],
             "runtime_ready": False,
             "safe_idle_default": activation["safe_idle_default"],
             "push_to_talk_required": activation["push_to_talk_required"],
@@ -295,8 +358,8 @@ class VoiceRuntimePlanner:
             "permissions": self.permission_map(),
             "activation_contract": activation,
             "listen_state_contract": listen_state,
-            "listen_state_contract": listen_state,
-            "note": "Voice push-to-talk listen-state foundation is ready, but real microphone/STT/TTS/speaker runtime is not enabled yet.",
+            "microphone_capture_boundary_contract": microphone_boundary,
+            "note": "Voice local microphone capture boundary is ready as a safe contract, but real microphone capture, audio device access, STT/TTS, and speaker runtime are not enabled yet.",
         }
 
     def plan(self) -> dict[str, Any]:
@@ -362,6 +425,7 @@ class VoiceRuntimePlanner:
         dependencies = self.dependency_check()
         activation = self.activation_contract()
         listen_state = self.listen_state_contract()
+        microphone_boundary = self.microphone_capture_boundary_contract()
 
         installed_python = sum(
             1
@@ -412,6 +476,34 @@ class VoiceRuntimePlanner:
             "listen_state_persistence_disabled": listen_state["state_persistence_runtime"] is False,
             "listen_state_mutation_runtime_disabled": listen_state["state_mutation_runtime"] is False,
             "audio_device_access_disabled": listen_state["audio_device_access"] is False,
+            "microphone_boundary_ready": microphone_boundary["microphone_boundary_ready"] is True,
+            "microphone_capture_runtime_not_ready": microphone_boundary["microphone_capture_runtime_ready"] is False,
+            "permission_required_before_capture": microphone_boundary["permission_required_before_capture"] is True,
+            "explicit_listen_state_required_before_capture": microphone_boundary["explicit_listen_state_required_before_capture"] is True,
+            "required_capture_state_is_listening_explicit": microphone_boundary["required_listen_state_before_capture"] == "listening_explicit",
+            "push_to_talk_required_before_capture": microphone_boundary["push_to_talk_required_before_capture"] is True,
+            "capture_microphone_permission_reuses_existing_action": microphone_boundary["microphone_permission_action"] == "microphone_listen",
+            "capture_audio_device_access_disabled": microphone_boundary["audio_device_access"] is False,
+            "capture_audio_device_discovery_inactive": microphone_boundary["audio_device_discovery_active"] is False,
+            "device_enumeration_not_performed": microphone_boundary["device_enumeration_performed"] is False,
+            "microphone_capture_inactive_for_boundary": microphone_boundary["microphone_capture_active"] is False,
+            "sounddevice_runtime_not_imported": microphone_boundary["sounddevice_runtime_imported"] is False,
+            "recording_disabled_for_boundary": microphone_boundary["recording_enabled"] is False,
+            "recording_inactive_for_boundary": microphone_boundary["recording_active"] is False,
+            "audio_buffer_inactive_for_capture": microphone_boundary["audio_buffer_active"] is False,
+            "audio_file_write_inactive_for_capture": microphone_boundary["audio_file_write_active"] is False,
+            "audio_persistence_disabled_for_capture": microphone_boundary["audio_persistence_enabled"] is False,
+            "audio_transmission_disabled_for_capture": microphone_boundary["audio_transmission_enabled"] is False,
+            "stt_runtime_inactive_for_capture": microphone_boundary["stt_runtime_active"] is False,
+            "transcription_inactive_for_capture": microphone_boundary["transcription_active"] is False,
+            "listen_loop_inactive_for_capture": microphone_boundary["listen_loop_active"] is False,
+            "background_listener_inactive_for_capture": microphone_boundary["background_listener_active"] is False,
+            "wake_word_inactive_for_capture": microphone_boundary["wake_word_active"] is False,
+            "always_listening_disabled_for_capture": microphone_boundary["always_listening_enabled"] is False,
+            "hidden_capture_disabled_for_capture": microphone_boundary["hidden_capture_enabled"] is False,
+            "silent_cloud_fallback_disabled_for_capture": microphone_boundary["silent_cloud_fallback_enabled"] is False,
+            "direct_voice_to_action_disabled_for_capture": microphone_boundary["direct_voice_to_action_enabled"] is False,
+            "command_execution_inactive_for_capture": microphone_boundary["command_execution_active"] is False,
         }
 
         failed_assertions = [
@@ -436,5 +528,6 @@ class VoiceRuntimePlanner:
             "dependencies": dependencies,
             "activation_contract": activation,
             "listen_state_contract": listen_state,
-            "note": "Runtime is not enabled yet. This check did not access microphone or speaker.",
+            "microphone_capture_boundary_contract": microphone_boundary,
+            "note": "Runtime is not enabled yet. This check did not access microphone, speaker, audio devices, or capture audio.",
         }
