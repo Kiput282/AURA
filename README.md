@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.170.0-genesis  
+Current version: v0.171.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -1221,7 +1221,7 @@ Current canonical state:
 
 - Version: v0.170.0-genesis
 - Current completed sprint: Sprint 161.0 — Local Chat Runtime Foundation
-- Next planned sprint: Sprint 170.0 — Local Chat Runtime Stabilization
+- Next planned sprint: Sprint 171.0 — Memory Runtime Foundation
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1755,3 +1755,16 @@ python3 main.py local-chat-integration-alpha
 ```
 
 The integration alpha is read-only and metadata-only. It checks component registration and boundary consistency, reports component readiness, and keeps runtime execution features at zero. Sprint 170 remains the Local Chat Runtime Stabilization checkpoint before the roadmap moves toward Memory Runtime.
+
+
+## Sprint 171 — Memory Runtime Foundation
+
+AURA v0.171.0-genesis starts the Sprint 171-180 Memory Runtime block with a preview-only Memory Runtime Foundation. It can build a memory candidate preview and a write-gate proposal from a user-supplied message, but it does **not** write memory, mutate the memory store, delete memory, export memory, call a model, use network, read credentials, apply permission grants, write audit events, execute commands, read arbitrary files, write arbitrary files, or open full memory runtime.
+
+New alpha command:
+
+```bash
+python3 main.py memory-runtime-alpha "remember that AURA is local-first"
+```
+
+The alpha output must keep `Memory Writes`, `Memory Store Mutations`, `Model Requests`, `Network Requests`, `Credentials Read`, `Permission Grants`, `Audit Events Written`, `Commands Executed`, `Arbitrary Files Read`, `Arbitrary Files Wrote`, and `Runtime Execution` at `0`. Sprint 172 should add the Memory Write Permission Gate before any real memory write is allowed.

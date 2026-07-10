@@ -153,6 +153,7 @@ from aura.local_chat_safety_uncertainty_layer.aura_local_chat_safety_uncertainty
 from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_contract_manager import AuraLocalChatHistoryViewerContractManager
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
+from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4326,6 +4327,59 @@ class AuraCLI:
 
 
 
+
+
+    # Sprint 171.0 memory runtime foundation helpers.
+    def print_memory_runtime_foundation_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Runtime Foundation Boundary"))
+
+    def handle_memory_runtime_foundation_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA memory runtime foundation"
+        manager = AuraMemoryRuntimeFoundationManager(project_root=self.project_root)
+
+        if command in {"memory-runtime-alpha", "memory-runtime-foundation-alpha", "memory-foundation-alpha"}:
+            if not target or target == "AURA memory runtime foundation":
+                print("AURA Memory Runtime Foundation Alpha")
+                print("====================================")
+                print('Usage: python3 main.py memory-runtime-alpha "remember that AURA is local-first"')
+                return True
+            print(manager.render_foundation_alpha(target))
+            return True
+
+        if command == "memory-runtime-foundation-status":
+            self.print_memory_runtime_foundation_packet("AURA Memory Runtime Foundation Status", manager.status())
+            return True
+
+        if command == "memory-runtime-foundation-context":
+            self.print_memory_runtime_foundation_packet("AURA Memory Runtime Foundation Context", manager.context())
+            return True
+
+        command_map = {
+            "memory-candidate-schema-plan": ("AURA Memory Candidate Schema Plan", manager.memory_candidate_schema_plan),
+            "memory-write-gate-plan": ("AURA Memory Write Gate Plan", manager.memory_write_gate_plan),
+            "memory-source-boundary-plan": ("AURA Memory Source Boundary Plan", manager.memory_source_boundary_plan),
+            "memory-privacy-redaction-plan": ("AURA Memory Privacy Redaction Plan", manager.memory_privacy_redaction_plan),
+            "memory-review-queue-handoff-plan": ("AURA Memory Review Queue Handoff Plan", manager.memory_review_queue_handoff_plan),
+            "memory-correction-deletion-policy-plan": ("AURA Memory Correction Deletion Policy Plan", manager.memory_correction_deletion_policy_plan),
+            "chat-to-memory-handoff-plan": ("AURA Chat To Memory Handoff Plan", manager.chat_to_memory_handoff_plan),
+            "memory-model-summary-boundary-plan": ("AURA Memory Model Summary Boundary Plan", manager.memory_model_summary_boundary_plan),
+            "memory-control-center-handoff-plan": ("AURA Memory Control Center Handoff Plan", manager.memory_control_center_handoff_plan),
+            "no-memory-runtime-unsafe-runtime-plan": ("AURA No Memory Runtime Unsafe Runtime Plan", manager.no_memory_runtime_unsafe_runtime_plan),
+            "memory-next-sprint-readiness-plan": ("AURA Memory Next Sprint Readiness Plan", manager.memory_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_runtime_foundation_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 170.0 local chat runtime stabilization helpers.
     def print_local_chat_runtime_stabilization_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8122,6 +8176,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_memory_runtime_foundation_cli_command(raw_args):
             return True
 
         if self.handle_local_chat_runtime_stabilization_cli_command(raw_args):

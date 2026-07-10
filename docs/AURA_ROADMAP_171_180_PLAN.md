@@ -18,3 +18,12 @@ This block follows Sprint 170 Local Chat Runtime Stabilization.
 ## Guardrails
 
 Memory must not be written automatically from chat until permission, review, correction, deletion, and privacy boundaries are in place. Model-based summarization stays deferred until model request permission is ready.
+
+
+## Sprint 171 — Memory Runtime Foundation
+
+Status: completed in `v0.171.0-genesis` after Sprint 170.
+
+Sprint 171 creates a preview-only foundation for memory candidate packets, write-gate planning, privacy boundary planning, and chat-to-memory handoff. It keeps memory writes, memory store mutation, model requests, network, credentials, permission grants, command execution, arbitrary file access, full memory runtime, and runtime execution disabled.
+
+Next: Sprint 172 — Memory Write Permission Gate.

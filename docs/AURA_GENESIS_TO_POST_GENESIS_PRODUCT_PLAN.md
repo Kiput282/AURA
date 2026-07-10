@@ -551,3 +551,8 @@ AURA v0.170.0-genesis adds a read-only Chat History Viewer Contract for the loca
 ## Sprint 170 — Local Chat Runtime Stabilization
 
 AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced across Sprints 161-168. It confirms the CLI session alpha, message store, persona response layer, model adapter boundary, permission gate, safety/uncertainty layer, and history viewer are integrated as a safe thin runtime path while full model runtime, network, credentials, memory runtime, command execution, arbitrary file access, desktop action, voice, and vision remain disabled.
+
+
+## Sprint 171 — Memory Runtime Foundation
+
+`v0.171.0-genesis` starts the Memory Runtime block with a preview-only memory foundation. AURA can create memory candidate previews and write-gate metadata, but real memory write remains disabled until explicit permission, review, privacy, and correction/deletion boundaries are implemented.

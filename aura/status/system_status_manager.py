@@ -142,6 +142,7 @@ from aura.local_chat_safety_uncertainty_layer.aura_local_chat_safety_uncertainty
 from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_contract_manager import AuraLocalChatHistoryViewerContractManager
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
+from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -344,6 +345,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        memory_runtime_foundation_status = AuraMemoryRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_runtime_stabilization_status = AuraLocalChatRuntimeStabilizationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
             "service_control_command_review_foundation_ready": service_control_command_review_foundation_status["service_control_command_review_foundation_ready"],
@@ -490,6 +492,21 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "memory_runtime_foundation_ready": memory_runtime_foundation_status["memory_runtime_foundation_ready"],
+            "memory_runtime_foundation_data_ready": memory_runtime_foundation_status["memory_runtime_foundation_data_ready"],
+            "memory_runtime_foundation_plan_type_count": memory_runtime_foundation_status["plan_type_count"],
+            "memory_runtime_foundation_total_blueprint_count": memory_runtime_foundation_status["total_memory_runtime_foundation_blueprint_count"],
+            "memory_runtime_foundation_thin_runtime_alpha": memory_runtime_foundation_status["thin_runtime_alpha"],
+            "memory_runtime_foundation_enabled": memory_runtime_foundation_status["memory_runtime_foundation_enabled"],
+            "memory_runtime_foundation_block_started": memory_runtime_foundation_status["memory_runtime_block_171_180_started"],
+            "memory_runtime_foundation_write_gate_required": memory_runtime_foundation_status["memory_write_gate_required"],
+            "memory_runtime_foundation_preview_enabled": memory_runtime_foundation_status["memory_candidate_preview_runtime_enabled"],
+            "memory_runtime_foundation_runtime_memory_writes": memory_runtime_foundation_status["runtime_memory_writes"],
+            "memory_runtime_foundation_runtime_memory_store_mutations": memory_runtime_foundation_status["runtime_memory_store_mutations"],
+            "memory_runtime_foundation_runtime_model_requests_dispatched": memory_runtime_foundation_status["runtime_model_requests_dispatched"],
+            "memory_runtime_foundation_runtime_network_requests": memory_runtime_foundation_status["runtime_network_requests"],
+            "memory_runtime_foundation_runtime_commands_executed": memory_runtime_foundation_status["runtime_commands_executed"],
+            "memory_runtime_foundation_runtime_execution_features": memory_runtime_foundation_status["runtime_execution_features"],
             "local_chat_runtime_stabilization_ready": local_chat_runtime_stabilization_status["local_chat_runtime_stabilization_ready"],
             "local_chat_runtime_stabilization_data_ready": local_chat_runtime_stabilization_status["local_chat_runtime_stabilization_data_ready"],
             "local_chat_runtime_stabilization_plan_type_count": local_chat_runtime_stabilization_status["plan_type_count"],
