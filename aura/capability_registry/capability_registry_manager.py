@@ -176,6 +176,23 @@ class CapabilityRegistryManager:
                    'local_model_explicit_request_confirmation': True,
                    'local_model_response_persistence': True,
                    'browser_chat_model_bridge_runtime': True,
+                   'interactive_control_center_chat_runtime': True,
+                   'interactive_chat_web_surface_runtime': True,
+                   'interactive_chat_orchestration_runtime': True,
+                   'interactive_chat_save_only_default': True,
+                   'interactive_chat_local_model_mode': True,
+                   'interactive_chat_provider_status_visibility': True,
+                   'interactive_chat_model_status_visibility': True,
+                   'interactive_chat_probe_confirmation_ui': True,
+                   'interactive_chat_model_request_confirmation_ui': True,
+                   'interactive_chat_idempotent_retry_ui': True,
+                   'interactive_chat_response_kind_visibility': True,
+                   'interactive_chat_restart_persistence': True,
+                   'interactive_chat_clear_confirmation': True,
+                   'interactive_chat_local_browser_storage_runtime': False,
+                   'interactive_chat_websocket_runtime': False,
+                   'interactive_chat_eventsource_runtime': False,
+                   'interactive_chat_tool_action_command_ui': False,
                    'local_model_download_runtime': False,
                    'local_model_streaming_runtime': False,
                    'local_model_tool_calling_runtime': False,
@@ -1729,6 +1746,33 @@ class CapabilityRegistryManager:
                     "autonomy remain disabled."
                 ),
             },
+            {
+                "id": "aura_interactive_control_center_chat_runtime",
+                "name": "AURA Interactive Control Center Chat Runtime",
+                "state": "online",
+                "runtime_level": "permission_gated_alpha_runtime",
+                "risk_level": "high",
+                "permission_required": "model_request_permission",
+                "category": "local_interaction_runtime",
+                "introduced_in": "0.188.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Interactive localhost Control Center chat with "
+                    "persistent bounded sessions, save-only safe default, "
+                    "provider and model visibility, explicit provider probe "
+                    "confirmation, explicit per-message model confirmation, "
+                    "text-only local model responses, stable in-memory retry "
+                    "identifiers, optimistic revision conflicts, idempotent "
+                    "replay without duplicate model invocation, response-kind "
+                    "visibility, restart persistence, and confirmed session "
+                    "clearing. Model downloads, remote providers, internet "
+                    "fallback, streaming, tools, commands, actions, arbitrary "
+                    "files, desktop control, AURA long-term memory writes, "
+                    "browser storage, WebSocket/EventSource, background "
+                    "service, public/LAN binding, browser auto-launch, and "
+                    "autonomy remain disabled."
+                ),
+            },
 ]
 
 
@@ -1753,9 +1797,16 @@ class CapabilityRegistryManager:
             "review_only_count": sum(1 for item in catalog if item["runtime_level"] == "review_only"),
             "planned_future_count": state_counts.get("planned_future", 0),
             "disabled_runtime_count": state_counts.get("disabled_runtime", 0),
-            "runtime_execution_features": (1) + int(any(
+            "runtime_execution_features": ((1) + int(any(
                 capability.get("id")
                 == "aura_local_model_bridge_runtime"
+                and capability.get("state") == "online"
+                and capability.get("runtime_level")
+                == "permission_gated_alpha_runtime"
+                for capability in self.capability_catalog()
+            ))) + int(any(
+                capability.get("id")
+                == "aura_interactive_control_center_chat_runtime"
                 and capability.get("state") == "online"
                 and capability.get("runtime_level")
                 == "permission_gated_alpha_runtime"

@@ -120,7 +120,7 @@ def handle_service_lifecycle_command(
         print("Control Center backend: 9 read-only routes")
         print("Web shell  : ENABLED / 3 dashboard assets")
         print("Local chat : ENABLED / 3 chat assets / 7 route contracts")
-        print("Model bridge: READY / 2 model routes / disabled by default")
+        print("Model bridge: READY / 2 model routes / interactive chat ready / disabled by default")
         print("Browser launch: DISABLED")
         print()
 

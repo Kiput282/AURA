@@ -171,6 +171,7 @@ from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
 from aura.browser_chat_session_runtime.aura_browser_chat_session_runtime_cli import handle_browser_chat_session_command
 from aura.local_model_bridge_runtime.aura_local_model_bridge_runtime_cli import handle_local_model_bridge_command
+from aura.interactive_control_center_chat_runtime.aura_interactive_control_center_chat_runtime_cli import handle_interactive_chat_command
 
 
 class AuraCLI:
@@ -8365,6 +8366,9 @@ class AuraCLI:
         return False
 
     def run(self, args: list[str] | None = None) -> bool:
+        if handle_interactive_chat_command(args):
+            return True
+
         if handle_local_model_bridge_command(args):
             return True
 

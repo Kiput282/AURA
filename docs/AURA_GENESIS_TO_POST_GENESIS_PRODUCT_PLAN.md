@@ -636,3 +636,12 @@ and conversation experience into the Control Center chat UI.
 
 No online provider, model download, tool use, external action, or autonomous
 behavior is enabled.
+
+## Sprint 188 Product Activation Note
+
+AURA now has a usable localhost browser chat experience. The interface keeps
+save-only messaging as the safe default and exposes local-model use only when
+a provider is active and the user confirms the individual request.
+
+This remains a bounded local alpha: no online model provider, model download,
+tool use, external action, browser storage, or autonomous behavior is enabled.

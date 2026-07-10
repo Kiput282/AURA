@@ -632,3 +632,39 @@ Model downloads, remote providers, redirect following, internet fallback,
 streaming, tool/function calling, commands, actions, arbitrary files, desktop
 control, AURA long-term memory writes, background service, public/LAN binding,
 and autonomy remain disabled.
+
+## Sprint 188 Update — Interactive Control Center Chat Online
+
+Status: UPDATED FOR v0.188.0-genesis
+
+The registry now tracks
+`aura_interactive_control_center_chat_runtime` as an online,
+permission-gated alpha runtime.
+
+Current summary:
+
+- total capabilities tracked: 119
+- online capabilities: 117
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 11
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 3
+
+New active boundaries include:
+
+- `interactive_control_center_chat_runtime: true`
+- `interactive_chat_web_surface_runtime: true`
+- `interactive_chat_orchestration_runtime: true`
+- `interactive_chat_save_only_default: true`
+- `interactive_chat_model_request_confirmation_ui: true`
+- `interactive_chat_idempotent_retry_ui: true`
+- `interactive_chat_response_kind_visibility: true`
+
+Provider default activation, model downloads, remote providers, internet
+fallback, streaming, tools, commands, actions, arbitrary files, desktop
+control, AURA long-term memory writes, browser storage,
+WebSocket/EventSource, background service, public/LAN binding, browser
+auto-launch, and autonomy remain disabled.

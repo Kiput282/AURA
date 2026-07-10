@@ -55,7 +55,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
 
     name = "aura_browser_chat_session_http_runtime"
     component_version = "0.1.0-alpha"
-    sprint = 187
+    sprint = 188
 
     CHAT_ASSET_ROUTES = (
         AuraBrowserChatWebSurfaceManager.ASSET_ROUTES
@@ -429,10 +429,10 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     payload.update(
                         {
                             "service": (
-                                "AURA Local Model Browser Chat "
-                                "Runtime"
+                                "AURA Interactive Control Center "
+                                "Chat Runtime"
                             ),
-                            "sprint": 187,
+                            "sprint": 188,
                             "control_center_backend": True,
                             "control_center_backend_routes": 9,
                             "control_center_panels": 8,

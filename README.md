@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.187.0-genesis
-Current status: permission-gated localhost local model bridge alpha connected to browser chat backend
-Current runtime state: one explicitly confirmed foreground localhost listener provides status, Control Center, browser chat session, and local-model bridge routes; Ollama and OpenAI-compatible loopback providers are supported through environment-only profiles and remain disabled by default. Model downloads, remote providers, internet fallback, streaming, tools, commands, actions, AURA long-term memory writes, background service, systemd, auto-start, public/LAN binding, and browser auto-launch remain disabled
+Current version: v0.188.0-genesis
+Current status: interactive localhost Control Center chat alpha with persistent sessions and explicitly confirmed local-model messaging
+Current runtime state: one explicitly confirmed foreground localhost listener provides Control Center, responsive interactive chat, persistent local sessions, save-only safe default, provider/model visibility, explicit provider probe confirmation, explicit per-message local-model confirmation, idempotent retry, response-kind visibility, restart persistence, and confirmed clearing. Model providers remain disabled by default; downloads, remote providers, internet fallback, streaming, tools, commands, actions, AURA long-term memory writes, browser storage, WebSocket/EventSource, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,33 +35,33 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 187 in the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 188 in the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.187.0-genesis
-- Sprint 187: Local Model Bridge Runtime
+- v0.188.0-genesis
+- Sprint 188: Interactive Control Center Chat Runtime
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 188 — Interactive Control Center Chat
+- Next planned sprint: Sprint 189 — Permission, Audit, and Recovery Visibility
 Current capability registry summary:
 
-- total capabilities: 118
-- online capabilities: 116
+- total capabilities: 119
+- online capabilities: 117
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 10
+- permission-gated capabilities: 11
 - review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 2
+- runtime execution features: 3
 ---
 
 ## Safety State
@@ -295,7 +295,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.187.0-genesis
+    Version  : 0.188.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -2215,3 +2215,57 @@ Validation:
 - port `8765`: closed after tests.
 
 Next: Sprint 188 — Interactive Control Center Chat.
+
+## Sprint 188 — Interactive Control Center Chat Runtime
+
+Status: completed
+Version: `v0.188.0-genesis`
+
+Sprint 188 turns the bounded Sprint 187 model backend into an interactive
+localhost Control Center chat experience:
+
+- responsive `/chat` browser surface;
+- persistent local session list and transcript;
+- save-only mode as the safe default;
+- provider and model status visibility;
+- explicit provider probe confirmation;
+- explicit confirmation for every local-model message;
+- confirmation reset after successful model delivery;
+- stable in-memory retry identifiers;
+- idempotent retry without duplicate model invocation;
+- optimistic revision-conflict recovery;
+- visible distinction between `local_model_response` and
+  `model_bridge_unavailable`;
+- restart persistence;
+- confirmed session clearing;
+- no external browser dependencies.
+
+Operator commands:
+
+```bash
+python3 main.py interactive-chat-status
+python3 main.py interactive-chat-contracts
+python3 main.py interactive-chat-self-test
+```
+
+The provider remains disabled by default. Model downloads, remote providers,
+internet fallback, streaming, tools, function calling, commands, actions,
+arbitrary files, desktop control, AURA long-term memory writes, browser
+storage, WebSocket/EventSource, background service, public/LAN binding,
+browser auto-launch, and autonomy remain disabled.
+
+Validation:
+
+- interactive runtime: 119/119;
+- interactive web surface: 166/166;
+- local model bridge: 178/178;
+- browser chat session core: 152/152;
+- live browser-like save-only and model paths: verified;
+- duplicate retry without model reinvocation: verified;
+- stale revision conflict `409`: verified;
+- restart persistence and clear confirmation: verified;
+- SIGTERM and SIGINT shutdown: verified;
+- canonical data: unchanged;
+- port `8765`: closed after tests.
+
+Next: Sprint 189 — Permission, Audit, and Recovery Visibility.

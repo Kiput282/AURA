@@ -739,6 +739,12 @@ class AuraControlCenterBackendRuntimeManager:
                              'local_model_provider_contracts': True,
                              'local_model_browser_chat_route': True,
                              'local_model_response_persistence': True,
+                             'interactive_control_center_chat': True,
+                             'interactive_chat_web_surface': True,
+                             'interactive_chat_model_status_ui': True,
+                             'interactive_chat_explicit_confirmation': True,
+                             'interactive_chat_idempotent_retry': True,
+                             'interactive_chat_response_kind_visibility': True,
                              'local_chat_history_persistence': True,
                              'validated_message_submission': True,
                              'explicit_clear_confirmation': True,
@@ -783,7 +789,7 @@ class AuraControlCenterBackendRuntimeManager:
         return {
                    'panel_id': "readiness",
                    'title': "Runtime Readiness",
-                   'status': "local_model_bridge_ready_disabled_by_default" if backend_ready else "degraded",
+                   'status': "interactive_control_center_chat_ready" if backend_ready else "degraded",
                    'backend_ready': backend_ready,
                    'web_shell_ready': True,
                    'interaction_runtime_ready': bool(
@@ -792,11 +798,11 @@ class AuraControlCenterBackendRuntimeManager:
                    'execution_ready': bool(
                 safety["execution_ready"]
             ),
-                   'current_stage': "local_model_bridge_runtime",
+                   'current_stage': "interactive_control_center_chat_runtime",
                    'ready_surfaces': ready_surfaces,
                    'blocked_surfaces': blocked_surfaces,
                    'blockers': blockers,
-                   'next_sprint': "Sprint 188 — Interactive Control Center Chat",
+                   'next_sprint': "Sprint 189 — Permission, Audit, and Recovery Visibility",
                    'read_only': False,
                    'actions_allowed': False,
                    'shell_asset_route_count': 3,
@@ -813,6 +819,19 @@ class AuraControlCenterBackendRuntimeManager:
                    'model_route_contract_count': 2,
                    'model_bridge_configured': False,
                    'local_model_enabled_by_default': False,
+                   'interactive_chat_ready': True,
+                   'interactive_chat_web_surface_ready': True,
+                   'interactive_chat_runtime_ready': True,
+                   'interactive_chat_web_assertion_count': 166,
+                   'interactive_chat_runtime_assertion_count': 119,
+                   'save_only_default': True,
+                   'explicit_model_request_confirmation': True,
+                   'explicit_model_probe_confirmation': True,
+                   'idempotent_model_retry': True,
+                   'response_kind_visibility': True,
+                   'local_browser_storage_active': False,
+                   'websocket_active': False,
+                   'eventsource_active': False,
                }
 
     def snapshot(self) -> dict[str, Any]:
@@ -983,6 +1002,18 @@ class AuraControlCenterBackendRuntimeManager:
                    'model_inference_runtime': True,
                    'model_route_contract_count': 2,
                    'browser_chat_model_bridge_runtime': True,
+                   'interactive_control_center_chat_runtime': True,
+                   'interactive_chat_web_surface_runtime': True,
+                   'interactive_chat_orchestration_runtime': True,
+                   'interactive_chat_save_only_default': True,
+                   'interactive_chat_explicit_model_confirmation': True,
+                   'interactive_chat_explicit_probe_confirmation': True,
+                   'interactive_chat_idempotent_retry': True,
+                   'interactive_chat_response_kind_visibility': True,
+                   'interactive_chat_local_browser_storage_runtime': False,
+                   'interactive_chat_websocket_runtime': False,
+                   'interactive_chat_eventsource_runtime': False,
+                   'interactive_chat_tool_action_command_ui': False,
                    'model_provider_profiles_environment_only': True,
                    'model_loopback_endpoint_enforcement': True,
                    'model_resolved_loopback_enforcement': True,
@@ -1117,9 +1148,9 @@ class AuraControlCenterBackendRuntimeManager:
         memory = panels["memory"]
         readiness = panels["readiness"]
 
-        assertions['overview_version_187'] = (
+        assertions['overview_version_188'] = (
             overview["identity"]["version"]
-            == '0.187.0-genesis'
+            == '0.188.0-genesis'
         )
         assertions["overview_boot_ready"] = (
             overview["core_boot_ready"] is True
@@ -1133,21 +1164,21 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["overview_listener_false"] = (
             overview["listener_active"] is False
         )
-        assertions['overview_capability_total_118'] = (
-            overview["capability_total"] == 118
+        assertions['overview_capability_total_119'] = (
+            overview["capability_total"] == 119
         )
-        assertions['overview_online_116'] = (
-            overview["online_capabilities"] == 116
+        assertions['overview_online_117'] = (
+            overview["online_capabilities"] == 117
         )
-        assertions['overview_permission_gated_ten'] = (
+        assertions['overview_permission_gated_eleven'] = (
             overview[
                 "permission_gated_capabilities"
             ]
-            == 10
+            == 11
         )
-        assertions['overview_runtime_feature_two'] = (
+        assertions['overview_runtime_feature_three'] = (
             overview["runtime_execution_features"]
-            == 2
+            == 3
         )
         assertions["overview_plugins_two"] = (
             overview["plugin_available_count"] == 2
@@ -1178,14 +1209,14 @@ class AuraControlCenterBackendRuntimeManager:
             is False
         )
 
-        assertions['capability_card_count_118'] = (
-            capabilities["card_count"] == 118
+        assertions['capability_card_count_119'] = (
+            capabilities["card_count"] == 119
         )
-        assertions['capability_summary_total_118'] = (
+        assertions['capability_summary_total_119'] = (
             capabilities["summary"][
                 "total_capabilities"
             ]
-            == 118
+            == 119
         )
         assertions["capability_mutation_false"] = (
             capabilities["mutation_enabled"] is False
@@ -1211,11 +1242,11 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["permission_foundation_available"] = (
             permissions["foundation_available"] is True
         )
-        assertions['permission_gated_count_ten'] = (
+        assertions['permission_gated_count_eleven'] = (
             permissions[
                 "permission_gated_capability_count"
             ]
-            == 10
+            == 11
         )
         assertions["pending_runtime_false"] = (
             permissions[
@@ -1281,8 +1312,8 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_backend_ready"] = (
             readiness["backend_ready"] is True
         )
-        assertions['readiness_local_model_bridge_true'] = (
-            readiness["local_model_bridge_ready"] is True
+        assertions['readiness_interactive_chat_true'] = (
+            readiness["interactive_chat_ready"] is True
         )
         assertions["readiness_runtime_false"] = (
             readiness["interaction_runtime_ready"]
@@ -1291,9 +1322,9 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_execution_false"] = (
             readiness["execution_ready"] is False
         )
-        assertions['readiness_next_sprint_188'] = (
+        assertions['readiness_next_sprint_189'] = (
             readiness["next_sprint"]
-            == 'Sprint 188 — Interactive Control Center Chat'   )
+            == 'Sprint 189 — Permission, Audit, and Recovery Visibility' )
 
         for route in self.ROUTES:
             payload = self.payload_for_route(
@@ -1444,7 +1475,7 @@ class AuraControlCenterBackendRuntimeManager:
                 self.FOUNDATION_MODULES
             ),
             "foundation_contracts_available": 8,
-            "capability_card_count": 118,
+            "capability_card_count": 119,
             "degraded_fixture_verified": True,
             "read_only_file_integrity_verified": True,
             "frontend_rendered": False,

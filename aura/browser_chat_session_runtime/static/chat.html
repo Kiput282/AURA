@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-aura-surface="browser-chat-session">
+<html lang="en" data-aura-surface="interactive-control-center-chat">
 <head>
   <meta charset="utf-8">
   <meta
@@ -9,9 +9,9 @@
   <meta name="color-scheme" content="dark">
   <meta
     name="description"
-    content="AURA local browser chat session runtime."
+    content="AURA interactive localhost chat with an explicitly confirmed local model bridge."
   >
-  <title>AURA Local Chat</title>
+  <title>AURA Interactive Chat</title>
   <link
     rel="stylesheet"
     href="/assets/control-center-chat.css"
@@ -30,10 +30,11 @@
     <aside class="session-sidebar" aria-label="Local chat sessions">
       <div class="brand-row">
         <a class="back-link" href="/">← Control Center</a>
-        <p class="eyebrow">Sprint 186</p>
-        <h1>AURA Local Chat</h1>
+        <p class="eyebrow">Sprint 188</p>
+        <h1>AURA Interactive Chat</h1>
         <p class="muted">
-          Local session persistence with no model inference yet.
+          Persistent local sessions with an explicitly confirmed
+          localhost model bridge.
         </p>
       </div>
 
@@ -70,8 +71,8 @@
     <section class="chat-workspace" aria-labelledby="workspace-title">
       <header class="workspace-header">
         <div>
-          <p class="eyebrow">Browser Chat Session Runtime</p>
-          <h2 id="workspace-title">Local transcript</h2>
+          <p class="eyebrow">Interactive Control Center Chat</p>
+          <h2 id="workspace-title">Local conversation</h2>
           <p id="session-meta" class="muted">
             Create or select a session.
           </p>
@@ -82,6 +83,7 @@
             class="status-badge"
             role="status"
             aria-live="polite"
+            data-state="idle"
           >
             Idle
           </span>
@@ -95,14 +97,55 @@
         </div>
       </header>
 
-      <aside id="model-boundary" class="boundary-card">
-        <strong>Model boundary</strong>
-        <p>
-          Local Model Bridge is not active. Messages are persisted
-          locally and receive an honest placeholder response until
-          Sprint 187.
+      <section
+        id="model-panel"
+        class="model-card"
+        aria-labelledby="model-panel-title"
+      >
+        <div class="model-summary">
+          <div>
+            <p class="eyebrow">Local Model Bridge</p>
+            <h3 id="model-panel-title">Provider status</h3>
+          </div>
+          <span
+            id="model-status-badge"
+            class="status-badge"
+            role="status"
+            aria-live="polite"
+            data-state="idle"
+          >
+            Checking
+          </span>
+        </div>
+
+        <p id="model-status-detail" class="muted">
+          Reading the bounded local-model status.
         </p>
-      </aside>
+
+        <dl class="model-facts">
+          <div>
+            <dt>Provider</dt>
+            <dd id="model-provider">Not configured</dd>
+          </div>
+          <div>
+            <dt>Model</dt>
+            <dd id="model-name">Not configured</dd>
+          </div>
+          <div>
+            <dt>Boundary</dt>
+            <dd>Loopback · text only · no tools</dd>
+          </div>
+        </dl>
+
+        <div class="model-actions">
+          <button id="refresh-model-status" type="button">
+            Refresh status
+          </button>
+          <button id="probe-model" type="button" disabled>
+            Probe provider
+          </button>
+        </div>
+      </section>
 
       <div
         id="chat-transcript"
@@ -116,30 +159,105 @@
       </div>
 
       <section class="composer" aria-labelledby="composer-title">
-        <h3 id="composer-title">Submit a local message</h3>
+        <div class="composer-heading">
+          <div>
+            <p class="eyebrow">Bounded message submission</p>
+            <h3 id="composer-title">Send a local message</h3>
+          </div>
+          <span id="pending-status" class="pending-status">
+            No pending retry
+          </span>
+        </div>
+
+        <fieldset id="message-mode-group" class="mode-selector">
+          <legend>Message mode</legend>
+          <label class="mode-option">
+            <input
+              id="mode-save-only"
+              name="message-mode"
+              type="radio"
+              value="save-only"
+              checked
+            >
+            <span>
+              <strong>Save only</strong>
+              <small>
+                Persist the message and receive the honest runtime notice.
+              </small>
+            </span>
+          </label>
+          <label class="mode-option">
+            <input
+              id="mode-local-model"
+              name="message-mode"
+              type="radio"
+              value="local-model"
+              disabled
+            >
+            <span>
+              <strong>Local model</strong>
+              <small>
+                Send text to the explicitly enabled loopback provider.
+              </small>
+            </span>
+          </label>
+        </fieldset>
+
+        <label class="model-confirmation" for="confirm-model-request">
+          <input
+            id="confirm-model-request"
+            type="checkbox"
+            disabled
+          >
+          <span>
+            I confirm this single message may be sent to the configured
+            localhost model. This confirmation resets after success.
+          </span>
+        </label>
+
         <label for="message-input">Message</label>
         <textarea
           id="message-input"
           rows="5"
           maxlength="8192"
           disabled
-          placeholder="Model responses become available in Sprint 187."
+          placeholder="Write a local message."
         ></textarea>
+
         <div class="composer-footer">
           <p class="muted">
-            Maximum 8,192 characters. No tools or actions run.
+            <span id="message-count">0 / 8,192</span>
+            · no tools, commands, actions, or memory writes
           </p>
           <button
             id="send-message"
             type="button"
             disabled
           >
-            Save message
+            Save without model
           </button>
         </div>
       </section>
     </section>
   </main>
+
+  <dialog id="probe-dialog">
+    <div class="dialog-content">
+      <h2>Probe local model provider</h2>
+      <p>
+        This performs one explicit HTTP request to the configured
+        loopback provider. It does not download or invoke a model.
+      </p>
+      <div class="dialog-actions">
+        <button id="cancel-probe" type="button">
+          Cancel
+        </button>
+        <button id="confirm-probe" type="button">
+          Confirm local probe
+        </button>
+      </div>
+    </div>
+  </dialog>
 
   <dialog id="clear-dialog">
     <div class="dialog-content">
@@ -169,7 +287,7 @@
 
   <noscript>
     <div class="noscript-message">
-      JavaScript is required for the local chat session interface.
+      JavaScript is required for the local interactive chat interface.
     </div>
   </noscript>
 </body>

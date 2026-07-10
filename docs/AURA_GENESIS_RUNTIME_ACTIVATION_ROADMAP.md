@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.187.0-genesis
+Current anchor: v0.188.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -176,3 +176,13 @@ responses into bounded browser chat sessions.
 
 The provider remains disabled by default. Sprint 188 will expose the completed
 bridge as an interactive Control Center chat experience.
+
+## v0.188.0-genesis — Interactive Control Center Chat
+
+Sprint 188 completes the browser-facing interactive chat activation. AURA can
+now expose persistent local sessions, an honest save-only path, provider/model
+visibility, and explicitly confirmed local-model messages through the
+Control Center.
+
+Sprint 189 will surface permission, audit, and recovery state more clearly
+across the local interaction runtime.
