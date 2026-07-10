@@ -20,11 +20,17 @@ vision, and action layers.
 
 ## Deferred capabilities
 
-- Voice starts in Sprint 181-190.
-- Vision/screen awareness starts in Sprint 191-200.
-- Local action and desktop commands, such as opening Blender, opening VS Code,
-  and creating project folders, start around Sprint 201-210 after permission,
-  audit, allowlist, and recovery boundaries are ready.
+- Local service, browser dashboard, and interactive chat activation begin in
+  Sprint 181-190.
+- Voice interaction begins in Sprint 191-200 after dashboard and chat runtime
+  are operational and stabilized.
+- Vision and permission-gated screen awareness begin in Sprint 201-210.
+- Permission, audit, and narrowly allowlisted safe local actions begin in
+  Sprint 211-220.
+- Unified partner runtime integration follows in Sprint 221-230.
+- ORION client integration, avatar/presence runtime, advanced desktop control,
+  Game Companion execution, and streaming automation remain Post-Genesis
+  directions rather than Genesis Final release blockers.
 
 ## Runtime safety
 

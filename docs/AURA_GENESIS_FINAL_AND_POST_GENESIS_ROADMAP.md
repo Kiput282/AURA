@@ -1,7 +1,7 @@
 # AURA Genesis Final & Post-Genesis Roadmap
 
 Status: CANONICAL ROADMAP DIRECTION
-Current anchor: v0.90.0-genesis
+Current anchor: v0.180.0-genesis
 Owner: Kiput
 Project motto: Grow Together
 
@@ -10,6 +10,23 @@ Project motto: Grow Together
 This document locks the long-term roadmap direction for AURA so future sprints do not drift away from the original concept.
 
 AURA is not only a chatbot. AURA is intended to become a local AI Partner that can think, hear, see, remember safely, ask permission, act only when approved, and continue growing with Kiput.
+
+## Genesis Development Runtime Activation Sequence
+
+The canonical completion sequence from the current v0.180.0-genesis checkpoint is:
+
+- Sprint 181-190: Local Interaction Runtime Activation
+- Sprint 191-200: Voice Interaction Runtime
+- Sprint 201-210: Vision and Screen Awareness Runtime
+- Sprint 211-220: Permission, Audit, and Safe Local Actions
+- Sprint 221-230: Unified Partner Runtime Integration
+- Sprint 231-240: Genesis Final Integration and Release
+
+Dashboard and chat activate before voice so later voice and vision work can reuse stable service, session, model, permission, audit, and recovery paths.
+
+ORION client integration and avatar/presence runtime are no longer required before Genesis Final. They remain Post-Genesis directions unless a narrow non-blocking foundation is needed.
+
+Detailed plan: `docs/AURA_GENESIS_RUNTIME_ACTIVATION_ROADMAP.md`
 
 ## AURA Genesis Final / v1.0.0 Definition
 

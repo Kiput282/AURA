@@ -595,7 +595,7 @@ These milestones may be adjusted during the v0.50 review.
 
 ## Sprint 66.0 — Voice Conversation Planner
 
-Target: v0.66.0-genesis  
+Target: v0.66.0-genesis
 Status: VOICE CONVERSATION PLANNER ONLINE
 
 AURA can plan voice conversation intent, response style, turn flow, and safety boundaries as metadata only. This sprint does not enable real microphone access, TTS output, speaker output, wake word runtime, command execution, app opening, file writing, or external action execution.
@@ -603,7 +603,7 @@ AURA can plan voice conversation intent, response style, turn flow, and safety b
 
 ## Sprint 67.0 — Vision Context Planner
 
-Target: v0.67.0-genesis  
+Target: v0.67.0-genesis
 Status: VISION CONTEXT PLANNER ONLINE
 
 AURA can plan visual context, screen context, camera context, and vision safety boundaries as metadata only. This sprint does not enable screen capture, camera access, image opening/reading, video capture, OCR runtime, visual recognition runtime, desktop action execution, app opening, file operations, command execution, external action execution, or real tool execution.
@@ -611,7 +611,7 @@ AURA can plan visual context, screen context, camera context, and vision safety 
 
 ## Sprint 68.0 — Avatar Interaction Planner
 
-Target: v0.68.0-genesis  
+Target: v0.68.0-genesis
 Status: AVATAR INTERACTION PLANNER ONLINE
 
 AURA can plan avatar expressions, gestures, poses, streaming presence, and avatar safety boundaries as metadata only. This sprint does not enable avatar rendering, animation playback, mocap runtime, camera/face/body tracking, rig/bone/blendshape control, Blender execution, OBS control, desktop action execution, file operations, command execution, external action execution, or real tool execution.
@@ -619,7 +619,7 @@ AURA can plan avatar expressions, gestures, poses, streaming presence, and avata
 
 ## Sprint 69.0 — Desktop Workflow Planner
 
-Target: v0.69.0-genesis  
+Target: v0.69.0-genesis
 Status: DESKTOP WORKFLOW PLANNER ONLINE
 
 AURA can plan desktop workflows, app context, window flow, task sequences, and desktop safety boundaries as metadata only. This sprint does not enable desktop control, app opening, window inspection/control, mouse/keyboard control, screen capture, clipboard access, notification access, process inspection, file operations, command execution, external action execution, or real tool execution.
@@ -627,7 +627,7 @@ AURA can plan desktop workflows, app context, window flow, task sequences, and d
 
 ## Sprint 70.0 — Partner Runtime Planning Layer
 
-Target: v0.70.0-genesis  
+Target: v0.70.0-genesis
 Status: PARTNER RUNTIME PLANNING LAYER ONLINE
 
 AURA can plan partner runtime modes, session flow, multimodal handoffs, tool permission gates, growth-cycle checkpoints, and runtime safety boundaries as metadata only. This sprint does not enable autonomous runtime, background agent loops, scheduled self-execution, tool execution, file operations, command execution, desktop control, app opening, screen capture, camera/microphone access, speaker output, avatar rendering, network actions, git operations, external action execution, or real tool execution.
@@ -637,7 +637,7 @@ Checkpoint: After Sprint 70, review the v0.61-v0.70 block before planning Sprint
 
 ## Sprint 71.0 — Thought Loop Planner
 
-Target: v0.71.0-genesis  
+Target: v0.71.0-genesis
 Status: THOUGHT LOOP PLANNER ONLINE
 
 AURA can plan safe thought cycles, intent framing, visible reasoning summaries, uncertainty reviews, action readiness reviews, growth memory reviews, and thought safety boundaries as metadata only. This sprint starts the v0.71-v0.80 direction: prioritize AURA's core essence before avatar runtime. AURA should grow toward being able to think, hear, and see before focusing on live avatar or 3D environment work.
@@ -647,7 +647,7 @@ This sprint does not enable autonomous thought loops, background loops, self-tri
 
 ## Sprint 72.0 — Reasoning Context Manager
 
-Target: v0.72.0-genesis  
+Target: v0.72.0-genesis
 Status: REASONING CONTEXT MANAGER ONLINE
 
 AURA can prepare safe visible reasoning context, fact/assumption separation, unknowns review, evidence boundary review, decision frames, response strategy plans, and reasoning safety boundaries as metadata only. This continues the v0.71-v0.80 direction focused on AURA's core essence: think, hear, see, grow together, and stay intelligent without pretending to know.
@@ -657,7 +657,7 @@ This sprint does not expose hidden chain-of-thought, disclose private reasoning,
 
 ## Sprint 73.0 — Knowledge Uncertainty & Internet Search Gate
 
-Target: v0.73.0-genesis  
+Target: v0.73.0-genesis
 Status: KNOWLEDGE UNCERTAINTY GATE ONLINE
 
 AURA can prepare metadata-only plans for knowledge gaps, uncertainty review, internet search permission gates, source requirements, download requirement notices, answer confidence, and knowledge safety. This strengthens the principle: AURA is intelligent, but does not pretend to know.
@@ -667,7 +667,7 @@ This sprint does not perform real internet search, web requests, source fetching
 
 ## Sprint 74.0 — Voice Input Runtime Foundation
 
-Target: v0.74.0-genesis  
+Target: v0.74.0-genesis
 Status: VOICE INPUT RUNTIME FOUNDATION ONLINE
 
 AURA can prepare metadata-only plans for microphone permission, voice capture boundaries, speech-to-text adapter selection, voice intent gates, voice command confirmation, voice sessions, and voice input safety. This sprint begins the "hear" part of AURA's core essence while keeping all device and runtime access disabled.
@@ -677,7 +677,7 @@ This sprint does not access the microphone, record/capture audio, run STT, trans
 
 ## Sprint 75.0 — Voice Intent Understanding Layer
 
-Target: v0.75.0-genesis  
+Target: v0.75.0-genesis
 Status: VOICE INTENT UNDERSTANDING ONLINE
 
 AURA can prepare planner-only voice intent understanding plans for transcript normalization, intent classification, entity/slot extraction, clarification, action gates, response planning, and voice intent safety. This continues the "hear" part of AURA's core essence after the Voice Input Runtime Foundation.
@@ -687,7 +687,7 @@ This sprint does not access the microphone, record/capture audio, run speech-to-
 
 ## Sprint 76.0 — Vision Input Runtime Foundation
 
-Target: v0.76.0-genesis  
+Target: v0.76.0-genesis
 Status: VISION INPUT RUNTIME FOUNDATION ONLINE
 
 AURA can prepare foundation-only plans for future visual input permission, camera/screen/image boundaries, image input adapter planning, visual source selection, visual sessions, visual action gates, and vision safety. This begins the "see" part of AURA's core essence while keeping all visual runtime behavior disabled.
@@ -697,7 +697,7 @@ This sprint does not access camera, capture screen, capture screenshots, capture
 
 ## Sprint 77.0 — Visual Context Understanding Layer
 
-Target: v0.77.0-genesis  
+Target: v0.77.0-genesis
 Status: VISUAL CONTEXT UNDERSTANDING ONLINE
 
 AURA can prepare planner-only visual context understanding plans for scene context, object/relation planning, text-in-image context, uncertainty handling, clarification, visual response context, and visual context safety. This continues the "see" part of AURA's core essence after the Vision Input Runtime Foundation.
@@ -707,7 +707,7 @@ This sprint does not access camera, capture screen, capture screenshots, capture
 
 ## Sprint 78.0 — Coder Project Generation Planner
 
-Target: v0.78.0-genesis  
+Target: v0.78.0-genesis
 Status: CODER PROJECT GENERATION PLANNER ONLINE
 
 AURA can prepare planner-only code/project generation plans for project request framing, directory/file structure blueprints, code file blueprints, dependency planning, generation review gates, validation strategy, and project generation safety.
@@ -717,7 +717,7 @@ This sprint does not create projects, create directories, write files, read file
 
 ## Sprint 79.0 — Dependency & Download Permission Gate
 
-Target: v0.79.0-genesis  
+Target: v0.79.0-genesis
 Status: DEPENDENCY DOWNLOAD PERMISSION GATE ONLINE
 
 AURA can prepare planner-only dependency and download permission gates for dependency request review, package/source trust review, download permission, install command review, dependency risk review, offline alternatives, and dependency permission safety.
@@ -727,7 +727,7 @@ This sprint does not install dependencies, download packages/models/assets/insta
 
 ## Sprint 80.0 — Review & Stabilization 71-80
 
-Target: v0.80.0-genesis  
+Target: v0.80.0-genesis
 Status: REVIEW & STABILIZATION 71-80 ONLINE
 
 AURA can prepare a planner-only checkpoint review for Sprint 71-80. This checkpoint reviews completed features, active/foundation/planner-only status, permission-gated systems, safety boundaries, stabilization validation, technical debt, roadmap gaps, and Sprint 81-90 planning direction.
@@ -746,7 +746,7 @@ Detailed checkpoint review: docs/AURA_CHECKPOINT_71_80_REVIEW.md
 
 ## Sprint 81.0 — Shared Output Formatter Foundation
 
-Target: v0.81.0-genesis  
+Target: v0.81.0-genesis
 Status: SHARED OUTPUT FORMATTER ONLINE
 
 AURA can provide a renderer-only shared output formatter foundation for CLI, shell, future service monitor output, and future AURA Control Center output.
@@ -774,7 +774,7 @@ Detailed docs:
 
 ## Sprint 82.0 — Capability Registry Consolidation
 
-Target: v0.82.0-genesis  
+Target: v0.82.0-genesis
 Status: CAPABILITY REGISTRY ONLINE
 
 AURA can provide a central planner-only Capability Registry for current and planned capabilities.
@@ -820,7 +820,7 @@ Detailed docs:
 
 ## Sprint 83.0 — Unified Permission Workflow Manager
 
-Target: v0.83.0-genesis  
+Target: v0.83.0-genesis
 Status: UNIFIED PERMISSION WORKFLOW ONLINE
 
 AURA can provide a planner-only Unified Permission Workflow Manager for permission request planning, permission state transition planning, risk review planning, confirmation prompt planning, audit trail planning, future Control Center Permission Center view planning, and permission policy gap review.
@@ -885,7 +885,7 @@ Detailed docs:
 
 ## Sprint 84.0 — AURA Runtime Service Foundation
 
-Target: v0.84.0-genesis  
+Target: v0.84.0-genesis
 Status: RUNTIME SERVICE FOUNDATION ONLINE
 
 AURA can provide planner-only Runtime Service Foundation planning for ATLAS safe_idle boot behavior, service lifecycle planning, health check planning, systemd unit blueprint planning, service recovery planning, service monitor view planning, and auto-boot policy planning.
@@ -904,7 +904,7 @@ No service runtime, systemd creation, background process, auto-boot runtime, por
 
 ## Sprint 85.0 — AURA Launcher & Health Monitor Foundation
 
-Target: v0.85.0-genesis  
+Target: v0.85.0-genesis
 Status: LAUNCHER HEALTH MONITOR FOUNDATION ONLINE
 
 AURA can provide planner-only Launcher & Health Monitor Foundation planning for safe_idle launch behavior, start/stop/restart/status/logs planning, health monitor planning, Control Center service monitor planning, and launcher safety policy planning.
@@ -925,7 +925,7 @@ No launcher runtime, health monitor runtime, service runtime, process control, s
 
 ## Sprint 86.0 — AURA Control Center UI Blueprint
 
-Target: v0.86.0-genesis  
+Target: v0.86.0-genesis
 Status: CONTROL CENTER UI BLUEPRINT ONLINE
 
 AURA can provide planner-only Control Center / Genesis Console UI Blueprint planning for dashboard layout, Permission Center, Service Monitor, Capability Viewer, Launcher Control, Chat Console placeholder, Plugin Dashboard, Action Log, Roadmap Viewer direction, and Control Center safety policy.
@@ -946,7 +946,7 @@ No UI runtime, frontend runtime, backend runtime, web server runtime, route crea
 
 ## Sprint 87.0 — AURA Local Console Web Foundation
 
-Target: v0.87.0-genesis  
+Target: v0.87.0-genesis
 Status: LOCAL CONSOLE WEB FOUNDATION ONLINE
 
 AURA can provide planner-only Local Console Web Foundation planning for localhost-only policy, route blueprints, API contract blueprints, static asset blueprints, session state blueprints, security boundary planning, Control Center web bridge planning, and developer console access planning.
@@ -967,7 +967,7 @@ No web server runtime, frontend runtime, backend runtime, route creation runtime
 
 ## Sprint 88.0 — AURA Chat Bridge & Session State Foundation
 
-Target: v0.88.0-genesis  
+Target: v0.88.0-genesis
 Status: CHAT BRIDGE & SESSION STATE FOUNDATION ONLINE
 
 AURA can provide planner-only Chat Bridge & Session State Foundation planning for conversation session metadata, message flow blueprints, Control Center chat panel bridge planning, Local Console session contract planning, permission-aware chat action boundary planning, chat context persistence blueprint planning, websocket boundary planning, session recovery blueprint planning, and chat bridge safety policy.
@@ -988,7 +988,7 @@ No chat runtime, conversation runtime, session runtime, session persistence runt
 
 ## Sprint 89.0 — AURA Plugin / Permission Dashboard Foundation
 
-Target: v0.89.0-genesis  
+Target: v0.89.0-genesis
 Status: PLUGIN / PERMISSION DASHBOARD FOUNDATION ONLINE
 
 AURA can provide planner-only Plugin / Permission Dashboard Foundation planning for plugin/action registry visibility, permission request visibility, permission decision visibility, chat-originated action request visibility, capability-permission matrix planning, Control Center dashboard bridge planning, Local Console dashboard contract planning, audit trail dashboard blueprint planning, and dashboard safety policy.
@@ -1009,7 +1009,7 @@ No plugin runtime, plugin action execution, permission grant/deny/decision runti
 
 ## Sprint 90.0 — Review & Stabilization 81–90 Checkpoint
 
-Target: v0.90.0-genesis  
+Target: v0.90.0-genesis
 Status: CHECKPOINT REVIEW STABILIZED
 
 Sprint 90 reviews and stabilizes the Sprint 81–90 block.
@@ -1523,20 +1523,27 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 
 ## Product Direction — Genesis to Post-Genesis
 
-AURA's current path continues from v0.170.0-genesis toward v1.0.0-genesis.
+AURA's current path continues from v0.180.0-genesis toward v1.0.0-genesis.
 
 Major roadmap blocks:
 
-- Sprint 141-150: Local Service Runtime Foundation
-- Sprint 151-160: Control Center Runtime
-- Sprint 161-170: Local Chat Runtime
-- Sprint 171-180: Memory Runtime
-- Sprint 181-190: Voice Foundation Runtime
-- Sprint 191-200: Vision / Screen Awareness Runtime
-- Sprint 201-210: ORION Client Bridge
-- Sprint 211-220: Avatar / Presence Foundation
-- Sprint 221-230: Final Genesis Integration
-- Sprint 231-240: Genesis Release Candidate to v1.0.0-genesis
+- Sprint 141-150: Local Service Runtime Foundation — completed
+- Sprint 151-160: Control Center Runtime Foundation — completed
+- Sprint 161-170: Local Chat Runtime Foundation — completed
+- Sprint 171-180: Memory Runtime Foundation — completed
+- Sprint 181-190: Local Interaction Runtime Activation
+- Sprint 191-200: Voice Interaction Runtime
+- Sprint 201-210: Vision and Screen Awareness Runtime
+- Sprint 211-220: Permission, Audit, and Safe Local Actions
+- Sprint 221-230: Unified Partner Runtime Integration
+- Sprint 231-240: Genesis Final Integration and Release
+
+Detailed canonical activation plan:
+
+- `docs/AURA_GENESIS_RUNTIME_ACTIVATION_ROADMAP.md`
+- `docs/AURA_ROADMAP_181_190_PLAN.md`
+
+ORION client integration and avatar/presence runtime remain Post-Genesis directions and are not Genesis Final release blockers.
 
 Post-Genesis direction:
 
@@ -1607,7 +1614,7 @@ Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
 
 ## Sprint 146.0 — Service Audit Link Foundation
 
-Status: completed  
+Status: completed
 Version: v0.170.0-genesis
 
 Sprint 146 adds a planner-only, metadata-only, and foundation-only Service Audit Link Foundation for future service audit event references, audit link contracts, traceability chains, permission/audit pairing, Control Center audit visibility, redaction boundaries, failure safe-idle behavior, retention boundaries, error boundary, and no-audit-link-runtime-activation review.
@@ -1717,4 +1724,4 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 
 ## Sprint 180 — Memory Runtime Stabilization
 
-`v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block. Nine memory components pass stabilization with zero dependency gaps and runtime violations while privacy, review, permission, correction/deletion, release, mutation, model, network, command, arbitrary-file, voice, and runtime execution gates remain closed. The next block is Sprint 181-190 Voice Foundation Runtime.
+`v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block. Nine memory components pass stabilization with zero dependency gaps and runtime violations while privacy, review, permission, correction/deletion, release, mutation, model, network, command, arbitrary-file, voice, and runtime execution gates remain closed. The next block is Sprint 181-190 Local Interaction Runtime Activation. Voice moves to Sprint 191-200 after the dashboard and chat runtime are operational and stabilized.

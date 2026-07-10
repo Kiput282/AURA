@@ -109,5 +109,5 @@ Sprint 180 closes the Sprint 171-180 Memory Runtime block as a deterministic, re
 
 Block 171-180 status: completed and stable.
 
-Next block: Sprint 181-190 — Voice Foundation Runtime.
-Next: Sprint 181 — Voice Runtime Foundation.
+Next block: Sprint 181-190 — Local Interaction Runtime Activation.
+Next: Sprint 181 — Local Interaction Runtime Activation Cutline.

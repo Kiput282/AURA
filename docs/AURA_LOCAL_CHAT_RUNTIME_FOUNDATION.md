@@ -14,9 +14,12 @@ runtime. The agreed product order is:
 
 1. Sprint 161-170: Local Chat Runtime
 2. Sprint 171-180: Memory Runtime
-3. Sprint 181-190: Voice Foundation Runtime
-4. Sprint 191-200: Vision / Screen Awareness Runtime
-5. Sprint 201-210: Local Action & Desktop Command Runtime
+3. Sprint 181-190: Local Interaction Runtime Activation
+4. Sprint 191-200: Voice Interaction Runtime
+5. Sprint 201-210: Vision and Screen Awareness Runtime
+6. Sprint 211-220: Permission, Audit, and Safe Local Actions
+7. Sprint 221-230: Unified Partner Runtime Integration
+8. Sprint 231-240: Genesis Final Integration and Release
 
 ## Runtime boundary
 

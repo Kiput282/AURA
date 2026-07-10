@@ -7,7 +7,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 AURA is currently in the Genesis Runtime Readiness phase.
 
 Current version: v0.180.0-genesis
-Current status: foundation-only, planner-only, review-only  
+Current status: foundation-only, planner-only, review-only
 Current runtime state: disabled by design
 
 ---
@@ -50,7 +50,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 181.0 — Voice Runtime Foundation
+- Next planned sprint: Sprint 181 — Local Web Runtime Activation Cutline
 
 Current capability registry summary:
 
@@ -87,7 +87,7 @@ Disabled by design:
 - no memory write runtime
 - no git runtime
 
-AURA can plan, review, summarize, document, and prepare safe boundaries.  
+AURA can plan, review, summarize, document, and prepare safe boundaries.
 AURA cannot yet act freely.
 
 ---
@@ -174,7 +174,7 @@ Future AURA modes include:
 - Relaxed Translator Mode
 - Creative Studio Mode
 
-These modes are product direction targets.  
+These modes are product direction targets.
 They are not all active runtime features yet.
 
 ---
@@ -376,7 +376,7 @@ Archived full README history:
 
 AURA should grow slowly but correctly.
 
-The priority is not to make AURA powerful as fast as possible.  
+The priority is not to make AURA powerful as fast as possible.
 The priority is to make AURA feel alive, trustworthy, safe, local-first, useful, and clearly permission-bound.
 
 AURA should grow together with Kiput.
@@ -1224,29 +1224,35 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.172.0-genesis
-- Current completed sprint: Sprint 173.0 — Memory Extraction Dry Run
-- Next planned sprint: Sprint 173.0 — Memory Extraction Dry Run
-- Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
+- Version: v0.180.0-genesis
+- Current completed sprint: Sprint 180.0 — Memory Runtime Stabilization
+- Next planned sprint: Sprint 181.0 — Local Web Runtime Activation Cutline
+- Final Genesis target: Sprint 240 — AURA Genesis Final / v1.0.0-genesis
 
 Roadmap summary:
 
-- Sprint 141-150: Local Service Runtime Foundation
-- Sprint 151-160: Control Center Runtime
-- Sprint 161-170: Local Chat Runtime
-- Sprint 171-180: Memory Runtime
-- Sprint 181-190: Voice Foundation Runtime
-- Sprint 191-200: Vision / Screen Awareness Runtime
-- Sprint 201-210: ORION Client Bridge
-- Sprint 211-220: Avatar / Presence Foundation
-- Sprint 221-230: Final Genesis Integration
-- Sprint 231-240: Genesis Release Candidate to v1.0.0-genesis
+- Sprint 141-150: Local Service Runtime Foundation — completed
+- Sprint 151-160: Control Center Runtime Foundation — completed
+- Sprint 161-170: Local Chat Runtime Foundation — completed
+- Sprint 171-180: Memory Runtime Foundation — completed
+- Sprint 181-190: Local Interaction Runtime Activation
+- Sprint 191-200: Voice Interaction Runtime
+- Sprint 201-210: Vision and Screen Awareness Runtime
+- Sprint 211-220: Permission, Audit, and Safe Local Actions
+- Sprint 221-230: Unified Partner Runtime Integration
+- Sprint 231-240: Genesis Final Integration and Release
+
+Dashboard and chat activate before voice so voice and vision can reuse a stable localhost service, session, model, permission, audit, and recovery path.
+
+ORION client integration, avatar/presence runtime, advanced desktop control, Game Companion execution, and streaming automation are Post-Genesis directions rather than Genesis Final release blockers.
 
 Canonical planning docs:
 
+- docs/AURA_GENESIS_RUNTIME_ACTIVATION_ROADMAP.md
+- docs/AURA_ROADMAP_181_190_PLAN.md
+- docs/AURA_GENESIS_FINAL_AND_POST_GENESIS_ROADMAP.md
 - docs/AURA_GENESIS_TO_POST_GENESIS_PRODUCT_PLAN.md
 - docs/AURA_GAME_COMPANION_SAFETY_POLICY.md
-
 ## Future Game Companion Plan
 
 AURA Game Companion is a future post-core pillar.
@@ -1314,7 +1320,7 @@ At v0.170.0-genesis, AURA cannot yet:
 
 ## Sprint 141.0 — Local Service Runtime Foundation
 
-Status: completed  
+Status: completed
 Version: v0.141.0-genesis
 
 Sprint 141 opens the Sprint 141-150 Local Service Runtime Foundation block.
@@ -1351,7 +1357,7 @@ Next planned sprint:
 
 ## Sprint 142.0 — Local Service Safe Idle Boot Boundary
 
-Status: completed  
+Status: completed
 Version: v0.142.0-genesis
 
 Sprint 142 defines the safe-idle boot boundary for AURA's future ATLAS local service.
@@ -1392,7 +1398,7 @@ Next planned sprint:
 
 ## Sprint 143.0 — Local Service Health Endpoint Foundation
 
-Status: completed  
+Status: completed
 Version: v0.143.0-genesis
 
 Sprint 143 defines the future local-service health endpoint foundation for AURA's ATLAS service path.
@@ -1433,7 +1439,7 @@ Next planned sprint:
 
 ## Sprint 144.0 — Service Configuration and Port Registry Foundation
 
-Status: completed  
+Status: completed
 Version: v0.144.0-genesis
 
 Sprint 144 defines the future service configuration and port registry foundation for AURA's ATLAS service path.
@@ -1479,7 +1485,7 @@ Next planned sprint:
 
 ## Sprint 145.0 — Service Permission Gate Runtime Boundary
 
-Status: completed  
+Status: completed
 Version: v0.145.0-genesis
 
 Sprint 145 defines the Service Permission Gate Runtime Boundary for AURA's future ATLAS service path.
@@ -1491,7 +1497,7 @@ Sprint 145 keeps AURA safe by default: service runtime remains disabled, permiss
 
 ## Sprint 146.0 — Service Audit Link Foundation
 
-Status: completed  
+Status: completed
 Version: v0.146.0-genesis
 
 Sprint 146 defines the Service Audit Link Foundation for AURA's future ATLAS service path.
@@ -1859,7 +1865,7 @@ python3 main.py memory-runtime-integration-review-alpha "remember that AURA is l
 
 ## Sprint 180 — Memory Runtime Stabilization
 
-`v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block as a read-only stabilization checkpoint. It verifies nine memory components, zero dependency gaps, zero runtime violations, stable privacy/review/permission ordering, the closed correction/deletion boundary, and readiness for Sprint 181-190 Voice Foundation Runtime. Memory writes, store mutation, grants, review decisions, corrections, deletes, model/network activity, audit writes, commands, arbitrary file access, voice capture, and runtime execution remain disabled.
+`v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block as a read-only stabilization checkpoint. It verifies nine memory components, zero dependency gaps, zero runtime violations, stable privacy/review/permission ordering, the closed correction/deletion boundary, and readiness for Sprint 181-190 Local Interaction Runtime Activation. Memory writes, store mutation, grants, review decisions, corrections, deletes, model/network activity, audit writes, commands, arbitrary file access, voice capture, and runtime execution remain disabled.
 
 New safe alpha command:
 

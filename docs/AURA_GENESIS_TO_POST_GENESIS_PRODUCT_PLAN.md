@@ -1,10 +1,10 @@
 # AURA Genesis to Post-Genesis Product Plan
 
-Status: PLANNED
-Current Canonical Version: v0.170.0-genesis
-Current Canonical Sprint: Sprint 144.0 — Service Configuration and Port Registry Foundation
-Next Planned Sprint: Sprint 147.0 — Service Control Command Review Foundation
-Final Genesis Target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
+Status: CANONICAL GENESIS PATH
+Current Canonical Version: v0.180.0-genesis
+Current Canonical Sprint: Sprint 180 — Memory Runtime Stabilization
+Next Planned Sprint: Sprint 181 — Local Web Runtime Activation Cutline
+Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
 
@@ -132,157 +132,182 @@ Boundary:
 - audit link required for memory mutation
 - rollback path required
 
-### Sprint 181-190 — Voice Foundation Runtime
+### Sprint 181-190 — Local Interaction Runtime Activation
 
-Purpose: introduce local voice interaction foundation.
+Purpose: make AURA usable through a safe local service, localhost Control Center,
+and interactive browser chat before voice activation.
 
 Planned direction:
 
-- voice input runtime
-- push-to-talk or explicit listen boundary
-- speech-to-text adapter
-- voice intent understanding
-- voice output / TTS
-- voice permission and safety boundary
-- voice audit link
-- Control Center integration
+- localhost-only web runtime activation cutline
+- manual foreground service lifecycle
+- real health and status API
+- Control Center backend data runtime
+- usable Control Center web shell
+- browser chat session runtime
+- permission-gated local model bridge
+- integrated interactive dashboard chat
+- visible permission, audit, error, and recovery state
+- block review and stabilization
+
+Boundary:
+
+- bind only to `127.0.0.1`
+- safe-idle is the default state
+- no public or LAN exposure
+- no arbitrary command, tool, desktop, or file execution
+- no automatic permission grants
+- chat and model failures must remain visible and recoverable
+
+### Sprint 191-200 — Voice Interaction Runtime
+
+Purpose: add explicit local voice interaction after dashboard and chat are stable.
+
+Planned direction:
+
+- voice runtime activation foundation
+- push-to-talk and explicit listen state
+- local microphone capture boundary
+- speech-to-text adapter runtime
+- voice intent and chat integration
+- text-to-speech adapter runtime
+- voice permission and audit runtime
+- Control Center voice controls
+- integration review
 - stabilization
 
 Boundary:
 
-- no always-listening mode by default
-- no voice command execution without permission gate
-- audit visible for voice-driven actions
+- no always-listening mode
+- microphone use must be explicit and visible
+- voice input does not bypass chat, intent, permission, or action gates
+- speech output must be interruptible
+- voice-triggered actions require the same approval as typed actions
 
-### Sprint 191-200 — Vision / Screen Awareness Runtime
+### Sprint 201-210 — Vision and Screen Awareness Runtime
 
-Purpose: introduce permission-gated visual and screen context.
+Purpose: add permission-gated visual and screen context.
 
 Planned direction:
 
-- screen permission boundary
-- screenshot context pipeline
-- visual context understanding
-- screen region/app context
-- camera input boundary
-- visual safety and redaction
-- visual memory link
-- visual audit/permission link
-- Control Center integration
+- vision runtime activation foundation
+- explicit screenshot capture
+- screen context adapter
+- local vision model adapter
+- visual permission, privacy, and redaction
+- workspace visual understanding
+- vision-to-chat context handoff
+- Control Center vision panel
+- integration review
 - stabilization
 
 Boundary:
 
-- no silent screen capture
-- no camera access without approval
-- no sensitive visual storage without redaction and memory gate
-- screen awareness must be visible in Control Center
+- no silent screen or camera capture
+- capture target and state must be visible
+- sensitive visual content requires redaction and memory gates
+- visual understanding cannot directly execute actions
+- camera runtime is optional and must not block screenshot-based Genesis scope
 
-### Sprint 201-210 — ORION Client Bridge
+### Sprint 211-220 — Permission, Audit, and Safe Local Actions
 
-Purpose: connect ATLAS core with ORION Windows-side client safely.
+Purpose: activate narrow, reviewable local actions under explicit permission.
 
 Planned direction:
 
-- ORION bridge foundation
-- pairing and trust boundary
-- status and heartbeat
-- screen context bridge
-- command receive boundary
-- creative tool context bridge
-- audit and permission link
-- reconnect safe-idle
-- Control Center integration
+- active permission runtime
+- grant, denial, revocation, and expiry lifecycle
+- runtime audit writer
+- action proposal and preview runtime
+- safe local open actions
+- allowlisted application launch
+- controlled folder and simple file creation
+- dashboard approval workflow
+- rollback, emergency stop, and recovery
 - stabilization
 
 Boundary:
 
-- ORION must be paired and trusted
-- ORION must expose status and disconnect controls
-- no silent desktop control
-- no silent game input
-- no silent app/file action
+- every action requires clear scope and visible approval
+- no arbitrary shell execution
+- no file deletion or mass mutation
+- no unrestricted desktop control
+- no dependency installation without separate informed permission
+- all executed actions require audit and recovery evidence
 
-### Sprint 211-220 — Avatar / Presence Foundation
+### Sprint 221-230 — Unified Partner Runtime Integration
 
-Purpose: introduce AURA's visible presence.
+Purpose: connect chat, voice, vision, memory, permission, audit, workspace, and
+safe actions as one coherent local partner runtime.
 
 Planned direction:
 
-- avatar/presence foundation
-- status and emotion mapping
-- voice lip sync / viseme boundary
-- idle presence animation
-- motion capture bridge plan
-- OBS / streaming scene integration
-- livestream persona mode
-- avatar permission/audit link
-- stabilization
+- unified session runtime
+- workspace and project context runtime
+- chat-to-memory handoff
+- chat, voice, and vision context fusion
+- personality consistency runtime
+- multi-interface state synchronization
+- service persistence and launcher
+- safe auto-start evaluation
+- Genesis acceptance rehearsal
+- unified runtime stabilization
 
 Boundary:
 
-- avatar is expression first, not uncontrolled automation
-- livestream mode must be safe and controllable
-- OBS integration must be explicit and local
-- no unauthorized scene switching or stream action
+- interface integration must not bypass permission gates
+- memory relevance must not become silent memory mutation
+- safe-idle and emergency stop remain authoritative
+- service persistence is allowed only after recovery behavior is proven
+- ORION and avatar presence are not required for this block
 
-### Sprint 221-230 — Final Genesis Integration
+### Sprint 231-240 — Genesis Final Integration and Release
 
-Purpose: integrate all Genesis systems.
+Purpose: finalize AURA v1.0.0-genesis as a safe, usable local AI partner.
 
 Planned direction:
 
-- service + Control Center + chat integration
-- memory + permission + audit integration
-- voice integration pass
-- vision integration pass
-- ORION + avatar integration pass
-- end-to-end safe workflow test
-- Genesis test matrix
-- release checklist
-- review and stabilization
+- Genesis Final runtime cutline
+- end-to-end security review
+- privacy and data integrity review
+- failure and recovery drills
+- dashboard and interaction UX polish
+- launcher and deployment stabilization
+- installation, backup, and migration flow
+- final Genesis acceptance test
+- v1.0.0 release candidate
+- Genesis Final release
 
 Boundary:
 
-- integration must not bypass permission gates
-- all runtime actions require audit trail
-- safe-idle fallback remains active
-
-### Sprint 231-240 — Genesis Release Candidate
-
-Purpose: finalize AURA v1.0.0-genesis.
-
-Planned direction:
-
-- RC freeze
-- bugfix pass
-- final security/safety review
-- final usability review
-- backup/recovery finalization
-- Genesis demo scenario
-- README/docs/roadmap final pass
-- release candidate validation
-- v1.0.0 acceptance pass
-- Genesis Final Release
-
+- acceptance evidence must cover chat, voice, vision, memory, permission, audit,
+  safe actions, recovery, and user-visible status
+- release cannot bypass unresolved critical safety blockers
+- safe-idle remains the default and recovery destination
+- Post-Genesis capabilities cannot be pulled into the release as hidden blockers
 ## Genesis Final Target
 
 At v1.0.0-genesis, AURA should be born as a safe local-first AI partner.
 
 Genesis Final target:
 
-- local ATLAS service foundation
-- local Control Center
-- local chat runtime
-- gated memory read/write
-- permission system
-- audit system
-- safe-idle fallback
-- voice foundation
-- vision/screen awareness with permission
-- ORION bridge foundation
-- avatar/presence foundation
-- clear documentation and release checklist
+- local ATLAS service runtime
+- localhost Control Center with real status
+- interactive browser chat with local model integration
+- safe session and history persistence
+- gated and privacy-aware memory use
+- explicit voice interaction
+- permission-gated screenshot and screen awareness
+- active permission lifecycle
+- visible audit and recovery state
+- previewed, narrowly allowlisted safe local actions
+- unified workspace and project context
+- reliable launcher, backup, migration, and safe-idle behavior
+- clear documentation and release evidence
+
+ORION client integration, avatar/presence runtime, advanced desktop control,
+Game Companion execution, and streaming automation remain Post-Genesis
+directions and are not Genesis Final release blockers.
 
 Genesis Final is not the endpoint. It is AURA's birth point.
 
@@ -600,4 +625,4 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 
 ## Sprint 180 — Memory Runtime Stabilization
 
-`v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block. Nine memory components pass stabilization with zero dependency gaps and runtime violations while privacy, review, permission, correction/deletion, release, mutation, model, network, command, arbitrary-file, voice, and runtime execution gates remain closed. The next block is Sprint 181-190 Voice Foundation Runtime.
+`v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block. Nine memory components pass stabilization with zero dependency gaps and runtime violations while privacy, review, permission, correction/deletion, release, mutation, model, network, command, arbitrary-file, voice, and runtime execution gates remain closed. The next block is Sprint 181-190 Local Interaction Runtime Activation. Voice moves to Sprint 191-200 after the dashboard and chat runtime are operational and stabilized.
