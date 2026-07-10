@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.176.0-genesis  
+Current version: v0.177.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -49,12 +49,12 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 107
-- online capabilities: 105
+- total capabilities: 108
+- online capabilities: 106
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 3
-- review-only capabilities: 6
+- review-only capabilities: 7
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 0
@@ -1817,3 +1817,14 @@ All scoring and pin recommendations are review metadata only. `Pin State` remain
 ## Sprint 176 — Memory Correction and Deletion Boundary
 
 `v0.176.0-genesis` adds an exact-target, preview-only boundary for future memory correction and deletion. Corrections use versioned replacement rather than in-place edits; deletions use tombstone-first semantics and require a separate future purge permission. Memory-store reads, record lookup, correction/delete/tombstone/purge application, permission grants, memory writes/store mutation, model/network activity, commands, arbitrary file access, and runtime execution remain disabled.
+
+
+## Sprint 177 — Chat-to-Memory Handoff Contract
+
+`v0.177.0-genesis` adds a deterministic, preview-only contract that accepts one directly supplied user chat turn, requires an explicit memory trigger, binds the exact source message to one candidate fingerprint, performs a privacy precheck, and prepares a read-only handoff to the Memory Review Queue. Assistant/system/tool sources, chat-history scanning, chat-store reads, queue persistence, permission grants, memory writes/store mutation, model/network activity, commands, arbitrary file access, and runtime execution remain disabled.
+
+New safe alpha command:
+
+```bash
+python3 main.py chat-to-memory-handoff-alpha "remember that AURA is local-first and permission-gated"
+```

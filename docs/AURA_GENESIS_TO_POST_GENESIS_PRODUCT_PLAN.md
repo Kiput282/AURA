@@ -581,3 +581,8 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 ## Sprint 176 — Memory Correction and Deletion Boundary
 
 `v0.176.0-genesis` adds exact-target correction and tombstone-first deletion previews, with separate future purge permission. Store reads, lookups, mutations, grants, model/network activity, commands, arbitrary file access, and runtime execution remain disabled.
+
+
+## Sprint 177 — Chat-to-Memory Handoff Contract
+
+`v0.177.0-genesis` adds an explicit-user-turn, preview-only chat-to-memory handoff with exact source binding, privacy precheck, review-queue routing, and default-deny permission state. Chat-store/history reads, automatic handoff, queue persistence, grants, memory writes/store mutation, model/network activity, commands, arbitrary file access, and runtime execution remain disabled.

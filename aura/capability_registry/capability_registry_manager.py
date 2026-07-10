@@ -751,6 +751,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
             {
+                "id": "aura_chat_to_memory_handoff_contract",
+                "name": "AURA Chat-to-Memory Handoff Contract",
+                "state": "online",
+                "runtime_level": "review_only",
+                "risk_level": "medium",
+                "permission_required": "user_confirmation",
+                "category": "memory_runtime",
+                "introduced_in": "0.177.0-genesis",
+                "control_center_visible": True,
+                "description": "Deterministic, direct-user-turn, preview-only chat-to-memory handoff with explicit memory intent, exact source binding, privacy precheck, review-queue routing, and default-deny permission state while keeping chat-store/history reads, queue persistence, grants, memory writes/store mutation, model/network/credential activity, audit writes, commands, arbitrary file access, full runtimes, and runtime execution disabled.",
+            },
+            {
                 "id": "aura_memory_correction_deletion_boundary",
                 "name": "AURA Memory Correction and Deletion Boundary",
                 "state": "online",

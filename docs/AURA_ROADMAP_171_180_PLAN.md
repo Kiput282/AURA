@@ -72,3 +72,12 @@ Status: completed in `v0.176.0-genesis` after Sprint 175.
 Sprint 176 defines exact-target correction and deletion previews for one user-supplied memory record reference. Correction is modeled as a future versioned replacement rather than in-place editing; deletion is modeled as a future tombstone-first operation, while purge requires a separate future permission scope. Memory-store reads and record lookups, correction/delete/tombstone/purge application, permission grants, memory writes/store mutation, model/network/credential activity, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
 
 Next: Sprint 177 — Chat-to-Memory Handoff Contract.
+
+
+## Sprint 177 — Chat-to-Memory Handoff Contract
+
+Status: completed in `v0.177.0-genesis` after Sprint 176.
+
+Sprint 177 adds a deterministic, direct-user-turn, preview-only handoff contract from chat into the memory review pipeline. It requires an explicit memory trigger, exact source binding, a local privacy precheck, and default-deny permission state. Chat history/store reads, automatic scan/subscription, queue persistence, permission grants, candidate persistence, memory writes/store mutation, model/network/credential activity, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
+
+Next: Sprint 178 — Memory Privacy and Redaction Layer.

@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.chat_to_memory_handoff_contract.aura_chat_to_memory_handoff_contract_manager import AuraChatToMemoryHandoffContractManager
 from aura.memory_correction_deletion_boundary.aura_memory_correction_deletion_boundary_manager import AuraMemoryCorrectionDeletionBoundaryManager
 from aura.memory_review_queue.aura_memory_review_queue_manager import AuraMemoryReviewQueueManager
 from aura.memory_importance_pinning_policy.aura_memory_importance_pinning_policy_manager import AuraMemoryImportancePinningPolicyManager
@@ -4335,6 +4336,51 @@ class AuraCLI:
 
 
 
+
+    # Sprint 177.0 chat-to-memory handoff contract helpers.
+    def print_chat_to_memory_handoff_contract_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Chat-to-Memory Handoff Contract"))
+
+    def handle_chat_to_memory_handoff_contract_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+        command = raw_args[0]
+        manager = AuraChatToMemoryHandoffContractManager(project_root=self.project_root)
+
+        if command in {"chat-to-memory-handoff-alpha", "chat-memory-handoff-alpha"}:
+            if len(raw_args) < 2:
+                print('Usage: python3 main.py chat-to-memory-handoff-alpha "remember that AURA is local-first"')
+                return True
+            print(manager.render_handoff_preview(" ".join(raw_args[1:]), source_role="user"))
+            return True
+        if command == "chat-to-memory-handoff-status":
+            self.print_chat_to_memory_handoff_contract_packet("AURA Chat-to-Memory Handoff Contract Status", manager.status())
+            return True
+        if command == "chat-to-memory-handoff-context":
+            self.print_chat_to_memory_handoff_contract_packet("AURA Chat-to-Memory Handoff Contract Context", manager.context())
+            return True
+
+        target = " ".join(raw_args[1:]) if len(raw_args) > 1 else "AURA chat-to-memory handoff contract"
+        command_map = {
+            "chat-source-binding-plan": ("AURA Chat Source Binding Plan", manager.chat_source_binding_plan),
+            "chat-memory-intent-gate-plan": ("AURA Chat Memory Intent Gate Plan", manager.chat_memory_intent_gate_plan),
+            "chat-memory-candidate-envelope-plan": ("AURA Chat Memory Candidate Envelope Plan", manager.chat_memory_candidate_envelope_plan),
+            "chat-memory-review-queue-handoff-plan": ("AURA Chat Memory Review Queue Handoff Plan", manager.chat_memory_review_queue_handoff_plan),
+            "chat-memory-permission-handoff-plan": ("AURA Chat Memory Permission Handoff Plan", manager.chat_memory_permission_handoff_plan),
+            "chat-memory-privacy-precheck-plan": ("AURA Chat Memory Privacy Precheck Plan", manager.chat_memory_privacy_precheck_plan),
+            "chat-memory-control-center-handoff-plan": ("AURA Chat Memory Control Center Handoff Plan", manager.chat_memory_control_center_handoff_plan),
+            "chat-memory-failure-boundary-plan": ("AURA Chat Memory Failure Boundary Plan", manager.chat_memory_failure_boundary_plan),
+            "chat-memory-lifecycle-plan": ("AURA Chat Memory Lifecycle Plan", manager.chat_memory_lifecycle_plan),
+            "no-chat-to-memory-unsafe-runtime-plan": ("AURA No Chat-to-Memory Unsafe Runtime Plan", manager.no_chat_to_memory_unsafe_runtime_plan),
+            "chat-to-memory-next-sprint-readiness-plan": ("AURA Chat-to-Memory Next Sprint Readiness Plan", manager.chat_to_memory_next_sprint_readiness_plan),
+        }
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_chat_to_memory_handoff_contract_packet(title, handler(target))
+            return True
+        return False
+
     # Sprint 176.0 memory correction and deletion boundary helpers.
     def print_memory_correction_deletion_boundary_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8437,6 +8483,9 @@ class AuraCLI:
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
             return True
+
+        if self.handle_chat_to_memory_handoff_contract_cli_command(raw_args):
+            return
 
         if self.handle_memory_correction_deletion_boundary_cli_command(raw_args):
             return True

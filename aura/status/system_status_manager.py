@@ -143,6 +143,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.chat_to_memory_handoff_contract.aura_chat_to_memory_handoff_contract_manager import AuraChatToMemoryHandoffContractManager
 from aura.memory_correction_deletion_boundary.aura_memory_correction_deletion_boundary_manager import AuraMemoryCorrectionDeletionBoundaryManager
 from aura.memory_review_queue.aura_memory_review_queue_manager import AuraMemoryReviewQueueManager
 from aura.memory_importance_pinning_policy.aura_memory_importance_pinning_policy_manager import AuraMemoryImportancePinningPolicyManager
@@ -350,6 +351,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        chat_to_memory_handoff_contract_status = AuraChatToMemoryHandoffContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_correction_deletion_boundary_status = AuraMemoryCorrectionDeletionBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_review_queue_status = AuraMemoryReviewQueueManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_importance_pinning_policy_status = AuraMemoryImportancePinningPolicyManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
@@ -502,6 +504,18 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "chat_to_memory_handoff_contract_ready": chat_to_memory_handoff_contract_status["chat_to_memory_handoff_contract_ready"],
+            "chat_to_memory_handoff_contract_data_ready": chat_to_memory_handoff_contract_status["chat_to_memory_handoff_contract_data_ready"],
+            "chat_to_memory_handoff_contract_plan_type_count": chat_to_memory_handoff_contract_status["plan_type_count"],
+            "chat_to_memory_handoff_contract_total_blueprint_count": chat_to_memory_handoff_contract_status["total_chat_to_memory_handoff_contract_blueprint_count"],
+            "chat_to_memory_handoff_contract_thin_runtime_alpha": chat_to_memory_handoff_contract_status["thin_runtime_alpha"],
+            "chat_to_memory_handoff_contract_enabled": chat_to_memory_handoff_contract_status["chat_to_memory_handoff_contract_enabled"],
+            "chat_to_memory_explicit_request_required": chat_to_memory_handoff_contract_status["explicit_user_memory_request_required"],
+            "chat_to_memory_source_binding_enabled": chat_to_memory_handoff_contract_status["chat_source_binding_enabled"],
+            "chat_to_memory_runtime_chat_store_reads": chat_to_memory_handoff_contract_status["runtime_chat_store_reads"],
+            "chat_to_memory_runtime_handoffs_persisted": chat_to_memory_handoff_contract_status["runtime_chat_memory_handoffs_persisted"],
+            "chat_to_memory_runtime_memory_writes": chat_to_memory_handoff_contract_status["runtime_memory_writes"],
+            "chat_to_memory_runtime_execution_features": chat_to_memory_handoff_contract_status["runtime_execution_features"],
             "memory_correction_deletion_boundary_ready": memory_correction_deletion_boundary_status["memory_correction_deletion_boundary_ready"],
             "memory_correction_deletion_boundary_data_ready": memory_correction_deletion_boundary_status["memory_correction_deletion_boundary_data_ready"],
             "memory_correction_deletion_boundary_plan_type_count": memory_correction_deletion_boundary_status["plan_type_count"],
