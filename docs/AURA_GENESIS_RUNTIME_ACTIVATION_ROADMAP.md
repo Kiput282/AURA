@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.197.0-genesis
+Current anchor: v0.198.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.197.0-genesis
-- Completed: Sprint 197 — Voice Permission and Audit Runtime
+- Current version: v0.198.0-genesis
+- Completed: Sprint 198 — Control Center Voice Controls
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: activation, explicit listen-state, local microphone capture boundary, speech-to-text adapter contract, voice intent/chat integration contract, text-to-speech adapter contract, and voice permission/audit contract foundations ready; permission decision/grant/revoke/mutation/persistence, audit writes, audit persistence, audit dashboard emit, microphone capture, STT/TTS runtime, speaker playback, handoff execution, voice actions, tool/command execution, file/desktop/network/git actions, cloud fallback, and autonomy disabled
+- Voice runtime: activation, explicit listen-state, local microphone capture boundary, speech-to-text adapter contract, voice intent/chat integration contract, text-to-speech adapter contract, voice permission/audit contract, and read-only Control Center voice controls foundations ready; UI mutation, microphone capture, STT/TTS runtime, speaker playback, permission grant/revoke/mutation, audit writes, handoff execution, voice actions, tool/command execution, file/desktop/network/git actions, cloud fallback, and autonomy disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 198 — Control Center Voice Controls
+- Next: Sprint 199 — Voice Runtime Integration Review
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -392,3 +392,31 @@ The voice runtime check now covers 247 activation/listen-state/microphone-bounda
 assertions and reports zero failed assertions.
 
 Next: Sprint 198 — Control Center Voice Controls.
+
+## v0.198.0-genesis — Control Center Voice Controls
+
+Sprint 198 adds the Control Center voice controls contract for the Voice
+Interaction Runtime block.
+
+The checkpoint defines a safe read-only and disabled-by-default Control Center
+voice controls boundary. It prepares visible voice control state, listen-state
+display, microphone and speaker permission display, STT/TTS adapter status
+display, permission/audit display, audit event display, runtime safety badges,
+and a future route/panel contract for `/api/control-center/voice-controls`
+without enabling any UI mutation.
+
+Sprint 198 preserves disabled UI start/stop listening, push-to-talk execution,
+microphone capture trigger, STT trigger, TTS trigger, speaker playback trigger,
+permission grant trigger, permission revoke trigger, permission mutation
+trigger, audit write trigger, voice action trigger, command trigger, tool
+trigger, file mutation trigger, frontend action buttons, API POST mutation
+routes, microphone capture, STT runtime, transcription runtime, TTS runtime,
+TTS synthesis, speaker playback, audio/playback device access, handoff
+execution, memory writes, direct voice-to-action execution, desktop action,
+network action, git action, cloud fallback, background service, public binding,
+and autonomy.
+
+The voice runtime check now covers 342 activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit/control-center-voice
+assertions and reports zero failed assertions.
+
+Next: Sprint 199 — Voice Runtime Integration Review.

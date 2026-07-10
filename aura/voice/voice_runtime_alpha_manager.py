@@ -89,6 +89,7 @@ class VoiceRuntimeAlphaManager:
         voice_intent_chat = self.planner.voice_intent_chat_integration_contract()
         tts_adapter = self.planner.text_to_speech_adapter_runtime_contract()
         voice_permission_audit = self.planner.voice_permission_audit_runtime_contract()
+        control_center_voice = self.planner.control_center_voice_controls_contract()
         backend = self.detect_tts_backend()
         speaker_permission = self.permission_manager.check("speaker_speak")
         microphone_permission = self.permission_manager.check("microphone_listen")
@@ -105,6 +106,16 @@ class VoiceRuntimeAlphaManager:
             "sprint_195_voice_intent_chat_contract_ready": voice_intent_chat["voice_intent_chat_contract_ready"],
             "sprint_196_tts_adapter_contract_ready": tts_adapter["tts_adapter_contract_ready"],
             "sprint_197_voice_permission_audit_contract_ready": voice_permission_audit["voice_permission_audit_contract_ready"],
+            "sprint_198_control_center_voice_controls_contract_ready": control_center_voice["control_center_voice_controls_contract_ready"],
+            "control_center_voice_controls_runtime_ready": control_center_voice["control_center_voice_controls_runtime_ready"],
+            "control_center_voice_controls_visible": control_center_voice["control_center_voice_controls_visible"],
+            "control_center_voice_controls_read_only": control_center_voice["control_center_voice_controls_read_only"],
+            "control_center_voice_controls_disabled_by_default": control_center_voice["control_center_voice_controls_disabled_by_default"],
+            "control_center_voice_controls_route_contract_ready": control_center_voice["control_center_voice_controls_route_contract_ready"],
+            "control_center_voice_controls_panel_contract_ready": control_center_voice["control_center_voice_controls_panel_contract_ready"],
+            "control_center_voice_listen_state_display_ready": control_center_voice["listen_state_display_boundary_ready"],
+            "control_center_voice_ui_mutation_enabled": control_center_voice["ui_controls_mutation_enabled"],
+            "control_center_voice_ui_voice_action_trigger_active": control_center_voice["ui_voice_action_trigger_active"],
             "voice_permission_audit_runtime_ready": voice_permission_audit["voice_permission_audit_runtime_ready"],
             "voice_permission_boundary_ready": voice_permission_audit["permission_boundary_ready"],
             "voice_microphone_permission_action": voice_permission_audit["microphone_permission_action"],
@@ -187,9 +198,10 @@ class VoiceRuntimeAlphaManager:
             "voice_intent_chat_integration_contract": voice_intent_chat,
             "text_to_speech_adapter_runtime_contract": tts_adapter,
             "voice_permission_audit_runtime_contract": voice_permission_audit,
-            "sections": 13,
+            "control_center_voice_controls_contract": control_center_voice,
+            "sections": 14,
             "project_root": str(self.project_root),
-            "note": "Voice Runtime Alpha is online for Sprint 197 voice permission and audit contract. It does not grant permissions, mutate permission state, write audit events, access microphone/speaker devices, run STT/TTS, play audio, or execute voice actions.",
+            "note": "Voice Runtime Alpha is online for Sprint 198 Control Center voice controls contract. Voice controls are read-only, disabled by default, and do not trigger microphone capture, STT, TTS, speaker playback, permission mutation, audit writes, or voice actions.",
         }
 
     def build_tts_command(self, text: str) -> dict[str, Any]:

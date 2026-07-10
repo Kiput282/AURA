@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.197.0-genesis
-Current status: Sprint 197 Voice Permission and Audit Runtime completed and ready to hand off to Sprint 198 Control Center Voice Controls
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 197 adds a safe voice permission and audit contract with microphone_listen and speaker_speak permission links, explicit confirmation requirements, transcript/chat/TTS handoff permission boundaries, voice audit event schema, six declared audit event types, review/recovery visibility contracts, and audit redaction/local-only/append-only boundaries while keeping permission decision/grant/revoke/mutation/persistence, audit writes, audit persistence, audit dashboard emit, microphone capture, STT/TTS runtime, speaker playback, handoff execution, voice actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
+Current version: v0.198.0-genesis
+Current status: Sprint 198 Control Center Voice Controls completed and ready to hand off to Sprint 199 Voice Runtime Integration Review
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 198 adds a safe read-only Control Center voice controls contract with visible disabled-by-default voice controls, listen-state display, microphone/speaker permission display, STT/TTS status display, permission/audit display, route and panel contracts, and runtime safety badges while keeping UI mutation, microphone capture, STT/TTS runtime, speaker playback, permission grant/revoke/mutation, audit writes, voice actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 197 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe voice permission and audit contract.
+AURA has completed Sprint 198 and continues the Sprint 191-200 Voice Interaction Runtime block with safe read-only Control Center voice controls.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.198.0-genesis
+- Sprint 198: Control Center Voice Controls
 - v0.197.0-genesis
 - Sprint 197: Voice Permission and Audit Runtime
 - v0.196.0-genesis
@@ -64,7 +66,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 198 — Control Center Voice Controls
+- Next planned sprint: Sprint 199 — Voice Runtime Integration Review
 Current capability registry summary:
 
 - total capabilities: 121
@@ -2811,3 +2813,124 @@ fallback, arbitrary file access, public/LAN binding, background service, systemd
 activation, browser auto-launch, or autonomy.
 
 Next: Sprint 198 — Control Center Voice Controls.
+
+## Sprint 198 — Control Center Voice Controls
+
+Version: `v0.198.0-genesis`
+
+Sprint 198 adds the Control Center voice controls contract on top of the Sprint
+191 activation contract, Sprint 192 listen-state foundation, Sprint 193
+microphone capture boundary, Sprint 194 speech-to-text adapter contract, Sprint
+195 voice intent/chat integration contract, Sprint 196 text-to-speech adapter
+contract, and Sprint 197 voice permission/audit contract.
+
+Validated checkpoint:
+
+- Control Center voice controls contract ready;
+- Control Center voice controls runtime not ready;
+- voice controls visible in Control Center contract;
+- voice controls read-only;
+- voice controls disabled by default;
+- voice controls route contract ready;
+- voice controls panel contract ready;
+- panel id is `voice_controls`;
+- route contract is `/api/control-center/voice-controls`;
+- web panel anchor is `#voice-controls`;
+- listen-state display boundary ready;
+- default listen state is `idle`;
+- current listen state is `idle`;
+- nine allowed listen states declared;
+- push-to-talk display ready;
+- push-to-talk required;
+- microphone permission display boundary ready;
+- speaker permission display boundary ready;
+- existing `microphone_listen` permission action displayed;
+- existing `speaker_speak` permission action displayed;
+- microphone confirmation required;
+- speaker confirmation required;
+- STT status display boundary ready;
+- TTS status display boundary ready;
+- STT adapter contract ready;
+- TTS adapter contract ready;
+- STT adapter runtime not ready;
+- TTS adapter runtime not ready;
+- voice intent display boundary ready;
+- voice permission/audit display boundary ready;
+- audit event display boundary ready;
+- runtime safety badges ready;
+- ten disabled voice controls declared;
+- UI mutation disabled;
+- UI start-listening action inactive;
+- UI stop-listening action inactive;
+- UI push-to-talk action inactive;
+- UI microphone capture trigger inactive;
+- UI STT trigger inactive;
+- UI TTS trigger inactive;
+- UI speaker playback trigger inactive;
+- UI permission grant trigger inactive;
+- UI permission revoke trigger inactive;
+- UI permission mutation trigger inactive;
+- UI audit write trigger inactive;
+- UI voice action trigger inactive;
+- UI command trigger inactive;
+- UI tool trigger inactive;
+- UI file mutation trigger inactive;
+- API GET route contract ready;
+- API POST mutation route disabled;
+- API localhost-only requirement ready;
+- API read-only payload ready;
+- API credentials exposure disabled;
+- API sensitive values exposure disabled;
+- frontend read-only binding ready;
+- frontend mutation controls absent;
+- frontend button actions disabled;
+- frontend permission grant buttons disabled;
+- frontend audio device buttons disabled;
+- frontend audit write buttons disabled;
+- visibility link allowed;
+- panel uses status-only data;
+- panel uses permission/audit visibility data;
+- microphone capture inactive;
+- STT runtime inactive;
+- transcription inactive;
+- live microphone transcription inactive;
+- TTS runtime inactive;
+- TTS synthesis inactive;
+- speaker playback inactive;
+- audio device access disabled;
+- playback device access disabled;
+- audio buffer inactive;
+- transcript-to-chat handoff inactive;
+- chat-response-to-TTS handoff inactive;
+- permission decision runtime inactive;
+- permission grant runtime inactive;
+- permission mutation inactive;
+- audit write runtime inactive;
+- audit event persistence disabled;
+- memory write inactive;
+- direct voice-to-action disabled;
+- tool execution inactive;
+- command execution inactive;
+- file mutation inactive;
+- desktop action inactive;
+- network action inactive;
+- git action inactive;
+- cloud STT fallback disabled;
+- cloud TTS fallback disabled;
+- silent cloud fallback disabled;
+- 342 total voice activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit/control-center-voice
+  assertions;
+- zero failed voice activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit/control-center-voice
+  assertions.
+
+Sprint 198 adds no active UI control, runtime voice control, microphone capture,
+STT trigger, TTS trigger, speaker playback trigger, permission grant trigger,
+permission revoke trigger, permission mutation trigger, audit write trigger,
+voice action trigger, command trigger, tool trigger, file mutation trigger,
+desktop action trigger, network action trigger, git action trigger, memory
+write trigger, API POST mutation route, frontend action button, audio device
+button, audit write button, live voice input, voice output, cloud fallback,
+arbitrary file access, public/LAN binding, background service, systemd
+activation, browser auto-launch, or autonomy.
+
+Next: Sprint 199 — Voice Runtime Integration Review.

@@ -2339,3 +2339,96 @@ network actions, perform git actions, fallback to cloud providers, start
 background services, bind publicly, or add autonomy.
 
 Next: Sprint 198 — Control Center Voice Controls.
+
+## Checkpoint v0.198.0-genesis — Control Center Voice Controls
+
+Sprint 198 continues the Sprint 191-200 Voice Interaction Runtime block.
+
+Checkpoint state:
+
+- voice activation foundation remains ready;
+- listen-state foundation remains ready;
+- microphone boundary remains ready;
+- STT adapter contract remains ready;
+- voice intent and chat integration contract remains ready;
+- TTS adapter contract remains ready;
+- voice permission and audit contract remains ready;
+- Control Center voice controls contract ready;
+- Control Center voice controls runtime not ready;
+- voice controls visible in Control Center contract;
+- voice controls read-only;
+- voice controls disabled by default;
+- route contract ready;
+- panel contract ready;
+- panel id is `voice_controls`;
+- route contract is `/api/control-center/voice-controls`;
+- web panel anchor is `#voice-controls`;
+- listen-state display boundary ready;
+- default listen state is `idle`;
+- current listen state is `idle`;
+- nine allowed listen states declared;
+- push-to-talk display ready and required;
+- microphone permission display boundary ready;
+- speaker permission display boundary ready;
+- existing `microphone_listen` permission action displayed;
+- existing `speaker_speak` permission action displayed;
+- microphone and speaker confirmation required;
+- STT status display boundary ready;
+- TTS status display boundary ready;
+- STT and TTS adapter contracts ready;
+- STT and TTS adapter runtimes not ready;
+- voice intent, permission/audit, and audit event displays ready;
+- runtime safety badges ready;
+- ten disabled voice controls declared;
+- UI mutation disabled;
+- UI microphone capture trigger inactive;
+- UI STT trigger inactive;
+- UI TTS trigger inactive;
+- UI speaker playback trigger inactive;
+- UI permission grant, revoke, and mutation triggers inactive;
+- UI audit write trigger inactive;
+- UI voice action trigger inactive;
+- UI command, tool, and file mutation triggers inactive;
+- API GET contract ready;
+- API POST mutation route disabled;
+- API localhost-only and read-only payload boundaries ready;
+- frontend read-only binding ready;
+- frontend mutation controls absent;
+- frontend action, permission, audio device, and audit write buttons disabled;
+- microphone capture inactive;
+- STT runtime inactive;
+- transcription inactive;
+- live microphone transcription inactive;
+- TTS runtime inactive;
+- TTS synthesis inactive;
+- speaker playback inactive;
+- audio device access disabled;
+- playback device access disabled;
+- transcript/chat/TTS handoffs inactive;
+- permission decision, grant, and mutation runtimes inactive;
+- audit write runtime inactive;
+- audit event persistence disabled;
+- memory write inactive;
+- direct voice-to-action disabled;
+- tool execution inactive;
+- command execution inactive;
+- file mutation inactive;
+- desktop action inactive;
+- network action inactive;
+- git action inactive;
+- cloud STT fallback disabled;
+- cloud TTS fallback disabled;
+- silent cloud fallback disabled;
+- 342 activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit/control-center-voice assertions;
+- 0 failed activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit/control-center-voice assertions.
+
+Sprint 198 does not activate Control Center voice controls, execute
+push-to-talk, start listening, stop listening, capture microphone input, trigger
+STT, trigger TTS, play speaker output, grant permissions, revoke permissions,
+mutate permission state, write audit events, execute voice actions, execute
+commands, execute tools, mutate files, control the desktop, perform network
+actions, perform git actions, write memory, execute handoffs, fallback to cloud
+providers, expose API POST mutation routes, enable frontend action buttons,
+start background services, bind publicly, or add autonomy.
+
+Next: Sprint 199 — Voice Runtime Integration Review.

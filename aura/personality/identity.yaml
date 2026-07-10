@@ -1,5 +1,5 @@
 name: AURA
-version: "0.197.0-genesis"
+version: "0.198.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -107,3 +107,11 @@ modes:
 # microphone capture, STT/TTS runtime, speaker playback, handoff execution,
 # voice actions, command/tool execution, memory writes, and file/desktop/
 # network/git actions disabled.
+# Sprint 198: control_center_voice_controls adds a safe read-only
+# Control Center voice controls contract with visible disabled-by-default
+# voice controls, listen-state display, microphone/speaker permission display,
+# STT/TTS status display, permission/audit display, route/panel contracts, and
+# runtime safety badges while keeping all UI mutation, microphone capture, STT,
+# TTS, speaker playback, permission grant/revoke/mutation, audit writes, voice
+# actions, command/tool execution, memory writes, and file/desktop/network/git
+# actions disabled.

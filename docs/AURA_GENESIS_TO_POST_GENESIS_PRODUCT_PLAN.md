@@ -842,3 +842,28 @@ This is still not live voice permission execution or audit writing. It is the
 voice permission/audit contract that lets Sprint 198 add Control Center Voice
 Controls without allowing voice input/output to bypass permission and audit
 boundaries.
+
+
+## Sprint 198 — Control Center Voice Controls
+
+`v0.198.0-genesis` adds the Control Center voice controls contract.
+
+AURA now has a safe boundary for future voice controls in the Control Center
+without activating microphone capture, STT, TTS, speaker playback, permission
+mutation, audit writes, or voice actions. The contract prepares visible
+read-only and disabled-by-default controls, listen-state display, microphone and
+speaker permission display, STT/TTS status display, permission/audit status
+display, audit event display, safety badges, and a future
+`/api/control-center/voice-controls` route contract.
+
+The checkpoint confirms that UI mutation, start/stop listening, push-to-talk
+execution, microphone capture trigger, STT trigger, TTS trigger, speaker
+playback trigger, permission grant/revoke/mutation triggers, audit write
+trigger, voice action trigger, command/tool/file/desktop/network/git triggers,
+frontend action buttons, API POST mutation routes, live voice input, voice
+output, memory writes, handoff execution, and cloud fallback remain disabled.
+
+This is still not live Control Center voice control. It is the read-only voice
+controls contract that lets Sprint 199 review the Voice Runtime integration
+without allowing dashboard UI to bypass permission, audit, or voice safety
+boundaries.
