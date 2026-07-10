@@ -45,3 +45,12 @@ Status: completed in `v0.173.0-genesis` after Sprint 172.
 Sprint 173 adds deterministic, rule-based extraction of one reviewable memory candidate from a user-supplied message. It detects explicit memory triggers, normalizes and classifies candidate text, screens common sensitive patterns, creates a candidate fingerprint, and prepares permission/review handoff metadata while keeping model requests, permission persistence and grant apply, candidate persistence, memory writes/store mutation, network, credentials, audit writes, commands, arbitrary file access, and runtime execution disabled.
 
 Next: Sprint 174 — Memory Importance and Pinning Policy.
+
+
+## Sprint 174 — Memory Importance and Pinning Policy
+
+Status: completed in `v0.174.0-genesis` after Sprint 173.
+
+Sprint 174 adds deterministic and explainable importance scoring, durable/temporary signal detection, retention recommendations, and future pin eligibility for one candidate. All results remain preview-only: candidate persistence, permission grant apply, memory writes/store mutation, pin/unpin operations, model/network/credential activity, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
+
+Next: Sprint 175 — Memory Review Queue.

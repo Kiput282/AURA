@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.173.0-genesis  
+Current version: v0.174.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -49,12 +49,12 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 104
-- online capabilities: 102
+- total capabilities: 105
+- online capabilities: 103
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 3
-- review-only capabilities: 3
+- review-only capabilities: 4
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 0
@@ -343,7 +343,7 @@ Active block:
 - Sprint 144: Service Configuration and Port Registry Foundation completed
 - Sprint 151: Control Center Runtime Foundation completed
 - Sprint 152: Control Center Read-Only Status Panel Foundation completed
-- Sprint 173: Memory Extraction Dry Run completed
+- Sprint 174: Memory Importance and Pinning Policy completed
 - Next: Sprint 154 Control Center Service Monitor Panel Foundation
 
 ---
@@ -1794,3 +1794,16 @@ python3 main.py memory-extraction-dry-run-alpha "remember that AURA is local-fir
 ```
 
 The expected permission state remains `required_not_granted`, the gate decision remains `blocked_no_explicit_grant`, `Candidate Persisted` remains `False`, and all side-effect counters remain `0`. Sprint 174 should add the Memory Importance and Pinning Policy as preview-only metadata.
+
+
+## Sprint 174 — Memory Importance and Pinning Policy
+
+AURA v0.174.0-genesis adds deterministic, explainable importance scoring, durability and temporary-signal detection, retention recommendations, and future pin-eligibility previews for one memory candidate. The policy does **not** persist candidates or policy results, apply grants, write or mutate the memory store, pin or unpin memory, call a model, use network or credentials, write audit events, execute commands, or access arbitrary files.
+
+New alpha command:
+
+```bash
+python3 main.py memory-importance-pinning-alpha "remember that AURA is local-first and permission-gated"
+```
+
+All scoring and pin recommendations are review metadata only. `Pin State` remains `not_pinned`, `Automatic Pin Applied` remains `False`, write permission remains `required_not_granted`, and all side-effect counters remain `0`. Sprint 175 should add a preview-only Memory Review Queue.

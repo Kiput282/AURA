@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_importance_pinning_policy.aura_memory_importance_pinning_policy_manager import AuraMemoryImportancePinningPolicyManager
 from aura.memory_extraction_dry_run.aura_memory_extraction_dry_run_manager import AuraMemoryExtractionDryRunManager
 from aura.memory_write_permission_gate.aura_memory_write_permission_gate_manager import AuraMemoryWritePermissionGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
@@ -4332,6 +4333,57 @@ class AuraCLI:
 
 
 
+    # Sprint 174.0 memory importance and pinning policy helpers.
+    def print_memory_importance_pinning_policy_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Importance and Pinning Policy Boundary"))
+
+    def handle_memory_importance_pinning_policy_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA memory importance and pinning policy"
+        manager = AuraMemoryImportancePinningPolicyManager(project_root=self.project_root)
+
+        if command in {"memory-importance-pinning-alpha", "memory-importance-alpha"}:
+            if not target or target == "AURA memory importance and pinning policy":
+                print("AURA Memory Importance and Pinning Policy Alpha")
+                print("================================================")
+                print('Usage: python3 main.py memory-importance-pinning-alpha "remember that AURA is local-first and permission-gated"')
+                return True
+            print(manager.render_policy_preview(target))
+            return True
+
+        if command == "memory-importance-pinning-status":
+            self.print_memory_importance_pinning_policy_packet("AURA Memory Importance and Pinning Policy Status", manager.status())
+            return True
+
+        if command == "memory-importance-pinning-context":
+            self.print_memory_importance_pinning_policy_packet("AURA Memory Importance and Pinning Policy Context", manager.context())
+            return True
+
+        command_map = {
+            "memory-importance-scoring-plan": ("AURA Memory Importance Scoring Plan", manager.memory_importance_scoring_plan),
+            "memory-durability-signal-plan": ("AURA Memory Durability Signal Plan", manager.memory_durability_signal_plan),
+            "memory-temporary-signal-plan": ("AURA Memory Temporary Signal Plan", manager.memory_temporary_signal_plan),
+            "memory-retention-recommendation-plan": ("AURA Memory Retention Recommendation Plan", manager.memory_retention_recommendation_plan),
+            "memory-pin-eligibility-plan": ("AURA Memory Pin Eligibility Plan", manager.memory_pin_eligibility_plan),
+            "memory-pin-permission-boundary-plan": ("AURA Memory Pin Permission Boundary Plan", manager.memory_pin_permission_boundary_plan),
+            "memory-importance-manual-review-handoff-plan": ("AURA Memory Importance Manual Review Handoff Plan", manager.memory_importance_manual_review_handoff_plan),
+            "memory-importance-sensitive-boundary-plan": ("AURA Memory Importance Sensitive Boundary Plan", manager.memory_importance_sensitive_boundary_plan),
+            "memory-control-center-importance-preview-plan": ("AURA Memory Control Center Importance Preview Plan", manager.memory_control_center_importance_preview_plan),
+            "no-memory-importance-pinning-unsafe-runtime-plan": ("AURA No Memory Importance Pinning Unsafe Runtime Plan", manager.no_memory_importance_pinning_unsafe_runtime_plan),
+            "memory-importance-next-sprint-readiness-plan": ("AURA Memory Importance Next Sprint Readiness Plan", manager.memory_importance_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_importance_pinning_policy_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 173.0 memory extraction dry run helpers.
     def print_memory_extraction_dry_run_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8281,6 +8333,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_memory_importance_pinning_policy_cli_command(raw_args):
             return True
 
         if self.handle_memory_extraction_dry_run_cli_command(raw_args):
