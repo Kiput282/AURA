@@ -751,6 +751,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
             {
+                "id": "aura_memory_write_permission_gate",
+                "name": "AURA Memory Write Permission Gate",
+                "state": "online",
+                "runtime_level": "foundation_alpha",
+                "risk_level": "medium",
+                "permission_required": "user_confirmation",
+                "category": "memory_runtime",
+                "introduced_in": "0.172.0-genesis",
+                "control_center_visible": True,
+                "description": "Default-deny and preview-only Memory Write Permission Gate for a single candidate fingerprint and exact memory.write.single_candidate scope; keeps permission grant apply, candidate persistence, memory write/store mutation, model, network, credentials, audit writes, commands, arbitrary file access, full memory runtime, and runtime execution disabled.",
+            },
+            {
                 "id": "aura_memory_runtime_foundation",
                 "name": "AURA Memory Runtime Foundation",
                 "state": "online",

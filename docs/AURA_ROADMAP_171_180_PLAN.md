@@ -27,3 +27,12 @@ Status: completed in `v0.171.0-genesis` after Sprint 170.
 Sprint 171 creates a preview-only foundation for memory candidate packets, write-gate planning, privacy boundary planning, and chat-to-memory handoff. It keeps memory writes, memory store mutation, model requests, network, credentials, permission grants, command execution, arbitrary file access, full memory runtime, and runtime execution disabled.
 
 Next: Sprint 172 — Memory Write Permission Gate.
+
+
+## Sprint 172 — Memory Write Permission Gate
+
+Status: completed in `v0.172.0-genesis` after Sprint 171.
+
+Sprint 172 adds a default-deny, preview-only permission gate for one memory candidate fingerprint and the exact `memory.write.single_candidate` scope. It requires an explicit future approve-once decision while keeping permission request persistence, permission grant apply, memory candidate persistence, memory write/store mutation, model requests, network, credentials, audit writes, commands, arbitrary file access, and runtime execution disabled.
+
+Next: Sprint 173 — Memory Extraction Dry Run.

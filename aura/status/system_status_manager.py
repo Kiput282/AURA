@@ -143,6 +143,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_write_permission_gate.aura_memory_write_permission_gate_manager import AuraMemoryWritePermissionGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -345,6 +346,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        memory_write_permission_gate_status = AuraMemoryWritePermissionGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_runtime_foundation_status = AuraMemoryRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_runtime_stabilization_status = AuraLocalChatRuntimeStabilizationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         data.update({
@@ -492,6 +494,19 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "memory_write_permission_gate_ready": memory_write_permission_gate_status["memory_write_permission_gate_ready"],
+            "memory_write_permission_gate_data_ready": memory_write_permission_gate_status["memory_write_permission_gate_data_ready"],
+            "memory_write_permission_gate_plan_type_count": memory_write_permission_gate_status["plan_type_count"],
+            "memory_write_permission_gate_total_blueprint_count": memory_write_permission_gate_status["total_memory_write_permission_gate_blueprint_count"],
+            "memory_write_permission_gate_thin_runtime_alpha": memory_write_permission_gate_status["thin_runtime_alpha"],
+            "memory_write_permission_gate_enabled": memory_write_permission_gate_status["memory_write_permission_gate_enabled"],
+            "memory_write_permission_gate_default_deny": memory_write_permission_gate_status["default_deny_without_grant"],
+            "memory_write_permission_gate_one_shot_required": memory_write_permission_gate_status["one_shot_grant_required"],
+            "memory_write_permission_gate_runtime_permission_grants_applied": memory_write_permission_gate_status["runtime_permission_grants_applied"],
+            "memory_write_permission_gate_runtime_memory_writes": memory_write_permission_gate_status["runtime_memory_writes"],
+            "memory_write_permission_gate_runtime_memory_store_mutations": memory_write_permission_gate_status["runtime_memory_store_mutations"],
+            "memory_write_permission_gate_runtime_audit_events_written": memory_write_permission_gate_status["runtime_audit_events_written"],
+            "memory_write_permission_gate_runtime_execution_features": memory_write_permission_gate_status["runtime_execution_features"],
             "memory_runtime_foundation_ready": memory_runtime_foundation_status["memory_runtime_foundation_ready"],
             "memory_runtime_foundation_data_ready": memory_runtime_foundation_status["memory_runtime_foundation_data_ready"],
             "memory_runtime_foundation_plan_type_count": memory_runtime_foundation_status["plan_type_count"],

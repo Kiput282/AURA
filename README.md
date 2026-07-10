@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.171.0-genesis  
+Current version: v0.172.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -49,12 +49,12 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 99
-- online capabilities: 97
+- total capabilities: 103
+- online capabilities: 101
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
-- permission-gated capabilities: 2
-- review-only capabilities: 4
+- permission-gated capabilities: 3
+- review-only capabilities: 3
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 0
@@ -343,7 +343,7 @@ Active block:
 - Sprint 144: Service Configuration and Port Registry Foundation completed
 - Sprint 151: Control Center Runtime Foundation completed
 - Sprint 152: Control Center Read-Only Status Panel Foundation completed
-- Sprint 168: Chat History Viewer Contract completed
+- Sprint 172: Memory Write Permission Gate completed
 - Next: Sprint 154 Control Center Service Monitor Panel Foundation
 
 ---
@@ -1219,9 +1219,9 @@ AURA is a local-first AI partner.
 
 Current canonical state:
 
-- Version: v0.170.0-genesis
-- Current completed sprint: Sprint 161.0 — Local Chat Runtime Foundation
-- Next planned sprint: Sprint 171.0 — Memory Runtime Foundation
+- Version: v0.172.0-genesis
+- Current completed sprint: Sprint 172.0 — Memory Write Permission Gate
+- Next planned sprint: Sprint 173.0 — Memory Extraction Dry Run
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
 Roadmap summary:
@@ -1768,3 +1768,16 @@ python3 main.py memory-runtime-alpha "remember that AURA is local-first"
 ```
 
 The alpha output must keep `Memory Writes`, `Memory Store Mutations`, `Model Requests`, `Network Requests`, `Credentials Read`, `Permission Grants`, `Audit Events Written`, `Commands Executed`, `Arbitrary Files Read`, `Arbitrary Files Wrote`, and `Runtime Execution` at `0`. Sprint 172 should add the Memory Write Permission Gate before any real memory write is allowed.
+
+
+## Sprint 172 — Memory Write Permission Gate
+
+AURA v0.172.0-genesis adds a default-deny, preview-only permission gate for one memory candidate. The gate creates an in-memory candidate fingerprint and permission request envelope with the exact scope `memory.write.single_candidate`, but it does **not** persist requests, apply grants, consume grants, write memory, mutate the memory store, call a model, use network, read credentials, write audit events, execute commands, or access arbitrary files.
+
+New alpha command:
+
+```bash
+python3 main.py memory-write-permission-gate-alpha "remember that AURA is local-first"
+```
+
+Without a matching explicit one-shot grant, the expected gate decision is `blocked_no_explicit_grant`, `Write Authorized` remains `False`, and all runtime side-effect counters remain `0`. Sprint 173 should add Memory Extraction Dry Run without bypassing this gate.

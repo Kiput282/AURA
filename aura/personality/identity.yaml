@@ -1,5 +1,5 @@
 name: AURA
-version: "0.171.0-genesis"
+version: "0.172.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -24,3 +24,5 @@ modes:
 # Sprint 170: local_chat_runtime_stabilization confirms the safe alpha chat block remains bounded and hands off to memory runtime.
 
 # Sprint 171: memory_runtime_foundation starts the preview-only Memory Runtime block with memory writes still disabled.
+
+# Sprint 172: memory_write_permission_gate adds a default-deny single-candidate permission preview; grants and writes remain disabled.

@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_write_permission_gate.aura_memory_write_permission_gate_manager import AuraMemoryWritePermissionGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
 
@@ -4329,6 +4330,58 @@ class AuraCLI:
 
 
 
+
+    # Sprint 172.0 memory write permission gate helpers.
+    def print_memory_write_permission_gate_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Write Permission Gate Boundary"))
+
+    def handle_memory_write_permission_gate_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA memory write permission gate"
+        manager = AuraMemoryWritePermissionGateManager(project_root=self.project_root)
+
+        if command in {"memory-write-permission-gate-alpha", "memory-permission-gate-alpha"}:
+            if not target or target == "AURA memory write permission gate":
+                print("AURA Memory Write Permission Gate Alpha")
+                print("=======================================")
+                print('Usage: python3 main.py memory-write-permission-gate-alpha "remember that AURA is local-first"')
+                return True
+            print(manager.render_permission_gate_alpha(target))
+            return True
+
+        if command == "memory-write-permission-gate-status":
+            self.print_memory_write_permission_gate_packet("AURA Memory Write Permission Gate Status", manager.status())
+            return True
+
+        if command == "memory-write-permission-gate-context":
+            self.print_memory_write_permission_gate_packet("AURA Memory Write Permission Gate Context", manager.context())
+            return True
+
+        command_map = {
+            "memory-permission-request-envelope-plan": ("AURA Memory Permission Request Envelope Plan", manager.memory_permission_request_envelope_plan),
+            "memory-permission-scope-validation-plan": ("AURA Memory Permission Scope Validation Plan", manager.memory_permission_scope_validation_plan),
+            "memory-candidate-fingerprint-plan": ("AURA Memory Candidate Fingerprint Plan", manager.memory_candidate_fingerprint_plan),
+            "memory-default-deny-policy-plan": ("AURA Memory Default Deny Policy Plan", manager.memory_default_deny_policy_plan),
+            "memory-one-shot-grant-plan": ("AURA Memory One Shot Grant Plan", manager.memory_one_shot_grant_plan),
+            "memory-permission-expiry-plan": ("AURA Memory Permission Expiry Plan", manager.memory_permission_expiry_plan),
+            "memory-permission-audit-handoff-plan": ("AURA Memory Permission Audit Handoff Plan", manager.memory_permission_audit_handoff_plan),
+            "memory-control-center-permission-handoff-plan": ("AURA Memory Control Center Permission Handoff Plan", manager.memory_control_center_permission_handoff_plan),
+            "memory-permission-failure-boundary-plan": ("AURA Memory Permission Failure Boundary Plan", manager.memory_permission_failure_boundary_plan),
+            "no-memory-write-permission-gate-unsafe-runtime-plan": ("AURA No Memory Write Permission Gate Unsafe Runtime Plan", manager.no_memory_write_permission_gate_unsafe_runtime_plan),
+            "memory-permission-gate-next-sprint-readiness-plan": ("AURA Memory Permission Gate Next Sprint Readiness Plan", manager.memory_permission_gate_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_write_permission_gate_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 171.0 memory runtime foundation helpers.
     def print_memory_runtime_foundation_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8176,6 +8229,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_memory_write_permission_gate_cli_command(raw_args):
             return True
 
         if self.handle_memory_runtime_foundation_cli_command(raw_args):

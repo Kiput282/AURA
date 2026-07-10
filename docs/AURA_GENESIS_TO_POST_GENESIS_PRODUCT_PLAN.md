@@ -556,3 +556,8 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 ## Sprint 171 — Memory Runtime Foundation
 
 `v0.171.0-genesis` starts the Memory Runtime block with a preview-only memory foundation. AURA can create memory candidate previews and write-gate metadata, but real memory write remains disabled until explicit permission, review, privacy, and correction/deletion boundaries are implemented.
+
+
+## Sprint 172 — Memory Write Permission Gate
+
+`v0.172.0-genesis` adds a default-deny single-candidate memory permission gate. Candidate fingerprints and permission envelopes are previewed in process, but grants, memory writes, store mutation, audit writes, model/network activity, commands, and arbitrary file access remain disabled.
