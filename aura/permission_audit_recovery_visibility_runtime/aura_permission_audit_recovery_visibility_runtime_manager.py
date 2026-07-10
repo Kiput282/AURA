@@ -503,10 +503,10 @@ class AuraPermissionAuditRecoveryVisibilityRuntimeManager:
             status["interactive_chat_ready"] is True
         )
         assertions['capability_total_120'] = (
-            status["capability_total"] == 120
+            status["capability_total"] == 121
         )
         assertions['online_118'] = (
-            status["online_capabilities"] == 118
+            status["online_capabilities"] == 119
         )
         assertions['runtime_features_four'] = (
             status["runtime_execution_features"] == 4

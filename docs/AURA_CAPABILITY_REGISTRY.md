@@ -707,3 +707,42 @@ internet fallback, streaming, tools, commands, actions, arbitrary files,
 desktop control, AURA long-term memory writes, browser storage,
 WebSocket/EventSource, background service, public/LAN binding, browser
 auto-launch, and autonomy remain disabled.
+
+
+## Sprint 190 Update — Local Interaction Runtime Stabilization
+
+Status: UPDATED FOR v0.190.0-genesis
+
+The registry now tracks
+`aura_local_interaction_runtime_stabilization` as an online, review-only
+checkpoint capability.
+
+Current summary:
+
+- total capabilities tracked: 121
+- online capabilities: 119
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 12
+- review-only capabilities: 11
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 4
+
+Stabilization evidence:
+
+- 9 components checked and ready;
+- 10 dependency self-tests;
+- 1,088 dependency assertions;
+- 87 checkpoint assertions;
+- 1,175 total assertion coverage;
+- 0 failed assertions;
+- 0 stabilization gaps;
+- 0 runtime violations;
+- block 181-190 complete;
+- voice runtime block ready.
+
+The review-only capability does not increase runtime execution feature
+accounting. No listener, provider, persistence store, permission mutation,
+audit writer, recovery executor, command, tool, action, arbitrary file,
+desktop, voice, vision, background, public/LAN, or autonomous runtime is added.

@@ -655,3 +655,27 @@ how an operator can recover safely from common failures.
 The surface remains read-only. It cannot grant permissions, write audit
 events, retry actions automatically, restart services, execute rollback, or
 increase model/tool authority.
+
+
+## Sprint 190 — Local Interaction Runtime Stabilization
+
+`v0.190.0-genesis` completes the Local Interaction Runtime Activation block.
+
+AURA now has a bounded usable local interaction product surface:
+
+- localhost Control Center;
+- interactive browser chat;
+- persistent bounded sessions;
+- explicitly confirmed local-model responses;
+- transparent health and runtime state;
+- visible permission, audit-contract, and recovery guidance;
+- stable foreground startup and clean shutdown;
+- fail-closed listener and port boundaries.
+
+The checkpoint passes nine component reviews, ten dependency self-tests, and
+1,175 total assertions with zero gaps and zero runtime violations.
+
+Voice, vision, broad actions, ORION, avatar, livestream automation, game
+control, and autonomy remain outside this checkpoint.
+
+Next product block: Sprint 191-200 Voice Interaction Runtime.

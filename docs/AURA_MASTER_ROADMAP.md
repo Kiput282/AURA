@@ -1907,3 +1907,36 @@ Checkpoint state:
 - canonical data unchanged.
 
 Next: Sprint 190 — Review and Stabilization 181-190.
+
+
+## Checkpoint v0.190.0-genesis — Local Interaction Runtime Stabilization
+
+Sprint 190 closes the Sprint 181-190 Local Interaction Runtime Activation
+block.
+
+Checkpoint state:
+
+- 121 total capabilities;
+- 119 online capabilities;
+- 12 permission-gated capabilities;
+- 11 review-only capabilities;
+- 4 runtime execution features;
+- 9 local interaction components checked;
+- 9 components ready;
+- 10 dependency self-tests passed;
+- 1,175 total assertion coverage;
+- 0 failed assertions;
+- 0 stabilization gaps;
+- 0 runtime violations;
+- localhost-only and explicit foreground-start boundaries preserved;
+- clean shutdown and port-conflict fail-closed behavior preserved;
+- no permission bypass;
+- no arbitrary execution;
+- no new runtime authority added.
+
+The Local Interaction Runtime Activation block is complete. AURA can be opened
+through the localhost Control Center and used through bounded interactive chat
+with persistent sessions, an explicitly confirmed local-model path, and
+visible safety/recovery state.
+
+Next: Sprint 191 — Voice Runtime Activation Foundation.

@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.189.0-genesis
+Current anchor: v0.190.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,26 +16,33 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.186.0-genesis
-- Completed: Sprint 186 — Browser Chat Session Runtime
-- Runtime execution features: 1
-- Active scope: explicitly confirmed foreground localhost listener,
-  transparent status routes, read-only Control Center backend, responsive
-  browser dashboard, and permission-gated bounded local chat sessions
-- Status routes: 9
-- Control Center backend routes: 9
-- Control Center dashboard assets: 3
-- Control Center panels: 8
-- Browser chat assets: 3
-- Browser chat route contracts: 6
-- Total local interaction route contracts: 27
-- Session persistence: local, atomic, integrity-checked, Git-ignored
+- Current version: v0.190.0-genesis
+- Completed: Sprint 190 — Local Interaction Runtime Review and Stabilization
+- Completed block: Sprint 181-190 Local Interaction Runtime Activation
+- Runtime execution features: 4
+- Total capabilities: 121
+- Online capabilities: 119
+- Review-only capabilities: 11
+- Active scope: explicitly confirmed foreground localhost listener, health and
+  status APIs, Control Center backend and browser shell, bounded persistent
+  browser chat sessions, explicitly confirmed loopback local-model requests,
+  interactive chat, and read-only permission/audit/recovery visibility
+- Total local interaction route contracts: 37
+- Stabilization components: 9/9 ready
+- Dependency self-tests: 10/10 passed
+- Total assertion coverage: 1,175
+- Stabilization gaps: 0
+- Runtime violations: 0
 - Default listener state: stopped
-- Local Model Bridge and inference: disabled
+- Localhost-only boundary: preserved
+- Permission bypass: not detected
+- Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
+- Voice runtime: disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 187 — Local Model Bridge Activation
+- Next: Sprint 191 — Voice Runtime Activation Foundation
+
 ## Block 181-190 — Local Interaction Runtime Activation
 
 Outcome: AURA can be opened in a browser and used through a localhost Control Center and interactive local chat.
@@ -196,3 +203,22 @@ boundaries, and manual recovery guidance.
 
 Sprint 190 will review and stabilize the complete Sprint 181-190 Local
 Interaction Runtime Activation block.
+
+
+## v0.190.0-genesis — Local Interaction Runtime Stabilization
+
+Sprint 190 reviews and stabilizes the complete Sprint 181-190 Local
+Interaction Runtime Activation chain.
+
+All nine components are ready. Ten dependency self-tests and the Sprint 190
+checkpoint assertions provide 1,175 total assertion coverage with zero failed
+assertions, zero stabilization gaps, and zero runtime violations.
+
+The checkpoint preserves explicit foreground startup, localhost-only binding,
+clean shutdown, port-conflict fail-closed behavior, visible errors, explicit
+model permission, and the absence of arbitrary execution. It adds no runtime
+authority.
+
+Block 181-190 is complete.
+
+Next: Sprint 191 — Voice Runtime Activation Foundation.

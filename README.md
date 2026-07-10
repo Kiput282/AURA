@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.189.0-genesis
-Current status: read-only localhost permission, audit-contract, and recovery-guidance visibility integrated with the interactive Control Center
-Current runtime state: one explicitly confirmed foreground localhost listener provides Control Center, interactive chat, persistent bounded sessions, explicitly confirmed local-model messaging, and a read-only permission/audit/recovery visibility page with four GET/HEAD APIs and three assets. Provider values are redacted and message/model-response content is not recorded. Permission mutation/persistence, audit writing/persistence, automatic retry/recovery/restart, rollback execution, model downloads, internet fallback, tools, commands, actions, AURA long-term memory writes, browser storage, WebSocket/EventSource, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.190.0-genesis
+Current status: Sprint 181-190 Local Interaction Runtime Activation block stabilized and ready to hand off to Voice Interaction Runtime
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. The complete Sprint 181-189 chain passes Sprint 190 stabilization with nine components ready, ten dependency self-tests, 1,175 total assertions, zero stabilization gaps, and zero runtime violations. Permission mutation, audit writing, automatic recovery, arbitrary commands/tools/actions/files, desktop control, voice, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,30 +35,30 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 189 in the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 190 and closed the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.189.0-genesis
-- Sprint 189: Permission, Audit, and Recovery Visibility Runtime
+- v0.190.0-genesis
+- Sprint 190: Local Interaction Runtime Review and Stabilization
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 190 — Review and Stabilization 181-190
+- Next planned sprint: Sprint 191 — Voice Runtime Activation Foundation
 Current capability registry summary:
 
-- total capabilities: 120
-- online capabilities: 118
+- total capabilities: 121
+- online capabilities: 119
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
 - permission-gated capabilities: 12
-- review-only capabilities: 10
+- review-only capabilities: 11
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 4
@@ -295,7 +295,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.189.0-genesis
+    Version  : 0.190.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -2328,3 +2328,40 @@ Validation:
 - port `8765` closed after tests.
 
 Next: Sprint 190 — Review and Stabilization 181-190.
+
+
+## Sprint 190 — Local Interaction Runtime Review and Stabilization
+
+Version: `v0.190.0-genesis`
+
+Sprint 190 closes the Sprint 181-190 Local Interaction Runtime Activation
+block through a dedicated review-only stabilization manager.
+
+Validated checkpoint:
+
+- nine runtime components checked;
+- nine runtime components ready;
+- ten dependency self-test commands passed;
+- 1,088 dependency assertions;
+- 87 stabilization assertions;
+- 1,175 total assertion coverage;
+- zero failed assertions;
+- zero stabilization gaps;
+- zero runtime violations;
+- localhost-only listener requirement preserved;
+- status and context commands start no listener or subprocess;
+- port `8765` remains closed after validation;
+- clean shutdown and fail-closed port-conflict contracts preserved;
+- permission bypass not detected;
+- arbitrary execution not detected;
+- no Sprint 190 runtime mutation performed;
+- block 181-190 complete;
+- Voice Interaction Runtime block ready.
+
+Sprint 190 adds no new listener, model provider, persistence store, permission
+mutation, audit writer, automatic recovery executor, command/tool/action
+execution, arbitrary file access, desktop control, voice capture, vision
+capture, background service, systemd activation, public/LAN binding, browser
+auto-launch, or autonomy.
+
+Next: Sprint 191 — Voice Runtime Activation Foundation.

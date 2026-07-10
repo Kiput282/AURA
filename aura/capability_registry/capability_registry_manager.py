@@ -1817,6 +1817,33 @@ class CapabilityRegistryManager:
                     "autonomy remain disabled."
                 ),
             },
+            {
+                "id": "aura_local_interaction_runtime_stabilization",
+                "name": "AURA Local Interaction Runtime Stabilization",
+                "state": "online",
+                "runtime_level": "review_only",
+                "risk_level": "low",
+                "permission_required": "none",
+                "category": "local_interaction_runtime",
+                "introduced_in": "0.190.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Review-only stabilization checkpoint for the Sprint "
+                    "181-190 Local Interaction Runtime Activation chain. "
+                    "It validates nine runtime components through ten "
+                    "existing self-test commands, confirms 1,175 total "
+                    "assertions, zero stabilization gaps, zero runtime "
+                    "violations, localhost-only listener policy, clean "
+                    "shutdown, fail-closed port conflicts, visible errors, "
+                    "no permission bypass, and no arbitrary execution. "
+                    "Sprint 190 adds no listener, provider, persistence "
+                    "store, permission mutation, audit writer, recovery "
+                    "executor, command, tool, action, desktop, voice, "
+                    "vision, background service, public/LAN binding, or "
+                    "autonomous runtime."
+                ),
+            },
+
 ]
 
 

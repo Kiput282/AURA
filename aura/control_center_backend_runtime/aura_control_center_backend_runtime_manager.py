@@ -809,7 +809,7 @@ class AuraControlCenterBackendRuntimeManager:
                    'ready_surfaces': ready_surfaces,
                    'blocked_surfaces': blocked_surfaces,
                    'blockers': blockers,
-                   'next_sprint': "Sprint 190 — Review and Stabilization 181-190",
+                   'next_sprint': "Sprint 191 — Voice Runtime Activation Foundation",
                    'read_only': False,
                    'actions_allowed': False,
                    'shell_asset_route_count': 3,
@@ -1190,7 +1190,7 @@ class AuraControlCenterBackendRuntimeManager:
 
         assertions['overview_version_189'] = (
             overview["identity"]["version"]
-            == '0.189.0-genesis'
+            == '0.190.0-genesis'
         )
         assertions["overview_boot_ready"] = (
             overview["core_boot_ready"] is True
@@ -1204,11 +1204,11 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["overview_listener_false"] = (
             overview["listener_active"] is False
         )
-        assertions['overview_capability_total_120'] = (
-            overview["capability_total"] == 120
+        assertions['overview_capability_total_121'] = (
+            overview["capability_total"] == 121
         )
-        assertions['overview_online_118'] = (
-            overview["online_capabilities"] == 118
+        assertions['overview_online_119'] = (
+            overview["online_capabilities"] == 119
         )
         assertions['overview_permission_gated_twelve'] = (
             overview[
@@ -1249,14 +1249,14 @@ class AuraControlCenterBackendRuntimeManager:
             is False
         )
 
-        assertions['capability_card_count_120'] = (
-            capabilities["card_count"] == 120
+        assertions['capability_card_count_121'] = (
+            capabilities["card_count"] == 121
         )
-        assertions['capability_summary_total_120'] = (
+        assertions['capability_summary_total_121'] = (
             capabilities["summary"][
                 "total_capabilities"
             ]
-            == 120
+            == 121
         )
         assertions["capability_mutation_false"] = (
             capabilities["mutation_enabled"] is False
@@ -1362,9 +1362,9 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_execution_false"] = (
             readiness["execution_ready"] is False
         )
-        assertions['readiness_next_sprint_190'] = (
+        assertions['readiness_next_sprint_191'] = (
             readiness["next_sprint"]
-            == "Sprint 190 — Review and Stabilization 181-190"
+            == "Sprint 191 — Voice Runtime Activation Foundation"
         )
 
         for route in self.ROUTES:
@@ -1516,7 +1516,7 @@ class AuraControlCenterBackendRuntimeManager:
                 self.FOUNDATION_MODULES
             ),
             "foundation_contracts_available": 8,
-            "capability_card_count": 120,
+            "capability_card_count": 121,
             "degraded_fixture_verified": True,
             "read_only_file_integrity_verified": True,
             "frontend_rendered": False,
