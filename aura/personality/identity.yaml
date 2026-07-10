@@ -1,5 +1,5 @@
 name: AURA
-version: "0.185.0-genesis"
+version: "0.186.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -47,3 +47,4 @@ modes:
 # Sprint 183: health_status_api_runtime adds side-effect-free identity, boot-prerequisite, plugin, capability, lifecycle, memory, safety, error, and degraded-state reporting through nine read-only localhost payload routes; GET/HEAD only, while mutation methods, plugin start, memory writes, background service, systemd, auto-start, remote control, chat, models, commands, tools, files, desktop, voice, vision, and autonomy remain disabled.
 # Sprint 184: control_center_backend_runtime exposes nine read-only localhost backend routes and eight stable view-model panels for overview, service, capabilities, plugins, permissions, audit, memory, and readiness; the web shell, frontend assets, browser launch, service/plugin controls, permission decisions, audit writes, memory writes, chat, models, commands, tools, actions, background service, public/LAN binding, and autonomy remain disabled.
 # Sprint 185: control_center_web_shell_runtime serves three local static assets through the existing localhost listener and renders eight read-only dashboard panels with responsive, accessible, safe-idle, degraded-state, manual-refresh, auto-refresh, and local capability-filter behavior; browser auto-launch, external frontend dependencies, mutation controls, service/plugin controls, permission decisions, audit/memory writes, chat, models, commands, tools, actions, background service, public/LAN binding, and autonomy remain disabled.
+# Sprint 186: browser_chat_session_runtime provides a localhost-only local chat page and six bounded chat route contracts for session creation, validated submission, honest placeholder response delivery, atomic local history persistence, reload, idempotent replay, revision conflict protection, and explicit clear confirmation; local model inference, network fallback, AURA long-term memory writes, tools, commands, actions, arbitrary files, desktop control, background service, public/LAN binding, browser auto-launch, and autonomy remain disabled.

@@ -1,7 +1,7 @@
 # AURA Roadmap 181-190 — Local Interaction Runtime Activation
 
-Status: ACTIVE — SPRINT 185 COMPLETE
-Current anchor: v0.185.0-genesis
+Status: ACTIVE — SPRINT 186 COMPLETE
+Current anchor: v0.186.0-genesis
 Target checkpoint: v0.190.0-genesis
 
 ## Purpose
@@ -222,17 +222,52 @@ Still disabled:
 Next: Sprint 186 — Browser Chat Session Runtime.
 ### Sprint 186 — Browser Chat Session Runtime
 
-Activate browser-to-AURA chat sessions with:
+Status: completed in v0.186.0-genesis.
 
-- session creation;
+Delivered:
+
+- localhost browser chat page at `/chat`;
+- three local chat assets;
+- six bounded chat route contracts;
+- session creation and metadata listing;
 - validated message submission;
-- response delivery;
-- local history persistence;
+- deterministic honest placeholder response delivery;
+- atomic local history persistence;
 - session reload;
-- explicit clear-session confirmation;
-- input size and schema limits;
-- no tool or action execution.
+- exact clear-session confirmation;
+- 8,192-character and 32,768-byte message limits;
+- maximum 500 messages per session;
+- optimistic revision conflict protection;
+- stale-revision idempotent replay through `client_message_id`;
+- SHA-256 session integrity verification;
+- degraded-state reporting for corrupt session files;
+- `0600` local session files;
+- JSON content-type, local-intent, and same-origin mutation guards;
+- Control Center link to Local Chat;
+- private chat-session directory excluded from Git;
+- 152/152 session core assertions;
+- 85/85 browser chat web assertions;
+- 82/82 live chat HTTP assertions;
+- clean SIGTERM and SIGINT shutdown.
 
+Runtime feature accounting remains `1` because Sprint 186 reuses the existing
+localhost listener and does not activate a model, command, tool, action,
+desktop, or autonomous executor.
+
+Still disabled:
+
+- Local Model Bridge and model inference;
+- network fallback;
+- AURA long-term memory writes;
+- broad permission mutation;
+- audit writer;
+- tools, commands, actions, arbitrary files, and desktop control;
+- background daemon, systemd, automatic startup, and persistence;
+- public/LAN/wildcard binding;
+- browser auto-launch;
+- voice, vision, and autonomy.
+
+Next: Sprint 187 — Local Model Bridge Activation.
 ### Sprint 187 — Local Model Bridge Activation
 
 Connect chat sessions to the configured local model provider, initially through the existing Ollama boundary, while preserving:

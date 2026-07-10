@@ -11,8 +11,8 @@ from .aura_service_lifecycle_runtime_manager import (
     AuraServiceLifecycleRuntimeManager,
     LifecycleError,
 )
-from aura.control_center_web_shell_runtime.aura_control_center_web_shell_http_runtime_manager import (
-    build_control_center_web_shell_lifecycle_manager,
+from aura.browser_chat_session_runtime.aura_browser_chat_session_http_runtime_manager import (
+    build_browser_chat_session_lifecycle_manager,
 )
 
 
@@ -78,7 +78,7 @@ def handle_service_lifecycle_command(
         return False
 
     extra = [str(item) for item in args[1:]]
-    manager = build_control_center_web_shell_lifecycle_manager()
+    manager = build_browser_chat_session_lifecycle_manager()
 
     try:
         if command == STATUS_COMMAND:
@@ -118,7 +118,9 @@ def handle_service_lifecycle_command(
         print("Auto-start : DISABLED")
         print("Status API : 9 read-only payload routes")
         print("Control Center backend: 9 read-only routes")
-        print("Web shell  : ENABLED / 3 local assets")
+        print("Web shell  : ENABLED / 3 dashboard assets")
+        print("Local chat : ENABLED / 3 chat assets / 6 route contracts")
+        print("Model bridge: DISABLED until Sprint 187")
         print("Browser launch: DISABLED")
         print()
 

@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.185.0-genesis
+Current anchor: v0.186.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,23 +16,26 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.185.0-genesis
-- Completed: Sprint 185 — Control Center Web Shell
+- Current version: v0.186.0-genesis
+- Completed: Sprint 186 — Browser Chat Session Runtime
 - Runtime execution features: 1
-- Active scope: explicitly confirmed, foreground-only, localhost-only,
-  read-only HTTP with deterministic lifecycle, transparent status payloads,
-  Control Center backend view models, and a usable responsive browser shell
+- Active scope: explicitly confirmed foreground localhost listener,
+  transparent status routes, read-only Control Center backend, responsive
+  browser dashboard, and permission-gated bounded local chat sessions
 - Status routes: 9
 - Control Center backend routes: 9
+- Control Center dashboard assets: 3
 - Control Center panels: 8
-- Local shell asset routes: 3
-- Total route surface: 21
+- Browser chat assets: 3
+- Browser chat route contracts: 6
+- Total local interaction route contracts: 27
+- Session persistence: local, atomic, integrity-checked, Git-ignored
 - Default listener state: stopped
-- Web shell/frontend: enabled, local-only, read-only
+- Local Model Bridge and inference: disabled
+- AURA long-term memory writes: disabled
 - Browser auto-launch: disabled
-- Browser chat/model runtime: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 186 — Browser Chat Session Runtime
+- Next: Sprint 187 — Local Model Bridge Activation
 ## Block 181-190 — Local Interaction Runtime Activation
 
 Outcome: AURA can be opened in a browser and used through a localhost Control Center and interactive local chat.

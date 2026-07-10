@@ -538,3 +538,63 @@ Still false:
 
 Sprint 185 does not increase the runtime execution feature count because the
 dashboard uses the same Sprint 181 listener.
+
+## Sprint 186 Update — Browser Chat Session Runtime Online
+
+Status: UPDATED FOR v0.186.0-genesis
+
+The registry now tracks `aura_browser_chat_session_runtime` as an online,
+permission-gated alpha capability.
+
+Current summary:
+
+- total capabilities tracked: 117
+- online capabilities: 115
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 9
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 1
+
+Activated scoped fields include:
+
+- `browser_chat_session_runtime: true`
+- `browser_chat_http_routes: true`
+- `browser_chat_session_creation: true`
+- `browser_chat_validated_submission: true`
+- `browser_chat_response_delivery: true`
+- `browser_chat_history_persistence: true`
+- `browser_chat_session_reload: true`
+- `browser_chat_clear_confirmation: true`
+- `browser_chat_revision_control: true`
+- `browser_chat_idempotent_submission: true`
+- `browser_chat_integrity_hash: true`
+- `browser_chat_bounded_mutation: true`
+- `browser_chat_asset_route_count: 3`
+- `browser_chat_route_contract_count: 6`
+- `local_interaction_total_route_contract_count: 27`
+- `local_session_file_write_runtime: true`
+- `chat_runtime: true`
+
+Still false:
+
+- `runtime_ready`
+- `execution_ready`
+- `local_model_bridge_runtime`
+- `local_model_inference_runtime`
+- `network_fallback_runtime`
+- `aura_long_term_memory_write_runtime`
+- `control_center_browser_launch_runtime`
+- service/plugin control and permission mutation
+- audit writer
+- tools, commands, external actions, arbitrary files, and desktop control
+- background service, systemd, automatic startup, public/LAN binding,
+  voice, vision, and autonomy
+
+`file_write` remains false because Sprint 186 does not enable arbitrary file
+writes; only the fixed, validated local chat-session storage boundary is
+active.
+
+Runtime execution features remain `1`.

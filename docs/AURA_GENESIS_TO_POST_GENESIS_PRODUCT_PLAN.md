@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Canonical Version: v0.185.0-genesis
-Current Canonical Sprint: Sprint 185 — Control Center Web Shell
-Next Planned Sprint: Sprint 186 — Browser Chat Session Runtime
+Current Canonical Version: v0.186.0-genesis
+Current Canonical Sprint: Sprint 186 — Browser Chat Session Runtime
+Next Planned Sprint: Sprint 187 — Local Model Bridge Activation
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together

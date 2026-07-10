@@ -1817,3 +1817,24 @@ background service, public/LAN binding, or autonomous behavior are enabled.
 Runtime execution feature accounting remains `1`.
 
 Next: Sprint 186 — Browser Chat Session Runtime.
+
+## Checkpoint v0.186.0-genesis — Browser Chat Session Runtime
+
+Sprint 186 activates bounded browser-to-local-session interaction. AURA can
+create local chat sessions, validate and persist messages, reload history,
+return an honest no-model placeholder, replay duplicate client submissions
+idempotently, reject stale new-message revisions, and clear a session only
+after an exact confirmation phrase.
+
+The `/chat` page and six chat route contracts reuse the existing foreground
+localhost listener. Private session files are atomic, mode `0600`,
+integrity-checked, bounded, and excluded from Git.
+
+Local model inference, network fallback, AURA long-term memory writes, tools,
+commands, actions, arbitrary files, desktop control, permission mutation,
+audit writes, background service, public/LAN binding, browser auto-launch,
+and autonomy remain disabled.
+
+Runtime execution feature accounting remains `1`.
+
+Next: Sprint 187 — Local Model Bridge Activation.

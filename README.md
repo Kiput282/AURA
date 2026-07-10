@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.185.0-genesis
-Current status: permission-gated localhost Control Center web shell runtime alpha
-Current runtime state: one localhost-only read-only listener with deterministic lifecycle, nine transparent status routes, nine Control Center backend routes, and a responsive browser shell with three local assets across eight panels is available; browser chat, model, action, mutation, background, systemd, auto-start, and browser auto-launch runtimes remain disabled
+Current version: v0.186.0-genesis
+Current status: permission-gated localhost browser chat session runtime alpha
+Current runtime state: one explicitly confirmed foreground localhost listener provides nine status routes, nine Control Center backend routes, a responsive dashboard, and bounded browser chat sessions with atomic local history persistence; Local Model Bridge, model inference, AURA long-term memory writes, tools, commands, actions, background service, systemd, auto-start, public/LAN binding, and browser auto-launch remain disabled
 
 ---
 
@@ -35,29 +35,29 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 185 in the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 186 in the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.185.0-genesis
-- Sprint 185: Control Center Web Shell
+- v0.186.0-genesis
+- Sprint 186: Browser Chat Session Runtime
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 186 — Browser Chat Session Runtime
+- Next planned sprint: Sprint 187 — Local Model Bridge Activation
 Current capability registry summary:
 
-- total capabilities: 116
-- online capabilities: 114
+- total capabilities: 117
+- online capabilities: 115
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 8
+- permission-gated capabilities: 9
 - review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
@@ -295,7 +295,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.185.0-genesis
+    Version  : 0.186.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -2092,3 +2092,63 @@ desktop, voice, vision, background service, public/LAN binding, and autonomy
 remain disabled.
 
 Next: Sprint 186 — Browser Chat Session Runtime.
+
+## Sprint 186 — Browser Chat Session Runtime
+
+Status: completed
+Version: `v0.186.0-genesis`
+
+Sprint 186 adds AURA's first bounded local browser chat session path:
+
+- local chat page at `http://127.0.0.1:8765/chat`;
+- three local chat assets;
+- six chat route contracts;
+- session creation, listing, loading, and reload;
+- validated message submission;
+- deterministic honest placeholder response until Sprint 187;
+- atomic local JSON persistence with mode `0600`;
+- SHA-256 integrity verification;
+- optimistic revision conflicts;
+- stale-revision idempotent retry using `client_message_id`;
+- exact `CLEAR <session_id>` confirmation;
+- responsive and accessible local chat UI;
+- Control Center link to Local Chat;
+- private transcript directory excluded from Git.
+
+No-bind inspection commands:
+
+```bash
+python3 main.py browser-chat-session-status
+python3 main.py browser-chat-session-self-test
+python3 main.py browser-chat-web-status
+python3 main.py browser-chat-web-self-test
+```
+
+Start the foreground localhost service:
+
+```bash
+python3 main.py service-lifecycle-start --confirm-localhost
+```
+
+Then open manually:
+
+```text
+http://127.0.0.1:8765/chat
+```
+
+Model inference is not active. Accepted messages receive an honest runtime
+notice and remain in the local session store. AURA long-term memory, network
+fallback, tools, commands, actions, arbitrary files, desktop control,
+background service, public/LAN binding, and browser auto-launch remain
+disabled.
+
+Validation:
+
+- session core: 152/152;
+- chat web surface: 85/85;
+- live chat HTTP: 82/82;
+- prior Sprint 181-185 regressions: passed;
+- SIGTERM and SIGINT: clean;
+- port `8765`: closed after tests.
+
+Next: Sprint 187 — Local Model Bridge Activation.

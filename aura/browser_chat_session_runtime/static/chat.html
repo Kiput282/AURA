@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en" data-aura-surface="browser-chat-session">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta name="color-scheme" content="dark">
+  <meta
+    name="description"
+    content="AURA local browser chat session runtime."
+  >
+  <title>AURA Local Chat</title>
+  <link
+    rel="stylesheet"
+    href="/assets/control-center-chat.css"
+  >
+  <script
+    src="/assets/control-center-chat.js"
+    defer
+  ></script>
+</head>
+<body>
+  <a class="skip-link" href="#chat-main">
+    Skip to chat
+  </a>
+
+  <main id="chat-main" class="chat-shell">
+    <aside class="session-sidebar" aria-label="Local chat sessions">
+      <div class="brand-row">
+        <a class="back-link" href="/">← Control Center</a>
+        <p class="eyebrow">Sprint 186</p>
+        <h1>AURA Local Chat</h1>
+        <p class="muted">
+          Local session persistence with no model inference yet.
+        </p>
+      </div>
+
+      <section class="create-card" aria-labelledby="create-title">
+        <h2 id="create-title">New session</h2>
+        <label for="session-title">Optional title</label>
+        <input
+          id="session-title"
+          type="text"
+          maxlength="120"
+          autocomplete="off"
+          placeholder="New local session"
+        >
+        <button id="create-session" type="button">
+          Create session
+        </button>
+      </section>
+
+      <section aria-labelledby="session-list-title">
+        <div class="section-heading">
+          <h2 id="session-list-title">Sessions</h2>
+          <button id="refresh-sessions" type="button">
+            Refresh
+          </button>
+        </div>
+        <div
+          id="session-list"
+          class="session-list"
+          aria-live="polite"
+        ></div>
+      </section>
+    </aside>
+
+    <section class="chat-workspace" aria-labelledby="workspace-title">
+      <header class="workspace-header">
+        <div>
+          <p class="eyebrow">Browser Chat Session Runtime</p>
+          <h2 id="workspace-title">Local transcript</h2>
+          <p id="session-meta" class="muted">
+            Create or select a session.
+          </p>
+        </div>
+        <div class="workspace-actions">
+          <span
+            id="chat-status"
+            class="status-badge"
+            role="status"
+            aria-live="polite"
+          >
+            Idle
+          </span>
+          <button
+            id="clear-session"
+            type="button"
+            disabled
+          >
+            Clear session
+          </button>
+        </div>
+      </header>
+
+      <aside id="model-boundary" class="boundary-card">
+        <strong>Model boundary</strong>
+        <p>
+          Local Model Bridge is not active. Messages are persisted
+          locally and receive an honest placeholder response until
+          Sprint 187.
+        </p>
+      </aside>
+
+      <div
+        id="chat-transcript"
+        class="transcript"
+        aria-live="polite"
+        aria-label="Local chat transcript"
+      >
+        <p class="empty-state">
+          No active local chat session.
+        </p>
+      </div>
+
+      <section class="composer" aria-labelledby="composer-title">
+        <h3 id="composer-title">Submit a local message</h3>
+        <label for="message-input">Message</label>
+        <textarea
+          id="message-input"
+          rows="5"
+          maxlength="8192"
+          disabled
+          placeholder="Model responses become available in Sprint 187."
+        ></textarea>
+        <div class="composer-footer">
+          <p class="muted">
+            Maximum 8,192 characters. No tools or actions run.
+          </p>
+          <button
+            id="send-message"
+            type="button"
+            disabled
+          >
+            Save message
+          </button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="clear-dialog">
+    <div class="dialog-content">
+      <h2>Clear local session</h2>
+      <p>
+        Type the exact confirmation phrase shown below.
+      </p>
+      <code id="clear-phrase">CLEAR chat_…</code>
+      <label for="clear-confirmation">
+        Confirmation
+      </label>
+      <input
+        id="clear-confirmation"
+        type="text"
+        autocomplete="off"
+      >
+      <div class="dialog-actions">
+        <button id="cancel-clear" type="button">
+          Cancel
+        </button>
+        <button id="confirm-clear" type="button">
+          Clear history
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <noscript>
+    <div class="noscript-message">
+      JavaScript is required for the local chat session interface.
+    </div>
+  </noscript>
+</body>
+</html>

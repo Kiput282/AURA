@@ -146,6 +146,26 @@ class CapabilityRegistryManager:
                    'control_center_accessibility_contract': True,
                    'control_center_degraded_state_ui': True,
                    'control_center_safe_idle_indicator': True,
+                   'browser_chat_session_runtime': True,
+                   'browser_chat_http_routes': True,
+                   'browser_chat_session_creation': True,
+                   'browser_chat_validated_submission': True,
+                   'browser_chat_response_delivery': True,
+                   'browser_chat_history_persistence': True,
+                   'browser_chat_session_reload': True,
+                   'browser_chat_clear_confirmation': True,
+                   'browser_chat_revision_control': True,
+                   'browser_chat_idempotent_submission': True,
+                   'browser_chat_integrity_hash': True,
+                   'browser_chat_bounded_mutation': True,
+                   'browser_chat_asset_route_count': 3,
+                   'browser_chat_route_contract_count': 6,
+                   'local_interaction_total_route_contract_count': 27,
+                   'local_session_file_write_runtime': True,
+                   'local_model_bridge_runtime': False,
+                   'local_model_inference_runtime': False,
+                   'network_fallback_runtime': False,
+                   'aura_long_term_memory_write_runtime': False,
                    'control_center_external_dependency_runtime': False,
                    'control_center_browser_launch_runtime': False,
                    'control_center_backend_mutation_runtime': False,
@@ -180,7 +200,7 @@ class CapabilityRegistryManager:
                    'http_lifecycle_mutation_runtime': False,
                    'localhost_only_runtime': True,
                    'foreground_only_runtime': True,
-                   'read_only_http_runtime': True,
+                   'read_only_http_runtime': False,
                    'explicit_start_confirmation_required': True,
                    'public_web_server_runtime': False,
                    'lan_web_server_runtime': False,
@@ -199,7 +219,7 @@ class CapabilityRegistryManager:
                    'permission_grant_runtime': False,
                    'ui_runtime': True,
                    'web_server_runtime': True,
-                   'chat_runtime': False,
+                   'chat_runtime': True,
                    'service_runtime': True,
                    'launcher_runtime': False,
                    'file_read': False,
@@ -1641,6 +1661,31 @@ class CapabilityRegistryManager:
                     "controls, permission decisions, audit writes, memory "
                     "writes, chat, models, commands, tools, actions, "
                     "background service, public/LAN binding, or autonomy."
+                ),
+            },
+            {
+                "id": "aura_browser_chat_session_runtime",
+                "name": "AURA Browser Chat Session Runtime",
+                "state": "online",
+                "runtime_level": "permission_gated_alpha_runtime",
+                "risk_level": "medium",
+                "permission_required": "user_confirmation",
+                "category": "local_chat_runtime",
+                "introduced_in": "0.186.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Localhost-only browser chat session runtime with "
+                    "bounded session creation, validated message "
+                    "submission, deterministic honest placeholder "
+                    "response delivery, atomic local history persistence, "
+                    "session reload, optimistic revision control, "
+                    "idempotent client message replay, integrity hashes, "
+                    "and explicit clear confirmation. Local model "
+                    "inference, network fallback, AURA long-term memory "
+                    "writes, tools, commands, actions, arbitrary files, "
+                    "desktop control, background service, public/LAN "
+                    "binding, browser auto-launch, and autonomy remain "
+                    "disabled."
                 ),
             },
 ]

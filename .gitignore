@@ -8,3 +8,6 @@ __pycache__/
 logs/
 data/
 .aura_runtime/
+
+# Private local browser chat session data
+data/chat_sessions/

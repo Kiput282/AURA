@@ -734,6 +734,10 @@ class AuraControlCenterBackendRuntimeManager:
                              'health_status_api': True,
                              'control_center_backend_core': True,
                              'control_center_web_shell': True,
+                             'browser_chat_sessions': True,
+                             'local_chat_history_persistence': True,
+                             'validated_message_submission': True,
+                             'explicit_clear_confirmation': True,
                              'local_static_asset_delivery': True,
                              'responsive_dashboard_layout': True,
                              'accessibility_contract': True,
@@ -755,7 +759,6 @@ class AuraControlCenterBackendRuntimeManager:
             ),
                          }
         blocked_surfaces = {
-                               'browser_chat_sessions': False,
                                'local_model_bridge': False,
                                'permission_decision_runtime': False,
                                'audit_writer_runtime': False,
@@ -777,7 +780,7 @@ class AuraControlCenterBackendRuntimeManager:
         return {
                    'panel_id': "readiness",
                    'title': "Runtime Readiness",
-                   'status': "web_shell_ready_read_only" if backend_ready else "degraded",
+                   'status': "browser_chat_ready_no_model" if backend_ready else "degraded",
                    'backend_ready': backend_ready,
                    'web_shell_ready': True,
                    'interaction_runtime_ready': bool(
@@ -786,17 +789,24 @@ class AuraControlCenterBackendRuntimeManager:
                    'execution_ready': bool(
                 safety["execution_ready"]
             ),
-                   'current_stage': "read_only_control_center_web_shell",
+                   'current_stage': "browser_chat_session_runtime",
                    'ready_surfaces': ready_surfaces,
                    'blocked_surfaces': blocked_surfaces,
                    'blockers': blockers,
-                   'next_sprint': "Sprint 186 — Browser Chat Session Runtime",
-                   'read_only': True,
+                   'next_sprint': "Sprint 187 — Local Model Bridge Activation",
+                   'read_only': False,
                    'actions_allowed': False,
                    'shell_asset_route_count': 3,
-                   'total_route_count': 21,
+                   'total_route_count': 27,
                    'browser_auto_launch': False,
                    'external_dependencies': False,
+                   'browser_chat_ready': True,
+                   'local_model_bridge_ready': False,
+                   'bounded_session_mutation': True,
+                   'chat_asset_route_count': 3,
+                   'chat_route_contract_count': 6,
+                   'model_bridge_active': False,
+                   'aura_memory_write_active': False,
                }
 
     def snapshot(self) -> dict[str, Any]:
@@ -952,6 +962,21 @@ class AuraControlCenterBackendRuntimeManager:
                    'backend_panel_count': len(self.PANEL_IDS),
                    'frontend_runtime': True,
                    'static_file_serving_runtime': True,
+                   'browser_chat_session_runtime': True,
+                   'browser_chat_http_routes': True,
+                   'browser_chat_asset_route_count': 3,
+                   'browser_chat_route_contract_count': 6,
+                   'total_route_contract_count': 27,
+                   'bounded_session_mutation': True,
+                   'atomic_session_persistence': True,
+                   'session_integrity_hash': True,
+                   'optimistic_revision_control': True,
+                   'idempotent_message_submission': True,
+                   'explicit_clear_confirmation': True,
+                   'local_model_bridge_runtime': False,
+                   'model_inference_runtime': False,
+                   'network_fallback_runtime': False,
+                   'aura_long_term_memory_write': False,
                    'control_center_web_shell_runtime': True,
                    'shell_asset_route_count': 3,
                    'total_route_count': 21,
@@ -1074,9 +1099,9 @@ class AuraControlCenterBackendRuntimeManager:
         memory = panels["memory"]
         readiness = panels["readiness"]
 
-        assertions['overview_version_185'] = (
+        assertions['overview_version_186'] = (
             overview["identity"]["version"]
-            == '0.185.0-genesis'
+            == '0.186.0-genesis'
         )
         assertions["overview_boot_ready"] = (
             overview["core_boot_ready"] is True
@@ -1090,17 +1115,17 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["overview_listener_false"] = (
             overview["listener_active"] is False
         )
-        assertions['overview_capability_total_116'] = (
-            overview["capability_total"] == 116
+        assertions['overview_capability_total_117'] = (
+            overview["capability_total"] == 117
         )
-        assertions['overview_online_114'] = (
-            overview["online_capabilities"] == 114
+        assertions['overview_online_115'] = (
+            overview["online_capabilities"] == 115
         )
-        assertions['overview_permission_gated_eight'] = (
+        assertions['overview_permission_gated_nine'] = (
             overview[
                 "permission_gated_capabilities"
             ]
-            == 8
+            == 9
         )
         assertions["overview_runtime_feature_one"] = (
             overview["runtime_execution_features"]
@@ -1135,14 +1160,14 @@ class AuraControlCenterBackendRuntimeManager:
             is False
         )
 
-        assertions['capability_card_count_116'] = (
-            capabilities["card_count"] == 116
+        assertions['capability_card_count_117'] = (
+            capabilities["card_count"] == 117
         )
-        assertions['capability_summary_total_116'] = (
+        assertions['capability_summary_total_117'] = (
             capabilities["summary"][
                 "total_capabilities"
             ]
-            == 116
+            == 117
         )
         assertions["capability_mutation_false"] = (
             capabilities["mutation_enabled"] is False
@@ -1168,11 +1193,11 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["permission_foundation_available"] = (
             permissions["foundation_available"] is True
         )
-        assertions['permission_gated_count_eight'] = (
+        assertions['permission_gated_count_nine'] = (
             permissions[
                 "permission_gated_capability_count"
             ]
-            == 8
+            == 9
         )
         assertions["pending_runtime_false"] = (
             permissions[
@@ -1238,8 +1263,8 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_backend_ready"] = (
             readiness["backend_ready"] is True
         )
-        assertions['readiness_web_shell_true'] = (
-            readiness["web_shell_ready"] is True
+        assertions['readiness_browser_chat_true'] = (
+            readiness["browser_chat_ready"] is True
         )
         assertions["readiness_runtime_false"] = (
             readiness["interaction_runtime_ready"]
@@ -1248,9 +1273,9 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_execution_false"] = (
             readiness["execution_ready"] is False
         )
-        assertions['readiness_next_sprint_186'] = (
+        assertions['readiness_next_sprint_187'] = (
             readiness["next_sprint"]
-            == 'Sprint 186 — Browser Chat Session Runtime'       )
+            == 'Sprint 187 — Local Model Bridge Activation'     )
 
         for route in self.ROUTES:
             payload = self.payload_for_route(
@@ -1401,7 +1426,7 @@ class AuraControlCenterBackendRuntimeManager:
                 self.FOUNDATION_MODULES
             ),
             "foundation_contracts_available": 8,
-            "capability_card_count": 116,
+            "capability_card_count": 117,
             "degraded_fixture_verified": True,
             "read_only_file_integrity_verified": True,
             "frontend_rendered": False,
