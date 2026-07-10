@@ -1,5 +1,5 @@
 name: AURA
-version: "0.194.0-genesis"
+version: "0.195.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -82,3 +82,10 @@ modes:
 # install, cloud fallback, transcript persistence, transcript-to-chat handoff,
 # transcript-to-action, command execution, microphone capture, and audio device
 # access disabled.
+# Sprint 195: voice_intent_and_chat_integration adds a safe voice intent and
+# chat integration contract with contract-only transcript input, transcript
+# normalization/classification boundaries, clarification/action gates, and a
+# future transcript-to-chat handoff contract while keeping live transcript
+# input, automatic chat handoff, chat session writes, model requests, memory
+# writes, direct voice-to-action, tool/command execution, file/desktop/network
+# actions, STT/TTS runtime, speaker playback, and cloud fallback disabled.

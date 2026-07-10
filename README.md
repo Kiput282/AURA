@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.194.0-genesis
-Current status: Sprint 194 Speech-to-Text Adapter Runtime completed and ready to hand off to Sprint 195 Voice Intent and Chat Integration
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 194 adds a safe speech-to-text adapter contract with local/offline-first candidates, faster-whisper as the default candidate, and a provided-audio-file boundary for future dry runs while keeping STT execution, audio file read/write, live microphone transcription, microphone capture, audio device access, device discovery, recording, audio buffer, model download, dependency install, cloud STT fallback, transcript persistence, transcript-to-chat handoff, transcript-to-action, command execution, speaker playback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
+Current version: v0.195.0-genesis
+Current status: Sprint 195 Voice Intent and Chat Integration completed and ready to hand off to Sprint 196 Text-to-Speech Adapter Runtime
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 195 adds a safe voice intent and chat integration contract with contract-only transcript input, transcript normalization/classification boundaries, clarification/action gates, and a future transcript-to-chat handoff contract while keeping live transcript input, automatic chat handoff, chat session writes, model requests, memory writes, direct voice-to-action, tool/command execution, file/desktop/network/git actions, STT/TTS runtime, speaker playback, cloud fallback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 194 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe speech-to-text adapter contract.
+AURA has completed Sprint 195 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe voice intent and chat integration contract.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.195.0-genesis
+- Sprint 195: Voice Intent and Chat Integration
 - v0.194.0-genesis
 - Sprint 194: Speech-to-Text Adapter Runtime
 - v0.193.0-genesis
@@ -58,7 +60,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 195 — Voice Intent and Chat Integration
+- Next planned sprint: Sprint 196 — Text-to-Speech Adapter Runtime
 Current capability registry summary:
 
 - total capabilities: 121
@@ -2567,3 +2569,68 @@ arbitrary file access, desktop control, public/LAN binding, background service,
 systemd activation, browser auto-launch, or autonomy.
 
 Next: Sprint 195 — Voice Intent and Chat Integration.
+
+## Sprint 195 — Voice Intent and Chat Integration
+
+Version: `v0.195.0-genesis`
+
+Sprint 195 adds the voice intent and chat integration contract on top of the
+Sprint 191 activation contract, Sprint 192 listen-state foundation, Sprint 193
+microphone capture boundary, and Sprint 194 speech-to-text adapter contract.
+
+Validated checkpoint:
+
+- voice intent and chat integration contract ready;
+- voice intent runtime not ready;
+- voice intent layer contract ready;
+- transcript source is `contract_only`;
+- transcript input boundary ready;
+- provided transcript required before any future dry run;
+- dummy transcript allowed only for the contract boundary;
+- live transcript input inactive;
+- transcript normalization contract ready;
+- transcript normalization runtime inactive;
+- intent classification contract ready;
+- intent classification runtime inactive;
+- intent confidence runtime inactive;
+- clarification gate contract ready;
+- action intent gate contract ready;
+- voice response plan contract ready;
+- transcript-to-chat handoff contract ready;
+- transcript-to-chat handoff inactive;
+- chat session reuse required;
+- chat session write inactive;
+- chat model request inactive;
+- chat response generation inactive;
+- permission required before any future chat handoff;
+- human confirmation required for future action-like voice intent;
+- transcript persistence disabled;
+- memory write inactive;
+- direct voice-to-action disabled;
+- tool execution inactive;
+- command execution inactive;
+- file mutation inactive;
+- desktop action inactive;
+- network action inactive;
+- git action inactive;
+- STT runtime inactive;
+- transcription inactive;
+- live microphone transcription inactive;
+- TTS runtime inactive;
+- speaker playback inactive;
+- cloud STT fallback disabled;
+- silent cloud fallback disabled;
+- 138 total voice activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat
+  assertions;
+- zero failed voice activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat
+  assertions.
+
+Sprint 195 adds no live transcript input, automatic transcript-to-chat handoff,
+chat session write, model request, response generation, transcript persistence,
+memory write, direct voice-to-action execution, tool execution, command
+execution, file mutation, desktop action, network action, git action, STT
+execution, transcription runtime, live microphone transcription, TTS execution,
+speaker playback, cloud fallback, arbitrary file access, public/LAN binding,
+background service, systemd activation, browser auto-launch, or autonomy.
+
+Next: Sprint 196 — Text-to-Speech Adapter Runtime.

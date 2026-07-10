@@ -2124,3 +2124,67 @@ files, control the desktop, start background services, bind publicly, or add
 autonomy.
 
 Next: Sprint 195 — Voice Intent and Chat Integration.
+
+## Checkpoint v0.195.0-genesis — Voice Intent and Chat Integration
+
+Sprint 195 continues the Sprint 191-200 Voice Interaction Runtime block.
+
+Checkpoint state:
+
+- voice activation foundation remains ready;
+- listen-state foundation remains ready;
+- microphone boundary remains ready;
+- STT adapter contract remains ready;
+- voice intent and chat integration contract ready;
+- voice intent runtime not ready;
+- voice intent layer contract ready;
+- transcript source is `contract_only`;
+- transcript input boundary ready;
+- provided transcript required before any future dry run;
+- dummy transcript allowed for contract boundary;
+- live transcript input inactive;
+- transcript normalization contract ready;
+- transcript normalization runtime inactive;
+- intent classification contract ready;
+- intent classification runtime inactive;
+- intent confidence runtime inactive;
+- clarification gate contract ready;
+- action intent gate contract ready;
+- voice response plan contract ready;
+- transcript-to-chat handoff contract ready;
+- transcript-to-chat handoff inactive;
+- chat session reuse required;
+- chat session write inactive;
+- chat model request inactive;
+- chat response generation inactive;
+- permission required before any future chat handoff;
+- human confirmation required for future action-like voice intent;
+- transcript persistence disabled;
+- memory write inactive;
+- direct voice-to-action disabled;
+- tool execution inactive;
+- command execution inactive;
+- file mutation inactive;
+- desktop action inactive;
+- network action inactive;
+- git action inactive;
+- STT runtime inactive;
+- transcription inactive;
+- live microphone transcription inactive;
+- TTS runtime inactive;
+- speaker playback inactive;
+- cloud STT fallback disabled;
+- silent cloud fallback disabled;
+- 138 activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat assertions;
+- 0 failed activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat assertions.
+
+Sprint 195 does not process live transcripts, automatically hand transcripts to
+chat, write chat sessions, request models, generate responses, persist
+transcripts, write memory, execute voice actions, execute tools, execute
+commands, mutate files, control the desktop, perform network actions, perform
+git actions, run STT, transcribe speech, run live microphone transcription, run
+TTS, play speaker output, fallback to cloud providers, start a listen loop,
+enable wake words, listen in the background, hide capture, start background
+services, bind publicly, or add autonomy.
+
+Next: Sprint 196 — Text-to-Speech Adapter Runtime.

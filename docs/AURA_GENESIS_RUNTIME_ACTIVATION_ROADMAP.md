@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.194.0-genesis
+Current anchor: v0.195.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.194.0-genesis
-- Completed: Sprint 194 — Speech-to-Text Adapter Runtime
+- Current version: v0.195.0-genesis
+- Completed: Sprint 195 — Voice Intent and Chat Integration
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: activation, explicit listen-state, local microphone capture boundary, and speech-to-text adapter contract foundations ready; STT execution, audio file read/write, live microphone transcription, microphone capture runtime, audio device access, device discovery, recording, audio buffer, transcript handoff/action, cloud fallback, TTS runtime, and speaker playback disabled
+- Voice runtime: activation, explicit listen-state, local microphone capture boundary, speech-to-text adapter contract, and voice intent/chat integration contract foundations ready; live transcript input, automatic chat handoff, chat session writes, model requests, memory writes, direct voice-to-action, tool/command execution, file/desktop/network/git actions, STT/TTS runtime, cloud fallback, and speaker playback disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 195 — Voice Intent and Chat Integration
+- Next: Sprint 196 — Text-to-Speech Adapter Runtime
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -313,3 +313,26 @@ The voice runtime check now covers 98 activation/listen-state/microphone-boundar
 assertions and reports zero failed assertions.
 
 Next: Sprint 195 — Voice Intent and Chat Integration.
+
+## v0.195.0-genesis — Voice Intent and Chat Integration
+
+Sprint 195 adds the voice intent and chat integration contract for the Voice
+Interaction Runtime block.
+
+The checkpoint defines a safe contract-only voice intent boundary without
+processing live transcripts. It prepares transcript input, transcript
+normalization, intent classification, clarification gates, action-intent gates,
+voice response planning, and future transcript-to-chat handoff while keeping
+runtime execution disabled.
+
+Sprint 195 preserves disabled live transcript input, automatic chat handoff,
+chat session writes, model requests, response generation, transcript
+persistence, memory writes, direct voice-to-action execution, tool execution,
+command execution, file mutation, desktop action, network action, git action,
+STT runtime, transcription runtime, live microphone transcription, TTS runtime,
+speaker playback, cloud STT fallback, and silent cloud fallback.
+
+The voice runtime check now covers 138 activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat
+assertions and reports zero failed assertions.
+
+Next: Sprint 196 — Text-to-Speech Adapter Runtime.

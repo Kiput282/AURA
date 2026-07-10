@@ -771,3 +771,25 @@ playback remain disabled.
 This is still not live voice transcription. It is the speech-to-text adapter
 contract that lets Sprint 195 integrate voice intent and chat boundaries without
 allowing raw transcripts to execute actions directly.
+
+
+## Sprint 195 — Voice Intent and Chat Integration
+
+`v0.195.0-genesis` adds the voice intent and chat integration contract.
+
+AURA now has a safe boundary for future voice-to-chat flow without processing
+live transcripts or writing chat sessions yet. The contract prepares transcript
+input, normalization, intent classification, clarification gates, action gates,
+voice response planning, and future transcript-to-chat handoff while preserving
+explicit permission and human confirmation boundaries.
+
+The checkpoint confirms that live transcript input, automatic chat handoff,
+chat session writes, model requests, response generation, transcript
+persistence, memory writes, direct voice-to-action execution, tool execution,
+command execution, file mutation, desktop action, network action, git action,
+STT runtime, transcription runtime, live microphone transcription, TTS runtime,
+speaker playback, cloud fallback, and silent fallback remain disabled.
+
+This is still not live voice chat. It is the voice intent and chat integration
+contract that lets Sprint 196 add Text-to-Speech Adapter Runtime without
+allowing raw voice intent to execute actions directly.

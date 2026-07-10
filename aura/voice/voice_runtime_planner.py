@@ -382,6 +382,64 @@ class VoiceRuntimePlanner:
             ],
         }
 
+
+    def voice_intent_chat_integration_contract(self) -> dict[str, Any]:
+        return {
+            "sprint": 195,
+            "name": "voice_intent_and_chat_integration",
+            "voice_intent_chat_contract_ready": True,
+            "voice_intent_runtime_ready": False,
+            "voice_intent_layer_contract_ready": True,
+            "transcript_source": "contract_only",
+            "transcript_input_boundary_ready": True,
+            "provided_transcript_required_for_future_dry_run": True,
+            "dummy_transcript_allowed_for_contract": True,
+            "live_transcript_input_active": False,
+            "transcript_normalization_contract_ready": True,
+            "transcript_normalization_runtime_active": False,
+            "intent_classification_contract_ready": True,
+            "intent_classification_runtime_active": False,
+            "intent_confidence_runtime_active": False,
+            "clarification_gate_contract_ready": True,
+            "action_intent_gate_contract_ready": True,
+            "voice_response_plan_contract_ready": True,
+            "transcript_to_chat_handoff_contract_ready": True,
+            "transcript_to_chat_handoff_active": False,
+            "chat_session_reuse_required": True,
+            "chat_session_write_active": False,
+            "chat_model_request_active": False,
+            "chat_response_generation_active": False,
+            "permission_required_before_chat_handoff": True,
+            "human_confirmation_required_for_action_intent": True,
+            "transcript_persistence_enabled": False,
+            "memory_write_active": False,
+            "direct_voice_to_action_enabled": False,
+            "tool_execution_active": False,
+            "command_execution_active": False,
+            "file_mutation_active": False,
+            "desktop_action_active": False,
+            "network_action_active": False,
+            "git_action_active": False,
+            "stt_runtime_active": False,
+            "transcription_active": False,
+            "live_microphone_transcription_active": False,
+            "tts_runtime_active": False,
+            "speaker_playback_active": False,
+            "cloud_stt_fallback_enabled": False,
+            "silent_cloud_fallback_enabled": False,
+            "runtime_scope": "voice_intent_chat_contract_only",
+            "next_sprint": 196,
+            "next_boundary": "text_to_speech_adapter_runtime",
+            "guardrails": [
+                "No live transcript input is processed in Sprint 195.",
+                "No transcript is handed to chat automatically in Sprint 195.",
+                "No chat session write or model request is performed by the voice layer.",
+                "No direct voice-to-action execution is allowed.",
+                "No tools, commands, files, desktop, network, git, or memory writes are executed.",
+                "Action-like voice intent requires future explicit human confirmation.",
+            ],
+        }
+
     def status(self) -> dict[str, Any]:
         stt_candidates = self.stt_candidates()
         tts_candidates = self.tts_candidates()
@@ -389,6 +447,7 @@ class VoiceRuntimePlanner:
         listen_state = self.listen_state_contract()
         microphone_boundary = self.microphone_capture_boundary_contract()
         stt_adapter = self.speech_to_text_adapter_runtime_contract()
+        voice_intent_chat = self.voice_intent_chat_integration_contract()
 
         return {
             "name": self.name,
@@ -416,6 +475,15 @@ class VoiceRuntimePlanner:
             "transcription_active": stt_adapter["transcription_active"],
             "cloud_stt_fallback_enabled": stt_adapter["cloud_stt_fallback_enabled"],
             "transcript_to_action_enabled": stt_adapter["transcript_to_action_enabled"],
+            "voice_intent_chat_contract_ready": voice_intent_chat["voice_intent_chat_contract_ready"],
+            "voice_intent_runtime_ready": voice_intent_chat["voice_intent_runtime_ready"],
+            "transcript_source": voice_intent_chat["transcript_source"],
+            "transcript_to_chat_handoff_ready": voice_intent_chat["transcript_to_chat_handoff_contract_ready"],
+            "transcript_to_chat_handoff_active": voice_intent_chat["transcript_to_chat_handoff_active"],
+            "intent_classification_runtime_active": voice_intent_chat["intent_classification_runtime_active"],
+            "chat_session_write_active": voice_intent_chat["chat_session_write_active"],
+            "voice_intent_direct_voice_to_action_enabled": voice_intent_chat["direct_voice_to_action_enabled"],
+            "voice_intent_command_execution_active": voice_intent_chat["command_execution_active"],
             "runtime_ready": False,
             "safe_idle_default": activation["safe_idle_default"],
             "push_to_talk_required": activation["push_to_talk_required"],
@@ -437,7 +505,8 @@ class VoiceRuntimePlanner:
             "listen_state_contract": listen_state,
             "microphone_capture_boundary_contract": microphone_boundary,
             "speech_to_text_adapter_runtime_contract": stt_adapter,
-            "note": "Voice speech-to-text adapter contract is ready, but real STT execution, audio file transcription, live microphone transcription, cloud fallback, and transcript actions are not enabled yet.",
+            "voice_intent_chat_integration_contract": voice_intent_chat,
+            "note": "Voice intent and chat integration contract is ready, but live transcript input, chat handoff execution, model requests, memory writes, and voice actions are not enabled yet.",
         }
 
     def plan(self) -> dict[str, Any]:
@@ -505,6 +574,7 @@ class VoiceRuntimePlanner:
         listen_state = self.listen_state_contract()
         microphone_boundary = self.microphone_capture_boundary_contract()
         stt_adapter = self.speech_to_text_adapter_runtime_contract()
+        voice_intent_chat = self.voice_intent_chat_integration_contract()
 
         installed_python = sum(
             1
@@ -617,6 +687,46 @@ class VoiceRuntimePlanner:
             "remote_stt_provider_disabled": stt_adapter["remote_provider_enabled"] is False,
             "permission_required_before_transcription": stt_adapter["permission_required_before_transcription"] is True,
             "stt_microphone_permission_reuses_existing_action": stt_adapter["microphone_permission_action"] == "microphone_listen",
+            "voice_intent_chat_contract_ready": voice_intent_chat["voice_intent_chat_contract_ready"] is True,
+            "voice_intent_runtime_not_ready": voice_intent_chat["voice_intent_runtime_ready"] is False,
+            "voice_intent_layer_contract_ready": voice_intent_chat["voice_intent_layer_contract_ready"] is True,
+            "voice_transcript_source_contract_only": voice_intent_chat["transcript_source"] == "contract_only",
+            "voice_transcript_input_boundary_ready": voice_intent_chat["transcript_input_boundary_ready"] is True,
+            "future_provided_transcript_required": voice_intent_chat["provided_transcript_required_for_future_dry_run"] is True,
+            "dummy_transcript_allowed_for_contract": voice_intent_chat["dummy_transcript_allowed_for_contract"] is True,
+            "live_transcript_input_inactive": voice_intent_chat["live_transcript_input_active"] is False,
+            "transcript_normalization_contract_ready": voice_intent_chat["transcript_normalization_contract_ready"] is True,
+            "transcript_normalization_runtime_inactive": voice_intent_chat["transcript_normalization_runtime_active"] is False,
+            "intent_classification_contract_ready": voice_intent_chat["intent_classification_contract_ready"] is True,
+            "intent_classification_runtime_inactive": voice_intent_chat["intent_classification_runtime_active"] is False,
+            "intent_confidence_runtime_inactive": voice_intent_chat["intent_confidence_runtime_active"] is False,
+            "clarification_gate_contract_ready": voice_intent_chat["clarification_gate_contract_ready"] is True,
+            "action_intent_gate_contract_ready": voice_intent_chat["action_intent_gate_contract_ready"] is True,
+            "voice_response_plan_contract_ready": voice_intent_chat["voice_response_plan_contract_ready"] is True,
+            "transcript_to_chat_handoff_contract_ready": voice_intent_chat["transcript_to_chat_handoff_contract_ready"] is True,
+            "transcript_to_chat_handoff_inactive": voice_intent_chat["transcript_to_chat_handoff_active"] is False,
+            "voice_chat_session_reuse_required": voice_intent_chat["chat_session_reuse_required"] is True,
+            "voice_chat_session_write_inactive": voice_intent_chat["chat_session_write_active"] is False,
+            "voice_chat_model_request_inactive": voice_intent_chat["chat_model_request_active"] is False,
+            "voice_chat_response_generation_inactive": voice_intent_chat["chat_response_generation_active"] is False,
+            "permission_required_before_voice_chat_handoff": voice_intent_chat["permission_required_before_chat_handoff"] is True,
+            "human_confirmation_required_for_action_intent": voice_intent_chat["human_confirmation_required_for_action_intent"] is True,
+            "voice_transcript_persistence_disabled": voice_intent_chat["transcript_persistence_enabled"] is False,
+            "voice_memory_write_inactive": voice_intent_chat["memory_write_active"] is False,
+            "voice_direct_action_disabled": voice_intent_chat["direct_voice_to_action_enabled"] is False,
+            "voice_tool_execution_inactive": voice_intent_chat["tool_execution_active"] is False,
+            "voice_command_execution_inactive": voice_intent_chat["command_execution_active"] is False,
+            "voice_file_mutation_inactive": voice_intent_chat["file_mutation_active"] is False,
+            "voice_desktop_action_inactive": voice_intent_chat["desktop_action_active"] is False,
+            "voice_network_action_inactive": voice_intent_chat["network_action_active"] is False,
+            "voice_git_action_inactive": voice_intent_chat["git_action_active"] is False,
+            "voice_stt_runtime_inactive_for_intent": voice_intent_chat["stt_runtime_active"] is False,
+            "voice_transcription_inactive_for_intent": voice_intent_chat["transcription_active"] is False,
+            "voice_live_microphone_transcription_inactive": voice_intent_chat["live_microphone_transcription_active"] is False,
+            "voice_tts_runtime_inactive_for_intent": voice_intent_chat["tts_runtime_active"] is False,
+            "voice_speaker_playback_inactive_for_intent": voice_intent_chat["speaker_playback_active"] is False,
+            "voice_cloud_stt_fallback_disabled": voice_intent_chat["cloud_stt_fallback_enabled"] is False,
+            "voice_silent_cloud_fallback_disabled": voice_intent_chat["silent_cloud_fallback_enabled"] is False,
         }
 
         failed_assertions = [
@@ -643,5 +753,6 @@ class VoiceRuntimePlanner:
             "listen_state_contract": listen_state,
             "microphone_capture_boundary_contract": microphone_boundary,
             "speech_to_text_adapter_runtime_contract": stt_adapter,
-            "note": "Runtime is not enabled yet. This check did not access microphone, speaker, audio devices, audio files, STT models, cloud STT, or transcript actions.",
+            "voice_intent_chat_integration_contract": voice_intent_chat,
+            "note": "Runtime is not enabled yet. This check did not access microphone, speaker, audio devices, audio files, STT models, cloud STT, transcript chat handoff, tools, commands, memory, files, or voice actions.",
         }
