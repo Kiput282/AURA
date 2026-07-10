@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.191.0-genesis
+Current anchor: v0.192.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.191.0-genesis
-- Completed: Sprint 191 — Voice Runtime Activation Foundation
+- Current version: v0.192.0-genesis
+- Completed: Sprint 192 — Push-to-Talk and Explicit Listen State
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: activation foundation ready; microphone capture, STT/TTS runtime, and speaker playback disabled
+- Voice runtime: activation and explicit listen-state foundations ready; microphone capture, audio buffer, STT/TTS runtime, listen loop, and speaker playback disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 192 — Push-to-Talk and Explicit Listen State
+- Next: Sprint 193 — Local Microphone Capture Boundary
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -244,3 +244,26 @@ The voice activation check contains 19 assertions and currently reports zero
 failed assertions.
 
 Next: Sprint 192 — Push-to-Talk and Explicit Listen State.
+
+## v0.192.0-genesis — Push-to-Talk and Explicit Listen State
+
+Sprint 192 adds the explicit push-to-talk listen-state foundation for the Voice
+Interaction Runtime block.
+
+The checkpoint declares the bounded listen-state contract with idle as the
+default and current state. It exposes nine allowed states: `idle`,
+`listen_requested`, `permission_required`, `listen_ready`,
+`listening_explicit`, `listen_stopping`, `listen_stopped`, `listen_denied`,
+and `listen_error`.
+
+Sprint 192 confirms that explicit push-to-talk, explicit listen, explicit stop,
+and microphone permission are required before any future live listening. It
+preserves disabled microphone capture, audio buffer, STT runtime, listen loop,
+background listener, wake word, hidden capture, always-listening, silent cloud
+fallback, direct voice-to-action execution, state persistence, state mutation,
+audio device access, and command execution.
+
+The voice runtime check now covers 36 activation/listen-state assertions and
+reports zero failed assertions.
+
+Next: Sprint 193 — Local Microphone Capture Boundary.

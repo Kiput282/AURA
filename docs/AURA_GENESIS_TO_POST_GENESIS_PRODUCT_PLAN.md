@@ -708,3 +708,23 @@ TTS, permission/audit linkage, and Control Center voice controls without
 breaking the established safety model.
 
 Next product block: Sprint 191-200 Voice Interaction Runtime.
+
+
+## Sprint 192 — Push-to-Talk and Explicit Listen State
+
+`v0.192.0-genesis` adds the explicit push-to-talk listen-state foundation.
+
+AURA now has a safe voice-state contract for moving from activation foundation
+toward live voice without opening microphone capture yet. The state contract
+keeps the current/default state at `idle`, declares the future allowed
+listen-state path, requires explicit listen and explicit stop, and requires
+microphone permission before any future live listening.
+
+The checkpoint confirms that microphone capture, audio buffering, STT runtime,
+listen loop, background listener, wake word, always-listening, hidden capture,
+silent cloud fallback, direct voice-to-action execution, state persistence,
+state mutation, audio device access, and command execution remain disabled.
+
+This is still not live voice. It is the explicit listen-state boundary that
+lets Sprint 193 define the local microphone capture boundary without creating
+hidden capture or background listening behavior.

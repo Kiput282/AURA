@@ -195,10 +195,76 @@ class VoiceRuntimePlanner:
             ],
         }
 
+
+    def listen_state_contract(self) -> dict[str, Any]:
+        allowed_states = [
+            "idle",
+            "listen_requested",
+            "permission_required",
+            "listen_ready",
+            "listening_explicit",
+            "listen_stopping",
+            "listen_stopped",
+            "listen_denied",
+            "listen_error",
+        ]
+
+        transitions = {
+            "idle": ["listen_requested"],
+            "listen_requested": ["permission_required", "listen_ready", "listen_denied"],
+            "permission_required": ["listen_ready", "listen_denied"],
+            "listen_ready": ["listening_explicit", "listen_stopped"],
+            "listening_explicit": ["listen_stopping", "listen_error"],
+            "listen_stopping": ["listen_stopped", "listen_error"],
+            "listen_stopped": ["idle"],
+            "listen_denied": ["idle"],
+            "listen_error": ["idle"],
+        }
+
+        return {
+            "sprint": 192,
+            "name": "push_to_talk_explicit_listen_state",
+            "listen_state_foundation_ready": True,
+            "default_state": "idle",
+            "current_state": "idle",
+            "allowed_states": allowed_states,
+            "transition_map": transitions,
+            "push_to_talk_required": True,
+            "explicit_listen_required": True,
+            "explicit_stop_required": True,
+            "permission_required_before_listening": True,
+            "microphone_permission_action": "microphone_listen",
+            "microphone_capture_active": False,
+            "audio_buffer_active": False,
+            "stt_runtime_active": False,
+            "listen_loop_active": False,
+            "background_listener_active": False,
+            "wake_word_active": False,
+            "always_listening_enabled": False,
+            "hidden_capture_enabled": False,
+            "silent_cloud_fallback_enabled": False,
+            "direct_voice_to_action_enabled": False,
+            "state_persistence_runtime": False,
+            "state_mutation_runtime": False,
+            "audio_device_access": False,
+            "command_execution_active": False,
+            "next_sprint": 193,
+            "next_boundary": "local_microphone_capture_boundary",
+            "guardrails": [
+                "Default listen state is idle.",
+                "Listening can only begin from explicit push-to-talk request.",
+                "Microphone permission is required before any future live listening.",
+                "No microphone capture is performed in Sprint 192.",
+                "No audio buffer, STT runtime, wake word, or background listener is active.",
+                "No direct voice-to-action execution is allowed.",
+            ],
+        }
+
     def status(self) -> dict[str, Any]:
         stt_candidates = self.stt_candidates()
         tts_candidates = self.tts_candidates()
         activation = self.activation_contract()
+        listen_state = self.listen_state_contract()
 
         return {
             "name": self.name,
@@ -206,6 +272,10 @@ class VoiceRuntimePlanner:
             "status": "planning",
             "planning_ready": True,
             "activation_foundation_ready": activation["activation_foundation_ready"],
+            "listen_state_foundation_ready": listen_state["listen_state_foundation_ready"],
+            "default_listen_state": listen_state["default_state"],
+            "current_listen_state": listen_state["current_state"],
+            "allowed_listen_states": len(listen_state["allowed_states"]),
             "runtime_ready": False,
             "safe_idle_default": activation["safe_idle_default"],
             "push_to_talk_required": activation["push_to_talk_required"],
@@ -224,7 +294,9 @@ class VoiceRuntimePlanner:
             "candidate_count": len(stt_candidates) + len(tts_candidates),
             "permissions": self.permission_map(),
             "activation_contract": activation,
-            "note": "Voice runtime activation foundation is ready for explicit push-to-talk planning, but real microphone/STT/TTS/speaker runtime is not enabled yet.",
+            "listen_state_contract": listen_state,
+            "listen_state_contract": listen_state,
+            "note": "Voice push-to-talk listen-state foundation is ready, but real microphone/STT/TTS/speaker runtime is not enabled yet.",
         }
 
     def plan(self) -> dict[str, Any]:
@@ -289,6 +361,7 @@ class VoiceRuntimePlanner:
     def check(self) -> dict[str, Any]:
         dependencies = self.dependency_check()
         activation = self.activation_contract()
+        listen_state = self.listen_state_contract()
 
         installed_python = sum(
             1
@@ -322,6 +395,23 @@ class VoiceRuntimePlanner:
             "microphone_permission_reuses_existing_action": activation["microphone_permission_action"] == "microphone_listen",
             "speaker_permission_reuses_existing_action": activation["speaker_permission_action"] == "speaker_speak",
             "chat_session_reuse_required": activation["chat_session_reuse_required"] is True,
+            "listen_state_foundation_ready": listen_state["listen_state_foundation_ready"] is True,
+            "default_listen_state_idle": listen_state["default_state"] == "idle",
+            "current_listen_state_idle": listen_state["current_state"] == "idle",
+            "push_to_talk_still_required_for_listen": listen_state["push_to_talk_required"] is True,
+            "explicit_listen_still_required": listen_state["explicit_listen_required"] is True,
+            "explicit_stop_required": listen_state["explicit_stop_required"] is True,
+            "microphone_permission_required_before_listening": listen_state["permission_required_before_listening"] is True,
+            "listen_microphone_permission_reuses_existing_action": listen_state["microphone_permission_action"] == "microphone_listen",
+            "listen_microphone_capture_inactive": listen_state["microphone_capture_active"] is False,
+            "listen_audio_buffer_inactive": listen_state["audio_buffer_active"] is False,
+            "listen_stt_runtime_inactive": listen_state["stt_runtime_active"] is False,
+            "listen_loop_inactive": listen_state["listen_loop_active"] is False,
+            "background_listener_inactive": listen_state["background_listener_active"] is False,
+            "wake_word_inactive": listen_state["wake_word_active"] is False,
+            "listen_state_persistence_disabled": listen_state["state_persistence_runtime"] is False,
+            "listen_state_mutation_runtime_disabled": listen_state["state_mutation_runtime"] is False,
+            "audio_device_access_disabled": listen_state["audio_device_access"] is False,
         }
 
         failed_assertions = [
@@ -345,5 +435,6 @@ class VoiceRuntimePlanner:
             "executables_total": len(dependencies["executables"]),
             "dependencies": dependencies,
             "activation_contract": activation,
+            "listen_state_contract": listen_state,
             "note": "Runtime is not enabled yet. This check did not access microphone or speaker.",
         }

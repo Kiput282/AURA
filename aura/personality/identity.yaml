@@ -1,5 +1,5 @@
 name: AURA
-version: "0.191.0-genesis"
+version: "0.192.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -64,3 +64,8 @@ modes:
 # reuse and preserving disabled microphone capture, speaker playback, STT/TTS
 # runtime, hidden capture, always-listening, wake word, cloud fallback, direct
 # voice-to-action execution, command execution, and audio file writes.
+# Sprint 192: push_to_talk_explicit_listen_state adds an explicit listen-state
+# foundation with idle default, nine allowed states, permission-before-listen
+# boundaries, explicit stop requirement, and disabled microphone capture,
+# audio buffer, STT runtime, listen loop, background listener, wake word,
+# state persistence, state mutation, audio device access, and command execution.

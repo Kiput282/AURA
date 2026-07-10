@@ -83,6 +83,7 @@ class VoiceRuntimeAlphaManager:
     def status(self) -> dict[str, Any]:
         dependency_check = self.planner.check()
         activation = self.planner.activation_contract()
+        listen_state = self.planner.listen_state_contract()
         backend = self.detect_tts_backend()
         speaker_permission = self.permission_manager.check("speaker_speak")
         microphone_permission = self.permission_manager.check("microphone_listen")
@@ -93,6 +94,9 @@ class VoiceRuntimeAlphaManager:
             "status": self.status_name,
             "alpha_ready": True,
             "sprint_191_activation_foundation_ready": activation["activation_foundation_ready"],
+            "sprint_192_listen_state_foundation_ready": listen_state["listen_state_foundation_ready"],
+            "current_listen_state": listen_state["current_state"],
+            "default_listen_state": listen_state["default_state"],
             "speak_plan_ready": True,
             "speak_test_ready": True,
             "voice_context_ready": True,
@@ -125,9 +129,10 @@ class VoiceRuntimeAlphaManager:
             "executables_found": dependency_check["executables_found"],
             "executables_total": dependency_check["executables_total"],
             "activation_contract": activation,
-            "sections": 7,
+            "listen_state_contract": listen_state,
+            "sections": 8,
             "project_root": str(self.project_root),
-            "note": "Voice Runtime Alpha is online for Sprint 191 activation foundation and safe TTS planning. It does not access microphone, play speakers, write audio files, or execute commands automatically.",
+            "note": "Voice Runtime Alpha is online for Sprint 192 push-to-talk listen-state foundation and safe TTS planning. It does not access microphone, play speakers, write audio files, or execute commands automatically.",
         }
 
     def build_tts_command(self, text: str) -> dict[str, Any]:

@@ -1977,3 +1977,41 @@ files, control the desktop, start background services, bind publicly, or add
 autonomy.
 
 Next: Sprint 192 — Push-to-Talk and Explicit Listen State.
+
+## Checkpoint v0.192.0-genesis — Push-to-Talk and Explicit Listen State
+
+Sprint 192 continues the Sprint 191-200 Voice Interaction Runtime block.
+
+Checkpoint state:
+
+- voice activation foundation remains ready;
+- listen-state foundation ready;
+- default listen state is `idle`;
+- current listen state is `idle`;
+- nine allowed listen states declared;
+- explicit push-to-talk required;
+- explicit listen required;
+- explicit stop required;
+- microphone permission required before any future live listening;
+- existing `microphone_listen` permission action reused;
+- microphone capture inactive;
+- audio buffer inactive;
+- STT runtime inactive;
+- listen loop inactive;
+- background listener inactive;
+- wake word inactive;
+- state persistence runtime disabled;
+- state mutation runtime disabled;
+- audio device access disabled;
+- direct voice-to-action execution disabled;
+- command execution inactive;
+- 36 activation/listen-state assertions;
+- 0 failed activation/listen-state assertions.
+
+Sprint 192 does not install dependencies, access audio devices, capture
+microphone input, buffer audio, run STT, run TTS, play speaker output, start a
+listen loop, enable wake words, listen in the background, persist listen state,
+mutate listen state through runtime controls, execute commands, mutate files,
+control the desktop, start background services, bind publicly, or add autonomy.
+
+Next: Sprint 193 — Local Microphone Capture Boundary.
