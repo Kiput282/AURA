@@ -143,6 +143,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_extraction_dry_run.aura_memory_extraction_dry_run_manager import AuraMemoryExtractionDryRunManager
 from aura.memory_write_permission_gate.aura_memory_write_permission_gate_manager import AuraMemoryWritePermissionGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
@@ -346,6 +347,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        memory_extraction_dry_run_status = AuraMemoryExtractionDryRunManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_write_permission_gate_status = AuraMemoryWritePermissionGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_runtime_foundation_status = AuraMemoryRuntimeFoundationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_runtime_stabilization_status = AuraLocalChatRuntimeStabilizationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
@@ -494,6 +496,19 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "memory_extraction_dry_run_ready": memory_extraction_dry_run_status["memory_extraction_dry_run_ready"],
+            "memory_extraction_dry_run_data_ready": memory_extraction_dry_run_status["memory_extraction_dry_run_data_ready"],
+            "memory_extraction_dry_run_plan_type_count": memory_extraction_dry_run_status["plan_type_count"],
+            "memory_extraction_dry_run_total_blueprint_count": memory_extraction_dry_run_status["total_memory_extraction_dry_run_blueprint_count"],
+            "memory_extraction_dry_run_thin_runtime_alpha": memory_extraction_dry_run_status["thin_runtime_alpha"],
+            "memory_extraction_dry_run_enabled": memory_extraction_dry_run_status["memory_extraction_dry_run_enabled"],
+            "memory_extraction_dry_run_deterministic_rules": memory_extraction_dry_run_status["deterministic_rule_extraction_enabled"],
+            "memory_extraction_dry_run_permission_gate_required": memory_extraction_dry_run_status["permission_gate_required"],
+            "memory_extraction_dry_run_runtime_candidates_persisted": memory_extraction_dry_run_status["runtime_memory_candidates_persisted"],
+            "memory_extraction_dry_run_runtime_memory_writes": memory_extraction_dry_run_status["runtime_memory_writes"],
+            "memory_extraction_dry_run_runtime_memory_store_mutations": memory_extraction_dry_run_status["runtime_memory_store_mutations"],
+            "memory_extraction_dry_run_runtime_model_requests_dispatched": memory_extraction_dry_run_status["runtime_model_requests_dispatched"],
+            "memory_extraction_dry_run_runtime_execution_features": memory_extraction_dry_run_status["runtime_execution_features"],
             "memory_write_permission_gate_ready": memory_write_permission_gate_status["memory_write_permission_gate_ready"],
             "memory_write_permission_gate_data_ready": memory_write_permission_gate_status["memory_write_permission_gate_data_ready"],
             "memory_write_permission_gate_plan_type_count": memory_write_permission_gate_status["plan_type_count"],

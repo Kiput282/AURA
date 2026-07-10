@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_extraction_dry_run.aura_memory_extraction_dry_run_manager import AuraMemoryExtractionDryRunManager
 from aura.memory_write_permission_gate.aura_memory_write_permission_gate_manager import AuraMemoryWritePermissionGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 
@@ -4331,6 +4332,57 @@ class AuraCLI:
 
 
 
+    # Sprint 173.0 memory extraction dry run helpers.
+    def print_memory_extraction_dry_run_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Extraction Dry Run Boundary"))
+
+    def handle_memory_extraction_dry_run_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA memory extraction dry run"
+        manager = AuraMemoryExtractionDryRunManager(project_root=self.project_root)
+
+        if command in {"memory-extraction-dry-run-alpha", "memory-extraction-alpha"}:
+            if not target or target == "AURA memory extraction dry run":
+                print("AURA Memory Extraction Dry Run Alpha")
+                print("====================================")
+                print('Usage: python3 main.py memory-extraction-dry-run-alpha "remember that AURA is local-first"')
+                return True
+            print(manager.render_extraction_dry_run(target))
+            return True
+
+        if command == "memory-extraction-dry-run-status":
+            self.print_memory_extraction_dry_run_packet("AURA Memory Extraction Dry Run Status", manager.status())
+            return True
+
+        if command == "memory-extraction-dry-run-context":
+            self.print_memory_extraction_dry_run_packet("AURA Memory Extraction Dry Run Context", manager.context())
+            return True
+
+        command_map = {
+            "memory-explicit-trigger-detection-plan": ("AURA Memory Explicit Trigger Detection Plan", manager.memory_explicit_trigger_detection_plan),
+            "memory-candidate-normalization-plan": ("AURA Memory Candidate Normalization Plan", manager.memory_candidate_normalization_plan),
+            "memory-candidate-classification-plan": ("AURA Memory Candidate Classification Plan", manager.memory_candidate_classification_plan),
+            "memory-sensitive-pattern-screen-plan": ("AURA Memory Sensitive Pattern Screen Plan", manager.memory_sensitive_pattern_screen_plan),
+            "memory-candidate-fingerprint-handoff-plan": ("AURA Memory Candidate Fingerprint Handoff Plan", manager.memory_candidate_fingerprint_handoff_plan),
+            "memory-permission-gate-handoff-plan": ("AURA Memory Permission Gate Handoff Plan", manager.memory_permission_gate_handoff_plan),
+            "memory-manual-review-handoff-plan": ("AURA Memory Manual Review Handoff Plan", manager.memory_manual_review_handoff_plan),
+            "memory-extraction-failure-boundary-plan": ("AURA Memory Extraction Failure Boundary Plan", manager.memory_extraction_failure_boundary_plan),
+            "memory-control-center-extraction-preview-plan": ("AURA Memory Control Center Extraction Preview Plan", manager.memory_control_center_extraction_preview_plan),
+            "no-memory-extraction-unsafe-runtime-plan": ("AURA No Memory Extraction Unsafe Runtime Plan", manager.no_memory_extraction_unsafe_runtime_plan),
+            "memory-extraction-next-sprint-readiness-plan": ("AURA Memory Extraction Next Sprint Readiness Plan", manager.memory_extraction_next_sprint_readiness_plan),
+        }
+
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_extraction_dry_run_packet(title, handler(target))
+            return True
+
+        return False
+
     # Sprint 172.0 memory write permission gate helpers.
     def print_memory_write_permission_gate_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8229,6 +8281,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_memory_extraction_dry_run_cli_command(raw_args):
             return True
 
         if self.handle_memory_write_permission_gate_cli_command(raw_args):

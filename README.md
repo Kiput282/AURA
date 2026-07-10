@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.172.0-genesis  
+Current version: v0.173.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -49,8 +49,8 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 103
-- online capabilities: 101
+- total capabilities: 104
+- online capabilities: 102
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 3
@@ -343,7 +343,7 @@ Active block:
 - Sprint 144: Service Configuration and Port Registry Foundation completed
 - Sprint 151: Control Center Runtime Foundation completed
 - Sprint 152: Control Center Read-Only Status Panel Foundation completed
-- Sprint 172: Memory Write Permission Gate completed
+- Sprint 173: Memory Extraction Dry Run completed
 - Next: Sprint 154 Control Center Service Monitor Panel Foundation
 
 ---
@@ -1220,7 +1220,7 @@ AURA is a local-first AI partner.
 Current canonical state:
 
 - Version: v0.172.0-genesis
-- Current completed sprint: Sprint 172.0 — Memory Write Permission Gate
+- Current completed sprint: Sprint 173.0 — Memory Extraction Dry Run
 - Next planned sprint: Sprint 173.0 — Memory Extraction Dry Run
 - Final Genesis target: Sprint 240.0 — Genesis Final Release v1.0.0-genesis
 
@@ -1781,3 +1781,16 @@ python3 main.py memory-write-permission-gate-alpha "remember that AURA is local-
 ```
 
 Without a matching explicit one-shot grant, the expected gate decision is `blocked_no_explicit_grant`, `Write Authorized` remains `False`, and all runtime side-effect counters remain `0`. Sprint 173 should add Memory Extraction Dry Run without bypassing this gate.
+
+
+## Sprint 173 — Memory Extraction Dry Run
+
+AURA v0.173.0-genesis adds deterministic, rule-based extraction of one memory candidate from a user-supplied message. It can detect an explicit memory request, normalize candidate text, classify the candidate, screen common sensitive patterns, calculate a fingerprint, and prepare a handoff to the Sprint 172 permission gate. It does **not** call a model, persist a candidate or permission request, apply a grant, write memory, mutate the memory store, write audit events, use network or credentials, execute commands, or access arbitrary files.
+
+New alpha command:
+
+```bash
+python3 main.py memory-extraction-dry-run-alpha "remember that AURA is local-first"
+```
+
+The expected permission state remains `required_not_granted`, the gate decision remains `blocked_no_explicit_grant`, `Candidate Persisted` remains `False`, and all side-effect counters remain `0`. Sprint 174 should add the Memory Importance and Pinning Policy as preview-only metadata.

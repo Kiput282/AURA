@@ -561,3 +561,8 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 ## Sprint 172 — Memory Write Permission Gate
 
 `v0.172.0-genesis` adds a default-deny single-candidate memory permission gate. Candidate fingerprints and permission envelopes are previewed in process, but grants, memory writes, store mutation, audit writes, model/network activity, commands, and arbitrary file access remain disabled.
+
+
+## Sprint 173 — Memory Extraction Dry Run
+
+`v0.173.0-genesis` adds deterministic, no-model extraction of one reviewable memory candidate with trigger detection, normalization, classification, common sensitive-pattern screening, fingerprinting, and permission-gate handoff metadata. Candidate persistence, grants, memory writes/store mutation, network, credentials, audit writes, commands, arbitrary file access, and runtime execution remain disabled.

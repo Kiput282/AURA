@@ -1,5 +1,5 @@
 name: AURA
-version: "0.172.0-genesis"
+version: "0.173.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -26,3 +26,5 @@ modes:
 # Sprint 171: memory_runtime_foundation starts the preview-only Memory Runtime block with memory writes still disabled.
 
 # Sprint 172: memory_write_permission_gate adds a default-deny single-candidate permission preview; grants and writes remain disabled.
+
+# Sprint 173: memory_extraction_dry_run adds deterministic preview-only candidate extraction; model calls, grants, persistence, and writes remain disabled.
