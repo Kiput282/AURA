@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_runtime_integration_review.aura_memory_runtime_integration_review_manager import AuraMemoryRuntimeIntegrationReviewManager
 from aura.memory_privacy_redaction_layer.aura_memory_privacy_redaction_layer_manager import AuraMemoryPrivacyRedactionLayerManager
 from aura.chat_to_memory_handoff_contract.aura_chat_to_memory_handoff_contract_manager import AuraChatToMemoryHandoffContractManager
 from aura.memory_correction_deletion_boundary.aura_memory_correction_deletion_boundary_manager import AuraMemoryCorrectionDeletionBoundaryManager
@@ -4338,6 +4339,51 @@ class AuraCLI:
 
 
 
+
+
+    # Sprint 179.0 memory runtime integration review helpers.
+    def print_memory_runtime_integration_review_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Runtime Integration Review"))
+
+    def handle_memory_runtime_integration_review_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+        command = raw_args[0]
+        manager = AuraMemoryRuntimeIntegrationReviewManager(project_root=self.project_root)
+
+        if command in {"memory-runtime-integration-review-alpha", "memory-integration-review-alpha"}:
+            if len(raw_args) < 2:
+                print('Usage: python3 main.py memory-runtime-integration-review-alpha "remember that AURA is local-first"')
+                return True
+            print(manager.render_integration_review(" ".join(raw_args[1:])))
+            return True
+        if command == "memory-runtime-integration-review-status":
+            self.print_memory_runtime_integration_review_packet("AURA Memory Runtime Integration Review Status", manager.status())
+            return True
+        if command == "memory-runtime-integration-review-context":
+            self.print_memory_runtime_integration_review_packet("AURA Memory Runtime Integration Review Context", manager.context())
+            return True
+
+        target = " ".join(raw_args[1:]) if len(raw_args) > 1 else "AURA memory runtime integration review"
+        command_map = {
+            "memory-runtime-component-matrix-plan": ("AURA Memory Runtime Component Matrix Plan", manager.memory_runtime_component_matrix_plan),
+            "memory-runtime-pipeline-order-plan": ("AURA Memory Runtime Pipeline Order Plan", manager.memory_runtime_pipeline_order_plan),
+            "memory-runtime-dependency-review-plan": ("AURA Memory Runtime Dependency Review Plan", manager.memory_runtime_dependency_review_plan),
+            "memory-runtime-permission-review-plan": ("AURA Memory Runtime Permission Review Plan", manager.memory_runtime_permission_review_plan),
+            "memory-runtime-privacy-review-plan": ("AURA Memory Runtime Privacy Review Plan", manager.memory_runtime_privacy_review_plan),
+            "memory-runtime-correction-deletion-review-plan": ("AURA Memory Runtime Correction Deletion Review Plan", manager.memory_runtime_correction_deletion_review_plan),
+            "memory-runtime-control-center-handoff-plan": ("AURA Memory Runtime Control Center Handoff Plan", manager.memory_runtime_control_center_handoff_plan),
+            "memory-runtime-failure-boundary-plan": ("AURA Memory Runtime Failure Boundary Plan", manager.memory_runtime_failure_boundary_plan),
+            "memory-runtime-release-gate-plan": ("AURA Memory Runtime Release Gate Plan", manager.memory_runtime_release_gate_plan),
+            "no-memory-runtime-integration-unsafe-runtime-plan": ("AURA No Memory Runtime Integration Unsafe Runtime Plan", manager.no_memory_runtime_integration_unsafe_runtime_plan),
+            "memory-runtime-integration-next-sprint-readiness-plan": ("AURA Memory Runtime Integration Next Sprint Readiness Plan", manager.memory_runtime_integration_next_sprint_readiness_plan),
+        }
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_runtime_integration_review_packet(title, handler(target))
+            return True
+        return False
 
     # Sprint 178.0 memory privacy and redaction layer helpers.
     def print_memory_privacy_redaction_layer_packet(self, title: str, packet: dict) -> None:
@@ -8529,6 +8575,9 @@ class AuraCLI:
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
             return True
+
+        if self.handle_memory_runtime_integration_review_cli_command(raw_args):
+            return
 
         if self.handle_memory_privacy_redaction_layer_cli_command(raw_args):
             return

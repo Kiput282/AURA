@@ -591,3 +591,8 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 ## Sprint 178 — Memory Privacy and Redaction Layer
 
 `v0.178.0-genesis` adds deterministic redaction previews and strict secret-block boundaries for the memory pipeline. Original and redacted candidates remain unpersisted; review decisions, grants, memory writes/store mutation, model/network activity, commands, arbitrary file access, and runtime execution remain disabled.
+
+
+## Sprint 179 — Memory Runtime Integration Review
+
+`v0.179.0-genesis` validates the Sprint 171-178 memory chain as a single read-only integration surface. All component readiness, privacy, review, permission, and correction/deletion boundaries pass while release, persistence, mutation, model, network, command, audit, arbitrary-file, and runtime execution gates remain closed.

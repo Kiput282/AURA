@@ -90,3 +90,12 @@ Status: completed in `v0.178.0-genesis` after Sprint 177.
 Sprint 178 adds deterministic, local privacy screening for one directly supplied memory candidate. It provides stable redaction previews for maskable data, blocks credential/token/private-key material from the pipeline, hides original values from rendered output, and routes results to manual privacy review before permission review. Original/redacted candidate persistence, review decisions, permission grants, memory writes/store mutation, model/network/credential activity, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
 
 Next: Sprint 179 — Memory Runtime Integration Review.
+
+
+## Sprint 179 — Memory Runtime Integration Review
+
+Status: completed in `v0.179.0-genesis` after Sprint 178.
+
+Sprint 179 reviews the eight Sprint 171-178 memory components as one deterministic, read-only chain. It verifies versions and readiness, explicit-trigger extraction, privacy-before-permission, importance and manual-review handoff, default-deny permission, and the separate correction/deletion boundary. Integration reports are not persisted; queue decisions, permission grants, memory writes/store mutation, corrections/deletes, model/network/credential activity, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
+
+Next: Sprint 180 — Memory Runtime Stabilization.

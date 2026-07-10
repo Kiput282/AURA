@@ -143,6 +143,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_runtime_integration_review.aura_memory_runtime_integration_review_manager import AuraMemoryRuntimeIntegrationReviewManager
 from aura.memory_privacy_redaction_layer.aura_memory_privacy_redaction_layer_manager import AuraMemoryPrivacyRedactionLayerManager
 from aura.chat_to_memory_handoff_contract.aura_chat_to_memory_handoff_contract_manager import AuraChatToMemoryHandoffContractManager
 from aura.memory_correction_deletion_boundary.aura_memory_correction_deletion_boundary_manager import AuraMemoryCorrectionDeletionBoundaryManager
@@ -352,6 +353,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        memory_runtime_integration_review_status = AuraMemoryRuntimeIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_privacy_redaction_layer_status = AuraMemoryPrivacyRedactionLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         chat_to_memory_handoff_contract_status = AuraChatToMemoryHandoffContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_correction_deletion_boundary_status = AuraMemoryCorrectionDeletionBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
@@ -506,6 +508,19 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "memory_runtime_integration_review_ready": memory_runtime_integration_review_status["memory_runtime_integration_review_ready"],
+            "memory_runtime_integration_review_data_ready": memory_runtime_integration_review_status["memory_runtime_integration_review_data_ready"],
+            "memory_runtime_integration_review_plan_type_count": memory_runtime_integration_review_status["plan_type_count"],
+            "memory_runtime_integration_review_total_blueprint_count": memory_runtime_integration_review_status["total_memory_runtime_integration_review_blueprint_count"],
+            "memory_runtime_integration_review_thin_runtime_alpha": memory_runtime_integration_review_status["thin_runtime_alpha"],
+            "memory_runtime_integration_review_enabled": memory_runtime_integration_review_status["memory_runtime_integration_review_enabled"],
+            "memory_runtime_integration_components_checked": memory_runtime_integration_review_status["components_checked"],
+            "memory_runtime_integration_components_ready": memory_runtime_integration_review_status["components_ready"],
+            "memory_runtime_integration_dependency_gap_count": memory_runtime_integration_review_status["dependency_gap_count"],
+            "memory_runtime_integration_chain_ready": memory_runtime_integration_review_status["all_memory_components_ready"],
+            "memory_runtime_integration_release_gate_closed": memory_runtime_integration_review_status["release_gate_closed"],
+            "memory_runtime_integration_runtime_memory_writes": memory_runtime_integration_review_status["runtime_memory_writes"],
+            "memory_runtime_integration_runtime_execution_features": memory_runtime_integration_review_status["runtime_execution_features"],
             "memory_privacy_redaction_layer_ready": memory_privacy_redaction_layer_status["memory_privacy_redaction_layer_ready"],
             "memory_privacy_redaction_layer_data_ready": memory_privacy_redaction_layer_status["memory_privacy_redaction_layer_data_ready"],
             "memory_privacy_redaction_layer_plan_type_count": memory_privacy_redaction_layer_status["plan_type_count"],
