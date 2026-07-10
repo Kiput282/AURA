@@ -132,6 +132,20 @@ class CapabilityRegistryManager:
                    'local_web_runtime_alpha': True,
                    'service_lifecycle_runtime': True,
                    'health_status_api_runtime': True,
+                   'control_center_backend_runtime': True,
+                   'read_only_control_center_backend': True,
+                   'control_center_backend_route_count': 9,
+                   'control_center_backend_panel_count': 8,
+                   'control_center_backend_foundation_contract_count': 8,
+                   'control_center_web_shell_runtime': False,
+                   'control_center_frontend_asset_runtime': False,
+                   'control_center_browser_launch_runtime': False,
+                   'control_center_backend_mutation_runtime': False,
+                   'control_center_service_control_runtime': False,
+                   'control_center_plugin_control_runtime': False,
+                   'control_center_permission_decision_runtime': False,
+                   'control_center_audit_writer_runtime': False,
+                   'control_center_memory_write_runtime': False,
                    'read_only_status_routes': True,
                    'status_route_count': 9,
                    'degraded_status_reporting': True,
@@ -1575,6 +1589,28 @@ class CapabilityRegistryManager:
                     "control, background service, systemd, auto-start, chat, "
                     "models, commands, tools, files, desktop, voice, vision, "
                     "and autonomy remain disabled."
+                ),
+            },
+            {
+                "id": "aura_control_center_backend_runtime",
+                "name": "AURA Control Center Backend Runtime",
+                "state": "online",
+                "runtime_level": "permission_gated_alpha_runtime",
+                "risk_level": "medium",
+                "permission_required": "user_confirmation",
+                "category": "local_interaction_runtime",
+                "introduced_in": "0.184.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Read-only Control Center backend view models with nine "
+                    "localhost JSON routes and eight panels for overview, "
+                    "service, capabilities, plugins, permissions, audit, "
+                    "memory, and readiness. It reuses the existing listener "
+                    "and lifecycle; frontend assets, browser launch, service "
+                    "or plugin controls, permission decisions, audit writes, "
+                    "memory writes, chat, models, commands, tools, actions, "
+                    "background service, public/LAN binding, and autonomy "
+                    "remain disabled."
                 ),
             },
 ]

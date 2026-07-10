@@ -11,8 +11,8 @@ from .aura_service_lifecycle_runtime_manager import (
     AuraServiceLifecycleRuntimeManager,
     LifecycleError,
 )
-from aura.health_status_api_runtime.aura_health_status_http_runtime_manager import (
-    build_health_status_lifecycle_manager,
+from aura.control_center_backend_runtime.aura_control_center_backend_http_runtime_manager import (
+    build_control_center_lifecycle_manager,
 )
 
 
@@ -78,7 +78,7 @@ def handle_service_lifecycle_command(
         return False
 
     extra = [str(item) for item in args[1:]]
-    manager = build_health_status_lifecycle_manager()
+    manager = build_control_center_lifecycle_manager()
 
     try:
         if command == STATUS_COMMAND:
@@ -117,6 +117,8 @@ def handle_service_lifecycle_command(
         print("Systemd    : DISABLED")
         print("Auto-start : DISABLED")
         print("Status API : 9 read-only payload routes")
+        print("Control Center backend: 9 read-only routes")
+        print("Web shell  : DISABLED until Sprint 185")
         print()
 
         manager.run_foreground(confirmed=True)

@@ -443,3 +443,49 @@ Still false:
 
 Sprint 183 does not increase the runtime execution feature count because all
 payloads are served through the existing Sprint 181 listener.
+
+## Sprint 184 Update — Control Center Backend Runtime Online
+
+Status: UPDATED FOR v0.184.0-genesis
+
+The registry now tracks `aura_control_center_backend_runtime` as an online,
+permission-gated alpha capability.
+
+Current summary:
+
+- total capabilities tracked: 115
+- online capabilities: 113
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 7
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 1
+
+New scoped availability fields:
+
+- `control_center_backend_runtime: true`
+- `read_only_control_center_backend: true`
+- `control_center_backend_route_count: 9`
+- `control_center_backend_panel_count: 8`
+- `control_center_backend_foundation_contract_count: 8`
+
+Still false:
+
+- `runtime_ready`
+- `execution_ready`
+- `control_center_web_shell_runtime`
+- `control_center_frontend_asset_runtime`
+- `control_center_browser_launch_runtime`
+- `control_center_backend_mutation_runtime`
+- `control_center_service_control_runtime`
+- `control_center_plugin_control_runtime`
+- `control_center_permission_decision_runtime`
+- `control_center_audit_writer_runtime`
+- `control_center_memory_write_runtime`
+- background service, automatic startup, chat, model, command, tool, action,
+  arbitrary file, desktop, voice, vision, and autonomous runtime gates
+
+Sprint 184 does not increase the runtime execution feature count because all
+backend view models are served through the existing Sprint 181 listener.

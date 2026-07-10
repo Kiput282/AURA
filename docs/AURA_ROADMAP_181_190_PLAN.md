@@ -1,7 +1,7 @@
 # AURA Roadmap 181-190 — Local Interaction Runtime Activation
 
-Status: ACTIVE — SPRINT 183 COMPLETE
-Current anchor: v0.183.0-genesis
+Status: ACTIVE — SPRINT 184 COMPLETE
+Current anchor: v0.184.0-genesis
 Target checkpoint: v0.190.0-genesis
 
 ## Purpose
@@ -136,17 +136,46 @@ Still disabled:
 Next: Sprint 184 — Control Center Backend Runtime.
 ### Sprint 184 — Control Center Backend Runtime
 
-Connect existing Control Center contracts to real read-only APIs for:
+Status: completed in v0.184.0-genesis.
 
-- overview status;
-- service monitor;
-- capability viewer;
-- plugin viewer;
-- permission state;
-- audit state;
-- memory status;
-- runtime readiness.
+Delivered:
 
+- read-only Control Center backend view-model core;
+- nine backend JSON routes;
+- eight panel contracts for overview, service, capabilities, plugins,
+  permissions, audit, memory, and readiness;
+- eight older foundation contracts connected through read-only status probes;
+- live lifecycle-aware overview and service data;
+- all capability cards and summaries;
+- plugin visibility without plugin activation;
+- declared permission visibility without request decisions;
+- audit visibility without writer or persistence;
+- memory visibility without writes;
+- GET and HEAD support across all backend routes;
+- mutation methods rejected with 405;
+- localhost Host-header allowlist;
+- CORS disabled;
+- defensive no-store and browser security headers;
+- 108/108 backend assertions;
+- 210/210 live HTTP assertions.
+
+Runtime feature accounting remains `1` because Sprint 184 uses the same
+localhost listener introduced in Sprint 181.
+
+Still disabled:
+
+- Control Center web shell and frontend assets;
+- browser auto-launch;
+- service and plugin controls;
+- permission request decision, grant, deny, and scope mutation;
+- audit writer and persistence;
+- memory mutation;
+- background daemon, systemd, automatic startup, and persistence;
+- public/LAN/wildcard binding;
+- chat, model, command, tool, action, file, desktop, voice, vision, and
+  autonomy runtime.
+
+Next: Sprint 185 — Control Center Web Shell.
 ### Sprint 185 — Control Center Web Shell
 
 Deliver the first usable browser dashboard with:

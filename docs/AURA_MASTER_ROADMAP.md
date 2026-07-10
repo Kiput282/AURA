@@ -1775,3 +1775,24 @@ desktop control, voice, vision, public/LAN exposure, and autonomy remain
 disabled.
 
 Next: Sprint 184 — Control Center Backend Runtime.
+
+## Checkpoint v0.184.0-genesis — Control Center Backend Runtime
+
+Sprint 184 connects the earlier Control Center foundations to nine read-only
+backend routes and eight stable panel view models. The overview and service
+panels reflect the live lifecycle instance, while capability, plugin,
+permission, audit, memory, and readiness information remain transparent and
+side-effect free.
+
+The same foreground localhost listener now serves nine status routes and nine
+Control Center backend routes. GET and HEAD are allowed; mutation methods are
+blocked, non-local Host headers are rejected, CORS remains disabled, and
+defensive no-store/browser headers are retained. Runtime execution feature
+accounting remains `1`.
+
+The Control Center web shell, frontend assets, browser launch, service and
+plugin controls, permission decisions, audit writes, memory writes, chat,
+models, commands, tools, actions, background service, public/LAN exposure, and
+autonomy remain disabled.
+
+Next: Sprint 185 — Control Center Web Shell.

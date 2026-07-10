@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Canonical Version: v0.183.0-genesis
-Current Canonical Sprint: Sprint 183 — Health and Status API Runtime
-Next Planned Sprint: Sprint 184 — Control Center Backend Runtime
+Current Canonical Version: v0.184.0-genesis
+Current Canonical Sprint: Sprint 184 — Control Center Backend Runtime
+Next Planned Sprint: Sprint 185 — Control Center Web Shell
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together

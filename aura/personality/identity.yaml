@@ -1,5 +1,5 @@
 name: AURA
-version: "0.183.0-genesis"
+version: "0.184.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -45,3 +45,4 @@ modes:
 # Sprint 181: local_web_runtime_alpha activates one explicitly confirmed, foreground-only, localhost-only, read-only HTTP runtime with /, /health, and /api/status; chat, models, memory writes, permission mutation, commands, tools, arbitrary file access, desktop control, voice, vision, public/LAN binding, background service, and autonomous actions remain disabled.
 # Sprint 182: service_lifecycle_runtime adds deterministic stopped/starting/running/stopping/failed state transitions, single-listener ownership, port-conflict fail-closed behavior, startup rollback, clean programmatic stop, and clean SIGINT/SIGTERM foreground shutdown; background service, systemd, auto-start, persistent PID/state, remote lifecycle mutation, chat, models, commands, tools, files, desktop, voice, vision, and autonomy remain disabled.
 # Sprint 183: health_status_api_runtime adds side-effect-free identity, boot-prerequisite, plugin, capability, lifecycle, memory, safety, error, and degraded-state reporting through nine read-only localhost payload routes; GET/HEAD only, while mutation methods, plugin start, memory writes, background service, systemd, auto-start, remote control, chat, models, commands, tools, files, desktop, voice, vision, and autonomy remain disabled.
+# Sprint 184: control_center_backend_runtime exposes nine read-only localhost backend routes and eight stable view-model panels for overview, service, capabilities, plugins, permissions, audit, memory, and readiness; the web shell, frontend assets, browser launch, service/plugin controls, permission decisions, audit writes, memory writes, chat, models, commands, tools, actions, background service, public/LAN binding, and autonomy remain disabled.

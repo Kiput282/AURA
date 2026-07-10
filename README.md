@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.183.0-genesis
-Current status: permission-gated localhost health and status runtime alpha
-Current runtime state: one localhost-only read-only listener with deterministic lifecycle and nine transparent status payload routes is available; chat, model, action, mutation, background, systemd, and auto-start runtimes remain disabled
+Current version: v0.184.0-genesis
+Current status: permission-gated localhost Control Center backend runtime alpha
+Current runtime state: one localhost-only read-only listener with deterministic lifecycle, nine transparent status routes, and nine Control Center backend routes across eight panels is available; the web shell, chat, model, action, mutation, background, systemd, and auto-start runtimes remain disabled
 
 ---
 
@@ -35,29 +35,29 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 183 in the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 184 in the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.183.0-genesis
-- Sprint 183: Health and Status API Runtime
+- v0.184.0-genesis
+- Sprint 184: Control Center Backend Runtime
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 184 — Control Center Backend Runtime
+- Next planned sprint: Sprint 185 — Control Center Web Shell
 Current capability registry summary:
 
-- total capabilities: 114
-- online capabilities: 112
+- total capabilities: 115
+- online capabilities: 113
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 6
+- permission-gated capabilities: 7
 - review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
@@ -295,7 +295,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.183.0-genesis
+    Version  : 0.184.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -1989,3 +1989,52 @@ commands, tools, actions, arbitrary files, desktop, voice, vision, public/LAN
 exposure, and autonomy remain disabled.
 
 Next: Sprint 184 — Control Center Backend Runtime.
+
+## Sprint 184 — Control Center Backend Runtime
+
+Status: completed
+Version: `v0.184.0-genesis`
+
+Sprint 184 connects the previous Control Center foundations to a live,
+read-only backend:
+
+- nine Control Center backend routes;
+- eight view-model panels;
+- overview and service data linked to the active lifecycle instance;
+- 115 capability cards after capability registration;
+- plugin visibility without activation;
+- declared permission visibility without decisions or grants;
+- audit visibility without writer or persistence;
+- memory visibility without writes;
+- readiness visibility with explicit blockers;
+- GET and HEAD only;
+- mutation methods blocked with `405`;
+- non-local Host headers blocked with `403`;
+- CORS disabled;
+- no-store and defensive browser headers;
+- 108/108 backend assertions;
+- 210/210 live HTTP assertions.
+
+No-bind inspection commands:
+
+```bash
+python3 main.py control-center-backend-status
+python3 main.py control-center-backend-overview
+python3 main.py control-center-backend-self-test
+```
+
+Start the integrated listener with:
+
+```bash
+python3 main.py service-lifecycle-start --confirm-localhost
+```
+
+The runtime execution feature count remains `1` because Sprint 184 uses the
+same listener and lifecycle as Sprints 181-183.
+
+The Control Center web shell, frontend assets, browser auto-launch, service and
+plugin controls, permission decisions, audit writes, memory writes, chat,
+models, commands, tools, actions, arbitrary files, desktop, voice, vision,
+public/LAN exposure, and autonomy remain disabled.
+
+Next: Sprint 185 — Control Center Web Shell.
