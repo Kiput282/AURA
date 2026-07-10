@@ -165,6 +165,7 @@ from aura.memory_extraction_dry_run.aura_memory_extraction_dry_run_manager impor
 from aura.memory_write_permission_gate.aura_memory_write_permission_gate_manager import AuraMemoryWritePermissionGateManager
 from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager import CodebasePatchProposalRendererManager
 from aura.local_web_runtime_alpha.aura_local_web_runtime_cli import handle_local_web_runtime_command
+from aura.service_lifecycle_runtime.aura_service_lifecycle_runtime_cli import handle_service_lifecycle_command
 
 
 class AuraCLI:
@@ -8359,6 +8360,9 @@ class AuraCLI:
         return False
 
     def run(self, args: list[str] | None = None) -> bool:
+        if handle_service_lifecycle_command(args):
+            return True
+
         if handle_local_web_runtime_command(args):
             return True
 

@@ -349,3 +349,48 @@ These true values refer only to the narrow Sprint 181 runtime. Full Genesis
 runtime readiness remains false. Public, LAN, wildcard, background,
 automatic-start, mutating-dashboard, chat, model, permission-grant, command,
 tool, file, desktop, voice, vision, and autonomous runtimes remain disabled.
+
+## Sprint 182 Update — Service Lifecycle Runtime Online
+
+Status: UPDATED FOR v0.182.0-genesis
+
+The registry now tracks `aura_service_lifecycle_runtime` as an online,
+permission-gated alpha capability.
+
+Current summary:
+
+- total capabilities tracked: 113
+- online capabilities: 111
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 5
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 1
+
+New scoped availability fields:
+
+- `service_lifecycle_runtime: true`
+- `deterministic_lifecycle_state_machine: true`
+- `single_listener_enforced: true`
+- `port_conflict_fail_closed: true`
+- `startup_rollback_runtime: true`
+- `clean_programmatic_stop_runtime: true`
+- `clean_signal_shutdown_runtime: true`
+
+Still false:
+
+- `runtime_ready`
+- `execution_ready`
+- `background_service_runtime`
+- `automatic_service_start_runtime`
+- `persistent_pid_file_runtime`
+- `persistent_lifecycle_state_runtime`
+- `remote_lifecycle_control_runtime`
+- `http_lifecycle_mutation_runtime`
+- chat, command, tool, file, memory-write, permission-grant, desktop, voice,
+  vision, and autonomous runtime gates
+
+Sprint 182 does not increase the runtime execution feature count because it
+controls the existing Sprint 181 localhost listener.

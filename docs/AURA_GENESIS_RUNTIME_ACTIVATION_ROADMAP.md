@@ -16,14 +16,15 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.181.0-genesis
-- Completed: Sprint 181 — Local Web Runtime Activation Cutline
+- Current version: v0.182.0-genesis
+- Completed: Sprint 182 — Service Lifecycle Runtime
 - Runtime execution features: 1
 - Active scope: explicitly confirmed, foreground-only, localhost-only,
-  read-only HTTP
+  read-only HTTP with deterministic in-memory lifecycle control
+- Lifecycle states: stopped, starting, running, stopping, failed
 - Default listener state: stopped
-- Next: Sprint 182 — Service Lifecycle Runtime
-
+- Background/systemd/auto-start: disabled
+- Next: Sprint 183 — Health and Status API Runtime
 ## Block 181-190 — Local Interaction Runtime Activation
 
 Outcome: AURA can be opened in a browser and used through a localhost Control Center and interactive local chat.

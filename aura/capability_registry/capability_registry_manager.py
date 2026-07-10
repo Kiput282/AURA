@@ -6,10 +6,11 @@ foundation, what is planner-only, what requires permission, what is only a
 review/checkpoint layer, and what is still planned for the future.
 
 This registry prepares data for CLI, shell, service monitor, launcher, and
-AURA Control Center views. Sprint 181 records one narrow, explicitly
-confirmed, localhost-only, foreground-only, read-only HTTP runtime while
-chat, models, permission mutation, commands, tools, files, desktop control,
-and external actions remain disabled.
+AURA Control Center views. Sprint 181 activates a narrow localhost-only
+read-only HTTP listener, and Sprint 182 adds deterministic foreground
+lifecycle control. Chat, models, permission mutation, commands, tools,
+files, desktop control, background service, and external actions remain
+disabled.
 """
 from __future__ import annotations
 
@@ -129,6 +130,17 @@ class CapabilityRegistryManager:
                    'metadata_only': True,
                    'control_center_data_ready': True,
                    'local_web_runtime_alpha': True,
+                   'service_lifecycle_runtime': True,
+                   'deterministic_lifecycle_state_machine': True,
+                   'single_listener_enforced': True,
+                   'port_conflict_fail_closed': True,
+                   'startup_rollback_runtime': True,
+                   'clean_programmatic_stop_runtime': True,
+                   'clean_signal_shutdown_runtime': True,
+                   'persistent_pid_file_runtime': False,
+                   'persistent_lifecycle_state_runtime': False,
+                   'remote_lifecycle_control_runtime': False,
+                   'http_lifecycle_mutation_runtime': False,
                    'localhost_only_runtime': True,
                    'foreground_only_runtime': True,
                    'read_only_http_runtime': True,
@@ -1504,6 +1516,28 @@ class CapabilityRegistryManager:
                     "desktop control, voice, vision, public/LAN "
                     "binding, background service, and autonomous "
                     "actions remain disabled."
+                ),
+            },
+            {
+                "id": "aura_service_lifecycle_runtime",
+                "name": "AURA Service Lifecycle Runtime",
+                "state": "online",
+                "runtime_level": "permission_gated_alpha_runtime",
+                "risk_level": "high",
+                "permission_required": "user_confirmation",
+                "category": "local_interaction_runtime",
+                "introduced_in": "0.182.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Deterministic in-memory lifecycle wrapper for the "
+                    "Sprint 181 localhost listener with stopped, starting, "
+                    "running, stopping, and failed states; single-listener "
+                    "ownership, port-conflict fail-closed handling, startup "
+                    "rollback, clean programmatic stop, and clean SIGINT or "
+                    "SIGTERM foreground shutdown. Background service, systemd, "
+                    "automatic startup, persistent PID/state files, remote "
+                    "lifecycle mutation, chat, models, commands, tools, files, "
+                    "desktop, voice, vision, and autonomy remain disabled."
                 ),
             },
 ]

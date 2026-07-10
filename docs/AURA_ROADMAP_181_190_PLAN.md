@@ -1,7 +1,7 @@
 # AURA Roadmap 181-190 — Local Interaction Runtime Activation
 
-Status: ACTIVE — SPRINT 181 COMPLETE
-Current anchor: v0.181.0-genesis
+Status: ACTIVE — SPRINT 182 COMPLETE
+Current anchor: v0.182.0-genesis
 Target checkpoint: v0.190.0-genesis
 
 ## Purpose
@@ -65,20 +65,38 @@ Still disabled:
 Next: Sprint 182 — Service Lifecycle Runtime.
 ### Sprint 182 — Service Lifecycle Runtime
 
-Add a deterministic service state machine and lifecycle controls for:
+Status: completed in v0.182.0-genesis.
 
-- starting;
-- running;
-- stopping;
-- stopped;
-- failed;
-- port conflict handling;
-- startup rollback;
-- clean signal handling;
-- single-listener enforcement.
+Delivered:
 
-Systemd and automatic startup remain disabled until later evaluation.
+- deterministic `stopped`, `starting`, `running`, `stopping`, and `failed`
+  states;
+- validated transition contract;
+- foreground-only lifecycle ownership;
+- explicit confirmation requirement;
+- same-process single-listener enforcement;
+- port-conflict fail-closed behavior;
+- startup error visibility and rollback to `stopped`;
+- clean programmatic stop;
+- clean `SIGINT` and `SIGTERM` shutdown;
+- bounded in-memory transition history;
+- CLI status, self-test, and start commands;
+- 41/41 lifecycle assertions.
 
+Runtime feature accounting remains `1` because Sprint 182 controls the existing
+Sprint 181 localhost listener rather than introducing another executor.
+
+Still disabled:
+
+- systemd and background daemon runtime;
+- automatic startup;
+- persistent PID or lifecycle state;
+- remote or HTTP lifecycle mutation;
+- public/LAN/wildcard binding;
+- chat, model, memory-write, permission-mutation, audit-write, command, tool,
+  action, file, desktop, voice, vision, and autonomy runtime.
+
+Next: Sprint 183 — Health and Status API Runtime.
 ### Sprint 183 — Health and Status API Runtime
 
 Expose read-only runtime data for:

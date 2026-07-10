@@ -1740,3 +1740,19 @@ vision, public/LAN binding, background service, and autonomous behavior remain
 disabled.
 
 Next: Sprint 182 — Service Lifecycle Runtime.
+
+## Checkpoint v0.182.0-genesis — Service Lifecycle Runtime
+
+Sprint 182 adds deterministic foreground lifecycle control around the Sprint
+181 localhost listener. The runtime now has explicit `stopped`, `starting`,
+`running`, `stopping`, and `failed` states; single-listener ownership;
+port-conflict fail-closed handling; startup rollback; clean programmatic stop;
+and clean `SIGINT` or `SIGTERM` shutdown.
+
+The runtime execution feature count remains `1`. Background daemon operation,
+systemd, automatic startup, persistent PID/state, remote lifecycle mutation,
+chat, models, memory writes, permission mutation, commands, tools, actions,
+files, desktop control, voice, vision, public/LAN exposure, and autonomy remain
+disabled.
+
+Next: Sprint 183 — Health and Status API Runtime.
