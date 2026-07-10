@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.193.0-genesis
+Current anchor: v0.194.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.193.0-genesis
-- Completed: Sprint 193 — Local Microphone Capture Boundary
+- Current version: v0.194.0-genesis
+- Completed: Sprint 194 — Speech-to-Text Adapter Runtime
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: activation, explicit listen-state, and local microphone capture boundary foundations ready; microphone capture runtime, audio device access, device discovery, recording, audio buffer, STT/TTS runtime, transcription, listen loop, and speaker playback disabled
+- Voice runtime: activation, explicit listen-state, local microphone capture boundary, and speech-to-text adapter contract foundations ready; STT execution, audio file read/write, live microphone transcription, microphone capture runtime, audio device access, device discovery, recording, audio buffer, transcript handoff/action, cloud fallback, TTS runtime, and speaker playback disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 194 — Speech-to-Text Adapter Runtime
+- Next: Sprint 195 — Voice Intent and Chat Integration
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -289,3 +289,27 @@ The voice runtime check now covers 64 activation/listen-state/microphone-boundar
 assertions and reports zero failed assertions.
 
 Next: Sprint 194 — Speech-to-Text Adapter Runtime.
+
+## v0.194.0-genesis — Speech-to-Text Adapter Runtime
+
+Sprint 194 adds the speech-to-text adapter runtime contract for the Voice
+Interaction Runtime block.
+
+The checkpoint defines the safe STT adapter boundary without executing speech
+recognition. It declares local/offline-first STT requirements, sets
+`faster-whisper` as the default adapter candidate, keeps `whisper.cpp` and
+`vosk` as additional candidates, and prepares a provided-audio-file boundary
+for future dry runs.
+
+Sprint 194 preserves disabled STT execution, audio-file transcription runtime,
+audio file read/write, live microphone transcription, microphone capture, audio
+device access, audio device discovery, recording, audio buffering, audio
+persistence, audio transmission, model download, dependency installation,
+transcript persistence, transcript-to-chat handoff, transcript-to-action,
+cloud STT fallback, silent cloud fallback, remote STT providers, command
+execution, and speaker playback.
+
+The voice runtime check now covers 98 activation/listen-state/microphone-boundary/STT-adapter
+assertions and reports zero failed assertions.
+
+Next: Sprint 195 — Voice Intent and Chat Integration.

@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.193.0-genesis
-Current status: Sprint 193 Local Microphone Capture Boundary completed and ready to hand off to Sprint 194 Speech-to-Text Adapter Runtime
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 193 adds a safe local microphone capture boundary contract requiring microphone permission, explicit listen state, and push-to-talk before any future capture while keeping microphone capture runtime, audio device access, device discovery, recording, audio buffer, audio file writes, STT/transcription runtime, listen loop, background listener, wake word, hidden capture, always-listening, silent cloud fallback, direct voice-to-action execution, command execution, speaker playback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
+Current version: v0.194.0-genesis
+Current status: Sprint 194 Speech-to-Text Adapter Runtime completed and ready to hand off to Sprint 195 Voice Intent and Chat Integration
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 194 adds a safe speech-to-text adapter contract with local/offline-first candidates, faster-whisper as the default candidate, and a provided-audio-file boundary for future dry runs while keeping STT execution, audio file read/write, live microphone transcription, microphone capture, audio device access, device discovery, recording, audio buffer, model download, dependency install, cloud STT fallback, transcript persistence, transcript-to-chat handoff, transcript-to-action, command execution, speaker playback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 193 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe local microphone capture boundary contract.
+AURA has completed Sprint 194 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe speech-to-text adapter contract.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.194.0-genesis
+- Sprint 194: Speech-to-Text Adapter Runtime
 - v0.193.0-genesis
 - Sprint 193: Local Microphone Capture Boundary
 - v0.192.0-genesis
@@ -56,7 +58,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 194 — Speech-to-Text Adapter Runtime
+- Next planned sprint: Sprint 195 — Voice Intent and Chat Integration
 Current capability registry summary:
 
 - total capabilities: 121
@@ -2502,3 +2504,66 @@ control, public/LAN binding, background service, systemd activation, browser
 auto-launch, or autonomy.
 
 Next: Sprint 194 — Speech-to-Text Adapter Runtime.
+
+## Sprint 194 — Speech-to-Text Adapter Runtime
+
+Version: `v0.194.0-genesis`
+
+Sprint 194 adds the speech-to-text adapter runtime contract on top of the
+Sprint 191 activation contract, Sprint 192 listen-state foundation, and Sprint
+193 microphone capture boundary.
+
+Validated checkpoint:
+
+- STT adapter contract ready;
+- STT adapter runtime not ready;
+- default adapter candidate is `faster-whisper`;
+- three STT adapter candidates declared: `faster-whisper`, `whisper.cpp`, and
+  `vosk`;
+- local-first STT required;
+- offline-first STT required;
+- audio-file input boundary ready for future dry runs;
+- provided audio file required before any future audio-file STT dry run;
+- audio-file transcription runtime not ready;
+- audio file read inactive;
+- audio file write inactive;
+- microphone capture not required for the adapter contract;
+- live microphone transcription inactive;
+- microphone capture inactive;
+- audio device access disabled;
+- audio device discovery inactive;
+- recording inactive;
+- audio buffer inactive;
+- audio persistence disabled;
+- audio transmission disabled;
+- STT runtime inactive;
+- transcription inactive;
+- transcript persistence disabled;
+- transcript-to-chat handoff disabled;
+- transcript-to-action disabled;
+- command execution inactive;
+- model download not required;
+- model download not performed;
+- dependency install not performed;
+- cloud STT fallback disabled;
+- silent cloud fallback disabled;
+- remote STT provider disabled;
+- microphone permission required before any future transcription;
+- existing `microphone_listen` permission action reused;
+- 98 total voice activation/listen-state/microphone-boundary/STT-adapter
+  assertions;
+- zero failed voice activation/listen-state/microphone-boundary/STT-adapter
+  assertions.
+
+Sprint 194 adds no dependency installation, model download, audio file read,
+audio file write, audio-file transcription runtime, live microphone
+transcription, microphone capture, recording, audio buffer, audio persistence,
+audio transmission, audio device access, audio device discovery, STT execution,
+transcription runtime, transcript persistence, transcript-to-chat handoff,
+transcript-to-action, cloud STT fallback, remote STT provider, text-to-speech
+execution, speaker playback, wake word, background listener, always-listening
+mode, hidden capture, direct voice-to-action execution, command execution,
+arbitrary file access, desktop control, public/LAN binding, background service,
+systemd activation, browser auto-launch, or autonomy.
+
+Next: Sprint 195 — Voice Intent and Chat Integration.

@@ -749,3 +749,25 @@ speaker playback remain disabled.
 This is still not live voice capture. It is the local microphone capture
 boundary that lets Sprint 194 add the Speech-to-Text Adapter Runtime without
 creating hidden capture, background listening, or unintended audio retention.
+
+
+## Sprint 194 — Speech-to-Text Adapter Runtime
+
+`v0.194.0-genesis` adds the speech-to-text adapter runtime contract.
+
+AURA now has a safe STT adapter boundary for future transcription without
+running STT yet. The contract is local/offline-first, declares
+`faster-whisper`, `whisper.cpp`, and `vosk` as candidates, and prepares a
+provided-audio-file boundary for future dry runs before live microphone
+transcription is considered.
+
+The checkpoint confirms that STT execution, audio file read/write, live
+microphone transcription, microphone capture, audio device access, audio device
+discovery, recording, audio buffering, model download, dependency installation,
+transcript persistence, transcript-to-chat handoff, transcript-to-action,
+cloud STT fallback, remote STT provider usage, command execution, and speaker
+playback remain disabled.
+
+This is still not live voice transcription. It is the speech-to-text adapter
+contract that lets Sprint 195 integrate voice intent and chat boundaries without
+allowing raw transcripts to execute actions directly.

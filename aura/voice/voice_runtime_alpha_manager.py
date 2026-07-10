@@ -85,6 +85,7 @@ class VoiceRuntimeAlphaManager:
         activation = self.planner.activation_contract()
         listen_state = self.planner.listen_state_contract()
         microphone_boundary = self.planner.microphone_capture_boundary_contract()
+        stt_adapter = self.planner.speech_to_text_adapter_runtime_contract()
         backend = self.detect_tts_backend()
         speaker_permission = self.permission_manager.check("speaker_speak")
         microphone_permission = self.permission_manager.check("microphone_listen")
@@ -97,6 +98,15 @@ class VoiceRuntimeAlphaManager:
             "sprint_191_activation_foundation_ready": activation["activation_foundation_ready"],
             "sprint_192_listen_state_foundation_ready": listen_state["listen_state_foundation_ready"],
             "sprint_193_microphone_boundary_ready": microphone_boundary["microphone_boundary_ready"],
+            "sprint_194_stt_adapter_contract_ready": stt_adapter["stt_adapter_contract_ready"],
+            "stt_adapter_runtime_ready": stt_adapter["stt_adapter_runtime_ready"],
+            "stt_default_adapter": stt_adapter["default_adapter"],
+            "stt_adapter_candidates": stt_adapter["candidate_adapter_count"],
+            "audio_file_transcription_runtime_ready": stt_adapter["audio_file_transcription_runtime_ready"],
+            "live_microphone_transcription_active": stt_adapter["live_microphone_transcription_active"],
+            "transcription_active": stt_adapter["transcription_active"],
+            "cloud_stt_fallback_enabled": stt_adapter["cloud_stt_fallback_enabled"],
+            "transcript_to_action_enabled": stt_adapter["transcript_to_action_enabled"],
             "microphone_capture_runtime_ready": microphone_boundary["microphone_capture_runtime_ready"],
             "microphone_capture_active": microphone_boundary["microphone_capture_active"],
             "audio_device_access": microphone_boundary["audio_device_access"],
@@ -140,9 +150,10 @@ class VoiceRuntimeAlphaManager:
             "activation_contract": activation,
             "listen_state_contract": listen_state,
             "microphone_capture_boundary_contract": microphone_boundary,
-            "sections": 9,
+            "speech_to_text_adapter_runtime_contract": stt_adapter,
+            "sections": 10,
             "project_root": str(self.project_root),
-            "note": "Voice Runtime Alpha is online for Sprint 193 microphone capture boundary and safe TTS planning. It does not access microphone, discover audio devices, record audio, play speakers, write audio files, or execute commands automatically.",
+            "note": "Voice Runtime Alpha is online for Sprint 194 STT adapter contract and safe TTS planning. It does not access microphone, discover audio devices, read audio files, run STT, use cloud fallback, create transcripts, play speakers, write files, or execute commands automatically.",
         }
 
     def build_tts_command(self, text: str) -> dict[str, Any]:

@@ -1,5 +1,5 @@
 name: AURA
-version: "0.193.0-genesis"
+version: "0.194.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -75,3 +75,10 @@ modes:
 # device access, device discovery, recording, audio buffer, audio file writes,
 # STT/transcription, listen loop, background listener, wake word, hidden capture,
 # always-listening, cloud fallback, command execution, and speaker playback disabled.
+# Sprint 194: speech_to_text_adapter_runtime adds a safe STT adapter contract
+# with local/offline-first candidates, faster-whisper as default candidate, and
+# an audio-file input boundary for future dry runs while keeping STT execution,
+# audio file read/write, live mic transcription, model download, dependency
+# install, cloud fallback, transcript persistence, transcript-to-chat handoff,
+# transcript-to-action, command execution, microphone capture, and audio device
+# access disabled.

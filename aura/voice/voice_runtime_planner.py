@@ -315,12 +315,80 @@ class VoiceRuntimePlanner:
             ],
         }
 
+
+    def speech_to_text_adapter_runtime_contract(self) -> dict[str, Any]:
+        dependency_check = self.dependency_check()
+        python_packages = {
+            package["name"]: package["installed"]
+            for package in dependency_check["python_packages"]
+        }
+        executables = {
+            executable["name"]: executable["found"]
+            for executable in dependency_check["executables"]
+        }
+        candidates = self.stt_candidates()
+
+        return {
+            "sprint": 194,
+            "name": "speech_to_text_adapter_runtime",
+            "stt_adapter_contract_ready": True,
+            "stt_adapter_runtime_ready": False,
+            "default_adapter": "faster-whisper",
+            "candidate_adapters": [candidate["name"] for candidate in candidates],
+            "candidate_adapter_count": len(candidates),
+            "local_first_required": True,
+            "offline_first_required": True,
+            "audio_file_input_boundary_ready": True,
+            "provided_audio_file_required_for_future_dry_run": True,
+            "audio_file_transcription_runtime_ready": False,
+            "audio_file_read_active": False,
+            "audio_file_write_active": False,
+            "microphone_capture_required_for_adapter_contract": False,
+            "live_microphone_transcription_active": False,
+            "microphone_capture_active": False,
+            "audio_device_access": False,
+            "audio_device_discovery_active": False,
+            "recording_active": False,
+            "audio_buffer_active": False,
+            "audio_persistence_enabled": False,
+            "audio_transmission_enabled": False,
+            "stt_runtime_active": False,
+            "transcription_active": False,
+            "transcript_persistence_enabled": False,
+            "transcript_to_chat_handoff_enabled": False,
+            "transcript_to_action_enabled": False,
+            "command_execution_active": False,
+            "model_download_required": False,
+            "model_download_performed": False,
+            "dependency_install_performed": False,
+            "cloud_stt_fallback_enabled": False,
+            "silent_cloud_fallback_enabled": False,
+            "remote_provider_enabled": False,
+            "permission_required_before_transcription": True,
+            "microphone_permission_action": "microphone_listen",
+            "faster_whisper_available": python_packages.get("faster_whisper", False),
+            "vosk_available": python_packages.get("vosk", False),
+            "ffmpeg_available": executables.get("ffmpeg", False),
+            "runtime_scope": "adapter_contract_only",
+            "next_sprint": 195,
+            "next_boundary": "voice_intent_and_chat_integration",
+            "guardrails": [
+                "No STT runtime is executed in Sprint 194.",
+                "No audio file is read or written in Sprint 194.",
+                "No live microphone transcription is active.",
+                "No model download or dependency installation is performed.",
+                "No cloud STT or silent fallback is enabled.",
+                "Transcripts cannot trigger chat handoff or actions in Sprint 194.",
+            ],
+        }
+
     def status(self) -> dict[str, Any]:
         stt_candidates = self.stt_candidates()
         tts_candidates = self.tts_candidates()
         activation = self.activation_contract()
         listen_state = self.listen_state_contract()
         microphone_boundary = self.microphone_capture_boundary_contract()
+        stt_adapter = self.speech_to_text_adapter_runtime_contract()
 
         return {
             "name": self.name,
@@ -339,6 +407,15 @@ class VoiceRuntimePlanner:
             "audio_device_discovery_active": microphone_boundary["audio_device_discovery_active"],
             "recording_active": microphone_boundary["recording_active"],
             "audio_buffer_active": microphone_boundary["audio_buffer_active"],
+            "stt_adapter_contract_ready": stt_adapter["stt_adapter_contract_ready"],
+            "stt_adapter_runtime_ready": stt_adapter["stt_adapter_runtime_ready"],
+            "stt_default_adapter": stt_adapter["default_adapter"],
+            "stt_adapter_candidates": stt_adapter["candidate_adapter_count"],
+            "audio_file_transcription_runtime_ready": stt_adapter["audio_file_transcription_runtime_ready"],
+            "live_microphone_transcription_active": stt_adapter["live_microphone_transcription_active"],
+            "transcription_active": stt_adapter["transcription_active"],
+            "cloud_stt_fallback_enabled": stt_adapter["cloud_stt_fallback_enabled"],
+            "transcript_to_action_enabled": stt_adapter["transcript_to_action_enabled"],
             "runtime_ready": False,
             "safe_idle_default": activation["safe_idle_default"],
             "push_to_talk_required": activation["push_to_talk_required"],
@@ -359,7 +436,8 @@ class VoiceRuntimePlanner:
             "activation_contract": activation,
             "listen_state_contract": listen_state,
             "microphone_capture_boundary_contract": microphone_boundary,
-            "note": "Voice local microphone capture boundary is ready as a safe contract, but real microphone capture, audio device access, STT/TTS, and speaker runtime are not enabled yet.",
+            "speech_to_text_adapter_runtime_contract": stt_adapter,
+            "note": "Voice speech-to-text adapter contract is ready, but real STT execution, audio file transcription, live microphone transcription, cloud fallback, and transcript actions are not enabled yet.",
         }
 
     def plan(self) -> dict[str, Any]:
@@ -426,6 +504,7 @@ class VoiceRuntimePlanner:
         activation = self.activation_contract()
         listen_state = self.listen_state_contract()
         microphone_boundary = self.microphone_capture_boundary_contract()
+        stt_adapter = self.speech_to_text_adapter_runtime_contract()
 
         installed_python = sum(
             1
@@ -504,6 +583,40 @@ class VoiceRuntimePlanner:
             "silent_cloud_fallback_disabled_for_capture": microphone_boundary["silent_cloud_fallback_enabled"] is False,
             "direct_voice_to_action_disabled_for_capture": microphone_boundary["direct_voice_to_action_enabled"] is False,
             "command_execution_inactive_for_capture": microphone_boundary["command_execution_active"] is False,
+            "stt_adapter_contract_ready": stt_adapter["stt_adapter_contract_ready"] is True,
+            "stt_adapter_runtime_not_ready": stt_adapter["stt_adapter_runtime_ready"] is False,
+            "stt_default_adapter_is_faster_whisper": stt_adapter["default_adapter"] == "faster-whisper",
+            "stt_candidate_adapter_count_matches": stt_adapter["candidate_adapter_count"] == len(self.stt_candidates()),
+            "stt_local_first_required": stt_adapter["local_first_required"] is True,
+            "stt_offline_first_required": stt_adapter["offline_first_required"] is True,
+            "audio_file_input_boundary_ready": stt_adapter["audio_file_input_boundary_ready"] is True,
+            "future_audio_file_required_for_stt_dry_run": stt_adapter["provided_audio_file_required_for_future_dry_run"] is True,
+            "audio_file_transcription_runtime_not_ready": stt_adapter["audio_file_transcription_runtime_ready"] is False,
+            "stt_audio_file_read_inactive": stt_adapter["audio_file_read_active"] is False,
+            "stt_audio_file_write_inactive": stt_adapter["audio_file_write_active"] is False,
+            "microphone_capture_not_required_for_stt_adapter_contract": stt_adapter["microphone_capture_required_for_adapter_contract"] is False,
+            "live_microphone_transcription_inactive": stt_adapter["live_microphone_transcription_active"] is False,
+            "stt_microphone_capture_inactive": stt_adapter["microphone_capture_active"] is False,
+            "stt_audio_device_access_disabled": stt_adapter["audio_device_access"] is False,
+            "stt_audio_device_discovery_inactive": stt_adapter["audio_device_discovery_active"] is False,
+            "stt_recording_inactive": stt_adapter["recording_active"] is False,
+            "stt_audio_buffer_inactive": stt_adapter["audio_buffer_active"] is False,
+            "stt_audio_persistence_disabled": stt_adapter["audio_persistence_enabled"] is False,
+            "stt_audio_transmission_disabled": stt_adapter["audio_transmission_enabled"] is False,
+            "stt_runtime_inactive_for_adapter": stt_adapter["stt_runtime_active"] is False,
+            "transcription_inactive_for_stt_adapter": stt_adapter["transcription_active"] is False,
+            "transcript_persistence_disabled": stt_adapter["transcript_persistence_enabled"] is False,
+            "transcript_to_chat_handoff_disabled": stt_adapter["transcript_to_chat_handoff_enabled"] is False,
+            "transcript_to_action_disabled": stt_adapter["transcript_to_action_enabled"] is False,
+            "stt_command_execution_inactive": stt_adapter["command_execution_active"] is False,
+            "stt_model_download_not_required": stt_adapter["model_download_required"] is False,
+            "stt_model_download_not_performed": stt_adapter["model_download_performed"] is False,
+            "stt_dependency_install_not_performed": stt_adapter["dependency_install_performed"] is False,
+            "cloud_stt_fallback_disabled": stt_adapter["cloud_stt_fallback_enabled"] is False,
+            "silent_cloud_stt_fallback_disabled": stt_adapter["silent_cloud_fallback_enabled"] is False,
+            "remote_stt_provider_disabled": stt_adapter["remote_provider_enabled"] is False,
+            "permission_required_before_transcription": stt_adapter["permission_required_before_transcription"] is True,
+            "stt_microphone_permission_reuses_existing_action": stt_adapter["microphone_permission_action"] == "microphone_listen",
         }
 
         failed_assertions = [
@@ -529,5 +642,6 @@ class VoiceRuntimePlanner:
             "activation_contract": activation,
             "listen_state_contract": listen_state,
             "microphone_capture_boundary_contract": microphone_boundary,
-            "note": "Runtime is not enabled yet. This check did not access microphone, speaker, audio devices, or capture audio.",
+            "speech_to_text_adapter_runtime_contract": stt_adapter,
+            "note": "Runtime is not enabled yet. This check did not access microphone, speaker, audio devices, audio files, STT models, cloud STT, or transcript actions.",
         }

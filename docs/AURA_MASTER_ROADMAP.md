@@ -2065,3 +2065,62 @@ execute commands, mutate files, control the desktop, start background services,
 bind publicly, or add autonomy.
 
 Next: Sprint 194 — Speech-to-Text Adapter Runtime.
+
+## Checkpoint v0.194.0-genesis — Speech-to-Text Adapter Runtime
+
+Sprint 194 continues the Sprint 191-200 Voice Interaction Runtime block.
+
+Checkpoint state:
+
+- voice activation foundation remains ready;
+- listen-state foundation remains ready;
+- microphone boundary remains ready;
+- STT adapter contract ready;
+- STT adapter runtime not ready;
+- default adapter candidate is `faster-whisper`;
+- three STT adapter candidates declared;
+- local-first STT required;
+- offline-first STT required;
+- audio-file input boundary ready for future dry runs;
+- provided audio file required before any future audio-file STT dry run;
+- audio-file transcription runtime not ready;
+- audio file read inactive;
+- audio file write inactive;
+- microphone capture not required for the adapter contract;
+- live microphone transcription inactive;
+- microphone capture inactive;
+- audio device access disabled;
+- audio device discovery inactive;
+- recording inactive;
+- audio buffer inactive;
+- audio persistence disabled;
+- audio transmission disabled;
+- STT runtime inactive;
+- transcription inactive;
+- transcript persistence disabled;
+- transcript-to-chat handoff disabled;
+- transcript-to-action disabled;
+- command execution inactive;
+- model download not required;
+- model download not performed;
+- dependency install not performed;
+- cloud STT fallback disabled;
+- silent cloud fallback disabled;
+- remote STT provider disabled;
+- microphone permission required before any future transcription;
+- existing `microphone_listen` permission action reused;
+- 98 activation/listen-state/microphone-boundary/STT-adapter assertions;
+- 0 failed activation/listen-state/microphone-boundary/STT-adapter assertions.
+
+Sprint 194 does not install dependencies, download models, read audio files,
+write audio files, transcribe audio files, run live microphone transcription,
+capture microphone input, record audio, buffer audio, persist audio, transmit
+audio, access audio devices, discover audio devices, run STT, create
+transcripts, persist transcripts, hand transcripts to chat, turn transcripts
+into actions, fallback to cloud STT, enable remote STT providers, run TTS, play
+speaker output, start a listen loop, enable wake words, listen in the
+background, hide capture, execute voice actions, execute commands, mutate
+files, control the desktop, start background services, bind publicly, or add
+autonomy.
+
+Next: Sprint 195 — Voice Intent and Chat Integration.
