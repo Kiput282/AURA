@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.180.0-genesis
-Current status: foundation-only, planner-only, review-only
-Current runtime state: disabled by design
+Current version: v0.181.0-genesis
+Current status: permission-gated localhost runtime alpha
+Current runtime state: one narrow localhost-only read-only web runtime is available; chat, model, action, and mutation runtimes remain disabled
 
 ---
 
@@ -35,34 +35,34 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 180.0 and closed the Sprint 171-180 Memory Runtime block.
+AURA has completed Sprint 181 and opened the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.180.0-genesis
-- Sprint 180: Memory Runtime Stabilization
+- v0.181.0-genesis
+- Sprint 181: Local Web Runtime Activation Cutline
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 181 — Local Web Runtime Activation Cutline
+- Next planned sprint: Sprint 182 — Service Lifecycle Runtime
 
 Current capability registry summary:
 
-- total capabilities: 111
-- online capabilities: 109
-- foundation-only capabilities: 74
+- total capabilities: 112
+- online capabilities: 110
+- foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 3
+- permission-gated capabilities: 4
 - review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 0
+- runtime execution features: 1
 
 ---
 
@@ -79,11 +79,11 @@ Disabled by design:
 - no tool execution runtime
 - no command execution runtime
 - no file read/write/modify/delete runtime
-- no service start runtime
-- no port binding runtime
+- no automatic or background service start runtime
+- no public, LAN, wildcard, or IPv6-wildcard port binding
 - no network probe runtime
 - no ORION runtime handshake
-- no dashboard runtime start
+- no mutating or interactive dashboard runtime
 - no memory write runtime
 - no git runtime
 
@@ -297,7 +297,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.143.0-genesis
+    Version  : 0.181.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -1872,3 +1872,35 @@ New safe alpha command:
 ```bash
 python3 main.py memory-runtime-stabilization-alpha "remember that AURA is local-first and permission-gated"
 ```
+
+## Sprint 181 — Local Web Runtime Activation Cutline
+
+Status: completed
+Version: `v0.181.0-genesis`
+
+Sprint 181 activates AURA's first real listener as one tightly scoped runtime
+execution feature:
+
+- manual, explicit foreground start;
+- IPv4 localhost bind only at `127.0.0.1:8765`;
+- `safe_idle` default;
+- static read-only Control Center alpha page;
+- `GET /health`;
+- `GET /api/status`;
+- mutation methods rejected;
+- clean `Ctrl+C` / `SIGINT` shutdown;
+- status and self-test commands that leave the port closed.
+
+Commands:
+
+```bash
+python3 main.py local-web-runtime-status
+python3 main.py local-web-runtime-self-test
+python3 main.py local-web-runtime-start --confirm-localhost
+```
+
+Chat, models, memory writes, permission mutation, commands, tools, actions,
+arbitrary file access, desktop control, voice, vision, public/LAN binding,
+background service, and autonomous behavior remain disabled.
+
+Next: Sprint 182 — Service Lifecycle Runtime.

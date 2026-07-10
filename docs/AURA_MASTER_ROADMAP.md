@@ -1725,3 +1725,18 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 ## Sprint 180 — Memory Runtime Stabilization
 
 `v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block. Nine memory components pass stabilization with zero dependency gaps and runtime violations while privacy, review, permission, correction/deletion, release, mutation, model, network, command, arbitrary-file, voice, and runtime execution gates remain closed. The next block is Sprint 181-190 Local Interaction Runtime Activation. Voice moves to Sprint 191-200 after the dashboard and chat runtime are operational and stabilized.
+
+## Checkpoint v0.181.0-genesis — Local Web Runtime Alpha
+
+Sprint 181 activates AURA's first deliberately narrow live web runtime. It is
+explicitly confirmed, foreground-only, bound only to `127.0.0.1:8765`,
+defaults to `safe_idle`, and exposes only a static read-only Control Center
+shell plus `/health` and `/api/status`.
+
+Sprint 181 contributes one runtime execution feature. Full runtime readiness,
+chat, model calls, memory writes, permission mutation, audit persistence,
+commands, tools, actions, arbitrary file access, desktop control, voice,
+vision, public/LAN binding, background service, and autonomous behavior remain
+disabled.
+
+Next: Sprint 182 — Service Lifecycle Runtime.

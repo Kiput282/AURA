@@ -1,5 +1,5 @@
 name: AURA
-version: "0.180.0-genesis"
+version: "0.181.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -41,4 +41,5 @@ modes:
 
 # Sprint 179: memory_runtime_integration_review validates the Sprint 171-178 chain; release and write runtimes remain closed.
 
-# Sprint 180: memory_runtime_stabilization closes block 171-180; all memory mutation runtimes remain disabled and Voice Foundation Runtime is next.
+# Sprint 180: memory_runtime_stabilization closes block 171-180; all memory mutation runtimes remain disabled and Local Interaction Runtime Activation is next.
+# Sprint 181: local_web_runtime_alpha activates one explicitly confirmed, foreground-only, localhost-only, read-only HTTP runtime with /, /health, and /api/status; chat, models, memory writes, permission mutation, commands, tools, arbitrary file access, desktop control, voice, vision, public/LAN binding, background service, and autonomous actions remain disabled.

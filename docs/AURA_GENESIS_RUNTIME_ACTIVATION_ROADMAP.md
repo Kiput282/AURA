@@ -14,6 +14,16 @@ The Genesis Final objective is the smallest complete version of AURA as a safe l
 
 ORION client integration, avatar/presence runtime, advanced desktop control, game control, streaming automation, and broad work execution are not release blockers for Genesis Final. They remain Post-Genesis work unless a small non-blocking foundation is needed internally.
 
+## Current Runtime Activation Checkpoint
+
+- Current version: v0.181.0-genesis
+- Completed: Sprint 181 — Local Web Runtime Activation Cutline
+- Runtime execution features: 1
+- Active scope: explicitly confirmed, foreground-only, localhost-only,
+  read-only HTTP
+- Default listener state: stopped
+- Next: Sprint 182 — Service Lifecycle Runtime
+
 ## Block 181-190 — Local Interaction Runtime Activation
 
 Outcome: AURA can be opened in a browser and used through a localhost Control Center and interactive local chat.

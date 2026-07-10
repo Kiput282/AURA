@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Canonical Version: v0.180.0-genesis
-Current Canonical Sprint: Sprint 180 — Memory Runtime Stabilization
-Next Planned Sprint: Sprint 181 — Local Web Runtime Activation Cutline
+Current Canonical Version: v0.181.0-genesis
+Current Canonical Sprint: Sprint 181 — Local Web Runtime Activation Cutline
+Next Planned Sprint: Sprint 182 — Service Lifecycle Runtime
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together

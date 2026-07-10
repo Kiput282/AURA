@@ -1,7 +1,7 @@
 # AURA Roadmap 181-190 — Local Interaction Runtime Activation
 
-Status: CANONICAL NEXT BLOCK
-Current anchor: v0.180.0-genesis
+Status: ACTIVE — SPRINT 181 COMPLETE
+Current anchor: v0.181.0-genesis
 Target checkpoint: v0.190.0-genesis
 
 ## Purpose
@@ -36,19 +36,33 @@ Throughout Sprint 181-190:
 
 ## Sprint Plan
 
-### Sprint 181 — Local Web Runtime Activation Cutline
+## Sprint 181 — Local Web Runtime Activation Cutline
 
-Activate the minimum localhost-only HTTP runtime with:
+Status: completed in v0.181.0-genesis.
 
-- manual foreground start;
-- explicit activation confirmation;
-- `safe_idle` boot;
-- `GET /health`;
-- `GET /api/status`;
-- a read-only Control Center landing page;
-- clean shutdown;
-- blocked POST, command, model, memory-write, permission-mutation, and action routes.
+Delivered:
 
+- real foreground HTTP listener;
+- fail-closed `127.0.0.1:8765` binding;
+- `safe_idle` default;
+- explicit `--confirm-localhost` requirement;
+- read-only `/`, `/health`, and `/api/status`;
+- mutation methods blocked with `405`;
+- CLI status, self-test, and start commands;
+- clean `SIGINT` shutdown and port release;
+- one registered runtime execution feature.
+
+Still disabled:
+
+- public/LAN/wildcard binding;
+- automatic or background service start;
+- chat and model runtime;
+- memory writes and permission mutation;
+- audit persistence;
+- commands, tools, actions, arbitrary files, desktop, voice, vision, and
+  autonomy.
+
+Next: Sprint 182 — Service Lifecycle Runtime.
 ### Sprint 182 — Service Lifecycle Runtime
 
 Add a deterministic service state machine and lifecycle controls for:

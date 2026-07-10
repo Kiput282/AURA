@@ -20,3 +20,9 @@ reasoning:
   host: http://localhost:11434
   model: llama3.2
   timeout: 60
+
+local_web_runtime:
+  host: 127.0.0.1
+  port: 8765
+  mode: safe_idle
+  require_explicit_confirmation: true

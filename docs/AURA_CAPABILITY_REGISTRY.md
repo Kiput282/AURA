@@ -1,6 +1,6 @@
 # AURA Capability Registry Consolidation
 
-Target version: v0.82.0-genesis  
+Target version: v0.82.0-genesis
 Status: CAPABILITY REGISTRY ONLINE
 
 ## Purpose
@@ -314,3 +314,38 @@ Updated registry summary:
 - runtime execution features: 0
 
 AURA Local Console API Schema Foundation remains foundation-only and blueprint-only. It does not start API runtime, create API routes, handle API requests, serve API responses, bind ports, fetch runtime data, run runtime validation, run runtime serialization, emit runtime errors, or execute tools.
+
+## Sprint 181 Update — Local Web Runtime Alpha Online
+
+Status: UPDATED FOR v0.181.0-genesis
+
+The registry now tracks `aura_local_web_runtime_alpha` as an online,
+permission-gated alpha runtime.
+
+Current summary:
+
+- total capabilities tracked: 112
+- online capabilities: 110
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 4
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 1
+
+Scoped availability now reports:
+
+- `local_web_runtime_alpha: true`
+- `localhost_only_runtime: true`
+- `foreground_only_runtime: true`
+- `read_only_http_runtime: true`
+- `explicit_start_confirmation_required: true`
+- `ui_runtime: true`
+- `web_server_runtime: true`
+- `service_runtime: true`
+
+These true values refer only to the narrow Sprint 181 runtime. Full Genesis
+runtime readiness remains false. Public, LAN, wildcard, background,
+automatic-start, mutating-dashboard, chat, model, permission-grant, command,
+tool, file, desktop, voice, vision, and autonomous runtimes remain disabled.
