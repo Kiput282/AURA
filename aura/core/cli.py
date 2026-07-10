@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_runtime_stabilization.aura_memory_runtime_stabilization_manager import AuraMemoryRuntimeStabilizationManager
 from aura.memory_runtime_integration_review.aura_memory_runtime_integration_review_manager import AuraMemoryRuntimeIntegrationReviewManager
 from aura.memory_privacy_redaction_layer.aura_memory_privacy_redaction_layer_manager import AuraMemoryPrivacyRedactionLayerManager
 from aura.chat_to_memory_handoff_contract.aura_chat_to_memory_handoff_contract_manager import AuraChatToMemoryHandoffContractManager
@@ -4340,6 +4341,51 @@ class AuraCLI:
 
 
 
+
+
+    # Sprint 180.0 memory runtime stabilization helpers.
+    def print_memory_runtime_stabilization_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Runtime Stabilization"))
+
+    def handle_memory_runtime_stabilization_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+        command = raw_args[0]
+        manager = AuraMemoryRuntimeStabilizationManager(project_root=self.project_root)
+
+        if command in {"memory-runtime-stabilization-alpha", "memory-stabilization-alpha"}:
+            if len(raw_args) < 2:
+                print('Usage: python3 main.py memory-runtime-stabilization-alpha "remember that AURA is local-first"')
+                return True
+            print(manager.render_stabilization_alpha(" ".join(raw_args[1:])))
+            return True
+        if command == "memory-runtime-stabilization-status":
+            self.print_memory_runtime_stabilization_packet("AURA Memory Runtime Stabilization Status", manager.status())
+            return True
+        if command == "memory-runtime-stabilization-context":
+            self.print_memory_runtime_stabilization_packet("AURA Memory Runtime Stabilization Context", manager.context())
+            return True
+
+        target = " ".join(raw_args[1:]) if len(raw_args) > 1 else "AURA memory runtime stabilization"
+        command_map = {
+            "memory-runtime-block-completion-plan": ("AURA Memory Runtime Block Completion Plan", manager.memory_runtime_block_completion_plan),
+            "memory-runtime-component-stability-plan": ("AURA Memory Runtime Component Stability Plan", manager.memory_runtime_component_stability_plan),
+            "memory-runtime-pipeline-stability-plan": ("AURA Memory Runtime Pipeline Stability Plan", manager.memory_runtime_pipeline_stability_plan),
+            "memory-runtime-privacy-stability-plan": ("AURA Memory Runtime Privacy Stability Plan", manager.memory_runtime_privacy_stability_plan),
+            "memory-runtime-review-permission-stability-plan": ("AURA Memory Runtime Review Permission Stability Plan", manager.memory_runtime_review_permission_stability_plan),
+            "memory-runtime-correction-deletion-stability-plan": ("AURA Memory Runtime Correction Deletion Stability Plan", manager.memory_runtime_correction_deletion_stability_plan),
+            "memory-runtime-control-center-handoff-plan": ("AURA Memory Runtime Control Center Handoff Plan", manager.memory_runtime_control_center_handoff_plan),
+            "memory-runtime-release-gate-closure-plan": ("AURA Memory Runtime Release Gate Closure Plan", manager.memory_runtime_release_gate_closure_plan),
+            "memory-runtime-voice-block-handoff-plan": ("AURA Memory Runtime Voice Block Handoff Plan", manager.memory_runtime_voice_block_handoff_plan),
+            "no-memory-runtime-stabilization-unsafe-runtime-plan": ("AURA No Memory Runtime Stabilization Unsafe Runtime Plan", manager.no_memory_runtime_stabilization_unsafe_runtime_plan),
+            "memory-runtime-stabilization-next-block-readiness-plan": ("AURA Memory Runtime Stabilization Next Block Readiness Plan", manager.memory_runtime_stabilization_next_block_readiness_plan),
+        }
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_runtime_stabilization_packet(title, handler(target))
+            return True
+        return False
 
     # Sprint 179.0 memory runtime integration review helpers.
     def print_memory_runtime_integration_review_packet(self, title: str, packet: dict) -> None:
@@ -8574,6 +8620,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_memory_runtime_stabilization_cli_command(raw_args):
             return True
 
         if self.handle_memory_runtime_integration_review_cli_command(raw_args):

@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.179.0-genesis
+Current version: v0.180.0-genesis
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -35,26 +35,31 @@ Grow Together
 
 ## Current Project Status
 
+AURA has completed Sprint 180.0 and closed the Sprint 171-180 Memory Runtime block.
+
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
+
+- v0.180.0-genesis
+- Sprint 180: Memory Runtime Stabilization
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation
+- Next planned sprint: Sprint 181.0 — Voice Runtime Foundation
 
 Current capability registry summary:
 
-- total capabilities: 110
-- online capabilities: 108
+- total capabilities: 111
+- online capabilities: 109
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 3
-- review-only capabilities: 9
+- review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 0
@@ -1849,4 +1854,15 @@ New safe alpha command:
 
 ```bash
 python3 main.py memory-runtime-integration-review-alpha "remember that AURA is local-first and permission-gated"
+```
+
+
+## Sprint 180 — Memory Runtime Stabilization
+
+`v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block as a read-only stabilization checkpoint. It verifies nine memory components, zero dependency gaps, zero runtime violations, stable privacy/review/permission ordering, the closed correction/deletion boundary, and readiness for Sprint 181-190 Voice Foundation Runtime. Memory writes, store mutation, grants, review decisions, corrections, deletes, model/network activity, audit writes, commands, arbitrary file access, voice capture, and runtime execution remain disabled.
+
+New safe alpha command:
+
+```bash
+python3 main.py memory-runtime-stabilization-alpha "remember that AURA is local-first and permission-gated"
 ```

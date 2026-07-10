@@ -143,6 +143,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_runtime_stabilization.aura_memory_runtime_stabilization_manager import AuraMemoryRuntimeStabilizationManager
 from aura.memory_runtime_integration_review.aura_memory_runtime_integration_review_manager import AuraMemoryRuntimeIntegrationReviewManager
 from aura.memory_privacy_redaction_layer.aura_memory_privacy_redaction_layer_manager import AuraMemoryPrivacyRedactionLayerManager
 from aura.chat_to_memory_handoff_contract.aura_chat_to_memory_handoff_contract_manager import AuraChatToMemoryHandoffContractManager
@@ -353,6 +354,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        memory_runtime_stabilization_status = AuraMemoryRuntimeStabilizationManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_runtime_integration_review_status = AuraMemoryRuntimeIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_privacy_redaction_layer_status = AuraMemoryPrivacyRedactionLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         chat_to_memory_handoff_contract_status = AuraChatToMemoryHandoffContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
@@ -508,6 +510,21 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "memory_runtime_stabilization_ready": memory_runtime_stabilization_status["memory_runtime_stabilization_ready"],
+            "memory_runtime_stabilization_data_ready": memory_runtime_stabilization_status["memory_runtime_stabilization_data_ready"],
+            "memory_runtime_stabilization_plan_type_count": memory_runtime_stabilization_status["plan_type_count"],
+            "memory_runtime_stabilization_total_blueprint_count": memory_runtime_stabilization_status["total_memory_runtime_stabilization_blueprint_count"],
+            "memory_runtime_stabilization_thin_runtime_alpha": memory_runtime_stabilization_status["thin_runtime_alpha"],
+            "memory_runtime_stabilization_enabled": memory_runtime_stabilization_status["memory_runtime_stabilization_enabled"],
+            "memory_runtime_stabilization_components_checked": memory_runtime_stabilization_status["components_checked"],
+            "memory_runtime_stabilization_components_ready": memory_runtime_stabilization_status["components_ready"],
+            "memory_runtime_stabilization_gap_count": memory_runtime_stabilization_status["stabilization_gap_count"],
+            "memory_runtime_stabilization_runtime_violation_count": memory_runtime_stabilization_status["runtime_violation_count"],
+            "memory_runtime_block_171_180_complete": memory_runtime_stabilization_status["block_171_180_complete"],
+            "memory_runtime_chain_stable": memory_runtime_stabilization_status["memory_chain_stable"],
+            "voice_foundation_runtime_block_ready": memory_runtime_stabilization_status["voice_foundation_runtime_block_ready"],
+            "memory_runtime_stabilization_release_gate_closed": memory_runtime_stabilization_status["release_gate_closed"],
+            "memory_runtime_stabilization_runtime_execution_features": memory_runtime_stabilization_status["runtime_execution_features"],
             "memory_runtime_integration_review_ready": memory_runtime_integration_review_status["memory_runtime_integration_review_ready"],
             "memory_runtime_integration_review_data_ready": memory_runtime_integration_review_status["memory_runtime_integration_review_data_ready"],
             "memory_runtime_integration_review_plan_type_count": memory_runtime_integration_review_status["plan_type_count"],

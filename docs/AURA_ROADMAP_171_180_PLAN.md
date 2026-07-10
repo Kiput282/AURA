@@ -99,3 +99,15 @@ Status: completed in `v0.179.0-genesis` after Sprint 178.
 Sprint 179 reviews the eight Sprint 171-178 memory components as one deterministic, read-only chain. It verifies versions and readiness, explicit-trigger extraction, privacy-before-permission, importance and manual-review handoff, default-deny permission, and the separate correction/deletion boundary. Integration reports are not persisted; queue decisions, permission grants, memory writes/store mutation, corrections/deletes, model/network/credential activity, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
 
 Next: Sprint 180 — Memory Runtime Stabilization.
+
+
+## Sprint 180 — Memory Runtime Stabilization
+
+Status: completed in `v0.180.0-genesis` after Sprint 179.
+
+Sprint 180 closes the Sprint 171-180 Memory Runtime block as a deterministic, read-only stabilization checkpoint. It verifies all nine prior memory components, zero dependency gaps and runtime violations, privacy and manual review before permission, permission before any future write, the closed correction/deletion boundary, and a closed release gate. Stabilization reports are not persisted; review decisions, permission grants, memory writes/store mutation, corrections/deletes, model/network/credential activity, audit writes, commands, arbitrary file access, voice capture, and runtime execution remain disabled.
+
+Block 171-180 status: completed and stable.
+
+Next block: Sprint 181-190 — Voice Foundation Runtime.
+Next: Sprint 181 — Voice Runtime Foundation.

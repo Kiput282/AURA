@@ -1,5 +1,5 @@
 name: AURA
-version: "0.179.0-genesis"
+version: "0.180.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -40,3 +40,5 @@ modes:
 # Sprint 178: memory_privacy_redaction_layer adds local redaction and secret-block previews; original/redacted persistence, grants, and memory writes remain disabled.
 
 # Sprint 179: memory_runtime_integration_review validates the Sprint 171-178 chain; release and write runtimes remain closed.
+
+# Sprint 180: memory_runtime_stabilization closes block 171-180; all memory mutation runtimes remain disabled and Voice Foundation Runtime is next.

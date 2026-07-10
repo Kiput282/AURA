@@ -751,6 +751,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
             {
+                "id": "aura_memory_runtime_stabilization",
+                "name": "AURA Memory Runtime Stabilization",
+                "state": "online",
+                "runtime_level": "review_only",
+                "risk_level": "high",
+                "permission_required": "user_confirmation",
+                "category": "memory_runtime",
+                "introduced_in": "0.180.0-genesis",
+                "control_center_visible": True,
+                "description": "Read-only stabilization checkpoint closing the Sprint 171-180 Memory Runtime block by verifying nine component versions/readiness states, zero dependency gaps and runtime violations, stable privacy/review/permission ordering, closed correction/deletion and release gates, and readiness for the Voice Foundation Runtime block while all mutation and execution runtimes remain disabled.",
+            },
+            {
                 "id": "aura_memory_runtime_integration_review",
                 "name": "AURA Memory Runtime Integration Review",
                 "state": "online",
