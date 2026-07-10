@@ -13,6 +13,7 @@ from http.server import BaseHTTPRequestHandler
 
 from aura.control_center_web_shell_runtime import (
     AuraControlCenterWebShellHttpRuntimeManager,
+    AuraControlCenterWebShellRuntimeManager,
 )
 from aura.service_lifecycle_runtime import (
     AuraServiceLifecycleRuntimeManager,
@@ -1034,9 +1035,13 @@ def build_browser_chat_session_runtime_bundle(
         project_root=project_root,
         status_manager=status_manager,
     )
+    shell_manager = AuraControlCenterWebShellRuntimeManager(
+        project_root=project_root
+    )
 
     web_runtime.attach_status_manager(status_manager)
     web_runtime.attach_backend_manager(backend_manager)
+    web_runtime.attach_shell_manager(shell_manager)
 
     return BrowserChatSessionRuntimeBundle(
         web_runtime=web_runtime,
