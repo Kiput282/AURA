@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.184.0-genesis
-Current status: permission-gated localhost Control Center backend runtime alpha
-Current runtime state: one localhost-only read-only listener with deterministic lifecycle, nine transparent status routes, and nine Control Center backend routes across eight panels is available; the web shell, chat, model, action, mutation, background, systemd, and auto-start runtimes remain disabled
+Current version: v0.185.0-genesis
+Current status: permission-gated localhost Control Center web shell runtime alpha
+Current runtime state: one localhost-only read-only listener with deterministic lifecycle, nine transparent status routes, nine Control Center backend routes, and a responsive browser shell with three local assets across eight panels is available; browser chat, model, action, mutation, background, systemd, auto-start, and browser auto-launch runtimes remain disabled
 
 ---
 
@@ -35,29 +35,29 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 184 in the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 185 in the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.184.0-genesis
-- Sprint 184: Control Center Backend Runtime
+- v0.185.0-genesis
+- Sprint 185: Control Center Web Shell
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 185 — Control Center Web Shell
+- Next planned sprint: Sprint 186 — Browser Chat Session Runtime
 Current capability registry summary:
 
-- total capabilities: 115
-- online capabilities: 113
+- total capabilities: 116
+- online capabilities: 114
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 7
+- permission-gated capabilities: 8
 - review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
@@ -81,7 +81,7 @@ Disabled by design:
 - no public, LAN, wildcard, or IPv6-wildcard port binding
 - no network probe runtime
 - no ORION runtime handshake
-- no mutating or interactive dashboard runtime
+- no mutating dashboard controls or action execution runtime
 - no memory write runtime
 - no git runtime
 
@@ -295,7 +295,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.184.0-genesis
+    Version  : 0.185.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -2038,3 +2038,57 @@ models, commands, tools, actions, arbitrary files, desktop, voice, vision,
 public/LAN exposure, and autonomy remain disabled.
 
 Next: Sprint 185 — Control Center Web Shell.
+
+## Sprint 185 — Control Center Web Shell
+
+Status: completed
+Version: `v0.185.0-genesis`
+
+Sprint 185 delivers AURA's first usable local browser dashboard:
+
+- three local static asset routes;
+- eight dashboard panels;
+- live read-only status from `/api/control-center`;
+- responsive desktop, tablet, and mobile layouts;
+- keyboard focus, skip-link, live-region, and reduced-motion accessibility;
+- safe-idle and degraded-state indicators;
+- manual and visible-tab automatic read refresh;
+- local capability filtering;
+- safe DOM rendering without `innerHTML` or `eval`;
+- no CDN, external font, frontend framework, or external dependency;
+- self-only Content Security Policy and restrictive browser permissions;
+- Host allowlist, path traversal blocking, and no CORS;
+- 140/140 shell assertions;
+- 232/232 live HTTP assertions.
+
+No-bind inspection commands:
+
+```bash
+python3 main.py control-center-web-shell-status
+python3 main.py control-center-web-shell-manifest
+python3 main.py control-center-web-shell-self-test
+```
+
+Start the local dashboard with:
+
+```bash
+python3 main.py service-lifecycle-start --confirm-localhost
+```
+
+Then open manually on ATLAS:
+
+```text
+http://127.0.0.1:8765/
+```
+
+Browser auto-launch remains disabled.
+
+Runtime execution features remain `1` because the dashboard uses the existing
+localhost listener.
+
+Browser chat, model dispatch, service/plugin controls, permission decisions,
+audit writes, memory writes, commands, tools, actions, arbitrary files,
+desktop, voice, vision, background service, public/LAN binding, and autonomy
+remain disabled.
+
+Next: Sprint 186 — Browser Chat Session Runtime.

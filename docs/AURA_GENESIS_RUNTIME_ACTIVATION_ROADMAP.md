@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.180.0-genesis
+Current anchor: v0.185.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,19 +16,23 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.184.0-genesis
-- Completed: Sprint 184 — Control Center Backend Runtime
+- Current version: v0.185.0-genesis
+- Completed: Sprint 185 — Control Center Web Shell
 - Runtime execution features: 1
 - Active scope: explicitly confirmed, foreground-only, localhost-only,
   read-only HTTP with deterministic lifecycle, transparent status payloads,
-  and Control Center backend view models
+  Control Center backend view models, and a usable responsive browser shell
 - Status routes: 9
 - Control Center backend routes: 9
 - Control Center panels: 8
+- Local shell asset routes: 3
+- Total route surface: 21
 - Default listener state: stopped
-- Web shell/frontend: disabled
+- Web shell/frontend: enabled, local-only, read-only
+- Browser auto-launch: disabled
+- Browser chat/model runtime: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 185 — Control Center Web Shell
+- Next: Sprint 186 — Browser Chat Session Runtime
 ## Block 181-190 — Local Interaction Runtime Activation
 
 Outcome: AURA can be opened in a browser and used through a localhost Control Center and interactive local chat.

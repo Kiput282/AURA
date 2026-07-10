@@ -1,7 +1,7 @@
 # AURA Roadmap 181-190 — Local Interaction Runtime Activation
 
-Status: ACTIVE — SPRINT 184 COMPLETE
-Current anchor: v0.184.0-genesis
+Status: ACTIVE — SPRINT 185 COMPLETE
+Current anchor: v0.185.0-genesis
 Target checkpoint: v0.190.0-genesis
 
 ## Purpose
@@ -178,18 +178,48 @@ Still disabled:
 Next: Sprint 185 — Control Center Web Shell.
 ### Sprint 185 — Control Center Web Shell
 
-Deliver the first usable browser dashboard with:
+Status: completed in v0.185.0-genesis.
 
-- overview page;
-- service status;
-- capability viewer;
-- plugin viewer;
-- memory status;
-- permission panel in read-only mode;
-- action/audit log visibility;
-- responsive local UI;
-- clear safe-idle and degraded-state indicators.
+Delivered:
 
+- first usable localhost browser dashboard;
+- three local static asset routes;
+- eight read-only panels for overview, service, capabilities, plugins,
+  permissions, audit, memory, and readiness;
+- live read-only connection to `/api/control-center`;
+- responsive desktop, tablet, and mobile layouts;
+- keyboard focus, skip-link, live-region, and reduced-motion accessibility;
+- safe-idle and degraded-state indicators;
+- manual and five-second visible-tab read refresh;
+- local capability filtering;
+- safe DOM rendering without `innerHTML` or `eval`;
+- no CDN, external fonts, frontend packages, or external runtime dependency;
+- self-only Content Security Policy;
+- browser permission restrictions;
+- Host-header allowlist;
+- path traversal and unknown asset blocking;
+- mutation methods rejected with 405;
+- browser auto-launch disabled;
+- 140/140 shell assertions;
+- 232/232 live HTTP assertions.
+
+Runtime feature accounting remains `1` because Sprint 185 uses the same
+localhost listener introduced in Sprint 181.
+
+Still disabled:
+
+- browser chat sessions and message submission;
+- local model request/response runtime;
+- service and plugin controls;
+- permission decisions, grants, denials, and scope mutation;
+- audit writer and persistence;
+- memory mutation;
+- background daemon, systemd, automatic startup, and persistence;
+- public/LAN/wildcard binding;
+- command, tool, action, arbitrary-file, desktop, voice, vision, and
+  autonomy runtime.
+
+Next: Sprint 186 — Browser Chat Session Runtime.
 ### Sprint 186 — Browser Chat Session Runtime
 
 Activate browser-to-AURA chat sessions with:

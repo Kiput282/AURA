@@ -1215,9 +1215,9 @@ class AuraHealthStatusApiRuntimeManager:
         assertions["identity_available"] = (
             snapshot["identity"]["available"] is True
         )
-        assertions["identity_version_184"] = (
+        assertions['identity_version_185'] = (
             snapshot["identity"]["version"]
-            == "0.184.0-genesis"
+            == '0.185.0-genesis'
         )
         assertions["boot_probe_did_not_execute_boot"] = (
             snapshot["core_boot"]["boot_executed"]
@@ -1240,23 +1240,23 @@ class AuraHealthStatusApiRuntimeManager:
             snapshot["capabilities"]["available"]
             is True
         )
-        assertions["capability_total_115"] = (
+        assertions['capability_total_116'] = (
             snapshot["capabilities"]["summary"][
                 "total_capabilities"
             ]
-            == 115
+            == 116
         )
-        assertions["capability_online_113"] = (
+        assertions['capability_online_114'] = (
             snapshot["capabilities"]["summary"][
                 "online_capabilities"
             ]
-            == 113
+            == 114
         )
-        assertions["permission_gated_seven"] = (
+        assertions['permission_gated_eight'] = (
             snapshot["capabilities"]["summary"][
                 "permission_gated_count"
             ]
-            == 7
+            == 8
         )
         assertions["runtime_feature_count_one"] = (
             snapshot["capabilities"][

@@ -489,3 +489,52 @@ Still false:
 
 Sprint 184 does not increase the runtime execution feature count because all
 backend view models are served through the existing Sprint 181 listener.
+
+## Sprint 185 Update — Control Center Web Shell Runtime Online
+
+Status: UPDATED FOR v0.185.0-genesis
+
+The registry now tracks `aura_control_center_web_shell_runtime` as an online,
+permission-gated alpha capability.
+
+Current summary:
+
+- total capabilities tracked: 116
+- online capabilities: 114
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 8
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 1
+
+Activated scoped fields:
+
+- `control_center_web_shell_runtime: true`
+- `control_center_frontend_asset_runtime: true`
+- `control_center_web_shell_asset_route_count: 3`
+- `control_center_web_shell_panel_count: 8`
+- `control_center_total_route_count: 21`
+- `control_center_responsive_layout: true`
+- `control_center_accessibility_contract: true`
+- `control_center_degraded_state_ui: true`
+- `control_center_safe_idle_indicator: true`
+
+Still false:
+
+- `runtime_ready`
+- `execution_ready`
+- `control_center_browser_launch_runtime`
+- `control_center_backend_mutation_runtime`
+- `control_center_service_control_runtime`
+- `control_center_plugin_control_runtime`
+- `control_center_permission_decision_runtime`
+- `control_center_audit_writer_runtime`
+- `control_center_memory_write_runtime`
+- `control_center_external_dependency_runtime`
+- browser chat, model, background service, automatic startup, command, tool,
+  action, arbitrary file, desktop, voice, vision, and autonomous runtime gates
+
+Sprint 185 does not increase the runtime execution feature count because the
+dashboard uses the same Sprint 181 listener.

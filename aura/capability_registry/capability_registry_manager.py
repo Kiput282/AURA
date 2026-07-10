@@ -137,8 +137,16 @@ class CapabilityRegistryManager:
                    'control_center_backend_route_count': 9,
                    'control_center_backend_panel_count': 8,
                    'control_center_backend_foundation_contract_count': 8,
-                   'control_center_web_shell_runtime': False,
-                   'control_center_frontend_asset_runtime': False,
+                   'control_center_web_shell_runtime': True,
+                   'control_center_frontend_asset_runtime': True,
+                   'control_center_web_shell_asset_route_count': 3,
+                   'control_center_web_shell_panel_count': 8,
+                   'control_center_total_route_count': 21,
+                   'control_center_responsive_layout': True,
+                   'control_center_accessibility_contract': True,
+                   'control_center_degraded_state_ui': True,
+                   'control_center_safe_idle_indicator': True,
+                   'control_center_external_dependency_runtime': False,
                    'control_center_browser_launch_runtime': False,
                    'control_center_backend_mutation_runtime': False,
                    'control_center_service_control_runtime': False,
@@ -1611,6 +1619,28 @@ class CapabilityRegistryManager:
                     "memory writes, chat, models, commands, tools, actions, "
                     "background service, public/LAN binding, and autonomy "
                     "remain disabled."
+                ),
+            },
+            {
+                "id": "aura_control_center_web_shell_runtime",
+                "name": "AURA Control Center Web Shell Runtime",
+                "state": "online",
+                "runtime_level": "permission_gated_alpha_runtime",
+                "risk_level": "medium",
+                "permission_required": "user_confirmation",
+                "category": "local_interaction_runtime",
+                "introduced_in": "0.185.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Usable localhost-only read-only Control Center web "
+                    "shell with three local static assets and eight panels "
+                    "for overview, service, capabilities, plugins, "
+                    "permissions, audit, memory, and readiness. It uses "
+                    "the existing listener and backend, has no external "
+                    "dependencies, and exposes no service controls, plugin "
+                    "controls, permission decisions, audit writes, memory "
+                    "writes, chat, models, commands, tools, actions, "
+                    "background service, public/LAN binding, or autonomy."
                 ),
             },
 ]

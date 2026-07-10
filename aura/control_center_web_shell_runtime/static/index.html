@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en" data-aura-shell="control-center">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#10141d">
+  <meta
+    name="description"
+    content="AURA local read-only Control Center dashboard."
+  >
+  <title>AURA Control Center</title>
+  <link
+    rel="stylesheet"
+    href="/assets/control-center.css"
+  >
+  <script
+    src="/assets/control-center.js"
+    defer
+  ></script>
+</head>
+<body>
+  <a class="skip-link" href="#dashboard-main">
+    Skip to dashboard content
+  </a>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Control Center navigation">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true">A</div>
+        <div>
+          <p class="eyebrow">Project Genesis</p>
+          <p class="brand-name">AURA</p>
+        </div>
+      </div>
+
+      <nav class="panel-nav" aria-label="Dashboard panels">
+        <a href="#overview" data-panel-link="overview">Overview</a>
+        <a href="#service" data-panel-link="service">Service</a>
+        <a href="#capabilities" data-panel-link="capabilities">
+          Capabilities
+        </a>
+        <a href="#plugins" data-panel-link="plugins">Plugins</a>
+        <a href="#permissions" data-panel-link="permissions">
+          Permissions
+        </a>
+        <a href="#audit" data-panel-link="audit">Audit</a>
+        <a href="#memory" data-panel-link="memory">Memory</a>
+        <a href="#readiness" data-panel-link="readiness">
+          Readiness
+        </a>
+      </nav>
+
+      <section class="boundary-card" aria-labelledby="boundary-title">
+        <h2 id="boundary-title">Runtime boundary</h2>
+        <p>Localhost only</p>
+        <p>Read-only dashboard</p>
+        <p>No commands or actions</p>
+        <p>No web shell mutation</p>
+      </section>
+    </aside>
+
+    <main id="dashboard-main" class="dashboard" tabindex="-1">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Local Control Center</p>
+          <h1>
+            <span data-bind="identity-name">AURA</span>
+            <span class="version" data-bind="identity-version">
+              loading
+            </span>
+          </h1>
+          <p class="header-summary">
+            Transparent local runtime visibility with explicit
+            safety boundaries.
+          </p>
+        </div>
+
+        <div class="header-status">
+          <span
+            id="runtime-state"
+            class="status-badge status-neutral"
+            data-state="loading"
+          >
+            Loading
+          </span>
+          <button
+            id="refresh-data"
+            class="refresh-button"
+            type="button"
+            aria-describedby="refresh-note"
+          >
+            Refresh data
+          </button>
+          <p id="refresh-note" class="microcopy">
+            Read-only GET request
+          </p>
+        </div>
+      </header>
+
+      <div
+        id="shell-message"
+        class="shell-message"
+        role="status"
+        aria-live="polite"
+      >
+        Connecting to the local backend…
+      </div>
+
+      <section
+        id="overview"
+        class="dashboard-panel"
+        data-panel="overview"
+        aria-labelledby="overview-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">System summary</p>
+            <h2 id="overview-title">Overview</h2>
+          </div>
+          <span
+            class="panel-state"
+            data-bind="overview-status"
+          >
+            loading
+          </span>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric-card">
+            <p>Boot health</p>
+            <strong data-bind="boot-health">Loading</strong>
+          </article>
+          <article class="metric-card">
+            <p>Service</p>
+            <strong data-bind="service-state">Loading</strong>
+          </article>
+          <article class="metric-card">
+            <p>Capabilities</p>
+            <strong data-bind="capability-summary">—</strong>
+          </article>
+          <article class="metric-card">
+            <p>Plugins</p>
+            <strong data-bind="plugin-summary">—</strong>
+          </article>
+          <article class="metric-card">
+            <p>Memory</p>
+            <strong data-bind="memory-summary">—</strong>
+          </article>
+          <article class="metric-card">
+            <p>Runtime features</p>
+            <strong data-bind="runtime-features">—</strong>
+          </article>
+        </div>
+
+        <dl class="detail-list">
+          <div>
+            <dt>Codename</dt>
+            <dd data-bind="identity-codename">—</dd>
+          </div>
+          <div>
+            <dt>Creator</dt>
+            <dd data-bind="identity-creator">—</dd>
+          </div>
+          <div>
+            <dt>Safe idle</dt>
+            <dd data-bind="safe-idle">—</dd>
+          </div>
+          <div>
+            <dt>Last updated</dt>
+            <dd data-bind="last-updated">—</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section
+        id="service"
+        class="dashboard-panel"
+        data-panel="service"
+        aria-labelledby="service-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Lifecycle visibility</p>
+            <h2 id="service-title">Service</h2>
+          </div>
+          <span class="panel-state" data-bind="service-panel-status">
+            loading
+          </span>
+        </div>
+
+        <div class="two-column">
+          <dl class="detail-list">
+            <div>
+              <dt>State</dt>
+              <dd data-bind="service-detail-state">—</dd>
+            </div>
+            <div>
+              <dt>Listener</dt>
+              <dd data-bind="service-listener">—</dd>
+            </div>
+            <div>
+              <dt>Binding</dt>
+              <dd data-bind="service-binding">—</dd>
+            </div>
+            <div>
+              <dt>Uptime</dt>
+              <dd data-bind="service-uptime">—</dd>
+            </div>
+            <div>
+              <dt>Transitions</dt>
+              <dd data-bind="service-transitions">—</dd>
+            </div>
+            <div>
+              <dt>Last stop</dt>
+              <dd data-bind="service-last-stop">—</dd>
+            </div>
+          </dl>
+
+          <aside class="notice-card">
+            <h3>Controls intentionally unavailable</h3>
+            <p>
+              Start, stop, restart, systemd, background, and auto-start
+              controls are not exposed in this shell.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section
+        id="capabilities"
+        class="dashboard-panel"
+        data-panel="capabilities"
+        aria-labelledby="capabilities-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Registry visibility</p>
+            <h2 id="capabilities-title">Capabilities</h2>
+          </div>
+          <span class="panel-state" data-bind="capability-count">
+            loading
+          </span>
+        </div>
+
+        <div class="filter-row">
+          <label for="capability-search">
+            Filter capability cards
+          </label>
+          <input
+            id="capability-search"
+            type="search"
+            autocomplete="off"
+            placeholder="Search name, category, state, or risk"
+          >
+        </div>
+
+        <div
+          id="capability-list"
+          class="capability-list"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <section
+        id="plugins"
+        class="dashboard-panel"
+        data-panel="plugins"
+        aria-labelledby="plugins-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Module visibility</p>
+            <h2 id="plugins-title">Plugins</h2>
+          </div>
+          <span class="panel-state" data-bind="plugin-panel-status">
+            loading
+          </span>
+        </div>
+
+        <div id="plugin-list" class="item-list"></div>
+
+        <aside class="notice-card">
+          <h3>Plugin actions disabled</h3>
+          <p>
+            Install, enable, disable, reload, and activation operations
+            remain unavailable.
+          </p>
+        </aside>
+      </section>
+
+      <section
+        id="permissions"
+        class="dashboard-panel"
+        data-panel="permissions"
+        aria-labelledby="permissions-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Declared requirements</p>
+            <h2 id="permissions-title">Permissions</h2>
+          </div>
+          <span class="panel-state" data-bind="permission-panel-status">
+            loading
+          </span>
+        </div>
+
+        <dl class="detail-list">
+          <div>
+            <dt>Permission-gated capabilities</dt>
+            <dd data-bind="permission-gated-count">—</dd>
+          </div>
+          <div>
+            <dt>Pending request runtime</dt>
+            <dd data-bind="pending-runtime">—</dd>
+          </div>
+          <div>
+            <dt>Decision runtime</dt>
+            <dd data-bind="decision-runtime">—</dd>
+          </div>
+          <div>
+            <dt>Grant runtime</dt>
+            <dd data-bind="grant-runtime">—</dd>
+          </div>
+        </dl>
+
+        <div
+          id="permission-count-list"
+          class="tag-list"
+          aria-label="Declared permission counts"
+        ></div>
+      </section>
+
+      <section
+        id="audit"
+        class="dashboard-panel"
+        data-panel="audit"
+        aria-labelledby="audit-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Transparency state</p>
+            <h2 id="audit-title">Audit</h2>
+          </div>
+          <span class="panel-state" data-bind="audit-panel-status">
+            loading
+          </span>
+        </div>
+
+        <dl class="detail-list">
+          <div>
+            <dt>Writer</dt>
+            <dd data-bind="audit-writer">—</dd>
+          </div>
+          <div>
+            <dt>Persistence</dt>
+            <dd data-bind="audit-persistence">—</dd>
+          </div>
+          <div>
+            <dt>Runtime fetch</dt>
+            <dd data-bind="audit-fetch">—</dd>
+          </div>
+          <div>
+            <dt>Visible events</dt>
+            <dd data-bind="audit-event-count">—</dd>
+          </div>
+        </dl>
+
+        <div id="audit-event-list" class="item-list">
+          <p class="empty-state">Waiting for audit state…</p>
+        </div>
+      </section>
+
+      <section
+        id="memory"
+        class="dashboard-panel"
+        data-panel="memory"
+        aria-labelledby="memory-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Read-only storage state</p>
+            <h2 id="memory-title">Memory</h2>
+          </div>
+          <span class="panel-state" data-bind="memory-panel-status">
+            loading
+          </span>
+        </div>
+
+        <dl class="detail-list">
+          <div>
+            <dt>Available</dt>
+            <dd data-bind="memory-available">—</dd>
+          </div>
+          <div>
+            <dt>Records</dt>
+            <dd data-bind="memory-records">—</dd>
+          </div>
+          <div>
+            <dt>Invalid records</dt>
+            <dd data-bind="memory-invalid">—</dd>
+          </div>
+          <div>
+            <dt>Storage size</dt>
+            <dd data-bind="memory-size">—</dd>
+          </div>
+          <div>
+            <dt>Storage path</dt>
+            <dd class="breakable" data-bind="memory-path">—</dd>
+          </div>
+          <div>
+            <dt>Mutation performed</dt>
+            <dd data-bind="memory-mutation">—</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section
+        id="readiness"
+        class="dashboard-panel"
+        data-panel="readiness"
+        aria-labelledby="readiness-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Activation boundary</p>
+            <h2 id="readiness-title">Readiness</h2>
+          </div>
+          <span class="panel-state" data-bind="readiness-panel-status">
+            loading
+          </span>
+        </div>
+
+        <div class="two-column">
+          <div>
+            <h3>Ready surfaces</h3>
+            <div id="ready-surface-list" class="item-list"></div>
+          </div>
+          <div>
+            <h3>Blocked surfaces</h3>
+            <div id="blocked-surface-list" class="item-list"></div>
+          </div>
+        </div>
+
+        <aside class="notice-card">
+          <h3>Next activation</h3>
+          <p data-bind="next-sprint">—</p>
+        </aside>
+      </section>
+
+      <footer class="dashboard-footer">
+        <p>
+          AURA Control Center Web Shell · localhost-only · read-only
+        </p>
+        <p data-bind="connection-detail">Not connected</p>
+      </footer>
+    </main>
+  </div>
+
+  <template id="capability-card-template">
+    <article class="capability-card">
+      <div class="capability-card-heading">
+        <div>
+          <p class="capability-category"></p>
+          <h3 class="capability-name"></h3>
+        </div>
+        <span class="capability-state"></span>
+      </div>
+      <p class="capability-description"></p>
+      <dl>
+        <div>
+          <dt>Runtime</dt>
+          <dd class="capability-runtime"></dd>
+        </div>
+        <div>
+          <dt>Risk</dt>
+          <dd class="capability-risk"></dd>
+        </div>
+        <div>
+          <dt>Permission</dt>
+          <dd class="capability-permission"></dd>
+        </div>
+      </dl>
+    </article>
+  </template>
+
+  <noscript>
+    <div class="noscript-message">
+      JavaScript is required to display the local read-only dashboard.
+    </div>
+  </noscript>
+</body>
+</html>

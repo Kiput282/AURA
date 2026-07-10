@@ -1796,3 +1796,24 @@ models, commands, tools, actions, background service, public/LAN exposure, and
 autonomy remain disabled.
 
 Next: Sprint 185 — Control Center Web Shell.
+
+## Checkpoint v0.185.0-genesis — Control Center Web Shell
+
+Sprint 185 delivers AURA's first usable browser dashboard. Three local static
+assets are served through the same explicitly confirmed foreground localhost
+listener, while the nine status routes and nine Control Center backend routes
+remain available.
+
+The shell renders overview, service, capability, plugin, permission, audit,
+memory, and readiness panels. It includes responsive layouts, keyboard and
+reduced-motion accessibility, safe-idle and degraded-state indicators,
+read-only refresh, and local capability filtering.
+
+No external frontend dependencies, inline scripts, inline styles, browser
+auto-launch, mutation controls, service/plugin actions, permission decisions,
+audit writes, memory writes, chat, model dispatch, commands, tools, actions,
+background service, public/LAN binding, or autonomous behavior are enabled.
+
+Runtime execution feature accounting remains `1`.
+
+Next: Sprint 186 — Browser Chat Session Runtime.

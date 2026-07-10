@@ -168,6 +168,7 @@ from aura.local_web_runtime_alpha.aura_local_web_runtime_cli import handle_local
 from aura.service_lifecycle_runtime.aura_service_lifecycle_runtime_cli import handle_service_lifecycle_command
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
+from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
 
 
 class AuraCLI:
@@ -8362,6 +8363,9 @@ class AuraCLI:
         return False
 
     def run(self, args: list[str] | None = None) -> bool:
+        if handle_control_center_web_shell_command(args):
+            return True
+
         if handle_control_center_backend_command(args):
             return True
 

@@ -729,42 +729,43 @@ class AuraControlCenterBackendRuntimeManager:
         safety = status["safety"]
 
         ready_surfaces = {
-            "localhost_listener": True,
-            "deterministic_lifecycle": True,
-            "health_status_api": True,
-            "control_center_backend_core": True,
-            "identity_status": bool(
+                             'localhost_listener': True,
+                             'deterministic_lifecycle': True,
+                             'health_status_api': True,
+                             'control_center_backend_core': True,
+                             'control_center_web_shell': True,
+                             'local_static_asset_delivery': True,
+                             'responsive_dashboard_layout': True,
+                             'accessibility_contract': True,
+                             'identity_status': bool(
                 status["identity"]["available"]
             ),
-            "plugin_status": bool(
+                             'plugin_status': bool(
                 status["plugins"]["all_available"]
             ),
-            "capability_status": bool(
+                             'capability_status': bool(
                 status["capabilities"]["available"]
             ),
-            "service_status": (
-                status["service"]["state"]
-                != "unknown"
-            ),
-            "memory_status": True,
-            "safety_status": True,
-            "foundation_contracts": bool(
+                             'service_status': status["service"]["state"]
+                != "unknown",
+                             'memory_status': True,
+                             'safety_status': True,
+                             'foundation_contracts': bool(
                 foundations["all_available"]
             ),
-        }
+                         }
         blocked_surfaces = {
-            "control_center_web_shell": False,
-            "browser_chat_sessions": False,
-            "local_model_bridge": False,
-            "permission_decision_runtime": False,
-            "audit_writer_runtime": False,
-            "background_service": False,
-            "systemd_runtime": False,
-            "automatic_start": False,
-            "public_or_lan_listener": False,
-            "command_or_tool_execution": False,
-            "autonomous_actions": False,
-        }
+                               'browser_chat_sessions': False,
+                               'local_model_bridge': False,
+                               'permission_decision_runtime': False,
+                               'audit_writer_runtime': False,
+                               'background_service': False,
+                               'systemd_runtime': False,
+                               'automatic_start': False,
+                               'public_or_lan_listener': False,
+                               'command_or_tool_execution': False,
+                               'autonomous_actions': False,
+                           }
 
         backend_ready = all(ready_surfaces.values())
         blockers = [
@@ -774,33 +775,29 @@ class AuraControlCenterBackendRuntimeManager:
         ]
 
         return {
-            "panel_id": "readiness",
-            "title": "Runtime Readiness",
-            "status": (
-                "backend_ready_read_only"
-                if backend_ready
-                else "degraded"
-            ),
-            "backend_ready": backend_ready,
-            "web_shell_ready": False,
-            "interaction_runtime_ready": bool(
+                   'panel_id': "readiness",
+                   'title': "Runtime Readiness",
+                   'status': "web_shell_ready_read_only" if backend_ready else "degraded",
+                   'backend_ready': backend_ready,
+                   'web_shell_ready': True,
+                   'interaction_runtime_ready': bool(
                 safety["runtime_ready"]
             ),
-            "execution_ready": bool(
+                   'execution_ready': bool(
                 safety["execution_ready"]
             ),
-            "current_stage": (
-                "read_only_control_center_backend"
-            ),
-            "ready_surfaces": ready_surfaces,
-            "blocked_surfaces": blocked_surfaces,
-            "blockers": blockers,
-            "next_sprint": (
-                "Sprint 185 — Control Center Web Shell"
-            ),
-            "read_only": True,
-            "actions_allowed": False,
-        }
+                   'current_stage': "read_only_control_center_web_shell",
+                   'ready_surfaces': ready_surfaces,
+                   'blocked_surfaces': blocked_surfaces,
+                   'blockers': blockers,
+                   'next_sprint': "Sprint 186 — Browser Chat Session Runtime",
+                   'read_only': True,
+                   'actions_allowed': False,
+                   'shell_asset_route_count': 3,
+                   'total_route_count': 21,
+                   'browser_auto_launch': False,
+                   'external_dependencies': False,
+               }
 
     def snapshot(self) -> dict[str, Any]:
         """Build the complete read-only Control Center backend snapshot."""
@@ -949,36 +946,43 @@ class AuraControlCenterBackendRuntimeManager:
         """Return the Sprint 184 backend safety boundary."""
 
         return {
-            "control_center_backend_runtime": True,
-            "read_only_backend_view_models": True,
-            "backend_route_count": len(self.ROUTES),
-            "backend_panel_count": len(self.PANEL_IDS),
-            "frontend_runtime": False,
-            "static_file_serving_runtime": False,
-            "browser_launch_runtime": False,
-            "backend_mutation_runtime": False,
-            "service_control_runtime": False,
-            "plugin_control_runtime": False,
-            "permission_decision_runtime": False,
-            "permission_grant_runtime": False,
-            "permission_deny_runtime": False,
-            "audit_writer_runtime": False,
-            "audit_persistence_runtime": False,
-            "memory_write_runtime": False,
-            "chat_runtime": False,
-            "model_runtime": False,
-            "command_execution": False,
-            "tool_execution": False,
-            "action_dispatch": False,
-            "background_service_runtime": False,
-            "systemd_runtime": False,
-            "automatic_start_runtime": False,
-            "public_listener_runtime": False,
-            "lan_listener_runtime": False,
-            "autonomous_action": False,
-            "safe_idle": True,
-            "read_only": True,
-        }
+                   'control_center_backend_runtime': True,
+                   'read_only_backend_view_models': True,
+                   'backend_route_count': len(self.ROUTES),
+                   'backend_panel_count': len(self.PANEL_IDS),
+                   'frontend_runtime': True,
+                   'static_file_serving_runtime': True,
+                   'control_center_web_shell_runtime': True,
+                   'shell_asset_route_count': 3,
+                   'total_route_count': 21,
+                   'responsive_layout': True,
+                   'accessibility_contract': True,
+                   'degraded_state_ui': True,
+                   'external_dependency_runtime': False,
+                   'browser_launch_runtime': False,
+                   'backend_mutation_runtime': False,
+                   'service_control_runtime': False,
+                   'plugin_control_runtime': False,
+                   'permission_decision_runtime': False,
+                   'permission_grant_runtime': False,
+                   'permission_deny_runtime': False,
+                   'audit_writer_runtime': False,
+                   'audit_persistence_runtime': False,
+                   'memory_write_runtime': False,
+                   'chat_runtime': False,
+                   'model_runtime': False,
+                   'command_execution': False,
+                   'tool_execution': False,
+                   'action_dispatch': False,
+                   'background_service_runtime': False,
+                   'systemd_runtime': False,
+                   'automatic_start_runtime': False,
+                   'public_listener_runtime': False,
+                   'lan_listener_runtime': False,
+                   'autonomous_action': False,
+                   'safe_idle': True,
+                   'read_only': True,
+               }
 
     def self_test(self) -> dict[str, Any]:
         """Validate contracts, degraded visibility, and no side effects."""
@@ -1070,9 +1074,9 @@ class AuraControlCenterBackendRuntimeManager:
         memory = panels["memory"]
         readiness = panels["readiness"]
 
-        assertions["overview_version_184"] = (
+        assertions['overview_version_185'] = (
             overview["identity"]["version"]
-            == "0.184.0-genesis"
+            == '0.185.0-genesis'
         )
         assertions["overview_boot_ready"] = (
             overview["core_boot_ready"] is True
@@ -1086,17 +1090,17 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["overview_listener_false"] = (
             overview["listener_active"] is False
         )
-        assertions["overview_capability_total_115"] = (
-            overview["capability_total"] == 115
+        assertions['overview_capability_total_116'] = (
+            overview["capability_total"] == 116
         )
-        assertions["overview_online_113"] = (
-            overview["online_capabilities"] == 113
+        assertions['overview_online_114'] = (
+            overview["online_capabilities"] == 114
         )
-        assertions["overview_permission_gated_seven"] = (
+        assertions['overview_permission_gated_eight'] = (
             overview[
                 "permission_gated_capabilities"
             ]
-            == 7
+            == 8
         )
         assertions["overview_runtime_feature_one"] = (
             overview["runtime_execution_features"]
@@ -1131,14 +1135,14 @@ class AuraControlCenterBackendRuntimeManager:
             is False
         )
 
-        assertions["capability_card_count_115"] = (
-            capabilities["card_count"] == 115
+        assertions['capability_card_count_116'] = (
+            capabilities["card_count"] == 116
         )
-        assertions["capability_summary_total_115"] = (
+        assertions['capability_summary_total_116'] = (
             capabilities["summary"][
                 "total_capabilities"
             ]
-            == 115
+            == 116
         )
         assertions["capability_mutation_false"] = (
             capabilities["mutation_enabled"] is False
@@ -1164,11 +1168,11 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["permission_foundation_available"] = (
             permissions["foundation_available"] is True
         )
-        assertions["permission_gated_count_seven"] = (
+        assertions['permission_gated_count_eight'] = (
             permissions[
                 "permission_gated_capability_count"
             ]
-            == 7
+            == 8
         )
         assertions["pending_runtime_false"] = (
             permissions[
@@ -1234,8 +1238,8 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_backend_ready"] = (
             readiness["backend_ready"] is True
         )
-        assertions["readiness_web_shell_false"] = (
-            readiness["web_shell_ready"] is False
+        assertions['readiness_web_shell_true'] = (
+            readiness["web_shell_ready"] is True
         )
         assertions["readiness_runtime_false"] = (
             readiness["interaction_runtime_ready"]
@@ -1244,10 +1248,9 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_execution_false"] = (
             readiness["execution_ready"] is False
         )
-        assertions["readiness_next_sprint_185"] = (
+        assertions['readiness_next_sprint_186'] = (
             readiness["next_sprint"]
-            == "Sprint 185 — Control Center Web Shell"
-        )
+            == 'Sprint 186 — Browser Chat Session Runtime'       )
 
         for route in self.ROUTES:
             payload = self.payload_for_route(
@@ -1284,30 +1287,35 @@ class AuraControlCenterBackendRuntimeManager:
         )
 
         disabled_boundary_keys = (
-            "frontend_runtime",
-            "static_file_serving_runtime",
-            "browser_launch_runtime",
-            "backend_mutation_runtime",
-            "service_control_runtime",
-            "plugin_control_runtime",
-            "permission_decision_runtime",
-            "permission_grant_runtime",
-            "permission_deny_runtime",
-            "audit_writer_runtime",
-            "audit_persistence_runtime",
-            "memory_write_runtime",
-            "chat_runtime",
-            "model_runtime",
-            "command_execution",
-            "tool_execution",
-            "action_dispatch",
-            "background_service_runtime",
-            "systemd_runtime",
-            "automatic_start_runtime",
-            "public_listener_runtime",
-            "lan_listener_runtime",
-            "autonomous_action",
+                                     'browser_launch_runtime',
+                                     'backend_mutation_runtime',
+                                     'service_control_runtime',
+                                     'plugin_control_runtime',
+                                     'permission_decision_runtime',
+                                     'permission_grant_runtime',
+                                     'permission_deny_runtime',
+                                     'audit_writer_runtime',
+                                     'audit_persistence_runtime',
+                                     'memory_write_runtime',
+                                     'chat_runtime',
+                                     'model_runtime',
+                                     'command_execution',
+                                     'tool_execution',
+                                     'action_dispatch',
+                                     'background_service_runtime',
+                                     'systemd_runtime',
+                                     'automatic_start_runtime',
+                                     'public_listener_runtime',
+                                     'lan_listener_runtime',
+                                     'autonomous_action',
+                                 )
+        assertions["boundary_frontend_true"] = (
+            boundary["frontend_runtime"] is True
         )
+        assertions["boundary_static_delivery_true"] = (
+            boundary["static_file_serving_runtime"] is True
+        )
+
         for key in disabled_boundary_keys:
             assertions[
                 "boundary_disabled_" + key
@@ -1393,7 +1401,7 @@ class AuraControlCenterBackendRuntimeManager:
                 self.FOUNDATION_MODULES
             ),
             "foundation_contracts_available": 8,
-            "capability_card_count": 115,
+            "capability_card_count": 116,
             "degraded_fixture_verified": True,
             "read_only_file_integrity_verified": True,
             "frontend_rendered": False,
