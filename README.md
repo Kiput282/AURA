@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.199.0-genesis
-Current status: Sprint 199 Voice Runtime Integration Review completed and ready to hand off to Sprint 200 Voice Runtime Stabilization
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 199 adds a read-only Voice Runtime Integration Review contract across Sprint 191-198, reviewing activation, listen state, microphone boundary, STT, voice intent/chat, TTS, permission/audit, and Control Center voice controls while keeping runtime activation, microphone capture, STT/TTS runtime, speaker playback, permission grant/revoke/mutation, audit writes, transcript/chat/TTS handoffs, voice actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
+Current version: v0.200.0-genesis
+Current status: Sprint 200 Voice Runtime Stabilization completed; Voice Interaction Runtime block 191-200 is stabilized and ready to hand off to Sprint 201 Vision Runtime Activation Foundation
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completes the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization: activation, explicit listen state, microphone boundary, STT adapter, voice intent/chat, TTS adapter, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while runtime activation, microphone capture, STT/TTS runtime, speaker playback, permission grant/revoke/mutation, audit writes, transcript/chat/TTS handoffs, voice actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, vision runtime, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 199 and continues the Sprint 191-200 Voice Interaction Runtime block with a read-only voice runtime integration review across Sprint 191-198.
+AURA has completed Sprint 200 and closes the Sprint 191-200 Voice Interaction Runtime block with contract-only stabilization.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.200.0-genesis
+- Sprint 200: Voice Runtime Stabilization
 - v0.199.0-genesis
 - Sprint 199: Voice Runtime Integration Review
 - v0.198.0-genesis
@@ -68,7 +70,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 200 — Voice Runtime Stabilization
+- Next planned sprint: Sprint 201 — Vision Runtime Activation Foundation
 Current capability registry summary:
 
 - total capabilities: 121
@@ -3009,3 +3011,63 @@ or commands, mutate files, act on desktop/network/git, use cloud fallback, or
 execute voice actions.
 
 Next: Sprint 200 — Voice Runtime Stabilization.
+
+## Sprint 200 — Voice Runtime Stabilization
+
+Version: `v0.200.0-genesis`
+
+Sprint 200 completes the Sprint 191-200 Voice Interaction Runtime block as a
+contract-only stabilization checkpoint.
+
+The stabilization checkpoint verifies that the voice block is stable across:
+
+- Sprint 191 activation foundation
+- Sprint 192 push-to-talk and explicit listen state
+- Sprint 193 microphone capture boundary
+- Sprint 194 speech-to-text adapter contract
+- Sprint 195 voice intent and chat integration contract
+- Sprint 196 text-to-speech adapter contract
+- Sprint 197 voice permission and audit contract
+- Sprint 198 Control Center voice controls contract
+- Sprint 199 voice runtime integration review contract
+- Sprint 200 voice runtime stabilization gate
+
+Sprint 200 exposes Voice Runtime Stabilization status in `voice-runtime-status`
+and `voice-runtime-check`, including stabilization status, block completion,
+stabilized contract count, stabilization component count, safety blocker count,
+gap count, release gate state, and the next handoff boundary.
+
+Sprint 200 confirms:
+
+- voice runtime stabilization contract ready: true
+- voice runtime stabilization runtime ready: false
+- stabilization status: stabilized
+- voice block 191-200 complete: true
+- stabilized contracts: 9
+- stabilization components: 10
+- safety blockers: 47
+- stabilization gaps: 0
+- all safety blockers inactive: true
+- dependency baseline stable: true
+- runtime activation allowed: false
+- runtime ready: false
+- release gate open: false
+- next sprint: 201
+- next boundary: vision_runtime_activation_foundation
+
+The dependency baseline remains unchanged:
+
+- Python packages: 0/4
+- Executables: 0/4
+
+Sprint 200 does not install dependencies, download models, access microphones,
+access speakers, capture audio, run STT, run TTS, play speaker output, grant or
+revoke permissions, mutate permission state, write audit events, execute
+transcript/chat/TTS handoffs, write memory, execute tools or commands, mutate
+files, act on desktop/network/git, use cloud fallback, or execute voice actions.
+
+Validation passed with boot READY, compileall OK, voice-runtime-status OK,
+voice-runtime-check OK, 507 assertions, zero failed assertions, and baseline
+self-tests OK.
+
+Next: Sprint 201 — Vision Runtime Activation Foundation.

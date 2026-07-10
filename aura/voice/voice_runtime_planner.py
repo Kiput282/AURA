@@ -981,6 +981,161 @@ class VoiceRuntimePlanner:
             ],
         }
 
+    def voice_runtime_stabilization_contract(self) -> dict[str, Any]:
+        activation = self.activation_contract()
+        listen_state = self.listen_state_contract()
+        microphone_boundary = self.microphone_capture_boundary_contract()
+        stt_adapter = self.speech_to_text_adapter_runtime_contract()
+        voice_intent_chat = self.voice_intent_chat_integration_contract()
+        tts_adapter = self.text_to_speech_adapter_runtime_contract()
+        voice_permission_audit = self.voice_permission_audit_runtime_contract()
+        control_center_voice = self.control_center_voice_controls_contract()
+        integration_review = self.voice_runtime_integration_review_contract()
+
+        stabilized_contracts = [
+            "activation_contract",
+            "listen_state_contract",
+            "microphone_capture_boundary_contract",
+            "speech_to_text_adapter_runtime_contract",
+            "voice_intent_chat_integration_contract",
+            "text_to_speech_adapter_runtime_contract",
+            "voice_permission_audit_runtime_contract",
+            "control_center_voice_controls_contract",
+            "voice_runtime_integration_review_contract",
+        ]
+
+        stabilization_components = [
+            "activation_foundation",
+            "explicit_listen_state",
+            "microphone_capture_boundary",
+            "speech_to_text_adapter",
+            "voice_intent_chat_integration",
+            "text_to_speech_adapter",
+            "voice_permission_audit",
+            "control_center_voice_controls",
+            "voice_runtime_integration_review",
+            "voice_runtime_stabilization_gate",
+        ]
+
+        safety_blockers = list(integration_review["safety_blockers"])
+        safety_blocker_sources = [
+            integration_review,
+            activation,
+            listen_state,
+            microphone_boundary,
+            stt_adapter,
+            voice_intent_chat,
+            tts_adapter,
+            voice_permission_audit,
+            control_center_voice,
+        ]
+        safety_blocker_states = {}
+        for blocker in safety_blockers:
+            value = False
+            for source in safety_blocker_sources:
+                if blocker in source:
+                    value = source[blocker]
+                    break
+            safety_blocker_states[blocker] = value
+
+        all_safety_blockers_inactive = all(
+            value is False for value in safety_blocker_states.values()
+        )
+
+        dependency_baseline_stable = (
+            integration_review["python_package_baseline_expected_installed"] == 0
+            and integration_review["python_package_baseline_expected_total"] == 4
+            and integration_review["executable_baseline_expected_found"] == 0
+            and integration_review["executable_baseline_expected_total"] == 4
+        )
+
+        stabilization_gaps = []
+        checks = {
+            "activation_foundation_not_ready": activation["activation_foundation_ready"] is True,
+            "listen_state_foundation_not_ready": listen_state["listen_state_foundation_ready"] is True,
+            "microphone_boundary_not_ready": microphone_boundary["microphone_boundary_ready"] is True,
+            "stt_adapter_contract_not_ready": stt_adapter["stt_adapter_contract_ready"] is True,
+            "voice_intent_chat_contract_not_ready": voice_intent_chat["voice_intent_chat_contract_ready"] is True,
+            "tts_adapter_contract_not_ready": tts_adapter["tts_adapter_contract_ready"] is True,
+            "voice_permission_audit_contract_not_ready": voice_permission_audit["voice_permission_audit_contract_ready"] is True,
+            "control_center_voice_controls_contract_not_ready": control_center_voice["control_center_voice_controls_contract_ready"] is True,
+            "integration_review_contract_not_ready": integration_review["voice_runtime_integration_review_contract_ready"] is True,
+            "prior_contracts_not_ready": integration_review["all_prior_contracts_ready"] is True,
+            "prior_runtimes_not_blocked": integration_review["all_prior_runtimes_not_ready"] is True,
+            "runtime_activation_allowed": integration_review["runtime_activation_allowed"] is False,
+            "runtime_ready": integration_review["runtime_ready"] is False,
+            "safety_blocker_active": all_safety_blockers_inactive is True,
+            "dependency_baseline_changed": dependency_baseline_stable is True,
+        }
+        stabilization_gaps = [name for name, passed in checks.items() if not passed]
+        block_complete = len(stabilization_gaps) == 0
+
+        contract = {
+            "sprint": 200,
+            "name": "voice_runtime_stabilization",
+            "voice_runtime_stabilization_contract_ready": True,
+            "voice_runtime_stabilization_runtime_ready": False,
+            "voice_runtime_stabilization_status": "stabilized",
+            "voice_runtime_block_start": 191,
+            "voice_runtime_block_end": 200,
+            "voice_runtime_block_sprint_count": 10,
+            "stabilized_contracts": stabilized_contracts,
+            "stabilized_contract_count": len(stabilized_contracts),
+            "stabilization_components": stabilization_components,
+            "stabilization_component_count": len(stabilization_components),
+            "previous_integration_review_ready": integration_review["voice_runtime_integration_review_contract_ready"],
+            "previous_review_status": integration_review["voice_runtime_integration_review_status"],
+            "previous_reviewed_contract_count": integration_review["reviewed_contract_count"],
+            "previous_integration_matrix_ready": integration_review["integration_matrix_ready"],
+            "previous_integration_matrix_item_count": integration_review["integration_matrix_item_count"],
+            "previous_all_prior_contracts_ready": integration_review["all_prior_contracts_ready"],
+            "previous_all_prior_runtimes_not_ready": integration_review["all_prior_runtimes_not_ready"],
+            "previous_safety_blocker_matrix_ready": integration_review["safety_blocker_matrix_ready"],
+            "previous_safety_blocker_count": integration_review["safety_blocker_count"],
+            "dependency_baseline_stable": dependency_baseline_stable,
+            "python_package_baseline_expected_installed": integration_review["python_package_baseline_expected_installed"],
+            "python_package_baseline_expected_total": integration_review["python_package_baseline_expected_total"],
+            "executable_baseline_expected_found": integration_review["executable_baseline_expected_found"],
+            "executable_baseline_expected_total": integration_review["executable_baseline_expected_total"],
+            "safe_idle_default_stable": activation["safe_idle_default"],
+            "push_to_talk_required_stable": activation["push_to_talk_required"] and listen_state["push_to_talk_required"],
+            "explicit_listen_required_stable": activation["explicit_listen_required"] and listen_state["explicit_listen_required"],
+            "default_listen_state_stable": listen_state["default_state"],
+            "current_listen_state_stable": listen_state["current_state"],
+            "allowed_listen_state_count_stable": len(listen_state["allowed_states"]),
+            "microphone_permission_action_stable": voice_permission_audit["microphone_permission_action"],
+            "speaker_permission_action_stable": voice_permission_audit["speaker_permission_action"],
+            "control_center_voice_route_stable": control_center_voice["control_center_voice_controls_route"],
+            "control_center_voice_panel_id_stable": control_center_voice["control_center_voice_controls_panel_id"],
+            "control_center_voice_read_only_stable": control_center_voice["control_center_voice_controls_read_only"],
+            "control_center_voice_disabled_by_default_stable": control_center_voice["control_center_voice_controls_disabled_by_default"],
+            "disabled_voice_control_count_stable": control_center_voice["disabled_control_count"],
+            "safety_blockers": safety_blockers,
+            "safety_blocker_count": len(safety_blockers),
+            "all_safety_blockers_inactive": all_safety_blockers_inactive,
+            "stabilization_gaps": stabilization_gaps,
+            "stabilization_gap_count": len(stabilization_gaps),
+            "stabilization_passed": block_complete,
+            "voice_runtime_block_191_200_complete": block_complete,
+            "runtime_activation_allowed": False,
+            "runtime_ready": False,
+            "release_gate_open": False,
+            "v1_runtime_activation_allowed": False,
+            "background_service_activation_allowed": False,
+            "systemd_activation_allowed": False,
+            "public_lan_binding_allowed": False,
+            "browser_auto_launch_allowed": False,
+            "autonomy_allowed": False,
+            "runtime_scope": "voice_runtime_stabilization_contract_only",
+            "next_sprint": 201,
+            "next_boundary": "vision_runtime_activation_foundation",
+        }
+
+        for blocker in safety_blockers:
+            contract[blocker] = safety_blocker_states[blocker]
+
+        return contract
+
     def status(self) -> dict[str, Any]:
         stt_candidates = self.stt_candidates()
         tts_candidates = self.tts_candidates()
@@ -993,6 +1148,7 @@ class VoiceRuntimePlanner:
         voice_permission_audit = self.voice_permission_audit_runtime_contract()
         control_center_voice = self.control_center_voice_controls_contract()
         integration_review = self.voice_runtime_integration_review_contract()
+        stabilization = self.voice_runtime_stabilization_contract()
 
         return {
             "name": self.name,
@@ -1086,6 +1242,17 @@ class VoiceRuntimePlanner:
             "voice_runtime_safety_blocker_matrix_ready": integration_review["safety_blocker_matrix_ready"],
             "voice_runtime_safety_blocker_count": integration_review["safety_blocker_count"],
             "voice_runtime_activation_allowed": integration_review["runtime_activation_allowed"],
+            "voice_runtime_stabilization_contract_ready": stabilization["voice_runtime_stabilization_contract_ready"],
+            "voice_runtime_stabilization_runtime_ready": stabilization["voice_runtime_stabilization_runtime_ready"],
+            "voice_runtime_stabilization_status": stabilization["voice_runtime_stabilization_status"],
+            "voice_runtime_stabilization_passed": stabilization["stabilization_passed"],
+            "voice_runtime_block_191_200_complete": stabilization["voice_runtime_block_191_200_complete"],
+            "voice_runtime_stabilized_contract_count": stabilization["stabilized_contract_count"],
+            "voice_runtime_stabilization_component_count": stabilization["stabilization_component_count"],
+            "voice_runtime_stabilization_gap_count": stabilization["stabilization_gap_count"],
+            "voice_runtime_stabilization_safety_blocker_count": stabilization["safety_blocker_count"],
+            "voice_runtime_release_gate_open": stabilization["release_gate_open"],
+            "voice_runtime_next_sprint": stabilization["next_sprint"],
             "stt_candidates": len(stt_candidates),
             "tts_candidates": len(tts_candidates),
             "candidate_count": len(stt_candidates) + len(tts_candidates),
@@ -1099,7 +1266,8 @@ class VoiceRuntimePlanner:
             "voice_permission_audit_runtime_contract": voice_permission_audit,
             "control_center_voice_controls_contract": control_center_voice,
             "voice_runtime_integration_review_contract": integration_review,
-            "note": "Voice runtime integration review contract is ready for Sprint 191-198; runtime activation remains blocked and no microphone capture, STT, TTS, speaker playback, permission mutation, audit writes, handoffs, or voice actions are enabled.",
+            "voice_runtime_stabilization_contract": stabilization,
+            "note": "Voice runtime stabilization contract is ready for Sprint 191-200; the voice block is stabilized as contract-only, runtime activation remains blocked, release gates remain closed, and no microphone capture, STT, TTS, speaker playback, permission mutation, audit writes, handoffs, command/tool execution, cloud fallback, or voice actions are enabled.",
         }
 
     def plan(self) -> dict[str, Any]:
@@ -1172,6 +1340,7 @@ class VoiceRuntimePlanner:
         voice_permission_audit = self.voice_permission_audit_runtime_contract()
         control_center_voice = self.control_center_voice_controls_contract()
         integration_review = self.voice_runtime_integration_review_contract()
+        stabilization = self.voice_runtime_stabilization_contract()
 
         installed_python = sum(
             1
@@ -1620,6 +1789,80 @@ class VoiceRuntimePlanner:
             "voice_runtime_review_cloud_stt_fallback_disabled": integration_review["cloud_stt_fallback_enabled"] is False,
             "voice_runtime_review_cloud_tts_fallback_disabled": integration_review["cloud_tts_fallback_enabled"] is False,
             "voice_runtime_review_silent_cloud_fallback_disabled": integration_review["silent_cloud_fallback_enabled"] is False,
+            "voice_runtime_stabilization_contract_ready": stabilization["voice_runtime_stabilization_contract_ready"] is True,
+            "voice_runtime_stabilization_runtime_not_ready": stabilization["voice_runtime_stabilization_runtime_ready"] is False,
+            "voice_runtime_stabilization_status_stabilized": stabilization["voice_runtime_stabilization_status"] == "stabilized",
+            "voice_runtime_block_start_191": stabilization["voice_runtime_block_start"] == 191,
+            "voice_runtime_block_end_200": stabilization["voice_runtime_block_end"] == 200,
+            "voice_runtime_block_sprint_count_10": stabilization["voice_runtime_block_sprint_count"] == 10,
+            "voice_runtime_stabilized_contract_count_9": stabilization["stabilized_contract_count"] == 9,
+            "voice_runtime_stabilization_component_count_10": stabilization["stabilization_component_count"] == 10,
+            "voice_runtime_previous_integration_review_ready": stabilization["previous_integration_review_ready"] is True,
+            "voice_runtime_previous_review_status_ready": stabilization["previous_review_status"] == "review_ready",
+            "voice_runtime_previous_reviewed_contract_count": stabilization["previous_reviewed_contract_count"] == 8,
+            "voice_runtime_previous_integration_matrix_ready": stabilization["previous_integration_matrix_ready"] is True,
+            "voice_runtime_previous_integration_matrix_item_count": stabilization["previous_integration_matrix_item_count"] == 8,
+            "voice_runtime_previous_all_prior_contracts_ready": stabilization["previous_all_prior_contracts_ready"] is True,
+            "voice_runtime_previous_all_prior_runtimes_blocked": stabilization["previous_all_prior_runtimes_not_ready"] is True,
+            "voice_runtime_previous_safety_blocker_count": stabilization["previous_safety_blocker_count"] == 47,
+            "voice_runtime_stabilization_dependency_baseline_stable": stabilization["dependency_baseline_stable"] is True,
+            "voice_runtime_stabilization_python_baseline_installed_zero": stabilization["python_package_baseline_expected_installed"] == 0,
+            "voice_runtime_stabilization_python_baseline_total_four": stabilization["python_package_baseline_expected_total"] == 4,
+            "voice_runtime_stabilization_executable_baseline_found_zero": stabilization["executable_baseline_expected_found"] == 0,
+            "voice_runtime_stabilization_executable_baseline_total_four": stabilization["executable_baseline_expected_total"] == 4,
+            "voice_runtime_stabilization_safe_idle_default": stabilization["safe_idle_default_stable"] is True,
+            "voice_runtime_stabilization_push_to_talk_required": stabilization["push_to_talk_required_stable"] is True,
+            "voice_runtime_stabilization_explicit_listen_required": stabilization["explicit_listen_required_stable"] is True,
+            "voice_runtime_stabilization_default_listen_state_idle": stabilization["default_listen_state_stable"] == "idle",
+            "voice_runtime_stabilization_current_listen_state_idle": stabilization["current_listen_state_stable"] == "idle",
+            "voice_runtime_stabilization_allowed_state_count": stabilization["allowed_listen_state_count_stable"] == 9,
+            "voice_runtime_stabilization_microphone_permission_action": stabilization["microphone_permission_action_stable"] == "microphone_listen",
+            "voice_runtime_stabilization_speaker_permission_action": stabilization["speaker_permission_action_stable"] == "speaker_speak",
+            "voice_runtime_stabilization_control_center_route": stabilization["control_center_voice_route_stable"] == "/api/control-center/voice-controls",
+            "voice_runtime_stabilization_control_center_panel": stabilization["control_center_voice_panel_id_stable"] == "voice_controls",
+            "voice_runtime_stabilization_control_center_read_only": stabilization["control_center_voice_read_only_stable"] is True,
+            "voice_runtime_stabilization_control_center_disabled": stabilization["control_center_voice_disabled_by_default_stable"] is True,
+            "voice_runtime_stabilization_disabled_control_count": stabilization["disabled_voice_control_count_stable"] == 10,
+            "voice_runtime_stabilization_safety_blocker_count": stabilization["safety_blocker_count"] == 47,
+            "voice_runtime_stabilization_all_safety_blockers_inactive": stabilization["all_safety_blockers_inactive"] is True,
+            "voice_runtime_stabilization_gap_count_zero": stabilization["stabilization_gap_count"] == 0,
+            "voice_runtime_stabilization_passed": stabilization["stabilization_passed"] is True,
+            "voice_runtime_block_191_200_complete": stabilization["voice_runtime_block_191_200_complete"] is True,
+            "voice_runtime_stabilization_activation_denied": stabilization["runtime_activation_allowed"] is False,
+            "voice_runtime_stabilization_runtime_not_ready_final": stabilization["runtime_ready"] is False,
+            "voice_runtime_stabilization_release_gate_closed": stabilization["release_gate_open"] is False,
+            "voice_runtime_stabilization_v1_activation_denied": stabilization["v1_runtime_activation_allowed"] is False,
+            "voice_runtime_stabilization_background_service_denied": stabilization["background_service_activation_allowed"] is False,
+            "voice_runtime_stabilization_systemd_denied": stabilization["systemd_activation_allowed"] is False,
+            "voice_runtime_stabilization_public_lan_denied": stabilization["public_lan_binding_allowed"] is False,
+            "voice_runtime_stabilization_browser_auto_launch_denied": stabilization["browser_auto_launch_allowed"] is False,
+            "voice_runtime_stabilization_autonomy_denied": stabilization["autonomy_allowed"] is False,
+            "voice_runtime_stabilization_microphone_capture_inactive": stabilization["microphone_capture_active"] is False,
+            "voice_runtime_stabilization_stt_runtime_inactive": stabilization["stt_runtime_active"] is False,
+            "voice_runtime_stabilization_tts_runtime_inactive": stabilization["tts_runtime_active"] is False,
+            "voice_runtime_stabilization_speaker_playback_inactive": stabilization["speaker_playback_active"] is False,
+            "voice_runtime_stabilization_permission_grant_inactive": stabilization["permission_grant_runtime_active"] is False,
+            "voice_runtime_stabilization_permission_mutation_inactive": stabilization["permission_mutation_active"] is False,
+            "voice_runtime_stabilization_audit_write_inactive": stabilization["audit_write_runtime_active"] is False,
+            "voice_runtime_stabilization_ui_mic_trigger_inactive": stabilization["ui_microphone_capture_trigger_active"] is False,
+            "voice_runtime_stabilization_ui_stt_trigger_inactive": stabilization["ui_stt_trigger_active"] is False,
+            "voice_runtime_stabilization_ui_tts_trigger_inactive": stabilization["ui_tts_trigger_active"] is False,
+            "voice_runtime_stabilization_ui_speaker_trigger_inactive": stabilization["ui_speaker_playback_trigger_active"] is False,
+            "voice_runtime_stabilization_ui_permission_grant_trigger_inactive": stabilization["ui_permission_grant_trigger_active"] is False,
+            "voice_runtime_stabilization_ui_audit_write_trigger_inactive": stabilization["ui_audit_write_trigger_active"] is False,
+            "voice_runtime_stabilization_ui_voice_action_trigger_inactive": stabilization["ui_voice_action_trigger_active"] is False,
+            "voice_runtime_stabilization_memory_write_inactive": stabilization["memory_write_active"] is False,
+            "voice_runtime_stabilization_direct_voice_action_disabled": stabilization["direct_voice_to_action_enabled"] is False,
+            "voice_runtime_stabilization_tool_execution_inactive": stabilization["tool_execution_active"] is False,
+            "voice_runtime_stabilization_command_execution_inactive": stabilization["command_execution_active"] is False,
+            "voice_runtime_stabilization_file_mutation_inactive": stabilization["file_mutation_active"] is False,
+            "voice_runtime_stabilization_desktop_action_inactive": stabilization["desktop_action_active"] is False,
+            "voice_runtime_stabilization_network_action_inactive": stabilization["network_action_active"] is False,
+            "voice_runtime_stabilization_git_action_inactive": stabilization["git_action_active"] is False,
+            "voice_runtime_stabilization_cloud_stt_disabled": stabilization["cloud_stt_fallback_enabled"] is False,
+            "voice_runtime_stabilization_cloud_tts_disabled": stabilization["cloud_tts_fallback_enabled"] is False,
+            "voice_runtime_stabilization_silent_cloud_disabled": stabilization["silent_cloud_fallback_enabled"] is False,
+
         }
 
         failed_assertions = [
@@ -1651,5 +1894,6 @@ class VoiceRuntimePlanner:
             "voice_permission_audit_runtime_contract": voice_permission_audit,
             "control_center_voice_controls_contract": control_center_voice,
             "voice_runtime_integration_review_contract": integration_review,
-            "note": "Runtime is not enabled yet. This check reviewed Sprint 191-198 voice runtime integration without activating Control Center voice controls, granting permissions, mutating permission state, writing audit events, accessing microphone/speaker/playback devices, using STT/TTS models, cloud STT/TTS, transcript chat handoff, tools, commands, memory, files, or voice actions.",
+            "voice_runtime_stabilization_contract": stabilization,
+            "note": "Runtime is not enabled yet. This check stabilized the Sprint 191-200 voice runtime block as contract-only without activating Control Center voice controls, granting permissions, mutating permission state, writing audit events, accessing microphone/speaker/playback devices, using STT/TTS models, cloud STT/TTS, transcript chat handoff, tools, commands, memory, files, or voice actions.",
         }

@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.199.0-genesis
+Current anchor: v0.200.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.199.0-genesis
-- Completed: Sprint 199 — Voice Runtime Integration Review
+- Current version: v0.200.0-genesis
+- Completed: Sprint 200 — Voice Runtime Stabilization
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: Sprint 191-199 contracts are ready through activation, explicit listen state, microphone boundary, STT adapter, voice intent/chat, TTS adapter, permission/audit, Control Center voice controls, and voice runtime integration review; runtime activation remains blocked.
+- Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 200 — Voice Runtime Stabilization
+- Next: Sprint 201 — Vision Runtime Activation Foundation
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -451,3 +451,28 @@ handoffs, write memory, execute commands, or perform voice actions.
 Validation passed with 434 voice assertions and zero failed assertions.
 
 Next: Sprint 200 — Voice Runtime Stabilization.
+
+## v0.200.0-genesis — Voice Runtime Stabilization
+
+Sprint 200 completes the Sprint 191-200 Voice Interaction Runtime block as
+contract-only stabilization.
+
+The checkpoint stabilizes the prior voice chain and confirms:
+
+- 9 stabilized contracts
+- 10 stabilization components
+- 47 safety blockers
+- 0 stabilization gaps
+- all safety blockers inactive
+- dependency baseline stable at Python packages 0/4 and executables 0/4
+- voice block 191-200 complete
+- runtime activation blocked
+- release gate closed
+
+Sprint 200 keeps all voice runtime execution disabled, including microphone
+capture, audio device access, STT, transcription, TTS, speaker playback,
+permission mutation, audit writes, UI execution triggers, handoffs, memory
+writes, tool/command execution, file/desktop/network/git actions, cloud fallback,
+and voice actions.
+
+Next: Sprint 201 — Vision Runtime Activation Foundation.

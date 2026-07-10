@@ -91,6 +91,7 @@ class VoiceRuntimeAlphaManager:
         voice_permission_audit = self.planner.voice_permission_audit_runtime_contract()
         control_center_voice = self.planner.control_center_voice_controls_contract()
         integration_review = self.planner.voice_runtime_integration_review_contract()
+        stabilization = self.planner.voice_runtime_stabilization_contract()
         backend = self.detect_tts_backend()
         speaker_permission = self.permission_manager.check("speaker_speak")
         microphone_permission = self.permission_manager.check("microphone_listen")
@@ -109,6 +110,15 @@ class VoiceRuntimeAlphaManager:
             "sprint_197_voice_permission_audit_contract_ready": voice_permission_audit["voice_permission_audit_contract_ready"],
             "sprint_198_control_center_voice_controls_contract_ready": control_center_voice["control_center_voice_controls_contract_ready"],
             "sprint_199_voice_runtime_integration_review_contract_ready": integration_review["voice_runtime_integration_review_contract_ready"],
+            "sprint_200_voice_runtime_stabilization_contract_ready": stabilization["voice_runtime_stabilization_contract_ready"],
+            "voice_runtime_stabilization_runtime_ready": stabilization["voice_runtime_stabilization_runtime_ready"],
+            "voice_runtime_stabilization_status": stabilization["voice_runtime_stabilization_status"],
+            "voice_runtime_stabilization_passed": stabilization["stabilization_passed"],
+            "voice_runtime_block_191_200_complete": stabilization["voice_runtime_block_191_200_complete"],
+            "voice_runtime_stabilized_contract_count": stabilization["stabilized_contract_count"],
+            "voice_runtime_stabilization_component_count": stabilization["stabilization_component_count"],
+            "voice_runtime_stabilization_gap_count": stabilization["stabilization_gap_count"],
+            "voice_runtime_release_gate_open": stabilization["release_gate_open"],
             "voice_runtime_integration_review_runtime_ready": integration_review["voice_runtime_integration_review_runtime_ready"],
             "voice_runtime_integration_review_status": integration_review["voice_runtime_integration_review_status"],
             "voice_runtime_reviewed_contract_count": integration_review["reviewed_contract_count"],
@@ -209,7 +219,8 @@ class VoiceRuntimeAlphaManager:
             "voice_permission_audit_runtime_contract": voice_permission_audit,
             "control_center_voice_controls_contract": control_center_voice,
             "voice_runtime_integration_review_contract": integration_review,
-            "sections": 15,
+            "voice_runtime_stabilization_contract": stabilization,
+            "sections": 16,
             "project_root": str(self.project_root),
             "note": "Voice Runtime Alpha is online for Sprint 199 voice runtime integration review. Sprint 191-198 contracts are reviewed without activating microphone capture, STT, TTS, speaker playback, permission mutation, audit writes, handoffs, or voice actions.",
         }

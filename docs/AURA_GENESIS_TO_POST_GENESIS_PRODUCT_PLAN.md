@@ -882,3 +882,18 @@ This gives Sprint 200 a stable review baseline for Voice Runtime Stabilization
 without activating microphone capture, STT, TTS, speaker playback, permission
 mutation, audit writes, handoffs, command/tool execution, memory writes, desktop
 actions, network actions, git actions, cloud fallback, or voice actions.
+
+## Sprint 200 — Voice Runtime Stabilization
+
+`v0.200.0-genesis` completes the Sprint 191-200 Voice Interaction Runtime block
+as contract-only stabilization.
+
+The stabilization checkpoint confirms that the voice runtime chain is ready for
+future implementation planning while all runtime execution remains blocked. This
+protects AURA from accidental microphone capture, STT/TTS execution, speaker
+playback, permission mutation, audit writes, handoffs, command/tool execution,
+memory writes, file/desktop/network/git actions, cloud fallback, and voice
+actions.
+
+This creates the handoff baseline for Sprint 201 — Vision Runtime Activation
+Foundation.
