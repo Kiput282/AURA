@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.174.0-genesis  
+Current version: v0.175.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -49,12 +49,12 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 105
-- online capabilities: 103
+- total capabilities: 106
+- online capabilities: 104
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 3
-- review-only capabilities: 4
+- review-only capabilities: 5
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 0
@@ -343,7 +343,7 @@ Active block:
 - Sprint 144: Service Configuration and Port Registry Foundation completed
 - Sprint 151: Control Center Runtime Foundation completed
 - Sprint 152: Control Center Read-Only Status Panel Foundation completed
-- Sprint 174: Memory Importance and Pinning Policy completed
+- Sprint 175: Memory Review Queue completed
 - Next: Sprint 154 Control Center Service Monitor Panel Foundation
 
 ---
@@ -1807,3 +1807,8 @@ python3 main.py memory-importance-pinning-alpha "remember that AURA is local-fir
 ```
 
 All scoring and pin recommendations are review metadata only. `Pin State` remains `not_pinned`, `Automatic Pin Applied` remains `False`, write permission remains `required_not_granted`, and all side-effect counters remain `0`. Sprint 175 should add a preview-only Memory Review Queue.
+
+
+## Sprint 175 — Memory Review Queue
+
+`v0.175.0-genesis` adds a deterministic, ephemeral in-process manual-review queue preview for one memory candidate. It exposes priority, review state, privacy hold, permission state, and future decision options while keeping queue persistence, decision application, permission grants, memory writes/store mutation, pin/unpin actions, model/network activity, commands, arbitrary file access, and runtime execution disabled.

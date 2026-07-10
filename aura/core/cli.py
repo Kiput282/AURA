@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_review_queue.aura_memory_review_queue_manager import AuraMemoryReviewQueueManager
 from aura.memory_importance_pinning_policy.aura_memory_importance_pinning_policy_manager import AuraMemoryImportancePinningPolicyManager
 from aura.memory_extraction_dry_run.aura_memory_extraction_dry_run_manager import AuraMemoryExtractionDryRunManager
 from aura.memory_write_permission_gate.aura_memory_write_permission_gate_manager import AuraMemoryWritePermissionGateManager
@@ -4333,6 +4334,55 @@ class AuraCLI:
 
 
 
+    # Sprint 175.0 memory review queue helpers.
+    def print_memory_review_queue_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Review Queue Boundary"))
+
+    def handle_memory_review_queue_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        target = " ".join(raw_args[1:]).strip() or "AURA memory review queue"
+        manager = AuraMemoryReviewQueueManager(project_root=self.project_root)
+
+        if command in {"memory-review-queue-alpha", "memory-review-alpha"}:
+            if not target or target == "AURA memory review queue":
+                print("AURA Memory Review Queue Alpha")
+                print("==============================")
+                print('Usage: python3 main.py memory-review-queue-alpha "remember that AURA is local-first and permission-gated"')
+                return True
+            print(manager.render_queue_preview(target))
+            return True
+
+        if command == "memory-review-queue-status":
+            self.print_memory_review_queue_packet("AURA Memory Review Queue Status", manager.status())
+            return True
+
+        if command == "memory-review-queue-context":
+            self.print_memory_review_queue_packet("AURA Memory Review Queue Context", manager.context())
+            return True
+
+        command_map = {
+            "memory-review-queue-item-contract-plan": ("AURA Memory Review Queue Item Contract Plan", manager.memory_review_queue_item_contract_plan),
+            "memory-review-priority-policy-plan": ("AURA Memory Review Priority Policy Plan", manager.memory_review_priority_policy_plan),
+            "memory-review-decision-options-plan": ("AURA Memory Review Decision Options Plan", manager.memory_review_decision_options_plan),
+            "memory-review-privacy-hold-plan": ("AURA Memory Review Privacy Hold Plan", manager.memory_review_privacy_hold_plan),
+            "memory-review-permission-handoff-plan": ("AURA Memory Review Permission Handoff Plan", manager.memory_review_permission_handoff_plan),
+            "memory-review-edit-handoff-plan": ("AURA Memory Review Edit Handoff Plan", manager.memory_review_edit_handoff_plan),
+            "memory-review-control-center-queue-plan": ("AURA Memory Review Control Center Queue Plan", manager.memory_review_control_center_queue_plan),
+            "memory-review-queue-lifecycle-plan": ("AURA Memory Review Queue Lifecycle Plan", manager.memory_review_queue_lifecycle_plan),
+            "memory-review-queue-failure-boundary-plan": ("AURA Memory Review Queue Failure Boundary Plan", manager.memory_review_queue_failure_boundary_plan),
+            "no-memory-review-queue-unsafe-runtime-plan": ("AURA No Memory Review Queue Unsafe Runtime Plan", manager.no_memory_review_queue_unsafe_runtime_plan),
+            "memory-review-queue-next-sprint-readiness-plan": ("AURA Memory Review Queue Next Sprint Readiness Plan", manager.memory_review_queue_next_sprint_readiness_plan),
+        }
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_review_queue_packet(title, handler(target))
+            return True
+        return False
+
     # Sprint 174.0 memory importance and pinning policy helpers.
     def print_memory_importance_pinning_policy_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8333,6 +8383,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_memory_review_queue_cli_command(raw_args):
             return True
 
         if self.handle_memory_importance_pinning_policy_cli_command(raw_args):

@@ -143,6 +143,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_review_queue.aura_memory_review_queue_manager import AuraMemoryReviewQueueManager
 from aura.memory_importance_pinning_policy.aura_memory_importance_pinning_policy_manager import AuraMemoryImportancePinningPolicyManager
 from aura.memory_extraction_dry_run.aura_memory_extraction_dry_run_manager import AuraMemoryExtractionDryRunManager
 from aura.memory_write_permission_gate.aura_memory_write_permission_gate_manager import AuraMemoryWritePermissionGateManager
@@ -348,6 +349,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        memory_review_queue_status = AuraMemoryReviewQueueManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_importance_pinning_policy_status = AuraMemoryImportancePinningPolicyManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_extraction_dry_run_status = AuraMemoryExtractionDryRunManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_write_permission_gate_status = AuraMemoryWritePermissionGateManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
@@ -498,6 +500,19 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "memory_review_queue_ready": memory_review_queue_status["memory_review_queue_ready"],
+            "memory_review_queue_data_ready": memory_review_queue_status["memory_review_queue_data_ready"],
+            "memory_review_queue_plan_type_count": memory_review_queue_status["plan_type_count"],
+            "memory_review_queue_total_blueprint_count": memory_review_queue_status["total_memory_review_queue_blueprint_count"],
+            "memory_review_queue_thin_runtime_alpha": memory_review_queue_status["thin_runtime_alpha"],
+            "memory_review_queue_enabled": memory_review_queue_status["memory_review_queue_enabled"],
+            "memory_review_queue_ephemeral_enabled": memory_review_queue_status["ephemeral_in_process_queue_enabled"],
+            "memory_review_queue_priority_enabled": memory_review_queue_status["deterministic_review_priority_enabled"],
+            "memory_review_queue_runtime_review_items_persisted": memory_review_queue_status["runtime_review_items_persisted"],
+            "memory_review_queue_runtime_decisions_applied": memory_review_queue_status["runtime_review_decisions_applied"],
+            "memory_review_queue_runtime_memory_writes": memory_review_queue_status["runtime_memory_writes"],
+            "memory_review_queue_runtime_memory_store_mutations": memory_review_queue_status["runtime_memory_store_mutations"],
+            "memory_review_queue_runtime_execution_features": memory_review_queue_status["runtime_execution_features"],
             "memory_importance_pinning_policy_ready": memory_importance_pinning_policy_status["memory_importance_pinning_policy_ready"],
             "memory_importance_pinning_policy_data_ready": memory_importance_pinning_policy_status["memory_importance_pinning_policy_data_ready"],
             "memory_importance_pinning_policy_plan_type_count": memory_importance_pinning_policy_status["plan_type_count"],

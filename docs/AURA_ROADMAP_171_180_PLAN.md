@@ -54,3 +54,12 @@ Status: completed in `v0.174.0-genesis` after Sprint 173.
 Sprint 174 adds deterministic and explainable importance scoring, durable/temporary signal detection, retention recommendations, and future pin eligibility for one candidate. All results remain preview-only: candidate persistence, permission grant apply, memory writes/store mutation, pin/unpin operations, model/network/credential activity, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
 
 Next: Sprint 175 — Memory Review Queue.
+
+
+## Sprint 175 — Memory Review Queue
+
+Status: completed in `v0.175.0-genesis` after Sprint 174.
+
+Sprint 175 adds a deterministic, ephemeral in-process review queue preview for one memory candidate, including review priority, privacy hold routing, permission state, and future approve/edit/reject/defer options. Queue items and decisions are not persisted or applied; permission grants, candidate persistence, memory writes/store mutation, pin/unpin actions, model/network/credential activity, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
+
+Next: Sprint 176 — Memory Correction and Deletion Boundary.

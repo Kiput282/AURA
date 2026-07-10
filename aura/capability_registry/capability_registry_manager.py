@@ -751,6 +751,18 @@ class CapabilityRegistryManager:
                     "description": "Planner-only, metadata-only, and checkpoint-review-only Review Stabilization 111-120 Foundation for Sprint 111-120 completion review, capability registry stabilization, runtime safety zero-state review, integration surface stabilization, documentation roadmap stabilization, v1 blocker review, release cutline consistency, next block 121-130 boundary planning, and checkpoint 120 acceptance review without approving runtime, opening release gates, enabling v1 runtime, mutating capability states, or enabling runtime execution.",
                 },
             {
+                "id": "aura_memory_review_queue",
+                "name": "AURA Memory Review Queue",
+                "state": "online",
+                "runtime_level": "review_only",
+                "risk_level": "medium",
+                "permission_required": "user_confirmation",
+                "category": "memory_runtime",
+                "introduced_in": "0.175.0-genesis",
+                "control_center_visible": True,
+                "description": "Deterministic, ephemeral, preview-only manual review queue for one memory candidate with priority, privacy hold, permission state, and future decision options while keeping queue persistence, decision apply, permission grants, candidate persistence, memory writes/store mutation, pin/unpin operations, model/network/credential activity, audit writes, commands, arbitrary file access, full memory runtime, and runtime execution disabled.",
+            },
+            {
                 "id": "aura_memory_importance_pinning_policy",
                 "name": "AURA Memory Importance and Pinning Policy",
                 "state": "online",

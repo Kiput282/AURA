@@ -1688,3 +1688,8 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 ## Sprint 174 — Memory Importance and Pinning Policy
 
 `v0.174.0-genesis` adds deterministic, explainable importance scoring, durability/temporary signal detection, retention recommendations, and future pin-eligibility previews. Candidate persistence, grants, memory writes/store mutation, pin/unpin actions, model/network activity, credentials, audit writes, commands, arbitrary file access, and runtime execution remain disabled.
+
+
+## Sprint 175 — Memory Review Queue
+
+`v0.175.0-genesis` adds an ephemeral, deterministic manual-review queue preview for memory candidates with priority, privacy, permission, and future-decision metadata. Queue persistence, decision application, grants, memory writes/store mutation, pin/unpin actions, model/network activity, commands, arbitrary file access, and runtime execution remain disabled.
