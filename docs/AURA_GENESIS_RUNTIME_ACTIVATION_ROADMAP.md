@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.188.0-genesis
+Current anchor: v0.189.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -186,3 +186,13 @@ Control Center.
 
 Sprint 189 will surface permission, audit, and recovery state more clearly
 across the local interaction runtime.
+
+## v0.189.0-genesis — Permission, Audit, and Recovery Visibility
+
+Sprint 189 makes the local interaction runtime easier to understand and
+recover without increasing its authority. The Control Center now exposes
+read-only permission requirements, audit-event contracts, redaction
+boundaries, and manual recovery guidance.
+
+Sprint 190 will review and stabilize the complete Sprint 181-190 Local
+Interaction Runtime Activation block.

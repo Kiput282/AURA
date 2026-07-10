@@ -745,6 +745,13 @@ class AuraControlCenterBackendRuntimeManager:
                              'interactive_chat_explicit_confirmation': True,
                              'interactive_chat_idempotent_retry': True,
                              'interactive_chat_response_kind_visibility': True,
+                             'permission_audit_recovery_visibility': True,
+                             'permission_visibility_surface': True,
+                             'audit_contract_visibility_surface': True,
+                             'recovery_guidance_visibility_surface': True,
+                             'visibility_http_api': True,
+                             'visibility_browser_panel': True,
+                             'visibility_redaction_contract': True,
                              'local_chat_history_persistence': True,
                              'validated_message_submission': True,
                              'explicit_clear_confirmation': True,
@@ -789,7 +796,7 @@ class AuraControlCenterBackendRuntimeManager:
         return {
                    'panel_id': "readiness",
                    'title': "Runtime Readiness",
-                   'status': "interactive_control_center_chat_ready" if backend_ready else "degraded",
+                   'status': "permission_audit_recovery_visibility_ready" if backend_ready else "degraded",
                    'backend_ready': backend_ready,
                    'web_shell_ready': True,
                    'interaction_runtime_ready': bool(
@@ -798,15 +805,15 @@ class AuraControlCenterBackendRuntimeManager:
                    'execution_ready': bool(
                 safety["execution_ready"]
             ),
-                   'current_stage': "interactive_control_center_chat_runtime",
+                   'current_stage': "permission_audit_recovery_visibility_runtime",
                    'ready_surfaces': ready_surfaces,
                    'blocked_surfaces': blocked_surfaces,
                    'blockers': blockers,
-                   'next_sprint': "Sprint 189 — Permission, Audit, and Recovery Visibility",
+                   'next_sprint': "Sprint 190 — Review and Stabilization 181-190",
                    'read_only': False,
                    'actions_allowed': False,
                    'shell_asset_route_count': 3,
-                   'total_route_count': 30,
+                   'total_route_count': 37,
                    'browser_auto_launch': False,
                    'external_dependencies': False,
                    'browser_chat_ready': True,
@@ -832,6 +839,23 @@ class AuraControlCenterBackendRuntimeManager:
                    'local_browser_storage_active': False,
                    'websocket_active': False,
                    'eventsource_active': False,
+                   'permission_audit_recovery_visibility_ready': True,
+                   'permission_visibility_ready': True,
+                   'audit_contract_visibility_ready': True,
+                   'recovery_guidance_visibility_ready': True,
+                   'visibility_core_assertion_count': 127,
+                   'visibility_web_assertion_count': 143,
+                   'visibility_api_route_count': 4,
+                   'visibility_asset_route_count': 3,
+                   'visibility_total_route_count': 7,
+                   'visibility_page_route': "/visibility",
+                   'visibility_read_only': True,
+                   'sensitive_values_exposed': False,
+                   'permission_mutation_active': False,
+                   'audit_writer_active': False,
+                   'audit_persistence_active': False,
+                   'automatic_recovery_active': False,
+                   'rollback_execution_active': False,
                }
 
     def snapshot(self) -> dict[str, Any]:
@@ -991,7 +1015,7 @@ class AuraControlCenterBackendRuntimeManager:
                    'browser_chat_http_routes': True,
                    'browser_chat_asset_route_count': 3,
                    'browser_chat_route_contract_count': 7,
-                   'total_route_contract_count': 30,
+                   'total_route_contract_count': 37,
                    'bounded_session_mutation': True,
                    'atomic_session_persistence': True,
                    'session_integrity_hash': True,
@@ -1010,6 +1034,22 @@ class AuraControlCenterBackendRuntimeManager:
                    'interactive_chat_explicit_probe_confirmation': True,
                    'interactive_chat_idempotent_retry': True,
                    'interactive_chat_response_kind_visibility': True,
+                   'permission_audit_recovery_visibility_runtime': True,
+                   'permission_visibility_runtime': True,
+                   'audit_contract_visibility_runtime': True,
+                   'recovery_guidance_visibility_runtime': True,
+                   'permission_audit_recovery_http_routes': True,
+                   'permission_audit_recovery_browser_panel': True,
+                   'permission_audit_recovery_api_route_count': 4,
+                   'permission_audit_recovery_asset_route_count': 3,
+                   'permission_audit_recovery_total_route_count': 7,
+                   'permission_audit_recovery_read_only': True,
+                   'sensitive_values_exposed': False,
+                   'permission_mutation_runtime': False,
+                   'permission_persistence_runtime': False,
+                   'automatic_recovery_runtime': False,
+                   'automatic_retry_runtime': False,
+                   'rollback_execution_runtime': False,
                    'interactive_chat_local_browser_storage_runtime': False,
                    'interactive_chat_websocket_runtime': False,
                    'interactive_chat_eventsource_runtime': False,
@@ -1148,9 +1188,9 @@ class AuraControlCenterBackendRuntimeManager:
         memory = panels["memory"]
         readiness = panels["readiness"]
 
-        assertions['overview_version_188'] = (
+        assertions['overview_version_189'] = (
             overview["identity"]["version"]
-            == '0.188.0-genesis'
+            == '0.189.0-genesis'
         )
         assertions["overview_boot_ready"] = (
             overview["core_boot_ready"] is True
@@ -1164,21 +1204,21 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["overview_listener_false"] = (
             overview["listener_active"] is False
         )
-        assertions['overview_capability_total_119'] = (
-            overview["capability_total"] == 119
+        assertions['overview_capability_total_120'] = (
+            overview["capability_total"] == 120
         )
-        assertions['overview_online_117'] = (
-            overview["online_capabilities"] == 117
+        assertions['overview_online_118'] = (
+            overview["online_capabilities"] == 118
         )
-        assertions['overview_permission_gated_eleven'] = (
+        assertions['overview_permission_gated_twelve'] = (
             overview[
                 "permission_gated_capabilities"
             ]
-            == 11
+            == 12
         )
-        assertions['overview_runtime_feature_three'] = (
+        assertions['overview_runtime_feature_four'] = (
             overview["runtime_execution_features"]
-            == 3
+            == 4
         )
         assertions["overview_plugins_two"] = (
             overview["plugin_available_count"] == 2
@@ -1209,14 +1249,14 @@ class AuraControlCenterBackendRuntimeManager:
             is False
         )
 
-        assertions['capability_card_count_119'] = (
-            capabilities["card_count"] == 119
+        assertions['capability_card_count_120'] = (
+            capabilities["card_count"] == 120
         )
-        assertions['capability_summary_total_119'] = (
+        assertions['capability_summary_total_120'] = (
             capabilities["summary"][
                 "total_capabilities"
             ]
-            == 119
+            == 120
         )
         assertions["capability_mutation_false"] = (
             capabilities["mutation_enabled"] is False
@@ -1242,11 +1282,11 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["permission_foundation_available"] = (
             permissions["foundation_available"] is True
         )
-        assertions['permission_gated_count_eleven'] = (
+        assertions['permission_gated_count_twelve'] = (
             permissions[
                 "permission_gated_capability_count"
             ]
-            == 11
+            == 12
         )
         assertions["pending_runtime_false"] = (
             permissions[
@@ -1312,8 +1352,8 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_backend_ready"] = (
             readiness["backend_ready"] is True
         )
-        assertions['readiness_interactive_chat_true'] = (
-            readiness["interactive_chat_ready"] is True
+        assertions['readiness_visibility_true'] = (
+            readiness["permission_audit_recovery_visibility_ready"] is True
         )
         assertions["readiness_runtime_false"] = (
             readiness["interaction_runtime_ready"]
@@ -1322,9 +1362,10 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_execution_false"] = (
             readiness["execution_ready"] is False
         )
-        assertions['readiness_next_sprint_189'] = (
+        assertions['readiness_next_sprint_190'] = (
             readiness["next_sprint"]
-            == 'Sprint 189 — Permission, Audit, and Recovery Visibility' )
+            == "Sprint 190 — Review and Stabilization 181-190"
+        )
 
         for route in self.ROUTES:
             payload = self.payload_for_route(
@@ -1475,7 +1516,7 @@ class AuraControlCenterBackendRuntimeManager:
                 self.FOUNDATION_MODULES
             ),
             "foundation_contracts_available": 8,
-            "capability_card_count": 119,
+            "capability_card_count": 120,
             "degraded_fixture_verified": True,
             "read_only_file_integrity_verified": True,
             "frontend_rendered": False,

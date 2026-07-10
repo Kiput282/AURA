@@ -46,6 +46,10 @@ from aura.local_model_bridge_runtime.aura_local_model_bridge_runtime_manager imp
 from aura.local_model_bridge_runtime.aura_local_model_browser_chat_runtime_manager import (
     AuraLocalModelBrowserChatRuntimeManager,
 )
+from aura.permission_audit_recovery_visibility_runtime import (
+    AuraPermissionAuditRecoveryVisibilityRuntimeManager,
+    AuraPermissionAuditRecoveryWebSurfaceManager,
+)
 
 
 class AuraBrowserChatSessionHttpRuntimeManager(
@@ -55,7 +59,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
 
     name = "aura_browser_chat_session_http_runtime"
     component_version = "0.1.0-alpha"
-    sprint = 188
+    sprint = 189
 
     CHAT_ASSET_ROUTES = (
         AuraBrowserChatWebSurfaceManager.ASSET_ROUTES
@@ -77,7 +81,23 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         "GET /api/model/status",
         "POST /api/model/probe",
     )
-    TOTAL_ROUTE_CONTRACT_COUNT = 30
+    VISIBILITY_ASSET_ROUTES = (
+        AuraPermissionAuditRecoveryWebSurfaceManager.ASSET_ROUTES
+    )
+    VISIBILITY_API_ROUTES = (
+        AuraPermissionAuditRecoveryWebSurfaceManager.API_ROUTES
+    )
+    VISIBILITY_ROUTE_CONTRACTS = (
+        "GET /api/visibility/status",
+        "GET /api/visibility/permissions",
+        "GET /api/visibility/audit",
+        "GET /api/visibility/recovery",
+    )
+    VISIBILITY_TOTAL_ROUTE_COUNT = (
+        len(VISIBILITY_ASSET_ROUTES)
+        + len(VISIBILITY_ROUTE_CONTRACTS)
+    )
+    TOTAL_ROUTE_CONTRACT_COUNT = 37
     MAX_REQUEST_BODY_BYTES = 65536
     LOCAL_INTENT_HEADER = "X-AURA-Local-Intent"
     LOCAL_INTENT_VALUE = "browser-chat-session"
@@ -144,6 +164,16 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 ),
             )
         )
+        self.permission_audit_recovery_manager = (
+            AuraPermissionAuditRecoveryVisibilityRuntimeManager(
+                os.environ
+            )
+        )
+        self.permission_audit_recovery_web_manager = (
+            AuraPermissionAuditRecoveryWebSurfaceManager(
+                project_root=project_root
+            )
+        )
 
     def safety_boundary(self) -> dict[str, Any]:
         return {
@@ -163,6 +193,21 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             "total_route_contract_count": (
                 self.TOTAL_ROUTE_CONTRACT_COUNT
             ),
+            "permission_audit_recovery_visibility_runtime": True,
+            "permission_audit_recovery_http_routes": True,
+            "permission_audit_recovery_api_route_count": len(
+                self.VISIBILITY_ROUTE_CONTRACTS
+            ),
+            "permission_audit_recovery_asset_route_count": len(
+                self.VISIBILITY_ASSET_ROUTES
+            ),
+            "permission_audit_recovery_total_route_count": (
+                self.VISIBILITY_TOTAL_ROUTE_COUNT
+            ),
+            "permission_audit_recovery_read_only": True,
+            "permission_mutation_runtime": False,
+            "audit_writer_runtime": False,
+            "automatic_recovery_runtime": False,
             "browser_chat_model_bridge_runtime": True,
             "explicit_model_request_confirmation": True,
             "explicit_model_probe_confirmation": True,
@@ -366,6 +411,23 @@ class AuraBrowserChatSessionHttpRuntimeManager(
 
                 return None
 
+            def _visibility_read_payload(
+                self,
+                path: str,
+            ) -> tuple[int, dict[str, Any]] | None:
+                visibility = (
+                    manager.permission_audit_recovery_manager
+                )
+                if path == "/api/visibility/status":
+                    return 200, visibility.status()
+                if path == "/api/visibility/permissions":
+                    return 200, visibility.permission_snapshot()
+                if path == "/api/visibility/audit":
+                    return 200, visibility.audit_snapshot()
+                if path == "/api/visibility/recovery":
+                    return 200, visibility.recovery_snapshot()
+                return None
+
             def _dispatch_read(
                 self,
                 *,
@@ -422,6 +484,42 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     )
                     return
 
+                if path in manager.VISIBILITY_ASSET_ROUTES:
+                    try:
+                        body = (
+                            manager.permission_audit_recovery_web_manager
+                            .asset_bytes(path)
+                        )
+                        content_type = (
+                            manager.permission_audit_recovery_web_manager
+                            .asset_content_type(path)
+                        )
+                    except Exception as exc:
+                        self._send_json(
+                            503,
+                            {
+                                "status": "degraded",
+                                "error": (
+                                    "permission_audit_recovery_"
+                                    "asset_unavailable"
+                                ),
+                                "detail": (
+                                    f"{type(exc).__name__}: "
+                                    f"{exc}"
+                                ),
+                            },
+                            send_body=send_body,
+                        )
+                        return
+
+                    self._send(
+                        200,
+                        body,
+                        content_type,
+                        send_body=send_body,
+                    )
+                    return
+
                 if path == "/health":
                     payload = manager._health_payload(
                         int(bound_port_getter())
@@ -429,10 +527,10 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     payload.update(
                         {
                             "service": (
-                                "AURA Interactive Control Center "
-                                "Chat Runtime"
+                                "AURA Permission, Audit, and "
+                                "Recovery Visibility Runtime"
                             ),
-                            "sprint": 188,
+                            "sprint": 189,
                             "control_center_backend": True,
                             "control_center_backend_routes": 9,
                             "control_center_panels": 8,
@@ -442,7 +540,15 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "browser_chat_http_routes": 7,
                             "browser_chat_assets": 3,
                             "local_model_bridge_http_routes": 2,
-                            "total_route_contracts": 30,
+                            "permission_audit_recovery_visibility": True,
+                            "permission_audit_recovery_http_routes": 4,
+                            "permission_audit_recovery_assets": 3,
+                            "permission_audit_recovery_total_routes": 7,
+                            "permission_audit_recovery_read_only": True,
+                            "permission_mutation_runtime": False,
+                            "audit_writer_runtime": False,
+                            "automatic_recovery_runtime": False,
+                            "total_route_contracts": 37,
                             "model_bridge_configured": (
                                 manager.local_model_chat_manager
                                 .status()["configured"]
@@ -470,6 +576,39 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     )
                     self._send_json(
                         200,
+                        payload,
+                        send_body=send_body,
+                    )
+                    return
+
+                try:
+                    visibility_payload = (
+                        self._visibility_read_payload(path)
+                    )
+                except Exception as exc:
+                    self._send_json(
+                        503,
+                        {
+                            "status": "degraded",
+                            "degraded": True,
+                            "error": (
+                                "permission_audit_recovery_"
+                                "visibility_error"
+                            ),
+                            "detail": (
+                                f"{type(exc).__name__}: "
+                                f"{exc}"
+                            ),
+                            "mutation_allowed": False,
+                        },
+                        send_body=send_body,
+                    )
+                    return
+
+                if visibility_payload is not None:
+                    status, payload = visibility_payload
+                    self._send_json(
+                        status,
                         payload,
                         send_body=send_body,
                     )

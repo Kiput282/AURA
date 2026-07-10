@@ -160,7 +160,7 @@ class CapabilityRegistryManager:
                    'browser_chat_bounded_mutation': True,
                    'browser_chat_asset_route_count': 3,
                    'browser_chat_route_contract_count': 7,
-                   'local_interaction_total_route_contract_count': 30,
+                   'local_interaction_total_route_contract_count': 37,
                    'local_session_file_write_runtime': True,
                    'local_model_bridge_runtime': True,
                    'local_model_inference_runtime': True,
@@ -189,6 +189,24 @@ class CapabilityRegistryManager:
                    'interactive_chat_response_kind_visibility': True,
                    'interactive_chat_restart_persistence': True,
                    'interactive_chat_clear_confirmation': True,
+                   'permission_audit_recovery_visibility_runtime': True,
+                   'permission_visibility_runtime': True,
+                   'audit_contract_visibility_runtime': True,
+                   'recovery_guidance_visibility_runtime': True,
+                   'permission_audit_recovery_http_routes': True,
+                   'permission_audit_recovery_browser_panel': True,
+                   'permission_audit_recovery_api_route_count': 4,
+                   'permission_audit_recovery_asset_route_count': 3,
+                   'permission_audit_recovery_total_route_count': 7,
+                   'permission_audit_recovery_read_only': True,
+                   'sensitive_values_exposed': False,
+                   'permission_mutation_runtime': False,
+                   'permission_persistence_runtime': False,
+                   'audit_writer_runtime': False,
+                   'audit_persistence_runtime': False,
+                   'automatic_recovery_runtime': False,
+                   'automatic_retry_runtime': False,
+                   'rollback_execution_runtime': False,
                    'interactive_chat_local_browser_storage_runtime': False,
                    'interactive_chat_websocket_runtime': False,
                    'interactive_chat_eventsource_runtime': False,
@@ -1773,6 +1791,32 @@ class CapabilityRegistryManager:
                     "autonomy remain disabled."
                 ),
             },
+            {
+                "id": "aura_permission_audit_recovery_visibility_runtime",
+                "name": "AURA Permission, Audit, and Recovery Visibility Runtime",
+                "state": "online",
+                "runtime_level": "permission_gated_alpha_runtime",
+                "risk_level": "medium",
+                "permission_required": "user_confirmation",
+                "category": "local_interaction_runtime",
+                "introduced_in": "0.189.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Read-only localhost permission, audit-contract, and "
+                    "recovery-guidance visibility through five operator CLI "
+                    "commands, one responsive Control Center page, three "
+                    "browser assets, and four GET/HEAD API routes. Provider "
+                    "state values are redacted; message and model-response "
+                    "content are not recorded. Mutation HTTP methods are "
+                    "blocked. Permission grant/revoke/persistence, audit "
+                    "writer/persistence, automatic retry/restart/recovery, "
+                    "rollback execution, model downloads, internet fallback, "
+                    "tools, commands, actions, arbitrary files, desktop "
+                    "control, AURA long-term memory writes, background "
+                    "service, public/LAN binding, browser auto-launch, and "
+                    "autonomy remain disabled."
+                ),
+            },
 ]
 
 
@@ -1797,7 +1841,7 @@ class CapabilityRegistryManager:
             "review_only_count": sum(1 for item in catalog if item["runtime_level"] == "review_only"),
             "planned_future_count": state_counts.get("planned_future", 0),
             "disabled_runtime_count": state_counts.get("disabled_runtime", 0),
-            "runtime_execution_features": ((1) + int(any(
+            "runtime_execution_features": (((1) + int(any(
                 capability.get("id")
                 == "aura_local_model_bridge_runtime"
                 and capability.get("state") == "online"
@@ -1807,6 +1851,13 @@ class CapabilityRegistryManager:
             ))) + int(any(
                 capability.get("id")
                 == "aura_interactive_control_center_chat_runtime"
+                and capability.get("state") == "online"
+                and capability.get("runtime_level")
+                == "permission_gated_alpha_runtime"
+                for capability in self.capability_catalog()
+            ))) + int(any(
+                capability.get("id")
+                == "aura_permission_audit_recovery_visibility_runtime"
                 and capability.get("state") == "online"
                 and capability.get("runtime_level")
                 == "permission_gated_alpha_runtime"

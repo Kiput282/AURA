@@ -1,7 +1,7 @@
 # AURA Roadmap 181-190 — Local Interaction Runtime Activation
 
 Status: ACTIVE — SPRINT 186 COMPLETE
-Current anchor: v0.188.0-genesis
+Current anchor: v0.189.0-genesis
 Target checkpoint: v0.190.0-genesis
 
 ## Purpose
@@ -373,3 +373,23 @@ Delivered:
 - no external browser dependencies or browser storage.
 
 Next: Sprint 189 — Permission, Audit, and Recovery Visibility.
+
+## Sprint 189 Completion Checkpoint
+
+Status: completed in v0.189.0-genesis.
+
+Delivered:
+
+- read-only permission requirement visibility;
+- read-only audit-event contract visibility;
+- read-only manual recovery guidance;
+- responsive `/visibility` Control Center page;
+- four GET/HEAD visibility APIs;
+- three local assets;
+- provider-state redaction;
+- no message or model-response recording;
+- mutation methods blocked;
+- interactive chat preserved;
+- seven additional local route contracts.
+
+Next: Sprint 190 — Review and Stabilization 181-190.

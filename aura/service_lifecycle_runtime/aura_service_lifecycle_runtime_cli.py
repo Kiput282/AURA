@@ -121,6 +121,7 @@ def handle_service_lifecycle_command(
         print("Web shell  : ENABLED / 3 dashboard assets")
         print("Local chat : ENABLED / 3 chat assets / 7 route contracts")
         print("Model bridge: READY / 2 model routes / interactive chat ready / disabled by default")
+        print("Visibility: READY / 4 GET-only APIs / 3 assets / read-only")
         print("Browser launch: DISABLED")
         print()
 

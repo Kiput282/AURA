@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.188.0-genesis
-Current status: interactive localhost Control Center chat alpha with persistent sessions and explicitly confirmed local-model messaging
-Current runtime state: one explicitly confirmed foreground localhost listener provides Control Center, responsive interactive chat, persistent local sessions, save-only safe default, provider/model visibility, explicit provider probe confirmation, explicit per-message local-model confirmation, idempotent retry, response-kind visibility, restart persistence, and confirmed clearing. Model providers remain disabled by default; downloads, remote providers, internet fallback, streaming, tools, commands, actions, AURA long-term memory writes, browser storage, WebSocket/EventSource, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.189.0-genesis
+Current status: read-only localhost permission, audit-contract, and recovery-guidance visibility integrated with the interactive Control Center
+Current runtime state: one explicitly confirmed foreground localhost listener provides Control Center, interactive chat, persistent bounded sessions, explicitly confirmed local-model messaging, and a read-only permission/audit/recovery visibility page with four GET/HEAD APIs and three assets. Provider values are redacted and message/model-response content is not recorded. Permission mutation/persistence, audit writing/persistence, automatic retry/recovery/restart, rollback execution, model downloads, internet fallback, tools, commands, actions, AURA long-term memory writes, browser storage, WebSocket/EventSource, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,33 +35,33 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 188 in the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 189 in the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.188.0-genesis
-- Sprint 188: Interactive Control Center Chat Runtime
+- v0.189.0-genesis
+- Sprint 189: Permission, Audit, and Recovery Visibility Runtime
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 189 — Permission, Audit, and Recovery Visibility
+- Next planned sprint: Sprint 190 — Review and Stabilization 181-190
 Current capability registry summary:
 
-- total capabilities: 119
-- online capabilities: 117
+- total capabilities: 120
+- online capabilities: 118
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 11
+- permission-gated capabilities: 12
 - review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 3
+- runtime execution features: 4
 ---
 
 ## Safety State
@@ -295,7 +295,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.188.0-genesis
+    Version  : 0.189.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -2269,3 +2269,62 @@ Validation:
 - port `8765`: closed after tests.
 
 Next: Sprint 189 — Permission, Audit, and Recovery Visibility.
+
+## Sprint 189 — Permission, Audit, and Recovery Visibility Runtime
+
+Status: completed
+Version: `v0.189.0-genesis`
+
+Sprint 189 adds a bounded, read-only visibility layer to the localhost
+Control Center:
+
+- `/visibility` responsive browser page;
+- four GET/HEAD API routes for status, permissions, audit contracts, and
+  recovery guidance;
+- three local static assets with no external dependency;
+- five operator CLI commands;
+- five permission requirement items;
+- nine audit event contracts;
+- eight manual recovery cases;
+- ten explicitly declared redacted fields;
+- provider configuration represented only as boolean state;
+- message and model-response content never recorded;
+- POST, PUT, PATCH, and DELETE blocked on visibility endpoints;
+- existing interactive chat preserved.
+
+Operator commands:
+
+```bash
+python3 main.py permission-audit-recovery-status
+python3 main.py permission-audit-recovery-snapshot
+python3 main.py permission-audit-recovery-self-test
+python3 main.py permission-audit-recovery-web-status
+python3 main.py permission-audit-recovery-web-self-test
+```
+
+Permission grant/revoke/persistence, audit writer/persistence, automatic
+retry/recovery/restart, process killing, rollback execution, model downloads,
+remote providers, internet fallback, streaming, tools, commands, actions,
+arbitrary file access, desktop control, AURA long-term memory writes, browser
+storage, WebSocket/EventSource, background service, public/LAN binding,
+browser auto-launch, and autonomy remain disabled.
+
+Validation:
+
+- visibility core: 127/127;
+- visibility web surface: 143/143;
+- interactive chat: 119/119;
+- interactive chat web: 166/166;
+- local model bridge: 178/178;
+- browser chat core: 152/152;
+- backend: 108/108;
+- status API: 59/59;
+- Control Center shell: 140/140;
+- lifecycle: 41/41;
+- local web: 21/21;
+- live GET and HEAD visibility routes: verified;
+- visibility mutation methods blocked with `405`;
+- canonical data unchanged;
+- port `8765` closed after tests.
+
+Next: Sprint 190 — Review and Stabilization 181-190.

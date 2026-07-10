@@ -668,3 +668,42 @@ fallback, streaming, tools, commands, actions, arbitrary files, desktop
 control, AURA long-term memory writes, browser storage,
 WebSocket/EventSource, background service, public/LAN binding, browser
 auto-launch, and autonomy remain disabled.
+
+## Sprint 189 Update — Permission, Audit, and Recovery Visibility Online
+
+Status: UPDATED FOR v0.189.0-genesis
+
+The registry now tracks
+`aura_permission_audit_recovery_visibility_runtime` as an online,
+permission-gated alpha runtime.
+
+Current summary:
+
+- total capabilities tracked: 120
+- online capabilities: 118
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 12
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 4
+
+The runtime adds seven local visibility routes: three browser assets and four
+GET/HEAD API routes. Total local interaction route contracts are now 37.
+
+New active boundaries include:
+
+- `permission_audit_recovery_visibility_runtime: true`
+- `permission_visibility_runtime: true`
+- `audit_contract_visibility_runtime: true`
+- `recovery_guidance_visibility_runtime: true`
+- `permission_audit_recovery_read_only: true`
+- `sensitive_values_exposed: false`
+
+Permission mutation/persistence, audit writing/persistence, automatic
+recovery/retry/restart, rollback execution, downloads, remote providers,
+internet fallback, streaming, tools, commands, actions, arbitrary files,
+desktop control, AURA long-term memory writes, browser storage,
+WebSocket/EventSource, background service, public/LAN binding, browser
+auto-launch, and autonomy remain disabled.

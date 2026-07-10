@@ -645,3 +645,13 @@ a provider is active and the user confirms the individual request.
 
 This remains a bounded local alpha: no online model provider, model download,
 tool use, external action, browser storage, or autonomous behavior is enabled.
+
+## Sprint 189 Product Activation Note
+
+AURA's localhost Control Center can now explain which interactions require
+confirmation, which audit events are defined, which values are redacted, and
+how an operator can recover safely from common failures.
+
+The surface remains read-only. It cannot grant permissions, write audit
+events, retry actions automatically, restart services, execute rollback, or
+increase model/tool authority.

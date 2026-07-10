@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" data-aura-surface="permission-audit-recovery-visibility">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+  <meta name="color-scheme" content="dark">
+  <meta
+    name="description"
+    content="Read-only AURA permission, audit, and recovery visibility."
+  >
+  <title>AURA Permission, Audit, and Recovery</title>
+  <link
+    rel="stylesheet"
+    href="/assets/permission-audit-recovery.css"
+  >
+  <script
+    src="/assets/permission-audit-recovery.js"
+    defer
+  ></script>
+</head>
+<body>
+  <a class="skip-link" href="#visibility-main">
+    Skip to visibility panels
+  </a>
+
+  <main id="visibility-main" class="visibility-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Sprint 189</p>
+        <h1>Permission, Audit, and Recovery</h1>
+        <p class="lede">
+          Read-only visibility for local runtime boundaries.
+          This surface cannot grant permissions, write audit events,
+          or execute recovery actions.
+        </p>
+      </div>
+      <div class="header-actions">
+        <nav aria-label="Control Center navigation">
+          <a href="/">Control Center</a>
+          <a href="/chat">Interactive Chat</a>
+        </nav>
+        <button id="refresh-visibility" type="button">
+          Refresh
+        </button>
+      </div>
+    </header>
+
+    <section class="status-grid" aria-label="Visibility summary">
+      <article class="summary-card">
+        <span class="summary-label">Runtime</span>
+        <strong id="visibility-status">Checking</strong>
+        <small id="visibility-detail">
+          Reading localhost visibility endpoints.
+        </small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Permissions</span>
+        <strong id="permission-count">—</strong>
+        <small>read-only items</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Audit contracts</span>
+        <strong id="audit-count">—</strong>
+        <small>no event writer active</small>
+      </article>
+      <article class="summary-card">
+        <span class="summary-label">Recovery cases</span>
+        <strong id="recovery-count">—</strong>
+        <small>manual guidance only</small>
+      </article>
+    </section>
+
+    <section class="panel" aria-labelledby="provider-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Local model profile</p>
+          <h2 id="provider-title">Provider visibility</h2>
+        </div>
+        <span
+          id="provider-state"
+          class="state-badge"
+          data-state="idle"
+        >
+          Checking
+        </span>
+      </div>
+      <dl id="provider-facts" class="fact-grid">
+        <div>
+          <dt>Configured</dt>
+          <dd id="provider-configured">—</dd>
+        </div>
+        <div>
+          <dt>Enabled requested</dt>
+          <dd id="provider-enabled">—</dd>
+        </div>
+        <div>
+          <dt>Active candidate</dt>
+          <dd id="provider-candidate">—</dd>
+        </div>
+        <div>
+          <dt>Raw values exposed</dt>
+          <dd id="provider-raw-values">No</dd>
+        </div>
+      </dl>
+      <p class="boundary-note">
+        Provider name, endpoint, model name, credentials, and
+        environment values are intentionally not displayed.
+      </p>
+    </section>
+
+    <div class="panel-grid">
+      <section class="panel" aria-labelledby="permissions-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Permission gates</p>
+            <h2 id="permissions-title">Current requirements</h2>
+          </div>
+          <span class="read-only-badge">Read only</span>
+        </div>
+        <div
+          id="permission-list"
+          class="card-list"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <section class="panel" aria-labelledby="audit-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Audit schema</p>
+            <h2 id="audit-title">Visible event contracts</h2>
+          </div>
+          <span class="read-only-badge">Writer disabled</span>
+        </div>
+        <div
+          id="audit-list"
+          class="card-list"
+          aria-live="polite"
+        ></div>
+      </section>
+    </div>
+
+    <section class="panel" aria-labelledby="recovery-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Recovery guidance</p>
+          <h2 id="recovery-title">Manual recovery cases</h2>
+        </div>
+        <span class="read-only-badge">No automatic action</span>
+      </div>
+      <div
+        id="recovery-list"
+        class="recovery-grid"
+        aria-live="polite"
+      ></div>
+    </section>
+
+    <section class="panel boundary-panel" aria-labelledby="boundary-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Safety boundary</p>
+          <h2 id="boundary-title">Disabled execution surfaces</h2>
+        </div>
+        <span class="read-only-badge">Bounded</span>
+      </div>
+      <ul id="boundary-list" class="boundary-list"></ul>
+    </section>
+
+    <p
+      id="visibility-error"
+      class="error-banner"
+      role="alert"
+      hidden
+    ></p>
+  </main>
+
+  <noscript>
+    <p class="noscript-message">
+      JavaScript is required to read the localhost visibility endpoints.
+    </p>
+  </noscript>
+</body>
+</html>

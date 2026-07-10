@@ -1881,3 +1881,29 @@ Checkpoint state:
   storage, or AURA long-term memory writes.
 
 Next: Sprint 189 — Permission, Audit, and Recovery Visibility.
+
+## Checkpoint v0.189.0-genesis — Permission, Audit, and Recovery Visibility
+
+Sprint 189 activates the read-only safety visibility product surface.
+
+Checkpoint state:
+
+- 120 total capabilities;
+- 118 online capabilities;
+- 12 permission-gated capabilities;
+- 4 runtime execution features;
+- 5 visible permission requirement items;
+- 9 visible audit-event contracts;
+- 8 visible recovery cases;
+- 10 redacted field declarations;
+- 4 GET/HEAD visibility APIs;
+- 3 visibility browser assets;
+- 37 total local interaction route contracts;
+- visibility core self-test: 127/127;
+- visibility web self-test: 143/143;
+- mutation methods blocked;
+- provider values redacted;
+- audit writer and automatic recovery disabled;
+- canonical data unchanged.
+
+Next: Sprint 190 — Review and Stabilization 181-190.
