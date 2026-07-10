@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.190.0-genesis
-Current status: Sprint 181-190 Local Interaction Runtime Activation block stabilized and ready to hand off to Voice Interaction Runtime
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. The complete Sprint 181-189 chain passes Sprint 190 stabilization with nine components ready, ten dependency self-tests, 1,175 total assertions, zero stabilization gaps, and zero runtime violations. Permission mutation, audit writing, automatic recovery, arbitrary commands/tools/actions/files, desktop control, voice, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.191.0-genesis
+Current status: Sprint 191 Voice Runtime Activation Foundation completed and ready to hand off to Sprint 192 Push-to-Talk and Explicit Listen State
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 191 adds a safe-idle voice activation foundation contract for explicit push-to-talk planning while keeping microphone capture, speaker playback, STT/TTS runtime, hidden capture, always-listening, wake word, silent cloud fallback, direct voice-to-action execution, command execution, audio file writes, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 190 and closed the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 191 and started the Sprint 191-200 Voice Interaction Runtime block with a safe activation foundation.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.191.0-genesis
+- Sprint 191: Voice Runtime Activation Foundation
 - v0.190.0-genesis
 - Sprint 190: Local Interaction Runtime Review and Stabilization
 - v0.163.0-genesis
@@ -50,7 +52,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 191 — Voice Runtime Activation Foundation
+- Next planned sprint: Sprint 192 — Push-to-Talk and Explicit Listen State
 Current capability registry summary:
 
 - total capabilities: 121
@@ -2365,3 +2367,42 @@ capture, background service, systemd activation, public/LAN binding, browser
 auto-launch, or autonomy.
 
 Next: Sprint 191 — Voice Runtime Activation Foundation.
+
+## Sprint 191 — Voice Runtime Activation Foundation
+
+Version: `v0.191.0-genesis`
+
+Sprint 191 starts the Sprint 191-200 Voice Interaction Runtime block by adding
+a safe-idle voice activation foundation contract on top of the existing voice
+runtime planning layer.
+
+Validated checkpoint:
+
+- voice activation foundation ready;
+- explicit push-to-talk required;
+- explicit listen required;
+- safe idle default preserved;
+- always-listening disabled;
+- hidden capture disabled;
+- background wake word disabled;
+- silent cloud fallback disabled;
+- direct voice-to-action execution disabled;
+- microphone capture inactive;
+- speaker playback inactive;
+- STT runtime inactive;
+- TTS runtime inactive;
+- audio file writes inactive;
+- command execution inactive;
+- existing `microphone_listen` permission action reused;
+- existing `speaker_speak` permission action reused;
+- stable chat/session path reuse required;
+- 19 Sprint 191 activation assertions;
+- zero failed Sprint 191 activation assertions.
+
+Sprint 191 adds no dependency installation, audio device access, microphone
+capture, speaker playback, STT execution, TTS execution, audio file output,
+cloud provider fallback, action execution, command execution, arbitrary file
+access, desktop control, browser storage, public/LAN binding, background
+service, systemd activation, browser auto-launch, or autonomy.
+
+Next: Sprint 192 — Push-to-Talk and Explicit Listen State.

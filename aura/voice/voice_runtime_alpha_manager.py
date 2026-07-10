@@ -82,6 +82,7 @@ class VoiceRuntimeAlphaManager:
 
     def status(self) -> dict[str, Any]:
         dependency_check = self.planner.check()
+        activation = self.planner.activation_contract()
         backend = self.detect_tts_backend()
         speaker_permission = self.permission_manager.check("speaker_speak")
         microphone_permission = self.permission_manager.check("microphone_listen")
@@ -91,6 +92,7 @@ class VoiceRuntimeAlphaManager:
             "version": self.version,
             "status": self.status_name,
             "alpha_ready": True,
+            "sprint_191_activation_foundation_ready": activation["activation_foundation_ready"],
             "speak_plan_ready": True,
             "speak_test_ready": True,
             "voice_context_ready": True,
@@ -100,6 +102,16 @@ class VoiceRuntimeAlphaManager:
             "tts_backend_path": backend["path"],
             "stt_runtime_ready": False,
             "tts_runtime_ready": backend["found"],
+            "runtime_ready": False,
+            "safe_idle_default": activation["safe_idle_default"],
+            "push_to_talk_required": activation["push_to_talk_required"],
+            "explicit_listen_required": activation["explicit_listen_required"],
+            "always_listening_enabled": activation["always_listening_enabled"],
+            "hidden_capture_enabled": activation["hidden_capture_enabled"],
+            "background_wake_word_enabled": activation["background_wake_word_enabled"],
+            "silent_cloud_fallback_enabled": activation["silent_cloud_fallback_enabled"],
+            "direct_voice_to_action_enabled": activation["direct_voice_to_action_enabled"],
+            "chat_session_reuse_required": activation["chat_session_reuse_required"],
             "microphone_access": False,
             "speaker_output": False,
             "recording_enabled": False,
@@ -112,9 +124,10 @@ class VoiceRuntimeAlphaManager:
             "python_packages_total": dependency_check["python_packages_total"],
             "executables_found": dependency_check["executables_found"],
             "executables_total": dependency_check["executables_total"],
-            "sections": 6,
+            "activation_contract": activation,
+            "sections": 7,
             "project_root": str(self.project_root),
-            "note": "Voice Runtime Alpha is online for safe TTS planning. It does not access microphone, play speakers, write audio files, or execute commands automatically.",
+            "note": "Voice Runtime Alpha is online for Sprint 191 activation foundation and safe TTS planning. It does not access microphone, play speakers, write audio files, or execute commands automatically.",
         }
 
     def build_tts_command(self, text: str) -> dict[str, Any]:

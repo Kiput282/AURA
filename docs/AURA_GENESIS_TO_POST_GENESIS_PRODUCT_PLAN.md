@@ -678,4 +678,33 @@ The checkpoint passes nine component reviews, ten dependency self-tests, and
 Voice, vision, broad actions, ORION, avatar, livestream automation, game
 control, and autonomy remain outside this checkpoint.
 
+
+## Sprint 191 — Voice Runtime Activation Foundation
+
+`v0.191.0-genesis` starts the Voice Interaction Runtime block.
+
+AURA now has a safe voice activation foundation contract that prepares the path
+for explicit push-to-talk voice interaction while preserving the stable
+localhost Control Center, browser chat, session, model permission, permission
+visibility, audit-contract, and recovery-visibility foundations from the Local
+Interaction Runtime block.
+
+The checkpoint confirms:
+
+- voice activation foundation readiness;
+- safe idle default;
+- explicit push-to-talk requirement;
+- explicit listen requirement;
+- stable chat/session reuse requirement;
+- reuse of the existing `microphone_listen` permission action;
+- reuse of the existing `speaker_speak` permission action;
+- disabled always-listening, hidden capture, wake word, silent cloud fallback,
+  direct voice-to-action execution, microphone capture, speaker playback,
+  STT/TTS runtime, audio file writes, and command execution.
+
+This is not live voice yet. It is the activation foundation that lets later
+sprints add push-to-talk state, microphone boundary, STT, chat integration,
+TTS, permission/audit linkage, and Control Center voice controls without
+breaking the established safety model.
+
 Next product block: Sprint 191-200 Voice Interaction Runtime.

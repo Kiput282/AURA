@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.190.0-genesis
+Current anchor: v0.191.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,9 +16,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.190.0-genesis
-- Completed: Sprint 190 — Local Interaction Runtime Review and Stabilization
+- Current version: v0.191.0-genesis
+- Completed: Sprint 191 — Voice Runtime Activation Foundation
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
+- Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
 - Total capabilities: 121
 - Online capabilities: 119
@@ -38,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: disabled
+- Voice runtime: activation foundation ready; microphone capture, STT/TTS runtime, and speaker playback disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 191 — Voice Runtime Activation Foundation
+- Next: Sprint 192 — Push-to-Talk and Explicit Listen State
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -222,3 +223,24 @@ authority.
 Block 181-190 is complete.
 
 Next: Sprint 191 — Voice Runtime Activation Foundation.
+
+## v0.191.0-genesis — Voice Runtime Activation Foundation
+
+Sprint 191 starts the Sprint 191-200 Voice Interaction Runtime block with a
+safe-idle activation foundation contract.
+
+The checkpoint exposes voice activation readiness through the existing voice
+runtime status and check surfaces. It confirms explicit push-to-talk and
+explicit listen are required, the stable chat/session path must be reused, and
+the existing `microphone_listen` and `speaker_speak` permission actions remain
+the canonical voice permission boundaries.
+
+Sprint 191 keeps real microphone capture, speaker playback, STT runtime, TTS
+runtime, audio file writes, always-listening, hidden capture, background wake
+word, silent cloud fallback, direct voice-to-action execution, command
+execution, dependency installation, and audio device access disabled.
+
+The voice activation check contains 19 assertions and currently reports zero
+failed assertions.
+
+Next: Sprint 192 — Push-to-Talk and Explicit Listen State.

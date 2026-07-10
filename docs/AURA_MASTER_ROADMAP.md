@@ -1940,3 +1940,40 @@ with persistent sessions, an explicitly confirmed local-model path, and
 visible safety/recovery state.
 
 Next: Sprint 191 — Voice Runtime Activation Foundation.
+
+## Checkpoint v0.191.0-genesis — Voice Runtime Activation Foundation
+
+Sprint 191 starts the Sprint 191-200 Voice Interaction Runtime block.
+
+Checkpoint state:
+
+- voice activation foundation ready;
+- planning ready;
+- runtime ready remains false;
+- safe idle default true;
+- explicit push-to-talk required;
+- explicit listen required;
+- always-listening disabled;
+- hidden capture disabled;
+- background wake word disabled;
+- silent cloud fallback disabled;
+- direct voice-to-action execution disabled;
+- microphone capture inactive;
+- speaker playback inactive;
+- STT runtime inactive;
+- TTS runtime inactive;
+- audio file writes inactive;
+- command execution inactive;
+- existing `microphone_listen` permission action reused;
+- existing `speaker_speak` permission action reused;
+- chat/session reuse required;
+- 19 activation assertions;
+- 0 failed activation assertions.
+
+Sprint 191 does not install dependencies, access audio devices, capture
+microphone input, play speaker output, run STT, run TTS, write audio files,
+fallback to cloud providers, execute voice actions, execute commands, mutate
+files, control the desktop, start background services, bind publicly, or add
+autonomy.
+
+Next: Sprint 192 — Push-to-Talk and Explicit Listen State.

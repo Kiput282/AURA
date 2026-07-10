@@ -1,5 +1,5 @@
 name: AURA
-version: "0.190.0-genesis"
+version: "0.191.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -59,3 +59,8 @@ modes:
 # and zero runtime violations. The runtime remains localhost-only,
 # foreground-only, explicitly started, permission-bounded, and free from
 # arbitrary execution. Sprint 191 Voice Runtime Activation Foundation is next.
+# Sprint 191: voice_runtime_activation_foundation adds a safe idle activation
+# contract for explicit push-to-talk voice planning, requiring chat/session
+# reuse and preserving disabled microphone capture, speaker playback, STT/TTS
+# runtime, hidden capture, always-listening, wake word, cloud fallback, direct
+# voice-to-action execution, command execution, and audio file writes.

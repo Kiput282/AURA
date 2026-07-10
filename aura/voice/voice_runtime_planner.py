@@ -158,16 +158,63 @@ class VoiceRuntimePlanner:
             "speaker_speak": speaker.to_dict(),
         }
 
+
+    def activation_contract(self) -> dict[str, Any]:
+        return {
+            "sprint": 191,
+            "name": "voice_runtime_activation_foundation",
+            "activation_foundation_ready": True,
+            "runtime_ready": False,
+            "safe_idle_default": True,
+            "push_to_talk_required": True,
+            "explicit_listen_required": True,
+            "always_listening_enabled": False,
+            "hidden_capture_enabled": False,
+            "background_wake_word_enabled": False,
+            "silent_cloud_fallback_enabled": False,
+            "direct_voice_to_action_enabled": False,
+            "microphone_capture_active": False,
+            "speaker_playback_active": False,
+            "stt_runtime_active": False,
+            "tts_runtime_active": False,
+            "audio_file_write_active": False,
+            "command_execution_active": False,
+            "microphone_permission_action": "microphone_listen",
+            "speaker_permission_action": "speaker_speak",
+            "chat_session_reuse_required": True,
+            "control_center_voice_controls_deferred": True,
+            "next_sprint": 192,
+            "next_boundary": "push_to_talk_and_explicit_listen_state",
+            "guardrails": [
+                "No always-listening mode.",
+                "No hidden microphone capture.",
+                "No background wake word.",
+                "No direct voice-to-action execution.",
+                "No silent cloud STT or TTS fallback.",
+                "Reuse the stable chat/session interaction path.",
+            ],
+        }
+
     def status(self) -> dict[str, Any]:
         stt_candidates = self.stt_candidates()
         tts_candidates = self.tts_candidates()
+        activation = self.activation_contract()
 
         return {
             "name": self.name,
             "version": self.version,
             "status": "planning",
             "planning_ready": True,
+            "activation_foundation_ready": activation["activation_foundation_ready"],
             "runtime_ready": False,
+            "safe_idle_default": activation["safe_idle_default"],
+            "push_to_talk_required": activation["push_to_talk_required"],
+            "always_listening_enabled": activation["always_listening_enabled"],
+            "hidden_capture_enabled": activation["hidden_capture_enabled"],
+            "background_wake_word_enabled": activation["background_wake_word_enabled"],
+            "silent_cloud_fallback_enabled": activation["silent_cloud_fallback_enabled"],
+            "direct_voice_to_action_enabled": activation["direct_voice_to_action_enabled"],
+            "chat_session_reuse_required": activation["chat_session_reuse_required"],
             "microphone_access": False,
             "speaker_output": False,
             "stt_runtime_ready": False,
@@ -176,7 +223,8 @@ class VoiceRuntimePlanner:
             "tts_candidates": len(tts_candidates),
             "candidate_count": len(stt_candidates) + len(tts_candidates),
             "permissions": self.permission_map(),
-            "note": "Voice runtime planning is online, but real microphone/STT/TTS/speaker runtime is not enabled yet.",
+            "activation_contract": activation,
+            "note": "Voice runtime activation foundation is ready for explicit push-to-talk planning, but real microphone/STT/TTS/speaker runtime is not enabled yet.",
         }
 
     def plan(self) -> dict[str, Any]:
@@ -240,6 +288,7 @@ class VoiceRuntimePlanner:
 
     def check(self) -> dict[str, Any]:
         dependencies = self.dependency_check()
+        activation = self.activation_contract()
 
         installed_python = sum(
             1
@@ -253,14 +302,48 @@ class VoiceRuntimePlanner:
             if executable["found"]
         )
 
+        assertions = {
+            "activation_foundation_ready": activation["activation_foundation_ready"] is True,
+            "runtime_not_enabled": activation["runtime_ready"] is False,
+            "safe_idle_default": activation["safe_idle_default"] is True,
+            "push_to_talk_required": activation["push_to_talk_required"] is True,
+            "explicit_listen_required": activation["explicit_listen_required"] is True,
+            "always_listening_disabled": activation["always_listening_enabled"] is False,
+            "hidden_capture_disabled": activation["hidden_capture_enabled"] is False,
+            "background_wake_word_disabled": activation["background_wake_word_enabled"] is False,
+            "silent_cloud_fallback_disabled": activation["silent_cloud_fallback_enabled"] is False,
+            "direct_voice_to_action_disabled": activation["direct_voice_to_action_enabled"] is False,
+            "microphone_capture_inactive": activation["microphone_capture_active"] is False,
+            "speaker_playback_inactive": activation["speaker_playback_active"] is False,
+            "stt_runtime_inactive": activation["stt_runtime_active"] is False,
+            "tts_runtime_inactive": activation["tts_runtime_active"] is False,
+            "audio_file_write_inactive": activation["audio_file_write_active"] is False,
+            "command_execution_inactive": activation["command_execution_active"] is False,
+            "microphone_permission_reuses_existing_action": activation["microphone_permission_action"] == "microphone_listen",
+            "speaker_permission_reuses_existing_action": activation["speaker_permission_action"] == "speaker_speak",
+            "chat_session_reuse_required": activation["chat_session_reuse_required"] is True,
+        }
+
+        failed_assertions = [
+            name
+            for name, passed in assertions.items()
+            if not passed
+        ]
+
         return {
-            "status": "checked",
+            "status": "checked" if not failed_assertions else "failed",
             "runtime_ready": False,
             "planning_ready": True,
+            "activation_foundation_ready": activation["activation_foundation_ready"],
+            "assertion_count": len(assertions),
+            "failed_assertion_count": len(failed_assertions),
+            "failed_assertions": failed_assertions,
+            "assertions": assertions,
             "python_packages_installed": installed_python,
             "python_packages_total": len(dependencies["python_packages"]),
             "executables_found": found_executables,
             "executables_total": len(dependencies["executables"]),
             "dependencies": dependencies,
+            "activation_contract": activation,
             "note": "Runtime is not enabled yet. This check did not access microphone or speaker.",
         }
