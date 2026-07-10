@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.186.0-genesis
-Current status: permission-gated localhost browser chat session runtime alpha
-Current runtime state: one explicitly confirmed foreground localhost listener provides nine status routes, nine Control Center backend routes, a responsive dashboard, and bounded browser chat sessions with atomic local history persistence; Local Model Bridge, model inference, AURA long-term memory writes, tools, commands, actions, background service, systemd, auto-start, public/LAN binding, and browser auto-launch remain disabled
+Current version: v0.187.0-genesis
+Current status: permission-gated localhost local model bridge alpha connected to browser chat backend
+Current runtime state: one explicitly confirmed foreground localhost listener provides status, Control Center, browser chat session, and local-model bridge routes; Ollama and OpenAI-compatible loopback providers are supported through environment-only profiles and remain disabled by default. Model downloads, remote providers, internet fallback, streaming, tools, commands, actions, AURA long-term memory writes, background service, systemd, auto-start, public/LAN binding, and browser auto-launch remain disabled
 
 ---
 
@@ -35,33 +35,33 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 186 in the Sprint 181-190 Local Interaction Runtime Activation block.
+AURA has completed Sprint 187 in the Sprint 181-190 Local Interaction Runtime Activation block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
-- v0.186.0-genesis
-- Sprint 186: Browser Chat Session Runtime
+- v0.187.0-genesis
+- Sprint 187: Local Model Bridge Runtime
 - v0.163.0-genesis
 - Sprint 161: Local Chat Runtime Foundation
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 187 — Local Model Bridge Activation
+- Next planned sprint: Sprint 188 — Interactive Control Center Chat
 Current capability registry summary:
 
-- total capabilities: 117
-- online capabilities: 115
+- total capabilities: 118
+- online capabilities: 116
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 9
+- permission-gated capabilities: 10
 - review-only capabilities: 10
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 1
+- runtime execution features: 2
 ---
 
 ## Safety State
@@ -295,7 +295,7 @@ Check AURA status:
 
 Expected current output:
 
-    Version  : 0.186.0-genesis
+    Version  : 0.187.0-genesis
     Status   : READY
 
 Check a foundation status example:
@@ -2152,3 +2152,66 @@ Validation:
 - port `8765`: closed after tests.
 
 Next: Sprint 187 — Local Model Bridge Activation.
+
+## Sprint 187 — Local Model Bridge Runtime
+
+Status: completed
+Version: `v0.187.0-genesis`
+
+Sprint 187 activates AURA's localhost-only text model bridge:
+
+- Ollama and OpenAI-compatible local provider contracts;
+- strict `localhost`, `127.0.0.1`, or `::1` endpoints;
+- explicit provider port requirement;
+- resolved-loopback verification;
+- HTTP redirect blocking;
+- non-persistent `AURA_LOCAL_MODEL_*` environment profiles;
+- provider disabled by default;
+- explicit probe confirmation;
+- explicit inference confirmation per request;
+- bounded non-streaming message and response schemas;
+- text-only model output;
+- browser-chat model response persistence;
+- seven chat route contracts and two model route contracts;
+- thirty total local interaction route contracts;
+- optimistic revision conflicts;
+- idempotent retry without duplicate model invocation;
+- provider failure without partial session writes;
+- Sprint 186 placeholder route preserved.
+
+No-bind operator commands:
+
+```bash
+python3 main.py local-model-bridge-status
+python3 main.py local-model-bridge-contracts
+python3 main.py local-model-bridge-self-test
+```
+
+A provider profile is supplied only for the current process. Example:
+
+```bash
+export AURA_LOCAL_MODEL_PROVIDER=ollama
+export AURA_LOCAL_MODEL_BASE_URL=http://127.0.0.1:11434
+export AURA_LOCAL_MODEL_NAME=qwen2.5:3b
+export AURA_LOCAL_MODEL_ENABLED=true
+```
+
+Model downloads, remote providers, credentials, internet fallback, streaming,
+tool/function calling, commands, actions, arbitrary files, desktop control,
+AURA long-term memory writes, background service, public/LAN binding, browser
+auto-launch, and autonomy remain disabled.
+
+Validation:
+
+- bridge core: 150/150;
+- environment profile resolver: 28/28;
+- combined bridge CLI: 178/178;
+- browser-chat model route: live verified;
+- model persistence across restart: verified;
+- duplicate model retry: no reinvocation;
+- provider failure: no session write;
+- prior Sprint 181-186 regressions: passed;
+- SIGTERM and SIGINT: clean;
+- port `8765`: closed after tests.
+
+Next: Sprint 188 — Interactive Control Center Chat.

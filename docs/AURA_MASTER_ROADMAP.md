@@ -1838,3 +1838,23 @@ and autonomy remain disabled.
 Runtime execution feature accounting remains `1`.
 
 Next: Sprint 187 — Local Model Bridge Activation.
+
+## Checkpoint v0.187.0-genesis — Local Model Bridge Runtime
+
+Sprint 187 activates a permission-gated localhost-only text model bridge.
+
+Checkpoint state:
+
+- 118 total capabilities;
+- 116 online capabilities;
+- 10 permission-gated capabilities;
+- 2 runtime execution features;
+- 7 browser chat route contracts;
+- 2 local model route contracts;
+- 30 total local interaction route contracts;
+- Ollama and OpenAI-compatible contracts ready;
+- provider disabled by default;
+- no model downloads or internet fallback;
+- no tool/function calling, commands, actions, or AURA memory writes.
+
+Next: Sprint 188 — Interactive Control Center Chat.

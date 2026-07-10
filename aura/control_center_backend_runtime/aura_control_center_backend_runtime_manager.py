@@ -735,6 +735,10 @@ class AuraControlCenterBackendRuntimeManager:
                              'control_center_backend_core': True,
                              'control_center_web_shell': True,
                              'browser_chat_sessions': True,
+                             'local_model_bridge_core': True,
+                             'local_model_provider_contracts': True,
+                             'local_model_browser_chat_route': True,
+                             'local_model_response_persistence': True,
                              'local_chat_history_persistence': True,
                              'validated_message_submission': True,
                              'explicit_clear_confirmation': True,
@@ -759,7 +763,6 @@ class AuraControlCenterBackendRuntimeManager:
             ),
                          }
         blocked_surfaces = {
-                               'local_model_bridge': False,
                                'permission_decision_runtime': False,
                                'audit_writer_runtime': False,
                                'background_service': False,
@@ -780,7 +783,7 @@ class AuraControlCenterBackendRuntimeManager:
         return {
                    'panel_id': "readiness",
                    'title': "Runtime Readiness",
-                   'status': "browser_chat_ready_no_model" if backend_ready else "degraded",
+                   'status': "local_model_bridge_ready_disabled_by_default" if backend_ready else "degraded",
                    'backend_ready': backend_ready,
                    'web_shell_ready': True,
                    'interaction_runtime_ready': bool(
@@ -789,24 +792,27 @@ class AuraControlCenterBackendRuntimeManager:
                    'execution_ready': bool(
                 safety["execution_ready"]
             ),
-                   'current_stage': "browser_chat_session_runtime",
+                   'current_stage': "local_model_bridge_runtime",
                    'ready_surfaces': ready_surfaces,
                    'blocked_surfaces': blocked_surfaces,
                    'blockers': blockers,
-                   'next_sprint': "Sprint 187 — Local Model Bridge Activation",
+                   'next_sprint': "Sprint 188 — Interactive Control Center Chat",
                    'read_only': False,
                    'actions_allowed': False,
                    'shell_asset_route_count': 3,
-                   'total_route_count': 27,
+                   'total_route_count': 30,
                    'browser_auto_launch': False,
                    'external_dependencies': False,
                    'browser_chat_ready': True,
-                   'local_model_bridge_ready': False,
+                   'local_model_bridge_ready': True,
                    'bounded_session_mutation': True,
                    'chat_asset_route_count': 3,
-                   'chat_route_contract_count': 6,
+                   'chat_route_contract_count': 7,
                    'model_bridge_active': False,
                    'aura_memory_write_active': False,
+                   'model_route_contract_count': 2,
+                   'model_bridge_configured': False,
+                   'local_model_enabled_by_default': False,
                }
 
     def snapshot(self) -> dict[str, Any]:
@@ -965,16 +971,28 @@ class AuraControlCenterBackendRuntimeManager:
                    'browser_chat_session_runtime': True,
                    'browser_chat_http_routes': True,
                    'browser_chat_asset_route_count': 3,
-                   'browser_chat_route_contract_count': 6,
-                   'total_route_contract_count': 27,
+                   'browser_chat_route_contract_count': 7,
+                   'total_route_contract_count': 30,
                    'bounded_session_mutation': True,
                    'atomic_session_persistence': True,
                    'session_integrity_hash': True,
                    'optimistic_revision_control': True,
                    'idempotent_message_submission': True,
                    'explicit_clear_confirmation': True,
-                   'local_model_bridge_runtime': False,
-                   'model_inference_runtime': False,
+                   'local_model_bridge_runtime': True,
+                   'model_inference_runtime': True,
+                   'model_route_contract_count': 2,
+                   'browser_chat_model_bridge_runtime': True,
+                   'model_provider_profiles_environment_only': True,
+                   'model_loopback_endpoint_enforcement': True,
+                   'model_resolved_loopback_enforcement': True,
+                   'model_redirect_following_runtime': False,
+                   'explicit_model_probe_confirmation': True,
+                   'explicit_model_request_confirmation': True,
+                   'model_response_persistence': True,
+                   'model_download_runtime': False,
+                   'model_streaming_runtime': False,
+                   'model_tool_calling_runtime': False,
                    'network_fallback_runtime': False,
                    'aura_long_term_memory_write': False,
                    'control_center_web_shell_runtime': True,
@@ -1099,9 +1117,9 @@ class AuraControlCenterBackendRuntimeManager:
         memory = panels["memory"]
         readiness = panels["readiness"]
 
-        assertions['overview_version_186'] = (
+        assertions['overview_version_187'] = (
             overview["identity"]["version"]
-            == '0.186.0-genesis'
+            == '0.187.0-genesis'
         )
         assertions["overview_boot_ready"] = (
             overview["core_boot_ready"] is True
@@ -1115,21 +1133,21 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["overview_listener_false"] = (
             overview["listener_active"] is False
         )
-        assertions['overview_capability_total_117'] = (
-            overview["capability_total"] == 117
+        assertions['overview_capability_total_118'] = (
+            overview["capability_total"] == 118
         )
-        assertions['overview_online_115'] = (
-            overview["online_capabilities"] == 115
+        assertions['overview_online_116'] = (
+            overview["online_capabilities"] == 116
         )
-        assertions['overview_permission_gated_nine'] = (
+        assertions['overview_permission_gated_ten'] = (
             overview[
                 "permission_gated_capabilities"
             ]
-            == 9
+            == 10
         )
-        assertions["overview_runtime_feature_one"] = (
+        assertions['overview_runtime_feature_two'] = (
             overview["runtime_execution_features"]
-            == 1
+            == 2
         )
         assertions["overview_plugins_two"] = (
             overview["plugin_available_count"] == 2
@@ -1160,14 +1178,14 @@ class AuraControlCenterBackendRuntimeManager:
             is False
         )
 
-        assertions['capability_card_count_117'] = (
-            capabilities["card_count"] == 117
+        assertions['capability_card_count_118'] = (
+            capabilities["card_count"] == 118
         )
-        assertions['capability_summary_total_117'] = (
+        assertions['capability_summary_total_118'] = (
             capabilities["summary"][
                 "total_capabilities"
             ]
-            == 117
+            == 118
         )
         assertions["capability_mutation_false"] = (
             capabilities["mutation_enabled"] is False
@@ -1193,11 +1211,11 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["permission_foundation_available"] = (
             permissions["foundation_available"] is True
         )
-        assertions['permission_gated_count_nine'] = (
+        assertions['permission_gated_count_ten'] = (
             permissions[
                 "permission_gated_capability_count"
             ]
-            == 9
+            == 10
         )
         assertions["pending_runtime_false"] = (
             permissions[
@@ -1263,8 +1281,8 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_backend_ready"] = (
             readiness["backend_ready"] is True
         )
-        assertions['readiness_browser_chat_true'] = (
-            readiness["browser_chat_ready"] is True
+        assertions['readiness_local_model_bridge_true'] = (
+            readiness["local_model_bridge_ready"] is True
         )
         assertions["readiness_runtime_false"] = (
             readiness["interaction_runtime_ready"]
@@ -1273,9 +1291,9 @@ class AuraControlCenterBackendRuntimeManager:
         assertions["readiness_execution_false"] = (
             readiness["execution_ready"] is False
         )
-        assertions['readiness_next_sprint_187'] = (
+        assertions['readiness_next_sprint_188'] = (
             readiness["next_sprint"]
-            == 'Sprint 187 — Local Model Bridge Activation'     )
+            == 'Sprint 188 — Interactive Control Center Chat'   )
 
         for route in self.ROUTES:
             payload = self.payload_for_route(
@@ -1426,7 +1444,7 @@ class AuraControlCenterBackendRuntimeManager:
                 self.FOUNDATION_MODULES
             ),
             "foundation_contracts_available": 8,
-            "capability_card_count": 117,
+            "capability_card_count": 118,
             "degraded_fixture_verified": True,
             "read_only_file_integrity_verified": True,
             "frontend_rendered": False,

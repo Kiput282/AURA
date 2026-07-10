@@ -598,3 +598,37 @@ writes; only the fixed, validated local chat-session storage boundary is
 active.
 
 Runtime execution features remain `1`.
+
+## Sprint 187 Update — Local Model Bridge Runtime Online
+
+Status: UPDATED FOR v0.187.0-genesis
+
+The registry now tracks `aura_local_model_bridge_runtime` as an online,
+permission-gated alpha runtime.
+
+Current summary:
+
+- total capabilities tracked: 118
+- online capabilities: 116
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 10
+- review-only capabilities: 10
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 2
+
+New active boundaries include:
+
+- `local_model_bridge_runtime: true`
+- `local_model_inference_runtime: true`
+- `browser_chat_model_bridge_runtime: true`
+- `local_model_probe_runtime: true`
+- `local_model_response_persistence: true`
+- `browser_chat_route_contract_count: 7`
+- `local_interaction_total_route_contract_count: 30`
+
+Model downloads, remote providers, redirect following, internet fallback,
+streaming, tool/function calling, commands, actions, arbitrary files, desktop
+control, AURA long-term memory writes, background service, public/LAN binding,
+and autonomy remain disabled.

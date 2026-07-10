@@ -626,3 +626,13 @@ AURA v0.170.0-genesis reviews the local chat runtime alpha chain introduced acro
 ## Sprint 180 — Memory Runtime Stabilization
 
 `v0.180.0-genesis` closes the Sprint 171-180 Memory Runtime block. Nine memory components pass stabilization with zero dependency gaps and runtime violations while privacy, review, permission, correction/deletion, release, mutation, model, network, command, arbitrary-file, voice, and runtime execution gates remain closed. The next block is Sprint 181-190 Local Interaction Runtime Activation. Voice moves to Sprint 191-200 after the dashboard and chat runtime are operational and stabilized.
+
+## Sprint 187 Product Activation Note
+
+AURA now has a bounded backend path from browser chat sessions to an
+explicitly configured localhost text model. This is not yet the final
+interactive chat product surface: Sprint 188 will integrate the model controls
+and conversation experience into the Control Center chat UI.
+
+No online provider, model download, tool use, external action, or autonomous
+behavior is enabled.

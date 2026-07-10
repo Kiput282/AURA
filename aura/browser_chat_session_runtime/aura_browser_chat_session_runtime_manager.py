@@ -19,7 +19,7 @@ import uuid
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Mapping
 
 
 class BrowserChatSessionError(RuntimeError):
@@ -60,6 +60,7 @@ class AuraBrowserChatSessionRuntimeManager:
     MAX_MESSAGES_PER_SESSION = 500
     MAX_SESSION_FILE_BYTES = 2 * 1024 * 1024
     RESPONSE_KIND = "model_bridge_unavailable"
+    LOCAL_MODEL_RESPONSE_KIND = "local_model_response"
     CLEAR_PREFIX = "CLEAR "
 
     _SESSION_ID_RE = re.compile(r"^chat_[0-9a-f]{32}$")
@@ -376,18 +377,31 @@ class AuraBrowserChatSessionRuntimeManager:
                     "User message response_kind must be null."
                 )
         else:
-            if message["response_kind"] != self.RESPONSE_KIND:
+            response_kind = message["response_kind"]
+            if response_kind not in {
+                self.RESPONSE_KIND,
+                self.LOCAL_MODEL_RESPONSE_KIND,
+            }:
                 raise BrowserChatSessionCorruptionError(
-                    "Assistant runtime notice kind is invalid."
+                    "Assistant response kind is invalid."
                 )
+
+            if response_kind == self.RESPONSE_KIND:
+                if message["model_invoked"]:
+                    raise BrowserChatSessionCorruptionError(
+                        "Placeholder response cannot mark a model invocation."
+                    )
+            elif not message["model_invoked"]:
+                raise BrowserChatSessionCorruptionError(
+                    "Local model response must mark model_invoked true."
+                )
+
             if (
-                message["model_invoked"]
-                or message["tools_invoked"]
+                message["tools_invoked"]
                 or message["actions_invoked"]
             ):
                 raise BrowserChatSessionCorruptionError(
-                    "Assistant runtime notice cannot invoke "
-                    "model, tools, or actions."
+                    "Assistant response cannot invoke tools or actions."
                 )
 
     def _validate_session_payload(
@@ -478,6 +492,7 @@ class AuraBrowserChatSessionRuntimeManager:
         if payload["last_response_kind"] not in {
             None,
             self.RESPONSE_KIND,
+            self.LOCAL_MODEL_RESPONSE_KIND,
         }:
             raise BrowserChatSessionCorruptionError(
                 "Persisted last_response_kind is invalid."
@@ -975,6 +990,258 @@ class AuraBrowserChatSessionRuntimeManager:
             "model_bridge_active": False,
             "tools_invoked": False,
             "actions_invoked": False,
+        }
+
+    def submit_local_model_message(
+        self,
+        session_id: str,
+        *,
+        content: str,
+        client_message_id: str,
+        expected_revision: int,
+        system_prompt: str,
+        response_factory: Callable[
+            [list[dict[str, str]]],
+            Mapping[str, Any],
+        ],
+    ) -> dict[str, Any]:
+        # Persist one user/model pair with atomic idempotency protection.
+
+        validated_session_id = self._validate_session_id(
+            session_id
+        )
+        validated_content = self._validate_message_content(
+            content
+        )
+        validated_client_id = (
+            self._validate_client_message_id(
+                client_message_id
+            )
+        )
+        if validated_client_id is None:
+            raise BrowserChatValidationError(
+                "client_message_id is required for model requests."
+            )
+        validated_revision = (
+            self._validate_expected_revision(
+                expected_revision
+            )
+        )
+        if validated_revision is None:
+            raise BrowserChatValidationError(
+                "expected_revision is required for model requests."
+            )
+        validated_system_prompt = (
+            self._validate_message_content(
+                system_prompt
+            )
+        )
+        if not callable(response_factory):
+            raise BrowserChatValidationError(
+                "response_factory must be callable."
+            )
+
+        with self._lock:
+            payload = self._read_session_unlocked(
+                validated_session_id
+            )
+            messages = payload["messages"]
+
+            for index, message in enumerate(messages):
+                if (
+                    message["role"] == "user"
+                    and message["client_message_id"]
+                    == validated_client_id
+                ):
+                    response = (
+                        messages[index + 1]
+                        if index + 1 < len(messages)
+                        else None
+                    )
+                    if (
+                        response is None
+                        or response["role"] != "assistant"
+                    ):
+                        raise BrowserChatSessionCorruptionError(
+                            "Idempotent model response pair is incomplete."
+                        )
+                    return {
+                        "status": "duplicate",
+                        "accepted": True,
+                        "idempotent_replay": True,
+                        "model_reinvoked": False,
+                        "session": self._metadata(payload),
+                        "submitted_message": deepcopy(message),
+                        "delivered_response": deepcopy(response),
+                        "model_bridge_active": bool(
+                            response["model_invoked"]
+                        ),
+                        "model_invoked": bool(
+                            response["model_invoked"]
+                        ),
+                        "tools_invoked": False,
+                        "actions_invoked": False,
+                        "commands_invoked": False,
+                        "aura_memory_written": False,
+                        "bridge_response": None,
+                    }
+
+            if payload["revision"] != validated_revision:
+                raise BrowserChatSessionConflictError(
+                    "Session revision changed before model submission."
+                )
+
+            if (
+                payload["message_count"] + 2
+                > self.MAX_MESSAGES_PER_SESSION
+            ):
+                raise BrowserChatValidationError(
+                    "Session message limit would be exceeded."
+                )
+
+            model_messages: list[dict[str, str]] = [
+                {
+                    "role": "system",
+                    "content": validated_system_prompt,
+                }
+            ]
+            for message in payload["messages"]:
+                if message["role"] == "user":
+                    model_messages.append(
+                        {
+                            "role": "user",
+                            "content": message["content"],
+                        }
+                    )
+                elif (
+                    message["role"] == "assistant"
+                    and message["response_kind"]
+                    == self.LOCAL_MODEL_RESPONSE_KIND
+                ):
+                    model_messages.append(
+                        {
+                            "role": "assistant",
+                            "content": message["content"],
+                        }
+                    )
+
+            model_messages.append(
+                {
+                    "role": "user",
+                    "content": validated_content,
+                }
+            )
+
+            bridge_response = response_factory(
+                model_messages
+            )
+            if not isinstance(bridge_response, Mapping):
+                raise BrowserChatValidationError(
+                    "Local model bridge response must be an object."
+                )
+
+            safe_flags = {
+                "model_invoked": True,
+                "network_fallback_used": False,
+                "streaming_used": False,
+                "tool_schema_sent": False,
+                "tool_calls_accepted": False,
+                "tools_invoked": False,
+                "actions_invoked": False,
+                "commands_invoked": False,
+                "aura_memory_written": False,
+            }
+            for key, expected in safe_flags.items():
+                if bridge_response.get(key) is not expected:
+                    raise BrowserChatValidationError(
+                        "Local model bridge returned an unsafe "
+                        f"or missing flag: {key}."
+                    )
+
+            response_content = (
+                self._validate_message_content(
+                    bridge_response.get("content")
+                )
+            )
+            timestamp = self._now()
+
+            user_message = {
+                "message_id": self._new_identifier("msg_"),
+                "sequence": payload["message_count"] + 1,
+                "role": "user",
+                "content": validated_content,
+                "created_at_utc": timestamp,
+                "client_message_id": validated_client_id,
+                "response_kind": None,
+                "model_invoked": False,
+                "tools_invoked": False,
+                "actions_invoked": False,
+            }
+            assistant_message = {
+                "message_id": self._new_identifier("msg_"),
+                "sequence": payload["message_count"] + 2,
+                "role": "assistant",
+                "content": response_content,
+                "created_at_utc": timestamp,
+                "client_message_id": None,
+                "response_kind": (
+                    self.LOCAL_MODEL_RESPONSE_KIND
+                ),
+                "model_invoked": True,
+                "tools_invoked": False,
+                "actions_invoked": False,
+            }
+
+            payload["messages"].extend(
+                [user_message, assistant_message]
+            )
+            payload["message_count"] = len(
+                payload["messages"]
+            )
+            payload["revision"] += 1
+            payload["updated_at_utc"] = timestamp
+            payload["last_response_kind"] = (
+                self.LOCAL_MODEL_RESPONSE_KIND
+            )
+
+            self._write_session_unlocked(payload)
+            stored = self._read_session_unlocked(
+                validated_session_id
+            )
+
+        bridge_summary = {
+            key: bridge_response.get(key)
+            for key in (
+                "request_id",
+                "provider",
+                "base_url",
+                "configured_model",
+                "response_model",
+                "elapsed_ms",
+                "input_message_count",
+                "input_character_count",
+            )
+        }
+
+        return {
+            "status": "accepted",
+            "accepted": True,
+            "idempotent_replay": False,
+            "model_reinvoked": True,
+            "session": self._metadata(stored),
+            "submitted_message": deepcopy(
+                stored["messages"][-2]
+            ),
+            "delivered_response": deepcopy(
+                stored["messages"][-1]
+            ),
+            "model_bridge_active": True,
+            "model_invoked": True,
+            "tools_invoked": False,
+            "actions_invoked": False,
+            "commands_invoked": False,
+            "aura_memory_written": False,
+            "bridge_response": bridge_summary,
         }
 
     def clear_session(

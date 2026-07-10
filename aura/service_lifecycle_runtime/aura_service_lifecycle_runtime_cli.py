@@ -119,8 +119,8 @@ def handle_service_lifecycle_command(
         print("Status API : 9 read-only payload routes")
         print("Control Center backend: 9 read-only routes")
         print("Web shell  : ENABLED / 3 dashboard assets")
-        print("Local chat : ENABLED / 3 chat assets / 6 route contracts")
-        print("Model bridge: DISABLED until Sprint 187")
+        print("Local chat : ENABLED / 3 chat assets / 7 route contracts")
+        print("Model bridge: READY / 2 model routes / disabled by default")
         print("Browser launch: DISABLED")
         print()
 

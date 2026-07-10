@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.186.0-genesis
+Current anchor: v0.187.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -167,3 +167,12 @@ The following remain primarily Post-Genesis:
 - Blender automation;
 - unrestricted plugin actions;
 - advanced multi-step autonomy.
+
+## v0.187.0-genesis — Local Model Bridge Activation
+
+Sprint 187 completes the local model bridge layer. The runtime can probe and
+invoke an explicitly enabled loopback provider and persist text-only model
+responses into bounded browser chat sessions.
+
+The provider remains disabled by default. Sprint 188 will expose the completed
+bridge as an interactive Control Center chat experience.

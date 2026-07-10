@@ -1,5 +1,5 @@
 name: AURA
-version: "0.186.0-genesis"
+version: "0.187.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -48,3 +48,4 @@ modes:
 # Sprint 184: control_center_backend_runtime exposes nine read-only localhost backend routes and eight stable view-model panels for overview, service, capabilities, plugins, permissions, audit, memory, and readiness; the web shell, frontend assets, browser launch, service/plugin controls, permission decisions, audit writes, memory writes, chat, models, commands, tools, actions, background service, public/LAN binding, and autonomy remain disabled.
 # Sprint 185: control_center_web_shell_runtime serves three local static assets through the existing localhost listener and renders eight read-only dashboard panels with responsive, accessible, safe-idle, degraded-state, manual-refresh, auto-refresh, and local capability-filter behavior; browser auto-launch, external frontend dependencies, mutation controls, service/plugin controls, permission decisions, audit/memory writes, chat, models, commands, tools, actions, background service, public/LAN binding, and autonomy remain disabled.
 # Sprint 186: browser_chat_session_runtime provides a localhost-only local chat page and six bounded chat route contracts for session creation, validated submission, honest placeholder response delivery, atomic local history persistence, reload, idempotent replay, revision conflict protection, and explicit clear confirmation; local model inference, network fallback, AURA long-term memory writes, tools, commands, actions, arbitrary files, desktop control, background service, public/LAN binding, browser auto-launch, and autonomy remain disabled.
+# Sprint 187: local_model_bridge_runtime activates a loopback-only, explicitly confirmed, bounded text-only bridge for Ollama and OpenAI-compatible local providers. Browser chat can persist local model responses safely; duplicate retries do not re-invoke the model and provider failures do not mutate the session. Model downloads, remote providers, internet fallback, streaming, tools, commands, actions, arbitrary files, desktop control, AURA long-term memory writes, background service, public/LAN binding, browser auto-launch, and autonomy remain disabled.

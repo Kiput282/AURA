@@ -170,6 +170,7 @@ from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import ha
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
 from aura.browser_chat_session_runtime.aura_browser_chat_session_runtime_cli import handle_browser_chat_session_command
+from aura.local_model_bridge_runtime.aura_local_model_bridge_runtime_cli import handle_local_model_bridge_command
 
 
 class AuraCLI:
@@ -8364,6 +8365,9 @@ class AuraCLI:
         return False
 
     def run(self, args: list[str] | None = None) -> bool:
+        if handle_local_model_bridge_command(args):
+            return True
+
         if handle_browser_chat_session_command(args):
             return True
 
@@ -13140,4 +13144,3 @@ class AuraCLI:
             print(f"- {item}")
         print()
         print(f"Note: {context['note']}")
-

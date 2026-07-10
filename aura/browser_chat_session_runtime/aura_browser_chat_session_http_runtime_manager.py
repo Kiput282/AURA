@@ -31,6 +31,22 @@ from .aura_browser_chat_web_surface_manager import (
     AuraBrowserChatWebSurfaceManager,
 )
 
+from aura.local_model_bridge_runtime.aura_local_model_bridge_profile_resolver import (
+    AuraLocalModelBridgeProfileResolver,
+)
+from aura.local_model_bridge_runtime.aura_local_model_bridge_runtime_manager import (
+    AuraLocalModelBridgeRuntimeManager,
+    LocalModelBridgeConfigurationError,
+    LocalModelBridgeError,
+    LocalModelBridgePermissionError,
+    LocalModelBridgeResponseError,
+    LocalModelBridgeTransportError,
+    LocalModelBridgeValidationError,
+)
+from aura.local_model_bridge_runtime.aura_local_model_browser_chat_runtime_manager import (
+    AuraLocalModelBrowserChatRuntimeManager,
+)
+
 
 class AuraBrowserChatSessionHttpRuntimeManager(
     AuraControlCenterWebShellHttpRuntimeManager
@@ -39,7 +55,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
 
     name = "aura_browser_chat_session_http_runtime"
     component_version = "0.1.0-alpha"
-    sprint = 186
+    sprint = 187
 
     CHAT_ASSET_ROUTES = (
         AuraBrowserChatWebSurfaceManager.ASSET_ROUTES
@@ -54,9 +70,14 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         "POST /api/chat/sessions",
         "GET /api/chat/sessions/{session_id}",
         "POST /api/chat/sessions/{session_id}/messages",
+        "POST /api/chat/sessions/{session_id}/model-messages",
         "POST /api/chat/sessions/{session_id}/clear",
     )
-    TOTAL_ROUTE_CONTRACT_COUNT = 27
+    MODEL_ROUTE_CONTRACTS = (
+        "GET /api/model/status",
+        "POST /api/model/probe",
+    )
+    TOTAL_ROUTE_CONTRACT_COUNT = 30
     MAX_REQUEST_BODY_BYTES = 65536
     LOCAL_INTENT_HEADER = "X-AURA-Local-Intent"
     LOCAL_INTENT_VALUE = "browser-chat-session"
@@ -69,6 +90,9 @@ class AuraBrowserChatSessionHttpRuntimeManager(
     )
     _SESSION_CLEAR_RE = re.compile(
         r"^/api/chat/sessions/(chat_[0-9a-f]{32})/clear$"
+    )
+    _SESSION_MODEL_MESSAGE_RE = re.compile(
+        r"^/api/chat/sessions/(chat_[0-9a-f]{32})/model-messages$"
     )
 
     def __init__(
@@ -96,6 +120,31 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             )
         )
 
+        try:
+            local_model_profile = (
+                AuraLocalModelBridgeProfileResolver
+                .resolve(os.environ)
+            )
+            local_model_configuration_error = None
+        except LocalModelBridgeConfigurationError as exc:
+            local_model_profile = None
+            local_model_configuration_error = str(exc)
+
+        self.local_model_bridge_manager = (
+            AuraLocalModelBridgeRuntimeManager(
+                local_model_profile
+            )
+        )
+        self.local_model_chat_manager = (
+            AuraLocalModelBrowserChatRuntimeManager(
+                self.chat_session_manager,
+                self.local_model_bridge_manager,
+                configuration_error=(
+                    local_model_configuration_error
+                ),
+            )
+        )
+
     def safety_boundary(self) -> dict[str, Any]:
         return {
             **super().safety_boundary(),
@@ -105,12 +154,18 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             "chat_route_contract_count": len(
                 self.CHAT_ROUTE_CONTRACTS
             ),
+            "model_route_contract_count": len(
+                self.MODEL_ROUTE_CONTRACTS
+            ),
             "chat_asset_route_count": len(
                 self.CHAT_ASSET_ROUTES
             ),
             "total_route_contract_count": (
                 self.TOTAL_ROUTE_CONTRACT_COUNT
             ),
+            "browser_chat_model_bridge_runtime": True,
+            "explicit_model_request_confirmation": True,
+            "explicit_model_probe_confirmation": True,
             "bounded_session_mutation": True,
             "json_content_type_required": True,
             "local_intent_header_required": True,
@@ -143,6 +198,51 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         self,
         exc: Exception,
     ) -> tuple[int, dict[str, Any]]:
+        if isinstance(
+            exc,
+            LocalModelBridgePermissionError,
+        ):
+            return 403, {
+                "status": "blocked",
+                "error": "local_model_permission_required",
+                "detail": str(exc),
+            }
+        if isinstance(
+            exc,
+            LocalModelBridgeConfigurationError,
+        ):
+            return 503, {
+                "status": "degraded",
+                "error": "local_model_configuration_error",
+                "detail": str(exc),
+            }
+        if isinstance(
+            exc,
+            LocalModelBridgeValidationError,
+        ):
+            return 400, {
+                "status": "invalid_request",
+                "error": "local_model_validation_error",
+                "detail": str(exc),
+            }
+        if isinstance(
+            exc,
+            (
+                LocalModelBridgeTransportError,
+                LocalModelBridgeResponseError,
+            ),
+        ):
+            return 502, {
+                "status": "provider_error",
+                "error": "local_model_provider_error",
+                "detail": str(exc),
+            }
+        if isinstance(exc, LocalModelBridgeError):
+            return 500, {
+                "status": "error",
+                "error": "local_model_bridge_error",
+                "detail": str(exc),
+            }
         if isinstance(
             exc,
             BrowserChatSessionNotFoundError,
@@ -215,6 +315,12 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 self,
                 path: str,
             ) -> tuple[int, dict[str, Any]] | None:
+                if path == "/api/model/status":
+                    return 200, (
+                        manager.local_model_chat_manager
+                        .status()
+                    )
+
                 if path == "/api/chat/status":
                     status = manager.chat_session_manager.status()
                     return 200, {
@@ -323,20 +429,41 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     payload.update(
                         {
                             "service": (
-                                "AURA Browser Chat Session "
+                                "AURA Local Model Browser Chat "
                                 "Runtime"
                             ),
-                            "sprint": 186,
+                            "sprint": 187,
                             "control_center_backend": True,
                             "control_center_backend_routes": 9,
                             "control_center_panels": 8,
                             "control_center_web_shell": True,
                             "control_center_shell_assets": 3,
                             "browser_chat_session_runtime": True,
-                            "browser_chat_http_routes": 6,
+                            "browser_chat_http_routes": 7,
                             "browser_chat_assets": 3,
-                            "total_route_contracts": 27,
-                            "model_bridge_active": False,
+                            "local_model_bridge_http_routes": 2,
+                            "total_route_contracts": 30,
+                            "model_bridge_configured": (
+                                manager.local_model_chat_manager
+                                .status()["configured"]
+                            ),
+                            "model_bridge_enabled": (
+                                manager.local_model_chat_manager
+                                .status()["enabled"]
+                            ),
+                            "model_bridge_active": (
+                                manager.local_model_chat_manager
+                                .status()["active"]
+                            ),
+                            "model_bridge_provider": (
+                                manager.local_model_chat_manager
+                                .status()["provider"]
+                            ),
+                            "model_bridge_model": (
+                                manager.local_model_chat_manager
+                                .status()["model"]
+                            ),
+                            "browser_chat_model_connected": True,
                             "browser_auto_launch": False,
                             "bounded_session_mutation": True,
                         }
@@ -567,11 +694,20 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                         path
                     )
                 )
+                model_message_match = (
+                    manager._SESSION_MODEL_MESSAGE_RE
+                    .fullmatch(path)
+                )
+                model_probe_route = (
+                    path == "/api/model/probe"
+                )
 
                 if not (
                     create_route
                     or message_match is not None
                     or clear_match is not None
+                    or model_message_match is not None
+                    or model_probe_route
                 ):
                     self._reject_mutation()
                     return
@@ -597,6 +733,60 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             )
                         )
                         status = 201
+                    elif model_probe_route:
+                        if set(payload) != {
+                            "confirm_local_connection"
+                        }:
+                            raise LocalModelBridgeValidationError(
+                                "Model probe requires only "
+                                "confirm_local_connection."
+                            )
+                        result = (
+                            manager.local_model_chat_manager
+                            .probe(
+                                confirm_local_connection=(
+                                    payload[
+                                        "confirm_local_connection"
+                                    ]
+                                )
+                            )
+                        )
+                        status = 200
+                    elif model_message_match is not None:
+                        allowed = {
+                            "content",
+                            "client_message_id",
+                            "expected_revision",
+                            "request_id",
+                            "confirm_model_request",
+                        }
+                        if set(payload) != allowed:
+                            raise LocalModelBridgeValidationError(
+                                "Model-message fields must be "
+                                "content, client_message_id, "
+                                "expected_revision, request_id, "
+                                "and confirm_model_request."
+                            )
+                        result = (
+                            manager.local_model_chat_manager
+                            .submit_model_message(
+                                model_message_match.group(1),
+                                content=payload["content"],
+                                client_message_id=payload[
+                                    "client_message_id"
+                                ],
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                                request_id=payload[
+                                    "request_id"
+                                ],
+                                confirm_model_request=payload[
+                                    "confirm_model_request"
+                                ],
+                            )
+                        )
+                        status = 200
                     elif message_match is not None:
                         allowed = {
                             "content",

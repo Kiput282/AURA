@@ -159,11 +159,26 @@ class CapabilityRegistryManager:
                    'browser_chat_integrity_hash': True,
                    'browser_chat_bounded_mutation': True,
                    'browser_chat_asset_route_count': 3,
-                   'browser_chat_route_contract_count': 6,
-                   'local_interaction_total_route_contract_count': 27,
+                   'browser_chat_route_contract_count': 7,
+                   'local_interaction_total_route_contract_count': 30,
                    'local_session_file_write_runtime': True,
-                   'local_model_bridge_runtime': False,
-                   'local_model_inference_runtime': False,
+                   'local_model_bridge_runtime': True,
+                   'local_model_inference_runtime': True,
+                   'local_model_provider_profile_runtime': True,
+                   'local_model_ollama_contract': True,
+                   'local_model_openai_compatible_contract': True,
+                   'local_model_loopback_endpoint_enforcement': True,
+                   'local_model_resolved_loopback_enforcement': True,
+                   'local_model_redirect_following_runtime': False,
+                   'local_model_probe_runtime': True,
+                   'local_model_text_response_runtime': True,
+                   'local_model_explicit_probe_confirmation': True,
+                   'local_model_explicit_request_confirmation': True,
+                   'local_model_response_persistence': True,
+                   'browser_chat_model_bridge_runtime': True,
+                   'local_model_download_runtime': False,
+                   'local_model_streaming_runtime': False,
+                   'local_model_tool_calling_runtime': False,
                    'network_fallback_runtime': False,
                    'aura_long_term_memory_write_runtime': False,
                    'control_center_external_dependency_runtime': False,
@@ -1688,6 +1703,32 @@ class CapabilityRegistryManager:
                     "disabled."
                 ),
             },
+            {
+                "id": "aura_local_model_bridge_runtime",
+                "name": "AURA Local Model Bridge Runtime",
+                "state": "online",
+                "runtime_level": "permission_gated_alpha_runtime",
+                "risk_level": "high",
+                "permission_required": "model_request_permission",
+                "category": "local_model_runtime",
+                "introduced_in": "0.187.0-genesis",
+                "control_center_visible": True,
+                "description": (
+                    "Loopback-only local model bridge supporting Ollama "
+                    "and OpenAI-compatible provider contracts, strict "
+                    "environment-only profiles, explicit probe and model "
+                    "request confirmation, bounded text-only inference, "
+                    "browser chat model-response persistence, optimistic "
+                    "revision conflicts, idempotent replay without duplicate "
+                    "model invocation, provider-failure rollback, resolved "
+                    "loopback enforcement, and redirect blocking. Model "
+                    "downloads, remote providers, internet fallback, "
+                    "streaming, tool or function calling, commands, actions, "
+                    "desktop control, arbitrary files, AURA long-term memory "
+                    "writes, background service, public/LAN binding, and "
+                    "autonomy remain disabled."
+                ),
+            },
 ]
 
 
@@ -1712,7 +1753,14 @@ class CapabilityRegistryManager:
             "review_only_count": sum(1 for item in catalog if item["runtime_level"] == "review_only"),
             "planned_future_count": state_counts.get("planned_future", 0),
             "disabled_runtime_count": state_counts.get("disabled_runtime", 0),
-            "runtime_execution_features": 1,
+            "runtime_execution_features": (1) + int(any(
+                capability.get("id")
+                == "aura_local_model_bridge_runtime"
+                and capability.get("state") == "online"
+                and capability.get("runtime_level")
+                == "permission_gated_alpha_runtime"
+                for capability in self.capability_catalog()
+            )),
             "state_counts": state_counts,
             "risk_counts": risk_counts,
             "permission_counts": permission_counts,

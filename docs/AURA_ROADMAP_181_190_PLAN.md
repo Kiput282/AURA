@@ -1,7 +1,7 @@
 # AURA Roadmap 181-190 — Local Interaction Runtime Activation
 
 Status: ACTIVE — SPRINT 186 COMPLETE
-Current anchor: v0.186.0-genesis
+Current anchor: v0.187.0-genesis
 Target checkpoint: v0.190.0-genesis
 
 ## Purpose
@@ -333,3 +333,22 @@ At v0.190.0-genesis, AURA should have her first usable local body:
 - visible safety and recovery state.
 
 This checkpoint does not yet require microphone capture, TTS, screen capture, local action execution, ORION, avatar rendering, or autonomous behavior.
+
+## Sprint 187 Completion Checkpoint
+
+Status: completed in v0.187.0-genesis.
+
+Delivered:
+
+- loopback-only Ollama and OpenAI-compatible provider contracts;
+- environment-only provider profiles;
+- explicit probe and inference confirmation;
+- bounded text-only inference;
+- resolved-loopback enforcement and redirect rejection;
+- browser-chat model message route;
+- persistent `local_model_response` pairs;
+- duplicate retries without model reinvocation;
+- provider failures without partial session writes;
+- seven chat routes, two model routes, and thirty total route contracts.
+
+Next: Sprint 188 — Interactive Control Center Chat.
