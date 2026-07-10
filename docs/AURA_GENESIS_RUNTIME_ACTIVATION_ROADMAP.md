@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.196.0-genesis
+Current anchor: v0.197.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.196.0-genesis
-- Completed: Sprint 196 — Text-to-Speech Adapter Runtime
+- Current version: v0.197.0-genesis
+- Completed: Sprint 197 — Voice Permission and Audit Runtime
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: activation, explicit listen-state, local microphone capture boundary, speech-to-text adapter contract, voice intent/chat integration contract, and text-to-speech adapter contract foundations ready; TTS synthesis, audio output file read/write, speaker playback, playback device access/discovery, automatic speak-after-chat, live transcript input, automatic chat handoff, memory writes, direct voice-to-action, tool/command execution, file/desktop/network/git actions, STT runtime, cloud fallback, and autonomy disabled
+- Voice runtime: activation, explicit listen-state, local microphone capture boundary, speech-to-text adapter contract, voice intent/chat integration contract, text-to-speech adapter contract, and voice permission/audit contract foundations ready; permission decision/grant/revoke/mutation/persistence, audit writes, audit persistence, audit dashboard emit, microphone capture, STT/TTS runtime, speaker playback, handoff execution, voice actions, tool/command execution, file/desktop/network/git actions, cloud fallback, and autonomy disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 197 — Voice Permission and Audit Runtime
+- Next: Sprint 198 — Control Center Voice Controls
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -362,3 +362,33 @@ The voice runtime check now covers 184 activation/listen-state/microphone-bounda
 assertions and reports zero failed assertions.
 
 Next: Sprint 197 — Voice Permission and Audit Runtime.
+
+## v0.197.0-genesis — Voice Permission and Audit Runtime
+
+Sprint 197 adds the voice permission and audit runtime contract for the Voice
+Interaction Runtime block.
+
+The checkpoint defines a safe voice permission and audit boundary without
+granting permissions, mutating permission state, or writing audit events. It
+links voice input/output to the existing `microphone_listen` and
+`speaker_speak` permission actions, requires explicit confirmation for both,
+declares transcript/chat/TTS handoff permission boundaries, prepares six voice
+audit event types, and defines redaction, local-only, append-only, review queue,
+and recovery visibility contracts.
+
+Sprint 197 preserves disabled permission decision runtime, permission grant
+runtime, permission revoke runtime, permission persistence, permission mutation,
+audit write runtime, audit event persistence, audit log append, audit storage
+write, audit dashboard event emit, audit redaction runtime, audit permission
+link runtime, review queue runtime, recovery action runtime, microphone capture,
+STT runtime, transcription runtime, live microphone transcription, TTS runtime,
+TTS synthesis, speaker playback, audio/playback device access, transcript-to-
+chat handoff execution, chat-response-to-TTS handoff execution, memory writes,
+direct voice-to-action execution, tool execution, command execution, file
+mutation, desktop action, network action, git action, cloud fallback, background
+service, public binding, and autonomy.
+
+The voice runtime check now covers 247 activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit
+assertions and reports zero failed assertions.
+
+Next: Sprint 198 — Control Center Voice Controls.

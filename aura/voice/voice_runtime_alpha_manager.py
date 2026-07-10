@@ -88,6 +88,7 @@ class VoiceRuntimeAlphaManager:
         stt_adapter = self.planner.speech_to_text_adapter_runtime_contract()
         voice_intent_chat = self.planner.voice_intent_chat_integration_contract()
         tts_adapter = self.planner.text_to_speech_adapter_runtime_contract()
+        voice_permission_audit = self.planner.voice_permission_audit_runtime_contract()
         backend = self.detect_tts_backend()
         speaker_permission = self.permission_manager.check("speaker_speak")
         microphone_permission = self.permission_manager.check("microphone_listen")
@@ -103,6 +104,18 @@ class VoiceRuntimeAlphaManager:
             "sprint_194_stt_adapter_contract_ready": stt_adapter["stt_adapter_contract_ready"],
             "sprint_195_voice_intent_chat_contract_ready": voice_intent_chat["voice_intent_chat_contract_ready"],
             "sprint_196_tts_adapter_contract_ready": tts_adapter["tts_adapter_contract_ready"],
+            "sprint_197_voice_permission_audit_contract_ready": voice_permission_audit["voice_permission_audit_contract_ready"],
+            "voice_permission_audit_runtime_ready": voice_permission_audit["voice_permission_audit_runtime_ready"],
+            "voice_permission_boundary_ready": voice_permission_audit["permission_boundary_ready"],
+            "voice_microphone_permission_action": voice_permission_audit["microphone_permission_action"],
+            "voice_speaker_permission_action": voice_permission_audit["speaker_permission_action"],
+            "voice_microphone_permission_requires_confirmation": voice_permission_audit["microphone_permission_requires_confirmation"],
+            "voice_speaker_permission_requires_confirmation": voice_permission_audit["speaker_permission_requires_confirmation"],
+            "voice_audit_event_contract_ready": voice_permission_audit["audit_event_contract_ready"],
+            "voice_audit_write_runtime_active": voice_permission_audit["audit_write_runtime_active"],
+            "voice_permission_decision_runtime_active": voice_permission_audit["permission_decision_runtime_active"],
+            "voice_permission_grant_runtime_active": voice_permission_audit["permission_grant_runtime_active"],
+            "voice_permission_mutation_active": voice_permission_audit["permission_mutation_active"],
             "tts_adapter_runtime_ready": tts_adapter["tts_adapter_runtime_ready"],
             "tts_default_adapter": tts_adapter["default_adapter"],
             "tts_adapter_candidates": tts_adapter["candidate_adapter_count"],
@@ -173,9 +186,10 @@ class VoiceRuntimeAlphaManager:
             "speech_to_text_adapter_runtime_contract": stt_adapter,
             "voice_intent_chat_integration_contract": voice_intent_chat,
             "text_to_speech_adapter_runtime_contract": tts_adapter,
-            "sections": 12,
+            "voice_permission_audit_runtime_contract": voice_permission_audit,
+            "sections": 13,
             "project_root": str(self.project_root),
-            "note": "Voice Runtime Alpha is online for Sprint 196 text-to-speech adapter contract. It does not synthesize speech, write audio output files, access playback devices, play speaker output, use cloud TTS fallback, or automatically speak after chat.",
+            "note": "Voice Runtime Alpha is online for Sprint 197 voice permission and audit contract. It does not grant permissions, mutate permission state, write audit events, access microphone/speaker devices, run STT/TTS, play audio, or execute voice actions.",
         }
 
     def build_tts_command(self, text: str) -> dict[str, Any]:

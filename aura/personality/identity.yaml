@@ -1,5 +1,5 @@
 name: AURA
-version: "0.196.0-genesis"
+version: "0.197.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -97,3 +97,13 @@ modes:
 # automatic speak-after-chat, cloud TTS fallback, model download, dependency
 # install, command/tool execution, memory writes, file/desktop/network/git
 # actions, STT runtime, transcription, and microphone capture disabled.
+# Sprint 197: voice_permission_and_audit_runtime adds a safe voice
+# permission/audit contract with microphone_listen and speaker_speak permission
+# links, explicit confirmation requirements, transcript/chat/TTS handoff
+# permission boundaries, voice audit event schema, six declared audit event
+# types, review/recovery visibility contracts, and audit redaction/local-only/
+# append-only boundaries while keeping permission decision/grant/revoke/
+# mutation/persistence, audit writes, audit persistence, audit dashboard emit,
+# microphone capture, STT/TTS runtime, speaker playback, handoff execution,
+# voice actions, command/tool execution, memory writes, and file/desktop/
+# network/git actions disabled.

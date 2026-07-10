@@ -2260,3 +2260,82 @@ perform network actions, perform git actions, start background services, bind
 publicly, or add autonomy.
 
 Next: Sprint 197 — Voice Permission and Audit Runtime.
+
+## Checkpoint v0.197.0-genesis — Voice Permission and Audit Runtime
+
+Sprint 197 continues the Sprint 191-200 Voice Interaction Runtime block.
+
+Checkpoint state:
+
+- voice activation foundation remains ready;
+- listen-state foundation remains ready;
+- microphone boundary remains ready;
+- STT adapter contract remains ready;
+- voice intent and chat integration contract remains ready;
+- TTS adapter contract remains ready;
+- voice permission and audit contract ready;
+- voice permission and audit runtime not ready;
+- permission boundary ready;
+- existing `microphone_listen` permission action linked;
+- existing `speaker_speak` permission action linked;
+- microphone permission required and confirmation-gated;
+- speaker permission required and confirmation-gated;
+- transcript chat handoff permission required;
+- chat response TTS permission required;
+- voice action permission required;
+- permission required before microphone capture, STT, TTS, speaker playback,
+  and chat handoff;
+- human confirmation required for future voice action intent;
+- audit event contract ready;
+- audit event schema ready;
+- six voice audit event types declared;
+- audit redaction boundary ready;
+- audit local-only requirement ready;
+- audit append-only boundary ready;
+- audit write runtime not ready and inactive;
+- audit event persistence disabled;
+- audit log append inactive;
+- audit storage write inactive;
+- audit dashboard event emit inactive;
+- audit redaction runtime inactive;
+- audit permission link runtime inactive;
+- review queue contract ready but runtime inactive;
+- recovery visibility contract ready but action runtime inactive;
+- permission decision, grant, revoke, persistence, and mutation runtimes inactive;
+- microphone capture inactive;
+- STT runtime inactive;
+- transcription inactive;
+- live microphone transcription inactive;
+- TTS runtime inactive;
+- TTS synthesis inactive;
+- speaker playback inactive;
+- audio device access disabled;
+- playback device access disabled;
+- transcript-to-chat handoff inactive;
+- chat-response-to-TTS handoff inactive;
+- memory write inactive;
+- direct voice-to-action disabled;
+- tool execution inactive;
+- command execution inactive;
+- file mutation inactive;
+- desktop action inactive;
+- network action inactive;
+- git action inactive;
+- cloud STT fallback disabled;
+- cloud TTS fallback disabled;
+- silent cloud fallback disabled;
+- 247 activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit assertions;
+- 0 failed activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit assertions.
+
+Sprint 197 does not grant permissions, revoke permissions, mutate permission
+state, persist permissions, write audit events, persist audit events, append
+audit logs, write audit storage, emit audit dashboard events, run audit
+redaction, create audit permission links, activate review queues, execute
+recovery actions, capture microphone input, run STT, transcribe speech, run
+TTS, synthesize speech, play speaker output, access audio/playback devices,
+execute transcript/chat/TTS handoffs, write memory, execute voice actions,
+execute tools, execute commands, mutate files, control the desktop, perform
+network actions, perform git actions, fallback to cloud providers, start
+background services, bind publicly, or add autonomy.
+
+Next: Sprint 198 — Control Center Voice Controls.

@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.196.0-genesis
-Current status: Sprint 196 Text-to-Speech Adapter Runtime completed and ready to hand off to Sprint 197 Voice Permission and Audit Runtime
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 196 adds a safe text-to-speech adapter contract with local/offline-first candidates, piper as the default candidate, a voice-response text input boundary, a future chat-response-to-TTS handoff contract, and speaker permission boundary while keeping TTS synthesis, audio output file read/write, audio persistence, speaker playback, playback device access/discovery, automatic speak-after-chat, cloud TTS fallback, model download, dependency install, command/tool execution, memory writes, file/desktop/network/git actions, STT runtime, transcription, microphone capture, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
+Current version: v0.197.0-genesis
+Current status: Sprint 197 Voice Permission and Audit Runtime completed and ready to hand off to Sprint 198 Control Center Voice Controls
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 197 adds a safe voice permission and audit contract with microphone_listen and speaker_speak permission links, explicit confirmation requirements, transcript/chat/TTS handoff permission boundaries, voice audit event schema, six declared audit event types, review/recovery visibility contracts, and audit redaction/local-only/append-only boundaries while keeping permission decision/grant/revoke/mutation/persistence, audit writes, audit persistence, audit dashboard emit, microphone capture, STT/TTS runtime, speaker playback, handoff execution, voice actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 196 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe text-to-speech adapter contract.
+AURA has completed Sprint 197 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe voice permission and audit contract.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.197.0-genesis
+- Sprint 197: Voice Permission and Audit Runtime
 - v0.196.0-genesis
 - Sprint 196: Text-to-Speech Adapter Runtime
 - v0.195.0-genesis
@@ -62,7 +64,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 197 — Voice Permission and Audit Runtime
+- Next planned sprint: Sprint 198 — Control Center Voice Controls
 Current capability registry summary:
 
 - total capabilities: 121
@@ -2711,3 +2713,101 @@ git action, arbitrary file access, public/LAN binding, background service,
 systemd activation, browser auto-launch, or autonomy.
 
 Next: Sprint 197 — Voice Permission and Audit Runtime.
+
+## Sprint 197 — Voice Permission and Audit Runtime
+
+Version: `v0.197.0-genesis`
+
+Sprint 197 adds the voice permission and audit runtime contract on top of the
+Sprint 191 activation contract, Sprint 192 listen-state foundation, Sprint 193
+microphone capture boundary, Sprint 194 speech-to-text adapter contract, Sprint
+195 voice intent/chat integration contract, and Sprint 196 text-to-speech
+adapter contract.
+
+Validated checkpoint:
+
+- voice permission and audit contract ready;
+- voice permission and audit runtime not ready;
+- permission boundary ready;
+- existing `microphone_listen` permission action linked;
+- existing `speaker_speak` permission action linked;
+- microphone permission required;
+- speaker permission required;
+- microphone permission allowed by policy;
+- speaker permission allowed by policy;
+- microphone permission requires confirmation;
+- speaker permission requires confirmation;
+- transcript chat handoff permission required;
+- chat response TTS permission required;
+- voice action permission required;
+- permission required before microphone capture;
+- permission required before STT;
+- permission required before TTS;
+- permission required before speaker playback;
+- permission required before chat handoff;
+- human confirmation required for future voice action intent;
+- audit event contract ready;
+- audit event schema ready;
+- six voice audit event types declared;
+- audit event redaction boundary ready;
+- audit event local-only requirement ready;
+- audit event append-only boundary ready;
+- audit write runtime not ready;
+- audit write runtime inactive;
+- audit event persistence disabled;
+- audit log append inactive;
+- audit storage write inactive;
+- audit dashboard event emit inactive;
+- audit redaction runtime inactive;
+- audit permission link runtime inactive;
+- review queue contract ready;
+- review queue runtime inactive;
+- recovery visibility contract ready;
+- recovery action runtime inactive;
+- permission decision runtime inactive;
+- permission grant runtime inactive;
+- permission revoke runtime inactive;
+- permission persistence inactive;
+- permission mutation inactive;
+- microphone capture inactive;
+- STT runtime inactive;
+- transcription inactive;
+- live microphone transcription inactive;
+- TTS runtime inactive;
+- TTS synthesis inactive;
+- speaker playback inactive;
+- audio device access disabled;
+- playback device access disabled;
+- audio buffer inactive;
+- transcript-to-chat handoff inactive;
+- chat-response-to-TTS handoff inactive;
+- memory write inactive;
+- direct voice-to-action disabled;
+- tool execution inactive;
+- command execution inactive;
+- file mutation inactive;
+- desktop action inactive;
+- network action inactive;
+- git action inactive;
+- cloud STT fallback disabled;
+- cloud TTS fallback disabled;
+- silent cloud fallback disabled;
+- 247 total voice activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit
+  assertions;
+- zero failed voice activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter/permission-audit
+  assertions.
+
+Sprint 197 adds no permission decision runtime, permission grant runtime,
+permission revoke runtime, permission persistence, permission mutation, audit
+write runtime, audit event persistence, audit log append, audit storage write,
+audit dashboard event emit, audit redaction runtime, audit permission link
+runtime, review queue runtime, recovery action runtime, microphone capture, STT
+runtime, transcription runtime, live microphone transcription, TTS runtime, TTS
+synthesis, speaker playback, audio device access, playback device access,
+transcript-to-chat handoff execution, chat-response-to-TTS handoff execution,
+memory write, direct voice-to-action execution, tool execution, command
+execution, file mutation, desktop action, network action, git action, cloud
+fallback, arbitrary file access, public/LAN binding, background service, systemd
+activation, browser auto-launch, or autonomy.
+
+Next: Sprint 198 — Control Center Voice Controls.

@@ -816,3 +816,29 @@ remain disabled.
 This is still not live voice output. It is the text-to-speech adapter contract
 that lets Sprint 197 add Voice Permission and Audit Runtime without allowing
 voice output or voice intent to bypass permission/audit boundaries.
+
+
+## Sprint 197 — Voice Permission and Audit Runtime
+
+`v0.197.0-genesis` adds the voice permission and audit runtime contract.
+
+AURA now has a safe boundary for future voice permission and audit behavior
+without granting permissions or writing audit events yet. The contract links
+microphone and speaker flows to `microphone_listen` and `speaker_speak`,
+requires explicit confirmation, prepares transcript/chat/TTS handoff permission
+boundaries, declares six voice audit event types, and defines local-only,
+redaction, append-only, review queue, and recovery visibility boundaries.
+
+The checkpoint confirms that permission decision, grant, revoke, persistence,
+and mutation runtimes; audit writes, audit persistence, audit log append, audit
+storage write, audit dashboard event emit, audit redaction runtime, audit
+permission link runtime; microphone capture, STT runtime, transcription, TTS
+runtime, TTS synthesis, speaker playback, handoff execution, memory write,
+direct voice-to-action execution, tool execution, command execution, file
+mutation, desktop action, network action, git action, and cloud fallback remain
+disabled.
+
+This is still not live voice permission execution or audit writing. It is the
+voice permission/audit contract that lets Sprint 198 add Control Center Voice
+Controls without allowing voice input/output to bypass permission and audit
+boundaries.
