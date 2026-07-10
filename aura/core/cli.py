@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_correction_deletion_boundary.aura_memory_correction_deletion_boundary_manager import AuraMemoryCorrectionDeletionBoundaryManager
 from aura.memory_review_queue.aura_memory_review_queue_manager import AuraMemoryReviewQueueManager
 from aura.memory_importance_pinning_policy.aura_memory_importance_pinning_policy_manager import AuraMemoryImportancePinningPolicyManager
 from aura.memory_extraction_dry_run.aura_memory_extraction_dry_run_manager import AuraMemoryExtractionDryRunManager
@@ -4334,6 +4335,58 @@ class AuraCLI:
 
 
 
+    # Sprint 176.0 memory correction and deletion boundary helpers.
+    def print_memory_correction_deletion_boundary_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Correction and Deletion Boundary"))
+
+    def handle_memory_correction_deletion_boundary_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+
+        command = raw_args[0]
+        manager = AuraMemoryCorrectionDeletionBoundaryManager(project_root=self.project_root)
+
+        if command in {"memory-correction-deletion-alpha", "memory-mutation-boundary-alpha"}:
+            if len(raw_args) < 3:
+                print("AURA Memory Correction and Deletion Boundary Alpha")
+                print("====================================================")
+                print('Usage correction: python3 main.py memory-correction-deletion-alpha correction "old memory => corrected memory"')
+                print('Usage deletion  : python3 main.py memory-correction-deletion-alpha delete "memory record text"')
+                return True
+            operation = raw_args[1]
+            payload = " ".join(raw_args[2:]).strip()
+            print(manager.render_boundary_preview(operation, payload))
+            return True
+
+        target = " ".join(raw_args[1:]).strip() or "AURA memory correction and deletion boundary"
+        if command == "memory-correction-deletion-status":
+            self.print_memory_correction_deletion_boundary_packet("AURA Memory Correction and Deletion Boundary Status", manager.status())
+            return True
+
+        if command == "memory-correction-deletion-context":
+            self.print_memory_correction_deletion_boundary_packet("AURA Memory Correction and Deletion Boundary Context", manager.context())
+            return True
+
+        command_map = {
+            "memory-correction-boundary-plan": ("AURA Memory Correction Boundary Plan", manager.memory_correction_boundary_plan),
+            "memory-deletion-boundary-plan": ("AURA Memory Deletion Boundary Plan", manager.memory_deletion_boundary_plan),
+            "memory-versioned-replacement-plan": ("AURA Memory Versioned Replacement Plan", manager.memory_versioned_replacement_plan),
+            "memory-tombstone-lifecycle-plan": ("AURA Memory Tombstone Lifecycle Plan", manager.memory_tombstone_lifecycle_plan),
+            "memory-exact-target-binding-plan": ("AURA Memory Exact Target Binding Plan", manager.memory_exact_target_binding_plan),
+            "memory-correction-deletion-permission-handoff-plan": ("AURA Memory Correction Deletion Permission Handoff Plan", manager.memory_correction_deletion_permission_handoff_plan),
+            "memory-correction-privacy-rescreen-plan": ("AURA Memory Correction Privacy Rescreen Plan", manager.memory_correction_privacy_rescreen_plan),
+            "memory-correction-deletion-control-center-plan": ("AURA Memory Correction Deletion Control Center Plan", manager.memory_correction_deletion_control_center_plan),
+            "memory-correction-deletion-failure-boundary-plan": ("AURA Memory Correction Deletion Failure Boundary Plan", manager.memory_correction_deletion_failure_boundary_plan),
+            "no-memory-correction-deletion-unsafe-runtime-plan": ("AURA No Memory Correction Deletion Unsafe Runtime Plan", manager.no_memory_correction_deletion_unsafe_runtime_plan),
+            "memory-correction-deletion-next-sprint-readiness-plan": ("AURA Memory Correction Deletion Next Sprint Readiness Plan", manager.memory_correction_deletion_next_sprint_readiness_plan),
+        }
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_correction_deletion_boundary_packet(title, handler(target))
+            return True
+        return False
+
     # Sprint 175.0 memory review queue helpers.
     def print_memory_review_queue_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8383,6 +8436,9 @@ class AuraCLI:
             return True
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
+            return True
+
+        if self.handle_memory_correction_deletion_boundary_cli_command(raw_args):
             return True
 
         if self.handle_memory_review_queue_cli_command(raw_args):

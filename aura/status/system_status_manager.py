@@ -143,6 +143,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_correction_deletion_boundary.aura_memory_correction_deletion_boundary_manager import AuraMemoryCorrectionDeletionBoundaryManager
 from aura.memory_review_queue.aura_memory_review_queue_manager import AuraMemoryReviewQueueManager
 from aura.memory_importance_pinning_policy.aura_memory_importance_pinning_policy_manager import AuraMemoryImportancePinningPolicyManager
 from aura.memory_extraction_dry_run.aura_memory_extraction_dry_run_manager import AuraMemoryExtractionDryRunManager
@@ -349,6 +350,7 @@ class SystemStatusManager:
         local_chat_safety_uncertainty_layer_status = AuraLocalChatSafetyUncertaintyLayerManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_history_viewer_contract_status = AuraLocalChatHistoryViewerContractManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         local_chat_integration_review_status = AuraLocalChatIntegrationReviewManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
+        memory_correction_deletion_boundary_status = AuraMemoryCorrectionDeletionBoundaryManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_review_queue_status = AuraMemoryReviewQueueManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_importance_pinning_policy_status = AuraMemoryImportancePinningPolicyManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
         memory_extraction_dry_run_status = AuraMemoryExtractionDryRunManager(project_root=getattr(self, "project_root", Path(".").resolve())).status()
@@ -500,6 +502,18 @@ class SystemStatusManager:
             "control_center_runtime_review_stabilization_151_160_runtime_dashboard_requests_served": control_center_runtime_review_stabilization_151_160_status["runtime_dashboard_requests_served"],
             "control_center_runtime_review_stabilization_151_160_runtime_ports_bound": control_center_runtime_review_stabilization_151_160_status["runtime_ports_bound"],
             "control_center_runtime_review_stabilization_151_160_runtime_execution_features": control_center_runtime_review_stabilization_151_160_status["runtime_execution_features"],
+            "memory_correction_deletion_boundary_ready": memory_correction_deletion_boundary_status["memory_correction_deletion_boundary_ready"],
+            "memory_correction_deletion_boundary_data_ready": memory_correction_deletion_boundary_status["memory_correction_deletion_boundary_data_ready"],
+            "memory_correction_deletion_boundary_plan_type_count": memory_correction_deletion_boundary_status["plan_type_count"],
+            "memory_correction_deletion_boundary_total_blueprint_count": memory_correction_deletion_boundary_status["total_memory_correction_deletion_boundary_blueprint_count"],
+            "memory_correction_deletion_boundary_thin_runtime_alpha": memory_correction_deletion_boundary_status["thin_runtime_alpha"],
+            "memory_correction_deletion_boundary_enabled": memory_correction_deletion_boundary_status["memory_correction_deletion_boundary_enabled"],
+            "memory_correction_deletion_exact_target_binding_enabled": memory_correction_deletion_boundary_status["exact_record_target_binding_enabled"],
+            "memory_correction_deletion_tombstone_preview_enabled": memory_correction_deletion_boundary_status["tombstone_deletion_preview_enabled"],
+            "memory_correction_deletion_runtime_store_reads": memory_correction_deletion_boundary_status["runtime_memory_store_reads"],
+            "memory_correction_deletion_runtime_corrections_applied": memory_correction_deletion_boundary_status["runtime_memory_corrections_applied"],
+            "memory_correction_deletion_runtime_deletes": memory_correction_deletion_boundary_status["runtime_memory_deletes"],
+            "memory_correction_deletion_runtime_execution_features": memory_correction_deletion_boundary_status["runtime_execution_features"],
             "memory_review_queue_ready": memory_review_queue_status["memory_review_queue_ready"],
             "memory_review_queue_data_ready": memory_review_queue_status["memory_review_queue_data_ready"],
             "memory_review_queue_plan_type_count": memory_review_queue_status["plan_type_count"],

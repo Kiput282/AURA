@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.175.0-genesis  
+Current version: v0.176.0-genesis  
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -49,12 +49,12 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 106
-- online capabilities: 104
+- total capabilities: 107
+- online capabilities: 105
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 3
-- review-only capabilities: 5
+- review-only capabilities: 6
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 0
@@ -343,7 +343,7 @@ Active block:
 - Sprint 144: Service Configuration and Port Registry Foundation completed
 - Sprint 151: Control Center Runtime Foundation completed
 - Sprint 152: Control Center Read-Only Status Panel Foundation completed
-- Sprint 175: Memory Review Queue completed
+- Sprint 176: Memory Correction and Deletion Boundary completed
 - Next: Sprint 154 Control Center Service Monitor Panel Foundation
 
 ---
@@ -1812,3 +1812,8 @@ All scoring and pin recommendations are review metadata only. `Pin State` remain
 ## Sprint 175 — Memory Review Queue
 
 `v0.175.0-genesis` adds a deterministic, ephemeral in-process manual-review queue preview for one memory candidate. It exposes priority, review state, privacy hold, permission state, and future decision options while keeping queue persistence, decision application, permission grants, memory writes/store mutation, pin/unpin actions, model/network activity, commands, arbitrary file access, and runtime execution disabled.
+
+
+## Sprint 176 — Memory Correction and Deletion Boundary
+
+`v0.176.0-genesis` adds an exact-target, preview-only boundary for future memory correction and deletion. Corrections use versioned replacement rather than in-place edits; deletions use tombstone-first semantics and require a separate future purge permission. Memory-store reads, record lookup, correction/delete/tombstone/purge application, permission grants, memory writes/store mutation, model/network activity, commands, arbitrary file access, and runtime execution remain disabled.

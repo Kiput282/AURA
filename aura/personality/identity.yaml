@@ -1,5 +1,5 @@
 name: AURA
-version: "0.175.0-genesis"
+version: "0.176.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -32,3 +32,5 @@ modes:
 # Sprint 174: memory_importance_pinning_policy adds deterministic importance and pin recommendations; persistence, pinning, grants, and writes remain disabled.
 
 # Sprint 175: memory_review_queue adds an ephemeral manual-review queue preview; queue persistence, decisions, grants, and writes remain disabled.
+
+# Sprint 176: memory_correction_deletion_boundary adds exact-target correction/delete previews; store reads and mutations remain disabled.
