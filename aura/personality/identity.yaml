@@ -1,5 +1,5 @@
 name: AURA
-version: "0.177.0-genesis"
+version: "0.178.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -36,3 +36,5 @@ modes:
 # Sprint 176: memory_correction_deletion_boundary adds exact-target correction/delete previews; store reads and mutations remain disabled.
 
 # Sprint 177: chat_to_memory_handoff_contract adds explicit user-turn handoff previews; chat-store reads, queue persistence, grants, and memory writes remain disabled.
+
+# Sprint 178: memory_privacy_redaction_layer adds local redaction and secret-block previews; original/redacted persistence, grants, and memory writes remain disabled.

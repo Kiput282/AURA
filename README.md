@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.177.0-genesis  
+Current version: v0.178.0-genesis
 Current status: foundation-only, planner-only, review-only  
 Current runtime state: disabled by design
 
@@ -49,12 +49,12 @@ Latest completed checkpoint:
 
 Current capability registry summary:
 
-- total capabilities: 108
-- online capabilities: 106
+- total capabilities: 109
+- online capabilities: 107
 - foundation-only capabilities: 74
 - planner-only capabilities: 7
 - permission-gated capabilities: 3
-- review-only capabilities: 7
+- review-only capabilities: 8
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 0
@@ -1827,4 +1827,15 @@ New safe alpha command:
 
 ```bash
 python3 main.py chat-to-memory-handoff-alpha "remember that AURA is local-first and permission-gated"
+```
+
+
+## Sprint 178 — Memory Privacy and Redaction Layer
+
+`v0.178.0-genesis` adds deterministic local privacy screening, stable redaction placeholders, and strict secret-block boundaries for one memory candidate. Only the redacted form may be rendered; original and redacted candidates are not persisted. Review decisions, permission grants, memory writes/store mutation, model/network activity, commands, arbitrary file access, and runtime execution remain disabled.
+
+New safe alpha command:
+
+```bash
+python3 main.py memory-privacy-redaction-alpha "remember that contact email is demo@example.com and AURA is local-first"
 ```

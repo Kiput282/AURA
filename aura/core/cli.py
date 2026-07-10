@@ -154,6 +154,7 @@ from aura.local_chat_history_viewer_contract.aura_local_chat_history_viewer_cont
 from aura.local_chat_integration_review.aura_local_chat_integration_review_manager import AuraLocalChatIntegrationReviewManager
 from aura.local_chat_runtime_stabilization.aura_local_chat_runtime_stabilization_manager import AuraLocalChatRuntimeStabilizationManager
 from aura.memory_runtime_foundation.aura_memory_runtime_foundation_manager import AuraMemoryRuntimeFoundationManager
+from aura.memory_privacy_redaction_layer.aura_memory_privacy_redaction_layer_manager import AuraMemoryPrivacyRedactionLayerManager
 from aura.chat_to_memory_handoff_contract.aura_chat_to_memory_handoff_contract_manager import AuraChatToMemoryHandoffContractManager
 from aura.memory_correction_deletion_boundary.aura_memory_correction_deletion_boundary_manager import AuraMemoryCorrectionDeletionBoundaryManager
 from aura.memory_review_queue.aura_memory_review_queue_manager import AuraMemoryReviewQueueManager
@@ -4337,6 +4338,51 @@ class AuraCLI:
 
 
 
+
+    # Sprint 178.0 memory privacy and redaction layer helpers.
+    def print_memory_privacy_redaction_layer_packet(self, title: str, packet: dict) -> None:
+        formatter = SharedOutputFormatterManager()
+        print(formatter.render_packet_text(title, packet, safety_title="Memory Privacy and Redaction Layer"))
+
+    def handle_memory_privacy_redaction_layer_cli_command(self, raw_args: list[str]) -> bool:
+        if not raw_args:
+            return False
+        command = raw_args[0]
+        manager = AuraMemoryPrivacyRedactionLayerManager(project_root=self.project_root)
+
+        if command in {"memory-privacy-redaction-alpha", "memory-privacy-alpha"}:
+            if len(raw_args) < 2:
+                print('Usage: python3 main.py memory-privacy-redaction-alpha "remember that contact email is demo@example.com"')
+                return True
+            print(manager.render_privacy_preview(" ".join(raw_args[1:])))
+            return True
+        if command == "memory-privacy-redaction-status":
+            self.print_memory_privacy_redaction_layer_packet("AURA Memory Privacy and Redaction Layer Status", manager.status())
+            return True
+        if command == "memory-privacy-redaction-context":
+            self.print_memory_privacy_redaction_layer_packet("AURA Memory Privacy and Redaction Layer Context", manager.context())
+            return True
+
+        target = " ".join(raw_args[1:]) if len(raw_args) > 1 else "AURA memory privacy and redaction layer"
+        command_map = {
+            "memory-privacy-classification-plan": ("AURA Memory Privacy Classification Plan", manager.memory_privacy_classification_plan),
+            "memory-sensitive-pattern-screen-plan": ("AURA Memory Sensitive Pattern Screen Plan", manager.memory_sensitive_pattern_screen_plan),
+            "memory-redaction-preview-plan": ("AURA Memory Redaction Preview Plan", manager.memory_redaction_preview_plan),
+            "memory-secret-block-plan": ("AURA Memory Secret Block Plan", manager.memory_secret_block_plan),
+            "memory-privacy-review-handoff-plan": ("AURA Memory Privacy Review Handoff Plan", manager.memory_privacy_review_handoff_plan),
+            "memory-privacy-permission-handoff-plan": ("AURA Memory Privacy Permission Handoff Plan", manager.memory_privacy_permission_handoff_plan),
+            "memory-privacy-control-center-plan": ("AURA Memory Privacy Control Center Plan", manager.memory_privacy_control_center_plan),
+            "memory-privacy-failure-boundary-plan": ("AURA Memory Privacy Failure Boundary Plan", manager.memory_privacy_failure_boundary_plan),
+            "memory-privacy-lifecycle-plan": ("AURA Memory Privacy Lifecycle Plan", manager.memory_privacy_lifecycle_plan),
+            "no-memory-privacy-unsafe-runtime-plan": ("AURA No Memory Privacy Unsafe Runtime Plan", manager.no_memory_privacy_unsafe_runtime_plan),
+            "memory-privacy-next-sprint-readiness-plan": ("AURA Memory Privacy Next Sprint Readiness Plan", manager.memory_privacy_next_sprint_readiness_plan),
+        }
+        if command in command_map:
+            title, handler = command_map[command]
+            self.print_memory_privacy_redaction_layer_packet(title, handler(target))
+            return True
+        return False
+
     # Sprint 177.0 chat-to-memory handoff contract helpers.
     def print_chat_to_memory_handoff_contract_packet(self, title: str, packet: dict) -> None:
         formatter = SharedOutputFormatterManager()
@@ -8483,6 +8529,9 @@ class AuraCLI:
 
         if self.handle_control_center_read_only_status_panel_foundation_cli_command(raw_args):
             return True
+
+        if self.handle_memory_privacy_redaction_layer_cli_command(raw_args):
+            return
 
         if self.handle_chat_to_memory_handoff_contract_cli_command(raw_args):
             return
