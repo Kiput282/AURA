@@ -867,3 +867,18 @@ This is still not live Control Center voice control. It is the read-only voice
 controls contract that lets Sprint 199 review the Voice Runtime integration
 without allowing dashboard UI to bypass permission, audit, or voice safety
 boundaries.
+
+## Sprint 199 — Voice Runtime Integration Review
+
+`v0.199.0-genesis` adds a read-only integration review for the Voice Interaction
+Runtime block.
+
+The review checks the Sprint 191-198 voice chain and confirms that activation,
+listen state, microphone boundary, STT, voice intent/chat, TTS, permission/audit,
+and Control Center voice controls are contract-ready while runtime execution
+remains blocked.
+
+This gives Sprint 200 a stable review baseline for Voice Runtime Stabilization
+without activating microphone capture, STT, TTS, speaker playback, permission
+mutation, audit writes, handoffs, command/tool execution, memory writes, desktop
+actions, network actions, git actions, cloud fallback, or voice actions.

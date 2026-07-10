@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.198.0-genesis
-Current status: Sprint 198 Control Center Voice Controls completed and ready to hand off to Sprint 199 Voice Runtime Integration Review
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 198 adds a safe read-only Control Center voice controls contract with visible disabled-by-default voice controls, listen-state display, microphone/speaker permission display, STT/TTS status display, permission/audit display, route and panel contracts, and runtime safety badges while keeping UI mutation, microphone capture, STT/TTS runtime, speaker playback, permission grant/revoke/mutation, audit writes, voice actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
+Current version: v0.199.0-genesis
+Current status: Sprint 199 Voice Runtime Integration Review completed and ready to hand off to Sprint 200 Voice Runtime Stabilization
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 199 adds a read-only Voice Runtime Integration Review contract across Sprint 191-198, reviewing activation, listen state, microphone boundary, STT, voice intent/chat, TTS, permission/audit, and Control Center voice controls while keeping runtime activation, microphone capture, STT/TTS runtime, speaker playback, permission grant/revoke/mutation, audit writes, transcript/chat/TTS handoffs, voice actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 198 and continues the Sprint 191-200 Voice Interaction Runtime block with safe read-only Control Center voice controls.
+AURA has completed Sprint 199 and continues the Sprint 191-200 Voice Interaction Runtime block with a read-only voice runtime integration review across Sprint 191-198.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.199.0-genesis
+- Sprint 199: Voice Runtime Integration Review
 - v0.198.0-genesis
 - Sprint 198: Control Center Voice Controls
 - v0.197.0-genesis
@@ -66,7 +68,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 199 — Voice Runtime Integration Review
+- Next planned sprint: Sprint 200 — Voice Runtime Stabilization
 Current capability registry summary:
 
 - total capabilities: 121
@@ -2934,3 +2936,76 @@ arbitrary file access, public/LAN binding, background service, systemd
 activation, browser auto-launch, or autonomy.
 
 Next: Sprint 199 — Voice Runtime Integration Review.
+
+## Sprint 199 — Voice Runtime Integration Review
+
+Version: `v0.199.0-genesis`
+
+Sprint 199 adds a read-only Voice Runtime Integration Review contract for the
+Sprint 191-198 Voice Interaction Runtime chain.
+
+The Sprint 199 review verifies that all prior voice contracts remain ready:
+
+- Sprint 191 activation foundation
+- Sprint 192 push-to-talk and explicit listen state
+- Sprint 193 microphone capture boundary
+- Sprint 194 speech-to-text adapter contract
+- Sprint 195 voice intent and chat integration contract
+- Sprint 196 text-to-speech adapter contract
+- Sprint 197 voice permission and audit contract
+- Sprint 198 Control Center voice controls contract
+
+The integration review exposes a voice integration matrix covering eight
+reviewed contracts, confirms the ordered chain from activation through Control
+Center voice controls, and keeps all reviewed runtimes blocked. The review
+status is `review_ready`, with eight reviewed contracts, eight integration
+matrix items, and forty-seven safety blockers.
+
+Sprint 199 confirms that the voice runtime remains blocked:
+
+- runtime activation allowed: false
+- runtime ready: false
+- microphone capture active: false
+- STT runtime active: false
+- transcription active: false
+- live microphone transcription active: false
+- transcript chat handoff active: false
+- chat session write active: false
+- chat model request active: false
+- chat response generation active: false
+- TTS runtime active: false
+- TTS synthesis active: false
+- speaker playback active: false
+- permission decision/grant/revoke/mutation runtime active: false
+- permission persistence active: false
+- audit write runtime active: false
+- audit event persistence active: false
+- UI control mutation active: false
+- UI microphone/STT/TTS/speaker/permission/audit/voice-action triggers active: false
+- memory write active: false
+- direct voice-to-action enabled: false
+- tool/command/file/desktop/network/git actions active: false
+- cloud STT/TTS and silent cloud fallback enabled: false
+
+Sprint 199 also exposes review visibility in `voice-runtime-status` and
+`voice-runtime-check`, including reviewed contract count, integration matrix
+readiness, all-prior-contract readiness, all-prior-runtime blocking, safety
+blocker matrix readiness, safety blocker count, dependency baseline review, and
+runtime activation denial.
+
+The dependency baseline remains unchanged:
+
+- Python packages: 0/4
+- Executables: 0/4
+
+Validation passed with boot READY, compileall OK, voice-runtime-status OK,
+voice-runtime-check OK, 434 assertions, zero failed assertions, and baseline
+self-tests OK.
+
+Sprint 199 does not install dependencies, download models, access audio devices,
+capture microphone input, run STT, run TTS, play speaker output, mutate
+permissions, write audit events, execute handoffs, write memory, execute tools
+or commands, mutate files, act on desktop/network/git, use cloud fallback, or
+execute voice actions.
+
+Next: Sprint 200 — Voice Runtime Stabilization.

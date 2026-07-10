@@ -1,5 +1,5 @@
 name: AURA
-version: "0.198.0-genesis"
+version: "0.199.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -115,3 +115,11 @@ modes:
 # TTS, speaker playback, permission grant/revoke/mutation, audit writes, voice
 # actions, command/tool execution, memory writes, and file/desktop/network/git
 # actions disabled.
+# Sprint 199: voice_runtime_integration_review adds a read-only
+# integration review contract across Sprint 191-198 voice runtime foundations.
+# The review checks activation, listen state, microphone boundary, STT contract,
+# voice intent/chat contract, TTS contract, permission/audit contract, and
+# Control Center voice controls while keeping runtime activation blocked and
+# keeping microphone capture, STT, TTS, speaker playback, permission mutation,
+# audit writes, handoffs, memory writes, tool/command execution, file/desktop/
+# network/git actions, cloud fallback, and voice actions disabled.

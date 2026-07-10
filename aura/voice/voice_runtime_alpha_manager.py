@@ -90,6 +90,7 @@ class VoiceRuntimeAlphaManager:
         tts_adapter = self.planner.text_to_speech_adapter_runtime_contract()
         voice_permission_audit = self.planner.voice_permission_audit_runtime_contract()
         control_center_voice = self.planner.control_center_voice_controls_contract()
+        integration_review = self.planner.voice_runtime_integration_review_contract()
         backend = self.detect_tts_backend()
         speaker_permission = self.permission_manager.check("speaker_speak")
         microphone_permission = self.permission_manager.check("microphone_listen")
@@ -107,6 +108,14 @@ class VoiceRuntimeAlphaManager:
             "sprint_196_tts_adapter_contract_ready": tts_adapter["tts_adapter_contract_ready"],
             "sprint_197_voice_permission_audit_contract_ready": voice_permission_audit["voice_permission_audit_contract_ready"],
             "sprint_198_control_center_voice_controls_contract_ready": control_center_voice["control_center_voice_controls_contract_ready"],
+            "sprint_199_voice_runtime_integration_review_contract_ready": integration_review["voice_runtime_integration_review_contract_ready"],
+            "voice_runtime_integration_review_runtime_ready": integration_review["voice_runtime_integration_review_runtime_ready"],
+            "voice_runtime_integration_review_status": integration_review["voice_runtime_integration_review_status"],
+            "voice_runtime_reviewed_contract_count": integration_review["reviewed_contract_count"],
+            "voice_runtime_all_prior_contracts_ready": integration_review["all_prior_contracts_ready"],
+            "voice_runtime_all_prior_runtimes_not_ready": integration_review["all_prior_runtimes_not_ready"],
+            "voice_runtime_safety_blocker_matrix_ready": integration_review["safety_blocker_matrix_ready"],
+            "voice_runtime_activation_allowed": integration_review["runtime_activation_allowed"],
             "control_center_voice_controls_runtime_ready": control_center_voice["control_center_voice_controls_runtime_ready"],
             "control_center_voice_controls_visible": control_center_voice["control_center_voice_controls_visible"],
             "control_center_voice_controls_read_only": control_center_voice["control_center_voice_controls_read_only"],
@@ -199,9 +208,10 @@ class VoiceRuntimeAlphaManager:
             "text_to_speech_adapter_runtime_contract": tts_adapter,
             "voice_permission_audit_runtime_contract": voice_permission_audit,
             "control_center_voice_controls_contract": control_center_voice,
-            "sections": 14,
+            "voice_runtime_integration_review_contract": integration_review,
+            "sections": 15,
             "project_root": str(self.project_root),
-            "note": "Voice Runtime Alpha is online for Sprint 198 Control Center voice controls contract. Voice controls are read-only, disabled by default, and do not trigger microphone capture, STT, TTS, speaker playback, permission mutation, audit writes, or voice actions.",
+            "note": "Voice Runtime Alpha is online for Sprint 199 voice runtime integration review. Sprint 191-198 contracts are reviewed without activating microphone capture, STT, TTS, speaker playback, permission mutation, audit writes, handoffs, or voice actions.",
         }
 
     def build_tts_command(self, text: str) -> dict[str, Any]:

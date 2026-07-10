@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.198.0-genesis
+Current anchor: v0.199.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.198.0-genesis
-- Completed: Sprint 198 — Control Center Voice Controls
+- Current version: v0.199.0-genesis
+- Completed: Sprint 199 — Voice Runtime Integration Review
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: activation, explicit listen-state, local microphone capture boundary, speech-to-text adapter contract, voice intent/chat integration contract, text-to-speech adapter contract, voice permission/audit contract, and read-only Control Center voice controls foundations ready; UI mutation, microphone capture, STT/TTS runtime, speaker playback, permission grant/revoke/mutation, audit writes, handoff execution, voice actions, tool/command execution, file/desktop/network/git actions, cloud fallback, and autonomy disabled
+- Voice runtime: Sprint 191-199 contracts are ready through activation, explicit listen state, microphone boundary, STT adapter, voice intent/chat, TTS adapter, permission/audit, Control Center voice controls, and voice runtime integration review; runtime activation remains blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 199 — Voice Runtime Integration Review
+- Next: Sprint 200 — Voice Runtime Stabilization
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -420,3 +420,34 @@ The voice runtime check now covers 342 activation/listen-state/microphone-bounda
 assertions and reports zero failed assertions.
 
 Next: Sprint 199 — Voice Runtime Integration Review.
+
+## v0.199.0-genesis — Voice Runtime Integration Review
+
+Sprint 199 reviews the Sprint 191-198 Voice Interaction Runtime chain without
+activating the voice runtime.
+
+The review contract verifies:
+
+- activation contract readiness
+- listen-state contract readiness
+- microphone boundary readiness
+- speech-to-text adapter contract readiness
+- voice intent and chat integration contract readiness
+- text-to-speech adapter contract readiness
+- voice permission/audit contract readiness
+- Control Center voice controls contract readiness
+
+The integration matrix contains eight reviewed contracts and confirms that all
+prior contracts are ready while all prior runtimes remain not ready. The review
+also exposes a safety blocker matrix with forty-seven blockers covering audio
+device access, microphone capture, STT, transcription, TTS, speaker playback,
+permission mutation, audit writes, UI triggers, handoffs, memory writes, tool
+and command execution, file/desktop/network/git actions, and cloud fallback.
+
+Runtime activation remains false. Sprint 199 does not install dependencies,
+download models, access devices, write audit events, mutate permissions, start
+handoffs, write memory, execute commands, or perform voice actions.
+
+Validation passed with 434 voice assertions and zero failed assertions.
+
+Next: Sprint 200 — Voice Runtime Stabilization.
