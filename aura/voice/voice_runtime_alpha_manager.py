@@ -87,6 +87,7 @@ class VoiceRuntimeAlphaManager:
         microphone_boundary = self.planner.microphone_capture_boundary_contract()
         stt_adapter = self.planner.speech_to_text_adapter_runtime_contract()
         voice_intent_chat = self.planner.voice_intent_chat_integration_contract()
+        tts_adapter = self.planner.text_to_speech_adapter_runtime_contract()
         backend = self.detect_tts_backend()
         speaker_permission = self.permission_manager.check("speaker_speak")
         microphone_permission = self.permission_manager.check("microphone_listen")
@@ -101,6 +102,16 @@ class VoiceRuntimeAlphaManager:
             "sprint_193_microphone_boundary_ready": microphone_boundary["microphone_boundary_ready"],
             "sprint_194_stt_adapter_contract_ready": stt_adapter["stt_adapter_contract_ready"],
             "sprint_195_voice_intent_chat_contract_ready": voice_intent_chat["voice_intent_chat_contract_ready"],
+            "sprint_196_tts_adapter_contract_ready": tts_adapter["tts_adapter_contract_ready"],
+            "tts_adapter_runtime_ready": tts_adapter["tts_adapter_runtime_ready"],
+            "tts_default_adapter": tts_adapter["default_adapter"],
+            "tts_adapter_candidates": tts_adapter["candidate_adapter_count"],
+            "voice_response_input_boundary_ready": tts_adapter["voice_response_input_boundary_ready"],
+            "tts_synthesis_runtime_active": tts_adapter["tts_synthesis_runtime_active"],
+            "speaker_playback_active": tts_adapter["speaker_playback_active"],
+            "audio_output_file_write_active": tts_adapter["audio_output_file_write_active"],
+            "automatic_speak_after_chat_enabled": tts_adapter["automatic_speak_after_chat_enabled"],
+            "cloud_tts_fallback_enabled": tts_adapter["cloud_tts_fallback_enabled"],
             "voice_intent_runtime_ready": voice_intent_chat["voice_intent_runtime_ready"],
             "transcript_source": voice_intent_chat["transcript_source"],
             "transcript_to_chat_handoff_ready": voice_intent_chat["transcript_to_chat_handoff_contract_ready"],
@@ -161,9 +172,10 @@ class VoiceRuntimeAlphaManager:
             "microphone_capture_boundary_contract": microphone_boundary,
             "speech_to_text_adapter_runtime_contract": stt_adapter,
             "voice_intent_chat_integration_contract": voice_intent_chat,
-            "sections": 11,
+            "text_to_speech_adapter_runtime_contract": tts_adapter,
+            "sections": 12,
             "project_root": str(self.project_root),
-            "note": "Voice Runtime Alpha is online for Sprint 195 voice intent and chat integration contract. It does not process live transcripts, write chat sessions, request models, write memory, execute tools/commands/actions, or mutate files automatically.",
+            "note": "Voice Runtime Alpha is online for Sprint 196 text-to-speech adapter contract. It does not synthesize speech, write audio output files, access playback devices, play speaker output, use cloud TTS fallback, or automatically speak after chat.",
         }
 
     def build_tts_command(self, text: str) -> dict[str, Any]:

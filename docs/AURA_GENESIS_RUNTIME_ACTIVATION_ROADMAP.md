@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.195.0-genesis
+Current anchor: v0.196.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.195.0-genesis
-- Completed: Sprint 195 — Voice Intent and Chat Integration
+- Current version: v0.196.0-genesis
+- Completed: Sprint 196 — Text-to-Speech Adapter Runtime
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -39,10 +39,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Permission bypass: not detected
 - Arbitrary execution: not detected
 - AURA long-term memory writes: disabled
-- Voice runtime: activation, explicit listen-state, local microphone capture boundary, speech-to-text adapter contract, and voice intent/chat integration contract foundations ready; live transcript input, automatic chat handoff, chat session writes, model requests, memory writes, direct voice-to-action, tool/command execution, file/desktop/network/git actions, STT/TTS runtime, cloud fallback, and speaker playback disabled
+- Voice runtime: activation, explicit listen-state, local microphone capture boundary, speech-to-text adapter contract, voice intent/chat integration contract, and text-to-speech adapter contract foundations ready; TTS synthesis, audio output file read/write, speaker playback, playback device access/discovery, automatic speak-after-chat, live transcript input, automatic chat handoff, memory writes, direct voice-to-action, tool/command execution, file/desktop/network/git actions, STT runtime, cloud fallback, and autonomy disabled
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 196 — Text-to-Speech Adapter Runtime
+- Next: Sprint 197 — Voice Permission and Audit Runtime
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -336,3 +336,29 @@ The voice runtime check now covers 138 activation/listen-state/microphone-bounda
 assertions and reports zero failed assertions.
 
 Next: Sprint 196 — Text-to-Speech Adapter Runtime.
+
+## v0.196.0-genesis — Text-to-Speech Adapter Runtime
+
+Sprint 196 adds the text-to-speech adapter runtime contract for the Voice
+Interaction Runtime block.
+
+The checkpoint defines a safe TTS adapter boundary without synthesizing speech
+or playing speaker output. It declares local/offline-first TTS requirements,
+sets `piper` as the default adapter candidate, keeps `coqui-tts` and
+`espeak-ng` as additional candidates, prepares a voice-response text input
+boundary, and defines a future chat-response-to-TTS handoff contract.
+
+Sprint 196 preserves disabled TTS synthesis runtime, audio output file
+read/write, audio persistence, speaker playback, playback device access,
+playback device discovery, automatic speak-after-chat, voice response playback,
+chat-response-to-TTS handoff execution, model download, dependency
+installation, cloud TTS fallback, silent cloud fallback, remote TTS providers,
+STT runtime, transcription runtime, microphone capture, memory writes, direct
+voice-to-action execution, tool execution, command execution, file mutation,
+desktop action, network action, git action, background service, public binding,
+and autonomy.
+
+The voice runtime check now covers 184 activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter
+assertions and reports zero failed assertions.
+
+Next: Sprint 197 — Voice Permission and Audit Runtime.

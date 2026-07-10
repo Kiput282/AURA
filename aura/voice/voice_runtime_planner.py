@@ -440,6 +440,72 @@ class VoiceRuntimePlanner:
             ],
         }
 
+
+    def text_to_speech_adapter_runtime_contract(self) -> dict[str, Any]:
+        candidates = self.tts_candidates()
+        return {
+            "sprint": 196,
+            "name": "text_to_speech_adapter_runtime",
+            "tts_adapter_contract_ready": True,
+            "tts_adapter_runtime_ready": False,
+            "default_adapter": "piper",
+            "candidate_adapters": [candidate["name"] for candidate in candidates],
+            "candidate_adapter_count": len(candidates),
+            "local_first_required": True,
+            "offline_first_required": True,
+            "voice_response_input_boundary_ready": True,
+            "provided_text_required_for_future_dry_run": True,
+            "dummy_text_allowed_for_contract": True,
+            "tts_text_normalization_contract_ready": True,
+            "tts_synthesis_runtime_ready": False,
+            "tts_synthesis_runtime_active": False,
+            "audio_output_file_boundary_ready": True,
+            "audio_output_file_write_active": False,
+            "audio_output_file_read_active": False,
+            "audio_file_persistence_enabled": False,
+            "speaker_playback_permission_required": True,
+            "speaker_permission_action": "speaker_speak",
+            "speaker_playback_runtime_ready": False,
+            "speaker_playback_active": False,
+            "audio_playback_device_access": False,
+            "audio_playback_device_discovery_active": False,
+            "playback_enabled": False,
+            "automatic_speak_after_chat_enabled": False,
+            "voice_response_playback_active": False,
+            "chat_response_to_tts_handoff_contract_ready": True,
+            "chat_response_to_tts_handoff_active": False,
+            "model_download_required": False,
+            "model_download_performed": False,
+            "dependency_install_performed": False,
+            "cloud_tts_fallback_enabled": False,
+            "silent_cloud_fallback_enabled": False,
+            "remote_tts_provider_enabled": False,
+            "stt_runtime_active": False,
+            "transcription_active": False,
+            "microphone_capture_active": False,
+            "audio_device_access": False,
+            "audio_buffer_active": False,
+            "memory_write_active": False,
+            "direct_voice_to_action_enabled": False,
+            "tool_execution_active": False,
+            "command_execution_active": False,
+            "file_mutation_active": False,
+            "desktop_action_active": False,
+            "network_action_active": False,
+            "git_action_active": False,
+            "runtime_scope": "text_to_speech_adapter_contract_only",
+            "next_sprint": 197,
+            "next_boundary": "voice_permission_and_audit_runtime",
+            "guardrails": [
+                "No TTS synthesis runtime is executed in Sprint 196.",
+                "No audio output file is written in Sprint 196.",
+                "No speaker playback or playback device access is active.",
+                "No automatic speak-after-chat handoff is enabled.",
+                "No cloud TTS or silent fallback is enabled.",
+                "No tools, commands, files, desktop, network, git, or memory writes are executed.",
+            ],
+        }
+
     def status(self) -> dict[str, Any]:
         stt_candidates = self.stt_candidates()
         tts_candidates = self.tts_candidates()
@@ -448,6 +514,7 @@ class VoiceRuntimePlanner:
         microphone_boundary = self.microphone_capture_boundary_contract()
         stt_adapter = self.speech_to_text_adapter_runtime_contract()
         voice_intent_chat = self.voice_intent_chat_integration_contract()
+        tts_adapter = self.text_to_speech_adapter_runtime_contract()
 
         return {
             "name": self.name,
@@ -497,6 +564,16 @@ class VoiceRuntimePlanner:
             "speaker_output": False,
             "stt_runtime_ready": False,
             "tts_runtime_ready": False,
+            "tts_adapter_contract_ready": tts_adapter["tts_adapter_contract_ready"],
+            "tts_adapter_runtime_ready": tts_adapter["tts_adapter_runtime_ready"],
+            "tts_default_adapter": tts_adapter["default_adapter"],
+            "tts_adapter_candidates": tts_adapter["candidate_adapter_count"],
+            "voice_response_input_boundary_ready": tts_adapter["voice_response_input_boundary_ready"],
+            "tts_synthesis_runtime_active": tts_adapter["tts_synthesis_runtime_active"],
+            "speaker_playback_active": tts_adapter["speaker_playback_active"],
+            "audio_output_file_write_active": tts_adapter["audio_output_file_write_active"],
+            "automatic_speak_after_chat_enabled": tts_adapter["automatic_speak_after_chat_enabled"],
+            "cloud_tts_fallback_enabled": tts_adapter["cloud_tts_fallback_enabled"],
             "stt_candidates": len(stt_candidates),
             "tts_candidates": len(tts_candidates),
             "candidate_count": len(stt_candidates) + len(tts_candidates),
@@ -506,7 +583,8 @@ class VoiceRuntimePlanner:
             "microphone_capture_boundary_contract": microphone_boundary,
             "speech_to_text_adapter_runtime_contract": stt_adapter,
             "voice_intent_chat_integration_contract": voice_intent_chat,
-            "note": "Voice intent and chat integration contract is ready, but live transcript input, chat handoff execution, model requests, memory writes, and voice actions are not enabled yet.",
+            "text_to_speech_adapter_runtime_contract": tts_adapter,
+            "note": "Text-to-speech adapter contract is ready, but TTS synthesis, audio output file writes, speaker playback, cloud fallback, and automatic speak-after-chat are not enabled yet.",
         }
 
     def plan(self) -> dict[str, Any]:
@@ -575,6 +653,7 @@ class VoiceRuntimePlanner:
         microphone_boundary = self.microphone_capture_boundary_contract()
         stt_adapter = self.speech_to_text_adapter_runtime_contract()
         voice_intent_chat = self.voice_intent_chat_integration_contract()
+        tts_adapter = self.text_to_speech_adapter_runtime_contract()
 
         installed_python = sum(
             1
@@ -727,6 +806,52 @@ class VoiceRuntimePlanner:
             "voice_speaker_playback_inactive_for_intent": voice_intent_chat["speaker_playback_active"] is False,
             "voice_cloud_stt_fallback_disabled": voice_intent_chat["cloud_stt_fallback_enabled"] is False,
             "voice_silent_cloud_fallback_disabled": voice_intent_chat["silent_cloud_fallback_enabled"] is False,
+            "tts_adapter_contract_ready": tts_adapter["tts_adapter_contract_ready"] is True,
+            "tts_adapter_runtime_not_ready": tts_adapter["tts_adapter_runtime_ready"] is False,
+            "tts_default_adapter_is_piper": tts_adapter["default_adapter"] == "piper",
+            "tts_candidate_adapter_count_matches": tts_adapter["candidate_adapter_count"] == len(self.tts_candidates()),
+            "tts_local_first_required": tts_adapter["local_first_required"] is True,
+            "tts_offline_first_required": tts_adapter["offline_first_required"] is True,
+            "voice_response_input_boundary_ready": tts_adapter["voice_response_input_boundary_ready"] is True,
+            "future_text_required_for_tts_dry_run": tts_adapter["provided_text_required_for_future_dry_run"] is True,
+            "dummy_text_allowed_for_tts_contract": tts_adapter["dummy_text_allowed_for_contract"] is True,
+            "tts_text_normalization_contract_ready": tts_adapter["tts_text_normalization_contract_ready"] is True,
+            "tts_synthesis_runtime_not_ready": tts_adapter["tts_synthesis_runtime_ready"] is False,
+            "tts_synthesis_runtime_inactive": tts_adapter["tts_synthesis_runtime_active"] is False,
+            "audio_output_file_boundary_ready": tts_adapter["audio_output_file_boundary_ready"] is True,
+            "tts_audio_output_file_write_inactive": tts_adapter["audio_output_file_write_active"] is False,
+            "tts_audio_output_file_read_inactive": tts_adapter["audio_output_file_read_active"] is False,
+            "tts_audio_file_persistence_disabled": tts_adapter["audio_file_persistence_enabled"] is False,
+            "speaker_playback_permission_required": tts_adapter["speaker_playback_permission_required"] is True,
+            "tts_speaker_permission_reuses_existing_action": tts_adapter["speaker_permission_action"] == "speaker_speak",
+            "speaker_playback_runtime_not_ready": tts_adapter["speaker_playback_runtime_ready"] is False,
+            "tts_speaker_playback_inactive": tts_adapter["speaker_playback_active"] is False,
+            "audio_playback_device_access_disabled": tts_adapter["audio_playback_device_access"] is False,
+            "audio_playback_device_discovery_inactive": tts_adapter["audio_playback_device_discovery_active"] is False,
+            "tts_playback_disabled": tts_adapter["playback_enabled"] is False,
+            "automatic_speak_after_chat_disabled": tts_adapter["automatic_speak_after_chat_enabled"] is False,
+            "voice_response_playback_inactive": tts_adapter["voice_response_playback_active"] is False,
+            "chat_response_to_tts_handoff_contract_ready": tts_adapter["chat_response_to_tts_handoff_contract_ready"] is True,
+            "chat_response_to_tts_handoff_inactive": tts_adapter["chat_response_to_tts_handoff_active"] is False,
+            "tts_model_download_not_required": tts_adapter["model_download_required"] is False,
+            "tts_model_download_not_performed": tts_adapter["model_download_performed"] is False,
+            "tts_dependency_install_not_performed": tts_adapter["dependency_install_performed"] is False,
+            "cloud_tts_fallback_disabled": tts_adapter["cloud_tts_fallback_enabled"] is False,
+            "silent_cloud_tts_fallback_disabled": tts_adapter["silent_cloud_fallback_enabled"] is False,
+            "remote_tts_provider_disabled": tts_adapter["remote_tts_provider_enabled"] is False,
+            "tts_stt_runtime_inactive": tts_adapter["stt_runtime_active"] is False,
+            "tts_transcription_inactive": tts_adapter["transcription_active"] is False,
+            "tts_microphone_capture_inactive": tts_adapter["microphone_capture_active"] is False,
+            "tts_audio_device_access_disabled": tts_adapter["audio_device_access"] is False,
+            "tts_audio_buffer_inactive": tts_adapter["audio_buffer_active"] is False,
+            "tts_memory_write_inactive": tts_adapter["memory_write_active"] is False,
+            "tts_direct_voice_action_disabled": tts_adapter["direct_voice_to_action_enabled"] is False,
+            "tts_tool_execution_inactive": tts_adapter["tool_execution_active"] is False,
+            "tts_command_execution_inactive": tts_adapter["command_execution_active"] is False,
+            "tts_file_mutation_inactive": tts_adapter["file_mutation_active"] is False,
+            "tts_desktop_action_inactive": tts_adapter["desktop_action_active"] is False,
+            "tts_network_action_inactive": tts_adapter["network_action_active"] is False,
+            "tts_git_action_inactive": tts_adapter["git_action_active"] is False,
         }
 
         failed_assertions = [
@@ -754,5 +879,6 @@ class VoiceRuntimePlanner:
             "microphone_capture_boundary_contract": microphone_boundary,
             "speech_to_text_adapter_runtime_contract": stt_adapter,
             "voice_intent_chat_integration_contract": voice_intent_chat,
-            "note": "Runtime is not enabled yet. This check did not access microphone, speaker, audio devices, audio files, STT models, cloud STT, transcript chat handoff, tools, commands, memory, files, or voice actions.",
+            "text_to_speech_adapter_runtime_contract": tts_adapter,
+            "note": "Runtime is not enabled yet. This check did not access microphone, speaker, playback devices, audio files, STT/TTS models, cloud STT/TTS, transcript chat handoff, tools, commands, memory, files, or voice actions.",
         }

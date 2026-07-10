@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.195.0-genesis
-Current status: Sprint 195 Voice Intent and Chat Integration completed and ready to hand off to Sprint 196 Text-to-Speech Adapter Runtime
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 195 adds a safe voice intent and chat integration contract with contract-only transcript input, transcript normalization/classification boundaries, clarification/action gates, and a future transcript-to-chat handoff contract while keeping live transcript input, automatic chat handoff, chat session writes, model requests, memory writes, direct voice-to-action, tool/command execution, file/desktop/network/git actions, STT/TTS runtime, speaker playback, cloud fallback, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
+Current version: v0.196.0-genesis
+Current status: Sprint 196 Text-to-Speech Adapter Runtime completed and ready to hand off to Sprint 197 Voice Permission and Audit Runtime
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 196 adds a safe text-to-speech adapter contract with local/offline-first candidates, piper as the default candidate, a voice-response text input boundary, a future chat-response-to-TTS handoff contract, and speaker permission boundary while keeping TTS synthesis, audio output file read/write, audio persistence, speaker playback, playback device access/discovery, automatic speak-after-chat, cloud TTS fallback, model download, dependency install, command/tool execution, memory writes, file/desktop/network/git actions, STT runtime, transcription, microphone capture, vision, background service, systemd, public/LAN binding, browser auto-launch, and autonomy disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 195 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe voice intent and chat integration contract.
+AURA has completed Sprint 196 and continues the Sprint 191-200 Voice Interaction Runtime block with a safe text-to-speech adapter contract.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.196.0-genesis
+- Sprint 196: Text-to-Speech Adapter Runtime
 - v0.195.0-genesis
 - Sprint 195: Voice Intent and Chat Integration
 - v0.194.0-genesis
@@ -60,7 +62,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 196 — Text-to-Speech Adapter Runtime
+- Next planned sprint: Sprint 197 — Voice Permission and Audit Runtime
 Current capability registry summary:
 
 - total capabilities: 121
@@ -2634,3 +2636,78 @@ speaker playback, cloud fallback, arbitrary file access, public/LAN binding,
 background service, systemd activation, browser auto-launch, or autonomy.
 
 Next: Sprint 196 — Text-to-Speech Adapter Runtime.
+
+## Sprint 196 — Text-to-Speech Adapter Runtime
+
+Version: `v0.196.0-genesis`
+
+Sprint 196 adds the text-to-speech adapter runtime contract on top of the
+Sprint 191 activation contract, Sprint 192 listen-state foundation, Sprint 193
+microphone capture boundary, Sprint 194 speech-to-text adapter contract, and
+Sprint 195 voice intent/chat integration contract.
+
+Validated checkpoint:
+
+- TTS adapter contract ready;
+- TTS adapter runtime not ready;
+- default adapter candidate is `piper`;
+- three TTS adapter candidates declared: `piper`, `coqui-tts`, and
+  `espeak-ng`;
+- local-first TTS required;
+- offline-first TTS required;
+- voice response input boundary ready;
+- provided text required before any future TTS dry run;
+- dummy text allowed only for the contract boundary;
+- TTS text normalization contract ready;
+- TTS synthesis runtime not ready;
+- TTS synthesis inactive;
+- audio output file boundary ready;
+- audio output file write inactive;
+- audio output file read inactive;
+- audio file persistence disabled;
+- speaker playback permission required;
+- existing `speaker_speak` permission action reused;
+- speaker playback runtime not ready;
+- speaker playback inactive;
+- playback device access disabled;
+- playback device discovery inactive;
+- playback disabled;
+- automatic speak-after-chat disabled;
+- voice response playback inactive;
+- chat-response-to-TTS handoff contract ready;
+- chat-response-to-TTS handoff inactive;
+- model download not required;
+- model download not performed;
+- dependency install not performed;
+- cloud TTS fallback disabled;
+- silent cloud fallback disabled;
+- remote TTS provider disabled;
+- STT runtime inactive;
+- transcription inactive;
+- microphone capture inactive;
+- audio device access disabled;
+- audio buffer inactive;
+- memory write inactive;
+- direct voice-to-action disabled;
+- tool execution inactive;
+- command execution inactive;
+- file mutation inactive;
+- desktop action inactive;
+- network action inactive;
+- git action inactive;
+- 184 total voice activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter
+  assertions;
+- zero failed voice activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter
+  assertions.
+
+Sprint 196 adds no TTS synthesis runtime, audio output file write, audio output
+file read, audio persistence, speaker playback, playback device access,
+playback device discovery, automatic speak-after-chat, voice response playback,
+chat-response-to-TTS handoff execution, model download, dependency install,
+cloud TTS fallback, remote TTS provider, STT execution, transcription runtime,
+microphone capture, memory write, direct voice-to-action execution, tool
+execution, command execution, file mutation, desktop action, network action,
+git action, arbitrary file access, public/LAN binding, background service,
+systemd activation, browser auto-launch, or autonomy.
+
+Next: Sprint 197 — Voice Permission and Audit Runtime.

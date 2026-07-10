@@ -793,3 +793,26 @@ speaker playback, cloud fallback, and silent fallback remain disabled.
 This is still not live voice chat. It is the voice intent and chat integration
 contract that lets Sprint 196 add Text-to-Speech Adapter Runtime without
 allowing raw voice intent to execute actions directly.
+
+
+## Sprint 196 — Text-to-Speech Adapter Runtime
+
+`v0.196.0-genesis` adds the text-to-speech adapter runtime contract.
+
+AURA now has a safe boundary for future voice output without synthesizing speech
+or playing speakers yet. The contract is local/offline-first, declares `piper`,
+`coqui-tts`, and `espeak-ng` as candidates, prepares a voice-response text input
+boundary, and defines a future chat-response-to-TTS handoff while preserving
+explicit speaker permission and no-playback defaults.
+
+The checkpoint confirms that TTS synthesis, audio output file read/write, audio
+persistence, speaker playback, playback device access/discovery, automatic
+speak-after-chat, cloud TTS fallback, silent fallback, remote TTS providers,
+model download, dependency installation, STT runtime, transcription, microphone
+capture, memory writes, direct voice-to-action execution, tool execution,
+command execution, file mutation, desktop action, network action, and git action
+remain disabled.
+
+This is still not live voice output. It is the text-to-speech adapter contract
+that lets Sprint 197 add Voice Permission and Audit Runtime without allowing
+voice output or voice intent to bypass permission/audit boundaries.

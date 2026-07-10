@@ -2188,3 +2188,75 @@ enable wake words, listen in the background, hide capture, start background
 services, bind publicly, or add autonomy.
 
 Next: Sprint 196 — Text-to-Speech Adapter Runtime.
+
+## Checkpoint v0.196.0-genesis — Text-to-Speech Adapter Runtime
+
+Sprint 196 continues the Sprint 191-200 Voice Interaction Runtime block.
+
+Checkpoint state:
+
+- voice activation foundation remains ready;
+- listen-state foundation remains ready;
+- microphone boundary remains ready;
+- STT adapter contract remains ready;
+- voice intent and chat integration contract remains ready;
+- TTS adapter contract ready;
+- TTS adapter runtime not ready;
+- default adapter candidate is `piper`;
+- three TTS adapter candidates declared;
+- local-first TTS required;
+- offline-first TTS required;
+- voice response input boundary ready;
+- provided text required before any future TTS dry run;
+- dummy text allowed for contract boundary;
+- TTS text normalization contract ready;
+- TTS synthesis runtime not ready;
+- TTS synthesis inactive;
+- audio output file boundary ready;
+- audio output file write inactive;
+- audio output file read inactive;
+- audio file persistence disabled;
+- speaker playback permission required;
+- existing `speaker_speak` permission action reused;
+- speaker playback runtime not ready;
+- speaker playback inactive;
+- playback device access disabled;
+- playback device discovery inactive;
+- playback disabled;
+- automatic speak-after-chat disabled;
+- voice response playback inactive;
+- chat-response-to-TTS handoff contract ready;
+- chat-response-to-TTS handoff inactive;
+- model download not required;
+- model download not performed;
+- dependency install not performed;
+- cloud TTS fallback disabled;
+- silent cloud fallback disabled;
+- remote TTS provider disabled;
+- STT runtime inactive;
+- transcription inactive;
+- microphone capture inactive;
+- audio device access disabled;
+- audio buffer inactive;
+- memory write inactive;
+- direct voice-to-action disabled;
+- tool execution inactive;
+- command execution inactive;
+- file mutation inactive;
+- desktop action inactive;
+- network action inactive;
+- git action inactive;
+- 184 activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter assertions;
+- 0 failed activation/listen-state/microphone-boundary/STT-adapter/voice-intent-chat/TTS-adapter assertions.
+
+Sprint 196 does not synthesize speech, write audio output files, read audio
+output files, persist audio, play speaker output, access playback devices,
+discover playback devices, automatically speak after chat, play voice
+responses, execute chat-response-to-TTS handoff, download models, install
+dependencies, fallback to cloud TTS, enable remote TTS providers, run STT,
+transcribe speech, capture microphone input, write memory, execute voice
+actions, execute tools, execute commands, mutate files, control the desktop,
+perform network actions, perform git actions, start background services, bind
+publicly, or add autonomy.
+
+Next: Sprint 197 — Voice Permission and Audit Runtime.

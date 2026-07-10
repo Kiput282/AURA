@@ -1,5 +1,5 @@
 name: AURA
-version: "0.195.0-genesis"
+version: "0.196.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -89,3 +89,11 @@ modes:
 # input, automatic chat handoff, chat session writes, model requests, memory
 # writes, direct voice-to-action, tool/command execution, file/desktop/network
 # actions, STT/TTS runtime, speaker playback, and cloud fallback disabled.
+# Sprint 196: text_to_speech_adapter_runtime adds a safe TTS adapter contract
+# with local/offline-first candidates, piper as default candidate, voice
+# response text input boundary, chat-response-to-TTS handoff contract, and
+# speaker permission boundary while keeping TTS synthesis, audio output file
+# read/write, audio persistence, speaker playback, playback device access,
+# automatic speak-after-chat, cloud TTS fallback, model download, dependency
+# install, command/tool execution, memory writes, file/desktop/network/git
+# actions, STT runtime, transcription, and microphone capture disabled.
