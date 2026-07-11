@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.214.0-genesis
-Current status: Sprint 214 Action Proposal and Preview Runtime completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only action proposal and preview visibility
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 adds contract-only action proposal and preview visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, and safety matrix schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, action proposal creation, action preview creation, approval handoff creation, action queue enqueue, action execution, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.215.0-genesis
+Current status: Sprint 215 Safe Local Open Actions completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only safe local open action visibility
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 adds contract-only safe local open action visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, safety matrix, safe local open request, open target, open preview, path policy, allowlist, open approval handoff, open denial handoff, open execution blocker, and safe-open safety matrix schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, action proposal creation, action preview creation, approval handoff creation, action queue enqueue, action execution, safe local open request creation, open preview creation, open dispatch, path access, file read, directory listing, folder/file/project/dashboard opening, shell/OS/browser/file-manager dispatch, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 214 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Action Proposal and Preview Runtime as a contract-only default-deny boundary.
+AURA has completed Sprint 215 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Safe Local Open Actions as a contract-only default-deny boundary.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.215.0-genesis
+- Sprint 215: Safe Local Open Actions
 - v0.214.0-genesis
 - Sprint 214: Action Proposal and Preview Runtime
 - v0.213.0-genesis
@@ -98,7 +100,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 215 — Safe Local Open Actions
+- Next planned sprint: Sprint 216 — Allowlisted Application Launch
 Current capability registry summary:
 
 - total capabilities: 121
@@ -4603,3 +4605,153 @@ assertions, zero failed assertions, vision baseline stable, voice baseline
 stable, and baseline self-tests OK.
 
 Next: Sprint 215 — Safe Local Open Actions.
+
+## Sprint 215 — Safe Local Open Actions
+
+Version: `v0.215.0-genesis`
+
+Sprint 215 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block.
+
+This sprint adds the Safe Local Open Actions contract as a contract-only
+continuation of Active Permission Runtime, Grant/Denial/Expiry Lifecycle,
+Runtime Audit Writer, and Action Proposal and Preview Runtime. It prepares
+safe open request, safe open target, safe open preview, path policy, allowlist,
+permission requirement, audit correlation, user-visible preview, approval
+handoff, denial handoff, execution blocker, review queue, safety matrix, and
+next allowlisted application launch schemas.
+
+Sprint 215 confirms:
+
+- Safe Local Open Actions contract ready: true
+- Safe Local Open Actions runtime ready: false
+- Safe Local Open Actions status: safe_local_open_actions_contract_ready
+- current sprint: 215
+- next sprint: 216
+- next boundary: allowlisted_application_launch
+- previous contract chain complete: true
+- contract only: true
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- default deny: true
+- default grant: false
+- preview before open required: true
+- explicit approval before open required: true
+- permission before open required: true
+- audit correlation before open required: true
+- allowlist before open required: true
+- canonical path before open required: true
+- safe local scope before open required: true
+- single open action required: true
+- safe local open request schema ready: true
+- safe local open target schema ready: true
+- safe local open preview schema ready: true
+- safe local open path policy schema ready: true
+- safe local open allowlist schema ready: true
+- safe local open permission requirement schema ready: true
+- safe local open audit correlation schema ready: true
+- safe local open user-visible preview schema ready: true
+- safe local open approval handoff schema ready: true
+- safe local open denial handoff schema ready: true
+- safe local open execution blocker schema ready: true
+- safe local open review queue schema ready: true
+- safe local open safety matrix schema ready: true
+- allowed safe open target count: 4
+- blocked safe open target count: 9
+- safe local action handoff ready: false
+- local open action runtime ready: false
+- safe local open request creation allowed: false
+- safe local open target resolution allowed: false
+- safe local open preview creation allowed: false
+- safe local open preview render allowed: false
+- safe local open approval handoff allowed: false
+- safe local open review queue enqueue allowed: false
+- safe local open dispatch allowed: false
+- approved folder open runtime ready: false
+- approved file open runtime ready: false
+- project location open runtime ready: false
+- dashboard open runtime ready: false
+- path allowlist resolution allowed: false
+- path canonicalization allowed: false
+- path access runtime ready: false
+- file read runtime ready: false
+- directory listing runtime ready: false
+- shell open dispatch allowed: false
+- OS open dispatch allowed: false
+- browser open dispatch allowed: false
+- file manager launch allowed: false
+- file mutation allowed: false
+- desktop action allowed: false
+- application launch allowed: false
+- safe local open request created: false
+- safe local open preview packet created: false
+- safe local open approval handoff created: false
+- safe local open review queue item created: false
+- safe local open action executed: false
+- approved folder opened: false
+- approved file opened: false
+- project location opened: false
+- dashboard opened: false
+- path accessed: false
+- file read performed: false
+- directory listing performed: false
+- shell open dispatched: false
+- OS open dispatched: false
+- browser open dispatched: false
+- file manager launched: false
+- action executed: false
+- command executed: false
+- tool executed: false
+- file mutated: false
+- desktop action executed: false
+- application launched: false
+- permission state mutated: false
+- permission grant created: false
+- audit event written: false
+- no approved folder open: true
+- no approved file open: true
+- no project location open: true
+- no dashboard open: true
+- no path access: true
+- no file read: true
+- no directory listing: true
+- no shell open dispatch: true
+- no OS open dispatch: true
+- no browser open dispatch: true
+- no file manager launch: true
+- no open without preview: true
+- no open without approval: true
+- no open without permission: true
+- no open without audit correlation: true
+- no open non-allowlisted path: true
+- no open arbitrary path: true
+- no open mutating path: true
+- no open network path: true
+- no file mutation: true
+- no desktop action: true
+- no application launch: true
+- safety blockers: 115
+- all safety blockers inactive: true
+- runtime scope: safe_local_open_actions_contract_only
+- assertion count: 1008
+- failed assertion count: 0
+
+Allowed future safe-open targets are approved folder, approved file, approved
+project location, and approved dashboard. Blocked targets include arbitrary
+paths, hidden paths, system paths, credential files, network locations,
+executable files, mutating targets, shell commands, and broad desktop control.
+
+Sprint 215 does not create open requests, open previews, approval handoffs,
+review queue items, action queue items, path access, file reads, directory
+listings, folder/file/project/dashboard opens, shell/OS/browser/file-manager
+dispatches, permission mutations, grants, audit events, file mutations, desktop
+actions, app launches, commands, tools, network/git actions, memory writes,
+cloud fallback, external uploads, or autonomous actions.
+
+Validation passed with compileall OK, Safe Local Open Actions CLI/Shell
+visibility OK, active-permission-runtime-check OK, 1008 assertions, zero failed
+assertions, vision baseline stable, voice baseline stable, and baseline
+self-tests OK.
+
+Next: Sprint 216 — Allowlisted Application Launch.

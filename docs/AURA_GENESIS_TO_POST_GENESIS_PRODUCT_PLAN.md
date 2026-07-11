@@ -1204,3 +1204,28 @@ network/git actions, memory writes, cloud fallback, external upload, or
 autonomy.
 
 This creates the preview baseline for Sprint 215 — Safe Local Open Actions.
+
+## Sprint 215 — Safe Local Open Actions
+
+`v0.215.0-genesis` extends the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block.
+
+This sprint introduces contract-only Safe Local Open Actions visibility. It
+establishes the future preview-before-open and approval-before-open boundary for
+safe local open actions while keeping all open execution disabled.
+
+It prepares approved folder, approved file, approved project location, approved
+dashboard, path policy, allowlist, permission requirement, audit correlation,
+user-visible preview, approval handoff, denial handoff, review queue, execution
+blocker, safety matrix, and next allowlisted application launch schemas.
+
+It does not enable open request creation, open preview creation, approval
+handoff creation, review queue enqueue, path access, file read, directory
+listing, folder/file/project/dashboard opening, shell/OS/browser/file-manager
+dispatch, action execution, command/tool execution, file mutation, desktop
+actions, application launch, permission mutation, permission persistence, grant
+creation, audit writing, network/git actions, memory writes, cloud fallback,
+external upload, or autonomy.
+
+This creates the safe-open baseline for Sprint 216 — Allowlisted Application
+Launch.

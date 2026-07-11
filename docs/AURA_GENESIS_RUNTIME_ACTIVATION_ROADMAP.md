@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.214.0-genesis
+Current anchor: v0.215.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.214.0-genesis
-- Completed: Sprint 214 — Action Proposal and Preview Runtime
+- Current version: v0.215.0-genesis
+- Completed: Sprint 215 — Safe Local Open Actions
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 215 — Safe Local Open Actions
+- Next: Sprint 216 — Allowlisted Application Launch
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1313,3 +1313,66 @@ launches, commands/tools, network/git actions, memory writes, cloud fallback,
 external uploads, or autonomous actions.
 
 Next: Sprint 215 — Safe Local Open Actions.
+
+## v0.215.0-genesis — Safe Local Open Actions
+
+Sprint 215 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Safe Local Open Actions visibility.
+
+The sprint prepares safe local open request, target, preview, path policy,
+allowlist, permission requirement, audit correlation, user-visible preview,
+approval handoff, denial handoff, execution blocker, review queue, safety
+matrix, and next allowlisted application launch schemas.
+
+The checkpoint confirms:
+
+- Safe Local Open Actions contract ready
+- Safe Local Open Actions runtime disabled
+- status safe_local_open_actions_contract_ready
+- current sprint 215
+- next sprint 216
+- next boundary allowlisted_application_launch
+- preview before open required
+- explicit approval before open required
+- permission before open required
+- audit correlation before open required
+- allowlist before open required
+- canonical path before open required
+- safe local scope before open required
+- single open action required
+- safe local open request schema ready
+- safe local open target schema ready
+- safe local open preview schema ready
+- safe local open path policy schema ready
+- safe local open allowlist schema ready
+- safe local open approval handoff schema ready
+- safe local open review queue schema ready
+- allowed safe open targets 4
+- blocked safe open targets 9
+- local open action runtime blocked
+- safe local open request creation blocked
+- safe local open preview creation blocked
+- safe local open dispatch blocked
+- approved folder/file/project/dashboard open blocked
+- path access blocked
+- file read blocked
+- directory listing blocked
+- shell/OS/browser/file-manager dispatch blocked
+- file mutation blocked
+- desktop action blocked
+- application launch blocked
+- permission mutation blocked
+- audit write blocked
+- 115 safety blockers
+- all safety blockers inactive
+- 1008 assertions
+- zero failed assertions
+
+Sprint 215 does not create open requests, previews, approval handoffs, review
+queue items, path access, file reads, directory listings, folder/file/project/
+dashboard opens, shell/OS/browser/file-manager dispatches, audit events,
+permission mutations, grants, file mutations, desktop actions, app launches,
+commands/tools, network/git actions, memory writes, cloud fallback, external
+uploads, or autonomous actions.
+
+Next: Sprint 216 — Allowlisted Application Launch.

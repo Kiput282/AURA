@@ -2767,3 +2767,24 @@ write memory, install dependencies, download models, use cloud fallback, upload
 externally, or perform autonomous actions.
 
 The next sprint is Sprint 215 — Safe Local Open Actions.
+
+## Checkpoint v0.215.0-genesis — Safe Local Open Actions
+
+Sprint 215 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Safe Local Open Actions.
+
+This checkpoint prepares safe local open action schemas, including approved
+folder, approved file, approved project location, and approved dashboard open
+previews. It requires preview-before-open, explicit approval, permission, audit
+correlation, allowlist, canonical path, safe local scope, and single-open action
+boundaries.
+
+Runtime remains disabled. Sprint 215 does not create open requests, open
+previews, approval handoffs, review queue items, path access, file reads,
+directory listings, folder/file/project/dashboard opens, shell/OS/browser/file-
+manager dispatches, execute actions, execute commands/tools, mutate files,
+control desktop, launch applications, mutate permissions, create grants, write
+audit events, perform network/git actions, write memory, use cloud fallback,
+upload externally, or perform autonomous actions.
+
+The next sprint is Sprint 216 — Allowlisted Application Launch.

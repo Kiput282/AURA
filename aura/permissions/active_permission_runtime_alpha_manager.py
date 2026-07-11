@@ -567,3 +567,209 @@ if not getattr(ActivePermissionRuntimeAlphaManager, "_s214_extension_installed",
 
     ActivePermissionRuntimeAlphaManager.status = _s214_alpha_status
     ActivePermissionRuntimeAlphaManager._s214_extension_installed = True
+
+# Sprint 215 extension: alpha visibility for Safe Local Open Actions.
+if not getattr(ActivePermissionRuntimeAlphaManager, "_s215_extension_installed", False):
+    _S214_ALPHA_STATUS = ActivePermissionRuntimeAlphaManager.status
+
+    def _s215_alpha_status(self) -> dict[str, Any]:
+        status = _S214_ALPHA_STATUS(self)
+        contract = self.planner.safe_local_open_actions_contract()
+        check = self.planner.check()
+
+        status.update(
+            {
+                "sprint_215_safe_local_open_actions_contract_ready": contract[
+                    "safe_local_open_actions_contract_ready"
+                ],
+                "safe_local_open_actions_runtime_ready": contract[
+                    "safe_local_open_actions_runtime_ready"
+                ],
+                "safe_local_open_actions_status": contract[
+                    "safe_local_open_actions_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "preview_before_open_required": contract[
+                    "preview_before_open_required"
+                ],
+                "explicit_approval_before_open_required": contract[
+                    "explicit_approval_before_open_required"
+                ],
+                "permission_before_open_required": contract[
+                    "permission_before_open_required"
+                ],
+                "audit_correlation_before_open_required": contract[
+                    "audit_correlation_before_open_required"
+                ],
+                "allowlist_before_open_required": contract[
+                    "allowlist_before_open_required"
+                ],
+                "safe_local_open_request_schema_ready": contract[
+                    "safe_local_open_request_schema_ready"
+                ],
+                "safe_local_open_target_schema_ready": contract[
+                    "safe_local_open_target_schema_ready"
+                ],
+                "safe_local_open_preview_schema_ready": contract[
+                    "safe_local_open_preview_schema_ready"
+                ],
+                "safe_local_open_path_policy_schema_ready": contract[
+                    "safe_local_open_path_policy_schema_ready"
+                ],
+                "safe_local_open_allowlist_schema_ready": contract[
+                    "safe_local_open_allowlist_schema_ready"
+                ],
+                "safe_local_open_audit_correlation_schema_ready": contract[
+                    "safe_local_open_audit_correlation_schema_ready"
+                ],
+                "safe_local_open_user_visible_preview_schema_ready": contract[
+                    "safe_local_open_user_visible_preview_schema_ready"
+                ],
+                "safe_local_open_approval_handoff_schema_ready": contract[
+                    "safe_local_open_approval_handoff_schema_ready"
+                ],
+                "safe_local_open_review_queue_schema_ready": contract[
+                    "safe_local_open_review_queue_schema_ready"
+                ],
+                "allowed_safe_open_target_count": contract[
+                    "allowed_safe_open_target_count"
+                ],
+                "blocked_safe_open_target_count": contract[
+                    "blocked_safe_open_target_count"
+                ],
+                "safe_local_action_handoff_ready": contract[
+                    "safe_local_action_handoff_ready"
+                ],
+                "local_open_action_runtime_ready": contract[
+                    "local_open_action_runtime_ready"
+                ],
+                "safe_local_open_request_creation_allowed": contract[
+                    "safe_local_open_request_creation_allowed"
+                ],
+                "safe_local_open_preview_creation_allowed": contract[
+                    "safe_local_open_preview_creation_allowed"
+                ],
+                "safe_local_open_dispatch_allowed": contract[
+                    "safe_local_open_dispatch_allowed"
+                ],
+                "approved_folder_open_runtime_ready": contract[
+                    "approved_folder_open_runtime_ready"
+                ],
+                "approved_file_open_runtime_ready": contract[
+                    "approved_file_open_runtime_ready"
+                ],
+                "project_location_open_runtime_ready": contract[
+                    "project_location_open_runtime_ready"
+                ],
+                "dashboard_open_runtime_ready": contract[
+                    "dashboard_open_runtime_ready"
+                ],
+                "path_access_runtime_ready": contract["path_access_runtime_ready"],
+                "file_read_runtime_ready": contract["file_read_runtime_ready"],
+                "directory_listing_runtime_ready": contract[
+                    "directory_listing_runtime_ready"
+                ],
+                "shell_open_dispatch_allowed": contract[
+                    "shell_open_dispatch_allowed"
+                ],
+                "file_manager_launch_allowed": contract[
+                    "file_manager_launch_allowed"
+                ],
+                "file_mutation_allowed": contract["file_mutation_allowed"],
+                "desktop_action_allowed": contract["desktop_action_allowed"],
+                "application_launch_allowed": contract[
+                    "application_launch_allowed"
+                ],
+                "safe_local_open_request_created": contract[
+                    "safe_local_open_request_created"
+                ],
+                "safe_local_open_preview_packet_created": contract[
+                    "safe_local_open_preview_packet_created"
+                ],
+                "safe_local_open_approval_handoff_created": contract[
+                    "safe_local_open_approval_handoff_created"
+                ],
+                "safe_local_open_review_queue_item_created": contract[
+                    "safe_local_open_review_queue_item_created"
+                ],
+                "safe_local_open_action_executed": contract[
+                    "safe_local_open_action_executed"
+                ],
+                "approved_folder_opened": contract["approved_folder_opened"],
+                "approved_file_opened": contract["approved_file_opened"],
+                "project_location_opened": contract["project_location_opened"],
+                "dashboard_opened": contract["dashboard_opened"],
+                "path_accessed": contract["path_accessed"],
+                "file_read_performed": contract["file_read_performed"],
+                "directory_listing_performed": contract[
+                    "directory_listing_performed"
+                ],
+                "shell_open_dispatched": contract["shell_open_dispatched"],
+                "file_manager_launched": contract["file_manager_launched"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "tool_executed": contract["tool_executed"],
+                "file_mutated": contract["file_mutated"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "no_safe_local_open_request_creation": contract[
+                    "no_safe_local_open_request_creation"
+                ],
+                "no_safe_local_open_preview_creation": contract[
+                    "no_safe_local_open_preview_creation"
+                ],
+                "no_safe_local_open_dispatch": contract[
+                    "no_safe_local_open_dispatch"
+                ],
+                "no_approved_folder_open": contract["no_approved_folder_open"],
+                "no_approved_file_open": contract["no_approved_file_open"],
+                "no_project_location_open": contract[
+                    "no_project_location_open"
+                ],
+                "no_dashboard_open": contract["no_dashboard_open"],
+                "no_path_access": contract["no_path_access"],
+                "no_file_read": contract["no_file_read"],
+                "no_directory_listing": contract["no_directory_listing"],
+                "no_open_without_preview": contract["no_open_without_preview"],
+                "no_open_without_explicit_approval": contract[
+                    "no_open_without_explicit_approval"
+                ],
+                "no_open_without_permission": contract[
+                    "no_open_without_permission"
+                ],
+                "no_open_non_allowlisted_path": contract[
+                    "no_open_non_allowlisted_path"
+                ],
+                "no_open_arbitrary_path": contract["no_open_arbitrary_path"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "assertion_count": check["assertion_count"],
+                "failed_assertion_count": check["failed_assertion_count"],
+                "failed_assertions": check["failed_assertions"],
+                "runtime_scope": contract["runtime_scope"],
+                "sections": 5,
+                "note": (
+                    "Active Permission Runtime Alpha now exposes Sprint 215 "
+                    "Safe Local Open Actions visibility without opening files, "
+                    "accessing paths, reading files, launching apps, mutating "
+                    "files, or executing local actions."
+                ),
+            }
+        )
+        return status
+
+    ActivePermissionRuntimeAlphaManager.status = _s215_alpha_status
+    ActivePermissionRuntimeAlphaManager._s215_extension_installed = True

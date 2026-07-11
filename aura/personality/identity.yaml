@@ -1,5 +1,5 @@
 name: AURA
-version: "0.214.0-genesis"
+version: "0.215.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -224,3 +224,14 @@ modes:
 # execute actions, run commands/tools, mutate files, control desktop, launch
 # apps, mutate permissions, create grants, write audit events, use network/git,
 # use cloud fallback, or upload externally.
+# Sprint 215: safe_local_open_actions extends the permission/action block
+# with contract-only safe local open action schemas. It prepares approved
+# folder, approved file, approved project location, and approved dashboard open
+# preview boundaries. It requires preview-before-open, explicit approval,
+# permission, audit correlation, allowlist, canonical path, safe local scope,
+# and single-open action boundaries.
+# It does not create open requests, previews, approval handoffs, review queue
+# items, path access, file reads, directory listings, folder/file/project/
+# dashboard opens, shell/OS/browser/file-manager dispatches, file mutations,
+# desktop actions, app launches, permission mutations, grants, audit writes,
+# network/git actions, cloud fallback, external uploads, or autonomous actions.

@@ -2539,3 +2539,851 @@ if not getattr(ActivePermissionRuntimePlanner, "_s214_extension_installed", Fals
     ActivePermissionRuntimePlanner.check = _s214_check
     ActivePermissionRuntimePlanner.plan = _s214_plan
     ActivePermissionRuntimePlanner._s214_extension_installed = True
+
+# Sprint 215 extension: Safe Local Open Actions.
+#
+# This remains contract-only. It prepares safe local open action schemas and
+# safety visibility for approved folder/file/project/dashboard open previews.
+# It does not open files/folders, access arbitrary paths, read files, list
+# directories, dispatch shell/OS/browser/file-manager open commands, mutate
+# files, control desktop, launch applications, or execute local actions.
+if not getattr(ActivePermissionRuntimePlanner, "_s215_extension_installed", False):
+    _S214_STATUS = ActivePermissionRuntimePlanner.status
+    _S214_CHECK = ActivePermissionRuntimePlanner.check
+    _S214_PLAN = ActivePermissionRuntimePlanner.plan
+
+    def _s215_safety_blockers(self) -> tuple[str, ...]:
+        base = tuple(self.action_proposal_preview_runtime_contract()["safety_blockers"])
+        extra = (
+            "safe_local_open_actions_runtime_active",
+            "safe_local_open_request_creation_active",
+            "safe_local_open_target_resolution_active",
+            "safe_local_open_preview_creation_active",
+            "safe_local_open_preview_render_active",
+            "safe_local_open_approval_handoff_active",
+            "safe_local_open_review_queue_enqueue_active",
+            "safe_local_open_dispatch_active",
+            "approved_folder_open_runtime_active",
+            "approved_file_open_runtime_active",
+            "project_location_open_runtime_active",
+            "dashboard_open_runtime_active",
+            "path_allowlist_resolution_active",
+            "path_canonicalization_runtime_active",
+            "path_existence_check_runtime_active",
+            "path_access_runtime_active",
+            "file_read_runtime_active",
+            "directory_listing_runtime_active",
+            "shell_open_dispatch_active",
+            "os_open_dispatch_active",
+            "browser_open_dispatch_active",
+            "file_manager_launch_active",
+            "open_without_preview_active",
+            "open_without_approval_active",
+            "open_without_permission_active",
+            "open_without_audit_correlation_active",
+            "open_non_allowlisted_path_active",
+            "open_arbitrary_path_active",
+            "open_mutating_path_active",
+            "open_network_path_active",
+        )
+        return tuple(dict.fromkeys(base + extra))
+
+    def _s215_safe_local_open_actions_contract(self) -> dict[str, Any]:
+        s214 = self.action_proposal_preview_runtime_contract()
+        blockers = _s215_safety_blockers(self)
+
+        contract: dict[str, Any] = dict(s214)
+        contract.update(
+            {
+                "safe_local_open_actions_contract_ready": True,
+                "safe_local_open_actions_runtime_ready": False,
+                "safe_local_open_actions_status": "safe_local_open_actions_contract_ready",
+                "permission_action_block_start": 211,
+                "permission_action_block_end": 220,
+                "permission_action_current_sprint": 215,
+                "permission_action_next_sprint": 216,
+                "permission_action_next_boundary": "allowlisted_application_launch",
+                "previous_active_permission_runtime_contract_ready": s214[
+                    "active_permission_runtime_contract_ready"
+                ],
+                "previous_grant_denial_expiry_lifecycle_contract_ready": s214[
+                    "grant_denial_expiry_lifecycle_contract_ready"
+                ],
+                "previous_runtime_audit_writer_contract_ready": s214[
+                    "runtime_audit_writer_contract_ready"
+                ],
+                "previous_action_proposal_preview_runtime_contract_ready": s214[
+                    "action_proposal_preview_runtime_contract_ready"
+                ],
+                "previous_contract_chain_complete": True,
+                "contract_only": True,
+                "runtime_ready": False,
+                "runtime_activation_allowed": False,
+                "release_gate_open": False,
+                "default_deny": True,
+                "default_grant": False,
+                "preview_before_open_required": True,
+                "explicit_approval_before_open_required": True,
+                "permission_before_open_required": True,
+                "audit_correlation_before_open_required": True,
+                "allowlist_before_open_required": True,
+                "canonical_path_before_open_required": True,
+                "safe_local_scope_before_open_required": True,
+                "single_open_action_required": True,
+                "safe_local_open_request_schema_ready": True,
+                "safe_local_open_target_schema_ready": True,
+                "safe_local_open_preview_schema_ready": True,
+                "safe_local_open_path_policy_schema_ready": True,
+                "safe_local_open_allowlist_schema_ready": True,
+                "safe_local_open_permission_requirement_schema_ready": True,
+                "safe_local_open_audit_correlation_schema_ready": True,
+                "safe_local_open_user_visible_preview_schema_ready": True,
+                "safe_local_open_approval_handoff_schema_ready": True,
+                "safe_local_open_denial_handoff_schema_ready": True,
+                "safe_local_open_execution_blocker_schema_ready": True,
+                "safe_local_open_review_queue_schema_ready": True,
+                "safe_local_open_safety_matrix_schema_ready": True,
+                "safe_local_open_next_allowlisted_app_schema_ready": True,
+                "allowed_safe_open_target_catalog": [
+                    "approved_folder",
+                    "approved_file",
+                    "approved_project_location",
+                    "approved_dashboard",
+                ],
+                "allowed_safe_open_target_count": 4,
+                "blocked_safe_open_target_catalog": [
+                    "arbitrary_path",
+                    "hidden_path",
+                    "system_path",
+                    "credential_file",
+                    "network_location",
+                    "executable_file",
+                    "delete_or_mutate_target",
+                    "shell_command",
+                    "broad_desktop_control",
+                ],
+                "blocked_safe_open_target_count": 9,
+                "safe_local_action_handoff_ready": False,
+                "local_open_action_runtime_ready": False,
+                "safe_local_open_request_creation_allowed": False,
+                "safe_local_open_target_resolution_allowed": False,
+                "safe_local_open_preview_creation_allowed": False,
+                "safe_local_open_preview_render_allowed": False,
+                "safe_local_open_approval_handoff_allowed": False,
+                "safe_local_open_review_queue_enqueue_allowed": False,
+                "safe_local_open_dispatch_allowed": False,
+                "approved_folder_open_runtime_ready": False,
+                "approved_file_open_runtime_ready": False,
+                "project_location_open_runtime_ready": False,
+                "dashboard_open_runtime_ready": False,
+                "path_allowlist_resolution_allowed": False,
+                "path_canonicalization_allowed": False,
+                "path_existence_check_allowed": False,
+                "path_access_runtime_ready": False,
+                "file_read_runtime_ready": False,
+                "directory_listing_runtime_ready": False,
+                "shell_open_dispatch_allowed": False,
+                "os_open_dispatch_allowed": False,
+                "browser_open_dispatch_allowed": False,
+                "file_manager_launch_allowed": False,
+                "action_execution_runtime_ready": False,
+                "action_execution_dispatch_allowed": False,
+                "command_execution_allowed": False,
+                "tool_execution_allowed": False,
+                "file_mutation_allowed": False,
+                "desktop_action_allowed": False,
+                "application_launch_allowed": False,
+                "audit_write_allowed": False,
+                "audit_event_packet_creation_allowed": False,
+                "audit_event_write_allowed": False,
+                "audit_log_append_allowed": False,
+                "audit_persistence_allowed": False,
+                "permission_state_mutation_allowed": False,
+                "permission_state_persistence_allowed": False,
+                "grant_packet_creation_allowed": False,
+                "grant_persistence_allowed": False,
+                "safe_local_open_request_created": False,
+                "safe_local_open_target_packet_created": False,
+                "safe_local_open_preview_packet_created": False,
+                "safe_local_open_path_policy_created": False,
+                "safe_local_open_allowlist_packet_created": False,
+                "safe_local_open_permission_requirement_created": False,
+                "safe_local_open_audit_correlation_created": False,
+                "safe_local_open_user_visible_preview_created": False,
+                "safe_local_open_approval_handoff_created": False,
+                "safe_local_open_denial_handoff_created": False,
+                "safe_local_open_execution_blocker_created": False,
+                "safe_local_open_review_queue_item_created": False,
+                "safe_local_open_action_created": False,
+                "safe_local_open_action_enqueued": False,
+                "safe_local_open_action_executed": False,
+                "approved_folder_opened": False,
+                "approved_file_opened": False,
+                "project_location_opened": False,
+                "dashboard_opened": False,
+                "path_allowlist_resolved": False,
+                "path_canonicalized": False,
+                "path_existence_checked": False,
+                "path_accessed": False,
+                "file_read_performed": False,
+                "directory_listing_performed": False,
+                "shell_open_dispatched": False,
+                "os_open_dispatched": False,
+                "browser_open_dispatched": False,
+                "file_manager_launched": False,
+                "action_proposal_created": False,
+                "action_preview_created": False,
+                "action_enqueued": False,
+                "action_executed": False,
+                "command_executed": False,
+                "tool_executed": False,
+                "file_mutated": False,
+                "desktop_action_executed": False,
+                "application_launched": False,
+                "network_action_executed": False,
+                "git_action_executed": False,
+                "memory_written": False,
+                "external_upload_performed": False,
+                "cloud_fallback_used": False,
+                "autonomous_action_performed": False,
+                "permission_state_mutated": False,
+                "permission_grant_created": False,
+                "audit_event_written": False,
+                "audit_event_persisted": False,
+                "audit_log_appended": False,
+                "audit_storage_written": False,
+                "no_safe_local_open_request_creation": True,
+                "no_safe_local_open_target_resolution": True,
+                "no_safe_local_open_preview_creation": True,
+                "no_safe_local_open_preview_render": True,
+                "no_safe_local_open_approval_handoff": True,
+                "no_safe_local_open_review_queue_enqueue": True,
+                "no_safe_local_open_dispatch": True,
+                "no_approved_folder_open": True,
+                "no_approved_file_open": True,
+                "no_project_location_open": True,
+                "no_dashboard_open": True,
+                "no_path_allowlist_resolution": True,
+                "no_path_canonicalization": True,
+                "no_path_existence_check": True,
+                "no_path_access": True,
+                "no_file_read": True,
+                "no_directory_listing": True,
+                "no_shell_open_dispatch": True,
+                "no_os_open_dispatch": True,
+                "no_browser_open_dispatch": True,
+                "no_file_manager_launch": True,
+                "no_open_without_preview": True,
+                "no_open_without_explicit_approval": True,
+                "no_open_without_permission": True,
+                "no_open_without_audit_correlation": True,
+                "no_open_non_allowlisted_path": True,
+                "no_open_arbitrary_path": True,
+                "no_open_mutating_path": True,
+                "no_open_network_path": True,
+                "no_action_execution_dispatch": True,
+                "no_action_execution": True,
+                "no_command_execution": True,
+                "no_tool_execution": True,
+                "no_file_mutation": True,
+                "no_desktop_action": True,
+                "no_application_launch": True,
+                "no_network_action": True,
+                "no_git_action": True,
+                "no_memory_write": True,
+                "no_external_upload": True,
+                "no_cloud_fallback": True,
+                "no_autonomous_action": True,
+                "no_permission_state_mutation": True,
+                "no_permission_persistence": True,
+                "no_grant_creation": True,
+                "no_grant_persistence": True,
+                "no_audit_event_creation": True,
+                "no_audit_write": True,
+                "no_audit_persistence": True,
+                "runtime_scope": "safe_local_open_actions_contract_only",
+                "safety_blockers": list(blockers),
+                "safety_blocker_count": len(blockers),
+            }
+        )
+
+        for blocker in blockers:
+            contract[blocker] = False
+
+        contract["all_safety_blockers_inactive"] = all(
+            contract[blocker] is False for blocker in blockers
+        )
+
+        return contract
+
+    def _s215_status(self) -> dict[str, Any]:
+        status = _S214_STATUS(self)
+        contract = self.safe_local_open_actions_contract()
+
+        status.update(
+            {
+                "name": self.name,
+                "version": self.version,
+                "status": "planning",
+                "planning_ready": True,
+                "runtime_ready": False,
+                "safe_local_open_actions_contract_ready": contract[
+                    "safe_local_open_actions_contract_ready"
+                ],
+                "safe_local_open_actions_runtime_ready": contract[
+                    "safe_local_open_actions_runtime_ready"
+                ],
+                "safe_local_open_actions_status": contract[
+                    "safe_local_open_actions_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "preview_before_open_required": contract[
+                    "preview_before_open_required"
+                ],
+                "explicit_approval_before_open_required": contract[
+                    "explicit_approval_before_open_required"
+                ],
+                "permission_before_open_required": contract[
+                    "permission_before_open_required"
+                ],
+                "audit_correlation_before_open_required": contract[
+                    "audit_correlation_before_open_required"
+                ],
+                "allowlist_before_open_required": contract[
+                    "allowlist_before_open_required"
+                ],
+                "canonical_path_before_open_required": contract[
+                    "canonical_path_before_open_required"
+                ],
+                "safe_local_scope_before_open_required": contract[
+                    "safe_local_scope_before_open_required"
+                ],
+                "single_open_action_required": contract[
+                    "single_open_action_required"
+                ],
+                "safe_local_open_request_schema_ready": contract[
+                    "safe_local_open_request_schema_ready"
+                ],
+                "safe_local_open_target_schema_ready": contract[
+                    "safe_local_open_target_schema_ready"
+                ],
+                "safe_local_open_preview_schema_ready": contract[
+                    "safe_local_open_preview_schema_ready"
+                ],
+                "safe_local_open_path_policy_schema_ready": contract[
+                    "safe_local_open_path_policy_schema_ready"
+                ],
+                "safe_local_open_allowlist_schema_ready": contract[
+                    "safe_local_open_allowlist_schema_ready"
+                ],
+                "safe_local_open_permission_requirement_schema_ready": contract[
+                    "safe_local_open_permission_requirement_schema_ready"
+                ],
+                "safe_local_open_audit_correlation_schema_ready": contract[
+                    "safe_local_open_audit_correlation_schema_ready"
+                ],
+                "safe_local_open_user_visible_preview_schema_ready": contract[
+                    "safe_local_open_user_visible_preview_schema_ready"
+                ],
+                "safe_local_open_approval_handoff_schema_ready": contract[
+                    "safe_local_open_approval_handoff_schema_ready"
+                ],
+                "safe_local_open_review_queue_schema_ready": contract[
+                    "safe_local_open_review_queue_schema_ready"
+                ],
+                "allowed_safe_open_target_count": contract[
+                    "allowed_safe_open_target_count"
+                ],
+                "blocked_safe_open_target_count": contract[
+                    "blocked_safe_open_target_count"
+                ],
+                "safe_local_action_handoff_ready": contract[
+                    "safe_local_action_handoff_ready"
+                ],
+                "local_open_action_runtime_ready": contract[
+                    "local_open_action_runtime_ready"
+                ],
+                "safe_local_open_request_creation_allowed": contract[
+                    "safe_local_open_request_creation_allowed"
+                ],
+                "safe_local_open_target_resolution_allowed": contract[
+                    "safe_local_open_target_resolution_allowed"
+                ],
+                "safe_local_open_preview_creation_allowed": contract[
+                    "safe_local_open_preview_creation_allowed"
+                ],
+                "safe_local_open_preview_render_allowed": contract[
+                    "safe_local_open_preview_render_allowed"
+                ],
+                "safe_local_open_approval_handoff_allowed": contract[
+                    "safe_local_open_approval_handoff_allowed"
+                ],
+                "safe_local_open_review_queue_enqueue_allowed": contract[
+                    "safe_local_open_review_queue_enqueue_allowed"
+                ],
+                "safe_local_open_dispatch_allowed": contract[
+                    "safe_local_open_dispatch_allowed"
+                ],
+                "approved_folder_open_runtime_ready": contract[
+                    "approved_folder_open_runtime_ready"
+                ],
+                "approved_file_open_runtime_ready": contract[
+                    "approved_file_open_runtime_ready"
+                ],
+                "project_location_open_runtime_ready": contract[
+                    "project_location_open_runtime_ready"
+                ],
+                "dashboard_open_runtime_ready": contract[
+                    "dashboard_open_runtime_ready"
+                ],
+                "path_allowlist_resolution_allowed": contract[
+                    "path_allowlist_resolution_allowed"
+                ],
+                "path_canonicalization_allowed": contract[
+                    "path_canonicalization_allowed"
+                ],
+                "path_access_runtime_ready": contract["path_access_runtime_ready"],
+                "file_read_runtime_ready": contract["file_read_runtime_ready"],
+                "directory_listing_runtime_ready": contract[
+                    "directory_listing_runtime_ready"
+                ],
+                "shell_open_dispatch_allowed": contract[
+                    "shell_open_dispatch_allowed"
+                ],
+                "os_open_dispatch_allowed": contract["os_open_dispatch_allowed"],
+                "browser_open_dispatch_allowed": contract[
+                    "browser_open_dispatch_allowed"
+                ],
+                "file_manager_launch_allowed": contract[
+                    "file_manager_launch_allowed"
+                ],
+                "file_mutation_allowed": contract["file_mutation_allowed"],
+                "desktop_action_allowed": contract["desktop_action_allowed"],
+                "application_launch_allowed": contract[
+                    "application_launch_allowed"
+                ],
+                "safe_local_open_request_created": contract[
+                    "safe_local_open_request_created"
+                ],
+                "safe_local_open_target_packet_created": contract[
+                    "safe_local_open_target_packet_created"
+                ],
+                "safe_local_open_preview_packet_created": contract[
+                    "safe_local_open_preview_packet_created"
+                ],
+                "safe_local_open_approval_handoff_created": contract[
+                    "safe_local_open_approval_handoff_created"
+                ],
+                "safe_local_open_review_queue_item_created": contract[
+                    "safe_local_open_review_queue_item_created"
+                ],
+                "safe_local_open_action_created": contract[
+                    "safe_local_open_action_created"
+                ],
+                "safe_local_open_action_enqueued": contract[
+                    "safe_local_open_action_enqueued"
+                ],
+                "safe_local_open_action_executed": contract[
+                    "safe_local_open_action_executed"
+                ],
+                "approved_folder_opened": contract["approved_folder_opened"],
+                "approved_file_opened": contract["approved_file_opened"],
+                "project_location_opened": contract["project_location_opened"],
+                "dashboard_opened": contract["dashboard_opened"],
+                "path_accessed": contract["path_accessed"],
+                "file_read_performed": contract["file_read_performed"],
+                "directory_listing_performed": contract[
+                    "directory_listing_performed"
+                ],
+                "shell_open_dispatched": contract["shell_open_dispatched"],
+                "os_open_dispatched": contract["os_open_dispatched"],
+                "browser_open_dispatched": contract["browser_open_dispatched"],
+                "file_manager_launched": contract["file_manager_launched"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "tool_executed": contract["tool_executed"],
+                "file_mutated": contract["file_mutated"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "permission_grant_created": contract["permission_grant_created"],
+                "audit_event_written": contract["audit_event_written"],
+                "no_safe_local_open_request_creation": contract[
+                    "no_safe_local_open_request_creation"
+                ],
+                "no_safe_local_open_preview_creation": contract[
+                    "no_safe_local_open_preview_creation"
+                ],
+                "no_safe_local_open_dispatch": contract[
+                    "no_safe_local_open_dispatch"
+                ],
+                "no_approved_folder_open": contract["no_approved_folder_open"],
+                "no_approved_file_open": contract["no_approved_file_open"],
+                "no_project_location_open": contract[
+                    "no_project_location_open"
+                ],
+                "no_dashboard_open": contract["no_dashboard_open"],
+                "no_path_access": contract["no_path_access"],
+                "no_file_read": contract["no_file_read"],
+                "no_directory_listing": contract["no_directory_listing"],
+                "no_open_without_preview": contract["no_open_without_preview"],
+                "no_open_without_explicit_approval": contract[
+                    "no_open_without_explicit_approval"
+                ],
+                "no_open_without_permission": contract[
+                    "no_open_without_permission"
+                ],
+                "no_open_without_audit_correlation": contract[
+                    "no_open_without_audit_correlation"
+                ],
+                "no_open_non_allowlisted_path": contract[
+                    "no_open_non_allowlisted_path"
+                ],
+                "no_open_arbitrary_path": contract["no_open_arbitrary_path"],
+                "no_open_mutating_path": contract["no_open_mutating_path"],
+                "no_file_mutation": contract["no_file_mutation"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_application_launch": contract["no_application_launch"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "runtime_scope": contract["runtime_scope"],
+                "safe_local_open_actions_contract": contract,
+                "contract": contract,
+                "note": (
+                    "Safe Local Open Actions contract is ready for Sprint 215; "
+                    "it prepares allowlisted open previews without opening files, "
+                    "accessing paths, reading files, launching apps, mutating "
+                    "files, or executing local actions."
+                ),
+            }
+        )
+        return status
+
+    def _s215_check(self) -> dict[str, Any]:
+        s214 = _S214_CHECK(self)
+        contract = self.safe_local_open_actions_contract()
+
+        true_keys = (
+            "safe_local_open_actions_contract_ready",
+            "previous_active_permission_runtime_contract_ready",
+            "previous_grant_denial_expiry_lifecycle_contract_ready",
+            "previous_runtime_audit_writer_contract_ready",
+            "previous_action_proposal_preview_runtime_contract_ready",
+            "previous_contract_chain_complete",
+            "contract_only",
+            "default_deny",
+            "preview_before_open_required",
+            "explicit_approval_before_open_required",
+            "permission_before_open_required",
+            "audit_correlation_before_open_required",
+            "allowlist_before_open_required",
+            "canonical_path_before_open_required",
+            "safe_local_scope_before_open_required",
+            "single_open_action_required",
+            "safe_local_open_request_schema_ready",
+            "safe_local_open_target_schema_ready",
+            "safe_local_open_preview_schema_ready",
+            "safe_local_open_path_policy_schema_ready",
+            "safe_local_open_allowlist_schema_ready",
+            "safe_local_open_permission_requirement_schema_ready",
+            "safe_local_open_audit_correlation_schema_ready",
+            "safe_local_open_user_visible_preview_schema_ready",
+            "safe_local_open_approval_handoff_schema_ready",
+            "safe_local_open_denial_handoff_schema_ready",
+            "safe_local_open_execution_blocker_schema_ready",
+            "safe_local_open_review_queue_schema_ready",
+            "safe_local_open_safety_matrix_schema_ready",
+            "safe_local_open_next_allowlisted_app_schema_ready",
+            "no_safe_local_open_request_creation",
+            "no_safe_local_open_target_resolution",
+            "no_safe_local_open_preview_creation",
+            "no_safe_local_open_preview_render",
+            "no_safe_local_open_approval_handoff",
+            "no_safe_local_open_review_queue_enqueue",
+            "no_safe_local_open_dispatch",
+            "no_approved_folder_open",
+            "no_approved_file_open",
+            "no_project_location_open",
+            "no_dashboard_open",
+            "no_path_allowlist_resolution",
+            "no_path_canonicalization",
+            "no_path_existence_check",
+            "no_path_access",
+            "no_file_read",
+            "no_directory_listing",
+            "no_shell_open_dispatch",
+            "no_os_open_dispatch",
+            "no_browser_open_dispatch",
+            "no_file_manager_launch",
+            "no_open_without_preview",
+            "no_open_without_explicit_approval",
+            "no_open_without_permission",
+            "no_open_without_audit_correlation",
+            "no_open_non_allowlisted_path",
+            "no_open_arbitrary_path",
+            "no_open_mutating_path",
+            "no_open_network_path",
+            "no_action_execution_dispatch",
+            "no_action_execution",
+            "no_command_execution",
+            "no_tool_execution",
+            "no_file_mutation",
+            "no_desktop_action",
+            "no_application_launch",
+            "no_network_action",
+            "no_git_action",
+            "no_memory_write",
+            "no_external_upload",
+            "no_cloud_fallback",
+            "no_autonomous_action",
+            "no_permission_state_mutation",
+            "no_permission_persistence",
+            "no_grant_creation",
+            "no_grant_persistence",
+            "no_audit_event_creation",
+            "no_audit_write",
+            "no_audit_persistence",
+            "all_safety_blockers_inactive",
+        )
+
+        false_keys = (
+            "safe_local_open_actions_runtime_ready",
+            "runtime_ready",
+            "runtime_activation_allowed",
+            "release_gate_open",
+            "default_grant",
+            "safe_local_action_handoff_ready",
+            "local_open_action_runtime_ready",
+            "safe_local_open_request_creation_allowed",
+            "safe_local_open_target_resolution_allowed",
+            "safe_local_open_preview_creation_allowed",
+            "safe_local_open_preview_render_allowed",
+            "safe_local_open_approval_handoff_allowed",
+            "safe_local_open_review_queue_enqueue_allowed",
+            "safe_local_open_dispatch_allowed",
+            "approved_folder_open_runtime_ready",
+            "approved_file_open_runtime_ready",
+            "project_location_open_runtime_ready",
+            "dashboard_open_runtime_ready",
+            "path_allowlist_resolution_allowed",
+            "path_canonicalization_allowed",
+            "path_existence_check_allowed",
+            "path_access_runtime_ready",
+            "file_read_runtime_ready",
+            "directory_listing_runtime_ready",
+            "shell_open_dispatch_allowed",
+            "os_open_dispatch_allowed",
+            "browser_open_dispatch_allowed",
+            "file_manager_launch_allowed",
+            "action_execution_runtime_ready",
+            "action_execution_dispatch_allowed",
+            "command_execution_allowed",
+            "tool_execution_allowed",
+            "file_mutation_allowed",
+            "desktop_action_allowed",
+            "application_launch_allowed",
+            "audit_write_allowed",
+            "audit_event_packet_creation_allowed",
+            "audit_event_write_allowed",
+            "audit_log_append_allowed",
+            "audit_persistence_allowed",
+            "permission_state_mutation_allowed",
+            "permission_state_persistence_allowed",
+            "grant_packet_creation_allowed",
+            "grant_persistence_allowed",
+            "safe_local_open_request_created",
+            "safe_local_open_target_packet_created",
+            "safe_local_open_preview_packet_created",
+            "safe_local_open_path_policy_created",
+            "safe_local_open_allowlist_packet_created",
+            "safe_local_open_permission_requirement_created",
+            "safe_local_open_audit_correlation_created",
+            "safe_local_open_user_visible_preview_created",
+            "safe_local_open_approval_handoff_created",
+            "safe_local_open_denial_handoff_created",
+            "safe_local_open_execution_blocker_created",
+            "safe_local_open_review_queue_item_created",
+            "safe_local_open_action_created",
+            "safe_local_open_action_enqueued",
+            "safe_local_open_action_executed",
+            "approved_folder_opened",
+            "approved_file_opened",
+            "project_location_opened",
+            "dashboard_opened",
+            "path_allowlist_resolved",
+            "path_canonicalized",
+            "path_existence_checked",
+            "path_accessed",
+            "file_read_performed",
+            "directory_listing_performed",
+            "shell_open_dispatched",
+            "os_open_dispatched",
+            "browser_open_dispatched",
+            "file_manager_launched",
+            "action_proposal_created",
+            "action_preview_created",
+            "action_enqueued",
+            "action_executed",
+            "command_executed",
+            "tool_executed",
+            "file_mutated",
+            "desktop_action_executed",
+            "application_launched",
+            "network_action_executed",
+            "git_action_executed",
+            "memory_written",
+            "external_upload_performed",
+            "cloud_fallback_used",
+            "autonomous_action_performed",
+            "permission_state_mutated",
+            "permission_grant_created",
+            "audit_event_written",
+            "audit_event_persisted",
+            "audit_log_appended",
+            "audit_storage_written",
+        )
+
+        assertions: dict[str, bool] = {
+            "sprint_214_check_still_clean": s214["failed_assertion_count"] == 0,
+            "status_ready": contract["safe_local_open_actions_status"]
+            == "safe_local_open_actions_contract_ready",
+            "current_sprint_215": contract["permission_action_current_sprint"] == 215,
+            "next_sprint_216": contract["permission_action_next_sprint"] == 216,
+            "next_boundary_allowlisted_application_launch": contract[
+                "permission_action_next_boundary"
+            ]
+            == "allowlisted_application_launch",
+            "allowed_safe_open_target_count_expected": contract[
+                "allowed_safe_open_target_count"
+            ]
+            == len(contract["allowed_safe_open_target_catalog"]),
+            "blocked_safe_open_target_count_expected": contract[
+                "blocked_safe_open_target_count"
+            ]
+            == len(contract["blocked_safe_open_target_catalog"]),
+            "safety_blocker_count_expected": contract["safety_blocker_count"]
+            == len(contract["safety_blockers"]),
+            "runtime_scope_contract_only": contract["runtime_scope"]
+            == "safe_local_open_actions_contract_only",
+        }
+
+        for key in true_keys:
+            assertions[f"{key}_true"] = contract[key] is True
+
+        for key in false_keys:
+            assertions[f"{key}_false"] = contract[key] is False
+
+        for blocker in contract["safety_blockers"]:
+            assertions[f"{blocker}_inactive"] = contract[blocker] is False
+
+        failed_assertions = [name for name, passed in assertions.items() if not passed]
+        s214_failed = [
+            f"sprint_214::{name}" for name in s214.get("failed_assertions", [])
+        ]
+        all_failed = s214_failed + failed_assertions
+
+        return {
+            "status": "checked",
+            "planning_ready": True,
+            "runtime_ready": False,
+            "assertion_count": int(s214["assertion_count"]) + len(assertions),
+            "failed_assertion_count": len(all_failed),
+            "failed_assertions": all_failed,
+            "permission_action_current_sprint": contract[
+                "permission_action_current_sprint"
+            ],
+            "permission_action_next_sprint": contract[
+                "permission_action_next_sprint"
+            ],
+            "permission_action_next_boundary": contract[
+                "permission_action_next_boundary"
+            ],
+            "active_permission_runtime_contract": contract,
+            "grant_denial_expiry_lifecycle_contract": contract,
+            "runtime_audit_writer_contract": contract,
+            "action_proposal_preview_runtime_contract": contract,
+            "safe_local_open_actions_contract": contract,
+            "note": (
+                "Runtime is not enabled yet. This check prepared the Sprint 215 "
+                "Safe Local Open Actions contract without creating open requests, "
+                "previews, approval handoffs, queue items, path access, file "
+                "reads, folder/file opens, desktop actions, app launches, "
+                "commands, tools, permission mutations, audit writes, or local "
+                "action execution."
+            ),
+        }
+
+    def _s215_plan(self) -> dict[str, Any]:
+        contract = self.safe_local_open_actions_contract()
+        return {
+            "name": self.name,
+            "sprint": 215,
+            "next_sprint": 216,
+            "next_boundary": "allowlisted_application_launch",
+            "contract_ready": contract["safe_local_open_actions_contract_ready"],
+            "runtime_ready": contract["safe_local_open_actions_runtime_ready"],
+            "runtime_scope": contract["runtime_scope"],
+            "schemas_ready": {
+                "safe_local_open_request": contract[
+                    "safe_local_open_request_schema_ready"
+                ],
+                "safe_local_open_target": contract[
+                    "safe_local_open_target_schema_ready"
+                ],
+                "safe_local_open_preview": contract[
+                    "safe_local_open_preview_schema_ready"
+                ],
+                "safe_local_open_path_policy": contract[
+                    "safe_local_open_path_policy_schema_ready"
+                ],
+                "safe_local_open_allowlist": contract[
+                    "safe_local_open_allowlist_schema_ready"
+                ],
+                "safe_local_open_audit_correlation": contract[
+                    "safe_local_open_audit_correlation_schema_ready"
+                ],
+                "safe_local_open_approval_handoff": contract[
+                    "safe_local_open_approval_handoff_schema_ready"
+                ],
+                "safe_local_open_review_queue": contract[
+                    "safe_local_open_review_queue_schema_ready"
+                ],
+            },
+            "blocked_runtime": {
+                "open_request_creation": contract[
+                    "safe_local_open_request_creation_allowed"
+                ],
+                "open_preview_creation": contract[
+                    "safe_local_open_preview_creation_allowed"
+                ],
+                "open_dispatch": contract["safe_local_open_dispatch_allowed"],
+                "path_access": contract["path_access_runtime_ready"],
+                "file_read": contract["file_read_runtime_ready"],
+                "folder_open": contract["approved_folder_open_runtime_ready"],
+                "file_open": contract["approved_file_open_runtime_ready"],
+                "desktop_action": contract["desktop_action_allowed"],
+                "application_launch": contract["application_launch_allowed"],
+                "file_mutation": contract["file_mutation_allowed"],
+            },
+        }
+
+    ActivePermissionRuntimePlanner.safe_local_open_actions_contract = (
+        _s215_safe_local_open_actions_contract
+    )
+    ActivePermissionRuntimePlanner.status = _s215_status
+    ActivePermissionRuntimePlanner.check = _s215_check
+    ActivePermissionRuntimePlanner.plan = _s215_plan
+    ActivePermissionRuntimePlanner._s215_extension_installed = True
