@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.222.0-genesis
+Current anchor: v0.223.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.222.0-genesis
-- Completed: Sprint 222 — Workspace and Project Context Runtime
+- Current version: v0.223.0-genesis
+- Completed: Sprint 223 — Chat-to-Memory Runtime Handoff
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 223 — Chat-to-Memory Runtime Handoff
+- Next: Sprint 224 — Voice, Vision, and Chat Context Fusion
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1630,3 +1630,26 @@ Implemented boundaries:
 The next runtime boundary is `chat_to_memory_runtime_handoff`.
 
 Next: Sprint 223 — Chat-to-Memory Runtime Handoff.
+
+## v0.223.0-genesis — Chat-to-Memory Runtime Handoff
+
+Sprint 223 establishes the contract-only chat-to-memory handoff integration
+for the Sprint 221-230 Unified Partner Runtime Integration block.
+
+Implemented boundaries:
+
+- preserves `aura_browser_chat_session_runtime` as canonical session owner
+- composes the Sprint 222 workspace/project context contract
+- composes the existing handoff, privacy, review, and write-permission status contracts
+- requires explicit user memory intent and one directly supplied user turn
+- requires privacy review and manual review
+- preserves default-deny, one-shot, expiring memory-write permission semantics
+- reads no chat session, chat history, journal, or memory runtime data
+- persists no handoff, candidate, review item, permission request, grant, audit record, or memory
+- performs no command, tool, network, model, file, or autonomous action
+- keeps runtime activation and the release gate closed
+- validates 65 deterministic assertions with zero failures
+
+The next runtime boundary is `voice_vision_chat_context_fusion`.
+
+Next: Sprint 224 — Voice, Vision, and Chat Context Fusion.

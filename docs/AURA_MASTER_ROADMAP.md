@@ -2923,3 +2923,26 @@ Canonical checkpoint properties:
 - Capability Registry remains unchanged
 
 Next: Sprint 223 — Chat-to-Memory Runtime Handoff.
+
+## Checkpoint v0.223.0-genesis — Chat-to-Memory Runtime Handoff
+
+Sprint 223 completes the third step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+Canonical checkpoint properties:
+
+- chat-to-memory partner-runtime contract available
+- Sprint 222 workspace/project context contract preserved at 52 assertions
+- canonical browser chat session ownership preserved
+- existing handoff, privacy, review, and permission contracts remain owners of their domains
+- explicit user memory intent required
+- direct user-turn-only handoff boundary preserved
+- privacy and manual review required
+- default-deny, one-shot, expiring write permission required
+- chat and memory runtime data remain unread
+- handoff, review, permission, audit, and memory persistence remain disabled
+- runtime execution and autonomous behavior remain disabled
+- Sprint 223 validates 65 assertions with zero failures
+- Capability Registry remains unchanged
+
+Next: Sprint 224 — Voice, Vision, and Chat Context Fusion.

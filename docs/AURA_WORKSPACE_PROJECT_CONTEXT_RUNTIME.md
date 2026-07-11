@@ -1,8 +1,8 @@
 # AURA Workspace and Project Context Runtime
 
-Version: `0.222.0-genesis`  
-Sprint: `222`  
-Block: `Sprint 221-230 — Unified Partner Runtime Integration`  
+Version: `0.222.0-genesis`
+Sprint: `222`
+Block: `Sprint 221-230 — Unified Partner Runtime Integration`
 Runtime state: contract-only, read-only, inactive
 
 ## Purpose

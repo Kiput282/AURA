@@ -121,9 +121,18 @@ class PartnerRuntimePlanner:
         }
 
     def _session_snapshot(self) -> dict[str, Any]:
+        """Inspect canonical session metadata without reading payloads."""
+
         try:
-            status = self.session_manager.status()
-            boundary = self.session_manager.safety_boundary()
+            snapshot = (
+                self.session_manager
+                .contract_snapshot()
+            )
+            boundary = snapshot.get(
+                "safety_boundary",
+                {},
+            )
+
         except Exception as exc:  # pragma: no cover - defensive boundary
             return {
                 "available": False,
@@ -131,31 +140,107 @@ class PartnerRuntimePlanner:
                 "session_count": 0,
                 "total_message_count": 0,
                 "error_count": 1,
-                "errors": [f"{type(exc).__name__}: {exc}"],
+                "errors": [
+                    f"{type(exc).__name__}: {exc}"
+                ],
+                "session_metrics_available": False,
+                "session_metrics_inspected": False,
+                "session_payloads_read": 0,
+                "inspection_read_only": True,
+                "metadata_only": True,
                 "safety_boundary": {},
             }
+
         return {
             "available": True,
-            "name": status.get("name"),
-            "component_version": status.get("component_version"),
-            "source_sprint": status.get("sprint"),
-            "schema_version": status.get("schema_version"),
-            "status": status.get("status"),
-            "degraded": status.get("degraded") is True,
-            "storage_path": status.get("storage_path"),
-            "storage_exists": status.get("storage_exists") is True,
-            "session_count": int(status.get("session_count", 0)),
-            "total_message_count": int(status.get("total_message_count", 0)),
-            "error_count": int(status.get("error_count", 0)),
-            "errors": list(status.get("errors", [])),
+            "name": snapshot.get("name"),
+            "component_version":
+                snapshot.get(
+                    "component_version"
+                ),
+            "source_sprint":
+                snapshot.get("sprint"),
+            "schema_version":
+                snapshot.get(
+                    "schema_version"
+                ),
+            "status": snapshot.get("status"),
+            "degraded":
+                snapshot.get("degraded")
+                is True,
+            "storage_path":
+                snapshot.get(
+                    "storage_path"
+                ),
+            "storage_exists":
+                snapshot.get(
+                    "storage_exists"
+                )
+                is True,
+            "session_count":
+                int(
+                    snapshot.get(
+                        "session_count",
+                        0,
+                    )
+                ),
+            "total_message_count":
+                int(
+                    snapshot.get(
+                        "total_message_count",
+                        0,
+                    )
+                ),
+            "error_count":
+                int(
+                    snapshot.get(
+                        "error_count",
+                        0,
+                    )
+                ),
+            "errors":
+                list(
+                    snapshot.get(
+                        "errors",
+                        [],
+                    )
+                ),
+            "session_metrics_available":
+                snapshot.get(
+                    "session_metrics_available"
+                )
+                is True,
+            "session_metrics_inspected":
+                snapshot.get(
+                    "session_metrics_inspected"
+                )
+                is True,
+            "session_payloads_read":
+                int(
+                    snapshot.get(
+                        "session_payloads_read",
+                        0,
+                    )
+                ),
             "inspection_read_only": True,
-            "session_id_pattern": self.session_manager._SESSION_ID_RE.pattern,
-            "message_id_pattern": self.session_manager._MESSAGE_ID_RE.pattern,
+            "metadata_only":
+                snapshot.get(
+                    "metadata_only"
+                )
+                is True,
+            "session_id_pattern":
+                self.session_manager
+                ._SESSION_ID_RE.pattern,
+            "message_id_pattern":
+                self.session_manager
+                ._MESSAGE_ID_RE.pattern,
             "client_message_id_pattern": (
-                self.session_manager._CLIENT_MESSAGE_ID_RE.pattern
+                self.session_manager
+                ._CLIENT_MESSAGE_ID_RE.pattern
             ),
             "safety_boundary": boundary,
         }
+
 
     def unified_session_runtime_contract(self) -> dict[str, Any]:
         legacy = self._legacy_snapshot()

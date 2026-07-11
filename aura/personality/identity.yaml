@@ -1,5 +1,5 @@
 name: AURA
-version: "0.222.0-genesis"
+version: "0.223.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -297,3 +297,11 @@ modes:
 # Legacy workspace, journal, and memory managers are not constructed.
 # Recursive scans, persistence, execution, and runtime activation remain disabled.
 # Next: Sprint 223 — Chat-to-Memory Runtime Handoff.
+
+# Sprint 223 — Chat-to-Memory Runtime Handoff
+# Adds a contract-only bridge from explicit user memory intent into the
+# existing handoff, privacy, review, and permission contracts.
+# Chat stores, memory stores, review queues, grants, and audit data are
+# not read, persisted, or mutated by this integration layer.
+# Runtime activation and autonomous memory writes remain disabled.
+# Next: Sprint 224 — Voice, Vision, and Chat Context Fusion.

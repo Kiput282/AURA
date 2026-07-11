@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.222.0-genesis
-Current status: Sprint 222 Workspace and Project Context Runtime completed; Sprint 221-230 Unified Partner Runtime Integration is active
-Current runtime state: Sprint 222 adds a bounded contract-only workspace and project context facade over the Sprint 221 unified session contract. It reads only approved project metadata and top-level workspace structure. Recursive scans, journal or memory access, context persistence, session mutation, permission mutation, audit writes, actions, commands, tools, background services, public binding, and autonomy remain disabled.
+Current version: v0.223.0-genesis
+Current status: Sprint 223 Chat-to-Memory Runtime Handoff completed; Sprint 221-230 Unified Partner Runtime Integration is active
+Current runtime state: Sprint 223 adds a contract-only chat-to-memory handoff facade over the Sprint 222 workspace/project context contract and the existing handoff, privacy-redaction, manual-review, and memory-write permission contracts. It requires explicit user memory intent, privacy review, manual review, and a default-deny one-shot permission boundary. Chat-history reads, memory writes, review-queue persistence, grant application, audit writes, command or tool execution, background services, public binding, and autonomy remain disabled.
 
 ---
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 223 — Chat-to-Memory Runtime Handoff
+- Next planned sprint: Sprint 224 — Voice, Vision, and Chat Context Fusion
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5422,3 +5422,46 @@ Contract validation contains 52 assertions with runtime activation remaining
 disabled.
 
 Next: Sprint 223 — Chat-to-Memory Runtime Handoff.
+
+## Sprint 223 — Chat-to-Memory Runtime Handoff
+
+Sprint 223 extends the Unified Partner Runtime Integration block with a
+contract-only bridge between explicit user memory intent and AURA's existing
+memory safety contracts.
+
+The implementation introduces:
+
+- `ChatToMemoryRuntimeHandoffPlanner`
+- `ChatToMemoryRuntimeHandoffAlphaManager`
+- CLI and shell status, context, and check commands
+
+The Sprint 223 facade composes status-only snapshots from:
+
+- the Sprint 222 workspace and project context contract
+- the existing Chat-to-Memory Handoff Contract
+- the Memory Privacy and Redaction Layer
+- the Memory Review Queue
+- the Memory Write Permission Gate
+
+The canonical browser chat session owner remains unchanged. The new planner
+does not read chat-session files, scan chat history, retrieve individual chat
+turns, consume runtime events, inspect stored memories, or construct the
+canonical memory store.
+
+A memory handoff remains dependent on:
+
+- an explicit user request to remember something
+- one directly supplied user turn
+- privacy review
+- manual review
+- default-deny permission behavior
+- a one-shot grant with an expiry boundary
+
+Sprint 223 does not persist a handoff, memory candidate, review item,
+permission request, permission grant, audit event, or memory record. It also
+does not execute commands, tools, model requests, network requests, or
+autonomous actions.
+
+The contract validates 65 assertions with zero runtime execution features.
+
+Next: Sprint 224 — Voice, Vision, and Chat Context Fusion.

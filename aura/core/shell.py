@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-chat-to-memory-handoff-status Show Sprint 223 handoff contract status")
+        print("  partner-runtime-chat-to-memory-handoff-context Show Sprint 223 handoff contract context")
+        print("  partner-runtime-chat-to-memory-handoff-check Run Sprint 223 handoff contract checks")
         print("  partner-runtime-mode-plan <target> Prepare metadata-only partner runtime mode plan")
         print("  partner-session-plan <target> Prepare metadata-only partner session plan")
         print("  partner-multimodal-handoff-plan <target> Prepare metadata-only multimodal handoff plan")
@@ -5402,6 +5405,51 @@ class AuraShell:
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
         # Sprint 222 Workspace and Project Context Runtime shell commands.
+        # Sprint 223 Chat-to-Memory Runtime Handoff shell commands.
+        commands = {
+            "partner-runtime-chat-to-memory-handoff-status",
+            "partner-runtime-chat-to-memory-handoff-context",
+            "partner-runtime-chat-to-memory-handoff-check",
+        }
+
+        if normalized in commands:
+            from aura.partner_runtime import (
+                ChatToMemoryRuntimeHandoffAlphaManager,
+            )
+
+            manager = ChatToMemoryRuntimeHandoffAlphaManager(
+                project_root=self.project_root,
+            )
+
+            selected_command = normalized
+
+            if selected_command.endswith("-status"):
+                title = (
+                    "AURA Chat-to-Memory Runtime "
+                    "Handoff Contract Status"
+                )
+                payload = manager.status()
+
+            elif selected_command.endswith("-context"):
+                title = (
+                    "AURA Chat-to-Memory Runtime "
+                    "Handoff Contract Context"
+                )
+                payload = manager.context()
+
+            else:
+                title = (
+                    "AURA Chat-to-Memory Runtime "
+                    "Handoff Contract Check"
+                )
+                payload = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                payload,
+            )
+
+            return True
         commands = {
             "partner-runtime-workspace-project-context-status",
             "partner-runtime-workspace-project-context-context",

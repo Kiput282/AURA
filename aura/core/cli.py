@@ -4531,6 +4531,51 @@ class AuraCLI:
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
         # Sprint 222 Workspace and Project Context Runtime CLI commands.
+        # Sprint 223 Chat-to-Memory Runtime Handoff CLI commands.
+        commands = {
+            "partner-runtime-chat-to-memory-handoff-status",
+            "partner-runtime-chat-to-memory-handoff-context",
+            "partner-runtime-chat-to-memory-handoff-check",
+        }
+
+        if raw_args and raw_args[0] in commands:
+            from aura.partner_runtime import (
+                ChatToMemoryRuntimeHandoffAlphaManager,
+            )
+
+            manager = ChatToMemoryRuntimeHandoffAlphaManager(
+                project_root=self.project_root,
+            )
+
+            selected_command = raw_args[0]
+
+            if selected_command.endswith("-status"):
+                title = (
+                    "AURA Chat-to-Memory Runtime "
+                    "Handoff Contract Status"
+                )
+                payload = manager.status()
+
+            elif selected_command.endswith("-context"):
+                title = (
+                    "AURA Chat-to-Memory Runtime "
+                    "Handoff Contract Context"
+                )
+                payload = manager.context()
+
+            else:
+                title = (
+                    "AURA Chat-to-Memory Runtime "
+                    "Handoff Contract Check"
+                )
+                payload = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                payload,
+            )
+
+            return True
         commands = {
             "partner-runtime-workspace-project-context-status",
             "partner-runtime-workspace-project-context-context",

@@ -1377,3 +1377,26 @@ No recursive repository understanding, memory retrieval, journal traversal,
 context persistence, or autonomous project action is enabled.
 
 This boundary prepares Sprint 223 — Chat-to-Memory Runtime Handoff.
+
+## Sprint 223 — Chat-to-Memory Runtime Handoff
+
+v0.223.0-genesis connects explicit conversational memory intent to the
+existing memory-safety contract chain without activating memory persistence.
+
+The partner-runtime facade combines:
+
+- bounded session and workspace context
+- the Chat-to-Memory Handoff Contract
+- privacy and redaction requirements
+- manual memory review
+- memory-write permission gating
+
+The handoff is deliberately not a live memory writer. It does not scan chat
+history, automatically extract memories, persist review items, apply
+permission grants, or mutate `MemoryStore`.
+
+This preserves the product rule that AURA may only progress toward long-term
+memory after explicit user intent, privacy review, human review, and a bounded
+permission decision.
+
+This boundary prepares Sprint 224 — Voice, Vision, and Chat Context Fusion.

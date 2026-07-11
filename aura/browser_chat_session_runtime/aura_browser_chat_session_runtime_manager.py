@@ -656,6 +656,70 @@ class AuraBrowserChatSessionRuntimeManager:
             ):
                 temporary_path.unlink()
 
+    def contract_snapshot(self) -> dict[str, Any]:
+        """Return metadata-only state without loading session payloads."""
+
+        boundary = self.safety_boundary()
+
+        storage_exists = self.storage_dir.exists()
+        storage_is_directory = (
+            self.storage_dir.is_dir()
+            if storage_exists
+            else True
+        )
+        storage_is_symlink = (
+            self.storage_dir.is_symlink()
+        )
+
+        degraded = (
+            storage_is_symlink
+            or not storage_is_directory
+        )
+
+        return {
+            "name":
+                "aura_browser_chat_session_runtime",
+            "component_version":
+                getattr(
+                    self,
+                    "component_version",
+                    None,
+                ),
+            "sprint":
+                getattr(self, "sprint", 186),
+            "schema_version":
+                getattr(
+                    self,
+                    "schema_version",
+                    "1.0",
+                ),
+            "status": (
+                "contract_snapshot_ready"
+                if not degraded
+                else
+                "contract_snapshot_degraded"
+            ),
+            "degraded": degraded,
+            "storage_path":
+                str(self.storage_dir),
+            "storage_exists":
+                storage_exists,
+            "storage_is_directory":
+                storage_is_directory,
+            "storage_is_symlink":
+                storage_is_symlink,
+            "session_count": 0,
+            "total_message_count": 0,
+            "error_count": 0,
+            "errors": [],
+            "session_metrics_available": False,
+            "session_metrics_inspected": False,
+            "session_payloads_read": 0,
+            "inspection_read_only": True,
+            "metadata_only": True,
+            "safety_boundary": boundary,
+        }
+
     def status(self) -> dict[str, Any]:
         """Inspect storage without creating or changing it."""
 
