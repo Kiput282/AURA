@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.208.0-genesis
+Current anchor: v0.209.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.208.0-genesis
-- Completed: Sprint 208 — Control Center Vision Panel
+- Current version: v0.209.0-genesis
+- Completed: Sprint 209 — Vision Runtime Integration Review
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 209 — Vision Runtime Integration Review
+- Next: Sprint 210 — Vision Runtime Stabilization
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -924,3 +924,75 @@ file/desktop/network/git actions, cloud vision fallback, external upload, and
 visual-context-to-action bypass.
 
 Next: Sprint 209 — Vision Runtime Integration Review.
+
+## v0.209.0-genesis — Vision Runtime Integration Review
+
+Sprint 209 adds Vision Runtime Integration Review gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block as contract-only behavior.
+
+The checkpoint confirms:
+
+- Vision Runtime Integration Review contract ready
+- Vision Runtime Integration Review runtime disabled
+- current sprint 209
+- next sprint 210
+- next boundary vision_runtime_stabilization
+- previous contract chain complete
+- runtime activation blocked
+- release gate closed
+- integration review packet schema ready
+- integration acceptance packet schema ready
+- integration gap and blocker list schemas ready
+- integration runtime scope schema ready
+- integration release gate schema ready
+- integration dependency baseline schema ready
+- integration safety matrix schema ready
+- integration next stabilization schema ready
+- Sprint 201 activation boundary reviewed
+- Sprint 202 screenshot boundary reviewed
+- Sprint 203 screen context boundary reviewed
+- Sprint 204 local model boundary reviewed
+- Sprint 205 permission/redaction boundary reviewed
+- Sprint 206 workspace visual boundary reviewed
+- Sprint 207 vision-to-chat boundary reviewed
+- Sprint 208 Control Center panel boundary reviewed
+- dependency baseline reviewed
+- release gate reviewed
+- safety blockers reviewed
+- runtime scope reviewed
+- no action bypass reviewed
+- no external data reviewed
+- no runtime activation from review
+- no release gate opening from review
+- no dependency install from review
+- no model download from review
+- no screenshot capture from review
+- no image file read from review
+- no OCR from review
+- no model request from review
+- no chat handoff from review
+- no panel render from review
+- no route/API endpoint creation from review
+- no data fetch from review
+- no permission mutation from review
+- no audit write from review
+- no memory write from review
+- no command execution from review
+- no visual action from review
+- no cloud fallback from review
+- no external upload from review
+- 33 safety blockers
+- all safety blockers inactive
+- 236 assertions
+- zero failed assertions
+
+Sprint 209 keeps all runtime execution disabled, including runtime activation,
+release gate opening, dependency installation, model download, screenshot
+capture, screenshot/image file read, OCR, image analysis, object detection, model
+requests, inference, chat handoff, chat context injection, chat session writes,
+chat model requests, response generation, panel rendering, route creation, API
+endpoint creation, data fetch, permission mutation, audit writes, memory writes,
+visual actions, tool/command execution, file/desktop/network/git actions, cloud
+vision fallback, external upload, and visual-context-to-action bypass.
+
+Next: Sprint 210 — Vision Runtime Stabilization.

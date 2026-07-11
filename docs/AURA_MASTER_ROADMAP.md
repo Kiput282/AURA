@@ -2645,3 +2645,23 @@ control the desktop, perform network or git actions, use cloud vision fallback,
 externally upload visual data, or bypass action gates through visual context.
 
 The next sprint is Sprint 209 — Vision Runtime Integration Review.
+
+## Checkpoint v0.209.0-genesis — Vision Runtime Integration Review
+
+Sprint 209 adds Vision Runtime Integration Review contract gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint reviews the Sprint 201-208 contract chain: activation foundation,
+explicit screenshot capture, screen context adapter, local vision model adapter,
+permission/redaction, workspace visual understanding, vision-to-chat handoff, and
+Control Center Vision Panel visibility.
+
+Sprint 209 keeps runtime activation blocked and release gates closed. It does
+not install dependencies, download models, capture screenshots, read image files,
+run OCR, request models, inject chat context, render panels, create routes,
+create API endpoints, fetch data, mutate permissions, write audit events, write
+memory, execute visual actions, execute tools or commands, mutate files, control
+the desktop, perform network or git actions, use cloud vision fallback,
+externally upload visual data, or bypass action gates through visual context.
+
+The next sprint is Sprint 210 — Vision Runtime Stabilization.

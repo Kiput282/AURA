@@ -1,5 +1,5 @@
 name: AURA
-version: "0.208.0-genesis"
+version: "0.209.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -180,3 +180,9 @@ modes:
 # screenshot/camera controls, model requests, chat handoff, memory writes,
 # visual actions, tool/command execution, cloud fallback, and external upload
 # disabled.
+# Sprint 209: vision_runtime_integration_review adds contract-only
+# integration review gates for Sprint 201-208 vision contracts. It keeps
+# runtime activation, release gates, screenshot capture, image file read, OCR,
+# model requests, chat handoff, panel rendering, routes/API endpoints, data
+# fetch, permission mutation, audit writes, memory writes, visual actions,
+# tool/command execution, cloud fallback, and external upload disabled.

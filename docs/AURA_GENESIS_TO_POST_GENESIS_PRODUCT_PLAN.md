@@ -1065,3 +1065,26 @@ action gates through visual context.
 
 This creates the visibility baseline for Sprint 209 — Vision Runtime
 Integration Review.
+
+## Sprint 209 — Vision Runtime Integration Review
+
+`v0.209.0-genesis` adds Vision Runtime Integration Review gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint reviews the Sprint 201-208 vision contract chain and prepares the
+block for Sprint 210 stabilization. It confirms activation, screenshot, screen
+context, local model, permission/redaction, workspace visual, vision-to-chat, and
+Control Center Vision Panel boundaries without enabling runtime behavior.
+
+This keeps AURA from activating vision runtime, opening release gates, installing
+dependencies, downloading models, capturing screenshots, reading screenshots or
+image files, running OCR, requesting models, running inference, injecting chat
+context, writing chat sessions, requesting chat models, generating responses,
+rendering panels, creating routes or API endpoints, fetching data, mutating
+permissions, writing audit events, writing memory, executing visual actions,
+executing tools/commands, mutating files, controlling desktop/network/git, using
+cloud vision fallback, externally uploading visual data, or bypassing action
+gates through visual context.
+
+This creates the integration review baseline for Sprint 210 — Vision Runtime
+Stabilization.
