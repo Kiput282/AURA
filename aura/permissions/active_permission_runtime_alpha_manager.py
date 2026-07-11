@@ -1410,3 +1410,98 @@ if not getattr(ActivePermissionRuntimeAlphaManager, "_s219_extension_installed",
 
     ActivePermissionRuntimeAlphaManager.status = _s219_alpha_status
     ActivePermissionRuntimeAlphaManager._s219_extension_installed = True
+
+# Sprint 220 extension: alpha visibility for Permission and Action Runtime Stabilization.
+if not getattr(ActivePermissionRuntimeAlphaManager, "_s220_extension_installed", False):
+    _S219_ALPHA_STATUS = ActivePermissionRuntimeAlphaManager.status
+
+    def _s220_alpha_status(self) -> dict[str, Any]:
+        status = _S219_ALPHA_STATUS(self)
+        contract = self.planner.permission_action_runtime_stabilization_contract()
+        check = self.planner.check()
+
+        alpha_keys = (
+            "permission_action_runtime_stabilization_contract_ready",
+            "permission_action_runtime_stabilization_runtime_ready",
+            "permission_action_runtime_stabilization_status",
+            "permission_action_current_sprint",
+            "permission_action_next_sprint",
+            "permission_action_next_boundary",
+            "permission_action_block_complete",
+            "permission_action_block_stabilized",
+            "permission_action_contract_chain_stable",
+            "permission_action_runtime_zero_counters_stable",
+            "permission_action_safety_blockers_stable",
+            "stabilized_permission_action_contract_count",
+            "expected_permission_action_contract_count",
+            "allowed_stabilization_profile_count",
+            "blocked_stabilization_target_count",
+            "permission_action_runtime_gate_open_allowed",
+            "permission_action_release_gate_open_allowed",
+            "permission_action_runtime_activation_allowed",
+            "permission_state_mutation_allowed",
+            "audit_write_allowed",
+            "action_execution_dispatch_allowed",
+            "command_execution_allowed",
+            "tool_execution_allowed",
+            "file_mutation_allowed",
+            "desktop_action_allowed",
+            "application_launch_allowed",
+            "permission_action_runtime_gate_opened",
+            "permission_action_release_gate_opened",
+            "permission_action_runtime_activated",
+            "permission_state_mutated",
+            "permission_grant_created",
+            "audit_event_written",
+            "action_executed",
+            "command_executed",
+            "tool_executed",
+            "file_mutated",
+            "desktop_action_executed",
+            "application_launched",
+            "rollback_executed",
+            "emergency_stop_applied",
+            "recovery_action_dispatched",
+            "no_permission_action_runtime_gate_open",
+            "no_permission_action_release_gate_open",
+            "no_permission_action_runtime_activation",
+            "no_permission_state_mutation",
+            "no_audit_write",
+            "no_action_execution_dispatch",
+            "no_action_execution",
+            "no_command_execution",
+            "no_tool_execution",
+            "no_file_mutation",
+            "no_desktop_action",
+            "no_application_launch",
+            "no_rollback_execution",
+            "no_emergency_stop_apply",
+            "no_recovery_action_dispatch",
+            "no_autonomous_action",
+            "safety_blocker_count",
+            "all_safety_blockers_inactive",
+            "runtime_scope",
+        )
+        status.update({key: contract[key] for key in alpha_keys})
+        status.update(
+            {
+                "sprint_220_permission_action_runtime_stabilization_contract_ready": contract[
+                    "permission_action_runtime_stabilization_contract_ready"
+                ],
+                "assertion_count": check["assertion_count"],
+                "failed_assertion_count": check["failed_assertion_count"],
+                "failed_assertions": check["failed_assertions"],
+                "sections": 10,
+                "note": (
+                    "Active Permission Runtime Alpha now exposes Sprint 220 "
+                    "Permission and Action Runtime Stabilization visibility "
+                    "without opening runtime gates, mutating permissions, "
+                    "writing audit events, dispatching actions, or executing "
+                    "local actions."
+                ),
+            }
+        )
+        return status
+
+    ActivePermissionRuntimeAlphaManager.status = _s220_alpha_status
+    ActivePermissionRuntimeAlphaManager._s220_extension_installed = True

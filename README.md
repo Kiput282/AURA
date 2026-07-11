@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.219.0-genesis
-Current status: Sprint 219 Rollback, Emergency Stop, and Recovery completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only recovery safety visibility
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 added contract-only safe local open action visibility. Sprint 216 added contract-only allowlisted application launch visibility. Sprint 217 added contract-only controlled folder and simple file creation visibility. Sprint 218 added contract-only Control Center approval workflow visibility. Sprint 219 adds contract-only rollback, emergency stop, and recovery visibility. Runtime activation, release gates, rollback execution, emergency stop apply, process kill, service stop/restart, network cutoff, safety freeze activation, safe-idle transition apply, recovery action dispatch, recovery drill execution, permission mutation, permission persistence, grant creation, audit writes, audit persistence, dashboard event emit, approval request creation, approval decision apply, action dispatch, file/folder creation, app launch, command/tool execution, file mutation, desktop actions, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.220.0-genesis
+Current status: Sprint 220 Permission and Action Runtime Stabilization completed; Sprint 211-220 Permission, Audit, and Safe Local Actions block is complete and contract-only stabilized
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 220 completes the Sprint 211-220 Permission, Audit, and Safe Local Actions block as contract-only stabilized. The permission/action chain now covers active permission runtime, grant/denial/expiry lifecycle, runtime audit writer, action proposal and preview, safe local open actions, allowlisted application launch, controlled folder/simple file creation, Control Center approval workflow, rollback/emergency-stop/recovery, and final permission/action runtime stabilization. Runtime activation, runtime gates, release gates, permission mutation, permission persistence, grant creation, audit writes, audit persistence, action dispatch, file/folder creation, app launch, command/tool execution, file mutation, desktop actions, rollback execution, emergency stop apply, recovery dispatch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, plugin execution, multi-step automation, and autonomy remain disabled
 
 ---
 
@@ -42,6 +42,8 @@ AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Ru
 Latest completed checkpoint:
 
 
+- v0.220.0-genesis
+- Sprint 220: Permission and Action Runtime Stabilization
 - v0.219.0-genesis
 - Sprint 219: Rollback, Emergency Stop, and Recovery
 - v0.218.0-genesis
@@ -108,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 220 — Permission and Action Runtime Stabilization
+- Next planned sprint: Sprint 221 — Unified Partner Runtime Integration
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5267,3 +5269,80 @@ mutate files, launch applications, write memory, use cloud fallback, upload
 externally, or perform autonomous actions.
 
 Next: Sprint 220 — Permission and Action Runtime Stabilization.
+
+## Sprint 220 — Permission and Action Runtime Stabilization
+
+Version: `v0.220.0-genesis`
+
+Sprint 220 closes the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Permission and Action Runtime Stabilization.
+
+This sprint verifies the full permission/action contract chain, runtime zero
+counters, safety blocker register, CLI visibility, release-gate closure, docs
+version readiness, and next-block handoff boundary.
+
+Sprint 220 confirms:
+
+- Permission and Action Runtime Stabilization contract ready: true
+- Permission and Action Runtime Stabilization runtime ready: false
+- Permission and Action Runtime Stabilization status: permission_action_runtime_stabilization_contract_ready
+- current sprint: 220
+- next sprint: 221
+- next boundary: unified_partner_runtime_integration
+- block complete: true
+- block stabilized: true
+- block release ready: false
+- contract chain stable: true
+- runtime zero counters stable: true
+- safety blockers stable: true
+- stabilized permission/action contract count: 9
+- expected permission/action contract count: 9
+- allowed stabilization profiles: 6
+- blocked stabilization targets: 20
+- runtime gate open allowed: false
+- release gate open allowed: false
+- runtime activation allowed: false
+- permission mutation allowed: false
+- audit write allowed: false
+- action dispatch allowed: false
+- command execution allowed: false
+- tool execution allowed: false
+- file mutation allowed: false
+- desktop action allowed: false
+- application launch allowed: false
+- runtime gate opened: false
+- release gate opened: false
+- runtime activated: false
+- permission state mutated: false
+- audit event written: false
+- action executed: false
+- command executed: false
+- tool executed: false
+- file mutated: false
+- no runtime gate open: true
+- no release gate open: true
+- no runtime activation: true
+- no permission mutation: true
+- no audit write: true
+- no action dispatch: true
+- no action execution: true
+- no command execution: true
+- no tool execution: true
+- no file mutation: true
+- no autonomous action: true
+- safety blockers: 290
+- all safety blockers inactive: true
+- runtime scope: permission_action_runtime_stabilization_contract_only
+- assertion count: 3115
+- failed assertion count: 0
+
+Sprint 220 does not open runtime gates, open release gates, activate runtime,
+mutate permissions, create grants, write audit events, dispatch actions,
+execute commands/tools, mutate files, launch applications, execute rollback,
+apply emergency stop, dispatch recovery actions, perform network/git actions,
+write memory, use cloud fallback, upload externally, start background services,
+mutate systemd, bind public network interfaces, auto-launch a browser, install
+dependencies, download models, execute plugins, run multi-step automation, or
+perform autonomous actions.
+
+Next: Sprint 221 — Unified Partner Runtime Integration.

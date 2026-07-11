@@ -1,5 +1,5 @@
 name: AURA
-version: "0.219.0-genesis"
+version: "0.220.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -276,3 +276,10 @@ modes:
 # apply safe-idle transition, mutate permissions, write audit events, dispatch
 # recovery actions, restart services, write files/config, run commands/tools, or
 # execute local actions.
+# Sprint 220: permission_action_runtime_stabilization closes the Sprint 211-220
+# Permission, Audit, and Safe Local Actions block as contract-only stabilized.
+# It verifies the full 9-contract chain, runtime zero counters, safety blockers,
+# CLI visibility, release-gate closure, and next-block handoff boundary.
+# It does not open runtime gates, activate runtime, mutate permissions, write
+# audit events, dispatch actions, execute commands/tools, mutate files, launch
+# apps, execute rollback/recovery, or perform autonomous actions.

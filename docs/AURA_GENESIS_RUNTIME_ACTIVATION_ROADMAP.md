@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.219.0-genesis
+Current anchor: v0.220.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.219.0-genesis
-- Completed: Sprint 219 — Rollback, Emergency Stop, and Recovery
+- Current version: v0.220.0-genesis
+- Completed: Sprint 220 — Permission and Action Runtime Stabilization
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 220 — Permission and Action Runtime Stabilization
+- Next: Sprint 221 — Unified Partner Runtime Integration
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1556,3 +1556,21 @@ events, write files/config, perform git operations, execute commands/tools,
 mutate files, or perform autonomous actions.
 
 Next: Sprint 220 — Permission and Action Runtime Stabilization.
+
+## v0.220.0-genesis — Permission and Action Runtime Stabilization
+
+Sprint 220 closes the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Permission and Action Runtime Stabilization.
+
+The checkpoint confirms block completion, block stabilization, release gate
+closed, contract chain stable, runtime zero counters stable, safety blockers
+stable, 9 of 9 permission/action contracts stabilized, 6 allowed stabilization
+profiles, 20 blocked stabilization targets, 290 inactive safety blockers, 3115
+assertions, and zero failed assertions.
+
+Sprint 220 does not open runtime gates, open release gates, activate runtime,
+mutate permissions, write audit events, dispatch actions, execute commands or
+tools, mutate files, launch applications, execute rollback, apply emergency
+stop, dispatch recovery actions, or perform autonomous actions.
+
+Next: Sprint 221 — Unified Partner Runtime Integration.

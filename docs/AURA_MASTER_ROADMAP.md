@@ -2864,3 +2864,19 @@ dispatched, no permissions are mutated, no audit events are written, and no
 local actions execute.
 
 The next sprint is Sprint 220 — Permission and Action Runtime Stabilization.
+
+## Checkpoint v0.220.0-genesis — Permission and Action Runtime Stabilization
+
+Sprint 220 closes the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only stabilization. It verifies the full 9-contract chain,
+runtime zero counters, safety blockers, CLI visibility, release-gate closure,
+docs/version readiness, and next-block handoff to Unified Partner Runtime
+Integration.
+
+Runtime remains disabled: no runtime gates open, no release gates open, no
+permissions are mutated, no grants are created, no audit events are written, no
+actions are dispatched, no commands or tools execute, no files are mutated, no
+applications launch, no rollback or recovery actions execute, and no autonomous
+actions run.
+
+The next sprint is Sprint 221 — Unified Partner Runtime Integration.

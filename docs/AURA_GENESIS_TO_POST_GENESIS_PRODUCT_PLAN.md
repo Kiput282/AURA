@@ -1315,3 +1315,18 @@ network cutoff, command/tool execution, and autonomy disabled.
 
 This creates the recovery safety baseline for Sprint 220 — Permission and Action
 Runtime Stabilization.
+
+## Sprint 220 — Permission and Action Runtime Stabilization
+
+`v0.220.0-genesis` closes the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block with contract-only stabilization.
+
+This sprint verifies the full permission/action contract chain, zero-runtime
+counter state, safety blocker register, CLI visibility, release-gate closure,
+and handoff into Sprint 221 — Unified Partner Runtime Integration.
+
+It keeps runtime gate opening, release gate opening, permission mutation, grant
+creation, audit writing, action dispatch, command/tool execution, file mutation,
+application launch, rollback execution, emergency stop apply, recovery dispatch,
+network/git actions, memory write, cloud fallback, external upload, plugin
+execution, multi-step automation, and autonomy disabled.
