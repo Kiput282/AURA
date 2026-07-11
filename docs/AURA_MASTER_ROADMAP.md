@@ -2788,3 +2788,25 @@ audit events, perform network/git actions, write memory, use cloud fallback,
 upload externally, or perform autonomous actions.
 
 The next sprint is Sprint 216 — Allowlisted Application Launch.
+
+## Checkpoint v0.216.0-genesis — Allowlisted Application Launch
+
+Sprint 216 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Allowlisted Application Launch.
+
+This checkpoint prepares application launch schemas, including allowlisted
+launch request, launch target, launch preview, launch allowlist, permission
+requirement, audit correlation, user-visible preview, approval handoff, denial
+handoff, execution blocker, review queue, and safety matrix boundaries. It
+requires preview-before-launch, explicit approval, permission, audit
+correlation, allowlist, application identity, safe arguments, safe environment,
+and single-application launch boundaries.
+
+Runtime remains disabled. Sprint 216 does not create launch requests, previews,
+approval handoffs, review queue items, allowlist resolutions, executable
+resolutions, argument/environment resolutions, process spawns, application
+launches, app launches, desktop actions, commands/tools, file mutations,
+permission mutations, grants, audit events, network/git actions, memory writes,
+cloud fallback, external uploads, or autonomous actions.
+
+The next sprint is Sprint 217 — Controlled Folder and Simple File Creation.

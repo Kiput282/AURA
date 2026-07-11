@@ -3387,3 +3387,933 @@ if not getattr(ActivePermissionRuntimePlanner, "_s215_extension_installed", Fals
     ActivePermissionRuntimePlanner.check = _s215_check
     ActivePermissionRuntimePlanner.plan = _s215_plan
     ActivePermissionRuntimePlanner._s215_extension_installed = True
+
+# Sprint 216 extension: Allowlisted Application Launch.
+#
+# This remains contract-only. It prepares allowlisted application launch schemas
+# and safety visibility for future approved local application launch previews.
+# It does not launch applications, resolve executables, dispatch shell/OS
+# commands, start processes, open file managers, run tools, mutate files,
+# control desktop, write audit events, or execute local actions.
+if not getattr(ActivePermissionRuntimePlanner, "_s216_extension_installed", False):
+    _S215_STATUS = ActivePermissionRuntimePlanner.status
+    _S215_CHECK = ActivePermissionRuntimePlanner.check
+    _S215_PLAN = ActivePermissionRuntimePlanner.plan
+
+    def _s216_safety_blockers(self) -> tuple[str, ...]:
+        base = tuple(self.safe_local_open_actions_contract()["safety_blockers"])
+        extra = (
+            "allowlisted_application_launch_runtime_active",
+            "application_launch_request_creation_active",
+            "application_launch_target_resolution_active",
+            "application_launch_preview_creation_active",
+            "application_launch_preview_render_active",
+            "application_launch_approval_handoff_active",
+            "application_launch_review_queue_enqueue_active",
+            "application_launch_dispatch_active",
+            "application_allowlist_resolution_active",
+            "application_identity_validation_active",
+            "application_executable_resolution_active",
+            "application_argument_resolution_active",
+            "application_environment_resolution_active",
+            "application_process_spawn_active",
+            "approved_application_launch_runtime_active",
+            "approved_project_tool_launch_runtime_active",
+            "approved_browser_launch_runtime_active",
+            "approved_editor_launch_runtime_active",
+            "approved_file_manager_launch_runtime_active",
+            "shell_application_launch_dispatch_active",
+            "os_application_launch_dispatch_active",
+            "desktop_application_launch_dispatch_active",
+            "launch_without_preview_active",
+            "launch_without_approval_active",
+            "launch_without_permission_active",
+            "launch_without_audit_correlation_active",
+            "launch_non_allowlisted_application_active",
+            "launch_arbitrary_executable_active",
+            "launch_with_unapproved_arguments_active",
+            "launch_privileged_application_active",
+            "launch_installer_or_package_manager_active",
+            "launch_network_downloader_active",
+            "launch_script_or_macro_active",
+            "launch_multi_step_chain_active",
+        )
+        return tuple(dict.fromkeys(base + extra))
+
+    def _s216_allowlisted_application_launch_contract(self) -> dict[str, Any]:
+        s215 = self.safe_local_open_actions_contract()
+        blockers = _s216_safety_blockers(self)
+
+        contract: dict[str, Any] = dict(s215)
+        contract.update(
+            {
+                "allowlisted_application_launch_contract_ready": True,
+                "allowlisted_application_launch_runtime_ready": False,
+                "allowlisted_application_launch_status": "allowlisted_application_launch_contract_ready",
+                "permission_action_block_start": 211,
+                "permission_action_block_end": 220,
+                "permission_action_current_sprint": 216,
+                "permission_action_next_sprint": 217,
+                "permission_action_next_boundary": "controlled_folder_simple_file_creation",
+                "previous_active_permission_runtime_contract_ready": s215[
+                    "active_permission_runtime_contract_ready"
+                ],
+                "previous_grant_denial_expiry_lifecycle_contract_ready": s215[
+                    "grant_denial_expiry_lifecycle_contract_ready"
+                ],
+                "previous_runtime_audit_writer_contract_ready": s215[
+                    "runtime_audit_writer_contract_ready"
+                ],
+                "previous_action_proposal_preview_runtime_contract_ready": s215[
+                    "action_proposal_preview_runtime_contract_ready"
+                ],
+                "previous_safe_local_open_actions_contract_ready": s215[
+                    "safe_local_open_actions_contract_ready"
+                ],
+                "previous_contract_chain_complete": True,
+                "contract_only": True,
+                "runtime_ready": False,
+                "runtime_activation_allowed": False,
+                "release_gate_open": False,
+                "default_deny": True,
+                "default_grant": False,
+                "preview_before_launch_required": True,
+                "explicit_approval_before_launch_required": True,
+                "permission_before_launch_required": True,
+                "audit_correlation_before_launch_required": True,
+                "allowlist_before_launch_required": True,
+                "application_identity_before_launch_required": True,
+                "safe_arguments_before_launch_required": True,
+                "safe_environment_before_launch_required": True,
+                "single_application_launch_required": True,
+                "application_launch_request_schema_ready": True,
+                "application_launch_target_schema_ready": True,
+                "application_launch_preview_schema_ready": True,
+                "application_launch_allowlist_schema_ready": True,
+                "application_launch_permission_requirement_schema_ready": True,
+                "application_launch_audit_correlation_schema_ready": True,
+                "application_launch_user_visible_preview_schema_ready": True,
+                "application_launch_approval_handoff_schema_ready": True,
+                "application_launch_denial_handoff_schema_ready": True,
+                "application_launch_execution_blocker_schema_ready": True,
+                "application_launch_review_queue_schema_ready": True,
+                "application_launch_safety_matrix_schema_ready": True,
+                "application_launch_next_controlled_file_schema_ready": True,
+                "allowed_application_launch_profile_catalog": [
+                    "approved_browser_application",
+                    "approved_editor_application",
+                    "approved_file_manager_application",
+                    "approved_creative_tool_application",
+                    "approved_project_tool_application",
+                ],
+                "allowed_application_launch_profile_count": 5,
+                "blocked_application_launch_target_catalog": [
+                    "arbitrary_executable",
+                    "unapproved_application",
+                    "installer_or_package_manager",
+                    "privileged_admin_application",
+                    "shell_command",
+                    "script_or_macro",
+                    "network_downloader",
+                    "credential_or_secret_tool",
+                    "system_settings_mutator",
+                    "multi_step_automation_chain",
+                ],
+                "blocked_application_launch_target_count": 10,
+                "application_launch_runtime_ready": False,
+                "application_launch_request_creation_allowed": False,
+                "application_launch_target_resolution_allowed": False,
+                "application_launch_preview_creation_allowed": False,
+                "application_launch_preview_render_allowed": False,
+                "application_launch_approval_handoff_allowed": False,
+                "application_launch_review_queue_enqueue_allowed": False,
+                "application_launch_dispatch_allowed": False,
+                "application_allowlist_resolution_allowed": False,
+                "application_identity_validation_allowed": False,
+                "application_executable_resolution_allowed": False,
+                "application_argument_resolution_allowed": False,
+                "application_environment_resolution_allowed": False,
+                "application_process_spawn_allowed": False,
+                "approved_application_launch_runtime_ready": False,
+                "approved_project_tool_launch_runtime_ready": False,
+                "approved_browser_launch_runtime_ready": False,
+                "approved_editor_launch_runtime_ready": False,
+                "approved_file_manager_launch_runtime_ready": False,
+                "shell_application_launch_dispatch_allowed": False,
+                "os_application_launch_dispatch_allowed": False,
+                "desktop_application_launch_dispatch_allowed": False,
+                "safe_local_action_handoff_ready": False,
+                "local_open_action_runtime_ready": False,
+                "action_execution_runtime_ready": False,
+                "action_execution_dispatch_allowed": False,
+                "command_execution_allowed": False,
+                "tool_execution_allowed": False,
+                "file_mutation_allowed": False,
+                "desktop_action_allowed": False,
+                "application_launch_allowed": False,
+                "audit_write_allowed": False,
+                "audit_event_packet_creation_allowed": False,
+                "audit_event_write_allowed": False,
+                "audit_log_append_allowed": False,
+                "audit_persistence_allowed": False,
+                "permission_state_mutation_allowed": False,
+                "permission_state_persistence_allowed": False,
+                "grant_packet_creation_allowed": False,
+                "grant_persistence_allowed": False,
+                "application_launch_request_created": False,
+                "application_launch_target_packet_created": False,
+                "application_launch_preview_packet_created": False,
+                "application_launch_allowlist_packet_created": False,
+                "application_launch_permission_requirement_created": False,
+                "application_launch_audit_correlation_created": False,
+                "application_launch_user_visible_preview_created": False,
+                "application_launch_approval_handoff_created": False,
+                "application_launch_denial_handoff_created": False,
+                "application_launch_execution_blocker_created": False,
+                "application_launch_review_queue_item_created": False,
+                "application_launch_action_created": False,
+                "application_launch_action_enqueued": False,
+                "application_launch_action_executed": False,
+                "application_allowlist_resolved": False,
+                "application_identity_validated": False,
+                "application_executable_resolved": False,
+                "application_arguments_resolved": False,
+                "application_environment_resolved": False,
+                "application_process_spawned": False,
+                "approved_application_launched": False,
+                "approved_project_tool_launched": False,
+                "approved_browser_launched": False,
+                "approved_editor_launched": False,
+                "approved_file_manager_launched": False,
+                "shell_application_launch_dispatched": False,
+                "os_application_launch_dispatched": False,
+                "desktop_application_launch_dispatched": False,
+                "safe_local_open_action_executed": False,
+                "approved_folder_opened": False,
+                "approved_file_opened": False,
+                "project_location_opened": False,
+                "dashboard_opened": False,
+                "path_accessed": False,
+                "file_read_performed": False,
+                "directory_listing_performed": False,
+                "action_proposal_created": False,
+                "action_preview_created": False,
+                "action_enqueued": False,
+                "action_executed": False,
+                "command_executed": False,
+                "tool_executed": False,
+                "file_mutated": False,
+                "desktop_action_executed": False,
+                "application_launched": False,
+                "network_action_executed": False,
+                "git_action_executed": False,
+                "memory_written": False,
+                "external_upload_performed": False,
+                "cloud_fallback_used": False,
+                "autonomous_action_performed": False,
+                "permission_state_mutated": False,
+                "permission_grant_created": False,
+                "audit_event_written": False,
+                "audit_event_persisted": False,
+                "audit_log_appended": False,
+                "audit_storage_written": False,
+                "no_application_launch_request_creation": True,
+                "no_application_launch_target_resolution": True,
+                "no_application_launch_preview_creation": True,
+                "no_application_launch_preview_render": True,
+                "no_application_launch_approval_handoff": True,
+                "no_application_launch_review_queue_enqueue": True,
+                "no_application_launch_dispatch": True,
+                "no_application_allowlist_resolution": True,
+                "no_application_identity_validation": True,
+                "no_application_executable_resolution": True,
+                "no_application_argument_resolution": True,
+                "no_application_environment_resolution": True,
+                "no_application_process_spawn": True,
+                "no_approved_application_launch": True,
+                "no_approved_project_tool_launch": True,
+                "no_approved_browser_launch": True,
+                "no_approved_editor_launch": True,
+                "no_approved_file_manager_launch": True,
+                "no_shell_application_launch_dispatch": True,
+                "no_os_application_launch_dispatch": True,
+                "no_desktop_application_launch_dispatch": True,
+                "no_launch_without_preview": True,
+                "no_launch_without_explicit_approval": True,
+                "no_launch_without_permission": True,
+                "no_launch_without_audit_correlation": True,
+                "no_launch_non_allowlisted_application": True,
+                "no_launch_arbitrary_executable": True,
+                "no_launch_with_unapproved_arguments": True,
+                "no_launch_privileged_application": True,
+                "no_launch_installer_or_package_manager": True,
+                "no_launch_network_downloader": True,
+                "no_launch_script_or_macro": True,
+                "no_launch_multi_step_chain": True,
+                "no_safe_local_open_dispatch": True,
+                "no_path_access": True,
+                "no_file_read": True,
+                "no_directory_listing": True,
+                "no_action_execution_dispatch": True,
+                "no_action_execution": True,
+                "no_command_execution": True,
+                "no_tool_execution": True,
+                "no_file_mutation": True,
+                "no_desktop_action": True,
+                "no_application_launch": True,
+                "no_network_action": True,
+                "no_git_action": True,
+                "no_memory_write": True,
+                "no_external_upload": True,
+                "no_cloud_fallback": True,
+                "no_autonomous_action": True,
+                "no_permission_state_mutation": True,
+                "no_permission_persistence": True,
+                "no_grant_creation": True,
+                "no_grant_persistence": True,
+                "no_audit_event_creation": True,
+                "no_audit_write": True,
+                "no_audit_persistence": True,
+                "runtime_scope": "allowlisted_application_launch_contract_only",
+                "safety_blockers": list(blockers),
+                "safety_blocker_count": len(blockers),
+            }
+        )
+
+        for blocker in blockers:
+            contract[blocker] = False
+
+        contract["all_safety_blockers_inactive"] = all(
+            contract[blocker] is False for blocker in blockers
+        )
+
+        return contract
+
+    def _s216_status(self) -> dict[str, Any]:
+        status = _S215_STATUS(self)
+        contract = self.allowlisted_application_launch_contract()
+
+        status.update(
+            {
+                "name": self.name,
+                "version": self.version,
+                "status": "planning",
+                "planning_ready": True,
+                "runtime_ready": False,
+                "allowlisted_application_launch_contract_ready": contract[
+                    "allowlisted_application_launch_contract_ready"
+                ],
+                "allowlisted_application_launch_runtime_ready": contract[
+                    "allowlisted_application_launch_runtime_ready"
+                ],
+                "allowlisted_application_launch_status": contract[
+                    "allowlisted_application_launch_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "preview_before_launch_required": contract[
+                    "preview_before_launch_required"
+                ],
+                "explicit_approval_before_launch_required": contract[
+                    "explicit_approval_before_launch_required"
+                ],
+                "permission_before_launch_required": contract[
+                    "permission_before_launch_required"
+                ],
+                "audit_correlation_before_launch_required": contract[
+                    "audit_correlation_before_launch_required"
+                ],
+                "allowlist_before_launch_required": contract[
+                    "allowlist_before_launch_required"
+                ],
+                "application_identity_before_launch_required": contract[
+                    "application_identity_before_launch_required"
+                ],
+                "safe_arguments_before_launch_required": contract[
+                    "safe_arguments_before_launch_required"
+                ],
+                "safe_environment_before_launch_required": contract[
+                    "safe_environment_before_launch_required"
+                ],
+                "single_application_launch_required": contract[
+                    "single_application_launch_required"
+                ],
+                "application_launch_request_schema_ready": contract[
+                    "application_launch_request_schema_ready"
+                ],
+                "application_launch_target_schema_ready": contract[
+                    "application_launch_target_schema_ready"
+                ],
+                "application_launch_preview_schema_ready": contract[
+                    "application_launch_preview_schema_ready"
+                ],
+                "application_launch_allowlist_schema_ready": contract[
+                    "application_launch_allowlist_schema_ready"
+                ],
+                "application_launch_permission_requirement_schema_ready": contract[
+                    "application_launch_permission_requirement_schema_ready"
+                ],
+                "application_launch_audit_correlation_schema_ready": contract[
+                    "application_launch_audit_correlation_schema_ready"
+                ],
+                "application_launch_user_visible_preview_schema_ready": contract[
+                    "application_launch_user_visible_preview_schema_ready"
+                ],
+                "application_launch_approval_handoff_schema_ready": contract[
+                    "application_launch_approval_handoff_schema_ready"
+                ],
+                "application_launch_review_queue_schema_ready": contract[
+                    "application_launch_review_queue_schema_ready"
+                ],
+                "allowed_application_launch_profile_count": contract[
+                    "allowed_application_launch_profile_count"
+                ],
+                "blocked_application_launch_target_count": contract[
+                    "blocked_application_launch_target_count"
+                ],
+                "application_launch_runtime_ready": contract[
+                    "application_launch_runtime_ready"
+                ],
+                "application_launch_request_creation_allowed": contract[
+                    "application_launch_request_creation_allowed"
+                ],
+                "application_launch_target_resolution_allowed": contract[
+                    "application_launch_target_resolution_allowed"
+                ],
+                "application_launch_preview_creation_allowed": contract[
+                    "application_launch_preview_creation_allowed"
+                ],
+                "application_launch_preview_render_allowed": contract[
+                    "application_launch_preview_render_allowed"
+                ],
+                "application_launch_approval_handoff_allowed": contract[
+                    "application_launch_approval_handoff_allowed"
+                ],
+                "application_launch_review_queue_enqueue_allowed": contract[
+                    "application_launch_review_queue_enqueue_allowed"
+                ],
+                "application_launch_dispatch_allowed": contract[
+                    "application_launch_dispatch_allowed"
+                ],
+                "application_allowlist_resolution_allowed": contract[
+                    "application_allowlist_resolution_allowed"
+                ],
+                "application_identity_validation_allowed": contract[
+                    "application_identity_validation_allowed"
+                ],
+                "application_executable_resolution_allowed": contract[
+                    "application_executable_resolution_allowed"
+                ],
+                "application_argument_resolution_allowed": contract[
+                    "application_argument_resolution_allowed"
+                ],
+                "application_environment_resolution_allowed": contract[
+                    "application_environment_resolution_allowed"
+                ],
+                "application_process_spawn_allowed": contract[
+                    "application_process_spawn_allowed"
+                ],
+                "approved_application_launch_runtime_ready": contract[
+                    "approved_application_launch_runtime_ready"
+                ],
+                "approved_project_tool_launch_runtime_ready": contract[
+                    "approved_project_tool_launch_runtime_ready"
+                ],
+                "approved_browser_launch_runtime_ready": contract[
+                    "approved_browser_launch_runtime_ready"
+                ],
+                "approved_editor_launch_runtime_ready": contract[
+                    "approved_editor_launch_runtime_ready"
+                ],
+                "approved_file_manager_launch_runtime_ready": contract[
+                    "approved_file_manager_launch_runtime_ready"
+                ],
+                "shell_application_launch_dispatch_allowed": contract[
+                    "shell_application_launch_dispatch_allowed"
+                ],
+                "os_application_launch_dispatch_allowed": contract[
+                    "os_application_launch_dispatch_allowed"
+                ],
+                "desktop_application_launch_dispatch_allowed": contract[
+                    "desktop_application_launch_dispatch_allowed"
+                ],
+                "application_launch_allowed": contract["application_launch_allowed"],
+                "desktop_action_allowed": contract["desktop_action_allowed"],
+                "file_mutation_allowed": contract["file_mutation_allowed"],
+                "application_launch_request_created": contract[
+                    "application_launch_request_created"
+                ],
+                "application_launch_preview_packet_created": contract[
+                    "application_launch_preview_packet_created"
+                ],
+                "application_launch_approval_handoff_created": contract[
+                    "application_launch_approval_handoff_created"
+                ],
+                "application_launch_review_queue_item_created": contract[
+                    "application_launch_review_queue_item_created"
+                ],
+                "application_launch_action_executed": contract[
+                    "application_launch_action_executed"
+                ],
+                "application_allowlist_resolved": contract[
+                    "application_allowlist_resolved"
+                ],
+                "application_identity_validated": contract[
+                    "application_identity_validated"
+                ],
+                "application_executable_resolved": contract[
+                    "application_executable_resolved"
+                ],
+                "application_process_spawned": contract[
+                    "application_process_spawned"
+                ],
+                "approved_application_launched": contract[
+                    "approved_application_launched"
+                ],
+                "approved_project_tool_launched": contract[
+                    "approved_project_tool_launched"
+                ],
+                "approved_browser_launched": contract["approved_browser_launched"],
+                "approved_editor_launched": contract["approved_editor_launched"],
+                "approved_file_manager_launched": contract[
+                    "approved_file_manager_launched"
+                ],
+                "shell_application_launch_dispatched": contract[
+                    "shell_application_launch_dispatched"
+                ],
+                "os_application_launch_dispatched": contract[
+                    "os_application_launch_dispatched"
+                ],
+                "desktop_application_launch_dispatched": contract[
+                    "desktop_application_launch_dispatched"
+                ],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "tool_executed": contract["tool_executed"],
+                "file_mutated": contract["file_mutated"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "permission_grant_created": contract["permission_grant_created"],
+                "audit_event_written": contract["audit_event_written"],
+                "no_application_launch_request_creation": contract[
+                    "no_application_launch_request_creation"
+                ],
+                "no_application_launch_preview_creation": contract[
+                    "no_application_launch_preview_creation"
+                ],
+                "no_application_launch_dispatch": contract[
+                    "no_application_launch_dispatch"
+                ],
+                "no_application_allowlist_resolution": contract[
+                    "no_application_allowlist_resolution"
+                ],
+                "no_application_identity_validation": contract[
+                    "no_application_identity_validation"
+                ],
+                "no_application_process_spawn": contract[
+                    "no_application_process_spawn"
+                ],
+                "no_approved_application_launch": contract[
+                    "no_approved_application_launch"
+                ],
+                "no_approved_project_tool_launch": contract[
+                    "no_approved_project_tool_launch"
+                ],
+                "no_approved_browser_launch": contract[
+                    "no_approved_browser_launch"
+                ],
+                "no_approved_editor_launch": contract[
+                    "no_approved_editor_launch"
+                ],
+                "no_approved_file_manager_launch": contract[
+                    "no_approved_file_manager_launch"
+                ],
+                "no_launch_without_preview": contract[
+                    "no_launch_without_preview"
+                ],
+                "no_launch_without_explicit_approval": contract[
+                    "no_launch_without_explicit_approval"
+                ],
+                "no_launch_without_permission": contract[
+                    "no_launch_without_permission"
+                ],
+                "no_launch_without_audit_correlation": contract[
+                    "no_launch_without_audit_correlation"
+                ],
+                "no_launch_non_allowlisted_application": contract[
+                    "no_launch_non_allowlisted_application"
+                ],
+                "no_launch_arbitrary_executable": contract[
+                    "no_launch_arbitrary_executable"
+                ],
+                "no_launch_with_unapproved_arguments": contract[
+                    "no_launch_with_unapproved_arguments"
+                ],
+                "no_launch_privileged_application": contract[
+                    "no_launch_privileged_application"
+                ],
+                "no_launch_installer_or_package_manager": contract[
+                    "no_launch_installer_or_package_manager"
+                ],
+                "no_launch_multi_step_chain": contract[
+                    "no_launch_multi_step_chain"
+                ],
+                "no_application_launch": contract["no_application_launch"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_file_mutation": contract["no_file_mutation"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "runtime_scope": contract["runtime_scope"],
+                "allowlisted_application_launch_contract": contract,
+                "contract": contract,
+                "note": (
+                    "Allowlisted Application Launch contract is ready for "
+                    "Sprint 216; it prepares application launch previews "
+                    "without resolving executables, spawning processes, "
+                    "dispatching launch commands, launching apps, mutating "
+                    "files, or executing local actions."
+                ),
+            }
+        )
+        return status
+
+    def _s216_check(self) -> dict[str, Any]:
+        s215 = _S215_CHECK(self)
+        contract = self.allowlisted_application_launch_contract()
+
+        true_keys = (
+            "allowlisted_application_launch_contract_ready",
+            "previous_active_permission_runtime_contract_ready",
+            "previous_grant_denial_expiry_lifecycle_contract_ready",
+            "previous_runtime_audit_writer_contract_ready",
+            "previous_action_proposal_preview_runtime_contract_ready",
+            "previous_safe_local_open_actions_contract_ready",
+            "previous_contract_chain_complete",
+            "contract_only",
+            "default_deny",
+            "preview_before_launch_required",
+            "explicit_approval_before_launch_required",
+            "permission_before_launch_required",
+            "audit_correlation_before_launch_required",
+            "allowlist_before_launch_required",
+            "application_identity_before_launch_required",
+            "safe_arguments_before_launch_required",
+            "safe_environment_before_launch_required",
+            "single_application_launch_required",
+            "application_launch_request_schema_ready",
+            "application_launch_target_schema_ready",
+            "application_launch_preview_schema_ready",
+            "application_launch_allowlist_schema_ready",
+            "application_launch_permission_requirement_schema_ready",
+            "application_launch_audit_correlation_schema_ready",
+            "application_launch_user_visible_preview_schema_ready",
+            "application_launch_approval_handoff_schema_ready",
+            "application_launch_denial_handoff_schema_ready",
+            "application_launch_execution_blocker_schema_ready",
+            "application_launch_review_queue_schema_ready",
+            "application_launch_safety_matrix_schema_ready",
+            "application_launch_next_controlled_file_schema_ready",
+            "no_application_launch_request_creation",
+            "no_application_launch_target_resolution",
+            "no_application_launch_preview_creation",
+            "no_application_launch_preview_render",
+            "no_application_launch_approval_handoff",
+            "no_application_launch_review_queue_enqueue",
+            "no_application_launch_dispatch",
+            "no_application_allowlist_resolution",
+            "no_application_identity_validation",
+            "no_application_executable_resolution",
+            "no_application_argument_resolution",
+            "no_application_environment_resolution",
+            "no_application_process_spawn",
+            "no_approved_application_launch",
+            "no_approved_project_tool_launch",
+            "no_approved_browser_launch",
+            "no_approved_editor_launch",
+            "no_approved_file_manager_launch",
+            "no_shell_application_launch_dispatch",
+            "no_os_application_launch_dispatch",
+            "no_desktop_application_launch_dispatch",
+            "no_launch_without_preview",
+            "no_launch_without_explicit_approval",
+            "no_launch_without_permission",
+            "no_launch_without_audit_correlation",
+            "no_launch_non_allowlisted_application",
+            "no_launch_arbitrary_executable",
+            "no_launch_with_unapproved_arguments",
+            "no_launch_privileged_application",
+            "no_launch_installer_or_package_manager",
+            "no_launch_network_downloader",
+            "no_launch_script_or_macro",
+            "no_launch_multi_step_chain",
+            "no_safe_local_open_dispatch",
+            "no_path_access",
+            "no_file_read",
+            "no_directory_listing",
+            "no_action_execution_dispatch",
+            "no_action_execution",
+            "no_command_execution",
+            "no_tool_execution",
+            "no_file_mutation",
+            "no_desktop_action",
+            "no_application_launch",
+            "no_network_action",
+            "no_git_action",
+            "no_memory_write",
+            "no_external_upload",
+            "no_cloud_fallback",
+            "no_autonomous_action",
+            "no_permission_state_mutation",
+            "no_permission_persistence",
+            "no_grant_creation",
+            "no_grant_persistence",
+            "no_audit_event_creation",
+            "no_audit_write",
+            "no_audit_persistence",
+            "all_safety_blockers_inactive",
+        )
+
+        false_keys = (
+            "allowlisted_application_launch_runtime_ready",
+            "runtime_ready",
+            "runtime_activation_allowed",
+            "release_gate_open",
+            "default_grant",
+            "application_launch_runtime_ready",
+            "application_launch_request_creation_allowed",
+            "application_launch_target_resolution_allowed",
+            "application_launch_preview_creation_allowed",
+            "application_launch_preview_render_allowed",
+            "application_launch_approval_handoff_allowed",
+            "application_launch_review_queue_enqueue_allowed",
+            "application_launch_dispatch_allowed",
+            "application_allowlist_resolution_allowed",
+            "application_identity_validation_allowed",
+            "application_executable_resolution_allowed",
+            "application_argument_resolution_allowed",
+            "application_environment_resolution_allowed",
+            "application_process_spawn_allowed",
+            "approved_application_launch_runtime_ready",
+            "approved_project_tool_launch_runtime_ready",
+            "approved_browser_launch_runtime_ready",
+            "approved_editor_launch_runtime_ready",
+            "approved_file_manager_launch_runtime_ready",
+            "shell_application_launch_dispatch_allowed",
+            "os_application_launch_dispatch_allowed",
+            "desktop_application_launch_dispatch_allowed",
+            "safe_local_action_handoff_ready",
+            "local_open_action_runtime_ready",
+            "action_execution_runtime_ready",
+            "action_execution_dispatch_allowed",
+            "command_execution_allowed",
+            "tool_execution_allowed",
+            "file_mutation_allowed",
+            "desktop_action_allowed",
+            "application_launch_allowed",
+            "audit_write_allowed",
+            "audit_event_packet_creation_allowed",
+            "audit_event_write_allowed",
+            "audit_log_append_allowed",
+            "audit_persistence_allowed",
+            "permission_state_mutation_allowed",
+            "permission_state_persistence_allowed",
+            "grant_packet_creation_allowed",
+            "grant_persistence_allowed",
+            "application_launch_request_created",
+            "application_launch_target_packet_created",
+            "application_launch_preview_packet_created",
+            "application_launch_allowlist_packet_created",
+            "application_launch_permission_requirement_created",
+            "application_launch_audit_correlation_created",
+            "application_launch_user_visible_preview_created",
+            "application_launch_approval_handoff_created",
+            "application_launch_denial_handoff_created",
+            "application_launch_execution_blocker_created",
+            "application_launch_review_queue_item_created",
+            "application_launch_action_created",
+            "application_launch_action_enqueued",
+            "application_launch_action_executed",
+            "application_allowlist_resolved",
+            "application_identity_validated",
+            "application_executable_resolved",
+            "application_arguments_resolved",
+            "application_environment_resolved",
+            "application_process_spawned",
+            "approved_application_launched",
+            "approved_project_tool_launched",
+            "approved_browser_launched",
+            "approved_editor_launched",
+            "approved_file_manager_launched",
+            "shell_application_launch_dispatched",
+            "os_application_launch_dispatched",
+            "desktop_application_launch_dispatched",
+            "safe_local_open_action_executed",
+            "action_proposal_created",
+            "action_preview_created",
+            "action_enqueued",
+            "action_executed",
+            "command_executed",
+            "tool_executed",
+            "file_mutated",
+            "desktop_action_executed",
+            "application_launched",
+            "network_action_executed",
+            "git_action_executed",
+            "memory_written",
+            "external_upload_performed",
+            "cloud_fallback_used",
+            "autonomous_action_performed",
+            "permission_state_mutated",
+            "permission_grant_created",
+            "audit_event_written",
+            "audit_event_persisted",
+            "audit_log_appended",
+            "audit_storage_written",
+        )
+
+        assertions: dict[str, bool] = {
+            "sprint_215_check_still_clean": s215["failed_assertion_count"] == 0,
+            "status_ready": contract["allowlisted_application_launch_status"]
+            == "allowlisted_application_launch_contract_ready",
+            "current_sprint_216": contract["permission_action_current_sprint"] == 216,
+            "next_sprint_217": contract["permission_action_next_sprint"] == 217,
+            "next_boundary_controlled_folder_simple_file_creation": contract[
+                "permission_action_next_boundary"
+            ]
+            == "controlled_folder_simple_file_creation",
+            "allowed_application_launch_profile_count_expected": contract[
+                "allowed_application_launch_profile_count"
+            ]
+            == len(contract["allowed_application_launch_profile_catalog"]),
+            "blocked_application_launch_target_count_expected": contract[
+                "blocked_application_launch_target_count"
+            ]
+            == len(contract["blocked_application_launch_target_catalog"]),
+            "safety_blocker_count_expected": contract["safety_blocker_count"]
+            == len(contract["safety_blockers"]),
+            "runtime_scope_contract_only": contract["runtime_scope"]
+            == "allowlisted_application_launch_contract_only",
+        }
+
+        for key in true_keys:
+            assertions[f"{key}_true"] = contract[key] is True
+
+        for key in false_keys:
+            assertions[f"{key}_false"] = contract[key] is False
+
+        for blocker in contract["safety_blockers"]:
+            assertions[f"{blocker}_inactive"] = contract[blocker] is False
+
+        failed_assertions = [name for name, passed in assertions.items() if not passed]
+        s215_failed = [
+            f"sprint_215::{name}" for name in s215.get("failed_assertions", [])
+        ]
+        all_failed = s215_failed + failed_assertions
+
+        return {
+            "status": "checked",
+            "planning_ready": True,
+            "runtime_ready": False,
+            "assertion_count": int(s215["assertion_count"]) + len(assertions),
+            "failed_assertion_count": len(all_failed),
+            "failed_assertions": all_failed,
+            "permission_action_current_sprint": contract[
+                "permission_action_current_sprint"
+            ],
+            "permission_action_next_sprint": contract[
+                "permission_action_next_sprint"
+            ],
+            "permission_action_next_boundary": contract[
+                "permission_action_next_boundary"
+            ],
+            "active_permission_runtime_contract": contract,
+            "grant_denial_expiry_lifecycle_contract": contract,
+            "runtime_audit_writer_contract": contract,
+            "action_proposal_preview_runtime_contract": contract,
+            "safe_local_open_actions_contract": contract,
+            "allowlisted_application_launch_contract": contract,
+            "note": (
+                "Runtime is not enabled yet. This check prepared the Sprint 216 "
+                "Allowlisted Application Launch contract without creating launch "
+                "requests, previews, approval handoffs, review queue items, "
+                "allowlist resolutions, executable resolutions, process spawns, "
+                "application launches, desktop actions, app launches, commands, "
+                "tools, permission mutations, audit writes, or local action "
+                "execution."
+            ),
+        }
+
+    def _s216_plan(self) -> dict[str, Any]:
+        contract = self.allowlisted_application_launch_contract()
+        return {
+            "name": self.name,
+            "sprint": 216,
+            "next_sprint": 217,
+            "next_boundary": "controlled_folder_simple_file_creation",
+            "contract_ready": contract[
+                "allowlisted_application_launch_contract_ready"
+            ],
+            "runtime_ready": contract[
+                "allowlisted_application_launch_runtime_ready"
+            ],
+            "runtime_scope": contract["runtime_scope"],
+            "schemas_ready": {
+                "application_launch_request": contract[
+                    "application_launch_request_schema_ready"
+                ],
+                "application_launch_target": contract[
+                    "application_launch_target_schema_ready"
+                ],
+                "application_launch_preview": contract[
+                    "application_launch_preview_schema_ready"
+                ],
+                "application_launch_allowlist": contract[
+                    "application_launch_allowlist_schema_ready"
+                ],
+                "application_launch_audit_correlation": contract[
+                    "application_launch_audit_correlation_schema_ready"
+                ],
+                "application_launch_approval_handoff": contract[
+                    "application_launch_approval_handoff_schema_ready"
+                ],
+                "application_launch_review_queue": contract[
+                    "application_launch_review_queue_schema_ready"
+                ],
+            },
+            "blocked_runtime": {
+                "launch_request_creation": contract[
+                    "application_launch_request_creation_allowed"
+                ],
+                "launch_preview_creation": contract[
+                    "application_launch_preview_creation_allowed"
+                ],
+                "launch_dispatch": contract["application_launch_dispatch_allowed"],
+                "process_spawn": contract["application_process_spawn_allowed"],
+                "application_launch": contract["application_launch_allowed"],
+                "desktop_action": contract["desktop_action_allowed"],
+                "command_execution": contract["command_execution_allowed"],
+                "tool_execution": contract["tool_execution_allowed"],
+                "file_mutation": contract["file_mutation_allowed"],
+            },
+        }
+
+    ActivePermissionRuntimePlanner.allowlisted_application_launch_contract = (
+        _s216_allowlisted_application_launch_contract
+    )
+    ActivePermissionRuntimePlanner.status = _s216_status
+    ActivePermissionRuntimePlanner.check = _s216_check
+    ActivePermissionRuntimePlanner.plan = _s216_plan
+    ActivePermissionRuntimePlanner._s216_extension_installed = True

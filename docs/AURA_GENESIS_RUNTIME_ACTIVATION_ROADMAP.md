@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.215.0-genesis
+Current anchor: v0.216.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.215.0-genesis
-- Completed: Sprint 215 — Safe Local Open Actions
+- Current version: v0.216.0-genesis
+- Completed: Sprint 216 — Allowlisted Application Launch
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 216 — Allowlisted Application Launch
+- Next: Sprint 217 — Controlled Folder and Simple File Creation
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1376,3 +1376,71 @@ commands/tools, network/git actions, memory writes, cloud fallback, external
 uploads, or autonomous actions.
 
 Next: Sprint 216 — Allowlisted Application Launch.
+
+## v0.216.0-genesis — Allowlisted Application Launch
+
+Sprint 216 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Allowlisted Application Launch visibility.
+
+The sprint prepares application launch request, target, preview, allowlist,
+permission requirement, audit correlation, user-visible preview, approval
+handoff, denial handoff, execution blocker, review queue, safety matrix, and
+next controlled folder/simple file creation schemas.
+
+The checkpoint confirms:
+
+- Allowlisted Application Launch contract ready
+- Allowlisted Application Launch runtime disabled
+- status allowlisted_application_launch_contract_ready
+- current sprint 216
+- next sprint 217
+- next boundary controlled_folder_simple_file_creation
+- preview before launch required
+- explicit approval before launch required
+- permission before launch required
+- audit correlation before launch required
+- allowlist before launch required
+- application identity before launch required
+- safe arguments before launch required
+- safe environment before launch required
+- single application launch required
+- application launch request schema ready
+- application launch target schema ready
+- application launch preview schema ready
+- application launch allowlist schema ready
+- application launch user-visible preview schema ready
+- application launch approval handoff schema ready
+- application launch review queue schema ready
+- allowed launch profiles 5
+- blocked launch targets 10
+- application launch request creation blocked
+- application launch preview creation blocked
+- application launch dispatch blocked
+- application allowlist resolution blocked
+- application identity validation blocked
+- executable resolution blocked
+- argument/environment resolution blocked
+- process spawn blocked
+- approved application launch blocked
+- approved project tool launch blocked
+- approved browser launch blocked
+- approved editor launch blocked
+- approved file manager launch blocked
+- shell/OS/desktop application launch dispatch blocked
+- application launch blocked
+- desktop action blocked
+- file mutation blocked
+- permission mutation blocked
+- audit write blocked
+- 148 safety blockers
+- all safety blockers inactive
+- 1349 assertions
+- zero failed assertions
+
+Sprint 216 does not create launch requests, previews, approval handoffs, review
+queue items, allowlist resolutions, executable resolutions, process spawns,
+application launches, desktop actions, commands/tools, permission mutations,
+grants, audit events, file mutations, network/git actions, memory writes, cloud
+fallback, external uploads, or autonomous actions.
+
+Next: Sprint 217 — Controlled Folder and Simple File Creation.

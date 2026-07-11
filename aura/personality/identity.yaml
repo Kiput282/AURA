@@ -1,5 +1,5 @@
 name: AURA
-version: "0.215.0-genesis"
+version: "0.216.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -235,3 +235,15 @@ modes:
 # dashboard opens, shell/OS/browser/file-manager dispatches, file mutations,
 # desktop actions, app launches, permission mutations, grants, audit writes,
 # network/git actions, cloud fallback, external uploads, or autonomous actions.
+# Sprint 216: allowlisted_application_launch extends the permission/action block
+# with contract-only allowlisted application launch schemas. It prepares
+# application launch request, target, preview, allowlist, permission requirement,
+# audit correlation, user-visible preview, approval handoff, denial handoff,
+# execution blocker, review queue, safety matrix, and next controlled file
+# creation boundaries.
+# It does not create launch requests, previews, approval handoffs, review queue
+# items, allowlist resolutions, identity validations, executable resolutions,
+# argument/environment resolutions, process spawns, application launches, desktop
+# actions, command/tool execution, file mutations, permission mutations, grants,
+# audit writes, network/git actions, memory writes, cloud fallback, external
+# uploads, or autonomous actions.

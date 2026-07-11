@@ -1229,3 +1229,32 @@ external upload, or autonomy.
 
 This creates the safe-open baseline for Sprint 216 — Allowlisted Application
 Launch.
+
+## Sprint 216 — Allowlisted Application Launch
+
+`v0.216.0-genesis` extends the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block.
+
+This sprint introduces contract-only Allowlisted Application Launch visibility.
+It establishes the future preview-before-launch and approval-before-launch
+boundary for approved application launch actions while keeping all launch
+execution disabled.
+
+It prepares application launch request, application launch target, application
+launch preview, application allowlist, permission requirement, audit
+correlation, user-visible preview, approval handoff, denial handoff, review
+queue, execution blocker, safety matrix, and next controlled folder/simple file
+creation schemas.
+
+It does not enable launch request creation, launch preview creation, approval
+handoff creation, review queue enqueue, allowlist resolution, identity
+validation, executable resolution, argument or environment resolution, process
+spawn, approved application launch, approved project tool launch, approved
+browser/editor/file-manager launch, shell/OS/desktop launch dispatch, action
+execution, command/tool execution, file mutation, desktop actions, application
+launch, permission mutation, permission persistence, grant creation, audit
+writing, network/git actions, memory writes, cloud fallback, external upload, or
+autonomy.
+
+This creates the allowlisted-launch baseline for Sprint 217 — Controlled Folder
+and Simple File Creation.

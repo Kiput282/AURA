@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.215.0-genesis
-Current status: Sprint 215 Safe Local Open Actions completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only safe local open action visibility
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 adds contract-only safe local open action visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, safety matrix, safe local open request, open target, open preview, path policy, allowlist, open approval handoff, open denial handoff, open execution blocker, and safe-open safety matrix schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, action proposal creation, action preview creation, approval handoff creation, action queue enqueue, action execution, safe local open request creation, open preview creation, open dispatch, path access, file read, directory listing, folder/file/project/dashboard opening, shell/OS/browser/file-manager dispatch, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.216.0-genesis
+Current status: Sprint 216 Allowlisted Application Launch completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only allowlisted application launch visibility
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 added contract-only safe local open action visibility. Sprint 216 adds contract-only allowlisted application launch visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, safety matrix, safe local open request, open target, open preview, path policy, allowlist, open approval handoff, open denial handoff, open execution blocker, application launch request, launch target, launch preview, launch allowlist, launch permission requirement, launch audit correlation, launch user-visible preview, launch approval handoff, launch denial handoff, launch execution blocker, launch review queue, launch safety matrix, and next controlled file creation schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, action proposal creation, action preview creation, approval handoff creation, action queue enqueue, action execution, safe local open request creation, open preview creation, open dispatch, path access, file read, directory listing, folder/file/project/dashboard opening, shell/OS/browser/file-manager dispatch, application launch request creation, launch preview creation, launch dispatch, allowlist resolution, executable resolution, argument resolution, environment resolution, process spawn, approved app launch, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 215 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Safe Local Open Actions as a contract-only default-deny boundary.
+AURA has completed Sprint 216 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Allowlisted Application Launch as a contract-only default-deny boundary.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.216.0-genesis
+- Sprint 216: Allowlisted Application Launch
 - v0.215.0-genesis
 - Sprint 215: Safe Local Open Actions
 - v0.214.0-genesis
@@ -100,7 +102,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 216 — Allowlisted Application Launch
+- Next planned sprint: Sprint 217 — Controlled Folder and Simple File Creation
 Current capability registry summary:
 
 - total capabilities: 121
@@ -4755,3 +4757,174 @@ assertions, vision baseline stable, voice baseline stable, and baseline
 self-tests OK.
 
 Next: Sprint 216 — Allowlisted Application Launch.
+
+## Sprint 216 — Allowlisted Application Launch
+
+Version: `v0.216.0-genesis`
+
+Sprint 216 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block.
+
+This sprint adds the Allowlisted Application Launch contract as a contract-only
+continuation of Active Permission Runtime, Grant/Denial/Expiry Lifecycle,
+Runtime Audit Writer, Action Proposal and Preview Runtime, and Safe Local Open
+Actions. It prepares application launch request, application launch target,
+application launch preview, application launch allowlist, permission
+requirement, audit correlation, user-visible preview, approval handoff, denial
+handoff, execution blocker, review queue, safety matrix, and next controlled
+folder/simple file creation schemas.
+
+Sprint 216 confirms:
+
+- Allowlisted Application Launch contract ready: true
+- Allowlisted Application Launch runtime ready: false
+- Allowlisted Application Launch status: allowlisted_application_launch_contract_ready
+- current sprint: 216
+- next sprint: 217
+- next boundary: controlled_folder_simple_file_creation
+- previous contract chain complete: true
+- contract only: true
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- default deny: true
+- default grant: false
+- preview before launch required: true
+- explicit approval before launch required: true
+- permission before launch required: true
+- audit correlation before launch required: true
+- allowlist before launch required: true
+- application identity before launch required: true
+- safe arguments before launch required: true
+- safe environment before launch required: true
+- single application launch required: true
+- application launch request schema ready: true
+- application launch target schema ready: true
+- application launch preview schema ready: true
+- application launch allowlist schema ready: true
+- application launch permission requirement schema ready: true
+- application launch audit correlation schema ready: true
+- application launch user-visible preview schema ready: true
+- application launch approval handoff schema ready: true
+- application launch denial handoff schema ready: true
+- application launch execution blocker schema ready: true
+- application launch review queue schema ready: true
+- application launch safety matrix schema ready: true
+- allowed application launch profile count: 5
+- blocked application launch target count: 10
+- application launch runtime ready: false
+- application launch request creation allowed: false
+- application launch target resolution allowed: false
+- application launch preview creation allowed: false
+- application launch preview render allowed: false
+- application launch approval handoff allowed: false
+- application launch review queue enqueue allowed: false
+- application launch dispatch allowed: false
+- application allowlist resolution allowed: false
+- application identity validation allowed: false
+- application executable resolution allowed: false
+- application argument resolution allowed: false
+- application environment resolution allowed: false
+- application process spawn allowed: false
+- approved application launch runtime ready: false
+- approved project tool launch runtime ready: false
+- approved browser launch runtime ready: false
+- approved editor launch runtime ready: false
+- approved file manager launch runtime ready: false
+- shell application launch dispatch allowed: false
+- OS application launch dispatch allowed: false
+- desktop application launch dispatch allowed: false
+- application launch allowed: false
+- desktop action allowed: false
+- file mutation allowed: false
+- application launch request created: false
+- application launch preview packet created: false
+- application launch approval handoff created: false
+- application launch review queue item created: false
+- application launch action executed: false
+- application allowlist resolved: false
+- application identity validated: false
+- application executable resolved: false
+- application arguments resolved: false
+- application environment resolved: false
+- application process spawned: false
+- approved application launched: false
+- approved project tool launched: false
+- approved browser launched: false
+- approved editor launched: false
+- approved file manager launched: false
+- shell application launch dispatched: false
+- OS application launch dispatched: false
+- desktop application launch dispatched: false
+- application launched: false
+- desktop action executed: false
+- file mutated: false
+- action executed: false
+- command executed: false
+- tool executed: false
+- audit event written: false
+- permission state mutated: false
+- permission grant created: false
+- no application launch request creation: true
+- no application launch target resolution: true
+- no application launch preview creation: true
+- no application launch preview render: true
+- no application launch approval handoff: true
+- no application launch review queue enqueue: true
+- no application launch dispatch: true
+- no application allowlist resolution: true
+- no application identity validation: true
+- no application executable resolution: true
+- no application argument resolution: true
+- no application environment resolution: true
+- no application process spawn: true
+- no approved application launch: true
+- no approved project tool launch: true
+- no approved browser launch: true
+- no approved editor launch: true
+- no approved file manager launch: true
+- no shell application launch dispatch: true
+- no OS application launch dispatch: true
+- no desktop application launch dispatch: true
+- no launch without preview: true
+- no launch without explicit approval: true
+- no launch without permission: true
+- no launch without audit correlation: true
+- no launch non-allowlisted application: true
+- no launch arbitrary executable: true
+- no launch with unapproved arguments: true
+- no launch privileged application: true
+- no launch installer or package manager: true
+- no launch network downloader: true
+- no launch script or macro: true
+- no launch multi-step chain: true
+- no application launch: true
+- no desktop action: true
+- no file mutation: true
+- safety blockers: 148
+- all safety blockers inactive: true
+- runtime scope: allowlisted_application_launch_contract_only
+- assertion count: 1349
+- failed assertion count: 0
+
+Allowed future launch profiles are approved browser application, approved editor
+application, approved file manager application, approved creative tool
+application, and approved project tool application. Blocked launch targets
+include arbitrary executables, unapproved applications, installers or package
+managers, privileged applications, shell commands, scripts/macros, network
+downloaders, credential/secret tools, system-setting mutators, and multi-step
+automation chains.
+
+Sprint 216 does not create launch requests, launch previews, approval handoffs,
+review queue items, allowlist resolutions, identity validations, executable
+resolutions, argument/environment resolutions, process spawns, application
+launches, desktop actions, app launches, commands, tools, file mutations,
+permission mutations, grants, audit events, network/git actions, memory writes,
+cloud fallback, external uploads, or autonomous actions.
+
+Validation passed with compileall OK, Allowlisted Application Launch CLI/Shell
+visibility OK, active-permission-runtime-check OK, 1349 assertions, zero failed
+assertions, vision baseline stable, voice baseline stable, and baseline
+self-tests OK.
+
+Next: Sprint 217 — Controlled Folder and Simple File Creation.
