@@ -897,3 +897,23 @@ actions.
 
 This creates the handoff baseline for Sprint 201 — Vision Runtime Activation
 Foundation.
+
+## Sprint 201 — Vision Runtime Activation Foundation
+
+`v0.201.0-genesis` starts the Sprint 201-210 Vision and Screen Awareness Runtime
+block as contract-only activation foundation.
+
+The checkpoint prepares the safe baseline for future screen and visual awareness
+with explicit visual input requirements, user confirmation, screen/camera
+permission boundaries, local-first/offline-first preference, candidate mapping,
+inactive safety blockers, and a closed release gate.
+
+This keeps AURA from accidentally accessing the screen or camera, capturing
+screenshots or camera frames, reading image files, running OCR, running image
+analysis or object detection, watching continuously or in the background,
+identifying biometrics, recognizing faces or identity, inferring emotion from
+faces, bypassing visual context into actions, executing visual tools/commands,
+writing memory, mutating files, controlling desktop/network/git, using cloud
+vision fallback, or externally uploading visual data.
+
+This creates the handoff baseline for Sprint 202 — Explicit Screenshot Capture.

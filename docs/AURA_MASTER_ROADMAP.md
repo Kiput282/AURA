@@ -2480,3 +2480,23 @@ memory writes, tool/command execution, file/desktop/network/git actions, cloud
 fallback, or voice actions.
 
 The next block begins at Sprint 201 with Vision Runtime Activation Foundation.
+
+## Checkpoint v0.201.0-genesis — Vision Runtime Activation Foundation
+
+Sprint 201 starts the Sprint 201-210 Vision and Screen Awareness Runtime block as
+a contract-only activation foundation.
+
+The checkpoint confirms that the vision runtime block now has an activation
+foundation with explicit visual input requirements, explicit user confirmation,
+screen and camera permission boundaries, candidate mapping, thirty-three safety
+blockers, and all safety blockers inactive.
+
+Sprint 201 keeps runtime activation blocked and release gates closed. It does
+not activate screen access, camera access, screenshot capture, camera frame
+capture, image file reads, OCR, image analysis, object detection, continuous or
+background watching, biometric identification, face or identity recognition,
+face emotion inference, visual-context-to-action bypass, visual action execution,
+tool/command execution, file/desktop/network/git actions, memory writes, cloud
+vision fallback, external upload, or any visual runtime execution.
+
+The next sprint is Sprint 202 — Explicit Screenshot Capture.

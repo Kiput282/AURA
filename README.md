@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.200.0-genesis
-Current status: Sprint 200 Voice Runtime Stabilization completed; Voice Interaction Runtime block 191-200 is stabilized and ready to hand off to Sprint 201 Vision Runtime Activation Foundation
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completes the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization: activation, explicit listen state, microphone boundary, STT adapter, voice intent/chat, TTS adapter, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while runtime activation, microphone capture, STT/TTS runtime, speaker playback, permission grant/revoke/mutation, audit writes, transcript/chat/TTS handoffs, voice actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, vision runtime, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.201.0-genesis
+Current status: Sprint 201 Vision Runtime Activation Foundation completed; Vision and Screen Awareness Runtime block 201-210 has started with contract-only activation foundation and is ready to hand off to Sprint 202 Explicit Screenshot Capture
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 starts the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation: explicit visual input, user confirmation, screen/camera permission boundaries, local-first/offline-first preference, candidate mapping, and safety blockers are ready while screen capture, camera access, screenshot capture, image analysis, OCR, continuous watching, biometric identification, visual actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud vision fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 200 and closes the Sprint 191-200 Voice Interaction Runtime block with contract-only stabilization.
+AURA has completed Sprint 201 and starts the Sprint 201-210 Vision and Screen Awareness Runtime block with contract-only activation foundation.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.201.0-genesis
+- Sprint 201: Vision Runtime Activation Foundation
 - v0.200.0-genesis
 - Sprint 200: Voice Runtime Stabilization
 - v0.199.0-genesis
@@ -70,7 +72,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 201 — Vision Runtime Activation Foundation
+- Next planned sprint: Sprint 202 — Explicit Screenshot Capture
 Current capability registry summary:
 
 - total capabilities: 121
@@ -3071,3 +3073,71 @@ voice-runtime-check OK, 507 assertions, zero failed assertions, and baseline
 self-tests OK.
 
 Next: Sprint 201 — Vision Runtime Activation Foundation.
+
+## Sprint 201 — Vision Runtime Activation Foundation
+
+Version: `v0.201.0-genesis`
+
+Sprint 201 starts the Sprint 201-210 Vision and Screen Awareness Runtime block as
+a contract-only activation foundation.
+
+The activation foundation prepares the safe baseline for future visual input
+without enabling visual runtime execution. It defines explicit visual input
+requirements, user confirmation gates, screen and camera permission boundaries,
+local-first/offline-first preference, candidate mapping, release gate status, and
+safety blockers.
+
+Sprint 201 exposes Vision Runtime Activation Foundation status in
+`vision-runtime-status` and `vision-runtime-check`, including activation status,
+block start/end, current sprint, next sprint, next boundary, activation allowed
+state, release gate state, permission requirements, candidate counts, safety
+blocker count, and inactive runtime flags.
+
+Sprint 201 confirms:
+
+- vision runtime activation contract ready: true
+- vision runtime activation runtime ready: false
+- activation status: activation_foundation_ready
+- vision block start: 201
+- vision block end: 210
+- current sprint: 201
+- next sprint: 202
+- next boundary: explicit_visual_input_state
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- safe idle default: true
+- explicit visual input required: true
+- explicit user confirmation required: true
+- permission required before screen: true
+- permission required before camera: true
+- permission required before image analysis: true
+- permission required before visual action: true
+- user-provided image first: true
+- screen permission action: screen_analyze
+- camera permission action: camera_analyze
+- screen capture candidates: 4
+- camera capture candidates: 4
+- vision model candidates: 3
+- safety blockers: 33
+- all safety blockers inactive: true
+
+The dependency baseline remains passive:
+
+- Python packages: 0/5
+- Executables: 0/6
+
+Sprint 201 does not install dependencies, download models, access the screen,
+access the camera, capture screenshots, capture camera frames, read image files,
+run OCR, run image analysis, run object detection, run vision models, watch the
+screen continuously, watch in the background, identify biometrics, recognize
+faces or identity, infer emotion from faces, execute visual actions, execute
+tools or commands, mutate files, control the desktop, write memory, perform
+network or git actions, use cloud vision fallback, externally upload visual data,
+or bypass action gates through visual context.
+
+Validation passed with compileall OK, vision-runtime-status OK,
+vision-runtime-check OK, 69 assertions, zero failed assertions, and baseline
+self-tests OK.
+
+Next: Sprint 202 — Explicit Screenshot Capture.

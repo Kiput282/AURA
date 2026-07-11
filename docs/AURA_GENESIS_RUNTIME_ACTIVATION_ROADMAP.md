@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.200.0-genesis
+Current anchor: v0.201.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.200.0-genesis
-- Completed: Sprint 200 — Voice Runtime Stabilization
+- Current version: v0.201.0-genesis
+- Completed: Sprint 201 — Vision Runtime Activation Foundation
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 201 — Vision Runtime Activation Foundation
+- Next: Sprint 202 — Explicit Screenshot Capture
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -476,3 +476,40 @@ writes, tool/command execution, file/desktop/network/git actions, cloud fallback
 and voice actions.
 
 Next: Sprint 201 — Vision Runtime Activation Foundation.
+
+## v0.201.0-genesis — Vision Runtime Activation Foundation
+
+Sprint 201 starts the Sprint 201-210 Vision and Screen Awareness Runtime block as
+contract-only activation foundation.
+
+The checkpoint prepares the safe activation baseline for future visual input and
+confirms:
+
+- activation contract ready
+- activation runtime disabled
+- block start 201
+- block end 210
+- current sprint 201
+- next sprint 202
+- next boundary explicit_visual_input_state
+- runtime activation blocked
+- release gate closed
+- explicit visual input required
+- explicit user confirmation required
+- screen permission action: screen_analyze
+- camera permission action: camera_analyze
+- 4 screen capture candidates
+- 4 camera capture candidates
+- 3 vision model candidates
+- 33 safety blockers
+- all safety blockers inactive
+
+Sprint 201 keeps all visual runtime execution disabled, including screen access,
+camera access, screen capture, screenshot capture, camera frame capture, image
+file reads, OCR, image analysis, object detection, continuous/background
+watching, biometric identification, face/identity recognition, face emotion
+inference, visual-context-to-action bypass, visual actions, tool/command
+execution, file/desktop/network/git actions, memory writes, cloud vision
+fallback, and external upload.
+
+Next: Sprint 202 — Explicit Screenshot Capture.
