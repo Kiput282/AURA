@@ -1004,3 +1004,217 @@ if not getattr(ActivePermissionRuntimeAlphaManager, "_s216_extension_installed",
 
     ActivePermissionRuntimeAlphaManager.status = _s216_alpha_status
     ActivePermissionRuntimeAlphaManager._s216_extension_installed = True
+
+# Sprint 217 extension: alpha visibility for Controlled Folder and Simple File Creation.
+if not getattr(ActivePermissionRuntimeAlphaManager, "_s217_extension_installed", False):
+    _S216_ALPHA_STATUS = ActivePermissionRuntimeAlphaManager.status
+
+    def _s217_alpha_status(self) -> dict[str, Any]:
+        status = _S216_ALPHA_STATUS(self)
+        contract = self.planner.controlled_folder_simple_file_creation_contract()
+        check = self.planner.check()
+
+        status.update(
+            {
+                "sprint_217_controlled_folder_simple_file_creation_contract_ready": contract[
+                    "controlled_folder_simple_file_creation_contract_ready"
+                ],
+                "controlled_folder_simple_file_creation_runtime_ready": contract[
+                    "controlled_folder_simple_file_creation_runtime_ready"
+                ],
+                "controlled_folder_simple_file_creation_status": contract[
+                    "controlled_folder_simple_file_creation_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "preview_before_create_required": contract[
+                    "preview_before_create_required"
+                ],
+                "explicit_approval_before_create_required": contract[
+                    "explicit_approval_before_create_required"
+                ],
+                "permission_before_create_required": contract[
+                    "permission_before_create_required"
+                ],
+                "audit_correlation_before_create_required": contract[
+                    "audit_correlation_before_create_required"
+                ],
+                "allowlist_before_create_required": contract[
+                    "allowlist_before_create_required"
+                ],
+                "canonical_path_before_create_required": contract[
+                    "canonical_path_before_create_required"
+                ],
+                "parent_path_before_create_required": contract[
+                    "parent_path_before_create_required"
+                ],
+                "safe_content_before_file_create_required": contract[
+                    "safe_content_before_file_create_required"
+                ],
+                "controlled_creation_request_schema_ready": contract[
+                    "controlled_creation_request_schema_ready"
+                ],
+                "controlled_creation_target_schema_ready": contract[
+                    "controlled_creation_target_schema_ready"
+                ],
+                "controlled_creation_preview_schema_ready": contract[
+                    "controlled_creation_preview_schema_ready"
+                ],
+                "controlled_creation_path_policy_schema_ready": contract[
+                    "controlled_creation_path_policy_schema_ready"
+                ],
+                "controlled_creation_allowlist_schema_ready": contract[
+                    "controlled_creation_allowlist_schema_ready"
+                ],
+                "controlled_creation_user_visible_preview_schema_ready": contract[
+                    "controlled_creation_user_visible_preview_schema_ready"
+                ],
+                "controlled_creation_approval_handoff_schema_ready": contract[
+                    "controlled_creation_approval_handoff_schema_ready"
+                ],
+                "controlled_creation_review_queue_schema_ready": contract[
+                    "controlled_creation_review_queue_schema_ready"
+                ],
+                "folder_creation_request_schema_ready": contract[
+                    "folder_creation_request_schema_ready"
+                ],
+                "simple_file_creation_request_schema_ready": contract[
+                    "simple_file_creation_request_schema_ready"
+                ],
+                "simple_file_creation_content_preview_schema_ready": contract[
+                    "simple_file_creation_content_preview_schema_ready"
+                ],
+                "allowed_controlled_creation_profile_count": contract[
+                    "allowed_controlled_creation_profile_count"
+                ],
+                "blocked_controlled_creation_target_count": contract[
+                    "blocked_controlled_creation_target_count"
+                ],
+                "controlled_creation_runtime_ready": contract[
+                    "controlled_creation_runtime_ready"
+                ],
+                "controlled_creation_request_creation_allowed": contract[
+                    "controlled_creation_request_creation_allowed"
+                ],
+                "controlled_creation_preview_creation_allowed": contract[
+                    "controlled_creation_preview_creation_allowed"
+                ],
+                "controlled_creation_dispatch_allowed": contract[
+                    "controlled_creation_dispatch_allowed"
+                ],
+                "folder_creation_runtime_ready": contract[
+                    "folder_creation_runtime_ready"
+                ],
+                "simple_file_creation_runtime_ready": contract[
+                    "simple_file_creation_runtime_ready"
+                ],
+                "file_write_runtime_ready": contract["file_write_runtime_ready"],
+                "folder_mkdir_runtime_ready": contract["folder_mkdir_runtime_ready"],
+                "filesystem_mutation_runtime_ready": contract[
+                    "filesystem_mutation_runtime_ready"
+                ],
+                "file_mutation_allowed": contract["file_mutation_allowed"],
+                "desktop_action_allowed": contract["desktop_action_allowed"],
+                "application_launch_allowed": contract["application_launch_allowed"],
+                "controlled_creation_request_created": contract[
+                    "controlled_creation_request_created"
+                ],
+                "controlled_creation_preview_packet_created": contract[
+                    "controlled_creation_preview_packet_created"
+                ],
+                "controlled_creation_approval_handoff_created": contract[
+                    "controlled_creation_approval_handoff_created"
+                ],
+                "controlled_creation_review_queue_item_created": contract[
+                    "controlled_creation_review_queue_item_created"
+                ],
+                "controlled_creation_action_executed": contract[
+                    "controlled_creation_action_executed"
+                ],
+                "folder_creation_request_created": contract[
+                    "folder_creation_request_created"
+                ],
+                "simple_file_creation_request_created": contract[
+                    "simple_file_creation_request_created"
+                ],
+                "folder_created": contract["folder_created"],
+                "project_folder_created": contract["project_folder_created"],
+                "simple_file_created": contract["simple_file_created"],
+                "project_simple_file_created": contract[
+                    "project_simple_file_created"
+                ],
+                "file_written": contract["file_written"],
+                "folder_mkdir_performed": contract["folder_mkdir_performed"],
+                "filesystem_mutated": contract["filesystem_mutated"],
+                "file_mutated": contract["file_mutated"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "tool_executed": contract["tool_executed"],
+                "audit_event_written": contract["audit_event_written"],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "no_controlled_creation_request_creation": contract[
+                    "no_controlled_creation_request_creation"
+                ],
+                "no_controlled_creation_preview_creation": contract[
+                    "no_controlled_creation_preview_creation"
+                ],
+                "no_controlled_creation_dispatch": contract[
+                    "no_controlled_creation_dispatch"
+                ],
+                "no_folder_creation_runtime": contract[
+                    "no_folder_creation_runtime"
+                ],
+                "no_simple_file_creation_runtime": contract[
+                    "no_simple_file_creation_runtime"
+                ],
+                "no_file_write": contract["no_file_write"],
+                "no_folder_mkdir": contract["no_folder_mkdir"],
+                "no_filesystem_mutation": contract["no_filesystem_mutation"],
+                "no_create_without_preview": contract[
+                    "no_create_without_preview"
+                ],
+                "no_create_without_explicit_approval": contract[
+                    "no_create_without_explicit_approval"
+                ],
+                "no_create_arbitrary_path": contract["no_create_arbitrary_path"],
+                "no_overwrite_existing_path": contract[
+                    "no_overwrite_existing_path"
+                ],
+                "no_recursive_bulk_creation": contract[
+                    "no_recursive_bulk_creation"
+                ],
+                "no_file_mutation": contract["no_file_mutation"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_application_launch": contract["no_application_launch"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "assertion_count": check["assertion_count"],
+                "failed_assertion_count": check["failed_assertion_count"],
+                "failed_assertions": check["failed_assertions"],
+                "runtime_scope": contract["runtime_scope"],
+                "sections": 7,
+                "note": (
+                    "Active Permission Runtime Alpha now exposes Sprint 217 "
+                    "Controlled Folder and Simple File Creation visibility "
+                    "without resolving paths, creating folders, writing files, "
+                    "mutating the filesystem, dispatching commands, or executing "
+                    "local actions."
+                ),
+            }
+        )
+        return status
+
+    ActivePermissionRuntimeAlphaManager.status = _s217_alpha_status
+    ActivePermissionRuntimeAlphaManager._s217_extension_installed = True

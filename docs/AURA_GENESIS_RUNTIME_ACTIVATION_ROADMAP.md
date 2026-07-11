@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.216.0-genesis
+Current anchor: v0.217.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.216.0-genesis
-- Completed: Sprint 216 — Allowlisted Application Launch
+- Current version: v0.217.0-genesis
+- Completed: Sprint 217 — Controlled Folder and Simple File Creation
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 217 — Controlled Folder and Simple File Creation
+- Next: Sprint 218 — Control Center Approval Workflow
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1444,3 +1444,77 @@ grants, audit events, file mutations, network/git actions, memory writes, cloud
 fallback, external uploads, or autonomous actions.
 
 Next: Sprint 217 — Controlled Folder and Simple File Creation.
+
+## v0.217.0-genesis — Controlled Folder and Simple File Creation
+
+Sprint 217 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Controlled Folder and Simple File Creation visibility.
+
+The sprint prepares controlled creation request, target, preview, path policy,
+allowlist, permission requirement, audit correlation, user-visible preview,
+approval handoff, denial handoff, execution blocker, review queue, folder
+creation, simple file creation, content preview, safety matrix, and next Control
+Center approval workflow schemas.
+
+The checkpoint confirms:
+
+- Controlled Folder and Simple File Creation contract ready
+- Controlled Folder and Simple File Creation runtime disabled
+- status controlled_folder_simple_file_creation_contract_ready
+- current sprint 217
+- next sprint 218
+- next boundary control_center_approval_workflow
+- preview before create required
+- explicit approval before create required
+- permission before create required
+- audit correlation before create required
+- allowlist before create required
+- canonical path before create required
+- parent path before create required
+- safe content before file create required
+- single creation action required
+- controlled creation request schema ready
+- controlled creation target schema ready
+- controlled creation preview schema ready
+- controlled creation path policy schema ready
+- controlled creation allowlist schema ready
+- controlled creation user-visible preview schema ready
+- controlled creation approval handoff schema ready
+- controlled creation review queue schema ready
+- folder creation request schema ready
+- simple file creation request schema ready
+- simple file content preview schema ready
+- allowed controlled creation profiles 4
+- blocked controlled creation targets 12
+- controlled creation request creation blocked
+- controlled creation preview creation blocked
+- controlled creation dispatch blocked
+- folder creation runtime blocked
+- simple file creation runtime blocked
+- project folder creation runtime blocked
+- project simple file creation runtime blocked
+- parent path allowlist resolution blocked
+- target path canonicalization blocked
+- target path access blocked
+- directory listing blocked
+- file read blocked
+- file write blocked
+- folder mkdir blocked
+- filesystem mutation blocked
+- shell/OS/tool file creation dispatch blocked
+- file mutation blocked
+- desktop action blocked
+- application launch blocked
+- permission mutation blocked
+- audit write blocked
+- 188 safety blockers
+- all safety blockers inactive
+- 1775 assertions
+- zero failed assertions
+
+Sprint 217 does not create folders, write files, resolve paths, access paths,
+list directories, read files, create mkdir operations, mutate the filesystem,
+dispatch commands/tools, launch apps, mutate permissions, write audit events, or
+execute local actions.
+
+Next: Sprint 218 — Control Center Approval Workflow.

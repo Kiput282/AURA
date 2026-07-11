@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.216.0-genesis
-Current status: Sprint 216 Allowlisted Application Launch completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only allowlisted application launch visibility
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 added contract-only safe local open action visibility. Sprint 216 adds contract-only allowlisted application launch visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, safety matrix, safe local open request, open target, open preview, path policy, allowlist, open approval handoff, open denial handoff, open execution blocker, application launch request, launch target, launch preview, launch allowlist, launch permission requirement, launch audit correlation, launch user-visible preview, launch approval handoff, launch denial handoff, launch execution blocker, launch review queue, launch safety matrix, and next controlled file creation schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, action proposal creation, action preview creation, approval handoff creation, action queue enqueue, action execution, safe local open request creation, open preview creation, open dispatch, path access, file read, directory listing, folder/file/project/dashboard opening, shell/OS/browser/file-manager dispatch, application launch request creation, launch preview creation, launch dispatch, allowlist resolution, executable resolution, argument resolution, environment resolution, process spawn, approved app launch, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.217.0-genesis
+Current status: Sprint 217 Controlled Folder and Simple File Creation completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only controlled folder/simple file creation visibility
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 added contract-only safe local open action visibility. Sprint 216 added contract-only allowlisted application launch visibility. Sprint 217 adds contract-only controlled folder and simple file creation visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, safety matrix, safe local open request, open target, open preview, path policy, allowlist, open approval handoff, open denial handoff, open execution blocker, application launch request, launch target, launch preview, launch allowlist, launch permission requirement, launch audit correlation, launch user-visible preview, launch approval handoff, launch denial handoff, launch execution blocker, launch review queue, launch safety matrix, controlled creation request, creation target, creation preview, creation path policy, creation allowlist, creation permission requirement, creation audit correlation, creation user-visible preview, creation approval handoff, creation denial handoff, creation execution blocker, creation review queue, folder creation, simple file creation, content preview, creation safety matrix, and next Control Center approval workflow schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, action proposal creation, action preview creation, approval handoff creation, action queue enqueue, action execution, safe local open request creation, open preview creation, open dispatch, path access, file read, directory listing, folder/file/project/dashboard opening, shell/OS/browser/file-manager dispatch, application launch request creation, launch preview creation, launch dispatch, allowlist resolution, executable resolution, argument resolution, environment resolution, process spawn, approved app launch, controlled creation request creation, creation preview creation, creation dispatch, folder creation, simple file creation, file write, mkdir, filesystem mutation, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 216 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Allowlisted Application Launch as a contract-only default-deny boundary.
+AURA has completed Sprint 217 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Controlled Folder and Simple File Creation as a contract-only default-deny boundary.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.217.0-genesis
+- Sprint 217: Controlled Folder and Simple File Creation
 - v0.216.0-genesis
 - Sprint 216: Allowlisted Application Launch
 - v0.215.0-genesis
@@ -102,7 +104,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 217 — Controlled Folder and Simple File Creation
+- Next planned sprint: Sprint 218 — Control Center Approval Workflow
 Current capability registry summary:
 
 - total capabilities: 121
@@ -4928,3 +4930,185 @@ assertions, vision baseline stable, voice baseline stable, and baseline
 self-tests OK.
 
 Next: Sprint 217 — Controlled Folder and Simple File Creation.
+
+## Sprint 217 — Controlled Folder and Simple File Creation
+
+Version: `v0.217.0-genesis`
+
+Sprint 217 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block.
+
+This sprint adds the Controlled Folder and Simple File Creation contract as a
+contract-only continuation of Active Permission Runtime, Grant/Denial/Expiry
+Lifecycle, Runtime Audit Writer, Action Proposal and Preview Runtime, Safe Local
+Open Actions, and Allowlisted Application Launch. It prepares controlled
+creation request, controlled creation target, controlled creation preview, path
+policy, allowlist, permission requirement, audit correlation, user-visible
+preview, approval handoff, denial handoff, execution blocker, review queue,
+folder creation request/target/preview, simple file creation request/target,
+simple file content preview, safety matrix, and next Control Center approval
+workflow schemas.
+
+Sprint 217 confirms:
+
+- Controlled Folder and Simple File Creation contract ready: true
+- Controlled Folder and Simple File Creation runtime ready: false
+- Controlled Folder and Simple File Creation status: controlled_folder_simple_file_creation_contract_ready
+- current sprint: 217
+- next sprint: 218
+- next boundary: control_center_approval_workflow
+- previous contract chain complete: true
+- contract only: true
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- default deny: true
+- default grant: false
+- preview before create required: true
+- explicit approval before create required: true
+- permission before create required: true
+- audit correlation before create required: true
+- allowlist before create required: true
+- canonical path before create required: true
+- parent path before create required: true
+- safe content before file create required: true
+- single creation action required: true
+- controlled creation request schema ready: true
+- controlled creation target schema ready: true
+- controlled creation preview schema ready: true
+- controlled creation path policy schema ready: true
+- controlled creation allowlist schema ready: true
+- controlled creation permission requirement schema ready: true
+- controlled creation audit correlation schema ready: true
+- controlled creation user-visible preview schema ready: true
+- controlled creation approval handoff schema ready: true
+- controlled creation denial handoff schema ready: true
+- controlled creation execution blocker schema ready: true
+- controlled creation review queue schema ready: true
+- controlled creation safety matrix schema ready: true
+- folder creation request schema ready: true
+- folder creation target schema ready: true
+- folder creation preview schema ready: true
+- simple file creation request schema ready: true
+- simple file creation target schema ready: true
+- simple file creation content preview schema ready: true
+- simple file creation template schema ready: true
+- allowed controlled creation profile count: 4
+- blocked controlled creation target count: 12
+- controlled creation runtime ready: false
+- controlled creation request creation allowed: false
+- controlled creation target resolution allowed: false
+- controlled creation preview creation allowed: false
+- controlled creation preview render allowed: false
+- controlled creation approval handoff allowed: false
+- controlled creation review queue enqueue allowed: false
+- controlled creation dispatch allowed: false
+- folder creation runtime ready: false
+- simple file creation runtime ready: false
+- project folder creation runtime ready: false
+- project simple file creation runtime ready: false
+- parent path allowlist resolution allowed: false
+- target path canonicalization allowed: false
+- target path access allowed: false
+- directory listing runtime ready: false
+- file read runtime ready: false
+- file write runtime ready: false
+- folder mkdir runtime ready: false
+- filesystem mutation runtime ready: false
+- shell file creation dispatch allowed: false
+- OS file creation dispatch allowed: false
+- tool file creation dispatch allowed: false
+- file mutation allowed: false
+- desktop action allowed: false
+- application launch allowed: false
+- controlled creation request created: false
+- controlled creation preview packet created: false
+- controlled creation approval handoff created: false
+- controlled creation review queue item created: false
+- controlled creation action executed: false
+- folder creation request created: false
+- folder creation target created: false
+- folder creation preview created: false
+- simple file creation request created: false
+- simple file creation target created: false
+- simple file creation content preview created: false
+- parent path allowlist resolved: false
+- target path canonicalized: false
+- target path accessed: false
+- directory listing performed: false
+- file read performed: false
+- folder created: false
+- project folder created: false
+- simple file created: false
+- project simple file created: false
+- file written: false
+- folder mkdir performed: false
+- filesystem mutated: false
+- file mutated: false
+- action executed: false
+- command executed: false
+- tool executed: false
+- desktop action executed: false
+- application launched: false
+- audit event written: false
+- permission state mutated: false
+- permission grant created: false
+- no controlled creation request creation: true
+- no controlled creation preview creation: true
+- no controlled creation dispatch: true
+- no folder creation runtime: true
+- no simple file creation runtime: true
+- no project folder creation runtime: true
+- no project simple file creation runtime: true
+- no parent path allowlist resolution: true
+- no target path canonicalization: true
+- no target path access: true
+- no directory listing: true
+- no file read: true
+- no file write: true
+- no folder mkdir: true
+- no filesystem mutation: true
+- no create without preview: true
+- no create without explicit approval: true
+- no create without permission: true
+- no create without audit correlation: true
+- no create non-allowlisted path: true
+- no create arbitrary path: true
+- no create hidden path: true
+- no create system path: true
+- no create credential path: true
+- no create executable file: true
+- no create binary file: true
+- no overwrite existing path: true
+- no delete or replace path: true
+- no recursive bulk creation: true
+- no multi-step creation chain: true
+- no network path creation: true
+- no file mutation: true
+- no desktop action: true
+- no application launch: true
+- safety blockers: 188
+- all safety blockers inactive: true
+- runtime scope: controlled_folder_simple_file_creation_contract_only
+- assertion count: 1775
+- failed assertion count: 0
+
+Allowed future controlled creation profiles are approved folder creation,
+approved project folder creation, simple text file creation, and simple project
+note file creation. Blocked creation targets include arbitrary paths, hidden
+paths, system paths, credential or secret paths, executable files, binary files,
+existing-path overwrite, delete/replace target, recursive bulk creation, network
+locations, shell commands, and multi-step automation chains.
+
+Sprint 217 does not create folders, write files, resolve paths, access paths,
+list directories, read files, create mkdir operations, mutate the filesystem,
+dispatch commands or tools, launch applications, mutate permissions, create
+grants, write audit events, perform network/git actions, write memory, use cloud
+fallback, upload externally, or perform autonomous actions.
+
+Validation passed with compileall OK, Controlled Folder and Simple File Creation
+CLI/Shell visibility OK, active-permission-runtime-check OK, 1775 assertions,
+zero failed assertions, vision baseline stable, voice baseline stable, and
+baseline self-tests OK.
+
+Next: Sprint 218 — Control Center Approval Workflow.

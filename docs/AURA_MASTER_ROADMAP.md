@@ -2810,3 +2810,26 @@ permission mutations, grants, audit events, network/git actions, memory writes,
 cloud fallback, external uploads, or autonomous actions.
 
 The next sprint is Sprint 217 — Controlled Folder and Simple File Creation.
+
+## Checkpoint v0.217.0-genesis — Controlled Folder and Simple File Creation
+
+Sprint 217 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Controlled Folder and Simple File Creation.
+
+This checkpoint prepares controlled folder and simple file creation schemas,
+including creation request, creation target, creation preview, path policy,
+allowlist, permission requirement, audit correlation, user-visible preview,
+approval handoff, denial handoff, execution blocker, review queue, folder
+creation request/target/preview, simple file creation request/target/content
+preview, and safety matrix boundaries. It requires preview-before-create,
+explicit approval, permission, audit correlation, allowlist, canonical path,
+parent path, safe content, and single-creation action boundaries.
+
+Runtime remains disabled. Sprint 217 does not create folders, write files,
+resolve paths, access paths, list directories, read files, perform mkdir,
+mutate the filesystem, dispatch commands/tools, launch apps, mutate
+permissions, create grants, write audit events, perform network/git actions,
+write memory, use cloud fallback, upload externally, or perform autonomous
+actions.
+
+The next sprint is Sprint 218 — Control Center Approval Workflow.

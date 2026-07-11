@@ -1258,3 +1258,30 @@ autonomy.
 
 This creates the allowlisted-launch baseline for Sprint 217 — Controlled Folder
 and Simple File Creation.
+
+## Sprint 217 — Controlled Folder and Simple File Creation
+
+`v0.217.0-genesis` extends the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block.
+
+This sprint introduces contract-only Controlled Folder and Simple File Creation
+visibility. It establishes the future preview-before-create and approval-before-
+create boundary for approved folder creation and simple file creation while
+keeping all filesystem mutation disabled.
+
+It prepares controlled creation request, target, preview, path policy,
+allowlist, permission requirement, audit correlation, user-visible preview,
+approval handoff, denial handoff, review queue, execution blocker, folder
+creation request/target/preview, simple file creation request/target/content
+preview, safety matrix, and next Control Center approval workflow schemas.
+
+It does not enable controlled creation request creation, creation preview
+creation, approval handoff creation, review queue enqueue, path resolution, path
+access, directory listing, file read, folder creation, simple file creation,
+file write, mkdir, filesystem mutation, command/tool execution, desktop action,
+application launch, permission mutation, permission persistence, grant creation,
+audit writing, network/git actions, memory writes, cloud fallback, external
+upload, or autonomy.
+
+This creates the controlled creation baseline for Sprint 218 — Control Center
+Approval Workflow.

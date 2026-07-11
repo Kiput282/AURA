@@ -4317,3 +4317,1010 @@ if not getattr(ActivePermissionRuntimePlanner, "_s216_extension_installed", Fals
     ActivePermissionRuntimePlanner.check = _s216_check
     ActivePermissionRuntimePlanner.plan = _s216_plan
     ActivePermissionRuntimePlanner._s216_extension_installed = True
+
+# Sprint 217 extension: Controlled Folder and Simple File Creation.
+#
+# This remains contract-only. It prepares controlled folder creation and simple
+# file creation schemas and safety visibility for future approved local file
+# creation previews.
+# It does not create folders, write files, resolve paths, access paths, list
+# directories, read files, mutate files, dispatch commands, run tools, launch
+# apps, write audit events, mutate permissions, or execute local actions.
+if not getattr(ActivePermissionRuntimePlanner, "_s217_extension_installed", False):
+    _S216_STATUS = ActivePermissionRuntimePlanner.status
+    _S216_CHECK = ActivePermissionRuntimePlanner.check
+    _S216_PLAN = ActivePermissionRuntimePlanner.plan
+
+    def _s217_safety_blockers(self) -> tuple[str, ...]:
+        base = tuple(self.allowlisted_application_launch_contract()["safety_blockers"])
+        extra = (
+            "controlled_folder_simple_file_creation_runtime_active",
+            "controlled_creation_request_creation_active",
+            "controlled_creation_target_resolution_active",
+            "controlled_creation_preview_creation_active",
+            "controlled_creation_preview_render_active",
+            "controlled_creation_approval_handoff_active",
+            "controlled_creation_review_queue_enqueue_active",
+            "controlled_creation_dispatch_active",
+            "folder_creation_runtime_active",
+            "simple_file_creation_runtime_active",
+            "project_folder_creation_runtime_active",
+            "project_simple_file_creation_runtime_active",
+            "parent_path_allowlist_resolution_active",
+            "target_path_canonicalization_active",
+            "target_path_existence_check_active",
+            "target_path_access_active",
+            "directory_listing_runtime_active",
+            "file_read_runtime_active",
+            "file_content_template_resolution_active",
+            "file_content_preview_creation_active",
+            "file_write_runtime_active",
+            "folder_mkdir_runtime_active",
+            "filesystem_mutation_runtime_active",
+            "shell_file_creation_dispatch_active",
+            "os_file_creation_dispatch_active",
+            "tool_file_creation_dispatch_active",
+            "create_without_preview_active",
+            "create_without_approval_active",
+            "create_without_permission_active",
+            "create_without_audit_correlation_active",
+            "create_non_allowlisted_path_active",
+            "create_arbitrary_path_active",
+            "create_hidden_path_active",
+            "create_system_path_active",
+            "create_credential_path_active",
+            "create_executable_file_active",
+            "create_binary_file_active",
+            "overwrite_existing_path_active",
+            "delete_or_replace_path_active",
+            "recursive_bulk_creation_active",
+            "multi_step_creation_chain_active",
+            "network_path_creation_active",
+        )
+        return tuple(dict.fromkeys(base + extra))
+
+    def _s217_controlled_folder_simple_file_creation_contract(self) -> dict[str, Any]:
+        s216 = self.allowlisted_application_launch_contract()
+        blockers = _s217_safety_blockers(self)
+
+        contract: dict[str, Any] = dict(s216)
+        contract.update(
+            {
+                "controlled_folder_simple_file_creation_contract_ready": True,
+                "controlled_folder_simple_file_creation_runtime_ready": False,
+                "controlled_folder_simple_file_creation_status": "controlled_folder_simple_file_creation_contract_ready",
+                "permission_action_block_start": 211,
+                "permission_action_block_end": 220,
+                "permission_action_current_sprint": 217,
+                "permission_action_next_sprint": 218,
+                "permission_action_next_boundary": "control_center_approval_workflow",
+                "previous_active_permission_runtime_contract_ready": s216[
+                    "active_permission_runtime_contract_ready"
+                ],
+                "previous_grant_denial_expiry_lifecycle_contract_ready": s216[
+                    "grant_denial_expiry_lifecycle_contract_ready"
+                ],
+                "previous_runtime_audit_writer_contract_ready": s216[
+                    "runtime_audit_writer_contract_ready"
+                ],
+                "previous_action_proposal_preview_runtime_contract_ready": s216[
+                    "action_proposal_preview_runtime_contract_ready"
+                ],
+                "previous_safe_local_open_actions_contract_ready": s216[
+                    "safe_local_open_actions_contract_ready"
+                ],
+                "previous_allowlisted_application_launch_contract_ready": s216[
+                    "allowlisted_application_launch_contract_ready"
+                ],
+                "previous_contract_chain_complete": True,
+                "contract_only": True,
+                "runtime_ready": False,
+                "runtime_activation_allowed": False,
+                "release_gate_open": False,
+                "default_deny": True,
+                "default_grant": False,
+                "preview_before_create_required": True,
+                "explicit_approval_before_create_required": True,
+                "permission_before_create_required": True,
+                "audit_correlation_before_create_required": True,
+                "allowlist_before_create_required": True,
+                "canonical_path_before_create_required": True,
+                "parent_path_before_create_required": True,
+                "safe_content_before_file_create_required": True,
+                "single_creation_action_required": True,
+                "controlled_creation_request_schema_ready": True,
+                "controlled_creation_target_schema_ready": True,
+                "controlled_creation_preview_schema_ready": True,
+                "controlled_creation_path_policy_schema_ready": True,
+                "controlled_creation_allowlist_schema_ready": True,
+                "controlled_creation_permission_requirement_schema_ready": True,
+                "controlled_creation_audit_correlation_schema_ready": True,
+                "controlled_creation_user_visible_preview_schema_ready": True,
+                "controlled_creation_approval_handoff_schema_ready": True,
+                "controlled_creation_denial_handoff_schema_ready": True,
+                "controlled_creation_execution_blocker_schema_ready": True,
+                "controlled_creation_review_queue_schema_ready": True,
+                "controlled_creation_safety_matrix_schema_ready": True,
+                "controlled_creation_next_control_center_schema_ready": True,
+                "folder_creation_request_schema_ready": True,
+                "folder_creation_target_schema_ready": True,
+                "folder_creation_preview_schema_ready": True,
+                "simple_file_creation_request_schema_ready": True,
+                "simple_file_creation_target_schema_ready": True,
+                "simple_file_creation_content_preview_schema_ready": True,
+                "simple_file_creation_template_schema_ready": True,
+                "allowed_controlled_creation_profile_catalog": [
+                    "approved_folder_creation",
+                    "approved_project_folder_creation",
+                    "simple_text_file_creation",
+                    "simple_project_note_file_creation",
+                ],
+                "allowed_controlled_creation_profile_count": 4,
+                "blocked_controlled_creation_target_catalog": [
+                    "arbitrary_path",
+                    "hidden_path",
+                    "system_path",
+                    "credential_or_secret_path",
+                    "executable_file",
+                    "binary_file",
+                    "existing_path_overwrite",
+                    "delete_or_replace_target",
+                    "recursive_bulk_creation",
+                    "network_location",
+                    "shell_command",
+                    "multi_step_automation_chain",
+                ],
+                "blocked_controlled_creation_target_count": 12,
+                "controlled_creation_runtime_ready": False,
+                "controlled_creation_request_creation_allowed": False,
+                "controlled_creation_target_resolution_allowed": False,
+                "controlled_creation_preview_creation_allowed": False,
+                "controlled_creation_preview_render_allowed": False,
+                "controlled_creation_approval_handoff_allowed": False,
+                "controlled_creation_review_queue_enqueue_allowed": False,
+                "controlled_creation_dispatch_allowed": False,
+                "folder_creation_runtime_ready": False,
+                "simple_file_creation_runtime_ready": False,
+                "project_folder_creation_runtime_ready": False,
+                "project_simple_file_creation_runtime_ready": False,
+                "parent_path_allowlist_resolution_allowed": False,
+                "target_path_canonicalization_allowed": False,
+                "target_path_existence_check_allowed": False,
+                "target_path_access_allowed": False,
+                "directory_listing_runtime_ready": False,
+                "file_read_runtime_ready": False,
+                "file_content_template_resolution_allowed": False,
+                "file_content_preview_creation_allowed": False,
+                "file_write_runtime_ready": False,
+                "folder_mkdir_runtime_ready": False,
+                "filesystem_mutation_runtime_ready": False,
+                "shell_file_creation_dispatch_allowed": False,
+                "os_file_creation_dispatch_allowed": False,
+                "tool_file_creation_dispatch_allowed": False,
+                "safe_local_action_handoff_ready": False,
+                "local_open_action_runtime_ready": False,
+                "application_launch_runtime_ready": False,
+                "action_execution_runtime_ready": False,
+                "action_execution_dispatch_allowed": False,
+                "command_execution_allowed": False,
+                "tool_execution_allowed": False,
+                "file_mutation_allowed": False,
+                "desktop_action_allowed": False,
+                "application_launch_allowed": False,
+                "audit_write_allowed": False,
+                "audit_event_packet_creation_allowed": False,
+                "audit_event_write_allowed": False,
+                "audit_log_append_allowed": False,
+                "audit_persistence_allowed": False,
+                "permission_state_mutation_allowed": False,
+                "permission_state_persistence_allowed": False,
+                "grant_packet_creation_allowed": False,
+                "grant_persistence_allowed": False,
+                "controlled_creation_request_created": False,
+                "controlled_creation_target_packet_created": False,
+                "controlled_creation_preview_packet_created": False,
+                "controlled_creation_path_policy_created": False,
+                "controlled_creation_allowlist_packet_created": False,
+                "controlled_creation_permission_requirement_created": False,
+                "controlled_creation_audit_correlation_created": False,
+                "controlled_creation_user_visible_preview_created": False,
+                "controlled_creation_approval_handoff_created": False,
+                "controlled_creation_denial_handoff_created": False,
+                "controlled_creation_execution_blocker_created": False,
+                "controlled_creation_review_queue_item_created": False,
+                "controlled_creation_action_created": False,
+                "controlled_creation_action_enqueued": False,
+                "controlled_creation_action_executed": False,
+                "folder_creation_request_created": False,
+                "folder_creation_target_created": False,
+                "folder_creation_preview_created": False,
+                "simple_file_creation_request_created": False,
+                "simple_file_creation_target_created": False,
+                "simple_file_creation_content_preview_created": False,
+                "simple_file_creation_template_created": False,
+                "parent_path_allowlist_resolved": False,
+                "target_path_canonicalized": False,
+                "target_path_existence_checked": False,
+                "target_path_accessed": False,
+                "directory_listing_performed": False,
+                "file_read_performed": False,
+                "file_content_template_resolved": False,
+                "file_content_preview_created": False,
+                "folder_created": False,
+                "project_folder_created": False,
+                "simple_file_created": False,
+                "project_simple_file_created": False,
+                "file_written": False,
+                "folder_mkdir_performed": False,
+                "filesystem_mutated": False,
+                "shell_file_creation_dispatched": False,
+                "os_file_creation_dispatched": False,
+                "tool_file_creation_dispatched": False,
+                "safe_local_open_action_executed": False,
+                "approved_folder_opened": False,
+                "approved_file_opened": False,
+                "project_location_opened": False,
+                "dashboard_opened": False,
+                "path_accessed": False,
+                "application_launch_request_created": False,
+                "application_launch_preview_packet_created": False,
+                "application_launch_action_executed": False,
+                "application_process_spawned": False,
+                "approved_application_launched": False,
+                "approved_project_tool_launched": False,
+                "approved_browser_launched": False,
+                "approved_editor_launched": False,
+                "approved_file_manager_launched": False,
+                "application_launched": False,
+                "action_proposal_created": False,
+                "action_preview_created": False,
+                "action_enqueued": False,
+                "action_executed": False,
+                "command_executed": False,
+                "tool_executed": False,
+                "file_mutated": False,
+                "desktop_action_executed": False,
+                "network_action_executed": False,
+                "git_action_executed": False,
+                "memory_written": False,
+                "external_upload_performed": False,
+                "cloud_fallback_used": False,
+                "autonomous_action_performed": False,
+                "permission_state_mutated": False,
+                "permission_grant_created": False,
+                "audit_event_written": False,
+                "audit_event_persisted": False,
+                "audit_log_appended": False,
+                "audit_storage_written": False,
+                "no_controlled_creation_request_creation": True,
+                "no_controlled_creation_target_resolution": True,
+                "no_controlled_creation_preview_creation": True,
+                "no_controlled_creation_preview_render": True,
+                "no_controlled_creation_approval_handoff": True,
+                "no_controlled_creation_review_queue_enqueue": True,
+                "no_controlled_creation_dispatch": True,
+                "no_folder_creation_runtime": True,
+                "no_simple_file_creation_runtime": True,
+                "no_project_folder_creation_runtime": True,
+                "no_project_simple_file_creation_runtime": True,
+                "no_parent_path_allowlist_resolution": True,
+                "no_target_path_canonicalization": True,
+                "no_target_path_existence_check": True,
+                "no_target_path_access": True,
+                "no_directory_listing": True,
+                "no_file_read": True,
+                "no_file_content_template_resolution": True,
+                "no_file_content_preview_creation": True,
+                "no_file_write": True,
+                "no_folder_mkdir": True,
+                "no_filesystem_mutation": True,
+                "no_shell_file_creation_dispatch": True,
+                "no_os_file_creation_dispatch": True,
+                "no_tool_file_creation_dispatch": True,
+                "no_create_without_preview": True,
+                "no_create_without_explicit_approval": True,
+                "no_create_without_permission": True,
+                "no_create_without_audit_correlation": True,
+                "no_create_non_allowlisted_path": True,
+                "no_create_arbitrary_path": True,
+                "no_create_hidden_path": True,
+                "no_create_system_path": True,
+                "no_create_credential_path": True,
+                "no_create_executable_file": True,
+                "no_create_binary_file": True,
+                "no_overwrite_existing_path": True,
+                "no_delete_or_replace_path": True,
+                "no_recursive_bulk_creation": True,
+                "no_multi_step_creation_chain": True,
+                "no_network_path_creation": True,
+                "no_safe_local_open_dispatch": True,
+                "no_application_launch": True,
+                "no_desktop_action": True,
+                "no_action_execution_dispatch": True,
+                "no_action_execution": True,
+                "no_command_execution": True,
+                "no_tool_execution": True,
+                "no_file_mutation": True,
+                "no_network_action": True,
+                "no_git_action": True,
+                "no_memory_write": True,
+                "no_external_upload": True,
+                "no_cloud_fallback": True,
+                "no_autonomous_action": True,
+                "no_permission_state_mutation": True,
+                "no_permission_persistence": True,
+                "no_grant_creation": True,
+                "no_grant_persistence": True,
+                "no_audit_event_creation": True,
+                "no_audit_write": True,
+                "no_audit_persistence": True,
+                "runtime_scope": "controlled_folder_simple_file_creation_contract_only",
+                "safety_blockers": list(blockers),
+                "safety_blocker_count": len(blockers),
+            }
+        )
+
+        for blocker in blockers:
+            contract[blocker] = False
+
+        contract["all_safety_blockers_inactive"] = all(
+            contract[blocker] is False for blocker in blockers
+        )
+
+        return contract
+
+    def _s217_status(self) -> dict[str, Any]:
+        status = _S216_STATUS(self)
+        contract = self.controlled_folder_simple_file_creation_contract()
+
+        status.update(
+            {
+                "name": self.name,
+                "version": self.version,
+                "status": "planning",
+                "planning_ready": True,
+                "runtime_ready": False,
+                "controlled_folder_simple_file_creation_contract_ready": contract[
+                    "controlled_folder_simple_file_creation_contract_ready"
+                ],
+                "controlled_folder_simple_file_creation_runtime_ready": contract[
+                    "controlled_folder_simple_file_creation_runtime_ready"
+                ],
+                "controlled_folder_simple_file_creation_status": contract[
+                    "controlled_folder_simple_file_creation_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "preview_before_create_required": contract[
+                    "preview_before_create_required"
+                ],
+                "explicit_approval_before_create_required": contract[
+                    "explicit_approval_before_create_required"
+                ],
+                "permission_before_create_required": contract[
+                    "permission_before_create_required"
+                ],
+                "audit_correlation_before_create_required": contract[
+                    "audit_correlation_before_create_required"
+                ],
+                "allowlist_before_create_required": contract[
+                    "allowlist_before_create_required"
+                ],
+                "canonical_path_before_create_required": contract[
+                    "canonical_path_before_create_required"
+                ],
+                "parent_path_before_create_required": contract[
+                    "parent_path_before_create_required"
+                ],
+                "safe_content_before_file_create_required": contract[
+                    "safe_content_before_file_create_required"
+                ],
+                "single_creation_action_required": contract[
+                    "single_creation_action_required"
+                ],
+                "controlled_creation_request_schema_ready": contract[
+                    "controlled_creation_request_schema_ready"
+                ],
+                "controlled_creation_target_schema_ready": contract[
+                    "controlled_creation_target_schema_ready"
+                ],
+                "controlled_creation_preview_schema_ready": contract[
+                    "controlled_creation_preview_schema_ready"
+                ],
+                "controlled_creation_path_policy_schema_ready": contract[
+                    "controlled_creation_path_policy_schema_ready"
+                ],
+                "controlled_creation_allowlist_schema_ready": contract[
+                    "controlled_creation_allowlist_schema_ready"
+                ],
+                "controlled_creation_permission_requirement_schema_ready": contract[
+                    "controlled_creation_permission_requirement_schema_ready"
+                ],
+                "controlled_creation_audit_correlation_schema_ready": contract[
+                    "controlled_creation_audit_correlation_schema_ready"
+                ],
+                "controlled_creation_user_visible_preview_schema_ready": contract[
+                    "controlled_creation_user_visible_preview_schema_ready"
+                ],
+                "controlled_creation_approval_handoff_schema_ready": contract[
+                    "controlled_creation_approval_handoff_schema_ready"
+                ],
+                "controlled_creation_review_queue_schema_ready": contract[
+                    "controlled_creation_review_queue_schema_ready"
+                ],
+                "folder_creation_request_schema_ready": contract[
+                    "folder_creation_request_schema_ready"
+                ],
+                "folder_creation_target_schema_ready": contract[
+                    "folder_creation_target_schema_ready"
+                ],
+                "folder_creation_preview_schema_ready": contract[
+                    "folder_creation_preview_schema_ready"
+                ],
+                "simple_file_creation_request_schema_ready": contract[
+                    "simple_file_creation_request_schema_ready"
+                ],
+                "simple_file_creation_target_schema_ready": contract[
+                    "simple_file_creation_target_schema_ready"
+                ],
+                "simple_file_creation_content_preview_schema_ready": contract[
+                    "simple_file_creation_content_preview_schema_ready"
+                ],
+                "allowed_controlled_creation_profile_count": contract[
+                    "allowed_controlled_creation_profile_count"
+                ],
+                "blocked_controlled_creation_target_count": contract[
+                    "blocked_controlled_creation_target_count"
+                ],
+                "controlled_creation_runtime_ready": contract[
+                    "controlled_creation_runtime_ready"
+                ],
+                "controlled_creation_request_creation_allowed": contract[
+                    "controlled_creation_request_creation_allowed"
+                ],
+                "controlled_creation_preview_creation_allowed": contract[
+                    "controlled_creation_preview_creation_allowed"
+                ],
+                "controlled_creation_dispatch_allowed": contract[
+                    "controlled_creation_dispatch_allowed"
+                ],
+                "folder_creation_runtime_ready": contract[
+                    "folder_creation_runtime_ready"
+                ],
+                "simple_file_creation_runtime_ready": contract[
+                    "simple_file_creation_runtime_ready"
+                ],
+                "project_folder_creation_runtime_ready": contract[
+                    "project_folder_creation_runtime_ready"
+                ],
+                "project_simple_file_creation_runtime_ready": contract[
+                    "project_simple_file_creation_runtime_ready"
+                ],
+                "parent_path_allowlist_resolution_allowed": contract[
+                    "parent_path_allowlist_resolution_allowed"
+                ],
+                "target_path_canonicalization_allowed": contract[
+                    "target_path_canonicalization_allowed"
+                ],
+                "target_path_access_allowed": contract[
+                    "target_path_access_allowed"
+                ],
+                "directory_listing_runtime_ready": contract[
+                    "directory_listing_runtime_ready"
+                ],
+                "file_read_runtime_ready": contract["file_read_runtime_ready"],
+                "file_write_runtime_ready": contract["file_write_runtime_ready"],
+                "folder_mkdir_runtime_ready": contract["folder_mkdir_runtime_ready"],
+                "filesystem_mutation_runtime_ready": contract[
+                    "filesystem_mutation_runtime_ready"
+                ],
+                "file_mutation_allowed": contract["file_mutation_allowed"],
+                "desktop_action_allowed": contract["desktop_action_allowed"],
+                "application_launch_allowed": contract["application_launch_allowed"],
+                "controlled_creation_request_created": contract[
+                    "controlled_creation_request_created"
+                ],
+                "controlled_creation_preview_packet_created": contract[
+                    "controlled_creation_preview_packet_created"
+                ],
+                "controlled_creation_approval_handoff_created": contract[
+                    "controlled_creation_approval_handoff_created"
+                ],
+                "controlled_creation_review_queue_item_created": contract[
+                    "controlled_creation_review_queue_item_created"
+                ],
+                "controlled_creation_action_executed": contract[
+                    "controlled_creation_action_executed"
+                ],
+                "folder_creation_request_created": contract[
+                    "folder_creation_request_created"
+                ],
+                "simple_file_creation_request_created": contract[
+                    "simple_file_creation_request_created"
+                ],
+                "parent_path_allowlist_resolved": contract[
+                    "parent_path_allowlist_resolved"
+                ],
+                "target_path_canonicalized": contract["target_path_canonicalized"],
+                "target_path_accessed": contract["target_path_accessed"],
+                "directory_listing_performed": contract[
+                    "directory_listing_performed"
+                ],
+                "file_read_performed": contract["file_read_performed"],
+                "folder_created": contract["folder_created"],
+                "project_folder_created": contract["project_folder_created"],
+                "simple_file_created": contract["simple_file_created"],
+                "project_simple_file_created": contract[
+                    "project_simple_file_created"
+                ],
+                "file_written": contract["file_written"],
+                "folder_mkdir_performed": contract["folder_mkdir_performed"],
+                "filesystem_mutated": contract["filesystem_mutated"],
+                "file_mutated": contract["file_mutated"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "tool_executed": contract["tool_executed"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "audit_event_written": contract["audit_event_written"],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "no_controlled_creation_request_creation": contract[
+                    "no_controlled_creation_request_creation"
+                ],
+                "no_controlled_creation_preview_creation": contract[
+                    "no_controlled_creation_preview_creation"
+                ],
+                "no_controlled_creation_dispatch": contract[
+                    "no_controlled_creation_dispatch"
+                ],
+                "no_folder_creation_runtime": contract[
+                    "no_folder_creation_runtime"
+                ],
+                "no_simple_file_creation_runtime": contract[
+                    "no_simple_file_creation_runtime"
+                ],
+                "no_parent_path_allowlist_resolution": contract[
+                    "no_parent_path_allowlist_resolution"
+                ],
+                "no_target_path_canonicalization": contract[
+                    "no_target_path_canonicalization"
+                ],
+                "no_target_path_access": contract["no_target_path_access"],
+                "no_directory_listing": contract["no_directory_listing"],
+                "no_file_read": contract["no_file_read"],
+                "no_file_write": contract["no_file_write"],
+                "no_folder_mkdir": contract["no_folder_mkdir"],
+                "no_filesystem_mutation": contract["no_filesystem_mutation"],
+                "no_create_without_preview": contract[
+                    "no_create_without_preview"
+                ],
+                "no_create_without_explicit_approval": contract[
+                    "no_create_without_explicit_approval"
+                ],
+                "no_create_without_permission": contract[
+                    "no_create_without_permission"
+                ],
+                "no_create_non_allowlisted_path": contract[
+                    "no_create_non_allowlisted_path"
+                ],
+                "no_create_arbitrary_path": contract["no_create_arbitrary_path"],
+                "no_overwrite_existing_path": contract[
+                    "no_overwrite_existing_path"
+                ],
+                "no_recursive_bulk_creation": contract[
+                    "no_recursive_bulk_creation"
+                ],
+                "no_multi_step_creation_chain": contract[
+                    "no_multi_step_creation_chain"
+                ],
+                "no_file_mutation": contract["no_file_mutation"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_application_launch": contract["no_application_launch"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "runtime_scope": contract["runtime_scope"],
+                "controlled_folder_simple_file_creation_contract": contract,
+                "contract": contract,
+                "note": (
+                    "Controlled Folder and Simple File Creation contract is "
+                    "ready for Sprint 217; it prepares folder/file creation "
+                    "previews without resolving paths, creating folders, "
+                    "writing files, mutating the filesystem, dispatching "
+                    "commands, or executing local actions."
+                ),
+            }
+        )
+        return status
+
+    def _s217_check(self) -> dict[str, Any]:
+        s216 = _S216_CHECK(self)
+        contract = self.controlled_folder_simple_file_creation_contract()
+
+        true_keys = (
+            "controlled_folder_simple_file_creation_contract_ready",
+            "previous_active_permission_runtime_contract_ready",
+            "previous_grant_denial_expiry_lifecycle_contract_ready",
+            "previous_runtime_audit_writer_contract_ready",
+            "previous_action_proposal_preview_runtime_contract_ready",
+            "previous_safe_local_open_actions_contract_ready",
+            "previous_allowlisted_application_launch_contract_ready",
+            "previous_contract_chain_complete",
+            "contract_only",
+            "default_deny",
+            "preview_before_create_required",
+            "explicit_approval_before_create_required",
+            "permission_before_create_required",
+            "audit_correlation_before_create_required",
+            "allowlist_before_create_required",
+            "canonical_path_before_create_required",
+            "parent_path_before_create_required",
+            "safe_content_before_file_create_required",
+            "single_creation_action_required",
+            "controlled_creation_request_schema_ready",
+            "controlled_creation_target_schema_ready",
+            "controlled_creation_preview_schema_ready",
+            "controlled_creation_path_policy_schema_ready",
+            "controlled_creation_allowlist_schema_ready",
+            "controlled_creation_permission_requirement_schema_ready",
+            "controlled_creation_audit_correlation_schema_ready",
+            "controlled_creation_user_visible_preview_schema_ready",
+            "controlled_creation_approval_handoff_schema_ready",
+            "controlled_creation_denial_handoff_schema_ready",
+            "controlled_creation_execution_blocker_schema_ready",
+            "controlled_creation_review_queue_schema_ready",
+            "controlled_creation_safety_matrix_schema_ready",
+            "controlled_creation_next_control_center_schema_ready",
+            "folder_creation_request_schema_ready",
+            "folder_creation_target_schema_ready",
+            "folder_creation_preview_schema_ready",
+            "simple_file_creation_request_schema_ready",
+            "simple_file_creation_target_schema_ready",
+            "simple_file_creation_content_preview_schema_ready",
+            "simple_file_creation_template_schema_ready",
+            "no_controlled_creation_request_creation",
+            "no_controlled_creation_target_resolution",
+            "no_controlled_creation_preview_creation",
+            "no_controlled_creation_preview_render",
+            "no_controlled_creation_approval_handoff",
+            "no_controlled_creation_review_queue_enqueue",
+            "no_controlled_creation_dispatch",
+            "no_folder_creation_runtime",
+            "no_simple_file_creation_runtime",
+            "no_project_folder_creation_runtime",
+            "no_project_simple_file_creation_runtime",
+            "no_parent_path_allowlist_resolution",
+            "no_target_path_canonicalization",
+            "no_target_path_existence_check",
+            "no_target_path_access",
+            "no_directory_listing",
+            "no_file_read",
+            "no_file_content_template_resolution",
+            "no_file_content_preview_creation",
+            "no_file_write",
+            "no_folder_mkdir",
+            "no_filesystem_mutation",
+            "no_shell_file_creation_dispatch",
+            "no_os_file_creation_dispatch",
+            "no_tool_file_creation_dispatch",
+            "no_create_without_preview",
+            "no_create_without_explicit_approval",
+            "no_create_without_permission",
+            "no_create_without_audit_correlation",
+            "no_create_non_allowlisted_path",
+            "no_create_arbitrary_path",
+            "no_create_hidden_path",
+            "no_create_system_path",
+            "no_create_credential_path",
+            "no_create_executable_file",
+            "no_create_binary_file",
+            "no_overwrite_existing_path",
+            "no_delete_or_replace_path",
+            "no_recursive_bulk_creation",
+            "no_multi_step_creation_chain",
+            "no_network_path_creation",
+            "no_safe_local_open_dispatch",
+            "no_application_launch",
+            "no_desktop_action",
+            "no_action_execution_dispatch",
+            "no_action_execution",
+            "no_command_execution",
+            "no_tool_execution",
+            "no_file_mutation",
+            "no_network_action",
+            "no_git_action",
+            "no_memory_write",
+            "no_external_upload",
+            "no_cloud_fallback",
+            "no_autonomous_action",
+            "no_permission_state_mutation",
+            "no_permission_persistence",
+            "no_grant_creation",
+            "no_grant_persistence",
+            "no_audit_event_creation",
+            "no_audit_write",
+            "no_audit_persistence",
+            "all_safety_blockers_inactive",
+        )
+
+        false_keys = (
+            "controlled_folder_simple_file_creation_runtime_ready",
+            "runtime_ready",
+            "runtime_activation_allowed",
+            "release_gate_open",
+            "default_grant",
+            "controlled_creation_runtime_ready",
+            "controlled_creation_request_creation_allowed",
+            "controlled_creation_target_resolution_allowed",
+            "controlled_creation_preview_creation_allowed",
+            "controlled_creation_preview_render_allowed",
+            "controlled_creation_approval_handoff_allowed",
+            "controlled_creation_review_queue_enqueue_allowed",
+            "controlled_creation_dispatch_allowed",
+            "folder_creation_runtime_ready",
+            "simple_file_creation_runtime_ready",
+            "project_folder_creation_runtime_ready",
+            "project_simple_file_creation_runtime_ready",
+            "parent_path_allowlist_resolution_allowed",
+            "target_path_canonicalization_allowed",
+            "target_path_existence_check_allowed",
+            "target_path_access_allowed",
+            "directory_listing_runtime_ready",
+            "file_read_runtime_ready",
+            "file_content_template_resolution_allowed",
+            "file_content_preview_creation_allowed",
+            "file_write_runtime_ready",
+            "folder_mkdir_runtime_ready",
+            "filesystem_mutation_runtime_ready",
+            "shell_file_creation_dispatch_allowed",
+            "os_file_creation_dispatch_allowed",
+            "tool_file_creation_dispatch_allowed",
+            "safe_local_action_handoff_ready",
+            "local_open_action_runtime_ready",
+            "application_launch_runtime_ready",
+            "action_execution_runtime_ready",
+            "action_execution_dispatch_allowed",
+            "command_execution_allowed",
+            "tool_execution_allowed",
+            "file_mutation_allowed",
+            "desktop_action_allowed",
+            "application_launch_allowed",
+            "audit_write_allowed",
+            "audit_event_packet_creation_allowed",
+            "audit_event_write_allowed",
+            "audit_log_append_allowed",
+            "audit_persistence_allowed",
+            "permission_state_mutation_allowed",
+            "permission_state_persistence_allowed",
+            "grant_packet_creation_allowed",
+            "grant_persistence_allowed",
+            "controlled_creation_request_created",
+            "controlled_creation_target_packet_created",
+            "controlled_creation_preview_packet_created",
+            "controlled_creation_path_policy_created",
+            "controlled_creation_allowlist_packet_created",
+            "controlled_creation_permission_requirement_created",
+            "controlled_creation_audit_correlation_created",
+            "controlled_creation_user_visible_preview_created",
+            "controlled_creation_approval_handoff_created",
+            "controlled_creation_denial_handoff_created",
+            "controlled_creation_execution_blocker_created",
+            "controlled_creation_review_queue_item_created",
+            "controlled_creation_action_created",
+            "controlled_creation_action_enqueued",
+            "controlled_creation_action_executed",
+            "folder_creation_request_created",
+            "folder_creation_target_created",
+            "folder_creation_preview_created",
+            "simple_file_creation_request_created",
+            "simple_file_creation_target_created",
+            "simple_file_creation_content_preview_created",
+            "simple_file_creation_template_created",
+            "parent_path_allowlist_resolved",
+            "target_path_canonicalized",
+            "target_path_existence_checked",
+            "target_path_accessed",
+            "directory_listing_performed",
+            "file_read_performed",
+            "file_content_template_resolved",
+            "file_content_preview_created",
+            "folder_created",
+            "project_folder_created",
+            "simple_file_created",
+            "project_simple_file_created",
+            "file_written",
+            "folder_mkdir_performed",
+            "filesystem_mutated",
+            "shell_file_creation_dispatched",
+            "os_file_creation_dispatched",
+            "tool_file_creation_dispatched",
+            "safe_local_open_action_executed",
+            "approved_folder_opened",
+            "approved_file_opened",
+            "project_location_opened",
+            "dashboard_opened",
+            "path_accessed",
+            "application_launch_request_created",
+            "application_launch_preview_packet_created",
+            "application_launch_action_executed",
+            "application_process_spawned",
+            "approved_application_launched",
+            "approved_project_tool_launched",
+            "approved_browser_launched",
+            "approved_editor_launched",
+            "approved_file_manager_launched",
+            "application_launched",
+            "action_proposal_created",
+            "action_preview_created",
+            "action_enqueued",
+            "action_executed",
+            "command_executed",
+            "tool_executed",
+            "file_mutated",
+            "desktop_action_executed",
+            "network_action_executed",
+            "git_action_executed",
+            "memory_written",
+            "external_upload_performed",
+            "cloud_fallback_used",
+            "autonomous_action_performed",
+            "permission_state_mutated",
+            "permission_grant_created",
+            "audit_event_written",
+            "audit_event_persisted",
+            "audit_log_appended",
+            "audit_storage_written",
+        )
+
+        assertions: dict[str, bool] = {
+            "sprint_216_check_still_clean": s216["failed_assertion_count"] == 0,
+            "status_ready": contract["controlled_folder_simple_file_creation_status"]
+            == "controlled_folder_simple_file_creation_contract_ready",
+            "current_sprint_217": contract["permission_action_current_sprint"] == 217,
+            "next_sprint_218": contract["permission_action_next_sprint"] == 218,
+            "next_boundary_control_center_approval_workflow": contract[
+                "permission_action_next_boundary"
+            ]
+            == "control_center_approval_workflow",
+            "allowed_controlled_creation_profile_count_expected": contract[
+                "allowed_controlled_creation_profile_count"
+            ]
+            == len(contract["allowed_controlled_creation_profile_catalog"]),
+            "blocked_controlled_creation_target_count_expected": contract[
+                "blocked_controlled_creation_target_count"
+            ]
+            == len(contract["blocked_controlled_creation_target_catalog"]),
+            "safety_blocker_count_expected": contract["safety_blocker_count"]
+            == len(contract["safety_blockers"]),
+            "runtime_scope_contract_only": contract["runtime_scope"]
+            == "controlled_folder_simple_file_creation_contract_only",
+        }
+
+        for key in true_keys:
+            assertions[f"{key}_true"] = contract[key] is True
+
+        for key in false_keys:
+            assertions[f"{key}_false"] = contract[key] is False
+
+        for blocker in contract["safety_blockers"]:
+            assertions[f"{blocker}_inactive"] = contract[blocker] is False
+
+        failed_assertions = [name for name, passed in assertions.items() if not passed]
+        s216_failed = [
+            f"sprint_216::{name}" for name in s216.get("failed_assertions", [])
+        ]
+        all_failed = s216_failed + failed_assertions
+
+        return {
+            "status": "checked",
+            "planning_ready": True,
+            "runtime_ready": False,
+            "assertion_count": int(s216["assertion_count"]) + len(assertions),
+            "failed_assertion_count": len(all_failed),
+            "failed_assertions": all_failed,
+            "permission_action_current_sprint": contract[
+                "permission_action_current_sprint"
+            ],
+            "permission_action_next_sprint": contract[
+                "permission_action_next_sprint"
+            ],
+            "permission_action_next_boundary": contract[
+                "permission_action_next_boundary"
+            ],
+            "active_permission_runtime_contract": contract,
+            "grant_denial_expiry_lifecycle_contract": contract,
+            "runtime_audit_writer_contract": contract,
+            "action_proposal_preview_runtime_contract": contract,
+            "safe_local_open_actions_contract": contract,
+            "allowlisted_application_launch_contract": contract,
+            "controlled_folder_simple_file_creation_contract": contract,
+            "note": (
+                "Runtime is not enabled yet. This check prepared the Sprint 217 "
+                "Controlled Folder and Simple File Creation contract without "
+                "creating folders, writing files, resolving paths, accessing "
+                "paths, listing directories, reading files, mutating the "
+                "filesystem, dispatching commands, running tools, mutating "
+                "permissions, writing audit events, or executing local actions."
+            ),
+        }
+
+    def _s217_plan(self) -> dict[str, Any]:
+        contract = self.controlled_folder_simple_file_creation_contract()
+        return {
+            "name": self.name,
+            "sprint": 217,
+            "next_sprint": 218,
+            "next_boundary": "control_center_approval_workflow",
+            "contract_ready": contract[
+                "controlled_folder_simple_file_creation_contract_ready"
+            ],
+            "runtime_ready": contract[
+                "controlled_folder_simple_file_creation_runtime_ready"
+            ],
+            "runtime_scope": contract["runtime_scope"],
+            "schemas_ready": {
+                "controlled_creation_request": contract[
+                    "controlled_creation_request_schema_ready"
+                ],
+                "controlled_creation_target": contract[
+                    "controlled_creation_target_schema_ready"
+                ],
+                "controlled_creation_preview": contract[
+                    "controlled_creation_preview_schema_ready"
+                ],
+                "controlled_creation_path_policy": contract[
+                    "controlled_creation_path_policy_schema_ready"
+                ],
+                "controlled_creation_allowlist": contract[
+                    "controlled_creation_allowlist_schema_ready"
+                ],
+                "folder_creation_request": contract[
+                    "folder_creation_request_schema_ready"
+                ],
+                "simple_file_creation_request": contract[
+                    "simple_file_creation_request_schema_ready"
+                ],
+            },
+            "blocked_runtime": {
+                "controlled_creation_request_creation": contract[
+                    "controlled_creation_request_creation_allowed"
+                ],
+                "controlled_creation_preview_creation": contract[
+                    "controlled_creation_preview_creation_allowed"
+                ],
+                "controlled_creation_dispatch": contract[
+                    "controlled_creation_dispatch_allowed"
+                ],
+                "folder_creation_runtime": contract["folder_creation_runtime_ready"],
+                "simple_file_creation_runtime": contract[
+                    "simple_file_creation_runtime_ready"
+                ],
+                "file_write_runtime": contract["file_write_runtime_ready"],
+                "folder_mkdir_runtime": contract["folder_mkdir_runtime_ready"],
+                "filesystem_mutation_runtime": contract[
+                    "filesystem_mutation_runtime_ready"
+                ],
+                "file_mutation": contract["file_mutation_allowed"],
+                "command_execution": contract["command_execution_allowed"],
+                "tool_execution": contract["tool_execution_allowed"],
+            },
+        }
+
+    ActivePermissionRuntimePlanner.controlled_folder_simple_file_creation_contract = (
+        _s217_controlled_folder_simple_file_creation_contract
+    )
+    ActivePermissionRuntimePlanner.status = _s217_status
+    ActivePermissionRuntimePlanner.check = _s217_check
+    ActivePermissionRuntimePlanner.plan = _s217_plan
+    ActivePermissionRuntimePlanner._s217_extension_installed = True

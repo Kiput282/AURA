@@ -1,5 +1,5 @@
 name: AURA
-version: "0.216.0-genesis"
+version: "0.217.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -247,3 +247,14 @@ modes:
 # actions, command/tool execution, file mutations, permission mutations, grants,
 # audit writes, network/git actions, memory writes, cloud fallback, external
 # uploads, or autonomous actions.
+# Sprint 217: controlled_folder_simple_file_creation extends the
+# permission/action block with contract-only controlled folder creation and
+# simple file creation schemas. It prepares controlled creation request, target,
+# preview, path policy, allowlist, permission requirement, audit correlation,
+# user-visible preview, approval handoff, denial handoff, execution blocker,
+# review queue, folder creation, simple file creation, content preview, safety
+# matrix, and next Control Center approval workflow boundaries.
+# It does not create folders, write files, resolve paths, access paths, list
+# directories, read files, create mkdir operations, mutate the filesystem,
+# dispatch commands/tools, launch apps, mutate permissions, create grants, write
+# audit events, or execute local actions.
