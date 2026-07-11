@@ -1218,3 +1218,104 @@ if not getattr(ActivePermissionRuntimeAlphaManager, "_s217_extension_installed",
 
     ActivePermissionRuntimeAlphaManager.status = _s217_alpha_status
     ActivePermissionRuntimeAlphaManager._s217_extension_installed = True
+
+# Sprint 218 extension: alpha visibility for Control Center Approval Workflow.
+if not getattr(ActivePermissionRuntimeAlphaManager, "_s218_extension_installed", False):
+    _S217_ALPHA_STATUS = ActivePermissionRuntimeAlphaManager.status
+
+    def _s218_alpha_status(self) -> dict[str, Any]:
+        status = _S217_ALPHA_STATUS(self)
+        contract = self.planner.control_center_approval_workflow_contract()
+        check = self.planner.check()
+
+        alpha_keys = (
+            "control_center_approval_workflow_contract_ready",
+            "control_center_approval_workflow_runtime_ready",
+            "control_center_approval_workflow_status",
+            "permission_action_current_sprint",
+            "permission_action_next_sprint",
+            "permission_action_next_boundary",
+            "previous_contract_chain_complete",
+            "preview_before_approval_required",
+            "explicit_user_decision_required",
+            "approve_or_deny_required",
+            "permission_scope_before_approval_required",
+            "audit_correlation_before_approval_required",
+            "review_queue_item_before_approval_required",
+            "control_center_visibility_before_decision_required",
+            "control_center_approval_request_schema_ready",
+            "control_center_approval_preview_schema_ready",
+            "control_center_approval_decision_schema_ready",
+            "control_center_approval_denial_schema_ready",
+            "control_center_approval_review_queue_schema_ready",
+            "allowed_control_center_approval_profile_count",
+            "blocked_control_center_approval_target_count",
+            "control_center_approval_request_creation_allowed",
+            "control_center_approval_preview_render_allowed",
+            "control_center_approval_decision_creation_allowed",
+            "control_center_approval_decision_apply_allowed",
+            "control_center_approval_grant_creation_allowed",
+            "control_center_approval_denial_creation_allowed",
+            "control_center_approval_review_queue_mutation_allowed",
+            "permission_state_mutation_allowed",
+            "grant_packet_creation_allowed",
+            "audit_write_allowed",
+            "action_execution_dispatch_allowed",
+            "control_center_approval_request_created",
+            "control_center_approval_preview_rendered",
+            "control_center_approval_decision_packet_created",
+            "control_center_approval_decision_applied",
+            "control_center_approval_grant_created",
+            "control_center_approval_denial_created",
+            "control_center_approval_review_queue_mutated",
+            "approval_permission_state_mutated",
+            "approval_action_dispatched",
+            "permission_state_mutated",
+            "permission_grant_created",
+            "audit_event_written",
+            "action_executed",
+            "command_executed",
+            "tool_executed",
+            "file_mutated",
+            "no_control_center_approval_request_creation",
+            "no_control_center_approval_preview_render",
+            "no_control_center_approval_decision_creation",
+            "no_control_center_approval_decision_apply",
+            "no_control_center_approval_grant_creation",
+            "no_control_center_approval_review_queue_mutation",
+            "no_approve_without_preview",
+            "no_approve_without_explicit_user",
+            "no_approve_without_permission_scope",
+            "no_approve_without_audit_correlation",
+            "no_approve_without_review_queue_item",
+            "no_permission_state_mutation_from_approval",
+            "no_action_dispatch_from_approval",
+            "no_autonomous_approval_decision",
+            "safety_blocker_count",
+            "all_safety_blockers_inactive",
+            "runtime_scope",
+        )
+
+        status.update({key: contract[key] for key in alpha_keys})
+        status.update(
+            {
+                "sprint_218_control_center_approval_workflow_contract_ready": contract[
+                    "control_center_approval_workflow_contract_ready"
+                ],
+                "assertion_count": check["assertion_count"],
+                "failed_assertion_count": check["failed_assertion_count"],
+                "failed_assertions": check["failed_assertions"],
+                "sections": 8,
+                "note": (
+                    "Active Permission Runtime Alpha now exposes Sprint 218 "
+                    "Control Center Approval Workflow visibility without creating "
+                    "approval requests, applying decisions, creating grants, "
+                    "mutating permissions, writing audit events, or executing "
+                    "local actions."
+                ),
+            }
+        )
+        return status
+
+    ActivePermissionRuntimeAlphaManager.status = _s218_alpha_status
+    ActivePermissionRuntimeAlphaManager._s218_extension_installed = True

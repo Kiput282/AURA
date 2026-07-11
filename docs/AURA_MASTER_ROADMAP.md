@@ -2833,3 +2833,18 @@ write memory, use cloud fallback, upload externally, or perform autonomous
 actions.
 
 The next sprint is Sprint 218 — Control Center Approval Workflow.
+
+## Checkpoint v0.218.0-genesis — Control Center Approval Workflow
+
+Sprint 218 adds contract-only Control Center Approval Workflow visibility for
+future explicit approve/deny decisions. It prepares approval request, context,
+preview, decision, grant candidate, denial, expiry, audit correlation,
+user-visible summary, review queue, route, safety matrix, and next
+rollback/emergency-stop/recovery boundaries.
+
+Runtime remains disabled: no approval requests are created, no decisions are
+applied, no grants or denials are created, no queues are mutated, no permissions
+are mutated, no audit events are written, no actions are dispatched, and no
+local actions execute.
+
+The next sprint is Sprint 219 — Rollback, Emergency Stop, and Recovery.

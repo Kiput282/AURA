@@ -1285,3 +1285,17 @@ upload, or autonomy.
 
 This creates the controlled creation baseline for Sprint 218 — Control Center
 Approval Workflow.
+
+## Sprint 218 — Control Center Approval Workflow
+
+`v0.218.0-genesis` extends the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block with contract-only Control Center Approval Workflow visibility.
+
+This sprint establishes the future explicit approve/deny workflow boundary for
+safe local actions, allowlisted application launch, and controlled folder/simple
+file creation. It keeps approval request creation, decision apply, grant/denial
+creation, queue mutation, permission mutation, audit writing, action dispatch,
+file/folder creation, app launch, command/tool execution, and autonomy disabled.
+
+This creates the approval workflow baseline for Sprint 219 — Rollback,
+Emergency Stop, and Recovery.

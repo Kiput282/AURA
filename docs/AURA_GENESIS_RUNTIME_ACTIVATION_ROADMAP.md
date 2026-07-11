@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.217.0-genesis
+Current anchor: v0.218.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.217.0-genesis
-- Completed: Sprint 217 — Controlled Folder and Simple File Creation
+- Current version: v0.218.0-genesis
+- Completed: Sprint 218 — Control Center Approval Workflow
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 218 — Control Center Approval Workflow
+- Next: Sprint 219 — Rollback, Emergency Stop, and Recovery
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1518,3 +1518,21 @@ dispatch commands/tools, launch apps, mutate permissions, write audit events, or
 execute local actions.
 
 Next: Sprint 218 — Control Center Approval Workflow.
+
+## v0.218.0-genesis — Control Center Approval Workflow
+
+Sprint 218 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Control Center Approval Workflow visibility.
+
+The checkpoint confirms approval workflow contract readiness, runtime disabled
+state, Sprint 218 current marker, Sprint 219 next marker, rollback/emergency
+stop/recovery next boundary, 5 allowed approval profiles, 13 blocked approval
+targets, 228 inactive safety blockers, 2177 assertions, and zero failed
+assertions.
+
+Sprint 218 does not create approval requests, apply decisions, create grants or
+denials, mutate queues, mutate permissions, write audit events, dispatch
+actions, create files/folders, launch applications, execute commands/tools,
+mutate files, or perform autonomous actions.
+
+Next: Sprint 219 — Rollback, Emergency Stop, and Recovery.

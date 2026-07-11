@@ -1,5 +1,5 @@
 name: AURA
-version: "0.217.0-genesis"
+version: "0.218.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -258,3 +258,11 @@ modes:
 # directories, read files, create mkdir operations, mutate the filesystem,
 # dispatch commands/tools, launch apps, mutate permissions, create grants, write
 # audit events, or execute local actions.
+# Sprint 218: control_center_approval_workflow extends the permission/action
+# block with contract-only Control Center approval workflow visibility.
+# It prepares approval request, context, preview, decision, grant candidate,
+# denial, expiry, audit correlation, user-visible summary, review queue, route,
+# safety matrix, and next rollback/emergency-stop/recovery schemas.
+# It does not create approval requests, apply decisions, create grants or
+# denials, mutate queues, mutate permissions, write audit events, dispatch
+# actions, create files/folders, launch apps, or execute local actions.

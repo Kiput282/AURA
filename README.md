@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.217.0-genesis
-Current status: Sprint 217 Controlled Folder and Simple File Creation completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only controlled folder/simple file creation visibility
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 added contract-only safe local open action visibility. Sprint 216 added contract-only allowlisted application launch visibility. Sprint 217 adds contract-only controlled folder and simple file creation visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, safety matrix, safe local open request, open target, open preview, path policy, allowlist, open approval handoff, open denial handoff, open execution blocker, application launch request, launch target, launch preview, launch allowlist, launch permission requirement, launch audit correlation, launch user-visible preview, launch approval handoff, launch denial handoff, launch execution blocker, launch review queue, launch safety matrix, controlled creation request, creation target, creation preview, creation path policy, creation allowlist, creation permission requirement, creation audit correlation, creation user-visible preview, creation approval handoff, creation denial handoff, creation execution blocker, creation review queue, folder creation, simple file creation, content preview, creation safety matrix, and next Control Center approval workflow schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, action proposal creation, action preview creation, approval handoff creation, action queue enqueue, action execution, safe local open request creation, open preview creation, open dispatch, path access, file read, directory listing, folder/file/project/dashboard opening, shell/OS/browser/file-manager dispatch, application launch request creation, launch preview creation, launch dispatch, allowlist resolution, executable resolution, argument resolution, environment resolution, process spawn, approved app launch, controlled creation request creation, creation preview creation, creation dispatch, folder creation, simple file creation, file write, mkdir, filesystem mutation, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.218.0-genesis
+Current status: Sprint 218 Control Center Approval Workflow completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only Control Center approval workflow visibility
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 added contract-only safe local open action visibility. Sprint 216 added contract-only allowlisted application launch visibility. Sprint 217 added contract-only controlled folder and simple file creation visibility. Sprint 218 adds contract-only Control Center approval workflow visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, safety matrix, safe local open schemas, application launch schemas, controlled creation schemas, Control Center approval request, approval context, approval preview, approval decision, grant candidate, denial, expiry, audit correlation, user-visible summary, review queue, route, safety matrix, and next rollback/emergency-stop/recovery schemas. Runtime activation, release gates, approval request creation, approval preview render, approval decision creation/apply, grant creation, denial creation, approval queue mutation, permission mutation, permission persistence, audit writes, audit persistence, action dispatch, file/folder creation, app launch, command/tool execution, file mutation, desktop actions, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -42,6 +42,8 @@ AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Ru
 Latest completed checkpoint:
 
 
+- v0.218.0-genesis
+- Sprint 218: Control Center Approval Workflow
 - v0.217.0-genesis
 - Sprint 217: Controlled Folder and Simple File Creation
 - v0.216.0-genesis
@@ -104,7 +106,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 218 — Control Center Approval Workflow
+- Next planned sprint: Sprint 219 — Rollback, Emergency Stop, and Recovery
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5112,3 +5114,75 @@ zero failed assertions, vision baseline stable, voice baseline stable, and
 baseline self-tests OK.
 
 Next: Sprint 218 — Control Center Approval Workflow.
+
+## Sprint 218 — Control Center Approval Workflow
+
+Version: `v0.218.0-genesis`
+
+Sprint 218 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with a contract-only Control Center Approval Workflow.
+
+This sprint prepares approval request, approval context, approval preview,
+approval decision, grant candidate, denial, expiry, audit correlation,
+user-visible summary, review queue, route, safety matrix, and next rollback /
+emergency-stop / recovery schemas.
+
+Sprint 218 confirms:
+
+- Control Center Approval Workflow contract ready: true
+- Control Center Approval Workflow runtime ready: false
+- Control Center Approval Workflow status: control_center_approval_workflow_contract_ready
+- current sprint: 218
+- next sprint: 219
+- next boundary: rollback_emergency_stop_recovery
+- preview before approval required: true
+- explicit user decision required: true
+- approve or deny required: true
+- permission scope before approval required: true
+- audit correlation before approval required: true
+- review queue item before approval required: true
+- Control Center visibility before decision required: true
+- approval request schema ready: true
+- approval preview schema ready: true
+- approval decision schema ready: true
+- approval review queue schema ready: true
+- allowed approval profiles: 5
+- blocked approval targets: 13
+- approval request creation allowed: false
+- approval decision apply allowed: false
+- approval grant creation allowed: false
+- approval denial creation allowed: false
+- approval queue mutation allowed: false
+- permission state mutation allowed: false
+- audit write allowed: false
+- action dispatch allowed: false
+- approval request created: false
+- approval decision applied: false
+- approval grant created: false
+- approval denial created: false
+- approval queue mutated: false
+- permission state mutated: false
+- permission grant created: false
+- audit event written: false
+- action executed: false
+- command executed: false
+- tool executed: false
+- file mutated: false
+- no approve without preview: true
+- no approve without explicit user: true
+- no permission mutation from approval: true
+- no action dispatch from approval: true
+- no autonomous approval decision: true
+- safety blockers: 228
+- all safety blockers inactive: true
+- runtime scope: control_center_approval_workflow_contract_only
+- assertion count: 2177
+- failed assertion count: 0
+
+Sprint 218 does not create approval requests, apply decisions, create grants or
+denials, mutate approval queues, mutate permissions, write audit events,
+dispatch actions, create files/folders, launch applications, execute commands or
+tools, mutate files, perform network/git actions, write memory, use cloud
+fallback, upload externally, or perform autonomous actions.
+
+Next: Sprint 219 — Rollback, Emergency Stop, and Recovery.
