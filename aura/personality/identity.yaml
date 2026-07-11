@@ -1,5 +1,5 @@
 name: AURA
-version: "0.210.0-genesis"
+version: "0.211.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -193,3 +193,10 @@ modes:
 # handoff to Sprint 211 Active Permission Runtime without enabling capture,
 # OCR, model requests, chat handoff, panel rendering, memory writes, commands,
 # cloud fallback, or external upload.
+# Sprint 211: active_permission_runtime starts the Permission, Audit,
+# and Safe Local Actions block. It adds a contract-only default-deny active
+# permission runtime with request, scope, decision, grant, denial, expiry,
+# state snapshot, review queue, and audit-link schemas. It does not create
+# permission requests, grant permissions, mutate state, write audit events,
+# execute actions, run commands/tools, mutate files, launch apps, write memory,
+# use network/git, use cloud fallback, or upload externally.

@@ -1709,6 +1709,289 @@ class AuraCLI:
         print()
         print(f"Summary: {status['summary']}")
 
+
+    def active_permission_runtime_alpha_status(self) -> None:
+        from aura.permissions.active_permission_runtime_alpha_manager import (
+            ActivePermissionRuntimeAlphaManager,
+        )
+
+        status = ActivePermissionRuntimeAlphaManager().status()
+
+        print("AURA Active Permission Runtime Alpha")
+        print("====================================")
+        rows = [
+            ("Name", "name"),
+            ("Version", "version"),
+            ("Status", "status"),
+            ("Planning Ready", "planning_ready"),
+            ("Runtime Ready", "runtime_ready"),
+            ("Alpha Ready", "active_permission_runtime_alpha_ready"),
+            ("Sprint 211 Contract Ready", "sprint_211_active_permission_runtime_contract_ready"),
+            ("Active Permission Runtime", "active_permission_runtime_ready"),
+            ("Runtime Status", "active_permission_runtime_status"),
+            ("Current Sprint", "permission_action_current_sprint"),
+            ("Next Sprint", "permission_action_next_sprint"),
+            ("Next Boundary", "permission_action_next_boundary"),
+            ("Default Deny", "default_deny"),
+            ("Explicit Approval Required", "explicit_approval_required"),
+            ("Foreground Confirmation", "foreground_user_confirmation_required"),
+            ("Permission Before Action", "permission_before_action_required"),
+            ("Request Packet Schema", "active_permission_request_packet_schema_ready"),
+            ("Scope Packet Schema", "permission_scope_packet_schema_ready"),
+            ("Decision Packet Schema", "permission_decision_packet_schema_ready"),
+            ("Grant Packet Schema", "permission_grant_packet_schema_ready"),
+            ("Denial Packet Schema", "permission_denial_packet_schema_ready"),
+            ("Expiry Packet Schema", "permission_expiry_packet_schema_ready"),
+            ("State Snapshot Schema", "permission_state_snapshot_schema_ready"),
+            ("Audit Link Packet Schema", "permission_audit_link_packet_schema_ready"),
+            ("Permission Baseline", "permission_baseline_available"),
+            ("Permission Baseline Items", "permission_baseline_item_count"),
+            ("Registry Read Only", "permission_registry_read_only"),
+            ("Registry Mutation Allowed", "permission_registry_mutation_allowed"),
+            ("Grant Creation Allowed", "grant_creation_allowed"),
+            ("Audit Write Allowed", "audit_write_allowed"),
+            ("Safe Action Handoff Ready", "safe_local_action_handoff_ready"),
+            ("Allowed Future Scope Count", "allowed_future_scope_count"),
+            ("Blocked Scope Count", "blocked_scope_count"),
+            ("Request Created", "active_permission_request_created"),
+            ("Permission State Mutated", "permission_state_mutated"),
+            ("Permission Grant Created", "permission_grant_created"),
+            ("Audit Event Written", "audit_event_written"),
+            ("Action Executed", "action_executed"),
+            ("Command Executed", "command_executed"),
+            ("File Mutated", "file_mutated"),
+            ("Desktop Action Executed", "desktop_action_executed"),
+            ("Application Launched", "application_launched"),
+            ("Memory Written", "memory_written"),
+            ("External Upload Performed", "external_upload_performed"),
+            ("No Automatic Grant", "no_automatic_grant"),
+            ("No Implicit Approval", "no_implicit_approval"),
+            ("No Permission Bypass", "no_permission_bypass"),
+            ("No State Mutation", "no_state_mutation"),
+            ("No Action Execution", "no_action_execution"),
+            ("No Command Execution", "no_command_execution"),
+            ("No File Mutation", "no_file_mutation"),
+            ("No Desktop Action", "no_desktop_action"),
+            ("No Memory Write", "no_memory_write"),
+            ("No External Upload", "no_external_upload"),
+            ("Safety Blockers", "safety_blocker_count"),
+            ("All Safety Blockers Off", "all_safety_blockers_inactive"),
+            ("Assertion Count", "assertion_count"),
+            ("Failed Assertion Count", "failed_assertion_count"),
+            ("Runtime Scope", "runtime_scope"),
+        ]
+        for label, key in rows:
+            print(f"{label:<32}: {status[key]}")
+        print(f"Note                            : {status['note']}")
+
+    def active_permission_runtime_status(self) -> None:
+        from aura.permissions.active_permission_runtime_planner import (
+            ActivePermissionRuntimePlanner,
+        )
+
+        status = ActivePermissionRuntimePlanner().status()
+
+        print("AURA Active Permission Runtime Status")
+        print("=====================================")
+        rows = [
+            ("Name", "name"),
+            ("Version", "version"),
+            ("Status", "status"),
+            ("Planning Ready", "planning_ready"),
+            ("Runtime Ready", "runtime_ready"),
+            ("Contract Ready", "active_permission_runtime_contract_ready"),
+            ("Active Permission Runtime", "active_permission_runtime_ready"),
+            ("Runtime Status", "active_permission_runtime_status"),
+            ("Block Start", "permission_action_block_start"),
+            ("Block End", "permission_action_block_end"),
+            ("Current Sprint", "permission_action_current_sprint"),
+            ("Next Sprint", "permission_action_next_sprint"),
+            ("Next Boundary", "permission_action_next_boundary"),
+            ("Default Deny", "default_deny"),
+            ("Explicit Approval Required", "explicit_approval_required"),
+            ("Foreground Confirmation", "foreground_user_confirmation_required"),
+            ("Permission Before Action", "permission_before_action_required"),
+            ("Request Packet Schema", "active_permission_request_packet_schema_ready"),
+            ("Scope Packet Schema", "permission_scope_packet_schema_ready"),
+            ("Decision Packet Schema", "permission_decision_packet_schema_ready"),
+            ("Grant Packet Schema", "permission_grant_packet_schema_ready"),
+            ("Denial Packet Schema", "permission_denial_packet_schema_ready"),
+            ("Expiry Packet Schema", "permission_expiry_packet_schema_ready"),
+            ("State Snapshot Schema", "permission_state_snapshot_schema_ready"),
+            ("Audit Link Packet Schema", "permission_audit_link_packet_schema_ready"),
+            ("Review Queue Packet Schema", "permission_review_queue_packet_schema_ready"),
+            ("Permission Baseline", "permission_baseline_available"),
+            ("Permission Baseline Items", "permission_baseline_item_count"),
+            ("Registry Read Only", "permission_registry_read_only"),
+            ("Registry Mutation Allowed", "permission_registry_mutation_allowed"),
+            ("State Persistence Allowed", "permission_state_persistence_allowed"),
+            ("Grant Creation Allowed", "grant_creation_allowed"),
+            ("Audit Write Allowed", "audit_write_allowed"),
+            ("Audit Link Contract", "audit_link_contract_ready"),
+            ("Safe Action Handoff Ready", "safe_local_action_handoff_ready"),
+            ("Allowed Future Scope Count", "allowed_future_scope_count"),
+            ("Blocked Scope Count", "blocked_scope_count"),
+            ("Request Created", "active_permission_request_created"),
+            ("Decision Packet Created", "permission_decision_packet_created"),
+            ("Permission State Mutated", "permission_state_mutated"),
+            ("Permission Grant Created", "permission_grant_created"),
+            ("Audit Event Written", "audit_event_written"),
+            ("Action Executed", "action_executed"),
+            ("Command Executed", "command_executed"),
+            ("File Mutated", "file_mutated"),
+            ("Desktop Action Executed", "desktop_action_executed"),
+            ("Application Launched", "application_launched"),
+            ("Network Action Executed", "network_action_executed"),
+            ("Git Action Executed", "git_action_executed"),
+            ("Memory Written", "memory_written"),
+            ("External Upload Performed", "external_upload_performed"),
+            ("No Automatic Grant", "no_automatic_grant"),
+            ("No Implicit Approval", "no_implicit_approval"),
+            ("No Permission Bypass", "no_permission_bypass"),
+            ("No State Mutation", "no_state_mutation"),
+            ("No Action Execution", "no_action_execution"),
+            ("No Command Execution", "no_command_execution"),
+            ("No File Mutation", "no_file_mutation"),
+            ("No Desktop Action", "no_desktop_action"),
+            ("No Memory Write", "no_memory_write"),
+            ("No External Upload", "no_external_upload"),
+            ("Safety Blockers", "safety_blocker_count"),
+            ("All Safety Blockers Off", "all_safety_blockers_inactive"),
+            ("Runtime Scope", "runtime_scope"),
+        ]
+        for label, key in rows:
+            print(f"{label:<32}: {status[key]}")
+        print(f"Note                            : {status['note']}")
+
+    def active_permission_runtime_check(self) -> None:
+        from aura.permissions.active_permission_runtime_planner import (
+            ActivePermissionRuntimePlanner,
+        )
+
+        result = ActivePermissionRuntimePlanner().check()
+        contract = result["active_permission_runtime_contract"]
+
+        print("AURA Active Permission Runtime Check")
+        print("====================================")
+        print(f"Status                 : {result['status']}")
+        print(f"Planning Ready         : {result['planning_ready']}")
+        print(f"Runtime Ready          : {result['runtime_ready']}")
+        print(f"Assertion Count        : {result['assertion_count']}")
+        print(f"Failed Assertion Count : {result['failed_assertion_count']}")
+        print()
+        print("Sprint 211 Active Permission Runtime")
+        print("------------------------------------")
+
+        rows = [
+            ("Contract Ready", "active_permission_runtime_contract_ready"),
+            ("Runtime Ready", "active_permission_runtime_ready"),
+            ("Runtime Status", "active_permission_runtime_status"),
+            ("Current Sprint", "permission_action_current_sprint"),
+            ("Next Sprint", "permission_action_next_sprint"),
+            ("Next Boundary", "permission_action_next_boundary"),
+            ("Contract Only", "contract_only"),
+            ("Runtime Activation Allowed", "runtime_activation_allowed"),
+            ("Release Gate Open", "release_gate_open"),
+            ("Default Deny", "default_deny"),
+            ("Default Grant", "default_grant"),
+            ("Explicit Approval Required", "explicit_approval_required"),
+            ("Foreground Confirmation", "foreground_user_confirmation_required"),
+            ("Permission Before Action", "permission_before_action_required"),
+            ("Permission Before Memory", "permission_before_memory_write_required"),
+            ("Permission Before File", "permission_before_file_mutation_required"),
+            ("Permission Before Desktop", "permission_before_desktop_action_required"),
+            ("Permission Before App Launch", "permission_before_application_launch_required"),
+            ("Request Packet Schema", "active_permission_request_packet_schema_ready"),
+            ("Scope Packet Schema", "permission_scope_packet_schema_ready"),
+            ("Decision Packet Schema", "permission_decision_packet_schema_ready"),
+            ("Grant Packet Schema", "permission_grant_packet_schema_ready"),
+            ("Denial Packet Schema", "permission_denial_packet_schema_ready"),
+            ("Expiry Packet Schema", "permission_expiry_packet_schema_ready"),
+            ("State Snapshot Schema", "permission_state_snapshot_schema_ready"),
+            ("Audit Link Packet Schema", "permission_audit_link_packet_schema_ready"),
+            ("Review Queue Packet Schema", "permission_review_queue_packet_schema_ready"),
+            ("Permission Baseline", "permission_baseline_available"),
+            ("Permission Baseline Items", "permission_baseline_item_count"),
+            ("Registry Read Only", "permission_registry_read_only"),
+            ("Registry Mutation Allowed", "permission_registry_mutation_allowed"),
+            ("State Persistence Allowed", "permission_state_persistence_allowed"),
+            ("Grant Creation Allowed", "grant_creation_allowed"),
+            ("Grant Revocation Allowed", "grant_revocation_allowed"),
+            ("Audit Write Allowed", "audit_write_allowed"),
+            ("Audit Link Contract Ready", "audit_link_contract_ready"),
+            ("Audit Writer Runtime Ready", "audit_writer_runtime_ready"),
+            ("Safe Action Handoff Ready", "safe_local_action_handoff_ready"),
+            ("Action Execution Runtime", "action_execution_runtime_ready"),
+            ("Control Center Approval", "control_center_approval_runtime_ready"),
+            ("Allowed Future Scope Count", "allowed_future_scope_count"),
+            ("Blocked Scope Count", "blocked_scope_count"),
+            ("Runtime Scope", "runtime_scope"),
+        ]
+        for label, key in rows:
+            print(f"{label:<35}: {contract[key]}")
+
+        print()
+        print("Active Permission Runtime Safety State")
+        print("--------------------------------------")
+
+        safety_rows = [
+            ("Active Permission Request Created", "active_permission_request_created"),
+            ("Permission Scope Packet Created", "permission_scope_packet_created"),
+            ("Permission Decision Created", "permission_decision_packet_created"),
+            ("Permission Grant Packet Created", "permission_grant_packet_created"),
+            ("Permission Denial Packet Created", "permission_denial_packet_created"),
+            ("Permission State Mutated", "permission_state_mutated"),
+            ("Permission Grant Created", "permission_grant_created"),
+            ("Audit Event Written", "audit_event_written"),
+            ("Action Proposal Created", "action_proposal_created"),
+            ("Action Preview Created", "action_preview_created"),
+            ("Action Executed", "action_executed"),
+            ("Command Executed", "command_executed"),
+            ("Tool Executed", "tool_executed"),
+            ("File Mutated", "file_mutated"),
+            ("Desktop Action Executed", "desktop_action_executed"),
+            ("Application Launched", "application_launched"),
+            ("Network Action Executed", "network_action_executed"),
+            ("Git Action Executed", "git_action_executed"),
+            ("Memory Written", "memory_written"),
+            ("Dependency Installed", "dependency_installed"),
+            ("Model Downloaded", "model_downloaded"),
+            ("External Upload Performed", "external_upload_performed"),
+            ("Cloud Fallback Used", "cloud_fallback_used"),
+            ("Autonomous Action Performed", "autonomous_action_performed"),
+            ("No Automatic Grant", "no_automatic_grant"),
+            ("No Implicit Approval", "no_implicit_approval"),
+            ("No Permission Bypass", "no_permission_bypass"),
+            ("No State Mutation", "no_state_mutation"),
+            ("No Audit Write", "no_audit_write"),
+            ("No Action Execution", "no_action_execution"),
+            ("No Command Execution", "no_command_execution"),
+            ("No Tool Execution", "no_tool_execution"),
+            ("No File Mutation", "no_file_mutation"),
+            ("No Desktop Action", "no_desktop_action"),
+            ("No Application Launch", "no_application_launch"),
+            ("No Network Action", "no_network_action"),
+            ("No Git Action", "no_git_action"),
+            ("No Memory Write", "no_memory_write"),
+            ("No External Upload", "no_external_upload"),
+            ("No Autonomous Action", "no_autonomous_action"),
+            ("Safety Blocker Count", "safety_blocker_count"),
+            ("All Safety Blockers Off", "all_safety_blockers_inactive"),
+        ]
+        for label, key in safety_rows:
+            print(f"{label:<38}: {contract[key]}")
+
+        print()
+        print("Failed Assertions")
+        print("-----------------")
+        if result["failed_assertions"]:
+            for assertion in result["failed_assertions"]:
+                print(f"- {assertion}")
+        else:
+            print("- none")
+        print()
+        print(f"Note: {result['note']}")
+
     def vision_runtime_status(self) -> None:
         planner = VisionRuntimePlanner(project_root=Path.cwd())
         status = planner.status()
@@ -3333,6 +3616,9 @@ class AuraCLI:
         subparsers.add_parser("vision-runtime-status")
         subparsers.add_parser("vision-runtime-plan")
         subparsers.add_parser("vision-runtime-check")
+        subparsers.add_parser("active-permission-runtime-alpha-status")
+        subparsers.add_parser("active-permission-runtime-status")
+        subparsers.add_parser("active-permission-runtime-check")
 
         subparsers.add_parser("vision-status")
         subparsers.add_parser("vision-providers")
@@ -10478,6 +10764,21 @@ class AuraCLI:
         if parsed.command == "vision-runtime-check":
             disable_logging()
             self.vision_runtime_check()
+            return True
+
+        if parsed.command == "active-permission-runtime-alpha-status":
+            disable_logging()
+            self.active_permission_runtime_alpha_status()
+            return True
+
+        if parsed.command == "active-permission-runtime-status":
+            disable_logging()
+            self.active_permission_runtime_status()
+            return True
+
+        if parsed.command == "active-permission-runtime-check":
+            disable_logging()
+            self.active_permission_runtime_check()
             return True
 
         if parsed.command == "vision-status":

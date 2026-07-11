@@ -1112,3 +1112,24 @@ gates through visual context.
 
 This creates the stable Vision block baseline for Sprint 211 — Active Permission
 Runtime.
+
+## Sprint 211 — Active Permission Runtime
+
+`v0.211.0-genesis` starts the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block.
+
+This sprint introduces a contract-only Active Permission Runtime. It establishes
+AURA's next safety layer: default-deny permissions, explicit approval, foreground
+confirmation, permission-before-action, permission-before-memory-write,
+permission-before-file-mutation, permission-before-desktop-action, and
+permission-before-application-launch boundaries.
+
+It prepares request, scope, decision, grant, denial, expiry, state snapshot,
+review queue, runtime status, safety matrix, next lifecycle, user-visible reason,
+and audit-link schemas without enabling grant creation, permission mutation,
+permission persistence, audit writing, action execution, command/tool execution,
+file mutation, desktop actions, application launch, memory writes, network/git
+actions, cloud fallback, external upload, or autonomy.
+
+This creates the safe permission baseline for Sprint 212 — Grant, Denial, and
+Expiry Lifecycle.

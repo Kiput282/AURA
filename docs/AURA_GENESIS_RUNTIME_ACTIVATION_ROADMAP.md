@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.210.0-genesis
+Current anchor: v0.211.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.210.0-genesis
-- Completed: Sprint 210 — Vision Runtime Stabilization
+- Current version: v0.211.0-genesis
+- Completed: Sprint 211 — Active Permission Runtime
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 211 — Active Permission Runtime
+- Next: Sprint 212 — Grant, Denial, and Expiry Lifecycle
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1080,3 +1080,64 @@ visual actions, tool/command execution, file/desktop/network/git actions, cloud
 vision fallback, external upload, and visual-context-to-action bypass.
 
 Next: Sprint 211 — Active Permission Runtime.
+
+## v0.211.0-genesis — Active Permission Runtime
+
+Sprint 211 starts the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block.
+
+The sprint adds a contract-only Active Permission Runtime with default-deny
+permission state and explicit approval boundaries. It prepares request, scope,
+decision, grant, denial, expiry, state snapshot, review queue, runtime status,
+safety matrix, next lifecycle, user-visible reason, and audit-link schemas.
+
+The checkpoint confirms:
+
+- Active Permission Runtime contract ready
+- Active Permission Runtime runtime disabled
+- status active_permission_runtime_contract_ready
+- current sprint 211
+- next sprint 212
+- next boundary grant_denial_expiry_lifecycle
+- runtime activation blocked
+- release gate closed
+- default deny enabled
+- default grant disabled
+- explicit approval required
+- foreground confirmation required
+- permission before action required
+- permission before memory write required
+- permission before file mutation required
+- permission before desktop action required
+- permission before application launch required
+- permission before network action required
+- permission before git action required
+- permission baseline available
+- 22 permission baseline items
+- registry read-only
+- registry mutation blocked
+- state persistence blocked
+- grant creation blocked
+- grant revocation blocked
+- audit write blocked
+- audit link contract ready
+- audit writer runtime disabled
+- safe local action handoff disabled
+- action execution runtime disabled
+- Control Center approval runtime disabled
+- 7 allowed future scopes documented
+- 8 blocked scopes documented
+- 27 safety blockers
+- all safety blockers inactive
+- 131 assertions
+- zero failed assertions
+
+Sprint 211 does not create permission requests, grants, denials, expiry packets,
+state snapshots, review queue items, action proposals, action previews, or audit
+events. It does not mutate permission state, persist permissions, enqueue or
+execute actions, run commands/tools, mutate files, control desktop, launch
+applications, perform network/git actions, write memory, install dependencies,
+download models, use cloud fallback, upload externally, or perform autonomous
+actions.
+
+Next: Sprint 212 — Grant, Denial, and Expiry Lifecycle.

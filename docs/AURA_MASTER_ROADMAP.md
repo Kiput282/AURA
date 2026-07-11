@@ -2687,3 +2687,22 @@ fallback, externally upload visual data, or bypass action gates through visual
 context.
 
 The next sprint is Sprint 211 — Active Permission Runtime.
+
+## Checkpoint v0.211.0-genesis — Active Permission Runtime
+
+Sprint 211 starts the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with a contract-only Active Permission Runtime.
+
+This checkpoint establishes the default-deny runtime permission boundary and
+prepares request, scope, decision, grant, denial, expiry, state snapshot, review
+queue, user-visible reason, safety matrix, runtime status, next lifecycle, and
+audit-link schemas.
+
+Runtime remains disabled. Sprint 211 does not create permission requests,
+create grants, mutate permission state, persist permissions, write audit events,
+create action proposals, preview actions, enqueue actions, execute actions,
+execute commands/tools, mutate files, control desktop, launch applications,
+perform network/git actions, write memory, install dependencies, download models,
+use cloud fallback, upload externally, or perform autonomous actions.
+
+The next sprint is Sprint 212 — Grant, Denial, and Expiry Lifecycle.

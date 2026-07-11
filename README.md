@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.210.0-genesis
-Current status: Sprint 210 Vision Runtime Stabilization completed; Vision and Screen Awareness Runtime block 201-210 is now contract-only stable and ready to hand off to Sprint 211 Active Permission Runtime
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Vision now has stable contracts for activation foundation, explicit screenshot capture, screen context adapter, local/offline-first vision model adapter, permission/redaction, workspace visual understanding, vision-to-chat handoff, Control Center Vision Panel visibility, integration review, and stabilization. Runtime activation, release gates, dependency installs, model downloads, screenshot capture, image file read, OCR, model requests, inference, chat handoff, chat session writes, panel rendering, routes/API endpoints, data fetch, permission mutation, audit writes, memory writes, visual actions, command/tool execution, cloud fallback, external upload, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.211.0-genesis
+Current status: Sprint 211 Active Permission Runtime completed; Permission, Audit, and Safe Local Actions block 211-220 has started with a contract-only default-deny active permission runtime
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 starts the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Permission runtime now has default-deny request, scope, decision, grant, denial, expiry, state snapshot, review queue, and audit-link schemas. Runtime activation, release gates, permission request creation, permission grants, permission mutation, permission persistence, audit writes, action proposals, action previews, action execution, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 210 and closes the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable.
+AURA has completed Sprint 211 and starts the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Active Permission Runtime as a contract-only default-deny boundary.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.211.0-genesis
+- Sprint 211: Active Permission Runtime
 - v0.210.0-genesis
 - Sprint 210: Vision Runtime Stabilization
 - v0.209.0-genesis
@@ -90,7 +92,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 211 — Active Permission Runtime
+- Next planned sprint: Sprint 212 — Grant, Denial, and Expiry Lifecycle
 Current capability registry summary:
 
 - total capabilities: 121
@@ -4120,3 +4122,109 @@ vision-runtime-check OK, 330 assertions, zero failed assertions, voice baseline
 stable, and baseline self-tests OK.
 
 Next: Sprint 211 — Active Permission Runtime.
+
+## Sprint 211 — Active Permission Runtime
+
+Version: `v0.211.0-genesis`
+
+Sprint 211 starts the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block.
+
+This sprint adds the Active Permission Runtime contract as a default-deny,
+contract-only boundary. It prepares the permission request, scope, decision,
+grant, denial, expiry, state snapshot, review queue, user-visible reason,
+runtime status, safety matrix, next lifecycle, and audit-link schemas without
+creating permission requests, granting permissions, mutating state, writing audit
+events, or executing local actions.
+
+Sprint 211 confirms:
+
+- Active Permission Runtime contract ready: true
+- Active Permission Runtime ready: false
+- Active Permission Runtime status: active_permission_runtime_contract_ready
+- block start: 211
+- block end: 220
+- current sprint: 211
+- next sprint: 212
+- next boundary: grant_denial_expiry_lifecycle
+- contract only: true
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- default deny: true
+- default grant: false
+- explicit approval required: true
+- foreground user confirmation required: true
+- permission before action required: true
+- permission before memory write required: true
+- permission before file mutation required: true
+- permission before desktop action required: true
+- permission before application launch required: true
+- permission before network action required: true
+- permission before git action required: true
+- active permission request packet schema ready: true
+- permission scope packet schema ready: true
+- permission decision packet schema ready: true
+- permission grant packet schema ready: true
+- permission denial packet schema ready: true
+- permission expiry packet schema ready: true
+- permission state snapshot schema ready: true
+- permission audit link packet schema ready: true
+- permission review queue packet schema ready: true
+- permission baseline available: true
+- permission baseline item count: 22
+- permission registry read-only: true
+- permission registry mutation allowed: false
+- permission state persistence allowed: false
+- grant creation allowed: false
+- grant revocation allowed: false
+- audit write allowed: false
+- audit link contract ready: true
+- audit writer runtime ready: false
+- safe local action handoff ready: false
+- action execution runtime ready: false
+- Control Center approval runtime ready: false
+- allowed future scope count: 7
+- blocked scope count: 8
+- safety blockers: 27
+- all safety blockers inactive: true
+- runtime scope: active_permission_runtime_contract_only
+- assertion count: 131
+- failed assertion count: 0
+
+Allowed future scope is documented for later gated sprints only:
+
+- open approved folder
+- open approved file
+- open project location
+- open local dashboard
+- launch allowlisted application
+- create approved folder
+- create simple file after preview
+
+Blocked scope remains:
+
+- deleting files
+- arbitrary shell execution
+- broad desktop control
+- dependency installation
+- plugin action execution without gates
+- multi-step autonomous automation
+- network or git action without explicit permission
+- external upload without explicit permission
+
+Sprint 211 does not create permission requests, create scope packets, create
+decision packets, create grants, create denials, create expiry packets, create
+state snapshots, create review queue items, mutate permission state, persist
+permissions, write audit events, create action proposals, create action previews,
+enqueue actions, execute actions, execute commands, execute tools, mutate files,
+control the desktop, launch applications, perform network/git actions, write
+memory, install dependencies, download models, use cloud fallback, upload
+externally, or perform autonomous actions.
+
+Validation passed with compileall OK, Active Permission Runtime CLI/Shell
+visibility OK, active-permission-runtime-check OK, 131 assertions, zero failed
+assertions, vision baseline stable, voice baseline stable, and baseline
+self-tests OK.
+
+Next: Sprint 212 — Grant, Denial, and Expiry Lifecycle.
