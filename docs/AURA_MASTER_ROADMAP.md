@@ -2500,3 +2500,22 @@ tool/command execution, file/desktop/network/git actions, memory writes, cloud
 vision fallback, external upload, or any visual runtime execution.
 
 The next sprint is Sprint 202 — Explicit Screenshot Capture.
+
+## Checkpoint v0.202.0-genesis — Explicit Screenshot Capture
+
+Sprint 202 adds explicit screenshot capture contract gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block.
+
+The checkpoint defines screenshot capture as future request-only behavior guarded
+by explicit user request, screen permission, user confirmation, single-capture
+scope, and redaction before any future context handoff.
+
+Sprint 202 keeps runtime activation blocked and release gates closed. It does
+not capture the screen, write screenshot files, read image files, persist
+screenshot metadata, run OCR, run image analysis, run object detection, run
+vision model runtime, hand off screen context, execute visual actions, execute
+tools or commands, mutate files, control the desktop, write memory, perform
+network or git actions, use cloud vision fallback, externally upload visual data,
+or bypass action gates through visual context.
+
+The next sprint is Sprint 203 — Screen Context Adapter.

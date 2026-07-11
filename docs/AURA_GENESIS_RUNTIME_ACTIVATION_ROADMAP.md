@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.201.0-genesis
+Current anchor: v0.202.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.201.0-genesis
-- Completed: Sprint 201 — Vision Runtime Activation Foundation
+- Current version: v0.202.0-genesis
+- Completed: Sprint 202 — Explicit Screenshot Capture
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 202 — Explicit Screenshot Capture
+- Next: Sprint 203 — Screen Context Adapter
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -513,3 +513,42 @@ execution, file/desktop/network/git actions, memory writes, cloud vision
 fallback, and external upload.
 
 Next: Sprint 202 — Explicit Screenshot Capture.
+
+## v0.202.0-genesis — Explicit Screenshot Capture
+
+Sprint 202 adds explicit screenshot capture gates to the Sprint 201-210 Vision
+and Screen Awareness Runtime block as contract-only behavior.
+
+The checkpoint confirms:
+
+- explicit screenshot capture contract ready
+- explicit screenshot capture runtime disabled
+- current sprint 202
+- next sprint 203
+- next boundary screen_context_adapter
+- runtime activation blocked
+- release gate closed
+- explicit screenshot request required
+- explicit screenshot confirmation required
+- explicit screenshot permission required
+- permission required before screenshot
+- permission required before screen
+- permission required before screenshot file write
+- permission required before context handoff
+- redaction required before context handoff
+- single capture only
+- continuous/background/silent/automatic/scheduled capture disabled
+- 4 screenshot candidates
+- 33 safety blockers
+- all safety blockers inactive
+- 99 assertions
+- zero failed assertions
+
+Sprint 202 keeps all screenshot and visual runtime execution disabled, including
+screen capture, screenshot output files, screenshot file read/write,
+screenshot-to-context handoff, screen context adapter runtime, redaction runtime,
+OCR, image analysis, object detection, vision model runtime, visual action
+execution, tool/command execution, file/desktop/network/git actions, memory
+writes, cloud vision fallback, and external upload.
+
+Next: Sprint 203 — Screen Context Adapter.

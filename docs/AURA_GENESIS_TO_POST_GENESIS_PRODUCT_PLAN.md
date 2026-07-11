@@ -917,3 +917,22 @@ writing memory, mutating files, controlling desktop/network/git, using cloud
 vision fallback, or externally uploading visual data.
 
 This creates the handoff baseline for Sprint 202 — Explicit Screenshot Capture.
+
+## Sprint 202 — Explicit Screenshot Capture
+
+`v0.202.0-genesis` adds explicit screenshot capture gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block.
+
+The checkpoint makes future screenshot capture request-only and disabled by
+default. A future capture path must require explicit request, screen permission,
+user confirmation, single-capture scope, and redaction before context handoff.
+
+This keeps AURA from silently capturing the screen, watching continuously or in
+the background, writing screenshot files, reading image files, persisting
+screenshot metadata, running OCR, running image analysis or object detection,
+running vision model runtime, handing off screen context, executing visual
+actions, executing tools/commands, writing memory, mutating files, controlling
+desktop/network/git, using cloud vision fallback, or externally uploading visual
+data.
+
+This creates the handoff baseline for Sprint 203 — Screen Context Adapter.

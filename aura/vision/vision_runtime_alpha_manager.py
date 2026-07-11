@@ -156,6 +156,7 @@ class VisionRuntimeAlphaManager:
     def status(self) -> dict[str, Any]:
         dependency_check = self.planner.check()
         activation = self.planner.vision_runtime_activation_contract()
+        screenshot = self.planner.explicit_screenshot_capture_contract()
         screen_backend = self.detect_screen_backend()
         camera_backend = self.detect_camera_backend()
         screen_permission = self.permission_manager.check("screen_analyze")
@@ -167,21 +168,33 @@ class VisionRuntimeAlphaManager:
             "status": self.status_name,
             "alpha_ready": True,
             "sprint_201_vision_runtime_activation_contract_ready": activation["vision_runtime_activation_contract_ready"],
+            "sprint_202_explicit_screenshot_capture_contract_ready": screenshot["explicit_screenshot_capture_contract_ready"],
+            "explicit_screenshot_capture_runtime_ready": screenshot["explicit_screenshot_capture_runtime_ready"],
+            "explicit_screenshot_capture_status": screenshot["explicit_screenshot_capture_status"],
+            "explicit_screenshot_request_required": screenshot["explicit_screenshot_request_required"],
+            "explicit_screenshot_confirmation_required": screenshot["explicit_screenshot_confirmation_required"],
+            "permission_required_before_screenshot": screenshot["permission_required_before_screenshot"],
+            "screenshot_candidate_count": screenshot["screenshot_candidate_count"],
+            "screenshot_capture_runtime_ready": screenshot["screenshot_capture_runtime_ready"],
+            "screenshot_capture_active": screenshot["screenshot_capture_active"],
+            "screenshot_capture_performed": screenshot["screenshot_capture_performed"],
+            "screenshot_to_context_handoff_active": screenshot["screenshot_to_context_handoff_active"],
             "vision_runtime_activation_runtime_ready": activation["vision_runtime_activation_runtime_ready"],
             "vision_runtime_activation_status": activation["vision_runtime_activation_status"],
             "vision_runtime_block_start": activation["vision_runtime_block_start"],
             "vision_runtime_block_end": activation["vision_runtime_block_end"],
-            "vision_runtime_next_sprint": activation["vision_runtime_next_sprint"],
-            "vision_runtime_next_boundary": activation["vision_runtime_next_boundary"],
-            "vision_runtime_activation_allowed": activation["runtime_activation_allowed"],
-            "vision_release_gate_open": activation["release_gate_open"],
-            "vision_safety_blocker_count": activation["safety_blocker_count"],
-            "vision_all_safety_blockers_inactive": activation["all_safety_blockers_inactive"],
+            "vision_runtime_next_sprint": screenshot["vision_runtime_next_sprint"],
+            "vision_runtime_next_boundary": screenshot["vision_runtime_next_boundary"],
+            "vision_runtime_activation_allowed": screenshot["runtime_activation_allowed"],
+            "vision_release_gate_open": screenshot["release_gate_open"],
+            "vision_safety_blocker_count": screenshot["safety_blocker_count"],
+            "vision_all_safety_blockers_inactive": screenshot["all_safety_blockers_inactive"],
             "screen_plan_ready": True,
             "camera_plan_ready": True,
             "vision_context_ready": True,
             "dependency_check_ready": True,
             "vision_runtime_activation_contract": activation,
+            "explicit_screenshot_capture_contract": screenshot,
             "screen_backend_found": screen_backend["found"],
             "screen_backend": screen_backend["name"],
             "screen_backend_path": screen_backend["path"],
@@ -203,9 +216,9 @@ class VisionRuntimeAlphaManager:
             "python_packages_total": dependency_check["python_packages_total"],
             "executables_found": dependency_check["executables_found"],
             "executables_total": dependency_check["executables_total"],
-            "sections": 6,
+            "sections": 7,
             "project_root": str(self.project_root),
-            "note": "Vision Runtime Alpha is online for Sprint 201 Vision Runtime Activation Foundation. It does not capture screen, access camera, read image files, run OCR, run vision models, write image files, or execute commands automatically.",
+            "note": "Vision Runtime Alpha is online for Sprint 202 Explicit Screenshot Capture contract. It does not capture screen, access camera, read image files, run OCR, run vision models, write screenshot files, hand off context, or execute commands automatically.",
         }
 
     def build_screen_command(self) -> dict[str, Any]:

@@ -1,5 +1,5 @@
 name: AURA
-version: "0.201.0-genesis"
+version: "0.202.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -138,3 +138,10 @@ modes:
 # analysis, OCR, continuous watching, biometric identification, visual actions,
 # command/tool execution, memory writes, file/desktop/network/git actions, cloud
 # vision fallback, or external upload enabled.
+# Sprint 202: explicit_screenshot_capture adds contract-only explicit
+# screenshot capture gates. Screenshot capture remains disabled by default and
+# requires explicit request, permission, and confirmation before any future
+# capture. No screenshot is captured, no file is written/read, no OCR/model
+# runtime runs, no screen context handoff happens, and no visual action,
+# command/tool execution, memory write, desktop/network/git action, cloud vision
+# fallback, or external upload is enabled.

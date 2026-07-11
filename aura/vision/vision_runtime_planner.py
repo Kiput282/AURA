@@ -349,11 +349,128 @@ class VisionRuntimePlanner:
 
         return contract
 
+    def explicit_screenshot_capture_contract(self) -> dict[str, Any]:
+        activation = self.vision_runtime_activation_contract()
+        dependencies = self.dependency_check()
+        screen_permission = self.permission_manager.check("screen_analyze")
+        screenshot_candidates = self.screen_capture_candidates()
+        safety_blockers = list(activation["safety_blockers"])
+
+        installed_python = sum(
+            1 for package in dependencies["python_packages"] if package["installed"]
+        )
+        found_executables = sum(
+            1 for executable in dependencies["executables"] if executable["found"]
+        )
+
+        contract = {
+            "sprint": 202,
+            "name": "explicit_screenshot_capture",
+            "explicit_screenshot_capture_contract_ready": True,
+            "explicit_screenshot_capture_runtime_ready": False,
+            "explicit_screenshot_capture_status": "explicit_screenshot_capture_contract_ready",
+            "vision_runtime_block_start": 201,
+            "vision_runtime_block_end": 210,
+            "vision_runtime_current_sprint": 202,
+            "vision_runtime_next_sprint": 203,
+            "vision_runtime_next_boundary": "screen_context_adapter",
+            "previous_activation_contract_ready": activation["vision_runtime_activation_contract_ready"],
+            "previous_activation_status": activation["vision_runtime_activation_status"],
+            "previous_activation_runtime_ready": activation["vision_runtime_activation_runtime_ready"],
+            "runtime_ready": False,
+            "runtime_activation_allowed": False,
+            "release_gate_open": False,
+            "explicit_screenshot_request_required": True,
+            "explicit_screenshot_confirmation_required": True,
+            "explicit_screenshot_permission_required": True,
+            "permission_required_before_screenshot": True,
+            "permission_required_before_screen": True,
+            "permission_required_before_image_file_write": True,
+            "permission_required_before_context_handoff": True,
+            "redaction_required_before_context_handoff": True,
+            "single_capture_only": True,
+            "continuous_capture_allowed": False,
+            "background_capture_allowed": False,
+            "silent_capture_allowed": False,
+            "automatic_capture_allowed": False,
+            "scheduled_capture_allowed": False,
+            "screen_permission_action": "screen_analyze",
+            "screen_permission_allowed": screen_permission.allowed,
+            "screen_permission_requires_confirmation": screen_permission.requires_confirmation,
+            "screenshot_candidate_count": len(screenshot_candidates),
+            "screenshot_candidates_ready": len(screenshot_candidates) > 0,
+            "python_packages_installed": installed_python,
+            "python_packages_total": len(dependencies["python_packages"]),
+            "executables_found": found_executables,
+            "executables_total": len(dependencies["executables"]),
+            "screen_capture_runtime_ready": False,
+            "screenshot_capture_runtime_ready": False,
+            "screenshot_request_active": False,
+            "screenshot_permission_request_active": False,
+            "screenshot_confirmation_active": False,
+            "screenshot_capture_allowed": False,
+            "screenshot_capture_active": False,
+            "screenshot_capture_performed": False,
+            "screenshot_output_file_created": False,
+            "screenshot_file_write_active": False,
+            "screenshot_file_read_active": False,
+            "screenshot_storage_persistence_enabled": False,
+            "screenshot_metadata_persistence_enabled": False,
+            "screenshot_to_context_handoff_active": False,
+            "screen_context_adapter_active": False,
+            "redaction_runtime_active": False,
+            "vision_model_runtime_active": False,
+            "ocr_runtime_active": False,
+            "image_analysis_runtime_active": False,
+            "object_detection_runtime_active": False,
+            "visual_action_execution_active": False,
+            "visual_tool_execution_active": False,
+            "command_execution_active": False,
+            "file_mutation_active": False,
+            "desktop_action_active": False,
+            "network_action_active": False,
+            "git_action_active": False,
+            "memory_write_active": False,
+            "cloud_vision_fallback_enabled": False,
+            "external_upload_enabled": False,
+            "dependency_install_performed": False,
+            "model_download_performed": False,
+            "runtime_scope": "explicit_screenshot_capture_contract_only",
+            "safety_blockers": safety_blockers,
+            "safety_blocker_count": len(safety_blockers),
+            "all_safety_blockers_inactive": activation["all_safety_blockers_inactive"],
+        }
+
+        for blocker in safety_blockers:
+            contract[blocker] = activation[blocker]
+
+        contract["screenshot_capture_active"] = False
+        contract["screenshot_capture_performed"] = False
+        contract["ocr_runtime_active"] = False
+        contract["image_analysis_runtime_active"] = False
+        contract["object_detection_runtime_active"] = False
+        contract["visual_action_execution_active"] = False
+        contract["command_execution_active"] = False
+        contract["file_mutation_active"] = False
+        contract["desktop_action_active"] = False
+        contract["network_action_active"] = False
+        contract["git_action_active"] = False
+        contract["memory_write_active"] = False
+        contract["cloud_vision_fallback_enabled"] = False
+        contract["external_upload_enabled"] = False
+
+        contract["all_safety_blockers_inactive"] = all(
+            contract[blocker] is False for blocker in safety_blockers
+        )
+
+        return contract
+
     def status(self) -> dict[str, Any]:
         screen_candidates = self.screen_capture_candidates()
         camera_candidates = self.camera_capture_candidates()
         model_candidates = self.vision_model_candidates()
         activation = self.vision_runtime_activation_contract()
+        screenshot = self.explicit_screenshot_capture_contract()
 
         return {
             "name": self.name,
@@ -374,27 +491,45 @@ class VisionRuntimePlanner:
             "vision_runtime_activation_contract_ready": activation["vision_runtime_activation_contract_ready"],
             "vision_runtime_activation_runtime_ready": activation["vision_runtime_activation_runtime_ready"],
             "vision_runtime_activation_status": activation["vision_runtime_activation_status"],
-            "vision_runtime_block_start": activation["vision_runtime_block_start"],
-            "vision_runtime_block_end": activation["vision_runtime_block_end"],
-            "vision_runtime_current_sprint": activation["vision_runtime_current_sprint"],
-            "vision_runtime_next_sprint": activation["vision_runtime_next_sprint"],
-            "vision_runtime_next_boundary": activation["vision_runtime_next_boundary"],
-            "vision_runtime_activation_allowed": activation["runtime_activation_allowed"],
-            "vision_release_gate_open": activation["release_gate_open"],
+            "explicit_screenshot_capture_contract_ready": screenshot["explicit_screenshot_capture_contract_ready"],
+            "explicit_screenshot_capture_runtime_ready": screenshot["explicit_screenshot_capture_runtime_ready"],
+            "explicit_screenshot_capture_status": screenshot["explicit_screenshot_capture_status"],
+            "vision_runtime_block_start": screenshot["vision_runtime_block_start"],
+            "vision_runtime_block_end": screenshot["vision_runtime_block_end"],
+            "vision_runtime_current_sprint": screenshot["vision_runtime_current_sprint"],
+            "vision_runtime_next_sprint": screenshot["vision_runtime_next_sprint"],
+            "vision_runtime_next_boundary": screenshot["vision_runtime_next_boundary"],
+            "vision_runtime_activation_allowed": screenshot["runtime_activation_allowed"],
+            "vision_release_gate_open": screenshot["release_gate_open"],
             "vision_safe_idle_default": activation["safe_idle_default"],
             "vision_explicit_visual_input_required": activation["explicit_visual_input_required"],
             "vision_explicit_user_confirmation_required": activation["explicit_user_confirmation_required"],
-            "vision_permission_required_before_screen": activation["permission_required_before_screen"],
+            "vision_permission_required_before_screen": screenshot["permission_required_before_screen"],
             "vision_permission_required_before_camera": activation["permission_required_before_camera"],
             "vision_permission_required_before_image_analysis": activation["permission_required_before_image_analysis"],
             "vision_permission_required_before_visual_action": activation["permission_required_before_visual_action"],
             "vision_user_provided_image_first": activation["user_provided_image_first"],
-            "vision_screen_permission_action": activation["screen_permission_action"],
+            "vision_screen_permission_action": screenshot["screen_permission_action"],
             "vision_camera_permission_action": activation["camera_permission_action"],
-            "vision_safety_blocker_count": activation["safety_blocker_count"],
-            "vision_all_safety_blockers_inactive": activation["all_safety_blockers_inactive"],
+            "explicit_screenshot_request_required": screenshot["explicit_screenshot_request_required"],
+            "explicit_screenshot_confirmation_required": screenshot["explicit_screenshot_confirmation_required"],
+            "permission_required_before_screenshot": screenshot["permission_required_before_screenshot"],
+            "single_capture_only": screenshot["single_capture_only"],
+            "continuous_capture_allowed": screenshot["continuous_capture_allowed"],
+            "background_capture_allowed": screenshot["background_capture_allowed"],
+            "silent_capture_allowed": screenshot["silent_capture_allowed"],
+            "automatic_capture_allowed": screenshot["automatic_capture_allowed"],
+            "screenshot_candidate_count": screenshot["screenshot_candidate_count"],
+            "screenshot_capture_runtime_ready": screenshot["screenshot_capture_runtime_ready"],
+            "screenshot_capture_active": screenshot["screenshot_capture_active"],
+            "screenshot_capture_performed": screenshot["screenshot_capture_performed"],
+            "screenshot_output_file_created": screenshot["screenshot_output_file_created"],
+            "screenshot_to_context_handoff_active": screenshot["screenshot_to_context_handoff_active"],
+            "vision_safety_blocker_count": screenshot["safety_blocker_count"],
+            "vision_all_safety_blockers_inactive": screenshot["all_safety_blockers_inactive"],
             "vision_runtime_activation_contract": activation,
-            "note": "Vision runtime activation foundation is ready for Sprint 201; screen capture, camera access, image analysis, OCR, continuous watching, biometric identification, visual actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud fallback, and external upload remain disabled.",
+            "explicit_screenshot_capture_contract": screenshot,
+            "note": "Explicit screenshot capture contract is ready for Sprint 202; screenshot capture remains request-only and disabled by default, with no silent capture, background capture, continuous watching, OCR, vision model runtime, context handoff, visual action, file/desktop/network/git action, cloud fallback, or external upload enabled.",
         }
 
     def plan(self) -> dict[str, Any]:
@@ -466,6 +601,7 @@ class VisionRuntimePlanner:
     def check(self) -> dict[str, Any]:
         dependencies = self.dependency_check()
         activation = self.vision_runtime_activation_contract()
+        screenshot = self.explicit_screenshot_capture_contract()
 
         installed_python = sum(
             1 for package in dependencies["python_packages"] if package["installed"]
@@ -478,73 +614,73 @@ class VisionRuntimePlanner:
             "vision_runtime_activation_contract_ready": activation["vision_runtime_activation_contract_ready"] is True,
             "vision_runtime_activation_runtime_not_ready": activation["vision_runtime_activation_runtime_ready"] is False,
             "vision_runtime_activation_status_ready": activation["vision_runtime_activation_status"] == "activation_foundation_ready",
-            "vision_runtime_block_start_201": activation["vision_runtime_block_start"] == 201,
-            "vision_runtime_block_end_210": activation["vision_runtime_block_end"] == 210,
-            "vision_runtime_current_sprint_201": activation["vision_runtime_current_sprint"] == 201,
-            "vision_runtime_next_sprint_202": activation["vision_runtime_next_sprint"] == 202,
-            "vision_runtime_next_boundary_explicit_visual_input_state": activation["vision_runtime_next_boundary"] == "explicit_visual_input_state",
-            "vision_runtime_not_ready": activation["runtime_ready"] is False,
-            "vision_runtime_activation_not_allowed": activation["runtime_activation_allowed"] is False,
-            "vision_release_gate_closed": activation["release_gate_open"] is False,
-            "vision_safe_idle_default": activation["safe_idle_default"] is True,
-            "vision_local_first_required": activation["local_first_required"] is True,
-            "vision_offline_first_preferred": activation["offline_first_preferred"] is True,
-            "vision_explicit_visual_input_required": activation["explicit_visual_input_required"] is True,
-            "vision_explicit_user_confirmation_required": activation["explicit_user_confirmation_required"] is True,
-            "permission_required_before_screen": activation["permission_required_before_screen"] is True,
-            "permission_required_before_camera": activation["permission_required_before_camera"] is True,
-            "permission_required_before_image_analysis": activation["permission_required_before_image_analysis"] is True,
-            "permission_required_before_visual_action": activation["permission_required_before_visual_action"] is True,
-            "user_provided_image_first": activation["user_provided_image_first"] is True,
-            "screen_permission_action": activation["screen_permission_action"] == "screen_analyze",
-            "camera_permission_action": activation["camera_permission_action"] == "camera_analyze",
-            "screen_capture_candidates_ready": activation["screen_capture_candidates_ready"] is True,
-            "camera_capture_candidates_ready": activation["camera_capture_candidates_ready"] is True,
-            "vision_model_candidates_ready": activation["vision_model_candidates_ready"] is True,
-            "screen_access_disabled": activation["screen_access"] is False,
-            "camera_access_disabled": activation["camera_access"] is False,
-            "screen_capture_inactive": activation["screen_capture_active"] is False,
-            "screenshot_capture_inactive": activation["screenshot_capture_active"] is False,
-            "camera_frame_capture_inactive": activation["camera_frame_capture_active"] is False,
-            "image_capture_inactive": activation["image_capture_active"] is False,
-            "video_capture_inactive": activation["video_capture_active"] is False,
-            "webcam_runtime_inactive": activation["webcam_runtime_active"] is False,
-            "vision_runtime_inactive": activation["vision_runtime_active"] is False,
-            "visual_context_runtime_inactive": activation["visual_context_runtime_active"] is False,
-            "image_analysis_runtime_inactive": activation["image_analysis_runtime_active"] is False,
-            "object_detection_runtime_inactive": activation["object_detection_runtime_active"] is False,
-            "ocr_runtime_inactive": activation["ocr_runtime_active"] is False,
-            "image_text_extraction_runtime_inactive": activation["image_text_extraction_runtime_active"] is False,
-            "continuous_watch_inactive": activation["continuous_watch_active"] is False,
-            "background_watch_inactive": activation["background_watch_active"] is False,
-            "silent_capture_disabled": activation["silent_capture_enabled"] is False,
-            "camera_activation_by_default_disabled": activation["camera_activation_by_default_enabled"] is False,
-            "biometric_identification_disabled": activation["biometric_identification_enabled"] is False,
-            "face_recognition_disabled": activation["face_recognition_enabled"] is False,
-            "identity_recognition_disabled": activation["identity_recognition_enabled"] is False,
-            "emotion_inference_from_face_disabled": activation["emotion_inference_from_face_enabled"] is False,
-            "visual_context_to_action_bypass_disabled": activation["visual_context_to_action_bypass_enabled"] is False,
-            "visual_action_execution_inactive": activation["visual_action_execution_active"] is False,
-            "visual_tool_execution_inactive": activation["visual_tool_execution_active"] is False,
-            "command_execution_inactive": activation["command_execution_active"] is False,
-            "file_mutation_inactive": activation["file_mutation_active"] is False,
-            "desktop_action_inactive": activation["desktop_action_active"] is False,
-            "network_action_inactive": activation["network_action_active"] is False,
-            "git_action_inactive": activation["git_action_active"] is False,
-            "memory_write_inactive": activation["memory_write_active"] is False,
-            "cloud_vision_fallback_disabled": activation["cloud_vision_fallback_enabled"] is False,
-            "external_upload_disabled": activation["external_upload_enabled"] is False,
-            "dependency_install_not_performed": activation["dependency_install_performed"] is False,
-            "model_download_not_performed": activation["model_download_performed"] is False,
-            "screen_capture_not_performed": activation["screen_capture_performed"] is False,
-            "camera_frame_capture_not_performed": activation["camera_frame_capture_performed"] is False,
-            "image_file_read_not_performed": activation["image_file_read_performed"] is False,
-            "ocr_not_performed": activation["ocr_performed"] is False,
-            "visual_recognition_not_performed": activation["visual_recognition_performed"] is False,
-            "visual_action_not_performed": activation["visual_action_performed"] is False,
-            "vision_safety_blocker_count": activation["safety_blocker_count"] == 33,
-            "vision_all_safety_blockers_inactive": activation["all_safety_blockers_inactive"] is True,
+            "explicit_screenshot_capture_contract_ready": screenshot["explicit_screenshot_capture_contract_ready"] is True,
+            "explicit_screenshot_capture_runtime_not_ready": screenshot["explicit_screenshot_capture_runtime_ready"] is False,
+            "explicit_screenshot_capture_status_ready": screenshot["explicit_screenshot_capture_status"] == "explicit_screenshot_capture_contract_ready",
+            "vision_runtime_block_start_201": screenshot["vision_runtime_block_start"] == 201,
+            "vision_runtime_block_end_210": screenshot["vision_runtime_block_end"] == 210,
+            "vision_runtime_current_sprint_202": screenshot["vision_runtime_current_sprint"] == 202,
+            "vision_runtime_next_sprint_203": screenshot["vision_runtime_next_sprint"] == 203,
+            "vision_runtime_next_boundary_screen_context_adapter": screenshot["vision_runtime_next_boundary"] == "screen_context_adapter",
+            "previous_activation_contract_ready": screenshot["previous_activation_contract_ready"] is True,
+            "previous_activation_runtime_not_ready": screenshot["previous_activation_runtime_ready"] is False,
+            "vision_runtime_not_ready": screenshot["runtime_ready"] is False,
+            "vision_runtime_activation_not_allowed": screenshot["runtime_activation_allowed"] is False,
+            "vision_release_gate_closed": screenshot["release_gate_open"] is False,
+            "explicit_screenshot_request_required": screenshot["explicit_screenshot_request_required"] is True,
+            "explicit_screenshot_confirmation_required": screenshot["explicit_screenshot_confirmation_required"] is True,
+            "explicit_screenshot_permission_required": screenshot["explicit_screenshot_permission_required"] is True,
+            "permission_required_before_screenshot": screenshot["permission_required_before_screenshot"] is True,
+            "permission_required_before_screen": screenshot["permission_required_before_screen"] is True,
+            "permission_required_before_image_file_write": screenshot["permission_required_before_image_file_write"] is True,
+            "permission_required_before_context_handoff": screenshot["permission_required_before_context_handoff"] is True,
+            "redaction_required_before_context_handoff": screenshot["redaction_required_before_context_handoff"] is True,
+            "single_capture_only": screenshot["single_capture_only"] is True,
+            "continuous_capture_not_allowed": screenshot["continuous_capture_allowed"] is False,
+            "background_capture_not_allowed": screenshot["background_capture_allowed"] is False,
+            "silent_capture_not_allowed": screenshot["silent_capture_allowed"] is False,
+            "automatic_capture_not_allowed": screenshot["automatic_capture_allowed"] is False,
+            "scheduled_capture_not_allowed": screenshot["scheduled_capture_allowed"] is False,
+            "screen_permission_action": screenshot["screen_permission_action"] == "screen_analyze",
+            "screenshot_candidates_ready": screenshot["screenshot_candidates_ready"] is True,
+            "screen_capture_runtime_not_ready": screenshot["screen_capture_runtime_ready"] is False,
+            "screenshot_capture_runtime_not_ready": screenshot["screenshot_capture_runtime_ready"] is False,
+            "screenshot_request_inactive": screenshot["screenshot_request_active"] is False,
+            "screenshot_permission_request_inactive": screenshot["screenshot_permission_request_active"] is False,
+            "screenshot_confirmation_inactive": screenshot["screenshot_confirmation_active"] is False,
+            "screenshot_capture_not_allowed": screenshot["screenshot_capture_allowed"] is False,
+            "screenshot_capture_inactive": screenshot["screenshot_capture_active"] is False,
+            "screenshot_capture_not_performed": screenshot["screenshot_capture_performed"] is False,
+            "screenshot_output_file_not_created": screenshot["screenshot_output_file_created"] is False,
+            "screenshot_file_write_inactive": screenshot["screenshot_file_write_active"] is False,
+            "screenshot_file_read_inactive": screenshot["screenshot_file_read_active"] is False,
+            "screenshot_storage_persistence_disabled": screenshot["screenshot_storage_persistence_enabled"] is False,
+            "screenshot_metadata_persistence_disabled": screenshot["screenshot_metadata_persistence_enabled"] is False,
+            "screenshot_to_context_handoff_inactive": screenshot["screenshot_to_context_handoff_active"] is False,
+            "screen_context_adapter_inactive": screenshot["screen_context_adapter_active"] is False,
+            "redaction_runtime_inactive": screenshot["redaction_runtime_active"] is False,
+            "vision_model_runtime_inactive": screenshot["vision_model_runtime_active"] is False,
+            "ocr_runtime_inactive": screenshot["ocr_runtime_active"] is False,
+            "image_analysis_runtime_inactive": screenshot["image_analysis_runtime_active"] is False,
+            "object_detection_runtime_inactive": screenshot["object_detection_runtime_active"] is False,
+            "visual_action_execution_inactive": screenshot["visual_action_execution_active"] is False,
+            "visual_tool_execution_inactive": screenshot["visual_tool_execution_active"] is False,
+            "command_execution_inactive": screenshot["command_execution_active"] is False,
+            "file_mutation_inactive": screenshot["file_mutation_active"] is False,
+            "desktop_action_inactive": screenshot["desktop_action_active"] is False,
+            "network_action_inactive": screenshot["network_action_active"] is False,
+            "git_action_inactive": screenshot["git_action_active"] is False,
+            "memory_write_inactive": screenshot["memory_write_active"] is False,
+            "cloud_vision_fallback_disabled": screenshot["cloud_vision_fallback_enabled"] is False,
+            "external_upload_disabled": screenshot["external_upload_enabled"] is False,
+            "dependency_install_not_performed": screenshot["dependency_install_performed"] is False,
+            "model_download_not_performed": screenshot["model_download_performed"] is False,
+            "vision_safety_blocker_count": screenshot["safety_blocker_count"] == 33,
+            "vision_all_safety_blockers_inactive": screenshot["all_safety_blockers_inactive"] is True,
         }
+
+        for blocker in screenshot["safety_blockers"]:
+            assertions[f"safety_blocker_{blocker}_inactive"] = screenshot[blocker] is False
 
         failed_assertions = [
             name for name, passed in assertions.items() if not passed
@@ -557,15 +693,18 @@ class VisionRuntimePlanner:
             "vision_runtime_activation_contract_ready": activation["vision_runtime_activation_contract_ready"],
             "vision_runtime_activation_runtime_ready": activation["vision_runtime_activation_runtime_ready"],
             "vision_runtime_activation_status": activation["vision_runtime_activation_status"],
-            "vision_runtime_block_start": activation["vision_runtime_block_start"],
-            "vision_runtime_block_end": activation["vision_runtime_block_end"],
-            "vision_runtime_current_sprint": activation["vision_runtime_current_sprint"],
-            "vision_runtime_next_sprint": activation["vision_runtime_next_sprint"],
-            "vision_runtime_next_boundary": activation["vision_runtime_next_boundary"],
-            "vision_runtime_activation_allowed": activation["runtime_activation_allowed"],
-            "vision_release_gate_open": activation["release_gate_open"],
-            "vision_safety_blocker_count": activation["safety_blocker_count"],
-            "vision_all_safety_blockers_inactive": activation["all_safety_blockers_inactive"],
+            "explicit_screenshot_capture_contract_ready": screenshot["explicit_screenshot_capture_contract_ready"],
+            "explicit_screenshot_capture_runtime_ready": screenshot["explicit_screenshot_capture_runtime_ready"],
+            "explicit_screenshot_capture_status": screenshot["explicit_screenshot_capture_status"],
+            "vision_runtime_block_start": screenshot["vision_runtime_block_start"],
+            "vision_runtime_block_end": screenshot["vision_runtime_block_end"],
+            "vision_runtime_current_sprint": screenshot["vision_runtime_current_sprint"],
+            "vision_runtime_next_sprint": screenshot["vision_runtime_next_sprint"],
+            "vision_runtime_next_boundary": screenshot["vision_runtime_next_boundary"],
+            "vision_runtime_activation_allowed": screenshot["runtime_activation_allowed"],
+            "vision_release_gate_open": screenshot["release_gate_open"],
+            "vision_safety_blocker_count": screenshot["safety_blocker_count"],
+            "vision_all_safety_blockers_inactive": screenshot["all_safety_blockers_inactive"],
             "assertions": assertions,
             "assertion_count": len(assertions),
             "failed_assertions": failed_assertions,
@@ -576,5 +715,6 @@ class VisionRuntimePlanner:
             "executables_total": len(dependencies["executables"]),
             "dependencies": dependencies,
             "vision_runtime_activation_contract": activation,
-            "note": "Runtime is not enabled yet. This check prepared the Sprint 201 vision runtime activation foundation without accessing screen, camera, screenshots, files, OCR, vision models, tools, commands, memory, desktop, network, git, cloud vision, or visual actions.",
+            "explicit_screenshot_capture_contract": screenshot,
+            "note": "Runtime is not enabled yet. This check prepared the Sprint 202 explicit screenshot capture contract without capturing the screen, accessing camera, writing screenshot files, reading image files, running OCR, running vision models, handing off screen context, executing tools/commands, writing memory, controlling desktop, using network/git, using cloud vision, uploading externally, or executing visual actions.",
         }
