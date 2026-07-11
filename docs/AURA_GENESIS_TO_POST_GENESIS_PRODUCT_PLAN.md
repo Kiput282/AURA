@@ -954,3 +954,24 @@ tools/commands, writing memory, mutating files, controlling desktop/network/git,
 using cloud vision fallback, or externally uploading visual data.
 
 This creates the handoff baseline for Sprint 204 — Local Vision Model Adapter.
+
+## Sprint 204 — Local Vision Model Adapter
+
+`v0.204.0-genesis` adds local vision model adapter gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block.
+
+The checkpoint treats the model adapter as local/offline-first and contract-only.
+It prepares provider, model candidate, request, response, capability, and visual
+prompt schemas while requiring explicit permission and redaction before any
+future model request or response.
+
+This keeps AURA from downloading models, installing dependencies, probing
+providers, sending model requests, running inference, reading screenshots or
+image files, capturing the screen, running OCR, using cloud vision fallback,
+externally uploading visual data, handing off model output to chat, executing
+visual actions, executing tools/commands, writing memory, mutating files,
+controlling desktop/network/git, or bypassing action gates through visual
+context.
+
+This creates the handoff baseline for Sprint 205 — Vision Permission and
+Redaction.

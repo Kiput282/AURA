@@ -158,6 +158,7 @@ class VisionRuntimeAlphaManager:
         activation = self.planner.vision_runtime_activation_contract()
         screenshot = self.planner.explicit_screenshot_capture_contract()
         screen_context = self.planner.screen_context_adapter_contract()
+        local_model = self.planner.local_vision_model_adapter_contract()
         screen_backend = self.detect_screen_backend()
         camera_backend = self.detect_camera_backend()
         screen_permission = self.permission_manager.check("screen_analyze")
@@ -171,6 +172,30 @@ class VisionRuntimeAlphaManager:
             "sprint_201_vision_runtime_activation_contract_ready": activation["vision_runtime_activation_contract_ready"],
             "sprint_202_explicit_screenshot_capture_contract_ready": screenshot["explicit_screenshot_capture_contract_ready"],
             "sprint_203_screen_context_adapter_contract_ready": screen_context["screen_context_adapter_contract_ready"],
+            "sprint_204_local_vision_model_adapter_contract_ready": local_model["local_vision_model_adapter_contract_ready"],
+            "local_vision_model_adapter_runtime_ready": local_model["local_vision_model_adapter_runtime_ready"],
+            "local_vision_model_adapter_status": local_model["local_vision_model_adapter_status"],
+            "local_first_required": local_model["local_first_required"],
+            "offline_first_required": local_model["offline_first_required"],
+            "local_provider_contract_ready": local_model["local_provider_contract_ready"],
+            "supported_local_provider_count": local_model["supported_local_provider_count"],
+            "local_vision_model_candidate_count": local_model["local_vision_model_candidate_count"],
+            "local_vision_model_candidates_ready": local_model["local_vision_model_candidates_ready"],
+            "local_vision_model_default_candidate": local_model["local_vision_model_default_candidate"],
+            "model_request_schema_ready": local_model["model_request_schema_ready"],
+            "model_response_schema_ready": local_model["model_response_schema_ready"],
+            "permission_required_before_model_request": local_model["permission_required_before_model_request"],
+            "redaction_required_before_model_request": local_model["redaction_required_before_model_request"],
+            "model_download_required_now": local_model["model_download_required_now"],
+            "model_download_performed": local_model["model_download_performed"],
+            "local_vision_model_adapter_active": local_model["local_vision_model_adapter_active"],
+            "local_model_provider_probe_active": local_model["local_model_provider_probe_active"],
+            "local_model_request_active": local_model["local_model_request_active"],
+            "local_model_inference_active": local_model["local_model_inference_active"],
+            "local_model_response_created": local_model["local_model_response_created"],
+            "model_to_chat_handoff_active": local_model["model_to_chat_handoff_active"],
+            "cloud_vision_fallback_enabled": local_model["cloud_vision_fallback_enabled"],
+            "external_upload_enabled": local_model["external_upload_enabled"],
             "screen_context_adapter_runtime_ready": screen_context["screen_context_adapter_runtime_ready"],
             "screen_context_adapter_status": screen_context["screen_context_adapter_status"],
             "provided_screenshot_context_required": screen_context["provided_screenshot_context_required"],
@@ -200,12 +225,12 @@ class VisionRuntimeAlphaManager:
             "vision_runtime_activation_status": activation["vision_runtime_activation_status"],
             "vision_runtime_block_start": activation["vision_runtime_block_start"],
             "vision_runtime_block_end": activation["vision_runtime_block_end"],
-            "vision_runtime_next_sprint": screen_context["vision_runtime_next_sprint"],
-            "vision_runtime_next_boundary": screen_context["vision_runtime_next_boundary"],
-            "vision_runtime_activation_allowed": screen_context["runtime_activation_allowed"],
-            "vision_release_gate_open": screen_context["release_gate_open"],
-            "vision_safety_blocker_count": screen_context["safety_blocker_count"],
-            "vision_all_safety_blockers_inactive": screen_context["all_safety_blockers_inactive"],
+            "vision_runtime_next_sprint": local_model["vision_runtime_next_sprint"],
+            "vision_runtime_next_boundary": local_model["vision_runtime_next_boundary"],
+            "vision_runtime_activation_allowed": local_model["runtime_activation_allowed"],
+            "vision_release_gate_open": local_model["release_gate_open"],
+            "vision_safety_blocker_count": local_model["safety_blocker_count"],
+            "vision_all_safety_blockers_inactive": local_model["all_safety_blockers_inactive"],
             "screen_plan_ready": True,
             "camera_plan_ready": True,
             "vision_context_ready": True,
@@ -213,6 +238,7 @@ class VisionRuntimeAlphaManager:
             "vision_runtime_activation_contract": activation,
             "explicit_screenshot_capture_contract": screenshot,
             "screen_context_adapter_contract": screen_context,
+            "local_vision_model_adapter_contract": local_model,
             "screen_backend_found": screen_backend["found"],
             "screen_backend": screen_backend["name"],
             "screen_backend_path": screen_backend["path"],
@@ -234,9 +260,9 @@ class VisionRuntimeAlphaManager:
             "python_packages_total": dependency_check["python_packages_total"],
             "executables_found": dependency_check["executables_found"],
             "executables_total": dependency_check["executables_total"],
-            "sections": 8,
+            "sections": 9,
             "project_root": str(self.project_root),
-            "note": "Vision Runtime Alpha is online for Sprint 203 Screen Context Adapter contract. It accepts only provided metadata/placeholder context and does not capture screen, read image files, run OCR, run vision models, create context packets, hand off context, or execute commands automatically.",
+            "note": "Vision Runtime Alpha is online for Sprint 204 Local Vision Model Adapter contract. It declares local/offline-first model adapter boundaries and does not download models, install dependencies, probe providers, send model requests, run inference, read image files, capture screenshots, run OCR, use cloud vision, upload externally, hand off context, or execute commands automatically.",
         }
 
     def build_screen_command(self) -> dict[str, Any]:

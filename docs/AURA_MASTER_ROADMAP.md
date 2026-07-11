@@ -2538,3 +2538,23 @@ desktop, write memory, perform network or git actions, use cloud vision fallback
 externally upload visual data, or bypass action gates through visual context.
 
 The next sprint is Sprint 204 — Local Vision Model Adapter.
+
+## Checkpoint v0.204.0-genesis — Local Vision Model Adapter
+
+Sprint 204 adds local vision model adapter contract gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block.
+
+The checkpoint defines the adapter as local/offline-first and contract-only. It
+prepares provider, candidate, request, response, capability, and visual prompt
+schemas while requiring permission and redaction boundaries before any future
+model request.
+
+Sprint 204 keeps runtime activation blocked and release gates closed. It does
+not download models, install dependencies, probe providers, send model requests,
+run inference, read screenshots or image files, capture the screen, run OCR, use
+cloud vision fallback, externally upload visual data, hand off model output to
+chat, execute visual actions, execute tools or commands, mutate files, control
+the desktop, write memory, perform network or git actions, or bypass action
+gates through visual context.
+
+The next sprint is Sprint 205 — Vision Permission and Redaction.

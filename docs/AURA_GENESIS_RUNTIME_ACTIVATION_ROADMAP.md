@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.203.0-genesis
+Current anchor: v0.204.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.203.0-genesis
-- Completed: Sprint 203 — Screen Context Adapter
+- Current version: v0.204.0-genesis
+- Completed: Sprint 204 — Local Vision Model Adapter
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 204 — Local Vision Model Adapter
+- Next: Sprint 205 — Vision Permission and Redaction
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -601,3 +601,67 @@ execution, tool/command execution, file/desktop/network/git actions, memory
 writes, cloud vision fallback, and external upload.
 
 Next: Sprint 204 — Local Vision Model Adapter.
+
+## v0.204.0-genesis — Local Vision Model Adapter
+
+Sprint 204 adds local vision model adapter gates to the Sprint 201-210 Vision and
+Screen Awareness Runtime block as contract-only behavior.
+
+The checkpoint confirms:
+
+- local vision model adapter contract ready
+- local vision model adapter runtime disabled
+- current sprint 204
+- next sprint 205
+- next boundary vision_permission_and_redaction
+- runtime activation blocked
+- release gate closed
+- local first required
+- offline first required
+- local provider required
+- local provider contract ready
+- supported local provider count 2
+- local vision model candidate count 3
+- local vision model candidates ready
+- default model candidate llava via ollama
+- adapter selection schema ready
+- model request schema ready
+- model response schema ready
+- model capability schema ready
+- visual prompt contract ready
+- provided screen context required
+- provided screen metadata required
+- provided user prompt required
+- redacted context required
+- source metadata required
+- uncertainty required
+- permission before model adapter/probe/request/execution
+- redaction before model request and response
+- no raw screenshot to model
+- no unredacted context to model
+- image file read not allowed
+- OCR not required now
+- cloud vision fallback not allowed
+- external upload not allowed
+- model download not required and not performed
+- dependency install not performed
+- provider probe inactive
+- model request inactive
+- inference inactive
+- model response not created
+- model-to-chat handoff inactive
+- 33 safety blockers
+- all safety blockers inactive
+- 135 assertions
+- zero failed assertions
+
+Sprint 204 keeps all model runtime execution disabled, including model downloads,
+dependency installation, provider probes, model requests, inference, model
+response creation, local model persistence, visual description/classification/
+reasoning creation, screen-context-to-model handoff, model-to-chat handoff,
+screenshot capture, screenshot/image file read, redaction runtime, OCR, image
+analysis, object detection, visual actions, tool/command execution, file/desktop/
+network/git actions, memory writes, cloud vision fallback, external upload, and
+visual-context-to-action bypass.
+
+Next: Sprint 205 — Vision Permission and Redaction.

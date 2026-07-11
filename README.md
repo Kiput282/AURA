@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.203.0-genesis
-Current status: Sprint 203 Screen Context Adapter completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only screen context adapter gates for provided metadata/placeholder context and is ready to hand off to Sprint 204 Local Vision Model Adapter
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 adds screen context adapter contract gates for provided metadata/placeholder context only while screenshot capture, image file read, context packet creation, context/chat handoff, redaction runtime, OCR, vision model runtime, visual actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud vision fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.204.0-genesis
+Current status: Sprint 204 Local Vision Model Adapter completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only local/offline-first vision model adapter gates and is ready to hand off to Sprint 205 Vision Permission and Redaction
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 added screen context adapter contract gates for provided metadata/placeholder context only. Sprint 204 adds local/offline-first vision model adapter contract gates while model download, dependency install, provider probe, model request, inference, image file read, screenshot capture, OCR, cloud vision fallback, external upload, context/chat handoff, visual actions, command/tool execution, memory writes, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 203 and adds screen context adapter gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
+AURA has completed Sprint 204 and adds local vision model adapter gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.204.0-genesis
+- Sprint 204: Local Vision Model Adapter
 - v0.203.0-genesis
 - Sprint 203: Screen Context Adapter
 - v0.202.0-genesis
@@ -76,7 +78,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 204 — Local Vision Model Adapter
+- Next planned sprint: Sprint 205 — Vision Permission and Redaction
 Current capability registry summary:
 
 - total capabilities: 121
@@ -3288,3 +3290,86 @@ vision-runtime-check OK, 122 assertions, zero failed assertions, voice baseline
 stable, and baseline self-tests OK.
 
 Next: Sprint 204 — Local Vision Model Adapter.
+
+## Sprint 204 — Local Vision Model Adapter
+
+Version: `v0.204.0-genesis`
+
+Sprint 204 adds local vision model adapter contract gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block.
+
+The checkpoint defines the local vision model adapter as local/offline-first and
+contract-only. It declares model provider, model candidate, adapter selection,
+request, response, capability, and visual prompt schemas without downloading
+models, installing dependencies, probing providers, sending requests, or running
+inference.
+
+Sprint 204 exposes Local Vision Model Adapter status in `vision-runtime-status`
+and `vision-runtime-check`, including local/offline-first requirements, local
+provider contracts, model candidate count, default model candidate, model request
+and response schemas, permission-before-request, redaction-before-request, no raw
+screenshot to model, no unredacted context to model, inactive provider/model
+runtime flags, disabled cloud fallback, disabled external upload, and safety
+blockers.
+
+Sprint 204 confirms:
+
+- local vision model adapter contract ready: true
+- local vision model adapter runtime ready: false
+- local vision model status: local_vision_model_adapter_contract_ready
+- vision block start: 201
+- vision block end: 210
+- current sprint: 204
+- next sprint: 205
+- next boundary: vision_permission_and_redaction
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- local first required: true
+- offline first required: true
+- local provider required: true
+- local provider contract ready: true
+- supported local provider count: 2
+- local vision model candidate count: 3
+- local vision model candidates ready: true
+- default model candidate: llava via ollama
+- model request schema ready: true
+- model response schema ready: true
+- permission before model request: true
+- redaction before model request: true
+- no raw screenshot to model: true
+- no unredacted context to model: true
+- image file read allowed: false
+- OCR required now: false
+- cloud vision fallback allowed: false
+- external upload allowed: false
+- model download required now: false
+- model download performed: false
+- dependency install performed: false
+- local vision adapter active: false
+- provider probe active: false
+- model request active: false
+- model inference active: false
+- model response created: false
+- model-to-chat handoff active: false
+- safety blockers: 33
+- all safety blockers inactive: true
+
+The dependency baseline remains passive:
+
+- Python packages: 0/5
+- Executables: 0/6
+
+Sprint 204 does not download models, install dependencies, probe providers, send
+model requests, run inference, read screenshot or image files, capture the screen,
+write screenshot files, run OCR, run image analysis, run object detection, run
+vision model runtime, create model responses, hand off model output to chat,
+execute visual actions, execute tools or commands, mutate files, control the
+desktop, write memory, perform network or git actions, use cloud vision fallback,
+externally upload visual data, or bypass action gates through visual context.
+
+Validation passed with compileall OK, vision-runtime-status OK,
+vision-runtime-check OK, 135 assertions, zero failed assertions, voice baseline
+stable, and baseline self-tests OK.
+
+Next: Sprint 205 — Vision Permission and Redaction.

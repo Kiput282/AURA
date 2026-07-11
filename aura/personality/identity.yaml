@@ -1,5 +1,5 @@
 name: AURA
-version: "0.203.0-genesis"
+version: "0.204.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -151,3 +151,10 @@ modes:
 # context packet creation, context/chat handoff, visual actions, tool/command
 # execution, memory writes, desktop/network/git actions, cloud fallback, and
 # external upload disabled.
+# Sprint 204: local_vision_model_adapter adds contract-only local/offline-first
+# model adapter gates. It declares local provider/model candidate, request, and
+# response schemas while keeping model download, dependency install, provider
+# probe, model request, inference, image file read, screenshot capture, OCR,
+# cloud fallback, external upload, context/chat handoff, visual actions,
+# tool/command execution, memory writes, and desktop/network/git actions
+# disabled.
