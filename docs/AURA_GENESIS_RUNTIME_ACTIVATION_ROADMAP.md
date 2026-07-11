@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.218.0-genesis
+Current anchor: v0.219.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.218.0-genesis
-- Completed: Sprint 218 — Control Center Approval Workflow
+- Current version: v0.219.0-genesis
+- Completed: Sprint 219 — Rollback, Emergency Stop, and Recovery
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 219 — Rollback, Emergency Stop, and Recovery
+- Next: Sprint 220 — Permission and Action Runtime Stabilization
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1536,3 +1536,23 @@ actions, create files/folders, launch applications, execute commands/tools,
 mutate files, or perform autonomous actions.
 
 Next: Sprint 219 — Rollback, Emergency Stop, and Recovery.
+
+## v0.219.0-genesis — Rollback, Emergency Stop, and Recovery
+
+Sprint 219 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only rollback, emergency stop, safety freeze, safe-idle
+transition, and recovery visibility.
+
+The checkpoint confirms recovery contract readiness, runtime disabled state,
+Sprint 219 current marker, Sprint 220 next marker, permission/action runtime
+stabilization next boundary, 5 allowed recovery profiles, 15 blocked recovery
+targets, 268 inactive safety blockers, 2636 assertions, and zero failed
+assertions.
+
+Sprint 219 does not execute rollback, trigger emergency stop, apply safety
+freeze, apply safe-idle transition, dispatch recovery actions, execute recovery
+drills, mutate permissions, create grants, write audit events, emit dashboard
+events, write files/config, perform git operations, execute commands/tools,
+mutate files, or perform autonomous actions.
+
+Next: Sprint 220 — Permission and Action Runtime Stabilization.

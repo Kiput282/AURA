@@ -2848,3 +2848,19 @@ are mutated, no audit events are written, no actions are dispatched, and no
 local actions execute.
 
 The next sprint is Sprint 219 — Rollback, Emergency Stop, and Recovery.
+
+## Checkpoint v0.219.0-genesis — Rollback, Emergency Stop, and Recovery
+
+Sprint 219 adds contract-only recovery safety visibility for future rollback,
+emergency stop, safety freeze, safe-idle transition, and manual recovery flows.
+It prepares rollback request/preview/plan, emergency stop request/preview,
+safe-idle destination, safety freeze, recovery plan/state/drill, audit
+correlation, user-visible summary, review queue, safety matrix, and next
+stabilization boundaries.
+
+Runtime remains disabled: no rollback executes, no emergency stop is applied, no
+safety freeze or safe-idle transition is activated, no recovery actions are
+dispatched, no permissions are mutated, no audit events are written, and no
+local actions execute.
+
+The next sprint is Sprint 220 — Permission and Action Runtime Stabilization.

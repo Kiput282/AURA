@@ -1,5 +1,5 @@
 name: AURA
-version: "0.218.0-genesis"
+version: "0.219.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -266,3 +266,13 @@ modes:
 # It does not create approval requests, apply decisions, create grants or
 # denials, mutate queues, mutate permissions, write audit events, dispatch
 # actions, create files/folders, launch apps, or execute local actions.
+# Sprint 219: rollback_emergency_stop_recovery extends the permission/action
+# block with contract-only rollback, emergency stop, and recovery visibility.
+# It prepares rollback request, rollback preview, rollback plan, emergency stop
+# request/preview/safe-idle, safety freeze, safe-idle transition, recovery plan,
+# recovery state, recovery drill, audit correlation, user-visible summary,
+# review queue, safety matrix, and next stabilization schemas.
+# It does not execute rollback, trigger emergency stop, activate safety freeze,
+# apply safe-idle transition, mutate permissions, write audit events, dispatch
+# recovery actions, restart services, write files/config, run commands/tools, or
+# execute local actions.

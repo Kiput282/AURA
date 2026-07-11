@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.218.0-genesis
-Current status: Sprint 218 Control Center Approval Workflow completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only Control Center approval workflow visibility
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 added contract-only safe local open action visibility. Sprint 216 added contract-only allowlisted application launch visibility. Sprint 217 added contract-only controlled folder and simple file creation visibility. Sprint 218 adds contract-only Control Center approval workflow visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, safety matrix, safe local open schemas, application launch schemas, controlled creation schemas, Control Center approval request, approval context, approval preview, approval decision, grant candidate, denial, expiry, audit correlation, user-visible summary, review queue, route, safety matrix, and next rollback/emergency-stop/recovery schemas. Runtime activation, release gates, approval request creation, approval preview render, approval decision creation/apply, grant creation, denial creation, approval queue mutation, permission mutation, permission persistence, audit writes, audit persistence, action dispatch, file/folder creation, app launch, command/tool execution, file mutation, desktop actions, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.219.0-genesis
+Current status: Sprint 219 Rollback, Emergency Stop, and Recovery completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only recovery safety visibility
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 added contract-only action proposal and preview visibility. Sprint 215 added contract-only safe local open action visibility. Sprint 216 added contract-only allowlisted application launch visibility. Sprint 217 added contract-only controlled folder and simple file creation visibility. Sprint 218 added contract-only Control Center approval workflow visibility. Sprint 219 adds contract-only rollback, emergency stop, and recovery visibility. Runtime activation, release gates, rollback execution, emergency stop apply, process kill, service stop/restart, network cutoff, safety freeze activation, safe-idle transition apply, recovery action dispatch, recovery drill execution, permission mutation, permission persistence, grant creation, audit writes, audit persistence, dashboard event emit, approval request creation, approval decision apply, action dispatch, file/folder creation, app launch, command/tool execution, file mutation, desktop actions, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -42,6 +42,8 @@ AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Ru
 Latest completed checkpoint:
 
 
+- v0.219.0-genesis
+- Sprint 219: Rollback, Emergency Stop, and Recovery
 - v0.218.0-genesis
 - Sprint 218: Control Center Approval Workflow
 - v0.217.0-genesis
@@ -106,7 +108,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 219 — Rollback, Emergency Stop, and Recovery
+- Next planned sprint: Sprint 220 — Permission and Action Runtime Stabilization
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5186,3 +5188,82 @@ tools, mutate files, perform network/git actions, write memory, use cloud
 fallback, upload externally, or perform autonomous actions.
 
 Next: Sprint 219 — Rollback, Emergency Stop, and Recovery.
+
+## Sprint 219 — Rollback, Emergency Stop, and Recovery
+
+Version: `v0.219.0-genesis`
+
+Sprint 219 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Rollback, Emergency Stop, and Recovery visibility.
+
+This sprint prepares rollback request, rollback preview, rollback plan,
+emergency stop request, emergency stop preview, emergency stop safe-idle,
+safety freeze, safe-idle transition, recovery plan, recovery state, recovery
+drill, audit correlation, user-visible summary, review queue, safety matrix,
+and next Permission and Action Runtime Stabilization schemas.
+
+Sprint 219 confirms:
+
+- Rollback, Emergency Stop, and Recovery contract ready: true
+- Rollback, Emergency Stop, and Recovery runtime ready: false
+- Rollback, Emergency Stop, and Recovery status: rollback_emergency_stop_recovery_contract_ready
+- current sprint: 219
+- next sprint: 220
+- next boundary: permission_action_runtime_stabilization
+- manual review before recovery required: true
+- preview before rollback required: true
+- explicit approval before rollback required: true
+- safe-idle destination required: true
+- audit correlation before recovery required: true
+- emergency stop visibility required: true
+- rollback request schema ready: true
+- rollback preview schema ready: true
+- emergency stop request schema ready: true
+- emergency stop preview schema ready: true
+- safety freeze schema ready: true
+- safe-idle transition schema ready: true
+- recovery plan schema ready: true
+- allowed recovery profiles: 5
+- blocked recovery targets: 15
+- rollback execution allowed: false
+- emergency stop apply allowed: false
+- safety freeze activation allowed: false
+- safe-idle transition allowed: false
+- recovery action dispatch allowed: false
+- recovery permission mutation allowed: false
+- recovery audit write allowed: false
+- rollback executed: false
+- emergency stop applied: false
+- safety freeze activated: false
+- safe-idle transition applied: false
+- recovery action dispatched: false
+- recovery permission mutated: false
+- recovery audit event written: false
+- permission state mutated: false
+- audit event written: false
+- action executed: false
+- command executed: false
+- tool executed: false
+- file mutated: false
+- no rollback execution: true
+- no emergency stop apply: true
+- no safety freeze activation: true
+- no safe-idle transition: true
+- no recovery action dispatch: true
+- no automatic recovery loop: true
+- no autonomous recovery decision: true
+- safety blockers: 268
+- all safety blockers inactive: true
+- runtime scope: rollback_emergency_stop_recovery_contract_only
+- assertion count: 2636
+- failed assertion count: 0
+
+Sprint 219 does not execute rollback, trigger or apply emergency stop, kill
+processes, stop or restart services, cut off network access, activate safety
+freeze, apply safe-idle transition, dispatch recovery actions, execute recovery
+drills, mutate permissions, create grants, write audit events, emit dashboard
+events, write files or config, perform git operations, execute commands/tools,
+mutate files, launch applications, write memory, use cloud fallback, upload
+externally, or perform autonomous actions.
+
+Next: Sprint 220 — Permission and Action Runtime Stabilization.

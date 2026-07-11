@@ -1299,3 +1299,19 @@ file/folder creation, app launch, command/tool execution, and autonomy disabled.
 
 This creates the approval workflow baseline for Sprint 219 — Rollback,
 Emergency Stop, and Recovery.
+
+## Sprint 219 — Rollback, Emergency Stop, and Recovery
+
+`v0.219.0-genesis` extends the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block with contract-only recovery safety visibility.
+
+This sprint establishes the future rollback, emergency-stop, safety-freeze,
+safe-idle, and recovery boundary for safe local actions, allowlisted application
+launch, controlled creation, and Control Center approval workflows. It keeps
+rollback execution, emergency stop apply, safety freeze activation, safe-idle
+transition, recovery action dispatch, recovery drill execution, permission
+mutation, audit writing, file/config writing, service restart, process kill,
+network cutoff, command/tool execution, and autonomy disabled.
+
+This creates the recovery safety baseline for Sprint 220 — Permission and Action
+Runtime Stabilization.

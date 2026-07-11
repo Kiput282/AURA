@@ -1319,3 +1319,94 @@ if not getattr(ActivePermissionRuntimeAlphaManager, "_s218_extension_installed",
 
     ActivePermissionRuntimeAlphaManager.status = _s218_alpha_status
     ActivePermissionRuntimeAlphaManager._s218_extension_installed = True
+
+# Sprint 219 extension: alpha visibility for Rollback, Emergency Stop, and Recovery.
+if not getattr(ActivePermissionRuntimeAlphaManager, "_s219_extension_installed", False):
+    _S218_ALPHA_STATUS = ActivePermissionRuntimeAlphaManager.status
+
+    def _s219_alpha_status(self) -> dict[str, Any]:
+        status = _S218_ALPHA_STATUS(self)
+        contract = self.planner.rollback_emergency_stop_recovery_contract()
+        check = self.planner.check()
+
+        alpha_keys = (
+            "rollback_emergency_stop_recovery_contract_ready",
+            "rollback_emergency_stop_recovery_runtime_ready",
+            "rollback_emergency_stop_recovery_status",
+            "permission_action_current_sprint",
+            "permission_action_next_sprint",
+            "permission_action_next_boundary",
+            "manual_review_before_recovery_required",
+            "preview_before_rollback_required",
+            "explicit_approval_before_rollback_required",
+            "safe_idle_destination_required",
+            "audit_correlation_before_recovery_required",
+            "emergency_stop_visibility_required",
+            "rollback_request_schema_ready",
+            "rollback_preview_schema_ready",
+            "emergency_stop_request_schema_ready",
+            "emergency_stop_preview_schema_ready",
+            "safety_freeze_schema_ready",
+            "safe_idle_transition_schema_ready",
+            "recovery_plan_schema_ready",
+            "allowed_recovery_profile_count",
+            "blocked_recovery_target_count",
+            "rollback_request_creation_allowed",
+            "rollback_execution_allowed",
+            "emergency_stop_trigger_allowed",
+            "emergency_stop_apply_allowed",
+            "safety_freeze_activation_allowed",
+            "safe_idle_transition_allowed",
+            "recovery_action_dispatch_allowed",
+            "recovery_permission_mutation_allowed",
+            "recovery_audit_write_allowed",
+            "rollback_request_created",
+            "rollback_executed",
+            "emergency_stop_triggered",
+            "emergency_stop_applied",
+            "safety_freeze_activated",
+            "safe_idle_transition_applied",
+            "recovery_action_dispatched",
+            "recovery_permission_mutated",
+            "recovery_audit_event_written",
+            "permission_state_mutated",
+            "audit_event_written",
+            "action_executed",
+            "command_executed",
+            "tool_executed",
+            "file_mutated",
+            "no_rollback_execution",
+            "no_emergency_stop_apply",
+            "no_safety_freeze_activation",
+            "no_safe_idle_transition",
+            "no_recovery_action_dispatch",
+            "no_recovery_permission_mutation",
+            "no_recovery_audit_write",
+            "no_automatic_recovery_loop",
+            "no_autonomous_recovery_decision",
+            "safety_blocker_count",
+            "all_safety_blockers_inactive",
+            "runtime_scope",
+        )
+        status.update({key: contract[key] for key in alpha_keys})
+        status.update(
+            {
+                "sprint_219_rollback_emergency_stop_recovery_contract_ready": contract[
+                    "rollback_emergency_stop_recovery_contract_ready"
+                ],
+                "assertion_count": check["assertion_count"],
+                "failed_assertion_count": check["failed_assertion_count"],
+                "failed_assertions": check["failed_assertions"],
+                "sections": 9,
+                "note": (
+                    "Active Permission Runtime Alpha now exposes Sprint 219 "
+                    "Rollback, Emergency Stop, and Recovery visibility without "
+                    "executing rollback, triggering emergency stop, mutating "
+                    "permissions, writing audit events, or executing local actions."
+                ),
+            }
+        )
+        return status
+
+    ActivePermissionRuntimeAlphaManager.status = _s219_alpha_status
+    ActivePermissionRuntimeAlphaManager._s219_extension_installed = True
