@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.207.0-genesis
-Current status: Sprint 207 Vision-to-Chat Context Handoff completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only chat-safe visual context packet and handoff gates and is ready to hand off to Sprint 208 Control Center Vision Panel
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 added screen context adapter contract gates for provided metadata/placeholder context only. Sprint 204 added local/offline-first vision model adapter contract gates. Sprint 205 added explicit visual permission, confirmation, scope, audit, and redaction gates. Sprint 206 added provided and redacted workspace visual context schemas. Sprint 207 adds chat-safe visual context packet and handoff gates while chat context injection, chat session writes, chat model requests, response generation, memory writes, workspace-to-chat handoff, screenshot capture, image file read, OCR, model request, inference, visual actions, command/tool execution, cloud fallback, external upload, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.208.0-genesis
+Current status: Sprint 208 Control Center Vision Panel completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only read-only Control Center Vision Panel visibility schemas and is ready to hand off to Sprint 209 Vision Runtime Integration Review
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 added screen context adapter contract gates for provided metadata/placeholder context only. Sprint 204 added local/offline-first vision model adapter contract gates. Sprint 205 added explicit visual permission, confirmation, scope, audit, and redaction gates. Sprint 206 added provided and redacted workspace visual context schemas. Sprint 207 added chat-safe visual context packet and handoff gates. Sprint 208 adds read-only Control Center Vision Panel visibility schemas while panel rendering, routes, API endpoints, data fetch, permission mutation, audit writes, screenshot/camera controls, model requests, chat handoff, response generation, memory writes, screenshot capture, image file read, OCR, inference, visual actions, command/tool execution, cloud fallback, external upload, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 207 and adds vision-to-chat context handoff gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
+AURA has completed Sprint 208 and adds Control Center Vision Panel visibility gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.208.0-genesis
+- Sprint 208: Control Center Vision Panel
 - v0.207.0-genesis
 - Sprint 207: Vision-to-Chat Context Handoff
 - v0.206.0-genesis
@@ -84,7 +86,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 208 — Control Center Vision Panel
+- Next planned sprint: Sprint 209 — Vision Runtime Integration Review
 Current capability registry summary:
 
 - total capabilities: 121
@@ -3717,3 +3719,139 @@ vision-runtime-check OK, 154 assertions, zero failed assertions, voice baseline
 stable, and baseline self-tests OK.
 
 Next: Sprint 208 — Control Center Vision Panel.
+
+## Sprint 208 — Control Center Vision Panel
+
+Version: `v0.208.0-genesis`
+
+Sprint 208 adds Control Center Vision Panel contract gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint defines read-only and display-only Control Center Vision Panel
+visibility. It prepares schemas and contracts for vision status panels, safety
+panels, dependency panels, permission panels, redaction panels, handoff panels,
+limitation panels, risk panels, status badges, safety blocker lists, dependency
+baselines, capability boundaries, release gate display, next boundary display,
+panel route contracts, navigation item contracts, view-model contracts, data
+aggregator contracts, no-mutation contracts, and no-capture contracts.
+
+Sprint 208 confirms:
+
+- Control Center Vision Panel contract ready: true
+- Control Center Vision Panel runtime ready: false
+- Control Center Vision Panel status: control_center_vision_panel_contract_ready
+- vision block start: 201
+- vision block end: 210
+- current sprint: 208
+- next sprint: 209
+- next boundary: vision_runtime_integration_review
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- read-only panel contract ready: true
+- display-only panel contract ready: true
+- Control Center visible panel schema ready: true
+- vision status panel schema ready: true
+- vision safety panel schema ready: true
+- vision dependency panel schema ready: true
+- vision permission panel schema ready: true
+- vision redaction panel schema ready: true
+- vision handoff panel schema ready: true
+- vision limitation panel schema ready: true
+- vision risk panel schema ready: true
+- vision status badge schema ready: true
+- vision safety blocker list schema ready: true
+- vision dependency baseline schema ready: true
+- vision capability boundary schema ready: true
+- vision release gate display schema ready: true
+- vision next boundary display schema ready: true
+- vision panel route contract ready: true
+- vision panel navigation item contract ready: true
+- vision panel view-model contract ready: true
+- vision panel data aggregator contract ready: true
+- vision panel no-mutation contract ready: true
+- vision panel no-capture contract ready: true
+- read-only status visibility: true
+- read-only safety visibility: true
+- read-only dependency visibility: true
+- read-only handoff visibility: true
+- permission required before future panel actions: true
+- no permission grant from panel: true
+- no permission mutation from panel: true
+- no audit write from panel: true
+- no command execution from panel: true
+- no visual action from panel: true
+- no screenshot trigger from panel: true
+- no camera trigger from panel: true
+- no model request trigger from panel: true
+- no chat handoff trigger from panel: true
+- no memory write from panel: true
+- no external upload from panel: true
+- no raw screenshot display: true
+- no unredacted visual context display: true
+- no hidden visual context display: true
+- no live visual feed: true
+- no auto refresh runtime: true
+- no websocket runtime: true
+- no public panel route: true
+- Control Center Vision Panel runtime active: false
+- Control Center Vision Panel rendered: false
+- Control Center Vision Panel route created: false
+- Control Center Vision Panel API endpoint created: false
+- Control Center Vision Panel static asset generated: false
+- Control Center Vision Panel web UI mutation active: false
+- Control Center Vision Panel data fetch active: false
+- Control Center Vision Panel auto refresh active: false
+- Control Center Vision Panel websocket active: false
+- panel permission request active: false
+- panel permission mutation active: false
+- panel audit write active: false
+- panel screenshot control active: false
+- panel camera control active: false
+- panel model request control active: false
+- panel chat handoff control active: false
+- panel memory write control active: false
+- panel external upload control active: false
+- chat context packet created: false
+- chat session write active: false
+- chat model request active: false
+- chat response generation active: false
+- screenshot capture performed: false
+- screenshot file read active: false
+- local model request active: false
+- local model inference active: false
+- model-to-chat handoff active: false
+- vision model runtime active: false
+- OCR runtime active: false
+- image analysis runtime active: false
+- object detection runtime active: false
+- visual action execution active: false
+- command execution active: false
+- memory write active: false
+- cloud vision fallback enabled: false
+- external upload enabled: false
+- visual context to action bypass enabled: false
+- safety blockers: 33
+- all safety blockers inactive: true
+
+The dependency baseline remains passive:
+
+- Python packages: 0/5
+- Executables: 0/6
+
+Sprint 208 does not render Control Center Vision Panels, create routes, create
+API endpoints, generate static assets, fetch panel data, auto-refresh panel
+data, open websockets, mutate permissions, write audit events, trigger
+screenshot/camera/model/chat handoff controls, write memory, create chat context
+packets, write chat sessions, request chat models, generate responses, capture
+screenshots, read screenshots or image files, run OCR, run image analysis, run
+object detection, send model requests, run inference, execute visual actions,
+execute tools or commands, mutate files, control the desktop, perform network or
+git actions, use cloud vision fallback, externally upload visual data, or bypass
+action gates through visual context.
+
+Validation passed with compileall OK, vision-runtime-status OK,
+vision-runtime-check OK, 167 assertions, zero failed assertions, voice baseline
+stable, and baseline self-tests OK.
+
+Next: Sprint 209 — Vision Runtime Integration Review.

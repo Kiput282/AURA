@@ -1039,3 +1039,29 @@ files, controlling desktop/network/git, or bypassing action gates through visual
 context.
 
 This creates the handoff baseline for Sprint 208 — Control Center Vision Panel.
+
+## Sprint 208 — Control Center Vision Panel
+
+`v0.208.0-genesis` adds Control Center Vision Panel gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint treats the Vision Panel as contract-only and read-only. It
+prepares schemas for vision status, safety, dependency, permission, redaction,
+handoff, limitation, risk, status badge, safety blocker list, dependency
+baseline, capability boundary, release gate display, next boundary display,
+panel route, navigation item, view model, data aggregator, no-mutation boundary,
+and no-capture boundary.
+
+This keeps AURA from rendering the panel, creating routes or API endpoints,
+generating static assets, fetching panel data, auto-refreshing panel data,
+opening websockets, mutating permissions, writing audit events, triggering
+screenshot/camera/model/chat handoff controls, writing memory, creating chat
+context packets, writing chat sessions, requesting chat models, generating
+responses, capturing screenshots, reading screenshots or image files, running
+OCR, using cloud vision fallback, externally uploading visual data, sending
+model requests, running inference, executing visual actions, executing
+tools/commands, mutating files, controlling desktop/network/git, or bypassing
+action gates through visual context.
+
+This creates the visibility baseline for Sprint 209 — Vision Runtime
+Integration Review.

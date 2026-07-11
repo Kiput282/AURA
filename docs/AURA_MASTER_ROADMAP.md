@@ -2621,3 +2621,27 @@ git actions, use cloud vision fallback, externally upload visual data, or bypass
 action gates through visual context.
 
 The next sprint is Sprint 208 — Control Center Vision Panel.
+
+## Checkpoint v0.208.0-genesis — Control Center Vision Panel
+
+Sprint 208 adds Control Center Vision Panel contract gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint prepares read-only and display-only panel schemas for vision
+status, safety, dependencies, permissions, redaction, handoff, limitations, risk,
+status badges, safety blockers, dependency baselines, capability boundaries,
+release gate display, next boundary display, panel routes, navigation items,
+view models, data aggregators, no-mutation boundaries, and no-capture
+boundaries.
+
+Sprint 208 keeps runtime activation blocked and release gates closed. It does
+not render panels, create routes, create API endpoints, generate static assets,
+fetch data, auto-refresh, open websockets, mutate permissions, write audit
+events, trigger screenshot/camera/model/chat handoff controls, write memory,
+create chat context packets, write chat sessions, request chat models, generate
+responses, capture screenshots, read image files, run OCR, send model requests,
+run inference, execute visual actions, execute tools or commands, mutate files,
+control the desktop, perform network or git actions, use cloud vision fallback,
+externally upload visual data, or bypass action gates through visual context.
+
+The next sprint is Sprint 209 — Vision Runtime Integration Review.

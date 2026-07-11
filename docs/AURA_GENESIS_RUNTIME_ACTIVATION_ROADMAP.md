@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.207.0-genesis
+Current anchor: v0.208.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.207.0-genesis
-- Completed: Sprint 207 — Vision-to-Chat Context Handoff
+- Current version: v0.208.0-genesis
+- Completed: Sprint 208 — Control Center Vision Panel
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 208 — Control Center Vision Panel
+- Next: Sprint 209 — Vision Runtime Integration Review
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -856,3 +856,71 @@ file/desktop/network/git actions, cloud vision fallback, external upload, and
 visual-context-to-action bypass.
 
 Next: Sprint 208 — Control Center Vision Panel.
+
+## v0.208.0-genesis — Control Center Vision Panel
+
+Sprint 208 adds Control Center Vision Panel gates to the Sprint 201-210 Vision
+and Screen Awareness Runtime block as contract-only behavior.
+
+The checkpoint confirms:
+
+- Control Center Vision Panel contract ready
+- Control Center Vision Panel runtime disabled
+- current sprint 208
+- next sprint 209
+- next boundary vision_runtime_integration_review
+- runtime activation blocked
+- release gate closed
+- read-only panel contract ready
+- display-only panel contract ready
+- Control Center visible panel schema ready
+- vision status panel schema ready
+- vision safety panel schema ready
+- vision dependency panel schema ready
+- vision permission panel schema ready
+- vision redaction panel schema ready
+- vision handoff panel schema ready
+- vision limitation panel schema ready
+- vision risk panel schema ready
+- vision status badge schema ready
+- vision safety blocker list schema ready
+- vision dependency baseline schema ready
+- vision capability boundary schema ready
+- vision release gate display schema ready
+- vision next boundary display schema ready
+- vision panel route contract ready
+- vision panel navigation item contract ready
+- vision panel view-model contract ready
+- vision panel data aggregator contract ready
+- vision panel no-mutation contract ready
+- vision panel no-capture contract ready
+- read-only status, safety, dependency, and handoff visibility
+- no permission grant or mutation from panel
+- no audit write from panel
+- no command execution from panel
+- no visual action from panel
+- no screenshot/camera/model/chat handoff triggers from panel
+- no memory write or external upload from panel
+- no raw screenshot display
+- no unredacted visual context display
+- no hidden visual context display
+- no live visual feed
+- no auto refresh runtime
+- no websocket runtime
+- no public panel route
+- 33 safety blockers
+- all safety blockers inactive
+- 167 assertions
+- zero failed assertions
+
+Sprint 208 keeps all runtime execution disabled, including panel rendering,
+route creation, API endpoint creation, static asset generation, data fetch,
+auto-refresh, websocket runtime, permission mutation, audit writes,
+screenshot/camera/model/chat controls, memory writes, chat context packet
+creation, chat session writes, chat model requests, response generation,
+screenshot capture, screenshot/image file read, OCR, image analysis, object
+detection, model requests, inference, visual actions, tool/command execution,
+file/desktop/network/git actions, cloud vision fallback, external upload, and
+visual-context-to-action bypass.
+
+Next: Sprint 209 — Vision Runtime Integration Review.

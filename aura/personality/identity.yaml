@@ -1,5 +1,5 @@
 name: AURA
-version: "0.207.0-genesis"
+version: "0.208.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -174,3 +174,9 @@ modes:
 # injection, chat session writes, chat model requests, response generation,
 # memory writes, screenshot capture, image file read, OCR, visual actions,
 # tool/command execution, cloud fallback, and external upload disabled.
+# Sprint 208: control_center_vision_panel adds contract-only read-only
+# Vision Panel visibility for Control Center. It keeps panel rendering,
+# routes/API endpoints, data fetch, permission mutation, audit writes,
+# screenshot/camera controls, model requests, chat handoff, memory writes,
+# visual actions, tool/command execution, cloud fallback, and external upload
+# disabled.
