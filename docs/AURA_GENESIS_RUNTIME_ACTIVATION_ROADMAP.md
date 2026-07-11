@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.209.0-genesis
+Current anchor: v0.210.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.209.0-genesis
-- Completed: Sprint 209 — Vision Runtime Integration Review
+- Current version: v0.210.0-genesis
+- Completed: Sprint 210 — Vision Runtime Stabilization
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 210 — Vision Runtime Stabilization
+- Next: Sprint 211 — Active Permission Runtime
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -996,3 +996,87 @@ visual actions, tool/command execution, file/desktop/network/git actions, cloud
 vision fallback, external upload, and visual-context-to-action bypass.
 
 Next: Sprint 210 — Vision Runtime Stabilization.
+
+## v0.210.0-genesis — Vision Runtime Stabilization
+
+Sprint 210 closes the Sprint 201-210 Vision and Screen Awareness Runtime block
+as contract-only stable.
+
+The checkpoint confirms:
+
+- Vision Runtime Stabilization contract ready
+- Vision Runtime Stabilization runtime disabled
+- status vision_runtime_stabilized
+- current sprint 210
+- next sprint 211
+- next boundary active_permission_runtime
+- Vision Runtime block 201-210 complete
+- Vision Runtime block 201-210 stabilized
+- previous contract chain complete
+- runtime activation blocked
+- release gate closed
+- stabilization acceptance packet schema ready
+- stabilization summary schema ready
+- stabilization dependency baseline schema ready
+- stabilization release gate schema ready
+- stabilization runtime scope schema ready
+- stabilization safety matrix schema ready
+- stabilization handoff packet schema ready
+- stabilization next block schema ready
+- Sprint 201 activation stabilized
+- Sprint 202 screenshot stabilized
+- Sprint 203 screen context stabilized
+- Sprint 204 local model stabilized
+- Sprint 205 permission/redaction stabilized
+- Sprint 206 workspace visual stabilized
+- Sprint 207 vision-to-chat stabilized
+- Sprint 208 Control Center panel stabilized
+- Sprint 209 integration review stabilized
+- dependency baseline stable
+- release gate stable closed
+- safety blockers stable inactive
+- runtime scope stable contract-only
+- permission-first boundary stable
+- redaction-first boundary stable
+- local-first boundary stable
+- offline-first boundary stable
+- no-action-bypass boundary stable
+- no-external-data boundary stable
+- handoff to Sprint 211 Active Permission Runtime ready
+- no runtime activation from stabilization
+- no release gate opening from stabilization
+- no dependency install from stabilization
+- no model download from stabilization
+- no screenshot capture from stabilization
+- no image file read from stabilization
+- no OCR from stabilization
+- no model request or inference from stabilization
+- no chat handoff from stabilization
+- no panel render from stabilization
+- no route/API endpoint creation from stabilization
+- no data fetch from stabilization
+- no permission mutation from stabilization
+- no audit write from stabilization
+- no memory write from stabilization
+- no command/tool execution from stabilization
+- no visual action from stabilization
+- no file/desktop/network/git action from stabilization
+- no cloud fallback from stabilization
+- no external upload from stabilization
+- 33 safety blockers
+- all safety blockers inactive
+- Python packages 0/5
+- executables 0/6
+- 330 assertions
+- zero failed assertions
+
+Sprint 210 keeps all runtime execution disabled, including runtime activation,
+release gate opening, dependency installation, model download, screenshot
+capture, screenshot/image file read, OCR, image analysis, object detection, model
+requests, inference, chat handoff, chat context injection, chat session writes,
+chat model requests, response generation, panel rendering, route creation, API
+endpoint creation, data fetch, permission mutation, audit writes, memory writes,
+visual actions, tool/command execution, file/desktop/network/git actions, cloud
+vision fallback, external upload, and visual-context-to-action bypass.
+
+Next: Sprint 211 — Active Permission Runtime.

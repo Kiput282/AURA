@@ -2665,3 +2665,25 @@ the desktop, perform network or git actions, use cloud vision fallback,
 externally upload visual data, or bypass action gates through visual context.
 
 The next sprint is Sprint 210 — Vision Runtime Stabilization.
+
+## Checkpoint v0.210.0-genesis — Vision Runtime Stabilization
+
+Sprint 210 closes the Sprint 201-210 Vision and Screen Awareness Runtime block
+as contract-only stable.
+
+The checkpoint stabilizes the Sprint 201-209 contract chain: activation
+foundation, explicit screenshot capture, screen context adapter, local vision
+model adapter, permission/redaction, workspace visual understanding,
+vision-to-chat handoff, Control Center Vision Panel visibility, and Vision
+Runtime Integration Review.
+
+Sprint 210 keeps runtime activation blocked and release gates closed. It does
+not install dependencies, download models, capture screenshots, read image files,
+run OCR, request models, run inference, inject chat context, render panels,
+create routes, create API endpoints, fetch data, mutate permissions, write audit
+events, write memory, execute visual actions, execute tools or commands, mutate
+files, control the desktop, perform network or git actions, use cloud vision
+fallback, externally upload visual data, or bypass action gates through visual
+context.
+
+The next sprint is Sprint 211 — Active Permission Runtime.

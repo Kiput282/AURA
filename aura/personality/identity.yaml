@@ -1,5 +1,5 @@
 name: AURA
-version: "0.209.0-genesis"
+version: "0.210.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -186,3 +186,10 @@ modes:
 # model requests, chat handoff, panel rendering, routes/API endpoints, data
 # fetch, permission mutation, audit writes, memory writes, visual actions,
 # tool/command execution, cloud fallback, and external upload disabled.
+# Sprint 210: vision_runtime_stabilization closes Sprint 201-210
+# Vision and Screen Awareness Runtime as contract-only stable. It confirms the
+# Sprint 201-209 contract chain, keeps release gates closed, keeps 33 vision
+# safety blockers inactive, preserves passive dependency baseline, and prepares
+# handoff to Sprint 211 Active Permission Runtime without enabling capture,
+# OCR, model requests, chat handoff, panel rendering, memory writes, commands,
+# cloud fallback, or external upload.

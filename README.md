@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.209.0-genesis
-Current status: Sprint 209 Vision Runtime Integration Review completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only integration review gates across Sprint 201-208 and is ready to hand off to Sprint 210 Vision Runtime Stabilization
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 added screen context adapter contract gates for provided metadata/placeholder context only. Sprint 204 added local/offline-first vision model adapter contract gates. Sprint 205 added explicit visual permission, confirmation, scope, audit, and redaction gates. Sprint 206 added provided and redacted workspace visual context schemas. Sprint 207 added chat-safe visual context packet and handoff gates. Sprint 208 added read-only Control Center Vision Panel visibility schemas. Sprint 209 adds integration review gates across Sprint 201-208 while runtime activation, release gates, screenshot capture, image file read, OCR, model requests, chat handoff, panel rendering, routes/API endpoints, data fetch, permission mutation, audit writes, memory writes, visual actions, command/tool execution, cloud fallback, external upload, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.210.0-genesis
+Current status: Sprint 210 Vision Runtime Stabilization completed; Vision and Screen Awareness Runtime block 201-210 is now contract-only stable and ready to hand off to Sprint 211 Active Permission Runtime
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Vision now has stable contracts for activation foundation, explicit screenshot capture, screen context adapter, local/offline-first vision model adapter, permission/redaction, workspace visual understanding, vision-to-chat handoff, Control Center Vision Panel visibility, integration review, and stabilization. Runtime activation, release gates, dependency installs, model downloads, screenshot capture, image file read, OCR, model requests, inference, chat handoff, chat session writes, panel rendering, routes/API endpoints, data fetch, permission mutation, audit writes, memory writes, visual actions, command/tool execution, cloud fallback, external upload, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 209 and adds Vision Runtime Integration Review gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
+AURA has completed Sprint 210 and closes the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.210.0-genesis
+- Sprint 210: Vision Runtime Stabilization
 - v0.209.0-genesis
 - Sprint 209: Vision Runtime Integration Review
 - v0.208.0-genesis
@@ -88,7 +90,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 210 — Vision Runtime Stabilization
+- Next planned sprint: Sprint 211 — Active Permission Runtime
 Current capability registry summary:
 
 - total capabilities: 121
@@ -3978,3 +3980,143 @@ vision-runtime-check OK, 236 assertions, zero failed assertions, voice baseline
 stable, and baseline self-tests OK.
 
 Next: Sprint 210 — Vision Runtime Stabilization.
+
+## Sprint 210 — Vision Runtime Stabilization
+
+Version: `v0.210.0-genesis`
+
+Sprint 210 closes the Sprint 201-210 Vision and Screen Awareness Runtime block
+as contract-only stable.
+
+The checkpoint confirms that the full Sprint 201-210 chain is stable:
+
+- Sprint 201 — Vision Runtime Activation Foundation
+- Sprint 202 — Explicit Screenshot Capture
+- Sprint 203 — Screen Context Adapter
+- Sprint 204 — Local Vision Model Adapter
+- Sprint 205 — Vision Permission and Redaction
+- Sprint 206 — Workspace Visual Understanding
+- Sprint 207 — Vision-to-Chat Context Handoff
+- Sprint 208 — Control Center Vision Panel
+- Sprint 209 — Vision Runtime Integration Review
+- Sprint 210 — Vision Runtime Stabilization
+
+Sprint 210 confirms:
+
+- Vision Runtime Stabilization contract ready: true
+- Vision Runtime Stabilization runtime ready: false
+- Vision Runtime Stabilization status: vision_runtime_stabilized
+- vision block start: 201
+- vision block end: 210
+- current sprint: 210
+- next sprint: 211
+- next boundary: active_permission_runtime
+- Vision Runtime block 201-210 complete: true
+- Vision Runtime block 201-210 stabilized: true
+- previous contract chain complete: true
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- contract only: true
+- stabilization acceptance packet schema ready: true
+- stabilization summary schema ready: true
+- stabilization gap report schema ready: true
+- stabilization blocker report schema ready: true
+- stabilization dependency baseline schema ready: true
+- stabilization release gate schema ready: true
+- stabilization runtime scope schema ready: true
+- stabilization safety matrix schema ready: true
+- stabilization handoff packet schema ready: true
+- stabilization next block schema ready: true
+- Sprint 201 activation stabilized: true
+- Sprint 202 screenshot stabilized: true
+- Sprint 203 screen context stabilized: true
+- Sprint 204 local model stabilized: true
+- Sprint 205 permission/redaction stabilized: true
+- Sprint 206 workspace visual stabilized: true
+- Sprint 207 vision-to-chat stabilized: true
+- Sprint 208 Control Center panel stabilized: true
+- Sprint 209 integration review stabilized: true
+- vision dependency baseline stable: true
+- vision release gate stable closed: true
+- vision safety blockers stable inactive: true
+- vision runtime scope stable contract-only: true
+- vision permission-first boundary stable: true
+- vision redaction-first boundary stable: true
+- vision local-first boundary stable: true
+- vision offline-first boundary stable: true
+- vision no-action-bypass boundary stable: true
+- vision no-external-data boundary stable: true
+- vision block handoff to permission runtime ready: true
+- no runtime activation from stabilization: true
+- no release gate open from stabilization: true
+- no dependency install from stabilization: true
+- no model download from stabilization: true
+- no screenshot capture from stabilization: true
+- no image file read from stabilization: true
+- no OCR from stabilization: true
+- no model request from stabilization: true
+- no inference from stabilization: true
+- no chat handoff from stabilization: true
+- no chat session write from stabilization: true
+- no panel render from stabilization: true
+- no route creation from stabilization: true
+- no API endpoint creation from stabilization: true
+- no data fetch from stabilization: true
+- no permission mutation from stabilization: true
+- no audit write from stabilization: true
+- no memory write from stabilization: true
+- no command execution from stabilization: true
+- no tool execution from stabilization: true
+- no visual action from stabilization: true
+- no file mutation from stabilization: true
+- no desktop action from stabilization: true
+- no network action from stabilization: true
+- no git action from stabilization: true
+- no cloud fallback from stabilization: true
+- no external upload from stabilization: true
+- stabilization runtime active: false
+- stabilization acceptance packet created: false
+- stabilization summary created: false
+- stabilization release gate opened: false
+- stabilization handoff packet created: false
+- runtime activation path open: false
+- dependency install active: false
+- model download active: false
+- screenshot capture performed: false
+- screenshot file read active: false
+- local model request active: false
+- local model inference active: false
+- OCR runtime active: false
+- chat context packet created: false
+- chat session write active: false
+- chat model request active: false
+- Control Center Vision Panel rendered: false
+- Control Center Vision Panel route created: false
+- memory write active: false
+- command execution active: false
+- cloud vision fallback enabled: false
+- external upload enabled: false
+- visual context to action bypass enabled: false
+- safety blockers: 33
+- all safety blockers inactive: true
+
+The dependency baseline remains passive:
+
+- Python packages: 0/5
+- Executables: 0/6
+
+Sprint 210 does not activate vision runtime, open release gates, install
+dependencies, download models, capture screenshots, read screenshots or image
+files, run OCR, request models, run inference, inject chat context, write chat
+sessions, request chat models, generate responses, render panels, create routes
+or API endpoints, fetch data, mutate permissions, write audit events, write
+memory, execute tools or commands, mutate files, control the desktop, perform
+network or git actions, use cloud vision fallback, externally upload visual data,
+or bypass action gates through visual context.
+
+Validation passed with compileall OK, vision-runtime-status OK,
+vision-runtime-check OK, 330 assertions, zero failed assertions, voice baseline
+stable, and baseline self-tests OK.
+
+Next: Sprint 211 — Active Permission Runtime.
