@@ -161,6 +161,7 @@ class VisionRuntimeAlphaManager:
         local_model = self.planner.local_vision_model_adapter_contract()
         permission_redaction = self.planner.vision_permission_and_redaction_contract()
         workspace_visual = self.planner.workspace_visual_understanding_contract()
+        vision_to_chat = self.planner.vision_to_chat_context_handoff_contract()
         screen_backend = self.detect_screen_backend()
         camera_backend = self.detect_camera_backend()
         screen_permission = self.permission_manager.check("screen_analyze")
@@ -177,6 +178,31 @@ class VisionRuntimeAlphaManager:
             "sprint_204_local_vision_model_adapter_contract_ready": local_model["local_vision_model_adapter_contract_ready"],
             "sprint_205_vision_permission_redaction_contract_ready": permission_redaction["vision_permission_redaction_contract_ready"],
             "sprint_206_workspace_visual_understanding_contract_ready": workspace_visual["workspace_visual_understanding_contract_ready"],
+            "sprint_207_vision_to_chat_context_handoff_contract_ready": vision_to_chat["vision_to_chat_context_handoff_contract_ready"],
+            "vision_to_chat_context_handoff_runtime_ready": vision_to_chat["vision_to_chat_context_handoff_runtime_ready"],
+            "vision_to_chat_context_handoff_status": vision_to_chat["vision_to_chat_context_handoff_status"],
+            "chat_safe_visual_context_packet_schema_ready": vision_to_chat["chat_safe_visual_context_packet_schema_ready"],
+            "chat_safe_visual_summary_schema_ready": vision_to_chat["chat_safe_visual_summary_schema_ready"],
+            "chat_context_handoff_packet_schema_ready": vision_to_chat["chat_context_handoff_packet_schema_ready"],
+            "chat_source_attribution_schema_ready": vision_to_chat["chat_source_attribution_schema_ready"],
+            "chat_limitation_schema_ready": vision_to_chat["chat_limitation_schema_ready"],
+            "chat_uncertainty_schema_ready": vision_to_chat["chat_uncertainty_schema_ready"],
+            "chat_handoff_preview_schema_ready": vision_to_chat["chat_handoff_preview_schema_ready"],
+            "explicit_user_request_required_for_handoff": vision_to_chat["explicit_user_request_required_for_handoff"],
+            "explicit_confirmation_required_for_handoff": vision_to_chat["explicit_confirmation_required_for_handoff"],
+            "no_hidden_visual_context_injection": vision_to_chat["no_hidden_visual_context_injection"],
+            "no_automatic_chat_handoff": vision_to_chat["no_automatic_chat_handoff"],
+            "no_chat_model_request_without_user_message": vision_to_chat["no_chat_model_request_without_user_message"],
+            "no_memory_write_from_visual_handoff": vision_to_chat["no_memory_write_from_visual_handoff"],
+            "vision_to_chat_context_handoff_runtime_active": vision_to_chat["vision_to_chat_context_handoff_runtime_active"],
+            "chat_context_packet_created": vision_to_chat["chat_context_packet_created"],
+            "chat_safe_visual_summary_created": vision_to_chat["chat_safe_visual_summary_created"],
+            "chat_source_attribution_created": vision_to_chat["chat_source_attribution_created"],
+            "chat_handoff_preview_created": vision_to_chat["chat_handoff_preview_created"],
+            "chat_message_injection_active": vision_to_chat["chat_message_injection_active"],
+            "chat_session_write_active": vision_to_chat["chat_session_write_active"],
+            "chat_model_request_active": vision_to_chat["chat_model_request_active"],
+            "chat_response_generation_active": vision_to_chat["chat_response_generation_active"],
             "workspace_visual_understanding_runtime_ready": workspace_visual["workspace_visual_understanding_runtime_ready"],
             "workspace_visual_understanding_status": workspace_visual["workspace_visual_understanding_status"],
             "provided_redacted_visual_context_required": workspace_visual["provided_redacted_visual_context_required"],
@@ -278,12 +304,12 @@ class VisionRuntimeAlphaManager:
             "vision_runtime_activation_status": activation["vision_runtime_activation_status"],
             "vision_runtime_block_start": activation["vision_runtime_block_start"],
             "vision_runtime_block_end": activation["vision_runtime_block_end"],
-            "vision_runtime_next_sprint": workspace_visual["vision_runtime_next_sprint"],
-            "vision_runtime_next_boundary": workspace_visual["vision_runtime_next_boundary"],
-            "vision_runtime_activation_allowed": workspace_visual["runtime_activation_allowed"],
-            "vision_release_gate_open": workspace_visual["release_gate_open"],
-            "vision_safety_blocker_count": workspace_visual["safety_blocker_count"],
-            "vision_all_safety_blockers_inactive": workspace_visual["all_safety_blockers_inactive"],
+            "vision_runtime_next_sprint": vision_to_chat["vision_runtime_next_sprint"],
+            "vision_runtime_next_boundary": vision_to_chat["vision_runtime_next_boundary"],
+            "vision_runtime_activation_allowed": vision_to_chat["runtime_activation_allowed"],
+            "vision_release_gate_open": vision_to_chat["release_gate_open"],
+            "vision_safety_blocker_count": vision_to_chat["safety_blocker_count"],
+            "vision_all_safety_blockers_inactive": vision_to_chat["all_safety_blockers_inactive"],
             "screen_plan_ready": True,
             "camera_plan_ready": True,
             "vision_context_ready": True,
@@ -294,6 +320,7 @@ class VisionRuntimeAlphaManager:
             "local_vision_model_adapter_contract": local_model,
             "vision_permission_redaction_contract": permission_redaction,
             "workspace_visual_understanding_contract": workspace_visual,
+            "vision_to_chat_context_handoff_contract": vision_to_chat,
             "screen_backend_found": screen_backend["found"],
             "screen_backend": screen_backend["name"],
             "screen_backend_path": screen_backend["path"],
@@ -315,9 +342,9 @@ class VisionRuntimeAlphaManager:
             "python_packages_total": dependency_check["python_packages_total"],
             "executables_found": dependency_check["executables_found"],
             "executables_total": dependency_check["executables_total"],
-            "sections": 11,
+            "sections": 12,
             "project_root": str(self.project_root),
-            "note": "Vision Runtime Alpha is online for Sprint 206 Workspace Visual Understanding contract. It defines provided and redacted workspace visual context schemas without creating workspace summaries, reading screenshots or image files, running OCR, sending model requests, using cloud vision, uploading externally, handing off context, writing memory, or executing commands automatically.",
+            "note": "Vision Runtime Alpha is online for Sprint 207 Vision-to-Chat Context Handoff contract. It defines chat-safe visual context packet and handoff gates without injecting visual context into chat, writing chat sessions, requesting models, generating responses, writing memory, running OCR, reading screenshots or image files, uploading externally, or executing commands automatically.",
         }
 
     def build_screen_command(self) -> dict[str, Any]:

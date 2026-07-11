@@ -1,5 +1,5 @@
 name: AURA
-version: "0.206.0-genesis"
+version: "0.207.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -169,3 +169,8 @@ modes:
 # creation, screenshot capture, image file read, OCR, model request, inference,
 # context/chat handoff, memory writes, visual actions, tool/command execution,
 # cloud fallback, and external upload disabled.
+# Sprint 207: vision_to_chat_context_handoff adds contract-only
+# chat-safe visual context packet and handoff gates. It keeps chat context
+# injection, chat session writes, chat model requests, response generation,
+# memory writes, screenshot capture, image file read, OCR, visual actions,
+# tool/command execution, cloud fallback, and external upload disabled.

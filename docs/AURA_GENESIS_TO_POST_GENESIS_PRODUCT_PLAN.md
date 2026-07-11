@@ -1017,3 +1017,25 @@ or bypassing action gates through visual context.
 
 This creates the handoff baseline for Sprint 207 — Vision-to-Chat Context
 Handoff.
+
+## Sprint 207 — Vision-to-Chat Context Handoff
+
+`v0.207.0-genesis` adds vision-to-chat context handoff gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint treats vision-to-chat handoff as contract-only. It prepares
+schemas for chat-safe visual context packets, chat-safe visual summaries,
+chat-safe workspace summaries, handoff packets, source attribution, limitations,
+uncertainty, risk notices, handoff previews, visible disclosure, and chat render
+boundaries.
+
+This keeps AURA from injecting visual context into chat, writing chat sessions,
+creating chat context packets, creating chat-safe visual summaries, requesting
+chat models, generating responses, writing memory, capturing screenshots,
+reading screenshots or image files, running OCR, using cloud vision fallback,
+externally uploading visual data, sending model requests, running inference,
+executing visual actions, executing tools/commands, writing memory, mutating
+files, controlling desktop/network/git, or bypassing action gates through visual
+context.
+
+This creates the handoff baseline for Sprint 208 — Control Center Vision Panel.

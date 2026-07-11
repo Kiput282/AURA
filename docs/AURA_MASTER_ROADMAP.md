@@ -2600,3 +2600,24 @@ write memory, perform network or git actions, use cloud vision fallback,
 externally upload visual data, or bypass action gates through visual context.
 
 The next sprint is Sprint 207 — Vision-to-Chat Context Handoff.
+
+## Checkpoint v0.207.0-genesis — Vision-to-Chat Context Handoff
+
+Sprint 207 adds vision-to-chat context handoff contract gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint prepares schemas and contracts for chat-safe visual context
+packets, chat-safe visual summaries, chat-safe workspace summaries, chat context
+handoff packets, source attribution, limitation notes, uncertainty notes, risk
+notices, handoff previews, visible disclosure, and chat render boundaries.
+
+Sprint 207 keeps runtime activation blocked and release gates closed. It does
+not inject visual context into chat, write chat sessions, create chat context
+packets, create chat-safe visual summaries, create handoff previews, request
+chat models, generate responses, write memory, capture screenshots, read image
+files, run OCR, send model requests, run inference, execute visual actions,
+execute tools or commands, mutate files, control the desktop, perform network or
+git actions, use cloud vision fallback, externally upload visual data, or bypass
+action gates through visual context.
+
+The next sprint is Sprint 208 — Control Center Vision Panel.

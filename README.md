@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.206.0-genesis
-Current status: Sprint 206 Workspace Visual Understanding completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only provided/redacted workspace visual context schemas and is ready to hand off to Sprint 207 Vision-to-Chat Context Handoff
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 added screen context adapter contract gates for provided metadata/placeholder context only. Sprint 204 added local/offline-first vision model adapter contract gates. Sprint 205 added explicit visual permission, confirmation, scope, audit, and redaction gates. Sprint 206 adds provided and redacted workspace visual context schemas while workspace summary creation, screenshot capture, image file read, OCR, model request, inference, context/chat handoff, visual actions, command/tool execution, memory writes, cloud fallback, external upload, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.207.0-genesis
+Current status: Sprint 207 Vision-to-Chat Context Handoff completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only chat-safe visual context packet and handoff gates and is ready to hand off to Sprint 208 Control Center Vision Panel
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 added screen context adapter contract gates for provided metadata/placeholder context only. Sprint 204 added local/offline-first vision model adapter contract gates. Sprint 205 added explicit visual permission, confirmation, scope, audit, and redaction gates. Sprint 206 added provided and redacted workspace visual context schemas. Sprint 207 adds chat-safe visual context packet and handoff gates while chat context injection, chat session writes, chat model requests, response generation, memory writes, workspace-to-chat handoff, screenshot capture, image file read, OCR, model request, inference, visual actions, command/tool execution, cloud fallback, external upload, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 206 and adds workspace visual understanding gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
+AURA has completed Sprint 207 and adds vision-to-chat context handoff gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.207.0-genesis
+- Sprint 207: Vision-to-Chat Context Handoff
 - v0.206.0-genesis
 - Sprint 206: Workspace Visual Understanding
 - v0.205.0-genesis
@@ -82,7 +84,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 207 — Vision-to-Chat Context Handoff
+- Next planned sprint: Sprint 208 — Control Center Vision Panel
 Current capability registry summary:
 
 - total capabilities: 121
@@ -3594,3 +3596,124 @@ vision-runtime-check OK, 153 assertions, zero failed assertions, voice baseline
 stable, and baseline self-tests OK.
 
 Next: Sprint 207 — Vision-to-Chat Context Handoff.
+
+## Sprint 207 — Vision-to-Chat Context Handoff
+
+Version: `v0.207.0-genesis`
+
+Sprint 207 adds vision-to-chat context handoff contract gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint defines chat-safe visual context packet and handoff boundaries.
+It prepares schemas and contracts for chat-safe visual context packets,
+chat-safe visual summaries, chat-safe workspace summaries, chat context handoff
+packets, source attribution, limitations, uncertainty, risk notices, handoff
+previews, visible disclosure, and chat render boundaries.
+
+Sprint 207 confirms:
+
+- vision-to-chat context handoff contract ready: true
+- vision-to-chat context handoff runtime ready: false
+- vision-to-chat context handoff status: vision_to_chat_context_handoff_contract_ready
+- vision block start: 201
+- vision block end: 210
+- current sprint: 207
+- next sprint: 208
+- next boundary: control_center_vision_panel
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- provided redacted visual context required: true
+- provided workspace visual summary required: true
+- provided workspace metadata required: true
+- provided user question required: true
+- provided permission packet required: true
+- redaction proof required: true
+- source metadata required: true
+- uncertainty required: true
+- chat-safe visual context packet schema ready: true
+- chat-safe visual summary schema ready: true
+- chat-safe workspace summary schema ready: true
+- chat context handoff packet schema ready: true
+- chat source attribution schema ready: true
+- chat limitation schema ready: true
+- chat uncertainty schema ready: true
+- chat risk notice schema ready: true
+- chat handoff preview schema ready: true
+- chat visible disclosure contract ready: true
+- chat render boundary contract ready: true
+- permission before chat handoff: true
+- permission before chat context injection: true
+- permission before chat session write: true
+- redaction before chat handoff: true
+- redaction before chat context packet: true
+- redaction before chat session write: true
+- explicit user request required for handoff: true
+- explicit confirmation required for handoff: true
+- foreground chat session required: true
+- no raw screenshot to chat: true
+- no unredacted context to chat: true
+- no hidden visual context injection: true
+- no automatic chat handoff: true
+- no chat model request without user message: true
+- no memory write from visual handoff: true
+- no action recommendation without permission: true
+- no OCR claims without OCR: true
+- no model claims without model: true
+- no identity claims: true
+- no biometric identification: true
+- no face recognition: true
+- no emotion inference from face: true
+- image file read allowed: false
+- screenshot capture required now: false
+- screenshot file read required now: false
+- OCR required now: false
+- cloud vision fallback allowed: false
+- external upload allowed: false
+- vision-to-chat context handoff runtime active: false
+- chat context packet created: false
+- chat-safe visual summary created: false
+- chat source attribution created: false
+- chat handoff preview created: false
+- chat message injection active: false
+- chat session write active: false
+- chat model request active: false
+- chat response generation active: false
+- workspace-to-chat handoff active: false
+- workspace visual summary created: false
+- screenshot capture performed: false
+- screenshot file read active: false
+- local model request active: false
+- local model inference active: false
+- model-to-chat handoff active: false
+- vision model runtime active: false
+- OCR runtime active: false
+- image analysis runtime active: false
+- object detection runtime active: false
+- command execution active: false
+- memory write active: false
+- cloud vision fallback enabled: false
+- external upload enabled: false
+- visual context to action bypass enabled: false
+- safety blockers: 33
+- all safety blockers inactive: true
+
+The dependency baseline remains passive:
+
+- Python packages: 0/5
+- Executables: 0/6
+
+Sprint 207 does not inject visual context into chat, write chat sessions, create
+chat context packets, create chat-safe visual summaries, create chat handoff
+previews, request chat models, generate responses, write memory, capture
+screenshots, read screenshots or image files, run OCR, run image analysis, run
+object detection, send vision model requests, run inference, execute visual
+actions, execute tools or commands, mutate files, control the desktop, perform
+network or git actions, use cloud vision fallback, externally upload visual
+data, or bypass action gates through visual context.
+
+Validation passed with compileall OK, vision-runtime-status OK,
+vision-runtime-check OK, 154 assertions, zero failed assertions, voice baseline
+stable, and baseline self-tests OK.
+
+Next: Sprint 208 — Control Center Vision Panel.

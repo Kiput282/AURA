@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.206.0-genesis
+Current anchor: v0.207.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.206.0-genesis
-- Completed: Sprint 206 — Workspace Visual Understanding
+- Current version: v0.207.0-genesis
+- Completed: Sprint 207 — Vision-to-Chat Context Handoff
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 207 — Vision-to-Chat Context Handoff
+- Next: Sprint 208 — Control Center Vision Panel
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -791,3 +791,68 @@ network/git actions, memory writes, cloud vision fallback, external upload, and
 visual-context-to-action bypass.
 
 Next: Sprint 207 — Vision-to-Chat Context Handoff.
+
+## v0.207.0-genesis — Vision-to-Chat Context Handoff
+
+Sprint 207 adds vision-to-chat context handoff gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block as contract-only behavior.
+
+The checkpoint confirms:
+
+- vision-to-chat context handoff contract ready
+- vision-to-chat context handoff runtime disabled
+- current sprint 207
+- next sprint 208
+- next boundary control_center_vision_panel
+- runtime activation blocked
+- release gate closed
+- provided redacted visual context required
+- provided workspace visual summary required
+- provided workspace metadata required
+- provided user question required
+- provided permission packet required
+- redaction proof required
+- source metadata required
+- uncertainty required
+- chat-safe visual context packet schema ready
+- chat-safe visual summary schema ready
+- chat-safe workspace summary schema ready
+- chat context handoff packet schema ready
+- chat source attribution schema ready
+- chat limitation schema ready
+- chat uncertainty schema ready
+- chat risk notice schema ready
+- chat handoff preview schema ready
+- chat visible disclosure contract ready
+- chat render boundary contract ready
+- permission before chat handoff, context injection, and session write
+- redaction before chat handoff, context packet, and session write
+- explicit user request and confirmation required for handoff
+- foreground chat session required
+- no raw screenshot to chat
+- no unredacted context to chat
+- no hidden visual context injection
+- no automatic chat handoff
+- no chat model request without user message
+- no memory write from visual handoff
+- no OCR claims without OCR
+- no model claims without model
+- no identity claims
+- no biometric identification
+- no face recognition
+- no emotion inference from face
+- 33 safety blockers
+- all safety blockers inactive
+- 154 assertions
+- zero failed assertions
+
+Sprint 207 keeps all runtime execution disabled, including visual context
+injection into chat, chat session writes, chat model requests, response
+generation, memory writes, workspace-to-chat handoff, chat context packet
+creation, chat-safe visual summary creation, chat handoff preview creation,
+screenshot capture, screenshot/image file read, OCR, image analysis, object
+detection, model requests, inference, visual actions, tool/command execution,
+file/desktop/network/git actions, cloud vision fallback, external upload, and
+visual-context-to-action bypass.
+
+Next: Sprint 208 — Control Center Vision Panel.
