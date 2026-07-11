@@ -975,3 +975,24 @@ context.
 
 This creates the handoff baseline for Sprint 205 — Vision Permission and
 Redaction.
+
+## Sprint 205 — Vision Permission and Redaction
+
+`v0.205.0-genesis` adds vision permission and redaction gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint treats permission and redaction as contract-only. It prepares
+explicit visual permission, confirmation, scope, audit, and redaction schemas
+before any future screenshot, screen context, local vision model request, chat
+handoff, memory write, or visual action flow.
+
+This keeps AURA from mutating permissions, running redaction, creating redacted
+context, writing redaction audit events, capturing screenshots, reading
+screenshots or image files, running OCR, using cloud vision fallback, externally
+uploading visual data, sending model requests, running inference, handing off
+context to chat, executing visual actions, executing tools/commands, writing
+memory, mutating files, controlling desktop/network/git, or bypassing action
+gates through visual context.
+
+This creates the handoff baseline for Sprint 206 — Workspace Visual
+Understanding.

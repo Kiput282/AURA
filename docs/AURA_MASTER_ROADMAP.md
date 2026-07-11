@@ -2558,3 +2558,24 @@ the desktop, write memory, perform network or git actions, or bypass action
 gates through visual context.
 
 The next sprint is Sprint 205 — Vision Permission and Redaction.
+
+## Checkpoint v0.205.0-genesis — Vision Permission and Redaction
+
+Sprint 205 adds vision permission and redaction contract gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint prepares explicit visual permission, confirmation, scope, audit,
+and redaction schemas before any future screenshot, screen context, local model,
+chat handoff, or visual action flow. It also defines redaction requirements for
+sensitive regions, window titles, URLs, clipboard exclusion, secret tokens,
+personal identifiers, and visible text.
+
+Sprint 205 keeps runtime activation blocked and release gates closed. It does
+not mutate permissions, run redaction, create redacted context, write audit
+events, capture screenshots, read image files, run OCR, send model requests, run
+inference, hand off context/chat, execute visual actions, execute tools or
+commands, mutate files, control the desktop, write memory, perform network or git
+actions, use cloud vision fallback, externally upload visual data, or bypass
+action gates through visual context.
+
+The next sprint is Sprint 206 — Workspace Visual Understanding.

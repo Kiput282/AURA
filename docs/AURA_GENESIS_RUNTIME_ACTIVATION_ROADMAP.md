@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.204.0-genesis
+Current anchor: v0.205.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.204.0-genesis
-- Completed: Sprint 204 — Local Vision Model Adapter
+- Current version: v0.205.0-genesis
+- Completed: Sprint 205 — Vision Permission and Redaction
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 205 — Vision Permission and Redaction
+- Next: Sprint 206 — Workspace Visual Understanding
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -665,3 +665,65 @@ network/git actions, memory writes, cloud vision fallback, external upload, and
 visual-context-to-action bypass.
 
 Next: Sprint 205 — Vision Permission and Redaction.
+
+## v0.205.0-genesis — Vision Permission and Redaction
+
+Sprint 205 adds vision permission and redaction gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block as contract-only behavior.
+
+The checkpoint confirms:
+
+- vision permission redaction contract ready
+- vision permission redaction runtime disabled
+- current sprint 205
+- next sprint 206
+- next boundary workspace_visual_understanding
+- runtime activation blocked
+- release gate closed
+- explicit visual permission required
+- explicit visual confirmation required
+- foreground only required
+- single-capture permission scope
+- per-request permission required
+- permission packet schema ready
+- permission scope schema ready
+- permission decision schema ready
+- permission expiry schema ready
+- audit event schema ready
+- redaction policy schema ready
+- redaction preview schema ready
+- redaction scope schema ready
+- sensitive region redaction required
+- window title redaction required
+- URL redaction required
+- clipboard exclusion required
+- secret token redaction required
+- personal identifier redaction required
+- visible text redaction required
+- permission before visual input, screenshot, screen context, model adapter,
+  model request, chat handoff, and visual action
+- redaction before context adapter, context packet, model request, model response,
+  chat handoff, and memory write
+- no raw screenshot to model or chat
+- no unredacted context to model or chat
+- no clipboard capture
+- no sensitive window title exposure
+- no URL exposure
+- no identity claims
+- no biometric identification
+- no face recognition
+- no emotion inference from face
+- 33 safety blockers
+- all safety blockers inactive
+- 149 assertions
+- zero failed assertions
+
+Sprint 205 keeps all runtime execution disabled, including permission mutation,
+permission prompt runtime, redaction runtime, redaction preview creation, redacted
+context creation, redaction audit writes, screenshot capture, screenshot/image
+file read, OCR, image analysis, object detection, model requests, inference,
+context/chat handoff, visual actions, tool/command execution, file/desktop/
+network/git actions, memory writes, cloud vision fallback, external upload, and
+visual-context-to-action bypass.
+
+Next: Sprint 206 — Workspace Visual Understanding.

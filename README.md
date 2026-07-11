@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.204.0-genesis
-Current status: Sprint 204 Local Vision Model Adapter completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only local/offline-first vision model adapter gates and is ready to hand off to Sprint 205 Vision Permission and Redaction
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 added screen context adapter contract gates for provided metadata/placeholder context only. Sprint 204 adds local/offline-first vision model adapter contract gates while model download, dependency install, provider probe, model request, inference, image file read, screenshot capture, OCR, cloud vision fallback, external upload, context/chat handoff, visual actions, command/tool execution, memory writes, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.205.0-genesis
+Current status: Sprint 205 Vision Permission and Redaction completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only explicit visual permission, confirmation, scope, audit, and redaction gates and is ready to hand off to Sprint 206 Workspace Visual Understanding
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 added screen context adapter contract gates for provided metadata/placeholder context only. Sprint 204 added local/offline-first vision model adapter contract gates. Sprint 205 adds explicit visual permission, confirmation, scope, audit, and redaction gates while permission mutation, redaction runtime, screenshot capture, image file read, OCR, model request, inference, context/chat handoff, visual actions, command/tool execution, memory writes, cloud fallback, external upload, file/desktop/network/git actions, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 204 and adds local vision model adapter gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
+AURA has completed Sprint 205 and adds vision permission and redaction gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.205.0-genesis
+- Sprint 205: Vision Permission and Redaction
 - v0.204.0-genesis
 - Sprint 204: Local Vision Model Adapter
 - v0.203.0-genesis
@@ -78,7 +80,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 205 — Vision Permission and Redaction
+- Next planned sprint: Sprint 206 — Workspace Visual Understanding
 Current capability registry summary:
 
 - total capabilities: 121
@@ -3373,3 +3375,105 @@ vision-runtime-check OK, 135 assertions, zero failed assertions, voice baseline
 stable, and baseline self-tests OK.
 
 Next: Sprint 205 — Vision Permission and Redaction.
+
+## Sprint 205 — Vision Permission and Redaction
+
+Version: `v0.205.0-genesis`
+
+Sprint 205 adds vision permission and redaction contract gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint defines explicit visual permission, explicit confirmation,
+foreground-only scope, single-capture permission scope, per-request permission,
+permission packet schema, permission scope schema, permission decision schema,
+permission expiry schema, audit event schema, redaction policy schema, redaction
+preview schema, and redaction scope schema.
+
+Sprint 205 also defines redaction requirements for sensitive regions, window
+titles, URLs, clipboard exclusion, secret tokens, personal identifiers, and
+visible text. It preserves no-raw-screenshot-to-model, no-raw-screenshot-to-chat,
+no-unredacted-context-to-model, no-unredacted-context-to-chat, no clipboard
+capture, no sensitive window title exposure, no URL exposure, no identity claims,
+no biometric identification, no face recognition, and no emotion inference from
+face.
+
+Sprint 205 confirms:
+
+- vision permission redaction contract ready: true
+- vision permission redaction runtime ready: false
+- vision permission redaction status: vision_permission_and_redaction_contract_ready
+- vision block start: 201
+- vision block end: 210
+- current sprint: 205
+- next sprint: 206
+- next boundary: workspace_visual_understanding
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- explicit visual permission required: true
+- explicit visual confirmation required: true
+- foreground only required: true
+- per-request permission required: true
+- permission packet schema ready: true
+- permission scope schema ready: true
+- permission decision schema ready: true
+- permission expiry schema ready: true
+- audit event schema ready: true
+- redaction policy schema ready: true
+- redaction preview schema ready: true
+- redaction scope schema ready: true
+- sensitive region redaction required: true
+- window title redaction required: true
+- URL redaction required: true
+- clipboard exclusion required: true
+- permission before visual input: true
+- permission before screenshot: true
+- permission before model request: true
+- permission before chat handoff: true
+- redaction before model request: true
+- redaction before chat handoff: true
+- no raw screenshot to model: true
+- no raw screenshot to chat: true
+- no unredacted context to model: true
+- no unredacted context to chat: true
+- permission prompt runtime active: false
+- permission grant mutation active: false
+- redaction runtime active: false
+- redaction preview created: false
+- redacted context created: false
+- redaction audit write active: false
+- screenshot capture performed: false
+- screenshot file read active: false
+- local model request active: false
+- local model inference active: false
+- model-to-chat handoff active: false
+- vision model runtime active: false
+- OCR runtime active: false
+- image analysis runtime active: false
+- object detection runtime active: false
+- command execution active: false
+- memory write active: false
+- cloud vision fallback enabled: false
+- external upload enabled: false
+- visual context to action bypass enabled: false
+- safety blockers: 33
+- all safety blockers inactive: true
+
+The dependency baseline remains passive:
+
+- Python packages: 0/5
+- Executables: 0/6
+
+Sprint 205 does not mutate permissions, run redaction, create redaction previews,
+create redacted context, write redaction audit events, capture screenshots, read
+screenshot or image files, run OCR, run image analysis, run object detection,
+send model requests, run inference, hand off context/chat, execute visual
+actions, execute tools or commands, mutate files, control the desktop, write
+memory, perform network or git actions, use cloud vision fallback, externally
+upload visual data, or bypass action gates through visual context.
+
+Validation passed with compileall OK, vision-runtime-status OK,
+vision-runtime-check OK, 149 assertions, zero failed assertions, voice baseline
+stable, and baseline self-tests OK.
+
+Next: Sprint 206 — Workspace Visual Understanding.

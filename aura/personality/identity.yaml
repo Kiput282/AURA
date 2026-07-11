@@ -1,5 +1,5 @@
 name: AURA
-version: "0.204.0-genesis"
+version: "0.205.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -157,4 +157,10 @@ modes:
 # probe, model request, inference, image file read, screenshot capture, OCR,
 # cloud fallback, external upload, context/chat handoff, visual actions,
 # tool/command execution, memory writes, and desktop/network/git actions
+# disabled.
+# Sprint 205: vision_permission_and_redaction adds contract-only explicit
+# permission, confirmation, scope, audit, and redaction gates. It keeps
+# permission mutation, redaction runtime, screenshot capture, image file read,
+# OCR, model request, inference, context/chat handoff, visual actions,
+# tool/command execution, memory writes, cloud fallback, and external upload
 # disabled.
