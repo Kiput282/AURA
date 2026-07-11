@@ -54,6 +54,7 @@ from aura.vision_context.vision_context_planner_manager import VisionContextPlan
 from aura.avatar_interaction.avatar_interaction_planner_manager import AvatarInteractionPlannerManager
 from aura.desktop_workflow.desktop_workflow_planner_manager import DesktopWorkflowPlannerManager
 from aura.partner_runtime.partner_runtime_planning_manager import PartnerRuntimePlanningManager
+from aura.partner_runtime.partner_runtime_alpha_manager import PartnerRuntimeAlphaManager
 from aura.thought_loop.thought_loop_planner_manager import ThoughtLoopPlannerManager
 from aura.reasoning_context.reasoning_context_manager import ReasoningContextManager
 from aura.knowledge_uncertainty.knowledge_uncertainty_gate_manager import KnowledgeUncertaintyGateManager
@@ -4534,6 +4535,31 @@ class AuraCLI:
 
         command = raw_args[0]
         target = " ".join(raw_args[1:]).strip() or "general partner runtime planning"
+
+        if command == "partner-runtime-unified-session-status":
+            manager = PartnerRuntimeAlphaManager(project_root=self.project_root)
+            self.print_partner_runtime_packet(
+                "AURA Unified Session Runtime Contract Status",
+                manager.status(),
+            )
+            return True
+
+        if command == "partner-runtime-unified-session-context":
+            manager = PartnerRuntimeAlphaManager(project_root=self.project_root)
+            self.print_partner_runtime_packet(
+                "AURA Unified Session Runtime Contract Context",
+                manager.context(),
+            )
+            return True
+
+        if command == "partner-runtime-unified-session-check":
+            manager = PartnerRuntimeAlphaManager(project_root=self.project_root)
+            self.print_partner_runtime_packet(
+                "AURA Unified Session Runtime Contract Check",
+                manager.check(),
+            )
+            return True
+
         manager = PartnerRuntimePlanningManager(project_root=self.project_root)
 
         if command == "partner-runtime-status":

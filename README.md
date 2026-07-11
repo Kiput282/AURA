@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.220.0-genesis
-Current status: Sprint 220 Permission and Action Runtime Stabilization completed; Sprint 211-220 Permission, Audit, and Safe Local Actions block is complete and contract-only stabilized
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 220 completes the Sprint 211-220 Permission, Audit, and Safe Local Actions block as contract-only stabilized. The permission/action chain now covers active permission runtime, grant/denial/expiry lifecycle, runtime audit writer, action proposal and preview, safe local open actions, allowlisted application launch, controlled folder/simple file creation, Control Center approval workflow, rollback/emergency-stop/recovery, and final permission/action runtime stabilization. Runtime activation, runtime gates, release gates, permission mutation, permission persistence, grant creation, audit writes, audit persistence, action dispatch, file/folder creation, app launch, command/tool execution, file mutation, desktop actions, rollback execution, emergency stop apply, recovery dispatch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, plugin execution, multi-step automation, and autonomy remain disabled
+Current version: v0.221.0-genesis
+Current status: Sprint 221 Unified Session Runtime completed; Sprint 221-230 Unified Partner Runtime Integration is active
+Current runtime state: Sprint 221 adds a contract-only unified session facade while preserving the browser chat session runtime as canonical owner. Runtime execution, session mutation, memory writes, permission mutation, audit writes, actions, commands, tools, background services, public binding, and autonomy remain disabled.
 
 ---
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 221 — Unified Partner Runtime Integration
+- Next planned sprint: Sprint 222 — Workspace and Project Context Runtime
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5346,3 +5346,45 @@ dependencies, download models, execute plugins, run multi-step automation, or
 perform autonomous actions.
 
 Next: Sprint 221 — Unified Partner Runtime Integration.
+
+## Sprint 221 — Unified Session Runtime
+
+Version: v0.221.0-genesis
+
+Sprint 221 begins the Sprint 221-230 Unified Partner Runtime Integration
+block with a contract-only Unified Session Runtime.
+
+The partner facade keeps aura_browser_chat_session_runtime as the
+canonical owner of session IDs, message IDs, revision, integrity,
+persistence, and existing chat mutation rules. It does not introduce a
+second session store or identifier format.
+
+Validated state:
+
+- Current sprint: 221
+- Next sprint: 222
+- Next boundary: workspace_project_context_runtime
+- Planner assertions: 51
+- Failed assertions: 0
+- Deterministic planner status: true
+- Deterministic alpha status: true
+- Legacy dependency traversal: false
+- Project journal accessed: false
+- Temporary session storage created: false
+- Runtime ready: false
+- Execution ready: false
+- Capability Registry changed: false
+
+Commands:
+
+    partner-runtime-unified-session-status
+    partner-runtime-unified-session-context
+    partner-runtime-unified-session-check
+
+Sprint 221 does not create or mutate sessions, write long-term memory,
+mutate permissions, write audit events, dispatch actions, execute
+commands or tools, mutate files, launch applications, control the
+desktop, open runtime or release gates, start background services, bind
+public interfaces, or perform autonomous actions.
+
+Next: Sprint 222 — Workspace and Project Context Runtime.

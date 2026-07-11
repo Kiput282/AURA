@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.220.0-genesis
+Current anchor: v0.221.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,10 +16,10 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.220.0-genesis
-- Completed: Sprint 220 — Permission and Action Runtime Stabilization
+- Current version: v0.221.0-genesis
+- Completed: Sprint 221 — Unified Session Runtime
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
-- Active block: Sprint 191-200 Voice Interaction Runtime
+- Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
 - Total capabilities: 121
 - Online capabilities: 119
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 221 — Unified Partner Runtime Integration
+- Next: Sprint 222 — Workspace and Project Context Runtime
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1574,3 +1574,38 @@ tools, mutate files, launch applications, execute rollback, apply emergency
 stop, dispatch recovery actions, or perform autonomous actions.
 
 Next: Sprint 221 — Unified Partner Runtime Integration.
+
+## v0.221.0-genesis — Unified Session Runtime
+
+Sprint 221 begins the Sprint 221-230 Unified Partner Runtime Integration
+block with a contract-only Unified Session Runtime.
+
+The checkpoint introduces a deterministic partner-session facade while
+preserving aura_browser_chat_session_runtime as canonical owner of
+session identity, message identity, revision, integrity, persistence,
+and existing bounded mutation rules.
+
+Validation confirms:
+
+- Current sprint 221
+- Next sprint 222
+- Next boundary workspace_project_context_runtime
+- Canonical session owner aura_browser_chat_session_runtime
+- Static legacy safety-boundary snapshot
+- 51 assertions
+- Zero failed assertions
+- Deterministic planner and alpha status
+- No legacy dependency traversal
+- No project-journal access
+- No temporary session storage creation
+- Runtime ready false
+- Execution ready false
+- Capability Registry unchanged
+
+No session mutation, memory write, permission mutation, audit write,
+action dispatch, command or tool execution, arbitrary file mutation,
+application launch, desktop control, runtime or release gate opening,
+background service, public binding, network or Git action, dependency
+installation, model download, or autonomous action is enabled.
+
+Next: Sprint 222 — Workspace and Project Context Runtime.

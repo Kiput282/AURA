@@ -1,5 +1,5 @@
 name: AURA
-version: "0.220.0-genesis"
+version: "0.221.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -283,3 +283,10 @@ modes:
 # It does not open runtime gates, activate runtime, mutate permissions, write
 # audit events, dispatch actions, execute commands/tools, mutate files, launch
 # apps, execute rollback/recovery, or perform autonomous actions.
+
+# Sprint 221 — Unified Session Runtime
+# Contract-only partner-session facade.
+# Canonical session ownership remains with aura_browser_chat_session_runtime.
+# Planner validation: 51 assertions, 0 failures.
+# Runtime and execution authority remain disabled.
+# Next: Sprint 222 — Workspace and Project Context Runtime.

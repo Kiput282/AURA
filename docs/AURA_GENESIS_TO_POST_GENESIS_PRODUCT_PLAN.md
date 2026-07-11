@@ -1330,3 +1330,27 @@ creation, audit writing, action dispatch, command/tool execution, file mutation,
 application launch, rollback execution, emergency stop apply, recovery dispatch,
 network/git actions, memory write, cloud fallback, external upload, plugin
 execution, multi-step automation, and autonomy disabled.
+
+## Sprint 221 — Unified Session Runtime
+
+v0.221.0-genesis begins the Sprint 221-230 Unified Partner Runtime
+Integration block with a contract-only Unified Session Runtime.
+
+The existing browser chat session runtime remains canonical owner of
+session identity, revision, integrity, persistence, and chat mutation
+rules. The partner facade exposes deterministic status, context,
+planning, and check surfaces through the existing CLI and shell
+handlers.
+
+Validation confirms 51 assertions with zero failures, no journal
+access, no legacy dependency traversal, no temporary storage creation,
+no Capability Registry change, and no increase in runtime authority.
+
+Session mutation, memory writes, permission mutation, audit writes,
+actions, commands, tools, file mutation, application launch, desktop
+control, runtime or release activation, background operation, network
+or Git actions, dependency installation, model downloads, and autonomy
+remain disabled.
+
+This creates the baseline for Sprint 222 — Workspace and Project Context
+Runtime.

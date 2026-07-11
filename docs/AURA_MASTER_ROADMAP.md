@@ -2880,3 +2880,25 @@ applications launch, no rollback or recovery actions execute, and no autonomous
 actions run.
 
 The next sprint is Sprint 221 — Unified Partner Runtime Integration.
+
+## Checkpoint v0.221.0-genesis — Unified Session Runtime
+
+Sprint 221 begins the Sprint 221-230 Unified Partner Runtime Integration
+block.
+
+The checkpoint adds a contract-only unified-session facade. The browser
+chat session runtime remains canonical owner of session identity,
+revision, integrity, persistence, and bounded mutation behavior.
+
+The checkpoint passes 51 assertions with zero failures. Planner and
+alpha status are deterministic. The legacy planning layer is represented
+only through its static safety boundary, so the broad dependency graph
+and project journal are not accessed.
+
+Runtime authority remains disabled. No session mutation, memory write,
+permission mutation, audit write, action execution, command or tool
+execution, arbitrary file mutation, application launch, desktop
+control, background service, public binding, or autonomous action is
+enabled.
+
+Next: Sprint 222 — Workspace and Project Context Runtime.
