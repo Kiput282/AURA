@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.221.0-genesis
-Current status: Sprint 221 Unified Session Runtime completed; Sprint 221-230 Unified Partner Runtime Integration is active
-Current runtime state: Sprint 221 adds a contract-only unified session facade while preserving the browser chat session runtime as canonical owner. Runtime execution, session mutation, memory writes, permission mutation, audit writes, actions, commands, tools, background services, public binding, and autonomy remain disabled.
+Current version: v0.222.0-genesis
+Current status: Sprint 222 Workspace and Project Context Runtime completed; Sprint 221-230 Unified Partner Runtime Integration is active
+Current runtime state: Sprint 222 adds a bounded contract-only workspace and project context facade over the Sprint 221 unified session contract. It reads only approved project metadata and top-level workspace structure. Recursive scans, journal or memory access, context persistence, session mutation, permission mutation, audit writes, actions, commands, tools, background services, public binding, and autonomy remain disabled.
 
 ---
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 222 — Workspace and Project Context Runtime
+- Next planned sprint: Sprint 223 — Chat-to-Memory Runtime Handoff
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5388,3 +5388,37 @@ desktop, open runtime or release gates, start background services, bind
 public interfaces, or perform autonomous actions.
 
 Next: Sprint 222 — Workspace and Project Context Runtime.
+
+## Sprint 222 — Workspace and Project Context Runtime
+
+Sprint 222 extends the Unified Partner Runtime Integration block with a
+bounded, read-only workspace and project context contract.
+
+The implementation is located in `aura/partner_runtime` and introduces:
+
+- `WorkspaceProjectContextPlanner`
+- `WorkspaceProjectContextAlphaManager`
+- CLI and shell commands for status, context, and contract checks
+
+The contract preserves the Sprint 221 browser chat session runtime as the
+canonical session owner. It exposes only a bounded project snapshot:
+
+- identity version and codename from the approved identity source
+- Git branch and commit hint through direct `.git` metadata reads
+- non-recursive top-level workspace directory and file names
+- availability of explicitly approved context-source files
+
+The legacy `WorkspaceAwarenessManager` is represented only as a static source
+boundary. Its constructor, status, and context methods are not invoked because
+that dependency graph constructs project journal, memory, reflection, coding,
+and plugin managers.
+
+Sprint 222 does not recursively scan the repository, read journal or memory
+data, persist project context, mutate sessions, alter permissions, execute
+commands or tools, write audit data, control the desktop, activate services,
+or open release gates.
+
+Contract validation contains 52 assertions with runtime activation remaining
+disabled.
+
+Next: Sprint 223 — Chat-to-Memory Runtime Handoff.

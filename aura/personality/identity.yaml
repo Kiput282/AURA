@@ -1,5 +1,5 @@
 name: AURA
-version: "0.221.0-genesis"
+version: "0.222.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -290,3 +290,10 @@ modes:
 # Planner validation: 51 assertions, 0 failures.
 # Runtime and execution authority remain disabled.
 # Next: Sprint 222 — Workspace and Project Context Runtime.
+
+# Sprint 222 — Workspace and Project Context Runtime
+# Adds a bounded contract-only workspace and project context facade.
+# Canonical session ownership remains with the browser chat session runtime.
+# Legacy workspace, journal, and memory managers are not constructed.
+# Recursive scans, persistence, execution, and runtime activation remain disabled.
+# Next: Sprint 223 — Chat-to-Memory Runtime Handoff.

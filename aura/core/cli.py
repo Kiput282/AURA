@@ -4530,6 +4530,167 @@ class AuraCLI:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
+        # Sprint 222 Workspace and Project Context Runtime CLI commands.
+        commands = {
+            "partner-runtime-workspace-project-context-status",
+            "partner-runtime-workspace-project-context-context",
+            "partner-runtime-workspace-project-context-check",
+        }
+
+        if raw_args and raw_args[0] in commands:
+            from aura.partner_runtime import (
+                WorkspaceProjectContextAlphaManager,
+            )
+
+            manager = WorkspaceProjectContextAlphaManager(
+                project_root=self.project_root,
+            )
+
+            selected_command = raw_args[0]
+
+            print(
+                "AURA Workspace and Project Context "
+                "Runtime Contract"
+            )
+            print(
+                "=" * 52
+            )
+
+            if selected_command.endswith("-status"):
+                payload = manager.status()
+
+                print(
+                    f"Status            : "
+                    f"{payload['status']}"
+                )
+                print(
+                    f"Contract Ready    : "
+                    f"{payload['workspace_project_context_contract_ready']}"
+                )
+                print(
+                    f"Planning Ready    : "
+                    f"{payload['planning_ready']}"
+                )
+                print(
+                    f"Current Sprint    : "
+                    f"{payload['partner_runtime_current_sprint']}"
+                )
+                print(
+                    f"Next Sprint       : "
+                    f"{payload['partner_runtime_next_sprint']}"
+                )
+                print(
+                    f"Next Boundary     : "
+                    f"{payload['partner_runtime_next_boundary']}"
+                )
+                print(
+                    f"Session Owner     : "
+                    f"{payload['canonical_session_owner']}"
+                )
+                print(
+                    f"Runtime Ready     : "
+                    f"{payload['runtime_ready']}"
+                )
+                print(
+                    f"Assertion Count   : "
+                    f"{payload['assertion_count']}"
+                )
+                print(
+                    f"Failed Assertions : "
+                    f"{payload['failed_assertion_count']}"
+                )
+
+            elif selected_command.endswith("-context"):
+                payload = manager.context()
+
+                identity = payload["identity_snapshot"]
+                git = payload["git_snapshot"]
+                workspace = payload["workspace_snapshot"]
+                sources = payload[
+                    "context_source_snapshot"
+                ]
+                legacy = payload[
+                    "legacy_workspace_snapshot"
+                ]
+
+                print(
+                    f"Current Sprint     : "
+                    f"{payload['current_sprint']}"
+                )
+                print(
+                    f"Next Sprint        : "
+                    f"{payload['next_sprint']}"
+                )
+                print(
+                    f"Next Boundary      : "
+                    f"{payload['next_boundary']}"
+                )
+                print(
+                    f"Identity Version   : "
+                    f"{identity['version']}"
+                )
+                print(
+                    f"Git Branch         : "
+                    f"{git['branch']}"
+                )
+                print(
+                    f"Workspace Dirs     : "
+                    f"{len(workspace['directories'])}"
+                )
+                print(
+                    f"Workspace Files    : "
+                    f"{len(workspace['files'])}"
+                )
+                print(
+                    f"Context Sources OK : "
+                    f"{sources['all_available']}"
+                )
+                print(
+                    f"Legacy Constructed : "
+                    f"{legacy['constructor_called']}"
+                )
+                print(
+                    f"Journal Accessed   : "
+                    f"{legacy['journal_accessed']}"
+                )
+                print(
+                    f"Memory Accessed    : "
+                    f"{legacy['memory_accessed']}"
+                )
+                print(
+                    f"Contract Only      : "
+                    f"{payload['contract_only']}"
+                )
+                print(
+                    f"Runtime Ready      : "
+                    f"{payload['runtime_ready']}"
+                )
+
+            else:
+                payload = manager.check()
+
+                print(
+                    f"Status            : "
+                    f"{payload['status']}"
+                )
+                print(
+                    f"Planning Ready    : "
+                    f"{payload['planning_ready']}"
+                )
+                print(
+                    f"Assertion Count   : "
+                    f"{payload['assertion_count']}"
+                )
+                print(
+                    f"Failed Assertions : "
+                    f"{payload['failed_assertion_count']}"
+                )
+                print(
+                    f"Runtime Ready     : "
+                    f"{payload['runtime_ready']}"
+                )
+
+            return True
         if not raw_args:
             return False
 

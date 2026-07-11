@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.221.0-genesis
+Current anchor: v0.222.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.221.0-genesis
-- Completed: Sprint 221 — Unified Session Runtime
+- Current version: v0.222.0-genesis
+- Completed: Sprint 222 — Workspace and Project Context Runtime
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 222 — Workspace and Project Context Runtime
+- Next: Sprint 223 — Chat-to-Memory Runtime Handoff
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1609,3 +1609,24 @@ background service, public binding, network or Git action, dependency
 installation, model download, or autonomous action is enabled.
 
 Next: Sprint 222 — Workspace and Project Context Runtime.
+
+## v0.222.0-genesis — Workspace and Project Context Runtime
+
+Sprint 222 establishes the bounded workspace and project context contract for
+the Sprint 221-230 Unified Partner Runtime Integration block.
+
+Implemented boundaries:
+
+- preserves `aura_browser_chat_session_runtime` as canonical session owner
+- exposes identity, Git, approved context-source, and top-level workspace metadata
+- limits workspace inspection to depth one
+- excludes `data`, `.git`, `.venv`, logs, and cache directories from workspace listing
+- represents the legacy workspace manager through static source metadata only
+- performs no journal access, memory access, recursive scan, or context persistence
+- performs no session, permission, audit, file, command, tool, network, Git, or desktop mutation
+- keeps runtime activation and the release gate closed
+- validates the contract through 52 deterministic assertions
+
+The next runtime boundary is `chat_to_memory_runtime_handoff`.
+
+Next: Sprint 223 — Chat-to-Memory Runtime Handoff.

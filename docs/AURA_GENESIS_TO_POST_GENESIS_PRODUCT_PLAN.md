@@ -1354,3 +1354,26 @@ remain disabled.
 
 This creates the baseline for Sprint 222 — Workspace and Project Context
 Runtime.
+
+## Sprint 222 — Workspace and Project Context Runtime
+
+v0.222.0-genesis extends the Unified Partner Runtime Integration block with a
+bounded project-awareness contract.
+
+The new facade connects the Sprint 221 unified session contract to stable
+workspace and project metadata without promoting the older workspace stack to
+runtime ownership. This is important because the legacy workspace dependency
+graph constructs journal, memory, reflection, coding, and plugin components.
+
+Sprint 222 therefore uses an explicit contract boundary:
+
+- approved project identity
+- bounded Git metadata
+- top-level workspace shape
+- approved context-source availability
+- static legacy workspace safety metadata
+
+No recursive repository understanding, memory retrieval, journal traversal,
+context persistence, or autonomous project action is enabled.
+
+This boundary prepares Sprint 223 — Chat-to-Memory Runtime Handoff.

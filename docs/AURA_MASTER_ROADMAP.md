@@ -2902,3 +2902,24 @@ control, background service, public binding, or autonomous action is
 enabled.
 
 Next: Sprint 222 — Workspace and Project Context Runtime.
+
+## Checkpoint v0.222.0-genesis — Workspace and Project Context Runtime
+
+Sprint 222 completes the second step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+Canonical checkpoint properties:
+
+- bounded workspace and project context contract available
+- Sprint 221 unified session contract preserved
+- browser chat session runtime remains canonical session owner
+- legacy workspace manager remains a non-runtime static boundary
+- top-level workspace inspection only
+- approved context sources inspected by existence only
+- journal and memory data remain unread
+- context persistence remains disabled
+- execution and all mutation authorities remain disabled
+- 52 contract assertions pass with zero failures
+- Capability Registry remains unchanged
+
+Next: Sprint 223 — Chat-to-Memory Runtime Handoff.
