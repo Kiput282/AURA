@@ -2706,3 +2706,23 @@ perform network/git actions, write memory, install dependencies, download models
 use cloud fallback, upload externally, or perform autonomous actions.
 
 The next sprint is Sprint 212 — Grant, Denial, and Expiry Lifecycle.
+
+## Checkpoint v0.212.0-genesis — Grant, Denial, and Expiry Lifecycle
+
+Sprint 212 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with a contract-only Grant, Denial, and Expiry Lifecycle.
+
+This checkpoint prepares lifecycle schemas and safety visibility for future
+grant requests, grant scopes, grant decisions, grant packets, grant expiry,
+grant revocation, denials, denial reasons, expiry checks, expiry events,
+lifecycle state snapshots, lifecycle audit links, lifecycle review queues, and
+runtime audit writer handoff.
+
+Runtime remains disabled. Sprint 212 does not create grants, denials, expiry
+events, mutate permission state, persist permissions, write audit events, create
+action proposals, preview actions, enqueue actions, execute actions, execute
+commands/tools, mutate files, control desktop, launch applications, perform
+network/git actions, write memory, install dependencies, download models, use
+cloud fallback, upload externally, or perform autonomous actions.
+
+The next sprint is Sprint 213 — Runtime Audit Writer.

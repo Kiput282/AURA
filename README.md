@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.211.0-genesis
-Current status: Sprint 211 Active Permission Runtime completed; Permission, Audit, and Safe Local Actions block 211-220 has started with a contract-only default-deny active permission runtime
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 starts the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Permission runtime now has default-deny request, scope, decision, grant, denial, expiry, state snapshot, review queue, and audit-link schemas. Runtime activation, release gates, permission request creation, permission grants, permission mutation, permission persistence, audit writes, action proposals, action previews, action execution, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.212.0-genesis
+Current status: Sprint 212 Grant, Denial, and Expiry Lifecycle completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only grant, denial, and expiry lifecycle visibility
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 adds contract-only grant, denial, and expiry lifecycle visibility. Permission runtime now has default-deny request, scope, decision, grant, denial, expiry, state snapshot, review queue, lifecycle state, and audit-link schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit writes, action proposals, action previews, action execution, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 211 and starts the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Active Permission Runtime as a contract-only default-deny boundary.
+AURA has completed Sprint 212 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Grant, Denial, and Expiry Lifecycle as a contract-only default-deny boundary.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.212.0-genesis
+- Sprint 212: Grant, Denial, and Expiry Lifecycle
 - v0.211.0-genesis
 - Sprint 211: Active Permission Runtime
 - v0.210.0-genesis
@@ -92,7 +94,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 212 — Grant, Denial, and Expiry Lifecycle
+- Next planned sprint: Sprint 213 — Runtime Audit Writer
 Current capability registry summary:
 
 - total capabilities: 121
@@ -4228,3 +4230,119 @@ assertions, vision baseline stable, voice baseline stable, and baseline
 self-tests OK.
 
 Next: Sprint 212 — Grant, Denial, and Expiry Lifecycle.
+
+## Sprint 212 — Grant, Denial, and Expiry Lifecycle
+
+Version: `v0.212.0-genesis`
+
+Sprint 212 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block.
+
+This sprint adds the Grant, Denial, and Expiry Lifecycle contract as a
+contract-only continuation of Active Permission Runtime. It prepares lifecycle
+schemas and safety visibility for future grants, denials, expiry checks, expiry
+events, lifecycle state snapshots, and lifecycle audit links without creating or
+persisting any runtime permission state.
+
+Sprint 212 confirms:
+
+- Grant, Denial, and Expiry Lifecycle contract ready: true
+- Grant, Denial, and Expiry Lifecycle runtime ready: false
+- Grant, Denial, and Expiry Lifecycle status: grant_denial_expiry_lifecycle_contract_ready
+- current sprint: 212
+- next sprint: 213
+- next boundary: runtime_audit_writer
+- previous contract chain complete: true
+- contract only: true
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- default deny: true
+- default grant: false
+- explicit approval required: true
+- approval before grant required: true
+- request before grant required: true
+- scope before grant required: true
+- expiry before grant required: true
+- denial reason required: true
+- audit link before persistence required: true
+- grant request packet schema ready: true
+- grant scope packet schema ready: true
+- grant decision packet schema ready: true
+- grant packet schema ready: true
+- grant expiry packet schema ready: true
+- grant revocation packet schema ready: true
+- denial packet schema ready: true
+- denial reason packet schema ready: true
+- expiry check packet schema ready: true
+- expiry event packet schema ready: true
+- lifecycle state snapshot schema ready: true
+- lifecycle audit link packet schema ready: true
+- lifecycle review queue packet schema ready: true
+- lifecycle runtime status schema ready: true
+- lifecycle safety matrix schema ready: true
+- lifecycle next audit writer schema ready: true
+- grant lifecycle runtime ready: false
+- grant packet creation allowed: false
+- grant state mutation allowed: false
+- grant persistence allowed: false
+- grant revocation allowed: false
+- denial packet creation allowed: false
+- denial persistence allowed: false
+- expiry evaluation runtime ready: false
+- expiry state mutation allowed: false
+- expired grant reuse allowed: false
+- automatic grant renewal allowed: false
+- broad scope grant allowed: false
+- permission lifecycle bypass allowed: false
+- audit write allowed: false
+- action execution runtime ready: false
+- grant request packet created: false
+- grant packet created: false
+- denial packet created: false
+- expiry event packet created: false
+- lifecycle state snapshot created: false
+- lifecycle audit link packet created: false
+- permission state mutated: false
+- permission grant created: false
+- audit event written: false
+- action executed: false
+- command executed: false
+- file mutated: false
+- desktop action executed: false
+- application launched: false
+- memory written: false
+- external upload performed: false
+- no grant creation: true
+- no grant persistence: true
+- no expired grant reuse: true
+- no automatic grant renewal: true
+- no broad scope grant: true
+- no grant without request: true
+- no grant without explicit approval: true
+- no grant without scope: true
+- no grant without expiry: true
+- no grant without audit link: true
+- no action execution: true
+- safety blockers: 46
+- all safety blockers inactive: true
+- runtime scope: grant_denial_expiry_lifecycle_contract_only
+- assertion count: 270
+- failed assertion count: 0
+
+Sprint 212 does not create grant packets, denial packets, expiry checks, expiry
+events, lifecycle state snapshots, lifecycle audit links, lifecycle review queue
+items, permission grants, permission denials, or permission expiry records. It
+does not mutate permission state, persist permissions, write audit events, create
+action proposals, create action previews, enqueue actions, execute actions,
+execute commands, execute tools, mutate files, control desktop, launch
+applications, perform network/git actions, write memory, install dependencies,
+download models, use cloud fallback, upload externally, or perform autonomous
+actions.
+
+Validation passed with compileall OK, Active Permission Runtime CLI/Shell
+lifecycle visibility OK, active-permission-runtime-check OK, 270 assertions,
+zero failed assertions, vision baseline stable, voice baseline stable, and
+baseline self-tests OK.
+
+Next: Sprint 213 — Runtime Audit Writer.

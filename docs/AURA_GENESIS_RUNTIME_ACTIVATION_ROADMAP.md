@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.211.0-genesis
+Current anchor: v0.212.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.211.0-genesis
-- Completed: Sprint 211 — Active Permission Runtime
+- Current version: v0.212.0-genesis
+- Completed: Sprint 212 — Grant, Denial, and Expiry Lifecycle
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 212 — Grant, Denial, and Expiry Lifecycle
+- Next: Sprint 213 — Runtime Audit Writer
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1141,3 +1141,59 @@ download models, use cloud fallback, upload externally, or perform autonomous
 actions.
 
 Next: Sprint 212 — Grant, Denial, and Expiry Lifecycle.
+
+## v0.212.0-genesis — Grant, Denial, and Expiry Lifecycle
+
+Sprint 212 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only grant, denial, and expiry lifecycle visibility.
+
+The sprint prepares schemas for grant request, grant scope, grant decision,
+grant packet, grant expiry, grant revocation, denial, denial reason, expiry
+check, expiry event, lifecycle state snapshot, lifecycle audit link, lifecycle
+review queue, lifecycle runtime status, lifecycle safety matrix, and next audit
+writer handoff.
+
+The checkpoint confirms:
+
+- Grant, Denial, and Expiry Lifecycle contract ready
+- Grant, Denial, and Expiry Lifecycle runtime disabled
+- status grant_denial_expiry_lifecycle_contract_ready
+- current sprint 212
+- next sprint 213
+- next boundary runtime_audit_writer
+- previous contract chain complete
+- default deny enabled
+- default grant disabled
+- approval before grant required
+- request before grant required
+- scope before grant required
+- expiry before grant required
+- denial reason required
+- audit link before persistence required
+- grant packet creation blocked
+- grant state mutation blocked
+- grant persistence blocked
+- denial packet creation blocked
+- denial persistence blocked
+- expiry evaluation runtime disabled
+- expiry mutation blocked
+- expired grant reuse blocked
+- automatic grant renewal blocked
+- broad scope grant blocked
+- lifecycle bypass blocked
+- audit write blocked
+- action execution blocked
+- 46 safety blockers
+- all safety blockers inactive
+- 270 assertions
+- zero failed assertions
+
+Sprint 212 does not create grants, denials, expiry events, lifecycle state
+snapshots, lifecycle audit links, or lifecycle review queue items. It does not
+mutate permission state, persist permissions, write audit events, enqueue or
+execute actions, run commands/tools, mutate files, control desktop, launch
+applications, perform network/git actions, write memory, install dependencies,
+download models, use cloud fallback, upload externally, or perform autonomous
+actions.
+
+Next: Sprint 213 — Runtime Audit Writer.

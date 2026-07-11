@@ -1133,3 +1133,26 @@ actions, cloud fallback, external upload, or autonomy.
 
 This creates the safe permission baseline for Sprint 212 — Grant, Denial, and
 Expiry Lifecycle.
+
+## Sprint 212 — Grant, Denial, and Expiry Lifecycle
+
+`v0.212.0-genesis` extends the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block.
+
+This sprint introduces contract-only grant, denial, and expiry lifecycle
+visibility. It establishes the future lifecycle boundary for permission grants:
+no grant can be valid without a request, explicit approval, scope, expiry, and
+audit-link boundary.
+
+It prepares grant request, grant scope, grant decision, grant packet, grant
+expiry, grant revocation, denial, denial reason, expiry check, expiry event,
+lifecycle state snapshot, lifecycle audit link, lifecycle review queue, runtime
+status, safety matrix, and next audit writer schemas.
+
+It does not enable grant creation, grant persistence, denial persistence, expiry
+mutation, permission mutation, permission persistence, audit writing, action
+execution, command/tool execution, file mutation, desktop actions, application
+launch, memory writes, network/git actions, cloud fallback, external upload, or
+autonomy.
+
+This creates the lifecycle baseline for Sprint 213 — Runtime Audit Writer.

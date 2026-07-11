@@ -2397,8 +2397,8 @@ class AuraShell:
 
         status = ActivePermissionRuntimeAlphaManager().status()
 
-        print("AURA Active Permission Runtime Alpha")
-        print("====================================")
+        print("AURA Permission Lifecycle Runtime Alpha")
+        print("=======================================")
         rows = [
             ("Name", "name"),
             ("Version", "version"),
@@ -2409,11 +2409,19 @@ class AuraShell:
             ("Sprint 211 Contract Ready", "sprint_211_active_permission_runtime_contract_ready"),
             ("Active Permission Runtime", "active_permission_runtime_ready"),
             ("Runtime Status", "active_permission_runtime_status"),
+            ("S212 Lifecycle Ready", "sprint_212_grant_denial_expiry_lifecycle_contract_ready"),
+            ("S212 Lifecycle Runtime", "grant_denial_expiry_lifecycle_runtime_ready"),
+            ("S212 Lifecycle Status", "grant_denial_expiry_lifecycle_status"),
             ("Current Sprint", "permission_action_current_sprint"),
             ("Next Sprint", "permission_action_next_sprint"),
             ("Next Boundary", "permission_action_next_boundary"),
             ("Default Deny", "default_deny"),
             ("Explicit Approval Required", "explicit_approval_required"),
+            ("Approval Before Grant", "approval_before_grant_required"),
+            ("Request Before Grant", "request_before_grant_required"),
+            ("Scope Before Grant", "scope_before_grant_required"),
+            ("Expiry Before Grant", "expiry_before_grant_required"),
+            ("Denial Reason Required", "denial_reason_required"),
             ("Foreground Confirmation", "foreground_user_confirmation_required"),
             ("Permission Before Action", "permission_before_action_required"),
             ("Request Packet Schema", "active_permission_request_packet_schema_ready"),
@@ -2424,16 +2432,42 @@ class AuraShell:
             ("Expiry Packet Schema", "permission_expiry_packet_schema_ready"),
             ("State Snapshot Schema", "permission_state_snapshot_schema_ready"),
             ("Audit Link Packet Schema", "permission_audit_link_packet_schema_ready"),
+            ("Grant Request Schema", "grant_request_packet_schema_ready"),
+            ("Grant Scope Schema", "grant_scope_packet_schema_ready"),
+            ("Grant Decision Schema", "grant_decision_packet_schema_ready"),
+            ("Grant Packet Schema", "grant_packet_schema_ready"),
+            ("Grant Expiry Schema", "grant_expiry_packet_schema_ready"),
+            ("Denial Packet Schema", "denial_packet_schema_ready"),
+            ("Denial Reason Schema", "denial_reason_packet_schema_ready"),
+            ("Expiry Check Schema", "expiry_check_packet_schema_ready"),
+            ("Expiry Event Schema", "expiry_event_packet_schema_ready"),
+            ("Lifecycle Snapshot Schema", "lifecycle_state_snapshot_schema_ready"),
+            ("Lifecycle Audit Link Schema", "lifecycle_audit_link_packet_schema_ready"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
             ("Registry Mutation Allowed", "permission_registry_mutation_allowed"),
             ("Grant Creation Allowed", "grant_creation_allowed"),
+            ("Grant Packet Creation Allowed", "grant_packet_creation_allowed"),
+            ("Grant State Mutation Allowed", "grant_state_mutation_allowed"),
+            ("Grant Persistence Allowed", "grant_persistence_allowed"),
+            ("Denial Packet Creation Allowed", "denial_packet_creation_allowed"),
+            ("Denial Persistence Allowed", "denial_persistence_allowed"),
+            ("Expiry Evaluation Runtime", "expiry_evaluation_runtime_ready"),
+            ("Expired Grant Reuse Allowed", "expired_grant_reuse_allowed"),
+            ("Automatic Grant Renewal", "automatic_grant_renewal_allowed"),
+            ("Lifecycle Bypass Allowed", "permission_lifecycle_bypass_allowed"),
             ("Audit Write Allowed", "audit_write_allowed"),
             ("Safe Action Handoff Ready", "safe_local_action_handoff_ready"),
             ("Allowed Future Scope Count", "allowed_future_scope_count"),
             ("Blocked Scope Count", "blocked_scope_count"),
             ("Request Created", "active_permission_request_created"),
+            ("Grant Request Created", "grant_request_packet_created"),
+            ("Grant Packet Created", "grant_packet_created"),
+            ("Denial Packet Created", "denial_packet_created"),
+            ("Expiry Event Created", "expiry_event_packet_created"),
+            ("Lifecycle Snapshot Created", "lifecycle_state_snapshot_created"),
+            ("Lifecycle Audit Link Created", "lifecycle_audit_link_packet_created"),
             ("Permission State Mutated", "permission_state_mutated"),
             ("Permission Grant Created", "permission_grant_created"),
             ("Audit Event Written", "audit_event_written"),
@@ -2445,6 +2479,15 @@ class AuraShell:
             ("Memory Written", "memory_written"),
             ("External Upload Performed", "external_upload_performed"),
             ("No Automatic Grant", "no_automatic_grant"),
+            ("No Grant Creation", "no_grant_creation"),
+            ("No Grant Persistence", "no_grant_persistence"),
+            ("No Expired Grant Reuse", "no_expired_grant_reuse"),
+            ("No Automatic Grant Renewal", "no_automatic_grant_renewal"),
+            ("No Grant Without Request", "no_grant_without_request"),
+            ("No Grant Without Approval", "no_grant_without_explicit_approval"),
+            ("No Grant Without Scope", "no_grant_without_scope"),
+            ("No Grant Without Expiry", "no_grant_without_expiry"),
+            ("No Grant Without Audit Link", "no_grant_without_audit_link"),
             ("No Implicit Approval", "no_implicit_approval"),
             ("No Permission Bypass", "no_permission_bypass"),
             ("No State Mutation", "no_state_mutation"),
@@ -2471,8 +2514,8 @@ class AuraShell:
 
         status = ActivePermissionRuntimePlanner().status()
 
-        print("AURA Active Permission Runtime Status")
-        print("=====================================")
+        print("AURA Permission Lifecycle Runtime Status")
+        print("========================================")
         rows = [
             ("Name", "name"),
             ("Version", "version"),
@@ -2489,6 +2532,11 @@ class AuraShell:
             ("Next Boundary", "permission_action_next_boundary"),
             ("Default Deny", "default_deny"),
             ("Explicit Approval Required", "explicit_approval_required"),
+            ("Approval Before Grant", "approval_before_grant_required"),
+            ("Request Before Grant", "request_before_grant_required"),
+            ("Scope Before Grant", "scope_before_grant_required"),
+            ("Expiry Before Grant", "expiry_before_grant_required"),
+            ("Denial Reason Required", "denial_reason_required"),
             ("Foreground Confirmation", "foreground_user_confirmation_required"),
             ("Permission Before Action", "permission_before_action_required"),
             ("Request Packet Schema", "active_permission_request_packet_schema_ready"),
@@ -2500,18 +2548,44 @@ class AuraShell:
             ("State Snapshot Schema", "permission_state_snapshot_schema_ready"),
             ("Audit Link Packet Schema", "permission_audit_link_packet_schema_ready"),
             ("Review Queue Packet Schema", "permission_review_queue_packet_schema_ready"),
+            ("Grant Request Schema", "grant_request_packet_schema_ready"),
+            ("Grant Scope Schema", "grant_scope_packet_schema_ready"),
+            ("Grant Decision Schema", "grant_decision_packet_schema_ready"),
+            ("Grant Packet Schema", "grant_packet_schema_ready"),
+            ("Grant Expiry Schema", "grant_expiry_packet_schema_ready"),
+            ("Denial Packet Schema", "denial_packet_schema_ready"),
+            ("Denial Reason Schema", "denial_reason_packet_schema_ready"),
+            ("Expiry Check Schema", "expiry_check_packet_schema_ready"),
+            ("Expiry Event Schema", "expiry_event_packet_schema_ready"),
+            ("Lifecycle Snapshot Schema", "lifecycle_state_snapshot_schema_ready"),
+            ("Lifecycle Audit Link Schema", "lifecycle_audit_link_packet_schema_ready"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
             ("Registry Mutation Allowed", "permission_registry_mutation_allowed"),
             ("State Persistence Allowed", "permission_state_persistence_allowed"),
             ("Grant Creation Allowed", "grant_creation_allowed"),
+            ("Grant Packet Creation Allowed", "grant_packet_creation_allowed"),
+            ("Grant State Mutation Allowed", "grant_state_mutation_allowed"),
+            ("Grant Persistence Allowed", "grant_persistence_allowed"),
+            ("Denial Packet Creation Allowed", "denial_packet_creation_allowed"),
+            ("Denial Persistence Allowed", "denial_persistence_allowed"),
+            ("Expiry Evaluation Runtime", "expiry_evaluation_runtime_ready"),
+            ("Expired Grant Reuse Allowed", "expired_grant_reuse_allowed"),
+            ("Automatic Grant Renewal", "automatic_grant_renewal_allowed"),
+            ("Lifecycle Bypass Allowed", "permission_lifecycle_bypass_allowed"),
             ("Audit Write Allowed", "audit_write_allowed"),
             ("Audit Link Contract", "audit_link_contract_ready"),
             ("Safe Action Handoff Ready", "safe_local_action_handoff_ready"),
             ("Allowed Future Scope Count", "allowed_future_scope_count"),
             ("Blocked Scope Count", "blocked_scope_count"),
             ("Request Created", "active_permission_request_created"),
+            ("Grant Request Created", "grant_request_packet_created"),
+            ("Grant Packet Created", "grant_packet_created"),
+            ("Denial Packet Created", "denial_packet_created"),
+            ("Expiry Event Created", "expiry_event_packet_created"),
+            ("Lifecycle Snapshot Created", "lifecycle_state_snapshot_created"),
+            ("Lifecycle Audit Link Created", "lifecycle_audit_link_packet_created"),
             ("Decision Packet Created", "permission_decision_packet_created"),
             ("Permission State Mutated", "permission_state_mutated"),
             ("Permission Grant Created", "permission_grant_created"),
@@ -2551,21 +2625,23 @@ class AuraShell:
         result = ActivePermissionRuntimePlanner().check()
         contract = result["active_permission_runtime_contract"]
 
-        print("AURA Active Permission Runtime Check")
-        print("====================================")
+        print("AURA Permission Lifecycle Runtime Check")
+        print("=======================================")
         print(f"Status                 : {result['status']}")
         print(f"Planning Ready         : {result['planning_ready']}")
         print(f"Runtime Ready          : {result['runtime_ready']}")
         print(f"Assertion Count        : {result['assertion_count']}")
         print(f"Failed Assertion Count : {result['failed_assertion_count']}")
         print()
-        print("Sprint 211 Active Permission Runtime")
-        print("------------------------------------")
+        print("Sprint 212 Grant, Denial, and Expiry Lifecycle")
+        print("------------------------------------------------")
 
         rows = [
             ("Contract Ready", "active_permission_runtime_contract_ready"),
             ("Runtime Ready", "active_permission_runtime_ready"),
-            ("Runtime Status", "active_permission_runtime_status"),
+            ("Runtime Status", "grant_denial_expiry_lifecycle_status"),
+            ("S212 Lifecycle Ready", "grant_denial_expiry_lifecycle_contract_ready"),
+            ("S212 Lifecycle Runtime", "grant_denial_expiry_lifecycle_runtime_ready"),
             ("Current Sprint", "permission_action_current_sprint"),
             ("Next Sprint", "permission_action_next_sprint"),
             ("Next Boundary", "permission_action_next_boundary"),
@@ -2575,6 +2651,12 @@ class AuraShell:
             ("Default Deny", "default_deny"),
             ("Default Grant", "default_grant"),
             ("Explicit Approval Required", "explicit_approval_required"),
+            ("Approval Before Grant", "approval_before_grant_required"),
+            ("Request Before Grant", "request_before_grant_required"),
+            ("Scope Before Grant", "scope_before_grant_required"),
+            ("Expiry Before Grant", "expiry_before_grant_required"),
+            ("Denial Reason Required", "denial_reason_required"),
+            ("Audit Link Before Persistence", "audit_link_before_persistence_required"),
             ("Foreground Confirmation", "foreground_user_confirmation_required"),
             ("Permission Before Action", "permission_before_action_required"),
             ("Permission Before Memory", "permission_before_memory_write_required"),
@@ -2590,13 +2672,34 @@ class AuraShell:
             ("State Snapshot Schema", "permission_state_snapshot_schema_ready"),
             ("Audit Link Packet Schema", "permission_audit_link_packet_schema_ready"),
             ("Review Queue Packet Schema", "permission_review_queue_packet_schema_ready"),
+            ("Grant Request Schema", "grant_request_packet_schema_ready"),
+            ("Grant Scope Schema", "grant_scope_packet_schema_ready"),
+            ("Grant Decision Schema", "grant_decision_packet_schema_ready"),
+            ("Grant Expiry Schema", "grant_expiry_packet_schema_ready"),
+            ("Grant Revocation Schema", "grant_revocation_packet_schema_ready"),
+            ("Denial Reason Schema", "denial_reason_packet_schema_ready"),
+            ("Expiry Check Schema", "expiry_check_packet_schema_ready"),
+            ("Expiry Event Schema", "expiry_event_packet_schema_ready"),
+            ("Lifecycle Snapshot Schema", "lifecycle_state_snapshot_schema_ready"),
+            ("Lifecycle Audit Link Schema", "lifecycle_audit_link_packet_schema_ready"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
             ("Registry Mutation Allowed", "permission_registry_mutation_allowed"),
             ("State Persistence Allowed", "permission_state_persistence_allowed"),
             ("Grant Creation Allowed", "grant_creation_allowed"),
+            ("Grant Packet Creation Allowed", "grant_packet_creation_allowed"),
+            ("Grant State Mutation Allowed", "grant_state_mutation_allowed"),
+            ("Grant Persistence Allowed", "grant_persistence_allowed"),
             ("Grant Revocation Allowed", "grant_revocation_allowed"),
+            ("Denial Packet Creation Allowed", "denial_packet_creation_allowed"),
+            ("Denial Persistence Allowed", "denial_persistence_allowed"),
+            ("Expiry Evaluation Runtime", "expiry_evaluation_runtime_ready"),
+            ("Expiry State Mutation Allowed", "expiry_state_mutation_allowed"),
+            ("Expired Grant Reuse Allowed", "expired_grant_reuse_allowed"),
+            ("Automatic Grant Renewal", "automatic_grant_renewal_allowed"),
+            ("Broad Scope Grant Allowed", "broad_scope_grant_allowed"),
+            ("Lifecycle Bypass Allowed", "permission_lifecycle_bypass_allowed"),
             ("Audit Write Allowed", "audit_write_allowed"),
             ("Audit Link Contract Ready", "audit_link_contract_ready"),
             ("Audit Writer Runtime Ready", "audit_writer_runtime_ready"),
@@ -2611,11 +2714,23 @@ class AuraShell:
             print(f"{label:<35}: {contract[key]}")
 
         print()
-        print("Active Permission Runtime Safety State")
-        print("--------------------------------------")
+        print("Grant, Denial, and Expiry Lifecycle Safety State")
+        print("------------------------------------------------")
 
         safety_rows = [
             ("Active Permission Request Created", "active_permission_request_created"),
+            ("Grant Request Packet Created", "grant_request_packet_created"),
+            ("Grant Scope Packet Created", "grant_scope_packet_created"),
+            ("Grant Decision Packet Created", "grant_decision_packet_created"),
+            ("Grant Packet Created", "grant_packet_created"),
+            ("Grant Expiry Packet Created", "grant_expiry_packet_created"),
+            ("Grant Revocation Packet Created", "grant_revocation_packet_created"),
+            ("Denial Packet Created", "denial_packet_created"),
+            ("Denial Reason Packet Created", "denial_reason_packet_created"),
+            ("Expiry Check Packet Created", "expiry_check_packet_created"),
+            ("Expiry Event Packet Created", "expiry_event_packet_created"),
+            ("Lifecycle Snapshot Created", "lifecycle_state_snapshot_created"),
+            ("Lifecycle Audit Link Created", "lifecycle_audit_link_packet_created"),
             ("Permission Scope Packet Created", "permission_scope_packet_created"),
             ("Permission Decision Created", "permission_decision_packet_created"),
             ("Permission Grant Packet Created", "permission_grant_packet_created"),
@@ -2640,6 +2755,16 @@ class AuraShell:
             ("Cloud Fallback Used", "cloud_fallback_used"),
             ("Autonomous Action Performed", "autonomous_action_performed"),
             ("No Automatic Grant", "no_automatic_grant"),
+            ("No Grant Creation", "no_grant_creation"),
+            ("No Grant Persistence", "no_grant_persistence"),
+            ("No Expired Grant Reuse", "no_expired_grant_reuse"),
+            ("No Automatic Grant Renewal", "no_automatic_grant_renewal"),
+            ("No Broad Scope Grant", "no_broad_scope_grant"),
+            ("No Grant Without Request", "no_grant_without_request"),
+            ("No Grant Without Approval", "no_grant_without_explicit_approval"),
+            ("No Grant Without Scope", "no_grant_without_scope"),
+            ("No Grant Without Expiry", "no_grant_without_expiry"),
+            ("No Grant Without Audit Link", "no_grant_without_audit_link"),
             ("No Implicit Approval", "no_implicit_approval"),
             ("No Permission Bypass", "no_permission_bypass"),
             ("No State Mutation", "no_state_mutation"),
@@ -15044,4 +15169,3 @@ class AuraShell:
             print(f"- {item}")
         print()
         print(f"Note: {context['note']}")
-

@@ -482,3 +482,693 @@ class ActivePermissionRuntimePlanner:
             "allowed_future_scope": contract["allowed_future_scope"],
             "blocked_scope": contract["blocked_scope"],
         }
+
+# Sprint 212 extension: Grant, Denial, and Expiry Lifecycle.
+#
+# This intentionally wraps the Sprint 211 planner instead of enabling a real
+# permission runtime. It prepares lifecycle schemas and safety visibility only.
+if not getattr(ActivePermissionRuntimePlanner, "_s212_extension_installed", False):
+    _S211_STATUS = ActivePermissionRuntimePlanner.status
+    _S211_CHECK = ActivePermissionRuntimePlanner.check
+    _S211_PLAN = ActivePermissionRuntimePlanner.plan
+
+    def _s212_safety_blockers(self) -> tuple[str, ...]:
+        base = tuple(self.SAFETY_BLOCKERS)
+        extra = (
+            "grant_lifecycle_runtime_active",
+            "grant_packet_creation_active",
+            "grant_state_mutation_active",
+            "grant_persistence_active",
+            "denial_lifecycle_runtime_active",
+            "denial_packet_creation_active",
+            "denial_persistence_active",
+            "expiry_lifecycle_runtime_active",
+            "expiry_evaluation_runtime_active",
+            "expiry_state_mutation_active",
+            "expired_grant_reuse_active",
+            "automatic_grant_renewal_active",
+            "grant_without_request_active",
+            "grant_without_explicit_approval_active",
+            "grant_without_scope_active",
+            "grant_without_expiry_active",
+            "grant_without_audit_link_active",
+            "broad_permission_grant_active",
+            "permission_lifecycle_bypass_active",
+        )
+        return tuple(dict.fromkeys(base + extra))
+
+    def _s212_grant_denial_expiry_lifecycle_contract(self) -> dict[str, Any]:
+        s211 = self.active_permission_runtime_contract()
+        blockers = _s212_safety_blockers(self)
+
+        contract: dict[str, Any] = dict(s211)
+        contract.update(
+            {
+                "grant_denial_expiry_lifecycle_contract_ready": True,
+                "grant_denial_expiry_lifecycle_runtime_ready": False,
+                "grant_denial_expiry_lifecycle_status": "grant_denial_expiry_lifecycle_contract_ready",
+                "permission_action_block_start": 211,
+                "permission_action_block_end": 220,
+                "permission_action_current_sprint": 212,
+                "permission_action_next_sprint": 213,
+                "permission_action_next_boundary": "runtime_audit_writer",
+                "previous_active_permission_runtime_contract_ready": s211[
+                    "active_permission_runtime_contract_ready"
+                ],
+                "previous_contract_chain_complete": True,
+                "contract_only": True,
+                "runtime_ready": False,
+                "runtime_activation_allowed": False,
+                "release_gate_open": False,
+                "default_deny": True,
+                "default_grant": False,
+                "explicit_approval_required": True,
+                "foreground_user_confirmation_required": True,
+                "approval_before_grant_required": True,
+                "request_before_grant_required": True,
+                "scope_before_grant_required": True,
+                "expiry_before_grant_required": True,
+                "denial_reason_required": True,
+                "audit_link_before_persistence_required": True,
+                "grant_request_packet_schema_ready": True,
+                "grant_scope_packet_schema_ready": True,
+                "grant_decision_packet_schema_ready": True,
+                "grant_packet_schema_ready": True,
+                "grant_expiry_packet_schema_ready": True,
+                "grant_revocation_packet_schema_ready": True,
+                "denial_packet_schema_ready": True,
+                "denial_reason_packet_schema_ready": True,
+                "denial_review_packet_schema_ready": True,
+                "expiry_check_packet_schema_ready": True,
+                "expiry_event_packet_schema_ready": True,
+                "lifecycle_state_snapshot_schema_ready": True,
+                "lifecycle_audit_link_packet_schema_ready": True,
+                "lifecycle_review_queue_packet_schema_ready": True,
+                "lifecycle_user_visible_reason_schema_ready": True,
+                "lifecycle_runtime_status_schema_ready": True,
+                "lifecycle_safety_matrix_schema_ready": True,
+                "lifecycle_next_audit_writer_schema_ready": True,
+                "grant_lifecycle_runtime_ready": False,
+                "grant_packet_creation_allowed": False,
+                "grant_state_mutation_allowed": False,
+                "grant_persistence_allowed": False,
+                "grant_revocation_allowed": False,
+                "denial_lifecycle_runtime_ready": False,
+                "denial_packet_creation_allowed": False,
+                "denial_persistence_allowed": False,
+                "expiry_lifecycle_runtime_ready": False,
+                "expiry_evaluation_runtime_ready": False,
+                "expiry_state_mutation_allowed": False,
+                "expired_grant_reuse_allowed": False,
+                "automatic_grant_renewal_allowed": False,
+                "broad_scope_grant_allowed": False,
+                "permission_lifecycle_bypass_allowed": False,
+                "audit_write_allowed": False,
+                "audit_writer_runtime_ready": False,
+                "audit_persistence_ready": False,
+                "safe_local_action_handoff_ready": False,
+                "action_proposal_runtime_ready": False,
+                "action_preview_runtime_ready": False,
+                "action_execution_runtime_ready": False,
+                "control_center_approval_runtime_ready": False,
+                "grant_request_packet_created": False,
+                "grant_scope_packet_created": False,
+                "grant_decision_packet_created": False,
+                "grant_packet_created": False,
+                "grant_expiry_packet_created": False,
+                "grant_revocation_packet_created": False,
+                "denial_packet_created": False,
+                "denial_reason_packet_created": False,
+                "denial_review_packet_created": False,
+                "expiry_check_packet_created": False,
+                "expiry_event_packet_created": False,
+                "lifecycle_state_snapshot_created": False,
+                "lifecycle_audit_link_packet_created": False,
+                "lifecycle_review_queue_item_created": False,
+                "grant_lifecycle_runtime_active": False,
+                "grant_packet_creation_active": False,
+                "grant_state_mutation_active": False,
+                "grant_persistence_active": False,
+                "denial_lifecycle_runtime_active": False,
+                "denial_packet_creation_active": False,
+                "denial_persistence_active": False,
+                "expiry_lifecycle_runtime_active": False,
+                "expiry_evaluation_runtime_active": False,
+                "expiry_state_mutation_active": False,
+                "expired_grant_reuse_active": False,
+                "automatic_grant_renewal_active": False,
+                "grant_without_request_active": False,
+                "grant_without_explicit_approval_active": False,
+                "grant_without_scope_active": False,
+                "grant_without_expiry_active": False,
+                "grant_without_audit_link_active": False,
+                "broad_permission_grant_active": False,
+                "permission_lifecycle_bypass_active": False,
+                "permission_state_mutated": False,
+                "permission_grant_created": False,
+                "permission_denial_created": False,
+                "permission_expiry_created": False,
+                "permission_persisted": False,
+                "audit_event_written": False,
+                "audit_event_persisted": False,
+                "action_proposal_created": False,
+                "action_preview_created": False,
+                "action_enqueued": False,
+                "action_executed": False,
+                "command_executed": False,
+                "tool_executed": False,
+                "file_mutated": False,
+                "desktop_action_executed": False,
+                "application_launched": False,
+                "network_action_executed": False,
+                "git_action_executed": False,
+                "memory_written": False,
+                "dependency_installed": False,
+                "model_downloaded": False,
+                "external_upload_performed": False,
+                "cloud_fallback_used": False,
+                "autonomous_action_performed": False,
+                "no_automatic_grant": True,
+                "no_implicit_approval": True,
+                "no_permission_bypass": True,
+                "no_state_mutation": True,
+                "no_permission_persistence": True,
+                "no_grant_creation": True,
+                "no_grant_persistence": True,
+                "no_denial_persistence": True,
+                "no_expiry_mutation": True,
+                "no_expired_grant_reuse": True,
+                "no_automatic_grant_renewal": True,
+                "no_broad_scope_grant": True,
+                "no_grant_without_request": True,
+                "no_grant_without_explicit_approval": True,
+                "no_grant_without_scope": True,
+                "no_grant_without_expiry": True,
+                "no_grant_without_audit_link": True,
+                "no_audit_write": True,
+                "no_action_execution": True,
+                "no_command_execution": True,
+                "no_tool_execution": True,
+                "no_file_mutation": True,
+                "no_desktop_action": True,
+                "no_application_launch": True,
+                "no_network_action": True,
+                "no_git_action": True,
+                "no_memory_write": True,
+                "no_dependency_install": True,
+                "no_model_download": True,
+                "no_external_upload": True,
+                "no_cloud_fallback": True,
+                "no_autonomous_action": True,
+                "runtime_scope": "grant_denial_expiry_lifecycle_contract_only",
+                "safety_blockers": list(blockers),
+                "safety_blocker_count": len(blockers),
+            }
+        )
+
+        for blocker in blockers:
+            contract[blocker] = False
+
+        contract["all_safety_blockers_inactive"] = all(
+            contract[blocker] is False for blocker in blockers
+        )
+
+        return contract
+
+    def _s212_status(self) -> dict[str, Any]:
+        status = _S211_STATUS(self)
+        contract = self.grant_denial_expiry_lifecycle_contract()
+
+        status.update(
+            {
+                "name": self.name,
+                "version": self.version,
+                "status": "planning",
+                "planning_ready": True,
+                "runtime_ready": False,
+                "grant_denial_expiry_lifecycle_contract_ready": contract[
+                    "grant_denial_expiry_lifecycle_contract_ready"
+                ],
+                "grant_denial_expiry_lifecycle_runtime_ready": contract[
+                    "grant_denial_expiry_lifecycle_runtime_ready"
+                ],
+                "grant_denial_expiry_lifecycle_status": contract[
+                    "grant_denial_expiry_lifecycle_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "default_deny": contract["default_deny"],
+                "default_grant": contract["default_grant"],
+                "explicit_approval_required": contract["explicit_approval_required"],
+                "approval_before_grant_required": contract[
+                    "approval_before_grant_required"
+                ],
+                "request_before_grant_required": contract[
+                    "request_before_grant_required"
+                ],
+                "scope_before_grant_required": contract[
+                    "scope_before_grant_required"
+                ],
+                "expiry_before_grant_required": contract[
+                    "expiry_before_grant_required"
+                ],
+                "denial_reason_required": contract["denial_reason_required"],
+                "grant_request_packet_schema_ready": contract[
+                    "grant_request_packet_schema_ready"
+                ],
+                "grant_scope_packet_schema_ready": contract[
+                    "grant_scope_packet_schema_ready"
+                ],
+                "grant_decision_packet_schema_ready": contract[
+                    "grant_decision_packet_schema_ready"
+                ],
+                "grant_packet_schema_ready": contract["grant_packet_schema_ready"],
+                "grant_expiry_packet_schema_ready": contract[
+                    "grant_expiry_packet_schema_ready"
+                ],
+                "denial_packet_schema_ready": contract["denial_packet_schema_ready"],
+                "denial_reason_packet_schema_ready": contract[
+                    "denial_reason_packet_schema_ready"
+                ],
+                "expiry_check_packet_schema_ready": contract[
+                    "expiry_check_packet_schema_ready"
+                ],
+                "expiry_event_packet_schema_ready": contract[
+                    "expiry_event_packet_schema_ready"
+                ],
+                "lifecycle_state_snapshot_schema_ready": contract[
+                    "lifecycle_state_snapshot_schema_ready"
+                ],
+                "lifecycle_audit_link_packet_schema_ready": contract[
+                    "lifecycle_audit_link_packet_schema_ready"
+                ],
+                "grant_packet_creation_allowed": contract[
+                    "grant_packet_creation_allowed"
+                ],
+                "grant_state_mutation_allowed": contract[
+                    "grant_state_mutation_allowed"
+                ],
+                "grant_persistence_allowed": contract["grant_persistence_allowed"],
+                "denial_packet_creation_allowed": contract[
+                    "denial_packet_creation_allowed"
+                ],
+                "expiry_evaluation_runtime_ready": contract[
+                    "expiry_evaluation_runtime_ready"
+                ],
+                "expired_grant_reuse_allowed": contract[
+                    "expired_grant_reuse_allowed"
+                ],
+                "automatic_grant_renewal_allowed": contract[
+                    "automatic_grant_renewal_allowed"
+                ],
+                "permission_lifecycle_bypass_allowed": contract[
+                    "permission_lifecycle_bypass_allowed"
+                ],
+                "grant_request_packet_created": contract[
+                    "grant_request_packet_created"
+                ],
+                "grant_packet_created": contract["grant_packet_created"],
+                "denial_packet_created": contract["denial_packet_created"],
+                "expiry_event_packet_created": contract[
+                    "expiry_event_packet_created"
+                ],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "permission_grant_created": contract["permission_grant_created"],
+                "audit_event_written": contract["audit_event_written"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "file_mutated": contract["file_mutated"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "memory_written": contract["memory_written"],
+                "external_upload_performed": contract["external_upload_performed"],
+                "no_automatic_grant": contract["no_automatic_grant"],
+                "no_grant_creation": contract["no_grant_creation"],
+                "no_grant_persistence": contract["no_grant_persistence"],
+                "no_expired_grant_reuse": contract["no_expired_grant_reuse"],
+                "no_automatic_grant_renewal": contract[
+                    "no_automatic_grant_renewal"
+                ],
+                "no_grant_without_request": contract["no_grant_without_request"],
+                "no_grant_without_explicit_approval": contract[
+                    "no_grant_without_explicit_approval"
+                ],
+                "no_grant_without_scope": contract["no_grant_without_scope"],
+                "no_grant_without_expiry": contract["no_grant_without_expiry"],
+                "no_grant_without_audit_link": contract[
+                    "no_grant_without_audit_link"
+                ],
+                "no_audit_write": contract["no_audit_write"],
+                "no_action_execution": contract["no_action_execution"],
+                "no_command_execution": contract["no_command_execution"],
+                "no_file_mutation": contract["no_file_mutation"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_memory_write": contract["no_memory_write"],
+                "no_external_upload": contract["no_external_upload"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "runtime_scope": contract["runtime_scope"],
+                "grant_denial_expiry_lifecycle_contract": contract,
+                "contract": contract,
+                "note": (
+                    "Grant, Denial, and Expiry Lifecycle contract is ready for "
+                    "Sprint 212; it prepares grant, denial, and expiry schemas "
+                    "without creating grant packets, mutating permission state, "
+                    "persisting permissions, writing audit events, or executing "
+                    "local actions."
+                ),
+            }
+        )
+        return status
+
+    def _s212_check(self) -> dict[str, Any]:
+        s211 = _S211_CHECK(self)
+        contract = self.grant_denial_expiry_lifecycle_contract()
+
+        assertions: dict[str, bool] = {
+            "sprint_211_check_still_clean": s211["failed_assertion_count"] == 0,
+            "contract_ready": contract[
+                "grant_denial_expiry_lifecycle_contract_ready"
+            ]
+            is True,
+            "runtime_disabled": contract[
+                "grant_denial_expiry_lifecycle_runtime_ready"
+            ]
+            is False,
+            "status_ready": contract["grant_denial_expiry_lifecycle_status"]
+            == "grant_denial_expiry_lifecycle_contract_ready",
+            "current_sprint_212": contract["permission_action_current_sprint"] == 212,
+            "next_sprint_213": contract["permission_action_next_sprint"] == 213,
+            "next_boundary_runtime_audit_writer": contract[
+                "permission_action_next_boundary"
+            ]
+            == "runtime_audit_writer",
+            "previous_contract_chain_complete": contract[
+                "previous_contract_chain_complete"
+            ]
+            is True,
+            "contract_only": contract["contract_only"] is True,
+            "runtime_not_ready": contract["runtime_ready"] is False,
+            "runtime_activation_blocked": contract["runtime_activation_allowed"]
+            is False,
+            "release_gate_closed": contract["release_gate_open"] is False,
+            "default_deny_enabled": contract["default_deny"] is True,
+            "default_grant_disabled": contract["default_grant"] is False,
+            "explicit_approval_required": contract["explicit_approval_required"]
+            is True,
+            "approval_before_grant_required": contract[
+                "approval_before_grant_required"
+            ]
+            is True,
+            "request_before_grant_required": contract[
+                "request_before_grant_required"
+            ]
+            is True,
+            "scope_before_grant_required": contract[
+                "scope_before_grant_required"
+            ]
+            is True,
+            "expiry_before_grant_required": contract[
+                "expiry_before_grant_required"
+            ]
+            is True,
+            "denial_reason_required": contract["denial_reason_required"] is True,
+            "audit_link_before_persistence_required": contract[
+                "audit_link_before_persistence_required"
+            ]
+            is True,
+            "grant_request_schema_ready": contract[
+                "grant_request_packet_schema_ready"
+            ]
+            is True,
+            "grant_scope_schema_ready": contract[
+                "grant_scope_packet_schema_ready"
+            ]
+            is True,
+            "grant_decision_schema_ready": contract[
+                "grant_decision_packet_schema_ready"
+            ]
+            is True,
+            "grant_packet_schema_ready": contract["grant_packet_schema_ready"]
+            is True,
+            "grant_expiry_schema_ready": contract[
+                "grant_expiry_packet_schema_ready"
+            ]
+            is True,
+            "grant_revocation_schema_ready": contract[
+                "grant_revocation_packet_schema_ready"
+            ]
+            is True,
+            "denial_packet_schema_ready": contract["denial_packet_schema_ready"]
+            is True,
+            "denial_reason_schema_ready": contract[
+                "denial_reason_packet_schema_ready"
+            ]
+            is True,
+            "expiry_check_schema_ready": contract[
+                "expiry_check_packet_schema_ready"
+            ]
+            is True,
+            "expiry_event_schema_ready": contract[
+                "expiry_event_packet_schema_ready"
+            ]
+            is True,
+            "lifecycle_state_snapshot_schema_ready": contract[
+                "lifecycle_state_snapshot_schema_ready"
+            ]
+            is True,
+            "lifecycle_audit_link_schema_ready": contract[
+                "lifecycle_audit_link_packet_schema_ready"
+            ]
+            is True,
+            "lifecycle_review_queue_schema_ready": contract[
+                "lifecycle_review_queue_packet_schema_ready"
+            ]
+            is True,
+            "grant_lifecycle_runtime_disabled": contract[
+                "grant_lifecycle_runtime_ready"
+            ]
+            is False,
+            "grant_packet_creation_blocked": contract[
+                "grant_packet_creation_allowed"
+            ]
+            is False,
+            "grant_state_mutation_blocked": contract[
+                "grant_state_mutation_allowed"
+            ]
+            is False,
+            "grant_persistence_blocked": contract["grant_persistence_allowed"]
+            is False,
+            "denial_packet_creation_blocked": contract[
+                "denial_packet_creation_allowed"
+            ]
+            is False,
+            "denial_persistence_blocked": contract["denial_persistence_allowed"]
+            is False,
+            "expiry_evaluation_runtime_disabled": contract[
+                "expiry_evaluation_runtime_ready"
+            ]
+            is False,
+            "expired_grant_reuse_blocked": contract[
+                "expired_grant_reuse_allowed"
+            ]
+            is False,
+            "automatic_grant_renewal_blocked": contract[
+                "automatic_grant_renewal_allowed"
+            ]
+            is False,
+            "broad_scope_grant_blocked": contract["broad_scope_grant_allowed"]
+            is False,
+            "permission_lifecycle_bypass_blocked": contract[
+                "permission_lifecycle_bypass_allowed"
+            ]
+            is False,
+            "audit_write_blocked": contract["audit_write_allowed"] is False,
+            "safe_action_handoff_disabled": contract[
+                "safe_local_action_handoff_ready"
+            ]
+            is False,
+            "action_execution_disabled": contract[
+                "action_execution_runtime_ready"
+            ]
+            is False,
+            "grant_request_not_created": contract[
+                "grant_request_packet_created"
+            ]
+            is False,
+            "grant_packet_not_created": contract["grant_packet_created"] is False,
+            "denial_packet_not_created": contract["denial_packet_created"]
+            is False,
+            "expiry_event_not_created": contract["expiry_event_packet_created"]
+            is False,
+            "lifecycle_snapshot_not_created": contract[
+                "lifecycle_state_snapshot_created"
+            ]
+            is False,
+            "lifecycle_audit_link_not_created": contract[
+                "lifecycle_audit_link_packet_created"
+            ]
+            is False,
+            "permission_state_not_mutated": contract["permission_state_mutated"]
+            is False,
+            "permission_grant_not_created": contract["permission_grant_created"]
+            is False,
+            "permission_denial_not_created": contract["permission_denial_created"]
+            is False,
+            "permission_expiry_not_created": contract["permission_expiry_created"]
+            is False,
+            "permission_not_persisted": contract["permission_persisted"]
+            is False,
+            "audit_event_not_written": contract["audit_event_written"] is False,
+            "action_not_executed": contract["action_executed"] is False,
+            "command_not_executed": contract["command_executed"] is False,
+            "tool_not_executed": contract["tool_executed"] is False,
+            "file_not_mutated": contract["file_mutated"] is False,
+            "desktop_action_not_executed": contract[
+                "desktop_action_executed"
+            ]
+            is False,
+            "application_not_launched": contract["application_launched"]
+            is False,
+            "network_action_not_executed": contract["network_action_executed"]
+            is False,
+            "git_action_not_executed": contract["git_action_executed"] is False,
+            "memory_not_written": contract["memory_written"] is False,
+            "external_upload_not_performed": contract[
+                "external_upload_performed"
+            ]
+            is False,
+            "cloud_fallback_not_used": contract["cloud_fallback_used"] is False,
+            "autonomous_action_not_performed": contract[
+                "autonomous_action_performed"
+            ]
+            is False,
+            "no_automatic_grant": contract["no_automatic_grant"] is True,
+            "no_grant_creation": contract["no_grant_creation"] is True,
+            "no_grant_persistence": contract["no_grant_persistence"] is True,
+            "no_expired_grant_reuse": contract["no_expired_grant_reuse"]
+            is True,
+            "no_automatic_grant_renewal": contract[
+                "no_automatic_grant_renewal"
+            ]
+            is True,
+            "no_grant_without_request": contract["no_grant_without_request"]
+            is True,
+            "no_grant_without_explicit_approval": contract[
+                "no_grant_without_explicit_approval"
+            ]
+            is True,
+            "no_grant_without_scope": contract["no_grant_without_scope"] is True,
+            "no_grant_without_expiry": contract["no_grant_without_expiry"]
+            is True,
+            "no_grant_without_audit_link": contract[
+                "no_grant_without_audit_link"
+            ]
+            is True,
+            "no_audit_write": contract["no_audit_write"] is True,
+            "no_action_execution": contract["no_action_execution"] is True,
+            "no_command_execution": contract["no_command_execution"] is True,
+            "no_tool_execution": contract["no_tool_execution"] is True,
+            "no_file_mutation": contract["no_file_mutation"] is True,
+            "no_desktop_action": contract["no_desktop_action"] is True,
+            "no_memory_write": contract["no_memory_write"] is True,
+            "no_external_upload": contract["no_external_upload"] is True,
+            "safety_blocker_count_expected": contract["safety_blocker_count"]
+            == len(contract["safety_blockers"]),
+            "all_safety_blockers_inactive": contract[
+                "all_safety_blockers_inactive"
+            ]
+            is True,
+            "runtime_scope_contract_only": contract["runtime_scope"]
+            == "grant_denial_expiry_lifecycle_contract_only",
+        }
+
+        for blocker in contract["safety_blockers"]:
+            assertions[f"{blocker}_inactive"] = contract[blocker] is False
+
+        failed_assertions = [name for name, passed in assertions.items() if not passed]
+        s211_failed = [
+            f"sprint_211::{name}" for name in s211.get("failed_assertions", [])
+        ]
+        all_failed = s211_failed + failed_assertions
+
+        return {
+            "status": "checked",
+            "planning_ready": True,
+            "runtime_ready": False,
+            "assertion_count": int(s211["assertion_count"]) + len(assertions),
+            "failed_assertion_count": len(all_failed),
+            "failed_assertions": all_failed,
+            "permission_action_current_sprint": contract[
+                "permission_action_current_sprint"
+            ],
+            "permission_action_next_sprint": contract[
+                "permission_action_next_sprint"
+            ],
+            "permission_action_next_boundary": contract[
+                "permission_action_next_boundary"
+            ],
+            "active_permission_runtime_contract": contract,
+            "grant_denial_expiry_lifecycle_contract": contract,
+            "note": (
+                "Runtime is not enabled yet. This check prepared the Sprint 212 "
+                "Grant, Denial, and Expiry Lifecycle contract without creating "
+                "grants, denials, expiry events, mutating permission state, "
+                "persisting permissions, writing audit events, or executing "
+                "local actions."
+            ),
+        }
+
+    def _s212_plan(self) -> dict[str, Any]:
+        contract = self.grant_denial_expiry_lifecycle_contract()
+        return {
+            "name": self.name,
+            "sprint": 212,
+            "next_sprint": 213,
+            "next_boundary": "runtime_audit_writer",
+            "contract_ready": contract[
+                "grant_denial_expiry_lifecycle_contract_ready"
+            ],
+            "runtime_ready": contract[
+                "grant_denial_expiry_lifecycle_runtime_ready"
+            ],
+            "runtime_scope": contract["runtime_scope"],
+            "schemas_ready": {
+                "grant_request": contract["grant_request_packet_schema_ready"],
+                "grant_scope": contract["grant_scope_packet_schema_ready"],
+                "grant_decision": contract["grant_decision_packet_schema_ready"],
+                "grant": contract["grant_packet_schema_ready"],
+                "grant_expiry": contract["grant_expiry_packet_schema_ready"],
+                "denial": contract["denial_packet_schema_ready"],
+                "expiry_check": contract["expiry_check_packet_schema_ready"],
+                "expiry_event": contract["expiry_event_packet_schema_ready"],
+                "audit_link": contract["lifecycle_audit_link_packet_schema_ready"],
+            },
+            "blocked_runtime": {
+                "grant_creation": contract["grant_packet_creation_allowed"],
+                "grant_state_mutation": contract["grant_state_mutation_allowed"],
+                "grant_persistence": contract["grant_persistence_allowed"],
+                "audit_write": contract["audit_write_allowed"],
+                "action_execution": contract["action_execution_runtime_ready"],
+            },
+        }
+
+    ActivePermissionRuntimePlanner.grant_denial_expiry_lifecycle_contract = (
+        _s212_grant_denial_expiry_lifecycle_contract
+    )
+    ActivePermissionRuntimePlanner.status = _s212_status
+    ActivePermissionRuntimePlanner.check = _s212_check
+    ActivePermissionRuntimePlanner.plan = _s212_plan
+    ActivePermissionRuntimePlanner._s212_extension_installed = True
