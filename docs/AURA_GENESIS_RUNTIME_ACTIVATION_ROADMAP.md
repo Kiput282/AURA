@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.205.0-genesis
+Current anchor: v0.206.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.205.0-genesis
-- Completed: Sprint 205 — Vision Permission and Redaction
+- Current version: v0.206.0-genesis
+- Completed: Sprint 206 — Workspace Visual Understanding
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 206 — Workspace Visual Understanding
+- Next: Sprint 207 — Vision-to-Chat Context Handoff
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -727,3 +727,67 @@ network/git actions, memory writes, cloud vision fallback, external upload, and
 visual-context-to-action bypass.
 
 Next: Sprint 206 — Workspace Visual Understanding.
+
+## v0.206.0-genesis — Workspace Visual Understanding
+
+Sprint 206 adds workspace visual understanding gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block as contract-only behavior.
+
+The checkpoint confirms:
+
+- workspace visual understanding contract ready
+- workspace visual understanding runtime disabled
+- current sprint 206
+- next sprint 207
+- next boundary vision_to_chat_context_handoff
+- runtime activation blocked
+- release gate closed
+- provided redacted visual context required
+- provided screen metadata required
+- provided workspace metadata required
+- provided user question required
+- provided permission packet required
+- redaction proof required
+- source metadata required
+- uncertainty required
+- workspace visual summary schema ready
+- workspace layout schema ready
+- active window schema ready
+- visible region schema ready
+- visual element schema ready
+- attention target schema ready
+- workspace risk schema ready
+- limitation schema ready
+- workspace overview contract ready
+- window layout contract ready
+- visible region contract ready
+- UI element hint contract ready
+- task context contract ready
+- risk summary contract ready
+- uncertainty summary contract ready
+- permission before workspace understanding, context handoff, and chat handoff
+- redaction before workspace understanding, workspace summary, context handoff,
+  and chat handoff
+- no raw screenshot to workspace or chat
+- no unredacted context to workspace or chat
+- no OCR claims without OCR
+- no model claims without model
+- no identity claims
+- no biometric identification
+- no face recognition
+- no emotion inference from face
+- no action recommendation without permission
+- 33 safety blockers
+- all safety blockers inactive
+- 153 assertions
+- zero failed assertions
+
+Sprint 206 keeps all runtime execution disabled, including workspace summary
+creation, workspace layout creation, visual element list creation, workspace risk
+assessment, workspace-to-chat handoff, screenshot capture, screenshot/image file
+read, OCR, image analysis, object detection, model requests, inference,
+context/chat handoff, visual actions, tool/command execution, file/desktop/
+network/git actions, memory writes, cloud vision fallback, external upload, and
+visual-context-to-action bypass.
+
+Next: Sprint 207 — Vision-to-Chat Context Handoff.

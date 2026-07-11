@@ -996,3 +996,24 @@ gates through visual context.
 
 This creates the handoff baseline for Sprint 206 — Workspace Visual
 Understanding.
+
+## Sprint 206 — Workspace Visual Understanding
+
+`v0.206.0-genesis` adds workspace visual understanding gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint treats workspace visual understanding as contract-only. It
+prepares schemas for already-provided, already-redacted workspace visual context,
+including workspace summary, layout, active window, visible regions, visual
+elements, attention target, task context, risk summary, and uncertainty summary.
+
+This keeps AURA from creating workspace summaries, creating workspace layouts,
+creating visual element lists, assessing workspace risk at runtime, capturing
+screenshots, reading screenshots or image files, running OCR, using cloud vision
+fallback, externally uploading visual data, sending model requests, running
+inference, handing off context to chat, executing visual actions, executing
+tools/commands, writing memory, mutating files, controlling desktop/network/git,
+or bypassing action gates through visual context.
+
+This creates the handoff baseline for Sprint 207 — Vision-to-Chat Context
+Handoff.

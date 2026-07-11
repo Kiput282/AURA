@@ -2579,3 +2579,24 @@ actions, use cloud vision fallback, externally upload visual data, or bypass
 action gates through visual context.
 
 The next sprint is Sprint 206 — Workspace Visual Understanding.
+
+## Checkpoint v0.206.0-genesis — Workspace Visual Understanding
+
+Sprint 206 adds workspace visual understanding contract gates to the Sprint
+201-210 Vision and Screen Awareness Runtime block.
+
+The checkpoint prepares schemas and contracts for understanding already-provided,
+already-redacted workspace visual context. It defines workspace visual summary,
+layout, active window, visible region, visual element, attention target,
+workspace risk, limitation, task context, risk summary, and uncertainty summary
+boundaries.
+
+Sprint 206 keeps runtime activation blocked and release gates closed. It does
+not create workspace summaries, create workspace layouts, create visual element
+lists, assess workspace risk at runtime, capture screenshots, read image files,
+run OCR, send model requests, run inference, hand off context/chat, execute
+visual actions, execute tools or commands, mutate files, control the desktop,
+write memory, perform network or git actions, use cloud vision fallback,
+externally upload visual data, or bypass action gates through visual context.
+
+The next sprint is Sprint 207 — Vision-to-Chat Context Handoff.

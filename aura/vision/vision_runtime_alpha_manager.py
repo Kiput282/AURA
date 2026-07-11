@@ -160,6 +160,7 @@ class VisionRuntimeAlphaManager:
         screen_context = self.planner.screen_context_adapter_contract()
         local_model = self.planner.local_vision_model_adapter_contract()
         permission_redaction = self.planner.vision_permission_and_redaction_contract()
+        workspace_visual = self.planner.workspace_visual_understanding_contract()
         screen_backend = self.detect_screen_backend()
         camera_backend = self.detect_camera_backend()
         screen_permission = self.permission_manager.check("screen_analyze")
@@ -175,6 +176,31 @@ class VisionRuntimeAlphaManager:
             "sprint_203_screen_context_adapter_contract_ready": screen_context["screen_context_adapter_contract_ready"],
             "sprint_204_local_vision_model_adapter_contract_ready": local_model["local_vision_model_adapter_contract_ready"],
             "sprint_205_vision_permission_redaction_contract_ready": permission_redaction["vision_permission_redaction_contract_ready"],
+            "sprint_206_workspace_visual_understanding_contract_ready": workspace_visual["workspace_visual_understanding_contract_ready"],
+            "workspace_visual_understanding_runtime_ready": workspace_visual["workspace_visual_understanding_runtime_ready"],
+            "workspace_visual_understanding_status": workspace_visual["workspace_visual_understanding_status"],
+            "provided_redacted_visual_context_required": workspace_visual["provided_redacted_visual_context_required"],
+            "provided_workspace_metadata_required": workspace_visual["provided_workspace_metadata_required"],
+            "provided_user_question_required": workspace_visual["provided_user_question_required"],
+            "redaction_proof_required": workspace_visual["redaction_proof_required"],
+            "workspace_visual_summary_schema_ready": workspace_visual["workspace_visual_summary_schema_ready"],
+            "workspace_layout_schema_ready": workspace_visual["workspace_layout_schema_ready"],
+            "active_window_schema_ready": workspace_visual["active_window_schema_ready"],
+            "visual_element_schema_ready": workspace_visual["visual_element_schema_ready"],
+            "workspace_risk_schema_ready": workspace_visual["workspace_risk_schema_ready"],
+            "permission_required_before_workspace_understanding": workspace_visual["permission_required_before_workspace_understanding"],
+            "redaction_required_before_workspace_understanding": workspace_visual["redaction_required_before_workspace_understanding"],
+            "redaction_required_before_workspace_summary": workspace_visual["redaction_required_before_workspace_summary"],
+            "no_raw_screenshot_to_workspace": workspace_visual["no_raw_screenshot_to_workspace"],
+            "no_unredacted_context_to_workspace": workspace_visual["no_unredacted_context_to_workspace"],
+            "no_ocr_claims_without_ocr": workspace_visual["no_ocr_claims_without_ocr"],
+            "no_model_claims_without_model": workspace_visual["no_model_claims_without_model"],
+            "workspace_visual_understanding_runtime_active": workspace_visual["workspace_visual_understanding_runtime_active"],
+            "workspace_visual_summary_created": workspace_visual["workspace_visual_summary_created"],
+            "workspace_layout_created": workspace_visual["workspace_layout_created"],
+            "visual_element_list_created": workspace_visual["visual_element_list_created"],
+            "workspace_risk_assessment_created": workspace_visual["workspace_risk_assessment_created"],
+            "workspace_to_chat_handoff_active": workspace_visual["workspace_to_chat_handoff_active"],
             "vision_permission_redaction_runtime_ready": permission_redaction["vision_permission_redaction_runtime_ready"],
             "vision_permission_redaction_status": permission_redaction["vision_permission_redaction_status"],
             "explicit_visual_permission_required": permission_redaction["explicit_visual_permission_required"],
@@ -252,12 +278,12 @@ class VisionRuntimeAlphaManager:
             "vision_runtime_activation_status": activation["vision_runtime_activation_status"],
             "vision_runtime_block_start": activation["vision_runtime_block_start"],
             "vision_runtime_block_end": activation["vision_runtime_block_end"],
-            "vision_runtime_next_sprint": permission_redaction["vision_runtime_next_sprint"],
-            "vision_runtime_next_boundary": permission_redaction["vision_runtime_next_boundary"],
-            "vision_runtime_activation_allowed": permission_redaction["runtime_activation_allowed"],
-            "vision_release_gate_open": permission_redaction["release_gate_open"],
-            "vision_safety_blocker_count": permission_redaction["safety_blocker_count"],
-            "vision_all_safety_blockers_inactive": permission_redaction["all_safety_blockers_inactive"],
+            "vision_runtime_next_sprint": workspace_visual["vision_runtime_next_sprint"],
+            "vision_runtime_next_boundary": workspace_visual["vision_runtime_next_boundary"],
+            "vision_runtime_activation_allowed": workspace_visual["runtime_activation_allowed"],
+            "vision_release_gate_open": workspace_visual["release_gate_open"],
+            "vision_safety_blocker_count": workspace_visual["safety_blocker_count"],
+            "vision_all_safety_blockers_inactive": workspace_visual["all_safety_blockers_inactive"],
             "screen_plan_ready": True,
             "camera_plan_ready": True,
             "vision_context_ready": True,
@@ -267,6 +293,7 @@ class VisionRuntimeAlphaManager:
             "screen_context_adapter_contract": screen_context,
             "local_vision_model_adapter_contract": local_model,
             "vision_permission_redaction_contract": permission_redaction,
+            "workspace_visual_understanding_contract": workspace_visual,
             "screen_backend_found": screen_backend["found"],
             "screen_backend": screen_backend["name"],
             "screen_backend_path": screen_backend["path"],
@@ -288,9 +315,9 @@ class VisionRuntimeAlphaManager:
             "python_packages_total": dependency_check["python_packages_total"],
             "executables_found": dependency_check["executables_found"],
             "executables_total": dependency_check["executables_total"],
-            "sections": 10,
+            "sections": 11,
             "project_root": str(self.project_root),
-            "note": "Vision Runtime Alpha is online for Sprint 205 Vision Permission and Redaction contract. It defines explicit visual permission, confirmation, scope, audit, and redaction gates without mutating permissions, running redaction, creating redacted context, capturing screenshots, reading image files, running OCR, sending model requests, using cloud vision, uploading externally, handing off context, or executing commands automatically.",
+            "note": "Vision Runtime Alpha is online for Sprint 206 Workspace Visual Understanding contract. It defines provided and redacted workspace visual context schemas without creating workspace summaries, reading screenshots or image files, running OCR, sending model requests, using cloud vision, uploading externally, handing off context, writing memory, or executing commands automatically.",
         }
 
     def build_screen_command(self) -> dict[str, Any]:
