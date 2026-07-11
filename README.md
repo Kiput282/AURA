@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.202.0-genesis
-Current status: Sprint 202 Explicit Screenshot Capture completed; Vision and Screen Awareness Runtime block 201-210 now has explicit request, permission, and confirmation gates for future screenshot capture and is ready to hand off to Sprint 203 Screen Context Adapter
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 adds explicit screenshot capture contract gates: screenshot capture remains request-only and disabled by default, requiring explicit request, permission, and confirmation before any future capture while silent capture, background capture, continuous watching, screenshot file write/read, OCR, vision model runtime, screen context handoff, visual actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud vision fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.203.0-genesis
+Current status: Sprint 203 Screen Context Adapter completed; Vision and Screen Awareness Runtime block 201-210 now has contract-only screen context adapter gates for provided metadata/placeholder context and is ready to hand off to Sprint 204 Local Vision Model Adapter
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 201 started the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only activation foundation. Sprint 202 added explicit screenshot capture contract gates. Sprint 203 adds screen context adapter contract gates for provided metadata/placeholder context only while screenshot capture, image file read, context packet creation, context/chat handoff, redaction runtime, OCR, vision model runtime, visual actions, command/tool execution, memory writes, file/desktop/network/git actions, cloud vision fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 202 and adds explicit screenshot capture gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
+AURA has completed Sprint 203 and adds screen context adapter gates to the Sprint 201-210 Vision and Screen Awareness Runtime block.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.203.0-genesis
+- Sprint 203: Screen Context Adapter
 - v0.202.0-genesis
 - Sprint 202: Explicit Screenshot Capture
 - v0.201.0-genesis
@@ -74,7 +76,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 203 — Screen Context Adapter
+- Next planned sprint: Sprint 204 — Local Vision Model Adapter
 Current capability registry summary:
 
 - total capabilities: 121
@@ -3210,3 +3212,79 @@ vision-runtime-check OK, 99 assertions, zero failed assertions, voice baseline
 stable, and baseline self-tests OK.
 
 Next: Sprint 203 — Screen Context Adapter.
+
+## Sprint 203 — Screen Context Adapter
+
+Version: `v0.203.0-genesis`
+
+Sprint 203 adds screen context adapter contract gates to the Sprint 201-210 Vision
+and Screen Awareness Runtime block.
+
+The checkpoint defines screen context as provided metadata/placeholder context
+only. It does not read screenshots, capture the screen, run OCR, run a vision
+model, create runtime context packets, hand off context to chat, or execute any
+visual action.
+
+Sprint 203 exposes Screen Context Adapter status in `vision-runtime-status` and
+`vision-runtime-check`, including screen context contract readiness, runtime
+state, block/current/next sprint, next boundary, provided context requirements,
+schema readiness, redaction requirements, uncertainty requirements, no-visual-
+claim/no-OCR-claim boundaries, inactive handoff flags, inactive runtime flags,
+and safety blockers.
+
+Sprint 203 confirms:
+
+- screen context adapter contract ready: true
+- screen context adapter runtime ready: false
+- screen context status: screen_context_adapter_contract_ready
+- vision block start: 201
+- vision block end: 210
+- current sprint: 203
+- next sprint: 204
+- next boundary: local_vision_model_adapter
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- provided screenshot context required: true
+- provided screen metadata required: true
+- provided user prompt required: true
+- provided redaction notes required: true
+- placeholder context only: true
+- contract input only: true
+- image file read allowed: false
+- screenshot capture required now: false
+- screenshot file read required now: false
+- screen context input schema ready: true
+- screen context metadata schema ready: true
+- screen context packet schema ready: true
+- screen context summary contract ready: true
+- screen context uncertainty required: true
+- no visual claims without model: true
+- no OCR claims without OCR: true
+- no identity claims: true
+- no action bypass: true
+- redaction before context adapter: true
+- redaction before context packet: true
+- redaction before chat handoff: true
+- safety blockers: 33
+- all safety blockers inactive: true
+
+The dependency baseline remains passive:
+
+- Python packages: 0/5
+- Executables: 0/6
+
+Sprint 203 does not capture the screen, access the camera, write screenshot
+files, read screenshot or image files, persist screenshot metadata, create screen
+context packets, create summaries, run redaction runtime, run OCR, run image
+analysis, run object detection, run vision models, hand off screen context to
+chat, execute visual actions, execute tools or commands, mutate files, control
+the desktop, write memory, perform network or git actions, use cloud vision
+fallback, externally upload visual data, or bypass action gates through visual
+context.
+
+Validation passed with compileall OK, vision-runtime-status OK,
+vision-runtime-check OK, 122 assertions, zero failed assertions, voice baseline
+stable, and baseline self-tests OK.
+
+Next: Sprint 204 — Local Vision Model Adapter.

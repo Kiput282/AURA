@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.202.0-genesis
+Current anchor: v0.203.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.202.0-genesis
-- Completed: Sprint 202 — Explicit Screenshot Capture
+- Current version: v0.203.0-genesis
+- Completed: Sprint 203 — Screen Context Adapter
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 203 — Screen Context Adapter
+- Next: Sprint 204 — Local Vision Model Adapter
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -552,3 +552,52 @@ execution, tool/command execution, file/desktop/network/git actions, memory
 writes, cloud vision fallback, and external upload.
 
 Next: Sprint 203 — Screen Context Adapter.
+
+## v0.203.0-genesis — Screen Context Adapter
+
+Sprint 203 adds screen context adapter gates to the Sprint 201-210 Vision and
+Screen Awareness Runtime block as contract-only behavior.
+
+The checkpoint confirms:
+
+- screen context adapter contract ready
+- screen context adapter runtime disabled
+- current sprint 203
+- next sprint 204
+- next boundary local_vision_model_adapter
+- runtime activation blocked
+- release gate closed
+- provided screenshot context required
+- provided screen metadata required
+- provided user prompt required
+- provided redaction notes required
+- placeholder context only
+- contract input only
+- image file read not allowed
+- screenshot capture not required now
+- screenshot file read not required now
+- screen context input schema ready
+- screen context metadata schema ready
+- screen context packet schema ready
+- screen context summary contract ready
+- source metadata required
+- uncertainty required
+- no visual claims without model
+- no OCR claims without OCR
+- no identity claims
+- no action bypass
+- redaction before adapter, packet, and chat handoff
+- sensitive region, window title, URL, and clipboard boundaries
+- 33 safety blockers
+- all safety blockers inactive
+- 122 assertions
+- zero failed assertions
+
+Sprint 203 keeps all screen context runtime execution disabled, including screen
+capture, screenshot output files, screenshot/image file read, context packet
+creation, context summary creation, context/chat handoff, redaction runtime,
+OCR, image analysis, object detection, vision model runtime, visual action
+execution, tool/command execution, file/desktop/network/git actions, memory
+writes, cloud vision fallback, and external upload.
+
+Next: Sprint 204 — Local Vision Model Adapter.

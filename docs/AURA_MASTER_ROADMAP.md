@@ -2519,3 +2519,22 @@ network or git actions, use cloud vision fallback, externally upload visual data
 or bypass action gates through visual context.
 
 The next sprint is Sprint 203 — Screen Context Adapter.
+
+## Checkpoint v0.203.0-genesis — Screen Context Adapter
+
+Sprint 203 adds screen context adapter contract gates to the Sprint 201-210
+Vision and Screen Awareness Runtime block.
+
+The checkpoint defines screen context as provided metadata/placeholder context
+only. It prepares input, metadata, packet, and summary contracts with uncertainty
+and redaction requirements while keeping runtime execution disabled.
+
+Sprint 203 keeps runtime activation blocked and release gates closed. It does
+not capture the screen, read screenshots or image files, create runtime context
+packets, create summaries, run redaction runtime, run OCR, run image analysis,
+run object detection, run vision model runtime, hand off context to chat,
+execute visual actions, execute tools or commands, mutate files, control the
+desktop, write memory, perform network or git actions, use cloud vision fallback,
+externally upload visual data, or bypass action gates through visual context.
+
+The next sprint is Sprint 204 — Local Vision Model Adapter.

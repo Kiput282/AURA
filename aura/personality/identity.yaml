@@ -1,5 +1,5 @@
 name: AURA
-version: "0.202.0-genesis"
+version: "0.203.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -145,3 +145,9 @@ modes:
 # runtime runs, no screen context handoff happens, and no visual action,
 # command/tool execution, memory write, desktop/network/git action, cloud vision
 # fallback, or external upload is enabled.
+# Sprint 203: screen_context_adapter adds contract-only screen context
+# adapter gates. It accepts only provided metadata/placeholder context and keeps
+# screenshot capture, image file read, OCR/model runtime, redaction runtime,
+# context packet creation, context/chat handoff, visual actions, tool/command
+# execution, memory writes, desktop/network/git actions, cloud fallback, and
+# external upload disabled.

@@ -936,3 +936,21 @@ desktop/network/git, using cloud vision fallback, or externally uploading visual
 data.
 
 This creates the handoff baseline for Sprint 203 — Screen Context Adapter.
+
+## Sprint 203 — Screen Context Adapter
+
+`v0.203.0-genesis` adds screen context adapter gates to the Sprint 201-210 Vision
+and Screen Awareness Runtime block.
+
+The checkpoint treats screen context as provided metadata/placeholder context
+only. A future context path must preserve source metadata, uncertainty, explicit
+permission, and redaction-before-adapter/packet/chat-handoff boundaries.
+
+This keeps AURA from capturing the screen, reading screenshots or image files,
+creating runtime context packets, creating summaries, running redaction runtime,
+running OCR, running image analysis or object detection, running vision model
+runtime, handing off screen context to chat, executing visual actions, executing
+tools/commands, writing memory, mutating files, controlling desktop/network/git,
+using cloud vision fallback, or externally uploading visual data.
+
+This creates the handoff baseline for Sprint 204 — Local Vision Model Adapter.
