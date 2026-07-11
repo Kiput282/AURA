@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.213.0-genesis
+Current anchor: v0.214.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.213.0-genesis
-- Completed: Sprint 213 — Runtime Audit Writer
+- Current version: v0.214.0-genesis
+- Completed: Sprint 214 — Action Proposal and Preview Runtime
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 214 — Action Proposal and Preview Runtime
+- Next: Sprint 215 — Safe Local Open Actions
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1258,3 +1258,58 @@ network/git actions, write memory, install dependencies, download models, use
 cloud fallback, upload externally, or perform autonomous actions.
 
 Next: Sprint 214 — Action Proposal and Preview Runtime.
+
+## v0.214.0-genesis — Action Proposal and Preview Runtime
+
+Sprint 214 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Action Proposal and Preview Runtime visibility.
+
+The sprint prepares schemas for action intent packets, action proposal packets,
+action preview packets, risk summaries, safe scope, permission requirements,
+audit correlation, user-visible previews, approval handoff, denial handoff,
+review queue packets, execution blockers, safety matrix, and the next safe local
+open action boundary.
+
+The checkpoint confirms:
+
+- Action Proposal and Preview Runtime contract ready
+- Action Proposal and Preview Runtime disabled
+- status action_proposal_preview_runtime_contract_ready
+- current sprint 214
+- next sprint 215
+- next boundary safe_local_open_actions
+- previous contract chain complete
+- preview before action required
+- explicit approval before execution required
+- permission before action required
+- audit correlation before action required
+- safe scope before action required
+- single action preview required
+- action proposal packet schema ready
+- action preview packet schema ready
+- action user-visible preview schema ready
+- action approval handoff schema ready
+- action review queue schema ready
+- allowed action preview types 7
+- blocked action types 8
+- action proposal packet creation blocked
+- action preview packet creation blocked
+- action queue enqueue blocked
+- action execution dispatch blocked
+- file mutation blocked
+- desktop action blocked
+- application launch blocked
+- permission state mutation blocked
+- audit write blocked
+- 85 safety blockers
+- all safety blockers inactive
+- 710 assertions
+- zero failed assertions
+
+Sprint 214 does not create action intent packets, action proposals, action
+previews, approval handoffs, review queue items, action queue items, audit
+events, permission mutations, grants, file mutations, desktop actions, app
+launches, commands/tools, network/git actions, memory writes, cloud fallback,
+external uploads, or autonomous actions.
+
+Next: Sprint 215 — Safe Local Open Actions.

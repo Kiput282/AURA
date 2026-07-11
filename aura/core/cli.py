@@ -1717,8 +1717,8 @@ class AuraCLI:
 
         status = ActivePermissionRuntimeAlphaManager().status()
 
-        print("AURA Runtime Audit Writer Alpha")
-        print("===============================")
+        print("AURA Action Proposal and Preview Alpha")
+        print("======================================")
         rows = [
             ("Name", "name"),
             ("Version", "version"),
@@ -1735,6 +1735,9 @@ class AuraCLI:
             ("S213 Audit Writer Ready", "sprint_213_runtime_audit_writer_contract_ready"),
             ("S213 Audit Writer Runtime", "runtime_audit_writer_runtime_ready"),
             ("S213 Audit Writer Status", "runtime_audit_writer_status"),
+            ("S214 Action Preview Ready", "sprint_214_action_proposal_preview_contract_ready"),
+            ("S214 Action Preview Runtime", "action_proposal_preview_runtime_ready"),
+            ("S214 Action Preview Status", "action_proposal_preview_runtime_status"),
             ("Current Sprint", "permission_action_current_sprint"),
             ("Next Sprint", "permission_action_next_sprint"),
             ("Next Boundary", "permission_action_next_boundary"),
@@ -1775,6 +1778,20 @@ class AuraCLI:
             ("Audit Lifecycle Link Schema", "audit_permission_lifecycle_link_schema_ready"),
             ("Audit Review Queue Schema", "audit_review_queue_packet_schema_ready"),
             ("Audit Event Type Count", "audit_event_type_count"),
+            ("Preview Before Action Required", "preview_before_action_required"),
+            ("Explicit Approval Before Execution", "explicit_approval_before_execution_required"),
+            ("Permission Before Action Required", "permission_before_action_required"),
+            ("Audit Correlation Before Action", "audit_correlation_before_action_required"),
+            ("Action Intent Packet Schema", "action_intent_packet_schema_ready"),
+            ("Action Proposal Packet Schema", "action_proposal_packet_schema_ready"),
+            ("Action Preview Packet Schema", "action_preview_packet_schema_ready"),
+            ("Action Risk Summary Schema", "action_risk_summary_schema_ready"),
+            ("Action Audit Correlation Schema", "action_audit_correlation_schema_ready"),
+            ("Action User Preview Schema", "action_user_visible_preview_schema_ready"),
+            ("Action Approval Handoff Schema", "action_user_approval_handoff_schema_ready"),
+            ("Action Review Queue Schema", "action_review_queue_packet_schema_ready"),
+            ("Allowed Action Preview Count", "allowed_action_preview_type_count"),
+            ("Blocked Action Type Count", "blocked_action_type_count"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
@@ -1801,6 +1818,19 @@ class AuraCLI:
             ("Audit Event Persisted", "audit_event_persisted"),
             ("Audit Log Appended", "audit_log_appended"),
             ("Audit Storage Written", "audit_storage_written"),
+            ("Action Intent Packet Created", "action_intent_packet_created"),
+            ("Action Proposal Packet Created", "action_proposal_packet_created"),
+            ("Action Preview Packet Created", "action_preview_packet_created"),
+            ("Action User Preview Created", "action_user_visible_preview_created"),
+            ("Action Approval Handoff Created", "action_user_approval_handoff_created"),
+            ("Action Review Queue Item", "action_review_queue_item_created"),
+            ("Action Proposal Created", "action_proposal_created"),
+            ("Action Preview Created", "action_preview_created"),
+            ("Action Enqueued", "action_enqueued"),
+            ("Action Executed", "action_executed"),
+            ("File Mutated", "file_mutated"),
+            ("Desktop Action Executed", "desktop_action_executed"),
+            ("Application Launched", "application_launched"),
             ("Grant Request Created", "grant_request_packet_created"),
             ("Grant Packet Created", "grant_packet_created"),
             ("Denial Packet Created", "denial_packet_created"),
@@ -1824,6 +1854,16 @@ class AuraCLI:
             ("No Audit Log Append", "no_audit_log_append"),
             ("No Audit Storage Write", "no_audit_storage_write"),
             ("No Audit Review Queue Enqueue", "no_audit_review_queue_enqueue"),
+            ("No Action Proposal Creation", "no_action_proposal_creation"),
+            ("No Action Preview Creation", "no_action_preview_creation"),
+            ("No Action Approval Handoff", "no_action_user_approval_handoff"),
+            ("No Action Queue Enqueue", "no_action_queue_enqueue"),
+            ("No Action Execution Dispatch", "no_action_execution_dispatch"),
+            ("No Preview To Execution Bypass", "no_preview_to_execution_bypass"),
+            ("No Action Without Preview", "no_action_without_preview"),
+            ("No Action Without Approval", "no_action_without_explicit_approval"),
+            ("No Action Without Permission", "no_action_without_permission"),
+            ("No Action Without Audit Correlation", "no_action_without_audit_correlation"),
             ("No Grant Creation", "no_grant_creation"),
             ("No Grant Persistence", "no_grant_persistence"),
             ("No Expired Grant Reuse", "no_expired_grant_reuse"),
@@ -1859,8 +1899,8 @@ class AuraCLI:
 
         status = ActivePermissionRuntimePlanner().status()
 
-        print("AURA Runtime Audit Writer Status")
-        print("================================")
+        print("AURA Action Proposal and Preview Status")
+        print("=======================================")
         rows = [
             ("Name", "name"),
             ("Version", "version"),
@@ -1919,6 +1959,24 @@ class AuraCLI:
             ("Audit Review Queue Schema", "audit_review_queue_packet_schema_ready"),
             ("Audit Control Center Schema", "audit_control_center_visibility_schema_ready"),
             ("Audit Event Type Count", "audit_event_type_count"),
+            ("Preview Before Action Required", "preview_before_action_required"),
+            ("Explicit Approval Before Execution", "explicit_approval_before_execution_required"),
+            ("Permission Before Action Required", "permission_before_action_required"),
+            ("Audit Correlation Before Action", "audit_correlation_before_action_required"),
+            ("Safe Scope Before Action", "safe_scope_before_action_required"),
+            ("Single Action Preview Required", "single_action_preview_required"),
+            ("Action Intent Packet Schema", "action_intent_packet_schema_ready"),
+            ("Action Proposal Packet Schema", "action_proposal_packet_schema_ready"),
+            ("Action Preview Packet Schema", "action_preview_packet_schema_ready"),
+            ("Action Risk Summary Schema", "action_risk_summary_schema_ready"),
+            ("Action Scope Packet Schema", "action_scope_packet_schema_ready"),
+            ("Action Permission Requirement Schema", "action_permission_requirement_schema_ready"),
+            ("Action Audit Correlation Schema", "action_audit_correlation_schema_ready"),
+            ("Action User Preview Schema", "action_user_visible_preview_schema_ready"),
+            ("Action Approval Handoff Schema", "action_user_approval_handoff_schema_ready"),
+            ("Action Review Queue Schema", "action_review_queue_packet_schema_ready"),
+            ("Allowed Action Preview Count", "allowed_action_preview_type_count"),
+            ("Blocked Action Type Count", "blocked_action_type_count"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
@@ -1951,6 +2009,23 @@ class AuraCLI:
             ("Audit Event Persisted", "audit_event_persisted"),
             ("Audit Log Appended", "audit_log_appended"),
             ("Audit Storage Written", "audit_storage_written"),
+            ("Action Intent Packet Created", "action_intent_packet_created"),
+            ("Action Proposal Packet Created", "action_proposal_packet_created"),
+            ("Action Preview Packet Created", "action_preview_packet_created"),
+            ("Action Risk Summary Created", "action_risk_summary_created"),
+            ("Action Audit Correlation Created", "action_audit_correlation_created"),
+            ("Action User Preview Created", "action_user_visible_preview_created"),
+            ("Action Approval Handoff Created", "action_user_approval_handoff_created"),
+            ("Action Review Queue Item", "action_review_queue_item_created"),
+            ("Action Proposal Created", "action_proposal_created"),
+            ("Action Preview Created", "action_preview_created"),
+            ("Action Enqueued", "action_enqueued"),
+            ("Action Executed", "action_executed"),
+            ("Command Executed", "command_executed"),
+            ("Tool Executed", "tool_executed"),
+            ("File Mutated", "file_mutated"),
+            ("Desktop Action Executed", "desktop_action_executed"),
+            ("Application Launched", "application_launched"),
             ("Grant Request Created", "grant_request_packet_created"),
             ("Grant Packet Created", "grant_packet_created"),
             ("Denial Packet Created", "denial_packet_created"),
@@ -1996,23 +2071,23 @@ class AuraCLI:
         result = ActivePermissionRuntimePlanner().check()
         contract = result["active_permission_runtime_contract"]
 
-        print("AURA Runtime Audit Writer Check")
-        print("===============================")
+        print("AURA Action Proposal and Preview Check")
+        print("======================================")
         print(f"Status                 : {result['status']}")
         print(f"Planning Ready         : {result['planning_ready']}")
         print(f"Runtime Ready          : {result['runtime_ready']}")
         print(f"Assertion Count        : {result['assertion_count']}")
         print(f"Failed Assertion Count : {result['failed_assertion_count']}")
         print()
-        print("Sprint 213 Runtime Audit Writer")
-        print("--------------------------------")
+        print("Sprint 214 Action Proposal and Preview Runtime")
+        print("------------------------------------------------")
 
         rows = [
             ("Contract Ready", "active_permission_runtime_contract_ready"),
             ("Runtime Ready", "active_permission_runtime_ready"),
-            ("Runtime Status", "runtime_audit_writer_status"),
-            ("S213 Audit Writer Ready", "runtime_audit_writer_contract_ready"),
-            ("S213 Audit Writer Runtime", "runtime_audit_writer_runtime_ready"),
+            ("Runtime Status", "action_proposal_preview_runtime_status"),
+            ("S214 Action Preview Ready", "action_proposal_preview_runtime_contract_ready"),
+            ("S214 Action Preview Runtime", "action_proposal_preview_runtime_ready"),
             ("Current Sprint", "permission_action_current_sprint"),
             ("Next Sprint", "permission_action_next_sprint"),
             ("Next Boundary", "permission_action_next_boundary"),
@@ -2068,6 +2143,24 @@ class AuraCLI:
             ("Audit Review Queue Schema", "audit_review_queue_packet_schema_ready"),
             ("Audit Control Center Schema", "audit_control_center_visibility_schema_ready"),
             ("Audit Event Type Count", "audit_event_type_count"),
+            ("Preview Before Action Required", "preview_before_action_required"),
+            ("Explicit Approval Before Execution", "explicit_approval_before_execution_required"),
+            ("Permission Before Action Required", "permission_before_action_required"),
+            ("Audit Correlation Before Action", "audit_correlation_before_action_required"),
+            ("Safe Scope Before Action", "safe_scope_before_action_required"),
+            ("Single Action Preview Required", "single_action_preview_required"),
+            ("Action Intent Packet Schema", "action_intent_packet_schema_ready"),
+            ("Action Proposal Packet Schema", "action_proposal_packet_schema_ready"),
+            ("Action Preview Packet Schema", "action_preview_packet_schema_ready"),
+            ("Action Risk Summary Schema", "action_risk_summary_schema_ready"),
+            ("Action Scope Packet Schema", "action_scope_packet_schema_ready"),
+            ("Action Permission Requirement Schema", "action_permission_requirement_schema_ready"),
+            ("Action Audit Correlation Schema", "action_audit_correlation_schema_ready"),
+            ("Action User Preview Schema", "action_user_visible_preview_schema_ready"),
+            ("Action Approval Handoff Schema", "action_user_approval_handoff_schema_ready"),
+            ("Action Review Queue Schema", "action_review_queue_packet_schema_ready"),
+            ("Allowed Action Preview Count", "allowed_action_preview_type_count"),
+            ("Blocked Action Type Count", "blocked_action_type_count"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
@@ -2100,8 +2193,8 @@ class AuraCLI:
             print(f"{label:<35}: {contract[key]}")
 
         print()
-        print("Runtime Audit Writer Safety State")
-        print("---------------------------------")
+        print("Action Proposal and Preview Safety State")
+        print("----------------------------------------")
 
         safety_rows = [
             ("Active Permission Request Created", "active_permission_request_created"),
@@ -2116,6 +2209,23 @@ class AuraCLI:
             ("Audit Event Persisted", "audit_event_persisted"),
             ("Audit Log Appended", "audit_log_appended"),
             ("Audit Storage Written", "audit_storage_written"),
+            ("Action Intent Packet Created", "action_intent_packet_created"),
+            ("Action Proposal Packet Created", "action_proposal_packet_created"),
+            ("Action Preview Packet Created", "action_preview_packet_created"),
+            ("Action Risk Summary Created", "action_risk_summary_created"),
+            ("Action Audit Correlation Created", "action_audit_correlation_created"),
+            ("Action User Preview Created", "action_user_visible_preview_created"),
+            ("Action Approval Handoff Created", "action_user_approval_handoff_created"),
+            ("Action Review Queue Item", "action_review_queue_item_created"),
+            ("Action Proposal Created", "action_proposal_created"),
+            ("Action Preview Created", "action_preview_created"),
+            ("Action Enqueued", "action_enqueued"),
+            ("Action Executed", "action_executed"),
+            ("Command Executed", "command_executed"),
+            ("Tool Executed", "tool_executed"),
+            ("File Mutated", "file_mutated"),
+            ("Desktop Action Executed", "desktop_action_executed"),
+            ("Application Launched", "application_launched"),
             ("Grant Request Packet Created", "grant_request_packet_created"),
             ("Grant Scope Packet Created", "grant_scope_packet_created"),
             ("Grant Decision Packet Created", "grant_decision_packet_created"),
@@ -2159,6 +2269,21 @@ class AuraCLI:
             ("No Audit Storage Write", "no_audit_storage_write"),
             ("No Audit Correlation Write", "no_audit_correlation_write"),
             ("No Audit Review Queue Enqueue", "no_audit_review_queue_enqueue"),
+            ("No Action Intent Packet Creation", "no_action_intent_packet_creation"),
+            ("No Action Proposal Creation", "no_action_proposal_creation"),
+            ("No Action Preview Creation", "no_action_preview_creation"),
+            ("No Action Approval Handoff", "no_action_user_approval_handoff"),
+            ("No Action Review Queue Enqueue", "no_action_review_queue_enqueue"),
+            ("No Action Queue Enqueue", "no_action_queue_enqueue"),
+            ("No Action Execution Dispatch", "no_action_execution_dispatch"),
+            ("No Preview To Execution Bypass", "no_preview_to_execution_bypass"),
+            ("No Action Without Preview", "no_action_without_preview"),
+            ("No Action Without Approval", "no_action_without_explicit_approval"),
+            ("No Action Without Permission", "no_action_without_permission"),
+            ("No Action Without Audit Correlation", "no_action_without_audit_correlation"),
+            ("No Multi-Step Action Chain", "no_multi_step_action_chain"),
+            ("No Safe Local Action Handoff", "no_safe_local_action_handoff"),
+            ("No Local Open Action", "no_local_open_action"),
             ("No Grant Creation", "no_grant_creation"),
             ("No Grant Persistence", "no_grant_persistence"),
             ("No Expired Grant Reuse", "no_expired_grant_reuse"),

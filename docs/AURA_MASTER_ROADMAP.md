@@ -2747,3 +2747,23 @@ write memory, install dependencies, download models, use cloud fallback, upload
 externally, or perform autonomous actions.
 
 The next sprint is Sprint 214 — Action Proposal and Preview Runtime.
+
+## Checkpoint v0.214.0-genesis — Action Proposal and Preview Runtime
+
+Sprint 214 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with a contract-only Action Proposal and Preview Runtime.
+
+This checkpoint prepares action proposal and preview schemas, including action
+intent, action proposal, action preview, risk summary, scope, permission
+requirement, audit correlation, user-visible preview, approval handoff, denial
+handoff, review queue, execution blocker, safety matrix, and safe local open
+handoff.
+
+Runtime remains disabled. Sprint 214 does not create proposals, previews,
+approval handoffs, review queue items, queue actions, execute actions, execute
+commands/tools, mutate files, control desktop, launch applications, mutate
+permissions, create grants, write audit events, perform network/git actions,
+write memory, install dependencies, download models, use cloud fallback, upload
+externally, or perform autonomous actions.
+
+The next sprint is Sprint 215 — Safe Local Open Actions.

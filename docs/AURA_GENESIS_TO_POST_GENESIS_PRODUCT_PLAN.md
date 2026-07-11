@@ -1181,3 +1181,26 @@ network/git actions, cloud fallback, external upload, or autonomy.
 
 This creates the audit baseline for Sprint 214 — Action Proposal and Preview
 Runtime.
+
+## Sprint 214 — Action Proposal and Preview Runtime
+
+`v0.214.0-genesis` extends the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block.
+
+This sprint introduces contract-only Action Proposal and Preview Runtime
+visibility. It establishes the future preview-before-action boundary for safe
+local actions while keeping all action execution disabled.
+
+It prepares action intent, proposal, preview, risk summary, scope, permission
+requirement, audit correlation, user-visible preview, approval handoff, denial
+handoff, review queue, execution blocker, safety matrix, and next safe-open
+schemas.
+
+It does not enable action proposal creation, action preview creation, approval
+handoff creation, review queue enqueue, action queue enqueue, action execution,
+command/tool execution, file mutation, desktop actions, application launch,
+permission mutation, permission persistence, grant creation, audit writing,
+network/git actions, memory writes, cloud fallback, external upload, or
+autonomy.
+
+This creates the preview baseline for Sprint 215 — Safe Local Open Actions.

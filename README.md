@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.213.0-genesis
-Current status: Sprint 213 Runtime Audit Writer completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only runtime audit writer visibility
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 adds contract-only runtime audit writer visibility. Permission runtime now has default-deny request, scope, decision, grant, denial, expiry, state snapshot, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, lifecycle-link, review queue, and Control Center visibility schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, audit storage write, action proposals, action previews, action execution, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.214.0-genesis
+Current status: Sprint 214 Action Proposal and Preview Runtime completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only action proposal and preview visibility
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 added contract-only runtime audit writer visibility. Sprint 214 adds contract-only action proposal and preview visibility. Permission/action runtime now has default-deny request, scope, decision, grant, denial, expiry, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, action intent, action proposal, action preview, risk summary, user-visible preview, approval handoff, review queue, and safety matrix schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, action proposal creation, action preview creation, approval handoff creation, action queue enqueue, action execution, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 213 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Runtime Audit Writer as a contract-only default-deny boundary.
+AURA has completed Sprint 214 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Action Proposal and Preview Runtime as a contract-only default-deny boundary.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.214.0-genesis
+- Sprint 214: Action Proposal and Preview Runtime
 - v0.213.0-genesis
 - Sprint 213: Runtime Audit Writer
 - v0.212.0-genesis
@@ -96,7 +98,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 214 — Action Proposal and Preview Runtime
+- Next planned sprint: Sprint 215 — Safe Local Open Actions
 Current capability registry summary:
 
 - total capabilities: 121
@@ -4475,3 +4477,129 @@ failed assertions, vision baseline stable, voice baseline stable, and baseline
 self-tests OK.
 
 Next: Sprint 214 — Action Proposal and Preview Runtime.
+
+## Sprint 214 — Action Proposal and Preview Runtime
+
+Version: `v0.214.0-genesis`
+
+Sprint 214 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block.
+
+This sprint adds the Action Proposal and Preview Runtime contract as a
+contract-only continuation of Active Permission Runtime, Grant/Denial/Expiry
+Lifecycle, and Runtime Audit Writer. It prepares action intent, proposal,
+preview, risk summary, scope, permission requirement, audit correlation,
+user-visible preview, approval handoff, denial handoff, review queue, execution
+blocker, safety matrix, and next safe-open schemas.
+
+Sprint 214 confirms:
+
+- Action Proposal and Preview Runtime contract ready: true
+- Action Proposal and Preview Runtime ready: false
+- Action Proposal and Preview Runtime status: action_proposal_preview_runtime_contract_ready
+- current sprint: 214
+- next sprint: 215
+- next boundary: safe_local_open_actions
+- previous active permission contract ready: true
+- previous grant, denial, and expiry lifecycle contract ready: true
+- previous runtime audit writer contract ready: true
+- previous contract chain complete: true
+- contract only: true
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- default deny: true
+- default grant: false
+- preview before action required: true
+- explicit approval before execution required: true
+- permission before action required: true
+- audit correlation before action required: true
+- safe scope before action required: true
+- single action preview required: true
+- action intent packet schema ready: true
+- action proposal packet schema ready: true
+- action preview packet schema ready: true
+- action risk summary schema ready: true
+- action scope packet schema ready: true
+- action permission requirement schema ready: true
+- action audit correlation schema ready: true
+- action user-visible preview schema ready: true
+- action approval handoff schema ready: true
+- action denial handoff schema ready: true
+- action review queue packet schema ready: true
+- action execution blocker schema ready: true
+- action safety matrix schema ready: true
+- action next safe open schema ready: true
+- allowed action preview type count: 7
+- blocked action type count: 8
+- action proposal runtime ready: false
+- action preview runtime ready: false
+- action execution runtime ready: false
+- control center approval runtime ready: false
+- safe local action handoff ready: false
+- action proposal packet creation allowed: false
+- action preview packet creation allowed: false
+- action preview render allowed: false
+- action risk assessment allowed: false
+- action permission resolution allowed: false
+- action audit correlation allowed: false
+- action approval handoff allowed: false
+- action review queue enqueue allowed: false
+- action queue enqueue allowed: false
+- action execution dispatch allowed: false
+- local open action runtime ready: false
+- file mutation allowed: false
+- desktop action allowed: false
+- application launch allowed: false
+- action intent packet created: false
+- action proposal packet created: false
+- action preview packet created: false
+- action user-visible preview created: false
+- action approval handoff created: false
+- action review queue item created: false
+- action proposal created: false
+- action preview created: false
+- action enqueued: false
+- action executed: false
+- command executed: false
+- tool executed: false
+- file mutated: false
+- desktop action executed: false
+- application launched: false
+- permission state mutated: false
+- permission grant created: false
+- audit event written: false
+- no action proposal creation: true
+- no action preview creation: true
+- no action approval handoff: true
+- no action queue enqueue: true
+- no action execution dispatch: true
+- no preview-to-execution bypass: true
+- no action without preview: true
+- no action without approval: true
+- no action without permission: true
+- no action without audit correlation: true
+- no multi-step action chain: true
+- no safe local action handoff: true
+- no local open action: true
+- no file mutation: true
+- no desktop action: true
+- no application launch: true
+- safety blockers: 85
+- all safety blockers inactive: true
+- runtime scope: action_proposal_preview_runtime_contract_only
+- assertion count: 710
+- failed assertion count: 0
+
+Sprint 214 does not create action intent packets, action proposals, action
+previews, risk summaries, approval handoffs, denial handoffs, review queue
+items, action queue items, audit events, permission mutations, grants, file
+mutations, desktop actions, app launches, commands, tools, network/git actions,
+memory writes, cloud fallback, external uploads, or autonomous actions.
+
+Validation passed with compileall OK, Active Permission Runtime CLI/Shell action
+proposal and preview visibility OK, active-permission-runtime-check OK, 710
+assertions, zero failed assertions, vision baseline stable, voice baseline
+stable, and baseline self-tests OK.
+
+Next: Sprint 215 — Safe Local Open Actions.

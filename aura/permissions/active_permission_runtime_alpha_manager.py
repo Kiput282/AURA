@@ -380,3 +380,190 @@ if not getattr(ActivePermissionRuntimeAlphaManager, "_s213_extension_installed",
 
     ActivePermissionRuntimeAlphaManager.status = _s213_alpha_status
     ActivePermissionRuntimeAlphaManager._s213_extension_installed = True
+
+# Sprint 214 extension: alpha visibility for Action Proposal and Preview Runtime.
+if not getattr(ActivePermissionRuntimeAlphaManager, "_s214_extension_installed", False):
+    _S213_ALPHA_STATUS = ActivePermissionRuntimeAlphaManager.status
+
+    def _s214_alpha_status(self) -> dict[str, Any]:
+        status = _S213_ALPHA_STATUS(self)
+        contract = self.planner.action_proposal_preview_runtime_contract()
+        check = self.planner.check()
+
+        status.update(
+            {
+                "sprint_214_action_proposal_preview_contract_ready": contract[
+                    "action_proposal_preview_runtime_contract_ready"
+                ],
+                "action_proposal_preview_runtime_ready": contract[
+                    "action_proposal_preview_runtime_ready"
+                ],
+                "action_proposal_preview_runtime_status": contract[
+                    "action_proposal_preview_runtime_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "preview_before_action_required": contract[
+                    "preview_before_action_required"
+                ],
+                "explicit_approval_before_execution_required": contract[
+                    "explicit_approval_before_execution_required"
+                ],
+                "permission_before_action_required": contract[
+                    "permission_before_action_required"
+                ],
+                "audit_correlation_before_action_required": contract[
+                    "audit_correlation_before_action_required"
+                ],
+                "action_intent_packet_schema_ready": contract[
+                    "action_intent_packet_schema_ready"
+                ],
+                "action_proposal_packet_schema_ready": contract[
+                    "action_proposal_packet_schema_ready"
+                ],
+                "action_preview_packet_schema_ready": contract[
+                    "action_preview_packet_schema_ready"
+                ],
+                "action_risk_summary_schema_ready": contract[
+                    "action_risk_summary_schema_ready"
+                ],
+                "action_audit_correlation_schema_ready": contract[
+                    "action_audit_correlation_schema_ready"
+                ],
+                "action_user_visible_preview_schema_ready": contract[
+                    "action_user_visible_preview_schema_ready"
+                ],
+                "action_user_approval_handoff_schema_ready": contract[
+                    "action_user_approval_handoff_schema_ready"
+                ],
+                "action_review_queue_packet_schema_ready": contract[
+                    "action_review_queue_packet_schema_ready"
+                ],
+                "allowed_action_preview_type_count": contract[
+                    "allowed_action_preview_type_count"
+                ],
+                "blocked_action_type_count": contract["blocked_action_type_count"],
+                "action_proposal_runtime_ready": contract[
+                    "action_proposal_runtime_ready"
+                ],
+                "action_preview_runtime_ready": contract[
+                    "action_preview_runtime_ready"
+                ],
+                "action_execution_runtime_ready": contract[
+                    "action_execution_runtime_ready"
+                ],
+                "action_proposal_packet_creation_allowed": contract[
+                    "action_proposal_packet_creation_allowed"
+                ],
+                "action_preview_packet_creation_allowed": contract[
+                    "action_preview_packet_creation_allowed"
+                ],
+                "action_queue_enqueue_allowed": contract[
+                    "action_queue_enqueue_allowed"
+                ],
+                "action_execution_dispatch_allowed": contract[
+                    "action_execution_dispatch_allowed"
+                ],
+                "safe_local_action_handoff_ready": contract[
+                    "safe_local_action_handoff_ready"
+                ],
+                "local_open_action_runtime_ready": contract[
+                    "local_open_action_runtime_ready"
+                ],
+                "file_mutation_allowed": contract["file_mutation_allowed"],
+                "desktop_action_allowed": contract["desktop_action_allowed"],
+                "application_launch_allowed": contract[
+                    "application_launch_allowed"
+                ],
+                "action_intent_packet_created": contract[
+                    "action_intent_packet_created"
+                ],
+                "action_proposal_packet_created": contract[
+                    "action_proposal_packet_created"
+                ],
+                "action_preview_packet_created": contract[
+                    "action_preview_packet_created"
+                ],
+                "action_user_visible_preview_created": contract[
+                    "action_user_visible_preview_created"
+                ],
+                "action_user_approval_handoff_created": contract[
+                    "action_user_approval_handoff_created"
+                ],
+                "action_review_queue_item_created": contract[
+                    "action_review_queue_item_created"
+                ],
+                "action_proposal_created": contract["action_proposal_created"],
+                "action_preview_created": contract["action_preview_created"],
+                "action_enqueued": contract["action_enqueued"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "tool_executed": contract["tool_executed"],
+                "file_mutated": contract["file_mutated"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "permission_grant_created": contract["permission_grant_created"],
+                "audit_event_written": contract["audit_event_written"],
+                "no_action_proposal_creation": contract[
+                    "no_action_proposal_creation"
+                ],
+                "no_action_preview_creation": contract[
+                    "no_action_preview_creation"
+                ],
+                "no_action_user_approval_handoff": contract[
+                    "no_action_user_approval_handoff"
+                ],
+                "no_action_queue_enqueue": contract["no_action_queue_enqueue"],
+                "no_action_execution_dispatch": contract[
+                    "no_action_execution_dispatch"
+                ],
+                "no_preview_to_execution_bypass": contract[
+                    "no_preview_to_execution_bypass"
+                ],
+                "no_action_without_preview": contract[
+                    "no_action_without_preview"
+                ],
+                "no_action_without_explicit_approval": contract[
+                    "no_action_without_explicit_approval"
+                ],
+                "no_action_without_permission": contract[
+                    "no_action_without_permission"
+                ],
+                "no_action_without_audit_correlation": contract[
+                    "no_action_without_audit_correlation"
+                ],
+                "no_file_mutation": contract["no_file_mutation"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_application_launch": contract["no_application_launch"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "assertion_count": check["assertion_count"],
+                "failed_assertion_count": check["failed_assertion_count"],
+                "failed_assertions": check["failed_assertions"],
+                "runtime_scope": contract["runtime_scope"],
+                "sections": 4,
+                "note": (
+                    "Active Permission Runtime Alpha now exposes Sprint 214 "
+                    "Action Proposal and Preview visibility without creating "
+                    "proposals, previews, approval handoffs, queue items, "
+                    "mutating files, launching apps, or executing local actions."
+                ),
+            }
+        )
+        return status
+
+    ActivePermissionRuntimeAlphaManager.status = _s214_alpha_status
+    ActivePermissionRuntimeAlphaManager._s214_extension_installed = True

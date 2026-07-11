@@ -1819,3 +1819,723 @@ if not getattr(ActivePermissionRuntimePlanner, "_s213_extension_installed", Fals
     ActivePermissionRuntimePlanner.check = _s213_check
     ActivePermissionRuntimePlanner.plan = _s213_plan
     ActivePermissionRuntimePlanner._s213_extension_installed = True
+
+# Sprint 214 extension: Action Proposal and Preview Runtime.
+#
+# This stays contract-only. It prepares action proposal, preview, approval
+# handoff, permission/audit correlation, and safety visibility without creating
+# proposals, previews, queue items, file changes, desktop actions, app launches,
+# command/tool execution, or real local actions.
+if not getattr(ActivePermissionRuntimePlanner, "_s214_extension_installed", False):
+    _S213_STATUS = ActivePermissionRuntimePlanner.status
+    _S213_CHECK = ActivePermissionRuntimePlanner.check
+    _S213_PLAN = ActivePermissionRuntimePlanner.plan
+
+    def _s214_safety_blockers(self) -> tuple[str, ...]:
+        base = tuple(self.runtime_audit_writer_contract()["safety_blockers"])
+        extra = (
+            "action_proposal_runtime_active",
+            "action_preview_runtime_active",
+            "action_proposal_packet_creation_active",
+            "action_preview_packet_creation_active",
+            "action_preview_render_active",
+            "action_risk_assessment_active",
+            "action_permission_resolution_active",
+            "action_audit_correlation_active",
+            "action_user_approval_handoff_active",
+            "action_review_queue_enqueue_active",
+            "action_queue_enqueue_active",
+            "action_execution_dispatch_active",
+            "safe_local_action_handoff_active",
+            "local_open_action_runtime_active",
+            "allowlisted_application_launch_runtime_active",
+            "controlled_file_creation_runtime_active",
+            "controlled_folder_creation_runtime_active",
+            "preview_to_execution_bypass_active",
+            "approval_without_preview_active",
+            "action_without_permission_active",
+            "action_without_audit_correlation_active",
+            "multi_step_action_chain_active",
+        )
+        return tuple(dict.fromkeys(base + extra))
+
+    def _s214_action_proposal_preview_runtime_contract(self) -> dict[str, Any]:
+        s213 = self.runtime_audit_writer_contract()
+        blockers = _s214_safety_blockers(self)
+
+        contract: dict[str, Any] = dict(s213)
+        contract.update(
+            {
+                "action_proposal_preview_runtime_contract_ready": True,
+                "action_proposal_preview_runtime_ready": False,
+                "action_proposal_preview_runtime_status": "action_proposal_preview_runtime_contract_ready",
+                "permission_action_block_start": 211,
+                "permission_action_block_end": 220,
+                "permission_action_current_sprint": 214,
+                "permission_action_next_sprint": 215,
+                "permission_action_next_boundary": "safe_local_open_actions",
+                "previous_active_permission_runtime_contract_ready": s213[
+                    "active_permission_runtime_contract_ready"
+                ],
+                "previous_grant_denial_expiry_lifecycle_contract_ready": s213[
+                    "grant_denial_expiry_lifecycle_contract_ready"
+                ],
+                "previous_runtime_audit_writer_contract_ready": s213[
+                    "runtime_audit_writer_contract_ready"
+                ],
+                "previous_contract_chain_complete": True,
+                "contract_only": True,
+                "runtime_ready": False,
+                "runtime_activation_allowed": False,
+                "release_gate_open": False,
+                "default_deny": True,
+                "default_grant": False,
+                "preview_before_action_required": True,
+                "explicit_approval_before_execution_required": True,
+                "permission_before_action_required": True,
+                "audit_correlation_before_action_required": True,
+                "safe_scope_before_action_required": True,
+                "single_action_preview_required": True,
+                "action_intent_packet_schema_ready": True,
+                "action_proposal_packet_schema_ready": True,
+                "action_preview_packet_schema_ready": True,
+                "action_risk_summary_schema_ready": True,
+                "action_scope_packet_schema_ready": True,
+                "action_permission_requirement_schema_ready": True,
+                "action_audit_correlation_schema_ready": True,
+                "action_user_visible_preview_schema_ready": True,
+                "action_user_approval_handoff_schema_ready": True,
+                "action_denial_handoff_schema_ready": True,
+                "action_review_queue_packet_schema_ready": True,
+                "action_execution_blocker_schema_ready": True,
+                "action_safety_matrix_schema_ready": True,
+                "action_next_safe_open_schema_ready": True,
+                "allowed_action_preview_type_catalog": [
+                    "open_approved_folder_preview",
+                    "open_approved_file_preview",
+                    "open_project_location_preview",
+                    "open_dashboard_preview",
+                    "launch_allowlisted_application_preview",
+                    "create_controlled_folder_preview",
+                    "create_simple_file_preview",
+                ],
+                "allowed_action_preview_type_count": 7,
+                "blocked_action_type_catalog": [
+                    "delete_file",
+                    "arbitrary_shell",
+                    "broad_desktop_control",
+                    "dependency_install",
+                    "plugin_action_without_gate",
+                    "multi_step_autonomous_chain",
+                    "network_action",
+                    "credential_access",
+                ],
+                "blocked_action_type_count": 8,
+                "action_proposal_runtime_ready": False,
+                "action_preview_runtime_ready": False,
+                "action_execution_runtime_ready": False,
+                "control_center_approval_runtime_ready": False,
+                "safe_local_action_handoff_ready": False,
+                "action_proposal_packet_creation_allowed": False,
+                "action_preview_packet_creation_allowed": False,
+                "action_preview_render_allowed": False,
+                "action_risk_assessment_allowed": False,
+                "action_permission_resolution_allowed": False,
+                "action_audit_correlation_allowed": False,
+                "action_user_approval_handoff_allowed": False,
+                "action_review_queue_enqueue_allowed": False,
+                "action_queue_enqueue_allowed": False,
+                "action_execution_dispatch_allowed": False,
+                "local_open_action_runtime_ready": False,
+                "allowlisted_application_launch_runtime_ready": False,
+                "controlled_file_creation_runtime_ready": False,
+                "controlled_folder_creation_runtime_ready": False,
+                "file_mutation_allowed": False,
+                "desktop_action_allowed": False,
+                "application_launch_allowed": False,
+                "command_execution_allowed": False,
+                "tool_execution_allowed": False,
+                "audit_write_allowed": False,
+                "audit_event_packet_creation_allowed": False,
+                "audit_event_write_allowed": False,
+                "audit_log_append_allowed": False,
+                "audit_persistence_allowed": False,
+                "permission_state_mutation_allowed": False,
+                "permission_state_persistence_allowed": False,
+                "grant_packet_creation_allowed": False,
+                "grant_persistence_allowed": False,
+                "action_intent_packet_created": False,
+                "action_proposal_packet_created": False,
+                "action_preview_packet_created": False,
+                "action_risk_summary_created": False,
+                "action_scope_packet_created": False,
+                "action_permission_requirement_created": False,
+                "action_audit_correlation_created": False,
+                "action_user_visible_preview_created": False,
+                "action_user_approval_handoff_created": False,
+                "action_denial_handoff_created": False,
+                "action_review_queue_item_created": False,
+                "action_execution_blocker_created": False,
+                "action_proposal_created": False,
+                "action_preview_created": False,
+                "action_enqueued": False,
+                "action_executed": False,
+                "command_executed": False,
+                "tool_executed": False,
+                "file_mutated": False,
+                "desktop_action_executed": False,
+                "application_launched": False,
+                "network_action_executed": False,
+                "git_action_executed": False,
+                "memory_written": False,
+                "external_upload_performed": False,
+                "cloud_fallback_used": False,
+                "autonomous_action_performed": False,
+                "permission_state_mutated": False,
+                "permission_grant_created": False,
+                "audit_event_written": False,
+                "audit_event_persisted": False,
+                "audit_log_appended": False,
+                "audit_storage_written": False,
+                "no_action_intent_packet_creation": True,
+                "no_action_proposal_creation": True,
+                "no_action_preview_creation": True,
+                "no_action_risk_assessment": True,
+                "no_action_permission_resolution": True,
+                "no_action_audit_correlation_creation": True,
+                "no_action_user_approval_handoff": True,
+                "no_action_review_queue_enqueue": True,
+                "no_action_queue_enqueue": True,
+                "no_action_execution_dispatch": True,
+                "no_preview_to_execution_bypass": True,
+                "no_action_without_preview": True,
+                "no_action_without_explicit_approval": True,
+                "no_action_without_permission": True,
+                "no_action_without_audit_correlation": True,
+                "no_multi_step_action_chain": True,
+                "no_safe_local_action_handoff": True,
+                "no_local_open_action": True,
+                "no_file_mutation": True,
+                "no_desktop_action": True,
+                "no_application_launch": True,
+                "no_command_execution": True,
+                "no_tool_execution": True,
+                "no_network_action": True,
+                "no_git_action": True,
+                "no_memory_write": True,
+                "no_external_upload": True,
+                "no_cloud_fallback": True,
+                "no_autonomous_action": True,
+                "no_permission_state_mutation": True,
+                "no_permission_persistence": True,
+                "no_grant_creation": True,
+                "no_grant_persistence": True,
+                "no_audit_event_creation": True,
+                "no_audit_write": True,
+                "no_audit_persistence": True,
+                "runtime_scope": "action_proposal_preview_runtime_contract_only",
+                "safety_blockers": list(blockers),
+                "safety_blocker_count": len(blockers),
+            }
+        )
+
+        for blocker in blockers:
+            contract[blocker] = False
+
+        contract["all_safety_blockers_inactive"] = all(
+            contract[blocker] is False for blocker in blockers
+        )
+
+        return contract
+
+    def _s214_status(self) -> dict[str, Any]:
+        status = _S213_STATUS(self)
+        contract = self.action_proposal_preview_runtime_contract()
+
+        status.update(
+            {
+                "name": self.name,
+                "version": self.version,
+                "status": "planning",
+                "planning_ready": True,
+                "runtime_ready": False,
+                "action_proposal_preview_runtime_contract_ready": contract[
+                    "action_proposal_preview_runtime_contract_ready"
+                ],
+                "action_proposal_preview_runtime_ready": contract[
+                    "action_proposal_preview_runtime_ready"
+                ],
+                "action_proposal_preview_runtime_status": contract[
+                    "action_proposal_preview_runtime_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "preview_before_action_required": contract[
+                    "preview_before_action_required"
+                ],
+                "explicit_approval_before_execution_required": contract[
+                    "explicit_approval_before_execution_required"
+                ],
+                "permission_before_action_required": contract[
+                    "permission_before_action_required"
+                ],
+                "audit_correlation_before_action_required": contract[
+                    "audit_correlation_before_action_required"
+                ],
+                "action_intent_packet_schema_ready": contract[
+                    "action_intent_packet_schema_ready"
+                ],
+                "action_proposal_packet_schema_ready": contract[
+                    "action_proposal_packet_schema_ready"
+                ],
+                "action_preview_packet_schema_ready": contract[
+                    "action_preview_packet_schema_ready"
+                ],
+                "action_risk_summary_schema_ready": contract[
+                    "action_risk_summary_schema_ready"
+                ],
+                "action_scope_packet_schema_ready": contract[
+                    "action_scope_packet_schema_ready"
+                ],
+                "action_permission_requirement_schema_ready": contract[
+                    "action_permission_requirement_schema_ready"
+                ],
+                "action_audit_correlation_schema_ready": contract[
+                    "action_audit_correlation_schema_ready"
+                ],
+                "action_user_visible_preview_schema_ready": contract[
+                    "action_user_visible_preview_schema_ready"
+                ],
+                "action_user_approval_handoff_schema_ready": contract[
+                    "action_user_approval_handoff_schema_ready"
+                ],
+                "action_review_queue_packet_schema_ready": contract[
+                    "action_review_queue_packet_schema_ready"
+                ],
+                "allowed_action_preview_type_count": contract[
+                    "allowed_action_preview_type_count"
+                ],
+                "blocked_action_type_count": contract["blocked_action_type_count"],
+                "action_proposal_runtime_ready": contract[
+                    "action_proposal_runtime_ready"
+                ],
+                "action_preview_runtime_ready": contract[
+                    "action_preview_runtime_ready"
+                ],
+                "action_execution_runtime_ready": contract[
+                    "action_execution_runtime_ready"
+                ],
+                "action_proposal_packet_creation_allowed": contract[
+                    "action_proposal_packet_creation_allowed"
+                ],
+                "action_preview_packet_creation_allowed": contract[
+                    "action_preview_packet_creation_allowed"
+                ],
+                "action_preview_render_allowed": contract[
+                    "action_preview_render_allowed"
+                ],
+                "action_risk_assessment_allowed": contract[
+                    "action_risk_assessment_allowed"
+                ],
+                "action_permission_resolution_allowed": contract[
+                    "action_permission_resolution_allowed"
+                ],
+                "action_audit_correlation_allowed": contract[
+                    "action_audit_correlation_allowed"
+                ],
+                "action_user_approval_handoff_allowed": contract[
+                    "action_user_approval_handoff_allowed"
+                ],
+                "action_review_queue_enqueue_allowed": contract[
+                    "action_review_queue_enqueue_allowed"
+                ],
+                "action_queue_enqueue_allowed": contract[
+                    "action_queue_enqueue_allowed"
+                ],
+                "action_execution_dispatch_allowed": contract[
+                    "action_execution_dispatch_allowed"
+                ],
+                "safe_local_action_handoff_ready": contract[
+                    "safe_local_action_handoff_ready"
+                ],
+                "local_open_action_runtime_ready": contract[
+                    "local_open_action_runtime_ready"
+                ],
+                "file_mutation_allowed": contract["file_mutation_allowed"],
+                "desktop_action_allowed": contract["desktop_action_allowed"],
+                "application_launch_allowed": contract[
+                    "application_launch_allowed"
+                ],
+                "action_intent_packet_created": contract[
+                    "action_intent_packet_created"
+                ],
+                "action_proposal_packet_created": contract[
+                    "action_proposal_packet_created"
+                ],
+                "action_preview_packet_created": contract[
+                    "action_preview_packet_created"
+                ],
+                "action_risk_summary_created": contract[
+                    "action_risk_summary_created"
+                ],
+                "action_audit_correlation_created": contract[
+                    "action_audit_correlation_created"
+                ],
+                "action_user_visible_preview_created": contract[
+                    "action_user_visible_preview_created"
+                ],
+                "action_user_approval_handoff_created": contract[
+                    "action_user_approval_handoff_created"
+                ],
+                "action_review_queue_item_created": contract[
+                    "action_review_queue_item_created"
+                ],
+                "action_proposal_created": contract["action_proposal_created"],
+                "action_preview_created": contract["action_preview_created"],
+                "action_enqueued": contract["action_enqueued"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "tool_executed": contract["tool_executed"],
+                "file_mutated": contract["file_mutated"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "permission_grant_created": contract["permission_grant_created"],
+                "audit_event_written": contract["audit_event_written"],
+                "audit_event_persisted": contract["audit_event_persisted"],
+                "no_action_proposal_creation": contract[
+                    "no_action_proposal_creation"
+                ],
+                "no_action_preview_creation": contract[
+                    "no_action_preview_creation"
+                ],
+                "no_action_user_approval_handoff": contract[
+                    "no_action_user_approval_handoff"
+                ],
+                "no_action_queue_enqueue": contract["no_action_queue_enqueue"],
+                "no_action_execution_dispatch": contract[
+                    "no_action_execution_dispatch"
+                ],
+                "no_preview_to_execution_bypass": contract[
+                    "no_preview_to_execution_bypass"
+                ],
+                "no_action_without_preview": contract[
+                    "no_action_without_preview"
+                ],
+                "no_action_without_explicit_approval": contract[
+                    "no_action_without_explicit_approval"
+                ],
+                "no_action_without_permission": contract[
+                    "no_action_without_permission"
+                ],
+                "no_action_without_audit_correlation": contract[
+                    "no_action_without_audit_correlation"
+                ],
+                "no_multi_step_action_chain": contract[
+                    "no_multi_step_action_chain"
+                ],
+                "no_file_mutation": contract["no_file_mutation"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_application_launch": contract["no_application_launch"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "runtime_scope": contract["runtime_scope"],
+                "action_proposal_preview_runtime_contract": contract,
+                "contract": contract,
+                "note": (
+                    "Action Proposal and Preview Runtime contract is ready for "
+                    "Sprint 214; it prepares proposal, preview, permission, audit "
+                    "correlation, approval handoff, review queue, and safety "
+                    "schemas without creating proposals, previews, queue items, "
+                    "mutating files, launching apps, or executing local actions."
+                ),
+            }
+        )
+        return status
+
+    def _s214_check(self) -> dict[str, Any]:
+        s213 = _S213_CHECK(self)
+        contract = self.action_proposal_preview_runtime_contract()
+
+        true_keys = (
+            "action_proposal_preview_runtime_contract_ready",
+            "previous_active_permission_runtime_contract_ready",
+            "previous_grant_denial_expiry_lifecycle_contract_ready",
+            "previous_runtime_audit_writer_contract_ready",
+            "previous_contract_chain_complete",
+            "contract_only",
+            "default_deny",
+            "preview_before_action_required",
+            "explicit_approval_before_execution_required",
+            "permission_before_action_required",
+            "audit_correlation_before_action_required",
+            "safe_scope_before_action_required",
+            "single_action_preview_required",
+            "action_intent_packet_schema_ready",
+            "action_proposal_packet_schema_ready",
+            "action_preview_packet_schema_ready",
+            "action_risk_summary_schema_ready",
+            "action_scope_packet_schema_ready",
+            "action_permission_requirement_schema_ready",
+            "action_audit_correlation_schema_ready",
+            "action_user_visible_preview_schema_ready",
+            "action_user_approval_handoff_schema_ready",
+            "action_denial_handoff_schema_ready",
+            "action_review_queue_packet_schema_ready",
+            "action_execution_blocker_schema_ready",
+            "action_safety_matrix_schema_ready",
+            "action_next_safe_open_schema_ready",
+            "no_action_intent_packet_creation",
+            "no_action_proposal_creation",
+            "no_action_preview_creation",
+            "no_action_risk_assessment",
+            "no_action_permission_resolution",
+            "no_action_audit_correlation_creation",
+            "no_action_user_approval_handoff",
+            "no_action_review_queue_enqueue",
+            "no_action_queue_enqueue",
+            "no_action_execution_dispatch",
+            "no_preview_to_execution_bypass",
+            "no_action_without_preview",
+            "no_action_without_explicit_approval",
+            "no_action_without_permission",
+            "no_action_without_audit_correlation",
+            "no_multi_step_action_chain",
+            "no_safe_local_action_handoff",
+            "no_local_open_action",
+            "no_file_mutation",
+            "no_desktop_action",
+            "no_application_launch",
+            "no_command_execution",
+            "no_tool_execution",
+            "no_network_action",
+            "no_git_action",
+            "no_memory_write",
+            "no_external_upload",
+            "no_cloud_fallback",
+            "no_autonomous_action",
+            "no_permission_state_mutation",
+            "no_permission_persistence",
+            "no_grant_creation",
+            "no_grant_persistence",
+            "no_audit_event_creation",
+            "no_audit_write",
+            "no_audit_persistence",
+            "all_safety_blockers_inactive",
+        )
+
+        false_keys = (
+            "action_proposal_preview_runtime_ready",
+            "runtime_ready",
+            "runtime_activation_allowed",
+            "release_gate_open",
+            "default_grant",
+            "action_proposal_runtime_ready",
+            "action_preview_runtime_ready",
+            "action_execution_runtime_ready",
+            "control_center_approval_runtime_ready",
+            "safe_local_action_handoff_ready",
+            "action_proposal_packet_creation_allowed",
+            "action_preview_packet_creation_allowed",
+            "action_preview_render_allowed",
+            "action_risk_assessment_allowed",
+            "action_permission_resolution_allowed",
+            "action_audit_correlation_allowed",
+            "action_user_approval_handoff_allowed",
+            "action_review_queue_enqueue_allowed",
+            "action_queue_enqueue_allowed",
+            "action_execution_dispatch_allowed",
+            "local_open_action_runtime_ready",
+            "allowlisted_application_launch_runtime_ready",
+            "controlled_file_creation_runtime_ready",
+            "controlled_folder_creation_runtime_ready",
+            "file_mutation_allowed",
+            "desktop_action_allowed",
+            "application_launch_allowed",
+            "command_execution_allowed",
+            "tool_execution_allowed",
+            "audit_write_allowed",
+            "audit_event_packet_creation_allowed",
+            "audit_event_write_allowed",
+            "audit_log_append_allowed",
+            "audit_persistence_allowed",
+            "permission_state_mutation_allowed",
+            "permission_state_persistence_allowed",
+            "grant_packet_creation_allowed",
+            "grant_persistence_allowed",
+            "action_intent_packet_created",
+            "action_proposal_packet_created",
+            "action_preview_packet_created",
+            "action_risk_summary_created",
+            "action_scope_packet_created",
+            "action_permission_requirement_created",
+            "action_audit_correlation_created",
+            "action_user_visible_preview_created",
+            "action_user_approval_handoff_created",
+            "action_denial_handoff_created",
+            "action_review_queue_item_created",
+            "action_execution_blocker_created",
+            "action_proposal_created",
+            "action_preview_created",
+            "action_enqueued",
+            "action_executed",
+            "command_executed",
+            "tool_executed",
+            "file_mutated",
+            "desktop_action_executed",
+            "application_launched",
+            "network_action_executed",
+            "git_action_executed",
+            "memory_written",
+            "external_upload_performed",
+            "cloud_fallback_used",
+            "autonomous_action_performed",
+            "permission_state_mutated",
+            "permission_grant_created",
+            "audit_event_written",
+            "audit_event_persisted",
+            "audit_log_appended",
+            "audit_storage_written",
+        )
+
+        assertions: dict[str, bool] = {
+            "sprint_213_check_still_clean": s213["failed_assertion_count"] == 0,
+            "status_ready": contract["action_proposal_preview_runtime_status"]
+            == "action_proposal_preview_runtime_contract_ready",
+            "current_sprint_214": contract["permission_action_current_sprint"] == 214,
+            "next_sprint_215": contract["permission_action_next_sprint"] == 215,
+            "next_boundary_safe_local_open_actions": contract[
+                "permission_action_next_boundary"
+            ]
+            == "safe_local_open_actions",
+            "allowed_preview_count_expected": contract[
+                "allowed_action_preview_type_count"
+            ]
+            == len(contract["allowed_action_preview_type_catalog"]),
+            "blocked_action_count_expected": contract["blocked_action_type_count"]
+            == len(contract["blocked_action_type_catalog"]),
+            "safety_blocker_count_expected": contract["safety_blocker_count"]
+            == len(contract["safety_blockers"]),
+            "runtime_scope_contract_only": contract["runtime_scope"]
+            == "action_proposal_preview_runtime_contract_only",
+        }
+
+        for key in true_keys:
+            assertions[f"{key}_true"] = contract[key] is True
+
+        for key in false_keys:
+            assertions[f"{key}_false"] = contract[key] is False
+
+        for blocker in contract["safety_blockers"]:
+            assertions[f"{blocker}_inactive"] = contract[blocker] is False
+
+        failed_assertions = [name for name, passed in assertions.items() if not passed]
+        s213_failed = [
+            f"sprint_213::{name}" for name in s213.get("failed_assertions", [])
+        ]
+        all_failed = s213_failed + failed_assertions
+
+        return {
+            "status": "checked",
+            "planning_ready": True,
+            "runtime_ready": False,
+            "assertion_count": int(s213["assertion_count"]) + len(assertions),
+            "failed_assertion_count": len(all_failed),
+            "failed_assertions": all_failed,
+            "permission_action_current_sprint": contract[
+                "permission_action_current_sprint"
+            ],
+            "permission_action_next_sprint": contract[
+                "permission_action_next_sprint"
+            ],
+            "permission_action_next_boundary": contract[
+                "permission_action_next_boundary"
+            ],
+            "active_permission_runtime_contract": contract,
+            "grant_denial_expiry_lifecycle_contract": contract,
+            "runtime_audit_writer_contract": contract,
+            "action_proposal_preview_runtime_contract": contract,
+            "note": (
+                "Runtime is not enabled yet. This check prepared the Sprint 214 "
+                "Action Proposal and Preview Runtime contract without creating "
+                "proposals, previews, approval handoffs, queue items, audit "
+                "events, permission mutations, file mutations, app launches, "
+                "commands, tools, or local action execution."
+            ),
+        }
+
+    def _s214_plan(self) -> dict[str, Any]:
+        contract = self.action_proposal_preview_runtime_contract()
+        return {
+            "name": self.name,
+            "sprint": 214,
+            "next_sprint": 215,
+            "next_boundary": "safe_local_open_actions",
+            "contract_ready": contract[
+                "action_proposal_preview_runtime_contract_ready"
+            ],
+            "runtime_ready": contract["action_proposal_preview_runtime_ready"],
+            "runtime_scope": contract["runtime_scope"],
+            "schemas_ready": {
+                "action_intent_packet": contract[
+                    "action_intent_packet_schema_ready"
+                ],
+                "action_proposal_packet": contract[
+                    "action_proposal_packet_schema_ready"
+                ],
+                "action_preview_packet": contract[
+                    "action_preview_packet_schema_ready"
+                ],
+                "action_risk_summary": contract[
+                    "action_risk_summary_schema_ready"
+                ],
+                "action_permission_requirement": contract[
+                    "action_permission_requirement_schema_ready"
+                ],
+                "action_audit_correlation": contract[
+                    "action_audit_correlation_schema_ready"
+                ],
+                "action_user_visible_preview": contract[
+                    "action_user_visible_preview_schema_ready"
+                ],
+                "action_user_approval_handoff": contract[
+                    "action_user_approval_handoff_schema_ready"
+                ],
+                "action_review_queue": contract[
+                    "action_review_queue_packet_schema_ready"
+                ],
+            },
+            "blocked_runtime": {
+                "action_proposal_creation": contract[
+                    "action_proposal_packet_creation_allowed"
+                ],
+                "action_preview_creation": contract[
+                    "action_preview_packet_creation_allowed"
+                ],
+                "action_queue_enqueue": contract["action_queue_enqueue_allowed"],
+                "action_execution": contract["action_execution_runtime_ready"],
+                "file_mutation": contract["file_mutation_allowed"],
+                "desktop_action": contract["desktop_action_allowed"],
+                "application_launch": contract["application_launch_allowed"],
+            },
+        }
+
+    ActivePermissionRuntimePlanner.action_proposal_preview_runtime_contract = (
+        _s214_action_proposal_preview_runtime_contract
+    )
+    ActivePermissionRuntimePlanner.status = _s214_status
+    ActivePermissionRuntimePlanner.check = _s214_check
+    ActivePermissionRuntimePlanner.plan = _s214_plan
+    ActivePermissionRuntimePlanner._s214_extension_installed = True
