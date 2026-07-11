@@ -2726,3 +2726,24 @@ network/git actions, write memory, install dependencies, download models, use
 cloud fallback, upload externally, or perform autonomous actions.
 
 The next sprint is Sprint 213 — Runtime Audit Writer.
+
+## Checkpoint v0.213.0-genesis — Runtime Audit Writer
+
+Sprint 213 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with a contract-only Runtime Audit Writer.
+
+This checkpoint prepares audit writer schemas and safety visibility for future
+audit event packets, append-only audit logs, persistence gates, correlation
+packets, actor context, permission lifecycle links, grant/denial/expiry links,
+redaction boundaries, retention policy, review queue packets, Control Center
+visibility, and action proposal/preview handoff.
+
+Runtime remains disabled. Sprint 213 does not create audit packets, write audit
+events, append audit logs, persist audit data, write audit storage, mutate
+permission state, persist permissions, create grants, create action proposals,
+preview actions, enqueue actions, execute actions, execute commands/tools,
+mutate files, control desktop, launch applications, perform network/git actions,
+write memory, install dependencies, download models, use cloud fallback, upload
+externally, or perform autonomous actions.
+
+The next sprint is Sprint 214 — Action Proposal and Preview Runtime.

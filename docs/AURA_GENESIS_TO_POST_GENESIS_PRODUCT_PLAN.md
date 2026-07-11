@@ -1156,3 +1156,28 @@ launch, memory writes, network/git actions, cloud fallback, external upload, or
 autonomy.
 
 This creates the lifecycle baseline for Sprint 213 — Runtime Audit Writer.
+
+## Sprint 213 — Runtime Audit Writer
+
+`v0.213.0-genesis` extends the Sprint 211-220 Permission, Audit, and Safe Local
+Actions block.
+
+This sprint introduces contract-only Runtime Audit Writer visibility. It
+establishes the future audit boundary for permission lifecycle and action-preview
+events while keeping all writes disabled.
+
+It prepares audit event packet, audit event type catalog, writer input, write
+request, write decision, append-only log, persistence gate, correlation, actor
+context, permission lifecycle link, grant/denial/expiry link, redaction boundary,
+failure safe-idle, retention policy, review queue, Control Center visibility,
+safety matrix, and next action proposal/preview schemas.
+
+It does not enable audit packet creation, audit writing, audit log append, audit
+persistence, audit storage write, audit correlation write, audit review queue
+enqueue, permission mutation, permission persistence, grant creation, action
+proposal creation, action preview creation, action execution, command/tool
+execution, file mutation, desktop actions, application launch, memory writes,
+network/git actions, cloud fallback, external upload, or autonomy.
+
+This creates the audit baseline for Sprint 214 — Action Proposal and Preview
+Runtime.

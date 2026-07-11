@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.212.0-genesis
+Current anchor: v0.213.0-genesis
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.212.0-genesis
-- Completed: Sprint 212 — Grant, Denial, and Expiry Lifecycle
+- Current version: v0.213.0-genesis
+- Completed: Sprint 213 — Runtime Audit Writer
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 191-200 Voice Interaction Runtime
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 213 — Runtime Audit Writer
+- Next: Sprint 214 — Action Proposal and Preview Runtime
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1197,3 +1197,64 @@ download models, use cloud fallback, upload externally, or perform autonomous
 actions.
 
 Next: Sprint 213 — Runtime Audit Writer.
+
+## v0.213.0-genesis — Runtime Audit Writer
+
+Sprint 213 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block with contract-only Runtime Audit Writer visibility.
+
+The sprint prepares schemas for audit event packets, audit event type catalog,
+writer input packets, write requests, write decisions, append-only log boundary,
+persistence gate, correlation packets, actor context, permission lifecycle links,
+grant/denial/expiry links, redaction boundary, failure safe-idle behavior,
+retention policy, review queue packets, Control Center visibility, safety matrix,
+and the next action proposal/preview handoff.
+
+The checkpoint confirms:
+
+- Runtime Audit Writer contract ready
+- Runtime Audit Writer runtime disabled
+- status runtime_audit_writer_contract_ready
+- current sprint 213
+- next sprint 214
+- next boundary action_proposal_preview_runtime
+- previous contract chain complete
+- default deny enabled
+- default grant disabled
+- audit event packet schema ready
+- audit write request schema ready
+- audit write decision schema ready
+- audit append-only log schema ready
+- audit persistence gate schema ready
+- audit correlation packet schema ready
+- audit permission lifecycle link schema ready
+- audit grant, denial, and expiry link schema ready
+- audit review queue schema ready
+- audit Control Center visibility schema ready
+- audit event type count 8
+- audit event packet creation blocked
+- audit event write blocked
+- audit log append blocked
+- audit persistence blocked
+- audit storage write blocked
+- audit correlation write blocked
+- audit review queue enqueue blocked
+- audit export blocked
+- audit network sync blocked
+- audit cloud upload blocked
+- permission state mutation blocked
+- action execution blocked
+- 63 safety blockers
+- all safety blockers inactive
+- 481 assertions
+- zero failed assertions
+
+Sprint 213 does not create audit packets, write audit events, append audit logs,
+persist audit data, write audit storage, create audit correlations, enqueue audit
+review items, mutate permission state, persist permissions, create grants,
+create action proposals, preview actions, enqueue or execute actions, run
+commands/tools, mutate files, control desktop, launch applications, perform
+network/git actions, write memory, install dependencies, download models, use
+cloud fallback, upload externally, or perform autonomous actions.
+
+Next: Sprint 214 — Action Proposal and Preview Runtime.

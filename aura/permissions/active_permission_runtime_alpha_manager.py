@@ -253,3 +253,130 @@ if not getattr(ActivePermissionRuntimeAlphaManager, "_s212_extension_installed",
 
     ActivePermissionRuntimeAlphaManager.status = _s212_alpha_status
     ActivePermissionRuntimeAlphaManager._s212_extension_installed = True
+
+# Sprint 213 extension: alpha visibility for Runtime Audit Writer.
+if not getattr(ActivePermissionRuntimeAlphaManager, "_s213_extension_installed", False):
+    _S212_ALPHA_STATUS = ActivePermissionRuntimeAlphaManager.status
+
+    def _s213_alpha_status(self) -> dict[str, Any]:
+        status = _S212_ALPHA_STATUS(self)
+        contract = self.planner.runtime_audit_writer_contract()
+        check = self.planner.check()
+
+        status.update(
+            {
+                "sprint_213_runtime_audit_writer_contract_ready": contract[
+                    "runtime_audit_writer_contract_ready"
+                ],
+                "runtime_audit_writer_runtime_ready": contract[
+                    "runtime_audit_writer_runtime_ready"
+                ],
+                "runtime_audit_writer_status": contract[
+                    "runtime_audit_writer_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "audit_event_packet_schema_ready": contract[
+                    "audit_event_packet_schema_ready"
+                ],
+                "audit_write_request_schema_ready": contract[
+                    "audit_write_request_schema_ready"
+                ],
+                "audit_write_decision_schema_ready": contract[
+                    "audit_write_decision_schema_ready"
+                ],
+                "audit_append_only_log_schema_ready": contract[
+                    "audit_append_only_log_schema_ready"
+                ],
+                "audit_persistence_gate_schema_ready": contract[
+                    "audit_persistence_gate_schema_ready"
+                ],
+                "audit_correlation_packet_schema_ready": contract[
+                    "audit_correlation_packet_schema_ready"
+                ],
+                "audit_permission_lifecycle_link_schema_ready": contract[
+                    "audit_permission_lifecycle_link_schema_ready"
+                ],
+                "audit_review_queue_packet_schema_ready": contract[
+                    "audit_review_queue_packet_schema_ready"
+                ],
+                "audit_event_type_count": contract["audit_event_type_count"],
+                "audit_write_allowed": contract["audit_write_allowed"],
+                "audit_writer_runtime_ready": contract["audit_writer_runtime_ready"],
+                "audit_persistence_ready": contract["audit_persistence_ready"],
+                "audit_event_packet_creation_allowed": contract[
+                    "audit_event_packet_creation_allowed"
+                ],
+                "audit_event_write_allowed": contract["audit_event_write_allowed"],
+                "audit_log_append_allowed": contract["audit_log_append_allowed"],
+                "audit_persistence_allowed": contract["audit_persistence_allowed"],
+                "audit_storage_write_allowed": contract["audit_storage_write_allowed"],
+                "audit_review_queue_enqueue_allowed": contract[
+                    "audit_review_queue_enqueue_allowed"
+                ],
+                "audit_event_packet_created": contract[
+                    "audit_event_packet_created"
+                ],
+                "audit_write_request_created": contract["audit_write_request_created"],
+                "audit_write_decision_created": contract[
+                    "audit_write_decision_created"
+                ],
+                "audit_event_written": contract["audit_event_written"],
+                "audit_event_persisted": contract["audit_event_persisted"],
+                "audit_log_appended": contract["audit_log_appended"],
+                "audit_storage_written": contract["audit_storage_written"],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "permission_grant_created": contract["permission_grant_created"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "file_mutated": contract["file_mutated"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "memory_written": contract["memory_written"],
+                "external_upload_performed": contract["external_upload_performed"],
+                "no_audit_event_creation": contract["no_audit_event_creation"],
+                "no_audit_write": contract["no_audit_write"],
+                "no_audit_persistence": contract["no_audit_persistence"],
+                "no_audit_log_append": contract["no_audit_log_append"],
+                "no_audit_storage_write": contract["no_audit_storage_write"],
+                "no_permission_state_mutation": contract[
+                    "no_permission_state_mutation"
+                ],
+                "no_action_execution": contract["no_action_execution"],
+                "no_command_execution": contract["no_command_execution"],
+                "no_file_mutation": contract["no_file_mutation"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_memory_write": contract["no_memory_write"],
+                "no_external_upload": contract["no_external_upload"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "assertion_count": check["assertion_count"],
+                "failed_assertion_count": check["failed_assertion_count"],
+                "failed_assertions": check["failed_assertions"],
+                "runtime_scope": contract["runtime_scope"],
+                "sections": 3,
+                "note": (
+                    "Active Permission Runtime Alpha now exposes Sprint 213 "
+                    "Runtime Audit Writer visibility without creating audit "
+                    "packets, writing audit events, appending audit logs, "
+                    "persisting audit data, mutating permissions, or executing "
+                    "local actions."
+                ),
+            }
+        )
+        return status
+
+    ActivePermissionRuntimeAlphaManager.status = _s213_alpha_status
+    ActivePermissionRuntimeAlphaManager._s213_extension_installed = True

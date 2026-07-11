@@ -2397,8 +2397,8 @@ class AuraShell:
 
         status = ActivePermissionRuntimeAlphaManager().status()
 
-        print("AURA Permission Lifecycle Runtime Alpha")
-        print("=======================================")
+        print("AURA Runtime Audit Writer Alpha")
+        print("===============================")
         rows = [
             ("Name", "name"),
             ("Version", "version"),
@@ -2412,6 +2412,9 @@ class AuraShell:
             ("S212 Lifecycle Ready", "sprint_212_grant_denial_expiry_lifecycle_contract_ready"),
             ("S212 Lifecycle Runtime", "grant_denial_expiry_lifecycle_runtime_ready"),
             ("S212 Lifecycle Status", "grant_denial_expiry_lifecycle_status"),
+            ("S213 Audit Writer Ready", "sprint_213_runtime_audit_writer_contract_ready"),
+            ("S213 Audit Writer Runtime", "runtime_audit_writer_runtime_ready"),
+            ("S213 Audit Writer Status", "runtime_audit_writer_status"),
             ("Current Sprint", "permission_action_current_sprint"),
             ("Next Sprint", "permission_action_next_sprint"),
             ("Next Boundary", "permission_action_next_boundary"),
@@ -2443,6 +2446,15 @@ class AuraShell:
             ("Expiry Event Schema", "expiry_event_packet_schema_ready"),
             ("Lifecycle Snapshot Schema", "lifecycle_state_snapshot_schema_ready"),
             ("Lifecycle Audit Link Schema", "lifecycle_audit_link_packet_schema_ready"),
+            ("Audit Event Packet Schema", "audit_event_packet_schema_ready"),
+            ("Audit Write Request Schema", "audit_write_request_schema_ready"),
+            ("Audit Write Decision Schema", "audit_write_decision_schema_ready"),
+            ("Audit Append-Only Log Schema", "audit_append_only_log_schema_ready"),
+            ("Audit Persistence Gate Schema", "audit_persistence_gate_schema_ready"),
+            ("Audit Correlation Schema", "audit_correlation_packet_schema_ready"),
+            ("Audit Lifecycle Link Schema", "audit_permission_lifecycle_link_schema_ready"),
+            ("Audit Review Queue Schema", "audit_review_queue_packet_schema_ready"),
+            ("Audit Event Type Count", "audit_event_type_count"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
@@ -2462,6 +2474,13 @@ class AuraShell:
             ("Allowed Future Scope Count", "allowed_future_scope_count"),
             ("Blocked Scope Count", "blocked_scope_count"),
             ("Request Created", "active_permission_request_created"),
+            ("Audit Event Packet Created", "audit_event_packet_created"),
+            ("Audit Write Request Created", "audit_write_request_created"),
+            ("Audit Write Decision Created", "audit_write_decision_created"),
+            ("Audit Event Written", "audit_event_written"),
+            ("Audit Event Persisted", "audit_event_persisted"),
+            ("Audit Log Appended", "audit_log_appended"),
+            ("Audit Storage Written", "audit_storage_written"),
             ("Grant Request Created", "grant_request_packet_created"),
             ("Grant Packet Created", "grant_packet_created"),
             ("Denial Packet Created", "denial_packet_created"),
@@ -2479,6 +2498,12 @@ class AuraShell:
             ("Memory Written", "memory_written"),
             ("External Upload Performed", "external_upload_performed"),
             ("No Automatic Grant", "no_automatic_grant"),
+            ("No Audit Event Creation", "no_audit_event_creation"),
+            ("No Audit Write", "no_audit_write"),
+            ("No Audit Persistence", "no_audit_persistence"),
+            ("No Audit Log Append", "no_audit_log_append"),
+            ("No Audit Storage Write", "no_audit_storage_write"),
+            ("No Audit Review Queue Enqueue", "no_audit_review_queue_enqueue"),
             ("No Grant Creation", "no_grant_creation"),
             ("No Grant Persistence", "no_grant_persistence"),
             ("No Expired Grant Reuse", "no_expired_grant_reuse"),
@@ -2514,8 +2539,8 @@ class AuraShell:
 
         status = ActivePermissionRuntimePlanner().status()
 
-        print("AURA Permission Lifecycle Runtime Status")
-        print("========================================")
+        print("AURA Runtime Audit Writer Status")
+        print("================================")
         rows = [
             ("Name", "name"),
             ("Version", "version"),
@@ -2559,6 +2584,21 @@ class AuraShell:
             ("Expiry Event Schema", "expiry_event_packet_schema_ready"),
             ("Lifecycle Snapshot Schema", "lifecycle_state_snapshot_schema_ready"),
             ("Lifecycle Audit Link Schema", "lifecycle_audit_link_packet_schema_ready"),
+            ("Audit Event Packet Schema", "audit_event_packet_schema_ready"),
+            ("Audit Event Type Catalog Schema", "audit_event_type_catalog_schema_ready"),
+            ("Audit Writer Input Schema", "audit_writer_input_packet_schema_ready"),
+            ("Audit Write Request Schema", "audit_write_request_schema_ready"),
+            ("Audit Write Decision Schema", "audit_write_decision_schema_ready"),
+            ("Audit Append-Only Log Schema", "audit_append_only_log_schema_ready"),
+            ("Audit Persistence Gate Schema", "audit_persistence_gate_schema_ready"),
+            ("Audit Correlation Schema", "audit_correlation_packet_schema_ready"),
+            ("Audit Actor Context Schema", "audit_actor_context_schema_ready"),
+            ("Audit Lifecycle Link Schema", "audit_permission_lifecycle_link_schema_ready"),
+            ("Audit GDE Link Schema", "audit_grant_denial_expiry_link_schema_ready"),
+            ("Audit Redaction Boundary Schema", "audit_redaction_boundary_schema_ready"),
+            ("Audit Review Queue Schema", "audit_review_queue_packet_schema_ready"),
+            ("Audit Control Center Schema", "audit_control_center_visibility_schema_ready"),
+            ("Audit Event Type Count", "audit_event_type_count"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
@@ -2580,6 +2620,17 @@ class AuraShell:
             ("Allowed Future Scope Count", "allowed_future_scope_count"),
             ("Blocked Scope Count", "blocked_scope_count"),
             ("Request Created", "active_permission_request_created"),
+            ("Audit Event Packet Created", "audit_event_packet_created"),
+            ("Audit Writer Input Created", "audit_writer_input_packet_created"),
+            ("Audit Write Request Created", "audit_write_request_created"),
+            ("Audit Write Decision Created", "audit_write_decision_created"),
+            ("Audit Correlation Created", "audit_correlation_packet_created"),
+            ("Audit Lifecycle Link Created", "audit_permission_lifecycle_link_created"),
+            ("Audit Review Queue Item", "audit_review_queue_item_created"),
+            ("Audit Event Written", "audit_event_written"),
+            ("Audit Event Persisted", "audit_event_persisted"),
+            ("Audit Log Appended", "audit_log_appended"),
+            ("Audit Storage Written", "audit_storage_written"),
             ("Grant Request Created", "grant_request_packet_created"),
             ("Grant Packet Created", "grant_packet_created"),
             ("Denial Packet Created", "denial_packet_created"),
@@ -2625,23 +2676,23 @@ class AuraShell:
         result = ActivePermissionRuntimePlanner().check()
         contract = result["active_permission_runtime_contract"]
 
-        print("AURA Permission Lifecycle Runtime Check")
-        print("=======================================")
+        print("AURA Runtime Audit Writer Check")
+        print("===============================")
         print(f"Status                 : {result['status']}")
         print(f"Planning Ready         : {result['planning_ready']}")
         print(f"Runtime Ready          : {result['runtime_ready']}")
         print(f"Assertion Count        : {result['assertion_count']}")
         print(f"Failed Assertion Count : {result['failed_assertion_count']}")
         print()
-        print("Sprint 212 Grant, Denial, and Expiry Lifecycle")
-        print("------------------------------------------------")
+        print("Sprint 213 Runtime Audit Writer")
+        print("--------------------------------")
 
         rows = [
             ("Contract Ready", "active_permission_runtime_contract_ready"),
             ("Runtime Ready", "active_permission_runtime_ready"),
-            ("Runtime Status", "grant_denial_expiry_lifecycle_status"),
-            ("S212 Lifecycle Ready", "grant_denial_expiry_lifecycle_contract_ready"),
-            ("S212 Lifecycle Runtime", "grant_denial_expiry_lifecycle_runtime_ready"),
+            ("Runtime Status", "runtime_audit_writer_status"),
+            ("S213 Audit Writer Ready", "runtime_audit_writer_contract_ready"),
+            ("S213 Audit Writer Runtime", "runtime_audit_writer_runtime_ready"),
             ("Current Sprint", "permission_action_current_sprint"),
             ("Next Sprint", "permission_action_next_sprint"),
             ("Next Boundary", "permission_action_next_boundary"),
@@ -2682,6 +2733,21 @@ class AuraShell:
             ("Expiry Event Schema", "expiry_event_packet_schema_ready"),
             ("Lifecycle Snapshot Schema", "lifecycle_state_snapshot_schema_ready"),
             ("Lifecycle Audit Link Schema", "lifecycle_audit_link_packet_schema_ready"),
+            ("Audit Event Packet Schema", "audit_event_packet_schema_ready"),
+            ("Audit Event Type Catalog Schema", "audit_event_type_catalog_schema_ready"),
+            ("Audit Writer Input Schema", "audit_writer_input_packet_schema_ready"),
+            ("Audit Write Request Schema", "audit_write_request_schema_ready"),
+            ("Audit Write Decision Schema", "audit_write_decision_schema_ready"),
+            ("Audit Append-Only Log Schema", "audit_append_only_log_schema_ready"),
+            ("Audit Persistence Gate Schema", "audit_persistence_gate_schema_ready"),
+            ("Audit Correlation Schema", "audit_correlation_packet_schema_ready"),
+            ("Audit Actor Context Schema", "audit_actor_context_schema_ready"),
+            ("Audit Lifecycle Link Schema", "audit_permission_lifecycle_link_schema_ready"),
+            ("Audit GDE Link Schema", "audit_grant_denial_expiry_link_schema_ready"),
+            ("Audit Redaction Boundary Schema", "audit_redaction_boundary_schema_ready"),
+            ("Audit Review Queue Schema", "audit_review_queue_packet_schema_ready"),
+            ("Audit Control Center Schema", "audit_control_center_visibility_schema_ready"),
+            ("Audit Event Type Count", "audit_event_type_count"),
             ("Permission Baseline", "permission_baseline_available"),
             ("Permission Baseline Items", "permission_baseline_item_count"),
             ("Registry Read Only", "permission_registry_read_only"),
@@ -2714,11 +2780,22 @@ class AuraShell:
             print(f"{label:<35}: {contract[key]}")
 
         print()
-        print("Grant, Denial, and Expiry Lifecycle Safety State")
-        print("------------------------------------------------")
+        print("Runtime Audit Writer Safety State")
+        print("---------------------------------")
 
         safety_rows = [
             ("Active Permission Request Created", "active_permission_request_created"),
+            ("Audit Event Packet Created", "audit_event_packet_created"),
+            ("Audit Writer Input Created", "audit_writer_input_packet_created"),
+            ("Audit Write Request Created", "audit_write_request_created"),
+            ("Audit Write Decision Created", "audit_write_decision_created"),
+            ("Audit Correlation Created", "audit_correlation_packet_created"),
+            ("Audit Lifecycle Link Created", "audit_permission_lifecycle_link_created"),
+            ("Audit Review Queue Item", "audit_review_queue_item_created"),
+            ("Audit Event Written", "audit_event_written"),
+            ("Audit Event Persisted", "audit_event_persisted"),
+            ("Audit Log Appended", "audit_log_appended"),
+            ("Audit Storage Written", "audit_storage_written"),
             ("Grant Request Packet Created", "grant_request_packet_created"),
             ("Grant Scope Packet Created", "grant_scope_packet_created"),
             ("Grant Decision Packet Created", "grant_decision_packet_created"),
@@ -2755,6 +2832,13 @@ class AuraShell:
             ("Cloud Fallback Used", "cloud_fallback_used"),
             ("Autonomous Action Performed", "autonomous_action_performed"),
             ("No Automatic Grant", "no_automatic_grant"),
+            ("No Audit Event Creation", "no_audit_event_creation"),
+            ("No Audit Write", "no_audit_write"),
+            ("No Audit Persistence", "no_audit_persistence"),
+            ("No Audit Log Append", "no_audit_log_append"),
+            ("No Audit Storage Write", "no_audit_storage_write"),
+            ("No Audit Correlation Write", "no_audit_correlation_write"),
+            ("No Audit Review Queue Enqueue", "no_audit_review_queue_enqueue"),
             ("No Grant Creation", "no_grant_creation"),
             ("No Grant Persistence", "no_grant_persistence"),
             ("No Expired Grant Reuse", "no_expired_grant_reuse"),

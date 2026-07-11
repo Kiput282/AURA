@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.212.0-genesis
-Current status: Sprint 212 Grant, Denial, and Expiry Lifecycle completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only grant, denial, and expiry lifecycle visibility
-Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 adds contract-only grant, denial, and expiry lifecycle visibility. Permission runtime now has default-deny request, scope, decision, grant, denial, expiry, state snapshot, review queue, lifecycle state, and audit-link schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit writes, action proposals, action previews, action execution, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
+Current version: v0.213.0-genesis
+Current status: Sprint 213 Runtime Audit Writer completed; Permission, Audit, and Safe Local Actions block 211-220 now has contract-only runtime audit writer visibility
+Current runtime state: one explicitly confirmed foreground localhost listener provides the Control Center dashboard, bounded interactive browser chat, persistent sessions, explicitly confirmed loopback local-model messaging, and read-only permission/audit/recovery visibility. Sprint 200 completed the Sprint 191-200 Voice Interaction Runtime block as contract-only stabilization. Sprint 210 completed the Sprint 201-210 Vision and Screen Awareness Runtime block as contract-only stable. Sprint 211 started the Sprint 211-220 Permission, Audit, and Safe Local Actions block with contract-only Active Permission Runtime. Sprint 212 added contract-only grant, denial, and expiry lifecycle visibility. Sprint 213 adds contract-only runtime audit writer visibility. Permission runtime now has default-deny request, scope, decision, grant, denial, expiry, state snapshot, lifecycle, audit-link, audit event, append-only log, persistence gate, correlation, lifecycle-link, review queue, and Control Center visibility schemas. Runtime activation, release gates, permission request creation, grant creation, grant persistence, denial persistence, expiry mutation, permission mutation, permission persistence, audit packet creation, audit writes, audit log append, audit persistence, audit storage write, action proposals, action previews, action execution, command/tool execution, file mutation, desktop actions, application launch, memory writes, network/git actions, dependency installs, model downloads, cloud fallback, external upload, background service, systemd, public/LAN binding, browser auto-launch, and autonomy remain disabled
 
 ---
 
@@ -35,13 +35,15 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 212 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Grant, Denial, and Expiry Lifecycle as a contract-only default-deny boundary.
+AURA has completed Sprint 213 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Runtime Audit Writer as a contract-only default-deny boundary.
 
 AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
 
 Latest completed checkpoint:
 
 
+- v0.213.0-genesis
+- Sprint 213: Runtime Audit Writer
 - v0.212.0-genesis
 - Sprint 212: Grant, Denial, and Expiry Lifecycle
 - v0.211.0-genesis
@@ -94,7 +96,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 213 — Runtime Audit Writer
+- Next planned sprint: Sprint 214 — Action Proposal and Preview Runtime
 Current capability registry summary:
 
 - total capabilities: 121
@@ -4346,3 +4348,130 @@ zero failed assertions, vision baseline stable, voice baseline stable, and
 baseline self-tests OK.
 
 Next: Sprint 213 — Runtime Audit Writer.
+
+## Sprint 213 — Runtime Audit Writer
+
+Version: `v0.213.0-genesis`
+
+Sprint 213 extends the Sprint 211-220 Permission, Audit, and Safe Local Actions
+block.
+
+This sprint adds the Runtime Audit Writer contract as a contract-only continuation
+of Active Permission Runtime and Grant, Denial, and Expiry Lifecycle. It prepares
+audit writer schemas and safety visibility for future audit event packets,
+append-only audit logs, persistence gates, correlation packets, actor context,
+permission lifecycle links, grant/denial/expiry links, redaction boundaries,
+retention policy, review queue packets, Control Center visibility, and the next
+action proposal/preview handoff.
+
+Sprint 213 confirms:
+
+- Runtime Audit Writer contract ready: true
+- Runtime Audit Writer runtime ready: false
+- Runtime Audit Writer status: runtime_audit_writer_contract_ready
+- current sprint: 213
+- next sprint: 214
+- next boundary: action_proposal_preview_runtime
+- previous active permission contract ready: true
+- previous grant, denial, and expiry lifecycle contract ready: true
+- previous contract chain complete: true
+- contract only: true
+- runtime ready: false
+- runtime activation allowed: false
+- release gate open: false
+- default deny: true
+- default grant: false
+- audit event packet schema ready: true
+- audit event type catalog schema ready: true
+- audit writer input packet schema ready: true
+- audit write request schema ready: true
+- audit write decision schema ready: true
+- audit append-only log schema ready: true
+- audit persistence gate schema ready: true
+- audit correlation packet schema ready: true
+- audit actor context schema ready: true
+- audit permission lifecycle link schema ready: true
+- audit grant, denial, and expiry link schema ready: true
+- audit redaction boundary schema ready: true
+- audit failure safe-idle schema ready: true
+- audit retention policy schema ready: true
+- audit review queue packet schema ready: true
+- audit Control Center visibility schema ready: true
+- audit writer safety matrix schema ready: true
+- audit writer next action preview schema ready: true
+- audit event type count: 8
+- audit write allowed: false
+- audit writer runtime ready: false
+- audit persistence ready: false
+- audit event packet creation allowed: false
+- audit event write allowed: false
+- audit log append allowed: false
+- audit persistence allowed: false
+- audit storage write allowed: false
+- audit correlation write allowed: false
+- audit permission lifecycle link write allowed: false
+- audit grant, denial, and expiry link write allowed: false
+- audit review queue enqueue allowed: false
+- audit export allowed: false
+- audit redaction runtime ready: false
+- audit retention mutation allowed: false
+- audit background flush allowed: false
+- audit network sync allowed: false
+- audit cloud upload allowed: false
+- audit event packet created: false
+- audit write request created: false
+- audit write decision created: false
+- audit event written: false
+- audit event persisted: false
+- audit log appended: false
+- audit storage written: false
+- permission state mutated: false
+- permission grant created: false
+- action proposal created: false
+- action preview created: false
+- action executed: false
+- command executed: false
+- file mutated: false
+- desktop action executed: false
+- application launched: false
+- memory written: false
+- external upload performed: false
+- no audit event creation: true
+- no audit write: true
+- no audit persistence: true
+- no audit log append: true
+- no audit storage write: true
+- no audit correlation write: true
+- no audit permission lifecycle link write: true
+- no audit grant, denial, and expiry link write: true
+- no audit review queue enqueue: true
+- no audit export: true
+- no audit network sync: true
+- no audit cloud upload: true
+- no permission state mutation: true
+- no permission persistence: true
+- no grant creation: true
+- no action proposal creation: true
+- no action preview creation: true
+- no action execution: true
+- safety blockers: 63
+- all safety blockers inactive: true
+- runtime scope: runtime_audit_writer_contract_only
+- assertion count: 481
+- failed assertion count: 0
+
+Sprint 213 does not create audit packets, write audit events, append audit logs,
+persist audit data, write audit storage, create audit correlations, enqueue audit
+review items, emit Control Center audit events, mutate permission state, persist
+permissions, create grants, create denials, create expiry records, create action
+proposals, create action previews, enqueue actions, execute actions, execute
+commands, execute tools, mutate files, control desktop, launch applications,
+perform network/git actions, write memory, install dependencies, download models,
+use cloud fallback, upload externally, or perform autonomous actions.
+
+Validation passed with compileall OK, Active Permission Runtime CLI/Shell audit
+writer visibility OK, active-permission-runtime-check OK, 481 assertions, zero
+failed assertions, vision baseline stable, voice baseline stable, and baseline
+self-tests OK.
+
+Next: Sprint 214 — Action Proposal and Preview Runtime.

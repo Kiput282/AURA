@@ -1,5 +1,5 @@
 name: AURA
-version: "0.212.0-genesis"
+version: "0.213.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -207,3 +207,11 @@ modes:
 # events, mutate permission state, persist permissions, write audit events,
 # execute actions, run commands/tools, mutate files, launch apps, write memory,
 # use network/git, use cloud fallback, or upload externally.
+# Sprint 213: runtime_audit_writer extends the permission/action block with
+# contract-only audit writer schemas. It prepares audit event packet, append-only
+# log, persistence gate, correlation, lifecycle-link, redaction, retention,
+# review-queue, and Control Center visibility boundaries. It does not create
+# audit packets, write audit events, append logs, persist audit data, mutate
+# permissions, create grants, execute actions, run commands/tools, mutate files,
+# launch apps, write memory, use network/git, use cloud fallback, or upload
+# externally.

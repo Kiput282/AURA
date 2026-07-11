@@ -1172,3 +1172,650 @@ if not getattr(ActivePermissionRuntimePlanner, "_s212_extension_installed", Fals
     ActivePermissionRuntimePlanner.check = _s212_check
     ActivePermissionRuntimePlanner.plan = _s212_plan
     ActivePermissionRuntimePlanner._s212_extension_installed = True
+
+# Sprint 213 extension: Runtime Audit Writer.
+#
+# This intentionally wraps the Sprint 212 planner instead of enabling a real
+# audit writer. It prepares audit-writer schemas and safety visibility only.
+if not getattr(ActivePermissionRuntimePlanner, "_s213_extension_installed", False):
+    _S212_STATUS = ActivePermissionRuntimePlanner.status
+    _S212_CHECK = ActivePermissionRuntimePlanner.check
+    _S212_PLAN = ActivePermissionRuntimePlanner.plan
+
+    def _s213_safety_blockers(self) -> tuple[str, ...]:
+        base = tuple(self.grant_denial_expiry_lifecycle_contract()["safety_blockers"])
+        extra = (
+            "runtime_audit_writer_active",
+            "audit_event_packet_creation_active",
+            "audit_event_write_active",
+            "audit_log_append_active",
+            "audit_persistence_active",
+            "audit_storage_write_active",
+            "audit_correlation_write_active",
+            "audit_permission_lifecycle_link_write_active",
+            "audit_grant_denial_expiry_link_write_active",
+            "audit_review_queue_enqueue_active",
+            "audit_export_active",
+            "audit_redaction_runtime_active",
+            "audit_retention_mutation_active",
+            "audit_failure_recovery_action_active",
+            "audit_background_flush_active",
+            "audit_network_sync_active",
+            "audit_cloud_upload_active",
+        )
+        return tuple(dict.fromkeys(base + extra))
+
+    def _s213_runtime_audit_writer_contract(self) -> dict[str, Any]:
+        s212 = self.grant_denial_expiry_lifecycle_contract()
+        blockers = _s213_safety_blockers(self)
+
+        contract: dict[str, Any] = dict(s212)
+        contract.update(
+            {
+                "runtime_audit_writer_contract_ready": True,
+                "runtime_audit_writer_runtime_ready": False,
+                "runtime_audit_writer_status": "runtime_audit_writer_contract_ready",
+                "permission_action_block_start": 211,
+                "permission_action_block_end": 220,
+                "permission_action_current_sprint": 213,
+                "permission_action_next_sprint": 214,
+                "permission_action_next_boundary": "action_proposal_preview_runtime",
+                "previous_active_permission_runtime_contract_ready": s212[
+                    "active_permission_runtime_contract_ready"
+                ],
+                "previous_grant_denial_expiry_lifecycle_contract_ready": s212[
+                    "grant_denial_expiry_lifecycle_contract_ready"
+                ],
+                "previous_contract_chain_complete": True,
+                "contract_only": True,
+                "runtime_ready": False,
+                "runtime_activation_allowed": False,
+                "release_gate_open": False,
+                "default_deny": True,
+                "default_grant": False,
+                "audit_event_packet_schema_ready": True,
+                "audit_event_type_catalog_schema_ready": True,
+                "audit_writer_input_packet_schema_ready": True,
+                "audit_write_request_schema_ready": True,
+                "audit_write_decision_schema_ready": True,
+                "audit_append_only_log_schema_ready": True,
+                "audit_persistence_gate_schema_ready": True,
+                "audit_correlation_packet_schema_ready": True,
+                "audit_actor_context_schema_ready": True,
+                "audit_permission_lifecycle_link_schema_ready": True,
+                "audit_grant_denial_expiry_link_schema_ready": True,
+                "audit_redaction_boundary_schema_ready": True,
+                "audit_failure_safe_idle_schema_ready": True,
+                "audit_retention_policy_schema_ready": True,
+                "audit_review_queue_packet_schema_ready": True,
+                "audit_control_center_visibility_schema_ready": True,
+                "audit_writer_safety_matrix_schema_ready": True,
+                "audit_writer_next_action_preview_schema_ready": True,
+                "audit_event_type_catalog": [
+                    "permission_request_observed",
+                    "permission_grant_decision_observed",
+                    "permission_denial_decision_observed",
+                    "permission_expiry_observed",
+                    "permission_lifecycle_snapshot_observed",
+                    "action_proposal_preview_observed",
+                    "runtime_safety_blocker_observed",
+                    "audit_writer_boundary_check_observed",
+                ],
+                "audit_event_type_count": 8,
+                "audit_write_allowed": False,
+                "audit_writer_runtime_ready": False,
+                "audit_persistence_ready": False,
+                "audit_event_packet_creation_allowed": False,
+                "audit_event_write_allowed": False,
+                "audit_log_append_allowed": False,
+                "audit_persistence_allowed": False,
+                "audit_storage_write_allowed": False,
+                "audit_correlation_write_allowed": False,
+                "audit_permission_lifecycle_link_write_allowed": False,
+                "audit_grant_denial_expiry_link_write_allowed": False,
+                "audit_review_queue_enqueue_allowed": False,
+                "audit_export_allowed": False,
+                "audit_redaction_runtime_ready": False,
+                "audit_retention_mutation_allowed": False,
+                "audit_failure_recovery_action_allowed": False,
+                "audit_background_flush_allowed": False,
+                "audit_network_sync_allowed": False,
+                "audit_cloud_upload_allowed": False,
+                "permission_state_mutation_allowed": False,
+                "permission_state_persistence_allowed": False,
+                "grant_packet_creation_allowed": False,
+                "grant_state_mutation_allowed": False,
+                "grant_persistence_allowed": False,
+                "denial_packet_creation_allowed": False,
+                "denial_persistence_allowed": False,
+                "expiry_state_mutation_allowed": False,
+                "action_proposal_runtime_ready": False,
+                "action_preview_runtime_ready": False,
+                "action_execution_runtime_ready": False,
+                "control_center_approval_runtime_ready": False,
+                "runtime_audit_writer_active": False,
+                "audit_event_packet_creation_active": False,
+                "audit_event_write_active": False,
+                "audit_log_append_active": False,
+                "audit_persistence_active": False,
+                "audit_storage_write_active": False,
+                "audit_correlation_write_active": False,
+                "audit_permission_lifecycle_link_write_active": False,
+                "audit_grant_denial_expiry_link_write_active": False,
+                "audit_review_queue_enqueue_active": False,
+                "audit_export_active": False,
+                "audit_redaction_runtime_active": False,
+                "audit_retention_mutation_active": False,
+                "audit_failure_recovery_action_active": False,
+                "audit_background_flush_active": False,
+                "audit_network_sync_active": False,
+                "audit_cloud_upload_active": False,
+                "audit_event_packet_created": False,
+                "audit_writer_input_packet_created": False,
+                "audit_write_request_created": False,
+                "audit_write_decision_created": False,
+                "audit_correlation_packet_created": False,
+                "audit_actor_context_created": False,
+                "audit_permission_lifecycle_link_created": False,
+                "audit_grant_denial_expiry_link_created": False,
+                "audit_review_queue_item_created": False,
+                "audit_redaction_applied": False,
+                "audit_retention_policy_applied": False,
+                "audit_control_center_event_emitted": False,
+                "audit_event_written": False,
+                "audit_event_persisted": False,
+                "audit_log_appended": False,
+                "audit_storage_written": False,
+                "permission_state_mutated": False,
+                "permission_grant_created": False,
+                "permission_denial_created": False,
+                "permission_expiry_created": False,
+                "permission_persisted": False,
+                "grant_packet_created": False,
+                "denial_packet_created": False,
+                "expiry_event_packet_created": False,
+                "action_proposal_created": False,
+                "action_preview_created": False,
+                "action_enqueued": False,
+                "action_executed": False,
+                "command_executed": False,
+                "tool_executed": False,
+                "file_mutated": False,
+                "desktop_action_executed": False,
+                "application_launched": False,
+                "network_action_executed": False,
+                "git_action_executed": False,
+                "memory_written": False,
+                "dependency_installed": False,
+                "model_downloaded": False,
+                "external_upload_performed": False,
+                "cloud_fallback_used": False,
+                "autonomous_action_performed": False,
+                "no_audit_event_creation": True,
+                "no_audit_write": True,
+                "no_audit_persistence": True,
+                "no_audit_log_append": True,
+                "no_audit_storage_write": True,
+                "no_audit_correlation_write": True,
+                "no_audit_permission_lifecycle_link_write": True,
+                "no_audit_grant_denial_expiry_link_write": True,
+                "no_audit_review_queue_enqueue": True,
+                "no_audit_export": True,
+                "no_audit_redaction_runtime": True,
+                "no_audit_retention_mutation": True,
+                "no_audit_failure_recovery_action": True,
+                "no_audit_background_flush": True,
+                "no_audit_network_sync": True,
+                "no_audit_cloud_upload": True,
+                "no_permission_state_mutation": True,
+                "no_permission_persistence": True,
+                "no_grant_creation": True,
+                "no_grant_persistence": True,
+                "no_denial_persistence": True,
+                "no_expiry_mutation": True,
+                "no_action_proposal_creation": True,
+                "no_action_preview_creation": True,
+                "no_action_execution": True,
+                "no_command_execution": True,
+                "no_tool_execution": True,
+                "no_file_mutation": True,
+                "no_desktop_action": True,
+                "no_application_launch": True,
+                "no_network_action": True,
+                "no_git_action": True,
+                "no_memory_write": True,
+                "no_dependency_install": True,
+                "no_model_download": True,
+                "no_external_upload": True,
+                "no_cloud_fallback": True,
+                "no_autonomous_action": True,
+                "runtime_scope": "runtime_audit_writer_contract_only",
+                "safety_blockers": list(blockers),
+                "safety_blocker_count": len(blockers),
+            }
+        )
+
+        for blocker in blockers:
+            contract[blocker] = False
+
+        contract["all_safety_blockers_inactive"] = all(
+            contract[blocker] is False for blocker in blockers
+        )
+
+        return contract
+
+    def _s213_status(self) -> dict[str, Any]:
+        status = _S212_STATUS(self)
+        contract = self.runtime_audit_writer_contract()
+
+        status.update(
+            {
+                "name": self.name,
+                "version": self.version,
+                "status": "planning",
+                "planning_ready": True,
+                "runtime_ready": False,
+                "runtime_audit_writer_contract_ready": contract[
+                    "runtime_audit_writer_contract_ready"
+                ],
+                "runtime_audit_writer_runtime_ready": contract[
+                    "runtime_audit_writer_runtime_ready"
+                ],
+                "runtime_audit_writer_status": contract[
+                    "runtime_audit_writer_status"
+                ],
+                "permission_action_current_sprint": contract[
+                    "permission_action_current_sprint"
+                ],
+                "permission_action_next_sprint": contract[
+                    "permission_action_next_sprint"
+                ],
+                "permission_action_next_boundary": contract[
+                    "permission_action_next_boundary"
+                ],
+                "previous_contract_chain_complete": contract[
+                    "previous_contract_chain_complete"
+                ],
+                "audit_event_packet_schema_ready": contract[
+                    "audit_event_packet_schema_ready"
+                ],
+                "audit_event_type_catalog_schema_ready": contract[
+                    "audit_event_type_catalog_schema_ready"
+                ],
+                "audit_writer_input_packet_schema_ready": contract[
+                    "audit_writer_input_packet_schema_ready"
+                ],
+                "audit_write_request_schema_ready": contract[
+                    "audit_write_request_schema_ready"
+                ],
+                "audit_write_decision_schema_ready": contract[
+                    "audit_write_decision_schema_ready"
+                ],
+                "audit_append_only_log_schema_ready": contract[
+                    "audit_append_only_log_schema_ready"
+                ],
+                "audit_persistence_gate_schema_ready": contract[
+                    "audit_persistence_gate_schema_ready"
+                ],
+                "audit_correlation_packet_schema_ready": contract[
+                    "audit_correlation_packet_schema_ready"
+                ],
+                "audit_actor_context_schema_ready": contract[
+                    "audit_actor_context_schema_ready"
+                ],
+                "audit_permission_lifecycle_link_schema_ready": contract[
+                    "audit_permission_lifecycle_link_schema_ready"
+                ],
+                "audit_grant_denial_expiry_link_schema_ready": contract[
+                    "audit_grant_denial_expiry_link_schema_ready"
+                ],
+                "audit_redaction_boundary_schema_ready": contract[
+                    "audit_redaction_boundary_schema_ready"
+                ],
+                "audit_review_queue_packet_schema_ready": contract[
+                    "audit_review_queue_packet_schema_ready"
+                ],
+                "audit_control_center_visibility_schema_ready": contract[
+                    "audit_control_center_visibility_schema_ready"
+                ],
+                "audit_event_type_count": contract["audit_event_type_count"],
+                "audit_write_allowed": contract["audit_write_allowed"],
+                "audit_writer_runtime_ready": contract["audit_writer_runtime_ready"],
+                "audit_persistence_ready": contract["audit_persistence_ready"],
+                "audit_event_packet_creation_allowed": contract[
+                    "audit_event_packet_creation_allowed"
+                ],
+                "audit_event_write_allowed": contract["audit_event_write_allowed"],
+                "audit_log_append_allowed": contract["audit_log_append_allowed"],
+                "audit_persistence_allowed": contract["audit_persistence_allowed"],
+                "audit_storage_write_allowed": contract["audit_storage_write_allowed"],
+                "audit_correlation_write_allowed": contract[
+                    "audit_correlation_write_allowed"
+                ],
+                "audit_review_queue_enqueue_allowed": contract[
+                    "audit_review_queue_enqueue_allowed"
+                ],
+                "audit_export_allowed": contract["audit_export_allowed"],
+                "audit_redaction_runtime_ready": contract[
+                    "audit_redaction_runtime_ready"
+                ],
+                "audit_event_packet_created": contract[
+                    "audit_event_packet_created"
+                ],
+                "audit_write_request_created": contract["audit_write_request_created"],
+                "audit_write_decision_created": contract[
+                    "audit_write_decision_created"
+                ],
+                "audit_correlation_packet_created": contract[
+                    "audit_correlation_packet_created"
+                ],
+                "audit_event_written": contract["audit_event_written"],
+                "audit_event_persisted": contract["audit_event_persisted"],
+                "audit_log_appended": contract["audit_log_appended"],
+                "audit_storage_written": contract["audit_storage_written"],
+                "permission_state_mutated": contract["permission_state_mutated"],
+                "permission_grant_created": contract["permission_grant_created"],
+                "action_executed": contract["action_executed"],
+                "command_executed": contract["command_executed"],
+                "file_mutated": contract["file_mutated"],
+                "desktop_action_executed": contract["desktop_action_executed"],
+                "application_launched": contract["application_launched"],
+                "memory_written": contract["memory_written"],
+                "external_upload_performed": contract["external_upload_performed"],
+                "no_audit_event_creation": contract["no_audit_event_creation"],
+                "no_audit_write": contract["no_audit_write"],
+                "no_audit_persistence": contract["no_audit_persistence"],
+                "no_audit_log_append": contract["no_audit_log_append"],
+                "no_audit_storage_write": contract["no_audit_storage_write"],
+                "no_audit_correlation_write": contract[
+                    "no_audit_correlation_write"
+                ],
+                "no_audit_review_queue_enqueue": contract[
+                    "no_audit_review_queue_enqueue"
+                ],
+                "no_permission_state_mutation": contract[
+                    "no_permission_state_mutation"
+                ],
+                "no_action_execution": contract["no_action_execution"],
+                "no_command_execution": contract["no_command_execution"],
+                "no_file_mutation": contract["no_file_mutation"],
+                "no_desktop_action": contract["no_desktop_action"],
+                "no_memory_write": contract["no_memory_write"],
+                "no_external_upload": contract["no_external_upload"],
+                "safety_blocker_count": contract["safety_blocker_count"],
+                "all_safety_blockers_inactive": contract[
+                    "all_safety_blockers_inactive"
+                ],
+                "runtime_scope": contract["runtime_scope"],
+                "runtime_audit_writer_contract": contract,
+                "contract": contract,
+                "note": (
+                    "Runtime Audit Writer contract is ready for Sprint 213; "
+                    "it prepares audit event, append-only log, persistence gate, "
+                    "correlation, permission lifecycle link, redaction, retention, "
+                    "review queue, and Control Center visibility schemas without "
+                    "creating audit packets, writing audit events, appending logs, "
+                    "persisting audit data, mutating permissions, or executing "
+                    "local actions."
+                ),
+            }
+        )
+        return status
+
+    def _s213_check(self) -> dict[str, Any]:
+        s212 = _S212_CHECK(self)
+        contract = self.runtime_audit_writer_contract()
+
+        true_keys = (
+            "runtime_audit_writer_contract_ready",
+            "previous_active_permission_runtime_contract_ready",
+            "previous_grant_denial_expiry_lifecycle_contract_ready",
+            "previous_contract_chain_complete",
+            "contract_only",
+            "default_deny",
+            "audit_event_packet_schema_ready",
+            "audit_event_type_catalog_schema_ready",
+            "audit_writer_input_packet_schema_ready",
+            "audit_write_request_schema_ready",
+            "audit_write_decision_schema_ready",
+            "audit_append_only_log_schema_ready",
+            "audit_persistence_gate_schema_ready",
+            "audit_correlation_packet_schema_ready",
+            "audit_actor_context_schema_ready",
+            "audit_permission_lifecycle_link_schema_ready",
+            "audit_grant_denial_expiry_link_schema_ready",
+            "audit_redaction_boundary_schema_ready",
+            "audit_failure_safe_idle_schema_ready",
+            "audit_retention_policy_schema_ready",
+            "audit_review_queue_packet_schema_ready",
+            "audit_control_center_visibility_schema_ready",
+            "audit_writer_safety_matrix_schema_ready",
+            "audit_writer_next_action_preview_schema_ready",
+            "no_audit_event_creation",
+            "no_audit_write",
+            "no_audit_persistence",
+            "no_audit_log_append",
+            "no_audit_storage_write",
+            "no_audit_correlation_write",
+            "no_audit_permission_lifecycle_link_write",
+            "no_audit_grant_denial_expiry_link_write",
+            "no_audit_review_queue_enqueue",
+            "no_audit_export",
+            "no_audit_redaction_runtime",
+            "no_audit_retention_mutation",
+            "no_audit_failure_recovery_action",
+            "no_audit_background_flush",
+            "no_audit_network_sync",
+            "no_audit_cloud_upload",
+            "no_permission_state_mutation",
+            "no_permission_persistence",
+            "no_grant_creation",
+            "no_grant_persistence",
+            "no_denial_persistence",
+            "no_expiry_mutation",
+            "no_action_proposal_creation",
+            "no_action_preview_creation",
+            "no_action_execution",
+            "no_command_execution",
+            "no_tool_execution",
+            "no_file_mutation",
+            "no_desktop_action",
+            "no_application_launch",
+            "no_network_action",
+            "no_git_action",
+            "no_memory_write",
+            "no_dependency_install",
+            "no_model_download",
+            "no_external_upload",
+            "no_cloud_fallback",
+            "no_autonomous_action",
+            "all_safety_blockers_inactive",
+        )
+
+        false_keys = (
+            "runtime_audit_writer_runtime_ready",
+            "runtime_ready",
+            "runtime_activation_allowed",
+            "release_gate_open",
+            "default_grant",
+            "audit_write_allowed",
+            "audit_writer_runtime_ready",
+            "audit_persistence_ready",
+            "audit_event_packet_creation_allowed",
+            "audit_event_write_allowed",
+            "audit_log_append_allowed",
+            "audit_persistence_allowed",
+            "audit_storage_write_allowed",
+            "audit_correlation_write_allowed",
+            "audit_permission_lifecycle_link_write_allowed",
+            "audit_grant_denial_expiry_link_write_allowed",
+            "audit_review_queue_enqueue_allowed",
+            "audit_export_allowed",
+            "audit_redaction_runtime_ready",
+            "audit_retention_mutation_allowed",
+            "audit_failure_recovery_action_allowed",
+            "audit_background_flush_allowed",
+            "audit_network_sync_allowed",
+            "audit_cloud_upload_allowed",
+            "permission_state_mutation_allowed",
+            "permission_state_persistence_allowed",
+            "grant_packet_creation_allowed",
+            "grant_state_mutation_allowed",
+            "grant_persistence_allowed",
+            "denial_packet_creation_allowed",
+            "denial_persistence_allowed",
+            "expiry_state_mutation_allowed",
+            "action_proposal_runtime_ready",
+            "action_preview_runtime_ready",
+            "action_execution_runtime_ready",
+            "control_center_approval_runtime_ready",
+            "audit_event_packet_created",
+            "audit_writer_input_packet_created",
+            "audit_write_request_created",
+            "audit_write_decision_created",
+            "audit_correlation_packet_created",
+            "audit_actor_context_created",
+            "audit_permission_lifecycle_link_created",
+            "audit_grant_denial_expiry_link_created",
+            "audit_review_queue_item_created",
+            "audit_redaction_applied",
+            "audit_retention_policy_applied",
+            "audit_control_center_event_emitted",
+            "audit_event_written",
+            "audit_event_persisted",
+            "audit_log_appended",
+            "audit_storage_written",
+            "permission_state_mutated",
+            "permission_grant_created",
+            "permission_denial_created",
+            "permission_expiry_created",
+            "permission_persisted",
+            "grant_packet_created",
+            "denial_packet_created",
+            "expiry_event_packet_created",
+            "action_proposal_created",
+            "action_preview_created",
+            "action_enqueued",
+            "action_executed",
+            "command_executed",
+            "tool_executed",
+            "file_mutated",
+            "desktop_action_executed",
+            "application_launched",
+            "network_action_executed",
+            "git_action_executed",
+            "memory_written",
+            "dependency_installed",
+            "model_downloaded",
+            "external_upload_performed",
+            "cloud_fallback_used",
+            "autonomous_action_performed",
+        )
+
+        assertions: dict[str, bool] = {
+            "sprint_212_check_still_clean": s212["failed_assertion_count"] == 0,
+            "status_ready": contract["runtime_audit_writer_status"]
+            == "runtime_audit_writer_contract_ready",
+            "current_sprint_213": contract["permission_action_current_sprint"] == 213,
+            "next_sprint_214": contract["permission_action_next_sprint"] == 214,
+            "next_boundary_action_proposal_preview": contract[
+                "permission_action_next_boundary"
+            ]
+            == "action_proposal_preview_runtime",
+            "audit_event_type_count_expected": contract["audit_event_type_count"] == 8,
+            "safety_blocker_count_expected": contract["safety_blocker_count"]
+            == len(contract["safety_blockers"]),
+            "runtime_scope_contract_only": contract["runtime_scope"]
+            == "runtime_audit_writer_contract_only",
+        }
+
+        for key in true_keys:
+            assertions[f"{key}_true"] = contract[key] is True
+
+        for key in false_keys:
+            assertions[f"{key}_false"] = contract[key] is False
+
+        for blocker in contract["safety_blockers"]:
+            assertions[f"{blocker}_inactive"] = contract[blocker] is False
+
+        failed_assertions = [name for name, passed in assertions.items() if not passed]
+        s212_failed = [
+            f"sprint_212::{name}" for name in s212.get("failed_assertions", [])
+        ]
+        all_failed = s212_failed + failed_assertions
+
+        return {
+            "status": "checked",
+            "planning_ready": True,
+            "runtime_ready": False,
+            "assertion_count": int(s212["assertion_count"]) + len(assertions),
+            "failed_assertion_count": len(all_failed),
+            "failed_assertions": all_failed,
+            "permission_action_current_sprint": contract[
+                "permission_action_current_sprint"
+            ],
+            "permission_action_next_sprint": contract[
+                "permission_action_next_sprint"
+            ],
+            "permission_action_next_boundary": contract[
+                "permission_action_next_boundary"
+            ],
+            "active_permission_runtime_contract": contract,
+            "grant_denial_expiry_lifecycle_contract": contract,
+            "runtime_audit_writer_contract": contract,
+            "note": (
+                "Runtime is not enabled yet. This check prepared the Sprint 213 "
+                "Runtime Audit Writer contract without creating audit packets, "
+                "writing audit events, appending audit logs, persisting audit "
+                "data, mutating permissions, creating grants, or executing "
+                "local actions."
+            ),
+        }
+
+    def _s213_plan(self) -> dict[str, Any]:
+        contract = self.runtime_audit_writer_contract()
+        return {
+            "name": self.name,
+            "sprint": 213,
+            "next_sprint": 214,
+            "next_boundary": "action_proposal_preview_runtime",
+            "contract_ready": contract["runtime_audit_writer_contract_ready"],
+            "runtime_ready": contract["runtime_audit_writer_runtime_ready"],
+            "runtime_scope": contract["runtime_scope"],
+            "schemas_ready": {
+                "audit_event_packet": contract["audit_event_packet_schema_ready"],
+                "audit_write_request": contract["audit_write_request_schema_ready"],
+                "audit_write_decision": contract["audit_write_decision_schema_ready"],
+                "append_only_log": contract["audit_append_only_log_schema_ready"],
+                "persistence_gate": contract["audit_persistence_gate_schema_ready"],
+                "correlation": contract["audit_correlation_packet_schema_ready"],
+                "permission_lifecycle_link": contract[
+                    "audit_permission_lifecycle_link_schema_ready"
+                ],
+                "grant_denial_expiry_link": contract[
+                    "audit_grant_denial_expiry_link_schema_ready"
+                ],
+                "review_queue": contract["audit_review_queue_packet_schema_ready"],
+                "control_center_visibility": contract[
+                    "audit_control_center_visibility_schema_ready"
+                ],
+            },
+            "blocked_runtime": {
+                "audit_event_creation": contract[
+                    "audit_event_packet_creation_allowed"
+                ],
+                "audit_write": contract["audit_write_allowed"],
+                "audit_log_append": contract["audit_log_append_allowed"],
+                "audit_persistence": contract["audit_persistence_allowed"],
+                "permission_mutation": contract["permission_state_mutation_allowed"],
+                "action_execution": contract["action_execution_runtime_ready"],
+            },
+        }
+
+    ActivePermissionRuntimePlanner.runtime_audit_writer_contract = (
+        _s213_runtime_audit_writer_contract
+    )
+    ActivePermissionRuntimePlanner.status = _s213_status
+    ActivePermissionRuntimePlanner.check = _s213_check
+    ActivePermissionRuntimePlanner.plan = _s213_plan
+    ActivePermissionRuntimePlanner._s213_extension_installed = True
