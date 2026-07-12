@@ -4530,6 +4530,52 @@ class AuraCLI:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
+        # Sprint 227 Service Persistence and Launcher CLI commands.
+        commands = {
+            "partner-runtime-service-persistence-launcher-status",
+            "partner-runtime-service-persistence-launcher-context",
+            "partner-runtime-service-persistence-launcher-check",
+        }
+
+        if raw_args and raw_args[0] in commands:
+            from aura.partner_runtime import (
+                ServicePersistenceAndLauncherAlphaManager,
+            )
+
+            manager = ServicePersistenceAndLauncherAlphaManager(
+                project_root=self.project_root,
+            )
+
+            selected_command = raw_args[0]
+
+            if selected_command.endswith("-status"):
+                title = (
+                    "AURA Service Persistence and "
+                    "Launcher Contract Status"
+                )
+                packet = manager.status()
+
+            elif selected_command.endswith("-context"):
+                title = (
+                    "AURA Service Persistence and "
+                    "Launcher Contract Context"
+                )
+                packet = manager.context()
+
+            else:
+                title = (
+                    "AURA Service Persistence and "
+                    "Launcher Contract Check"
+                )
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+
+            return True
+
         # Sprint 226 Multi-Interface State Synchronization CLI commands.
         commands = {
             "partner-runtime-multi-interface-state-synchronization-status",

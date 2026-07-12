@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.226.0-genesis
-Current status: Sprint 226 Multi-Interface State Synchronization completed; Sprint 221-230 Unified Partner Runtime Integration is active
-Current runtime state: Sprint 226 adds a contract-only and metadata-only deterministic state-vector facade across seven declared interface targets. It synchronizes no live state, reads no chat or session payloads, invokes no Control Center runtime snapshot, creates no state store, dispatches no events, performs no persistence or execution, starts no service, opens no release gate, and enables no autonomy.
+Current version: v0.227.0-genesis
+Current status: Sprint 227 Service Persistence and Launcher completed; Sprint 221-230 Unified Partner Runtime Integration is active
+Current runtime state: Sprint 227 adds a contract-only and metadata-only service persistence and launcher facade. It declares service-state, persistence-artifact, launcher, and recovery schemas while keeping lifecycle access static-only, creating no lifecycle instance, writing no PID or state file, installing no systemd unit, starting no service or listener, executing no launcher, enabling no auto-start, opening no release gate, and enabling no autonomy.
 
 ---
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 227 — Service Persistence and Launcher
+- Next planned sprint: Sprint 228 — Safe Auto-Start Evaluation
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5578,3 +5578,35 @@ process launch, background services, runtime activation, release gates, and
 autonomous state propagation remain disabled.
 
 Next: Sprint 227 — Service Persistence and Launcher.
+
+## Sprint 227 — Service Persistence and Launcher
+
+Sprint 227 completes the seventh step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+The implementation introduces:
+
+- `ServicePersistenceAndLauncherPlanner`
+- `ServicePersistenceAndLauncherAlphaManager`
+- identical read-only status, context, and check routes in CLI and shell
+- compatibility for identity version `0.227.0-genesis`
+- a deterministic service-state schema with 15 metadata fields
+- eight explicitly excluded runtime-payload fields
+- four declarative persistence artifacts
+- a metadata-only launcher and manual-recovery policy
+
+`AuraServiceLifecycleRuntimeManager` is preserved as the canonical lifecycle
+owner, but Sprint 227 inspects it only through static class metadata. The
+lifecycle manager is not instantiated, and no lifecycle runtime method is
+invoked.
+
+Launcher, runtime-service, and local-service foundation owners are accessed only
+through bounded read-only status, context, summary, and safety surfaces.
+
+Sprint 227 validates 208 deterministic assertions. It writes no service state,
+PID file, lifecycle state file, launcher log, or systemd unit. It performs no
+systemctl call, service start or stop, listener start, socket action, thread or
+subprocess start, launcher execution, browser auto-launch, automatic restart,
+runtime activation, release-gate opening, or autonomous recovery.
+
+Next: Sprint 228 — Safe Auto-Start Evaluation.

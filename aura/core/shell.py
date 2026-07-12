@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-service-persistence-launcher-status Show Sprint 227 service persistence and launcher contract status")
+        print("  partner-runtime-service-persistence-launcher-context Show Sprint 227 service persistence and launcher contract context")
+        print("  partner-runtime-service-persistence-launcher-check Run Sprint 227 service persistence and launcher contract checks")
         print("  partner-runtime-multi-interface-state-synchronization-status Show Sprint 226 multi-interface state synchronization contract status")
         print("  partner-runtime-multi-interface-state-synchronization-context Show Sprint 226 multi-interface state synchronization contract context")
         print("  partner-runtime-multi-interface-state-synchronization-check Run Sprint 226 multi-interface state synchronization contract checks")
@@ -5413,6 +5416,50 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 227 Service Persistence and Launcher shell commands.
+        commands = {
+            "partner-runtime-service-persistence-launcher-status",
+            "partner-runtime-service-persistence-launcher-context",
+            "partner-runtime-service-persistence-launcher-check",
+        }
+
+        if normalized in commands:
+            from aura.partner_runtime import (
+                ServicePersistenceAndLauncherAlphaManager,
+            )
+
+            manager = ServicePersistenceAndLauncherAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = (
+                    "AURA Service Persistence and "
+                    "Launcher Contract Status"
+                )
+                packet = manager.status()
+
+            elif normalized.endswith("-context"):
+                title = (
+                    "AURA Service Persistence and "
+                    "Launcher Contract Context"
+                )
+                packet = manager.context()
+
+            else:
+                title = (
+                    "AURA Service Persistence and "
+                    "Launcher Contract Check"
+                )
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+
+            return True
+
         # Sprint 226 Multi-Interface State Synchronization shell commands.
         commands = {
             "partner-runtime-multi-interface-state-synchronization-status",

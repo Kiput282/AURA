@@ -37,3 +37,15 @@ __all__ = [
     "MultiInterfaceStateSynchronizationPlanner",
     "MultiInterfaceStateSynchronizationAlphaManager",
 ]
+
+from .service_persistence_and_launcher_planner import (
+    ServicePersistenceAndLauncherPlanner,
+)
+from .service_persistence_and_launcher_alpha_manager import (
+    ServicePersistenceAndLauncherAlphaManager,
+)
+
+__all__ += [
+    "ServicePersistenceAndLauncherPlanner",
+    "ServicePersistenceAndLauncherAlphaManager",
+]

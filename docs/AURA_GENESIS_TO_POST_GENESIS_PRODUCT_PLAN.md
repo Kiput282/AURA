@@ -1483,3 +1483,35 @@ processes, start background services, activate runtime authority, open release
 gates, or enable autonomy.
 
 This boundary prepares Sprint 227 — Service Persistence and Launcher.
+
+## Sprint 227 — Service Persistence and Launcher
+
+`v0.227.0-genesis` introduces a bounded service persistence and launcher
+contract for AURA on ATLAS.
+
+The product goal is to define how future service state, PID metadata, recovery
+metadata, launcher visibility, and safe-idle lifecycle continuity should be
+represented without activating persistence or process authority.
+
+The canonical lifecycle owner remains
+`AuraServiceLifecycleRuntimeManager`, but Sprint 227 uses static metadata only.
+No lifecycle instance is created and no lifecycle method is called.
+
+The contract declares:
+
+- 15 service-state metadata fields
+- eight excluded runtime-payload fields
+- four future persistence artifact roles
+- six planned launcher actions
+- manual recovery, safe-idle fallback, and operator-review requirements
+
+CLI and shell expose identical deterministic status, context, and check packets.
+The contract validates 208 assertions with zero failures.
+
+The sprint does not write state or PID files, create logs, write or install a
+systemd unit, call systemctl, start or stop a service, open a listener or
+socket, start a thread or subprocess, execute a launcher, auto-launch a browser,
+enable auto-start, perform autonomous recovery, activate runtime authority, or
+open a release gate.
+
+This boundary prepares Sprint 228 — Safe Auto-Start Evaluation.

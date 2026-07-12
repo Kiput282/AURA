@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.226.0-genesis
-- Completed: Sprint 226 — Multi-Interface State Synchronization
+- Current version: v0.227.0-genesis
+- Completed: Sprint 227 — Service Persistence and Launcher
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 227 — Service Persistence and Launcher
+- Next: Sprint 228 — Safe Auto-Start Evaluation
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1739,3 +1739,29 @@ Implemented boundaries:
 The next runtime boundary is `service_persistence_and_launcher`.
 
 Next: Sprint 227 — Service Persistence and Launcher.
+
+## v0.227.0-genesis — Service Persistence and Launcher
+
+Sprint 227 establishes the contract-only service persistence and launcher
+boundary for the Sprint 221-230 Unified Partner Runtime Integration block.
+
+Implemented boundaries:
+
+- advances canonical identity to `0.227.0-genesis`
+- preserves Sprint 226 as the upstream synchronization owner with 128 assertions
+- preserves `AuraServiceLifecycleRuntimeManager` as canonical lifecycle owner
+- limits lifecycle inspection to static class metadata
+- creates no lifecycle-manager instance and invokes no lifecycle runtime method
+- declares 15 service-state metadata fields
+- excludes eight process, server, socket, thread, log, environment, and command payload fields
+- declares four future persistence artifacts without reading, writing, or creating them
+- preserves launcher, runtime-service, and local-service owners as read-only metadata references
+- keeps recovery manual-only with safe-idle fallback and operator review
+- exposes identical read-only CLI and shell packets
+- validates 208 deterministic assertions with zero failures
+- performs no service, listener, socket, thread, subprocess, filesystem, systemd, systemctl, launcher, auto-start, or autonomous recovery action
+- keeps runtime activation and release gates closed
+
+The next runtime boundary is `safe_auto_start_evaluation`.
+
+Next: Sprint 228 — Safe Auto-Start Evaluation.

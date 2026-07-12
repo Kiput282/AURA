@@ -3033,3 +3033,30 @@ Canonical checkpoint properties:
 - Capability Registry remains unchanged
 
 Next: Sprint 227 — Service Persistence and Launcher.
+
+## Checkpoint v0.227.0-genesis — Service Persistence and Launcher
+
+Sprint 227 completes the seventh step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+Canonical checkpoint properties:
+
+- canonical identity advances to `0.227.0-genesis`
+- Sprint 226 remains stable with 128 assertions and zero failures
+- Sprint 227 validates 208 assertions with zero failures
+- `AuraServiceLifecycleRuntimeManager` is the canonical lifecycle owner
+- lifecycle access remains `static_contract_metadata_only`
+- no lifecycle instance is created and no lifecycle runtime method is invoked
+- launcher foundation remains a secondary read-only metadata owner
+- runtime-service foundation remains a secondary read-only blueprint reference
+- local-service foundation remains a secondary read-only safety baseline
+- service-state schema contains 15 metadata fields
+- eight runtime-payload fields remain explicitly excluded
+- four persistence artifacts are declared but not read, written, or created
+- recovery remains manual-only with safe-idle fallback and operator review
+- CLI and shell expose identical read-only packets
+- no PID/state/log/systemd file is written
+- no systemctl, service, listener, socket, thread, subprocess, launcher, browser auto-launch, auto-start, runtime activation, release gate, or autonomous recovery is enabled
+- Capability Registry remains unchanged
+
+Next: Sprint 228 — Safe Auto-Start Evaluation.
