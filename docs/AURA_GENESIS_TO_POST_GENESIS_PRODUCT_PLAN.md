@@ -1552,3 +1552,34 @@ automatic restart or autonomous recovery, activate runtime authority, or open
 a release gate.
 
 This boundary prepares Sprint 229 — Genesis Acceptance Rehearsal.
+
+## Sprint 229 — Genesis Acceptance Rehearsal
+
+`v0.229.0-genesis` introduces a bounded, contract-only Genesis acceptance
+rehearsal across the complete Sprint 221-228 partner-runtime chain.
+
+The product goal is to prove that the integrated Genesis-facing contracts can
+be rehearsed together without granting release authority or activating any
+runtime effect. The rehearsal covers:
+
+- canonical checkpoint and identity compatibility
+- all eight partner-runtime owners from Sprint 221 through Sprint 228
+- all eight sequential sprint handoff boundaries
+- identity and personality consistency
+- multi-interface state consistency
+- service persistence and launcher safety
+- safe auto-start safety evaluation
+- permission, audit, manual recovery, emergency stop, and operator visibility
+- runtime-effect hold and release-gate hold
+
+The rehearsal validates 486 deterministic assertions, 1,042 upstream owner
+assertions, 30 deterministic method packets, nine rehearsal phases, and 27
+acceptance results with zero failures.
+
+Sprint 229 does not approve Genesis release, start or stop a service, write or
+install a systemd unit, call `systemctl`, open a listener or socket, start a
+thread or subprocess, execute a launcher, auto-launch a browser, enable
+auto-start or autonomous recovery, activate runtime authority, or open a
+release gate.
+
+This boundary prepares Sprint 230 — Unified Partner Runtime Stabilization.

@@ -3087,3 +3087,31 @@ Canonical checkpoint properties:
 - Capability Registry remains unchanged
 
 Next: Sprint 229 — Genesis Acceptance Rehearsal.
+
+## Checkpoint v0.229.0-genesis — Genesis Acceptance Rehearsal
+
+Sprint 229 completes the ninth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+Canonical checkpoint properties:
+
+- canonical identity advances to `0.229.0-genesis`
+- Sprint 228 remains stable with 358 assertions and zero failures
+- Sprint 229 validates 486 assertions with zero failures
+- eight partner-runtime rehearsal owners remain deterministic and read-only
+- 1,042 upstream owner assertions pass with zero failures
+- 30 read-only owner method packets remain deterministic
+- eight sequential sprint handoff boundaries are verified
+- nine Genesis rehearsal phases are represented
+- all 27 required acceptance results pass
+- ten safe auto-start safety domains remain non-activating
+- all 17 negative runtime-effect results remain false
+- all 21 zero-effect counters remain zero
+- CLI, shell, and direct packets remain identical
+- Genesis release approval remains false
+- no systemctl, service, listener, socket, thread, subprocess, launcher,
+  browser auto-launch, auto-start, runtime activation, release gate, or
+  autonomous recovery is enabled
+- Capability Registry remains unchanged
+
+Next: Sprint 230 — Unified Partner Runtime Stabilization.

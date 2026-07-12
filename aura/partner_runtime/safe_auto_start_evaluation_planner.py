@@ -70,7 +70,7 @@ class SafeAutoStartEvaluationPlanner:
     boundary = "safe_auto_start_evaluation"
     next_boundary = "genesis_acceptance_rehearsal"
 
-    identity_version = "0.228.0-genesis"
+    identity_version = "0.229.0-genesis"
 
     evaluation_mode = (
         "contract_only_read_only_safety_evaluation"

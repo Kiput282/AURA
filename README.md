@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.228.0-genesis
-Current status: Sprint 228 Safe Auto-Start Evaluation completed; Sprint 221-230 Unified Partner Runtime Integration is active
-Current runtime state: Sprint 228 adds a contract-only and read-only safe auto-start evaluation facade. It evaluates ten safety domains across nine foundation owners while preserving the canonical lifecycle owner as static metadata only. It creates no lifecycle instance, invokes no lifecycle runtime method, writes or installs no systemd unit, calls no systemctl command, starts no service or listener, enables no auto-start or autonomous recovery, opens no release gate, and grants no runtime authority.
+Current version: v0.229.0-genesis
+Current status: Sprint 229 Genesis Acceptance Rehearsal completed; Sprint 221-230 Unified Partner Runtime Integration is active
+Current runtime state: Sprint 229 adds a contract-only and read-only Genesis acceptance rehearsal across eight partner-runtime owners. It validates 1,042 upstream assertions, 30 deterministic method packets, eight handoff boundaries, nine rehearsal phases, and 27 acceptance results while keeping Genesis release approval, runtime activation, auto-start, service control, systemd actions, launcher execution, and release gates disabled.
 
 ---
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 229 — Genesis Acceptance Rehearsal
+- Next planned sprint: Sprint 230 — Unified Partner Runtime Stabilization
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5644,3 +5644,33 @@ auto-launches no browser, enables no automatic restart or autonomous recovery,
 activates no runtime authority, and opens no release gate.
 
 Next: Sprint 229 — Genesis Acceptance Rehearsal.
+
+## Sprint 229 — Genesis Acceptance Rehearsal
+
+Sprint 229 completes the ninth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+The implementation introduces:
+
+- `GenesisAcceptanceRehearsalPlanner`
+- `GenesisAcceptanceRehearsalAlphaManager`
+- identical read-only status, context, and check routes in CLI and shell
+- compatibility for identity version `0.229.0-genesis`
+- eight deterministic rehearsal owners covering Sprint 221 through Sprint 228
+- 1,042 upstream owner assertions with zero failures
+- 30 deterministic read-only owner method packets
+- eight verified sprint handoff boundaries
+- nine Genesis rehearsal phases
+- 27 required acceptance results
+- ten preserved safe auto-start evaluation domains
+- 17 preserved negative safety results
+- 21 preserved zero-effect counters
+
+Sprint 229 validates 486 deterministic assertions with zero failures.
+The rehearsal is ready, but Genesis release approval remains false. It performs
+no service start or stop, listener or socket action, thread or subprocess
+start, systemd write or installation, `systemctl` call, launcher execution,
+browser auto-launch, automatic restart, autonomous recovery, runtime
+activation, or release-gate opening.
+
+Next: Sprint 230 — Unified Partner Runtime Stabilization.

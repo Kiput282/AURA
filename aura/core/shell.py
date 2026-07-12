@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-genesis-acceptance-rehearsal-status Show Sprint 228 Genesis acceptance rehearsal contract status")
+        print("  partner-runtime-genesis-acceptance-rehearsal-context Show Sprint 228 Genesis acceptance rehearsal contract context")
+        print("  partner-runtime-genesis-acceptance-rehearsal-check Run Sprint 228 Genesis acceptance rehearsal contract checks")
         print("  partner-runtime-safe-auto-start-evaluation-status Show Sprint 228 safe auto-start evaluation contract status")
         print("  partner-runtime-safe-auto-start-evaluation-context Show Sprint 228 safe auto-start evaluation contract context")
         print("  partner-runtime-safe-auto-start-evaluation-check Run Sprint 228 safe auto-start evaluation contract checks")
@@ -5419,6 +5422,50 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 229 Genesis Acceptance Rehearsal shell commands.
+        commands = {
+            "partner-runtime-genesis-acceptance-rehearsal-status",
+            "partner-runtime-genesis-acceptance-rehearsal-context",
+            "partner-runtime-genesis-acceptance-rehearsal-check",
+        }
+
+        if normalized in commands:
+            from aura.partner_runtime import (
+                GenesisAcceptanceRehearsalAlphaManager,
+            )
+
+            manager = GenesisAcceptanceRehearsalAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = (
+                    "AURA Genesis Acceptance Rehearsal "
+                    "Contract Status"
+                )
+                packet = manager.status()
+
+            elif normalized.endswith("-context"):
+                title = (
+                    "AURA Genesis Acceptance Rehearsal "
+                    "Contract Context"
+                )
+                packet = manager.context()
+
+            else:
+                title = (
+                    "AURA Genesis Acceptance Rehearsal "
+                    "Contract Check"
+                )
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+
+            return True
+
         # Sprint 228 Safe Auto-Start Evaluation shell commands.
         commands = {
             "partner-runtime-safe-auto-start-evaluation-status",

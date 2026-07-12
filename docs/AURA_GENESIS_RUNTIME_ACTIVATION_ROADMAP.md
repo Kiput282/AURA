@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.228.0-genesis
-- Completed: Sprint 228 — Safe Auto-Start Evaluation
+- Current version: v0.229.0-genesis
+- Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 229 — Genesis Acceptance Rehearsal
+- Next: Sprint 230 — Unified Partner Runtime Stabilization
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1794,3 +1794,34 @@ Implemented boundaries:
 The next runtime boundary is `genesis_acceptance_rehearsal`.
 
 Next: Sprint 229 — Genesis Acceptance Rehearsal.
+
+## v0.229.0-genesis — Genesis Acceptance Rehearsal
+
+Sprint 229 establishes the contract-only Genesis acceptance rehearsal boundary
+for the Sprint 221-230 Unified Partner Runtime Integration block.
+
+Implemented boundaries:
+
+- advances canonical identity to `0.229.0-genesis`
+- preserves Sprint 228 as the upstream safe auto-start evaluation owner with
+  358 assertions and zero failures
+- rehearses eight deterministic partner-runtime owners from Sprint 221 through
+  Sprint 228
+- validates 1,042 upstream owner assertions with zero failures
+- validates 30 deterministic read-only owner method packets
+- verifies eight sequential handoff boundaries
+- defines nine bounded Genesis rehearsal phases
+- validates 27 required acceptance results
+- preserves ten safe auto-start evaluation domains
+- preserves 17 negative runtime-effect results
+- preserves 21 zero-effect counters
+- exposes identical read-only status, context, and check routes in CLI and shell
+- validates 486 deterministic Sprint 229 assertions with zero failures
+- keeps Genesis release approval false
+- performs no service, listener, socket, thread, subprocess, filesystem,
+  systemd, systemctl, launcher, browser auto-launch, auto-start, automatic
+  restart, autonomous recovery, runtime activation, or release-gate action
+
+The next runtime boundary is `unified_partner_runtime_stabilization`.
+
+Next: Sprint 230 — Unified Partner Runtime Stabilization.
