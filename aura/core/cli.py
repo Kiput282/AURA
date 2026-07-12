@@ -4530,6 +4530,52 @@ class AuraCLI:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
+        # Sprint 228 Safe Auto-Start Evaluation CLI commands.
+        commands = {
+            "partner-runtime-safe-auto-start-evaluation-status",
+            "partner-runtime-safe-auto-start-evaluation-context",
+            "partner-runtime-safe-auto-start-evaluation-check",
+        }
+
+        if raw_args and raw_args[0] in commands:
+            from aura.partner_runtime import (
+                SafeAutoStartEvaluationAlphaManager,
+            )
+
+            manager = SafeAutoStartEvaluationAlphaManager(
+                project_root=self.project_root,
+            )
+
+            selected_command = raw_args[0]
+
+            if selected_command.endswith("-status"):
+                title = (
+                    "AURA Safe Auto-Start Evaluation "
+                    "Contract Status"
+                )
+                packet = manager.status()
+
+            elif selected_command.endswith("-context"):
+                title = (
+                    "AURA Safe Auto-Start Evaluation "
+                    "Contract Context"
+                )
+                packet = manager.context()
+
+            else:
+                title = (
+                    "AURA Safe Auto-Start Evaluation "
+                    "Contract Check"
+                )
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+
+            return True
+
         # Sprint 227 Service Persistence and Launcher CLI commands.
         commands = {
             "partner-runtime-service-persistence-launcher-status",

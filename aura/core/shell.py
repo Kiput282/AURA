@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-safe-auto-start-evaluation-status Show Sprint 228 safe auto-start evaluation contract status")
+        print("  partner-runtime-safe-auto-start-evaluation-context Show Sprint 228 safe auto-start evaluation contract context")
+        print("  partner-runtime-safe-auto-start-evaluation-check Run Sprint 228 safe auto-start evaluation contract checks")
         print("  partner-runtime-service-persistence-launcher-status Show Sprint 227 service persistence and launcher contract status")
         print("  partner-runtime-service-persistence-launcher-context Show Sprint 227 service persistence and launcher contract context")
         print("  partner-runtime-service-persistence-launcher-check Run Sprint 227 service persistence and launcher contract checks")
@@ -5416,6 +5419,50 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 228 Safe Auto-Start Evaluation shell commands.
+        commands = {
+            "partner-runtime-safe-auto-start-evaluation-status",
+            "partner-runtime-safe-auto-start-evaluation-context",
+            "partner-runtime-safe-auto-start-evaluation-check",
+        }
+
+        if normalized in commands:
+            from aura.partner_runtime import (
+                SafeAutoStartEvaluationAlphaManager,
+            )
+
+            manager = SafeAutoStartEvaluationAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = (
+                    "AURA Safe Auto-Start Evaluation "
+                    "Contract Status"
+                )
+                packet = manager.status()
+
+            elif normalized.endswith("-context"):
+                title = (
+                    "AURA Safe Auto-Start Evaluation "
+                    "Contract Context"
+                )
+                packet = manager.context()
+
+            else:
+                title = (
+                    "AURA Safe Auto-Start Evaluation "
+                    "Contract Check"
+                )
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+
+            return True
+
         # Sprint 227 Service Persistence and Launcher shell commands.
         commands = {
             "partner-runtime-service-persistence-launcher-status",

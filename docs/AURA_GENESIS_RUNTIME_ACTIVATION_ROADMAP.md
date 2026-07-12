@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.227.0-genesis
-- Completed: Sprint 227 — Service Persistence and Launcher
+- Current version: v0.228.0-genesis
+- Completed: Sprint 228 — Safe Auto-Start Evaluation
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 228 — Safe Auto-Start Evaluation
+- Next: Sprint 229 — Genesis Acceptance Rehearsal
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1765,3 +1765,32 @@ Implemented boundaries:
 The next runtime boundary is `safe_auto_start_evaluation`.
 
 Next: Sprint 228 — Safe Auto-Start Evaluation.
+
+## v0.228.0-genesis — Safe Auto-Start Evaluation
+
+Sprint 228 establishes the contract-only safe auto-start evaluation boundary
+for the Sprint 221-230 Unified Partner Runtime Integration block.
+
+Implemented boundaries:
+
+- advances canonical identity to `0.228.0-genesis`
+- preserves Sprint 227 as the upstream service persistence and launcher owner
+  with 208 assertions and zero failures
+- preserves `AuraServiceLifecycleRuntimeManager` as canonical lifecycle owner
+- limits lifecycle access to `static_contract_metadata_only`
+- creates no lifecycle-manager instance and invokes no lifecycle runtime method
+- evaluates ten declarative safety domains
+- uses nine bounded read-only foundation metadata owners
+- audits 90 owner methods
+- invokes 33 deterministic zero-argument metadata methods
+- records 57 target-plan methods with canonical target
+  `safe_auto_start_evaluation` without invoking them
+- exposes identical read-only CLI and shell packets
+- validates 358 deterministic assertions with zero failures
+- performs no service, listener, socket, thread, subprocess, filesystem,
+  systemd, systemctl, launcher, browser auto-launch, auto-start, automatic
+  restart, autonomous recovery, runtime activation, or release-gate action
+
+The next runtime boundary is `genesis_acceptance_rehearsal`.
+
+Next: Sprint 229 — Genesis Acceptance Rehearsal.

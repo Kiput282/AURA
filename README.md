@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.227.0-genesis
-Current status: Sprint 227 Service Persistence and Launcher completed; Sprint 221-230 Unified Partner Runtime Integration is active
-Current runtime state: Sprint 227 adds a contract-only and metadata-only service persistence and launcher facade. It declares service-state, persistence-artifact, launcher, and recovery schemas while keeping lifecycle access static-only, creating no lifecycle instance, writing no PID or state file, installing no systemd unit, starting no service or listener, executing no launcher, enabling no auto-start, opening no release gate, and enabling no autonomy.
+Current version: v0.228.0-genesis
+Current status: Sprint 228 Safe Auto-Start Evaluation completed; Sprint 221-230 Unified Partner Runtime Integration is active
+Current runtime state: Sprint 228 adds a contract-only and read-only safe auto-start evaluation facade. It evaluates ten safety domains across nine foundation owners while preserving the canonical lifecycle owner as static metadata only. It creates no lifecycle instance, invokes no lifecycle runtime method, writes or installs no systemd unit, calls no systemctl command, starts no service or listener, enables no auto-start or autonomous recovery, opens no release gate, and grants no runtime authority.
 
 ---
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 228 — Safe Auto-Start Evaluation
+- Next planned sprint: Sprint 229 — Genesis Acceptance Rehearsal
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5610,3 +5610,37 @@ subprocess start, launcher execution, browser auto-launch, automatic restart,
 runtime activation, release-gate opening, or autonomous recovery.
 
 Next: Sprint 228 — Safe Auto-Start Evaluation.
+
+## Sprint 228 — Safe Auto-Start Evaluation
+
+Sprint 228 completes the eighth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+The implementation introduces:
+
+- `SafeAutoStartEvaluationPlanner`
+- `SafeAutoStartEvaluationAlphaManager`
+- identical read-only status, context, and check routes in CLI and shell
+- compatibility for identity version `0.228.0-genesis`
+- ten declarative safety-evaluation domains
+- nine bounded foundation metadata owners
+- 90 audited foundation methods
+- 33 deterministic zero-argument metadata methods
+- 57 target-plan methods recorded but deliberately not invoked
+
+`AuraServiceLifecycleRuntimeManager` remains the canonical lifecycle owner.
+Sprint 228 accesses it only through static class metadata. No lifecycle-manager
+instance is created and no lifecycle runtime method is invoked.
+
+The evaluated prerequisites cover safe-idle boot, localhost-only binding,
+health readiness, permission confirmation, audit traceability, manual recovery,
+emergency stop, operator visibility, systemd-unit review, and rollback/disable
+behavior.
+
+Sprint 228 validates 358 deterministic assertions. It writes or installs no
+systemd unit, performs no `systemctl` call, starts or stops no service, opens no
+listener or socket, starts no thread or subprocess, executes no launcher,
+auto-launches no browser, enables no automatic restart or autonomous recovery,
+activates no runtime authority, and opens no release gate.
+
+Next: Sprint 229 — Genesis Acceptance Rehearsal.

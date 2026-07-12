@@ -49,3 +49,21 @@ __all__ += [
     "ServicePersistenceAndLauncherPlanner",
     "ServicePersistenceAndLauncherAlphaManager",
 ]
+
+from .safe_auto_start_evaluation_planner import (
+    SafeAutoStartEvaluationPlanner,
+)
+from .safe_auto_start_evaluation_alpha_manager import (
+    SafeAutoStartEvaluationAlphaManager,
+)
+
+try:
+    __all__
+except NameError:
+    __all__ = []
+
+__all__ = [
+    *__all__,
+    "SafeAutoStartEvaluationPlanner",
+    "SafeAutoStartEvaluationAlphaManager",
+]

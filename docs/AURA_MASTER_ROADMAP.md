@@ -3060,3 +3060,30 @@ Canonical checkpoint properties:
 - Capability Registry remains unchanged
 
 Next: Sprint 228 — Safe Auto-Start Evaluation.
+
+## Checkpoint v0.228.0-genesis — Safe Auto-Start Evaluation
+
+Sprint 228 completes the eighth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+Canonical checkpoint properties:
+
+- canonical identity advances to `0.228.0-genesis`
+- Sprint 227 remains stable with 208 assertions and zero failures
+- Sprint 228 validates 358 assertions with zero failures
+- `AuraServiceLifecycleRuntimeManager` remains the canonical lifecycle owner
+- lifecycle access remains `static_contract_metadata_only`
+- no lifecycle instance is created and no lifecycle runtime method is invoked
+- nine foundation metadata owners remain bounded and read-only
+- ten auto-start safety domains are evaluated
+- 90 owner methods are audited
+- 33 zero-argument metadata methods are deterministic
+- 57 target-plan methods remain uninvoked
+- CLI and shell expose identical read-only packets
+- no systemd unit is written or installed
+- no `systemctl`, service, listener, socket, thread, subprocess, launcher,
+  browser auto-launch, auto-start, automatic restart, autonomous recovery,
+  runtime activation, or release-gate authority is enabled
+- Capability Registry remains unchanged
+
+Next: Sprint 229 — Genesis Acceptance Rehearsal.

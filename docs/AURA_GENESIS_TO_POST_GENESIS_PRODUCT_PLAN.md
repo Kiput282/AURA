@@ -1515,3 +1515,40 @@ enable auto-start, perform autonomous recovery, activate runtime authority, or
 open a release gate.
 
 This boundary prepares Sprint 228 — Safe Auto-Start Evaluation.
+
+## Sprint 228 — Safe Auto-Start Evaluation
+
+`v0.228.0-genesis` introduces a bounded read-only evaluation contract for
+AURA's possible future ATLAS auto-start behavior.
+
+The product goal is to prove that all required safeguards can be represented
+before any automatic service activation is considered. The evaluation covers:
+
+- safe-idle boot behavior
+- localhost-only binding
+- health and readiness visibility
+- explicit permission confirmation
+- audit traceability
+- manual recovery
+- emergency-stop availability
+- operator visibility
+- systemd-unit review
+- rollback and disable behavior
+
+The contract reads deterministic metadata from nine foundation owners. It
+audits 90 owner methods: 33 zero-argument metadata methods are invoked
+read-only and verified deterministic, while 57 target-plan methods are
+recorded with the canonical target `safe_auto_start_evaluation` but are not
+invoked.
+
+The canonical lifecycle owner remains
+`AuraServiceLifecycleRuntimeManager`, accessed only through static metadata.
+No lifecycle instance is created and no lifecycle method is called.
+
+Sprint 228 does not write or install a systemd unit, call `systemctl`, start,
+stop, or restart a service, open a listener or socket, start a thread or
+subprocess, execute a launcher, launch a browser, enable auto-start, enable
+automatic restart or autonomous recovery, activate runtime authority, or open
+a release gate.
+
+This boundary prepares Sprint 229 — Genesis Acceptance Rehearsal.
