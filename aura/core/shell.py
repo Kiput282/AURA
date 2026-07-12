@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-personality-consistency-status Show Sprint 225 personality consistency contract status")
+        print("  partner-runtime-personality-consistency-context Show Sprint 225 personality consistency contract context")
+        print("  partner-runtime-personality-consistency-check Run Sprint 225 personality consistency contract checks")
         print("  partner-runtime-voice-vision-chat-context-fusion-status Show Sprint 224 fusion contract status")
         print("  partner-runtime-voice-vision-chat-context-fusion-context Show Sprint 224 fusion contract context")
         print("  partner-runtime-voice-vision-chat-context-fusion-check Run Sprint 224 fusion contract checks")
@@ -5407,6 +5410,50 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 225 Personality Consistency Runtime shell commands.
+        commands = {
+            "partner-runtime-personality-consistency-status",
+            "partner-runtime-personality-consistency-context",
+            "partner-runtime-personality-consistency-check",
+        }
+
+        if normalized in commands:
+            from aura.partner_runtime import (
+                PersonalityConsistencyRuntimeAlphaManager,
+            )
+
+            manager = PersonalityConsistencyRuntimeAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = (
+                    "AURA Personality Consistency "
+                    "Runtime Contract Status"
+                )
+                payload = manager.status()
+
+            elif normalized.endswith("-context"):
+                title = (
+                    "AURA Personality Consistency "
+                    "Runtime Contract Context"
+                )
+                payload = manager.context()
+
+            else:
+                title = (
+                    "AURA Personality Consistency "
+                    "Runtime Contract Check"
+                )
+                payload = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                payload,
+            )
+
+            return True
+
         # Sprint 224 Voice, Vision, and Chat Context Fusion shell commands.
         commands = {
             "partner-runtime-voice-vision-chat-context-fusion-status",

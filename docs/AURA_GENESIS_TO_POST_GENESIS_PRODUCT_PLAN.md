@@ -1422,3 +1422,35 @@ The product boundary does not:
 - perform actions or start background services
 
 This boundary prepares Sprint 225 — Personality Consistency Runtime.
+
+## Sprint 225 — Personality Consistency Runtime
+
+`v0.225.0-genesis` introduces a bounded personality consistency facade across
+AURA's canonical identity, existing deterministic persona contract, stabilized
+voice/vision/chat context-fusion metadata, and canonical browser chat session
+ownership.
+
+The product goal is continuity rather than response generation. AURA should
+retain the same identity, tone, capability honesty, and safety posture when a
+future interaction moves between browser chat, local CLI, Control Center,
+voice metadata, vision metadata, shell, and CLI surfaces.
+
+The contract validates:
+
+- AURA's Genesis identity, creator, and `Grow Together` motto
+- friendly, intelligent, supportive, curious, adaptive, and honest traits
+- coding, gaming, learning, and streaming behavior modes
+- warm, clear, concise, supportive, and capability-honest persona style
+- safety-boundary consistency and no false autonomy claims
+- canonical session ownership and modality-neutral metadata
+- deterministic, payload-free behavior
+
+Expression Language remains a secondary metadata reference and receives no
+personality authority in this sprint.
+
+The feature deliberately does not generate a persona response, run a persona
+turn, read chat or session payloads, synchronize live interface state, invoke a
+model, infer context, access memory, mutate permissions, write audit data,
+execute commands or tools, mutate files, start services, or enable autonomy.
+
+This boundary prepares Sprint 226 — Multi-Interface State Synchronization.

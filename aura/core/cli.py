@@ -4530,6 +4530,52 @@ class AuraCLI:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
+        # Sprint 225 Personality Consistency Runtime CLI commands.
+        commands = {
+            "partner-runtime-personality-consistency-status",
+            "partner-runtime-personality-consistency-context",
+            "partner-runtime-personality-consistency-check",
+        }
+
+        if raw_args and raw_args[0] in commands:
+            from aura.partner_runtime import (
+                PersonalityConsistencyRuntimeAlphaManager,
+            )
+
+            manager = PersonalityConsistencyRuntimeAlphaManager(
+                project_root=self.project_root,
+            )
+
+            selected_command = raw_args[0]
+
+            if selected_command.endswith("-status"):
+                title = (
+                    "AURA Personality Consistency "
+                    "Runtime Contract Status"
+                )
+                payload = manager.status()
+
+            elif selected_command.endswith("-context"):
+                title = (
+                    "AURA Personality Consistency "
+                    "Runtime Contract Context"
+                )
+                payload = manager.context()
+
+            else:
+                title = (
+                    "AURA Personality Consistency "
+                    "Runtime Contract Check"
+                )
+                payload = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                payload,
+            )
+
+            return True
+
         # Sprint 224 Voice, Vision, and Chat Context Fusion CLI commands.
         commands = {
             "partner-runtime-voice-vision-chat-context-fusion-status",

@@ -2969,3 +2969,33 @@ Canonical checkpoint properties:
 - Capability Registry remains unchanged
 
 Next: Sprint 225 — Personality Consistency Runtime.
+
+## Checkpoint v0.225.0-genesis — Personality Consistency Runtime
+
+Sprint 225 completes the fifth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+Canonical checkpoint properties:
+
+- canonical identity source remains `aura/personality/identity.yaml`
+- identity version advances to `0.225.0-genesis`
+- Sprint 164 persona contract remains the persona-style owner
+- Sprint 224 fusion contract remains the upstream context owner with 84
+  assertions and zero failures
+- `aura_browser_chat_session_runtime` remains canonical session owner
+- Expression Language remains a secondary metadata reference and is not
+  instantiated by the Sprint 225 contract
+- required traits, operating modes, style items, consistency dimensions, and
+  interface targets are validated
+- personality profile remains deterministic, metadata-only, and payload-free
+- persona response generation and persona-turn persistence are not invoked
+- chat, session, audio, image, journal, memory, and runtime payloads remain
+  unread
+- inference, model requests, memory access, permission mutation, audit writes,
+  network actions, commands, tools, files, background services, release gates,
+  and autonomy remain inactive
+- CLI and shell expose identical read-only packets
+- Sprint 225 validates 96 assertions with zero failures
+- Capability Registry remains unchanged
+
+Next: Sprint 226 — Multi-Interface State Synchronization.

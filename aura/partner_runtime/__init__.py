@@ -9,6 +9,12 @@ from .chat_to_memory_runtime_handoff_alpha_manager import ChatToMemoryRuntimeHan
 from .chat_to_memory_runtime_handoff_planner import ChatToMemoryRuntimeHandoffPlanner
 from .voice_vision_chat_context_fusion_alpha_manager import VoiceVisionChatContextFusionAlphaManager
 from .voice_vision_chat_context_fusion_planner import VoiceVisionChatContextFusionPlanner
+from .personality_consistency_runtime_planner import (
+    PersonalityConsistencyRuntimePlanner,
+)
+from .personality_consistency_runtime_alpha_manager import (
+    PersonalityConsistencyRuntimeAlphaManager,
+)
 
 __all__ = [
     "PartnerRuntimeAlphaManager",
@@ -20,4 +26,6 @@ __all__ = [
     "ChatToMemoryRuntimeHandoffPlanner",
     "VoiceVisionChatContextFusionAlphaManager",
     "VoiceVisionChatContextFusionPlanner",
+    "PersonalityConsistencyRuntimePlanner",
+    "PersonalityConsistencyRuntimeAlphaManager",
 ]

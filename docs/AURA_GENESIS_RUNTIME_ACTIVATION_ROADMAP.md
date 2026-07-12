@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.224.0-genesis
-- Completed: Sprint 224 — Voice, Vision, and Chat Context Fusion
+- Current version: v0.225.0-genesis
+- Completed: Sprint 225 — Personality Consistency Runtime
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 225 — Personality Consistency Runtime
+- Next: Sprint 226 — Multi-Interface State Synchronization
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1678,3 +1678,32 @@ Implemented boundaries:
 The next runtime boundary is `personality_consistency_runtime`.
 
 Next: Sprint 225 — Personality Consistency Runtime.
+
+## v0.225.0-genesis — Personality Consistency Runtime
+
+Sprint 225 establishes the contract-only personality continuity boundary for
+the Sprint 221-230 Unified Partner Runtime Integration block.
+
+Implemented boundaries:
+
+- validates the canonical AURA identity source at `0.225.0-genesis`
+- preserves the Sprint 164 persona contract as the persona-style owner
+- preserves the Sprint 224 context-fusion owner at 84 passing assertions
+- preserves `aura_browser_chat_session_runtime` as canonical session owner
+- treats Expression Language as a secondary metadata reference only
+- declares required identity traits, operating modes, persona-style items,
+  consistency dimensions, and interface targets
+- validates capability honesty, safety-boundary continuity, modality
+  neutrality, payload-free behavior, and deterministic output
+- exposes identical CLI and shell status, context, and check packets
+- invokes no persona response or persona-turn persistence path
+- reads no chat, session, audio, image, journal, memory, or runtime payload
+- performs no model request, inference, memory write, permission mutation,
+  audit write, network action, command, tool, or file mutation
+- keeps runtime activation, background services, release gates, and autonomy
+  closed
+- validates 96 deterministic assertions with zero failures
+
+The next runtime boundary is `multi_interface_state_synchronization`.
+
+Next: Sprint 226 — Multi-Interface State Synchronization.

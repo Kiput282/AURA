@@ -1,5 +1,5 @@
 name: AURA
-version: "0.224.0-genesis"
+version: "0.225.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -314,3 +314,20 @@ modes:
 # Capture, inference, persistence, execution, release gates, and autonomy
 # remain disabled.
 # Next: Sprint 225 — Personality Consistency Runtime.
+
+# Sprint 225 — Personality Consistency Runtime
+# Adds a contract-only, metadata-only personality consistency facade across
+# AURA's canonical identity source, the Sprint 164 persona contract owner,
+# the Sprint 224 voice/vision/chat context-fusion owner, and the canonical
+# browser chat session owner.
+# The consistency profile preserves AURA's name, Genesis identity, creator,
+# motto, friendly/supportive/adaptive/honest traits, coding/gaming/learning/
+# streaming modes, warm partner tone, capability honesty, safety boundaries,
+# and modality-neutral behavior across declared interface targets.
+# Expression Language remains a secondary metadata reference and is not
+# instantiated or promoted to personality authority.
+# Persona response generation, persona-turn persistence, chat/session payload
+# reads, model requests, inference, memory access, permission mutation, audit
+# writes, network actions, commands, tools, file mutation, background services,
+# release gates, and autonomous actions remain disabled.
+# Next: Sprint 226 — Multi-Interface State Synchronization.
