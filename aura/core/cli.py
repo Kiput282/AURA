@@ -4530,6 +4530,52 @@ class AuraCLI:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
+        # Sprint 226 Multi-Interface State Synchronization CLI commands.
+        commands = {
+            "partner-runtime-multi-interface-state-synchronization-status",
+            "partner-runtime-multi-interface-state-synchronization-context",
+            "partner-runtime-multi-interface-state-synchronization-check",
+        }
+
+        if raw_args and raw_args[0] in commands:
+            from aura.partner_runtime import (
+                MultiInterfaceStateSynchronizationAlphaManager,
+            )
+
+            manager = MultiInterfaceStateSynchronizationAlphaManager(
+                project_root=self.project_root,
+            )
+
+            selected_command = raw_args[0]
+
+            if selected_command.endswith("-status"):
+                title = (
+                    "AURA Multi-Interface State "
+                    "Synchronization Contract Status"
+                )
+                payload = manager.status()
+
+            elif selected_command.endswith("-context"):
+                title = (
+                    "AURA Multi-Interface State "
+                    "Synchronization Contract Context"
+                )
+                payload = manager.context()
+
+            else:
+                title = (
+                    "AURA Multi-Interface State "
+                    "Synchronization Contract Check"
+                )
+                payload = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                payload,
+            )
+
+            return True
+
         # Sprint 225 Personality Consistency Runtime CLI commands.
         commands = {
             "partner-runtime-personality-consistency-status",

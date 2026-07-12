@@ -1,5 +1,5 @@
 name: AURA
-version: "0.225.0-genesis"
+version: "0.226.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -331,3 +331,20 @@ modes:
 # writes, network actions, commands, tools, file mutation, background services,
 # release gates, and autonomous actions remain disabled.
 # Next: Sprint 226 — Multi-Interface State Synchronization.
+
+# Sprint 226 — Multi-Interface State Synchronization
+# Adds a contract-only and metadata-only synchronization facade across browser
+# chat, local chat CLI, Control Center, voice metadata, vision metadata, shell,
+# and CLI interface targets.
+# Six canonical metadata fields are declared for deterministic synchronization,
+# while six session, conversation, user, message, response, and pending-action
+# payload-adjacent fields remain excluded.
+# Browser chat inspection remains contract_snapshot-only with zero session
+# payload reads. Control Center remains static_reference_only and its runtime
+# snapshot is not invoked.
+# Live propagation, event dispatch, state-store creation or mutation, memory
+# access, permission mutation, audit writes, network actions, commands, tools,
+# process launch, background services, runtime activation, release gates, and
+# autonomous propagation remain disabled.
+# Sprint 226 validates 128 deterministic assertions with zero failures.
+# Next: Sprint 227 — Service Persistence and Launcher.

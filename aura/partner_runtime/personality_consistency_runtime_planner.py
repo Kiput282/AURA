@@ -51,6 +51,7 @@ class PersonalityConsistencyRuntimePlanner:
     supported_identity_versions = (
         "0.224.0-genesis",
         "0.225.0-genesis",
+        "0.226.0-genesis",
     )
 
     required_traits = (

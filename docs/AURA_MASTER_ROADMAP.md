@@ -2999,3 +2999,37 @@ Canonical checkpoint properties:
 - Capability Registry remains unchanged
 
 Next: Sprint 226 — Multi-Interface State Synchronization.
+
+## Checkpoint v0.226.0-genesis — Multi-Interface State Synchronization
+
+Sprint 226 completes the sixth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+Canonical checkpoint properties:
+
+- canonical identity advances to `0.226.0-genesis`
+- Sprint 225 remains the upstream personality owner with 96 assertions and zero failures
+- Sprint 224 remains stable with 84 assertions and zero failures
+- `aura_browser_chat_session_runtime` remains canonical session owner
+- browser session inspection remains limited to `contract_snapshot()`
+- browser session payload reads remain zero
+- Chat Bridge remains the interface-state schema owner
+- Local Interaction Stabilization remains a secondary read-only baseline
+- Control Center remains `static_reference_only`
+- the Control Center runtime snapshot is not invoked
+- seven interface targets are declared
+- six canonical synchronization fields are declared
+- six payload-adjacent fields are excluded
+- deterministic metadata state-vector templates are declared
+- no live state vector is created
+- no interface state is persisted
+- no synchronization event is dispatched
+- no live propagation is performed
+- memory access, permission mutation, audit writes, network actions, commands,
+  tools, process launch, background services, runtime activation, release gates,
+  and autonomy remain inactive
+- CLI and shell expose identical read-only packets
+- Sprint 226 validates 128 assertions with zero failures
+- Capability Registry remains unchanged
+
+Next: Sprint 227 — Service Persistence and Launcher.

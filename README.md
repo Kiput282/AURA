@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.225.0-genesis
-Current status: Sprint 225 Personality Consistency Runtime completed; Sprint 221-230 Unified Partner Runtime Integration is active
-Current runtime state: Sprint 225 adds a contract-only and metadata-only personality consistency facade across AURA's canonical identity, the Sprint 164 persona contract, the Sprint 224 voice/vision/chat fusion contract, and the canonical browser chat session owner. It validates identity traits, operating modes, warm partner style, capability honesty, safety continuity, and modality-neutral interface targets without generating persona responses, reading chat or session payloads, invoking models, writing memory, mutating permissions, executing actions, starting background services, opening release gates, or enabling autonomy.
+Current version: v0.226.0-genesis
+Current status: Sprint 226 Multi-Interface State Synchronization completed; Sprint 221-230 Unified Partner Runtime Integration is active
+Current runtime state: Sprint 226 adds a contract-only and metadata-only deterministic state-vector facade across seven declared interface targets. It synchronizes no live state, reads no chat or session payloads, invokes no Control Center runtime snapshot, creates no state store, dispatches no events, performs no persistence or execution, starts no service, opens no release gate, and enables no autonomy.
 
 ---
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 226 — Multi-Interface State Synchronization
+- Next planned sprint: Sprint 227 — Service Persistence and Launcher
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5532,3 +5532,49 @@ tool execution, file mutation, background services, release gates, and
 autonomous actions remain disabled.
 
 Next: Sprint 226 — Multi-Interface State Synchronization.
+
+## Sprint 226 — Multi-Interface State Synchronization
+
+Sprint 226 completes the sixth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+The implementation introduces:
+
+- `MultiInterfaceStateSynchronizationPlanner`
+- `MultiInterfaceStateSynchronizationAlphaManager`
+- identical read-only status, context, and check routes in CLI and shell
+- compatibility for identity version `0.226.0-genesis`
+- a deterministic metadata state-vector policy across seven interface targets
+
+The canonical interface targets are browser chat, local chat CLI, Control
+Center, voice metadata, vision metadata, shell, and CLI.
+
+The canonical state vector contains six metadata fields:
+
+- `aura_identity_version`
+- `selected_channel`
+- `safe_idle_mode`
+- `permission_boundary_state`
+- `session_recovery_hint`
+- `session_runtime_enabled`
+
+Six payload-adjacent fields remain excluded:
+
+- session identifier
+- conversation identifier
+- user display name
+- last user-message metadata
+- last AURA-response metadata
+- pending-action request metadata
+
+Browser chat remains the canonical session owner and is inspected only through
+`contract_snapshot()`. Session payload reads remain zero. Control Center remains
+`static_reference_only`, and its runtime `snapshot()` method is not invoked.
+
+Sprint 226 validates 128 deterministic assertions. Live state propagation,
+event dispatch, state-store persistence, chat or session payload reads, memory
+access, permission mutation, audit writes, network actions, commands, tools,
+process launch, background services, runtime activation, release gates, and
+autonomous state propagation remain disabled.
+
+Next: Sprint 227 — Service Persistence and Launcher.

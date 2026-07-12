@@ -15,6 +15,12 @@ from .personality_consistency_runtime_planner import (
 from .personality_consistency_runtime_alpha_manager import (
     PersonalityConsistencyRuntimeAlphaManager,
 )
+from .multi_interface_state_synchronization_planner import (
+    MultiInterfaceStateSynchronizationPlanner,
+)
+from .multi_interface_state_synchronization_alpha_manager import (
+    MultiInterfaceStateSynchronizationAlphaManager,
+)
 
 __all__ = [
     "PartnerRuntimeAlphaManager",
@@ -28,4 +34,6 @@ __all__ = [
     "VoiceVisionChatContextFusionPlanner",
     "PersonalityConsistencyRuntimePlanner",
     "PersonalityConsistencyRuntimeAlphaManager",
+    "MultiInterfaceStateSynchronizationPlanner",
+    "MultiInterfaceStateSynchronizationAlphaManager",
 ]

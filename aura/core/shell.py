@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-multi-interface-state-synchronization-status Show Sprint 226 multi-interface state synchronization contract status")
+        print("  partner-runtime-multi-interface-state-synchronization-context Show Sprint 226 multi-interface state synchronization contract context")
+        print("  partner-runtime-multi-interface-state-synchronization-check Run Sprint 226 multi-interface state synchronization contract checks")
         print("  partner-runtime-personality-consistency-status Show Sprint 225 personality consistency contract status")
         print("  partner-runtime-personality-consistency-context Show Sprint 225 personality consistency contract context")
         print("  partner-runtime-personality-consistency-check Run Sprint 225 personality consistency contract checks")
@@ -5410,6 +5413,50 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 226 Multi-Interface State Synchronization shell commands.
+        commands = {
+            "partner-runtime-multi-interface-state-synchronization-status",
+            "partner-runtime-multi-interface-state-synchronization-context",
+            "partner-runtime-multi-interface-state-synchronization-check",
+        }
+
+        if normalized in commands:
+            from aura.partner_runtime import (
+                MultiInterfaceStateSynchronizationAlphaManager,
+            )
+
+            manager = MultiInterfaceStateSynchronizationAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = (
+                    "AURA Multi-Interface State "
+                    "Synchronization Contract Status"
+                )
+                payload = manager.status()
+
+            elif normalized.endswith("-context"):
+                title = (
+                    "AURA Multi-Interface State "
+                    "Synchronization Contract Context"
+                )
+                payload = manager.context()
+
+            else:
+                title = (
+                    "AURA Multi-Interface State "
+                    "Synchronization Contract Check"
+                )
+                payload = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                payload,
+            )
+
+            return True
+
         # Sprint 225 Personality Consistency Runtime shell commands.
         commands = {
             "partner-runtime-personality-consistency-status",

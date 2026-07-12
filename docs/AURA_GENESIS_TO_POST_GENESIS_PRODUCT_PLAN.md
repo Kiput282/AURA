@@ -1454,3 +1454,32 @@ model, infer context, access memory, mutate permissions, write audit data,
 execute commands or tools, mutate files, start services, or enable autonomy.
 
 This boundary prepares Sprint 226 — Multi-Interface State Synchronization.
+
+## Sprint 226 — Multi-Interface State Synchronization
+
+`v0.226.0-genesis` introduces a bounded metadata synchronization facade across
+browser chat, local chat CLI, Control Center, voice metadata, vision metadata,
+shell, and CLI surfaces.
+
+The product goal is deterministic cross-interface continuity without pretending
+that live synchronization already exists. The contract declares one canonical
+six-field state-vector template covering identity version, selected channel,
+safe-idle mode, permission-boundary state, manual recovery hint, and disabled
+session-runtime state.
+
+Session identifiers, conversation identifiers, user display names, message
+metadata, response metadata, and pending-action metadata remain excluded from
+the synchronization contract.
+
+Browser chat remains the canonical session owner. Only its metadata-only
+`contract_snapshot()` is used, and session payload reads remain zero. Control
+Center remains a static reference; its runtime snapshot is intentionally not
+invoked because it may traverse broader runtime data.
+
+The feature deliberately does not propagate live state, create or mutate a
+state store, dispatch events, read chat or session payloads, access memory,
+mutate permissions, write audit data, execute commands or tools, launch
+processes, start background services, activate runtime authority, open release
+gates, or enable autonomy.
+
+This boundary prepares Sprint 227 — Service Persistence and Launcher.

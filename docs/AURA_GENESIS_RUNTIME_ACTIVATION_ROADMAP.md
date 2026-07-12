@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.225.0-genesis
-- Completed: Sprint 225 — Personality Consistency Runtime
+- Current version: v0.226.0-genesis
+- Completed: Sprint 226 — Multi-Interface State Synchronization
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 226 — Multi-Interface State Synchronization
+- Next: Sprint 227 — Service Persistence and Launcher
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1707,3 +1707,35 @@ Implemented boundaries:
 The next runtime boundary is `multi_interface_state_synchronization`.
 
 Next: Sprint 226 — Multi-Interface State Synchronization.
+
+## v0.226.0-genesis — Multi-Interface State Synchronization
+
+Sprint 226 establishes the contract-only metadata synchronization boundary for
+the Sprint 221-230 Unified Partner Runtime Integration block.
+
+Implemented boundaries:
+
+- advances canonical identity to `0.226.0-genesis`
+- preserves the Sprint 225 personality owner with 96 passing assertions
+- preserves `aura_browser_chat_session_runtime` as canonical session owner
+- permits only browser `contract_snapshot()` and safety metadata inspection
+- preserves zero browser-session payload reads
+- uses the Chat Bridge session-state foundation as the static schema owner
+- preserves Local Interaction Stabilization as a secondary read-only baseline
+- treats Control Center as `static_reference_only`
+- does not invoke the Control Center runtime `snapshot()` method
+- declares seven interface targets
+- declares six canonical metadata synchronization fields
+- excludes six payload-adjacent state fields
+- declares deterministic per-interface state-vector templates
+- creates no live state vector
+- persists no interface state
+- dispatches no synchronization events
+- performs no live state propagation
+- performs no memory, permission, audit, network, command, tool, or process action
+- keeps background services, runtime activation, release gates, and autonomy closed
+- validates 128 deterministic assertions with zero failures
+
+The next runtime boundary is `service_persistence_and_launcher`.
+
+Next: Sprint 227 — Service Persistence and Launcher.
