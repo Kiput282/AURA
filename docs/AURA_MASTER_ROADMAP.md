@@ -2946,3 +2946,26 @@ Canonical checkpoint properties:
 - Capability Registry remains unchanged
 
 Next: Sprint 224 — Voice, Vision, and Chat Context Fusion.
+
+## Checkpoint v0.224.0-genesis — Voice, Vision, and Chat Context Fusion
+
+Sprint 224 completes the fourth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+Canonical checkpoint properties:
+
+- voice owner preserved with 507 assertions and zero failures
+- vision owner preserved with 330 assertions and zero failures
+- Sprint 223 chat/session chain preserved with 65 assertions and zero failures
+- canonical browser chat session ownership preserved
+- context-fusion planner validates 84 assertions with zero failures
+- fusion remains contract-only and preview-only
+- no live fusion packet is created
+- audio, transcript, image, screenshot, chat, and session payloads remain unread
+- microphone, speaker, screen, screenshot, and camera operations remain inactive
+- context inference and model requests remain inactive
+- persistence, permission mutation, audit writes, and execution remain inactive
+- runtime activation, background services, release gates, and autonomy remain disabled
+- Capability Registry remains unchanged
+
+Next: Sprint 225 — Personality Consistency Runtime.

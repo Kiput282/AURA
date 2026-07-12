@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-voice-vision-chat-context-fusion-status Show Sprint 224 fusion contract status")
+        print("  partner-runtime-voice-vision-chat-context-fusion-context Show Sprint 224 fusion contract context")
+        print("  partner-runtime-voice-vision-chat-context-fusion-check Run Sprint 224 fusion contract checks")
         print("  partner-runtime-chat-to-memory-handoff-status Show Sprint 223 handoff contract status")
         print("  partner-runtime-chat-to-memory-handoff-context Show Sprint 223 handoff contract context")
         print("  partner-runtime-chat-to-memory-handoff-check Run Sprint 223 handoff contract checks")
@@ -5404,6 +5407,50 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 224 Voice, Vision, and Chat Context Fusion shell commands.
+        commands = {
+            "partner-runtime-voice-vision-chat-context-fusion-status",
+            "partner-runtime-voice-vision-chat-context-fusion-context",
+            "partner-runtime-voice-vision-chat-context-fusion-check",
+        }
+
+        if normalized in commands:
+            from aura.partner_runtime import (
+                VoiceVisionChatContextFusionAlphaManager,
+            )
+
+            manager = VoiceVisionChatContextFusionAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = (
+                    "AURA Voice, Vision, and Chat "
+                    "Context Fusion Contract Status"
+                )
+                payload = manager.status()
+
+            elif normalized.endswith("-context"):
+                title = (
+                    "AURA Voice, Vision, and Chat "
+                    "Context Fusion Contract Context"
+                )
+                payload = manager.context()
+
+            else:
+                title = (
+                    "AURA Voice, Vision, and Chat "
+                    "Context Fusion Contract Check"
+                )
+                payload = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                payload,
+            )
+
+            return True
+
         # Sprint 222 Workspace and Project Context Runtime shell commands.
         # Sprint 223 Chat-to-Memory Runtime Handoff shell commands.
         commands = {

@@ -1400,3 +1400,25 @@ memory after explicit user intent, privacy review, human review, and a bounded
 permission decision.
 
 This boundary prepares Sprint 224 — Voice, Vision, and Chat Context Fusion.
+
+## Sprint 224 — Voice, Vision, and Chat Context Fusion
+
+v0.224.0-genesis introduces a bounded integration facade across AURA's
+stabilized voice, vision, and conversational context owners.
+
+The feature deliberately fuses contract metadata rather than live modality
+payloads. Chat/session context remains the canonical anchor. Voice and vision
+contribute readiness, safety, and handoff metadata only.
+
+The product boundary does not:
+
+- listen to or record microphone input
+- transcribe speech or synthesize voice
+- capture the screen, screenshots, or camera
+- read image, transcript, chat, or session payloads
+- infer combined multimodal meaning
+- invoke a model
+- persist context or memory
+- perform actions or start background services
+
+This boundary prepares Sprint 225 — Personality Consistency Runtime.

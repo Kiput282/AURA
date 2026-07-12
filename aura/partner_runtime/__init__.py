@@ -7,6 +7,8 @@ from .workspace_project_context_alpha_manager import WorkspaceProjectContextAlph
 from .workspace_project_context_planner import WorkspaceProjectContextPlanner
 from .chat_to_memory_runtime_handoff_alpha_manager import ChatToMemoryRuntimeHandoffAlphaManager
 from .chat_to_memory_runtime_handoff_planner import ChatToMemoryRuntimeHandoffPlanner
+from .voice_vision_chat_context_fusion_alpha_manager import VoiceVisionChatContextFusionAlphaManager
+from .voice_vision_chat_context_fusion_planner import VoiceVisionChatContextFusionPlanner
 
 __all__ = [
     "PartnerRuntimeAlphaManager",
@@ -16,4 +18,6 @@ __all__ = [
     "WorkspaceProjectContextPlanner",
     "ChatToMemoryRuntimeHandoffAlphaManager",
     "ChatToMemoryRuntimeHandoffPlanner",
+    "VoiceVisionChatContextFusionAlphaManager",
+    "VoiceVisionChatContextFusionPlanner",
 ]

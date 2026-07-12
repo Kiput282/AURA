@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.223.0-genesis
-Current status: Sprint 223 Chat-to-Memory Runtime Handoff completed; Sprint 221-230 Unified Partner Runtime Integration is active
-Current runtime state: Sprint 223 adds a contract-only chat-to-memory handoff facade over the Sprint 222 workspace/project context contract and the existing handoff, privacy-redaction, manual-review, and memory-write permission contracts. It requires explicit user memory intent, privacy review, manual review, and a default-deny one-shot permission boundary. Chat-history reads, memory writes, review-queue persistence, grant application, audit writes, command or tool execution, background services, public binding, and autonomy remain disabled.
+Current version: v0.224.0-genesis
+Current status: Sprint 224 Voice, Vision, and Chat Context Fusion completed; Sprint 221-230 Unified Partner Runtime Integration is active
+Current runtime state: Sprint 224 adds a contract-only fusion facade over the stabilized Voice Runtime, Vision Runtime, and Sprint 223 chat/session contract chain. It combines owner metadata only while preserving the browser chat session runtime as canonical session owner. Microphone capture, transcription, speaker playback, screen or camera capture, chat payload reads, context inference, model requests, persistence, execution, background services, release gates, and autonomy remain disabled.
 
 ---
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 224 — Voice, Vision, and Chat Context Fusion
+- Next planned sprint: Sprint 225 — Personality Consistency Runtime
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5465,3 +5465,33 @@ autonomous actions.
 The contract validates 65 assertions with zero runtime execution features.
 
 Next: Sprint 224 — Voice, Vision, and Chat Context Fusion.
+
+## Sprint 224 — Voice, Vision, and Chat Context Fusion
+
+Sprint 224 completes the fourth step of the Sprint 221-230 Unified Partner
+Runtime Integration block.
+
+The implementation introduces:
+
+- `VoiceVisionChatContextFusionPlanner`
+- `VoiceVisionChatContextFusionAlphaManager`
+- CLI and shell status, context, and check commands
+
+The fusion layer composes contract metadata from:
+
+- the stabilized Voice Runtime contract with 507 passing assertions
+- the stabilized Vision Runtime contract with 330 passing assertions
+- the Sprint 223 chat-to-memory and canonical-session chain with 65 passing assertions
+
+The fusion order preserves chat/session ownership first, followed by bounded
+voice and vision contract metadata. It does not create a live multimodal
+context packet, infer meaning across modalities, read transcript or image
+payloads, read chat-session payloads, or activate model execution.
+
+Sprint 224 validates 84 deterministic assertions. Microphone capture,
+recording, transcription, TTS synthesis, speaker playback, screen capture,
+screenshot capture, camera capture, OCR, memory writes, permission mutation,
+audit writes, network actions, command execution, tool execution, background
+services, release gates, and autonomous action remain disabled.
+
+Next: Sprint 225 — Personality Consistency Runtime.

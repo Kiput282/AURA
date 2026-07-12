@@ -1,5 +1,5 @@
 name: AURA
-version: "0.223.0-genesis"
+version: "0.224.0-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -305,3 +305,12 @@ modes:
 # not read, persisted, or mutated by this integration layer.
 # Runtime activation and autonomous memory writes remain disabled.
 # Next: Sprint 224 — Voice, Vision, and Chat Context Fusion.
+
+# Sprint 224 — Voice, Vision, and Chat Context Fusion
+# Adds a contract-only fusion facade across stabilized voice, vision, and
+# chat/session owner metadata.
+# Canonical browser chat session ownership remains unchanged.
+# Audio, transcript, image, screenshot, and chat payloads remain unread.
+# Capture, inference, persistence, execution, release gates, and autonomy
+# remain disabled.
+# Next: Sprint 225 — Personality Consistency Runtime.

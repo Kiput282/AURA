@@ -16,8 +16,8 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.223.0-genesis
-- Completed: Sprint 223 — Chat-to-Memory Runtime Handoff
+- Current version: v0.224.0-genesis
+- Completed: Sprint 224 — Voice, Vision, and Chat Context Fusion
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
 - Runtime execution features: 4
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 224 — Voice, Vision, and Chat Context Fusion
+- Next: Sprint 225 — Personality Consistency Runtime
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1653,3 +1653,28 @@ Implemented boundaries:
 The next runtime boundary is `voice_vision_chat_context_fusion`.
 
 Next: Sprint 224 — Voice, Vision, and Chat Context Fusion.
+
+## v0.224.0-genesis — Voice, Vision, and Chat Context Fusion
+
+Sprint 224 establishes the contract-only multimodal context-fusion boundary
+for the Sprint 221-230 Unified Partner Runtime Integration block.
+
+Implemented boundaries:
+
+- composes `VoiceRuntimePlanner` contract metadata at 507 assertions
+- composes `VisionRuntimePlanner` contract metadata at 330 assertions
+- composes the Sprint 223 partner/chat contract at 65 assertions
+- preserves `aura_browser_chat_session_runtime` as canonical session owner
+- orders fusion inputs as chat-session anchor, voice metadata, then vision metadata
+- performs no microphone, recording, transcription, synthesis, or playback operation
+- performs no screen, screenshot, camera, image-file, or OCR operation
+- reads no audio, transcript, image, screenshot, chat, or session payload
+- creates no live fusion packet
+- performs no multimodal inference or model request
+- performs no memory, permission, audit, network, command, tool, or file mutation
+- keeps runtime activation, background services, release gates, and autonomy closed
+- validates 84 deterministic assertions with zero failures
+
+The next runtime boundary is `personality_consistency_runtime`.
+
+Next: Sprint 225 — Personality Consistency Runtime.
