@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.229.0-genesis
+Current version: v0.230.0-genesis
 Current status: Sprint 229 Genesis Acceptance Rehearsal completed; Sprint 221-230 Unified Partner Runtime Integration is active
 Current runtime state: Sprint 229 adds a contract-only and read-only Genesis acceptance rehearsal across eight partner-runtime owners. It validates 1,042 upstream assertions, 30 deterministic method packets, eight handoff boundaries, nine rehearsal phases, and 27 acceptance results while keeping Genesis release approval, runtime activation, auto-start, service control, systemd actions, launcher execution, and release gates disabled.
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 230 — Unified Partner Runtime Stabilization
+- Next planned sprint: Sprint 231 — Genesis Final Integration and Release
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5674,3 +5674,33 @@ browser auto-launch, automatic restart, autonomous recovery, runtime
 activation, or release-gate opening.
 
 Next: Sprint 230 — Unified Partner Runtime Stabilization.
+
+## v0.230.0-genesis — Unified Partner Runtime Stabilization
+
+Sprint 230 closes and stabilizes the Sprint 221-230 Unified Partner Runtime
+Integration block as a contract-only, read-only boundary.
+
+Validated stabilization state:
+
+- nine partner-runtime owners are linked from Sprint 221 through Sprint 229;
+- the upstream owner assertion total is 1,528 with zero failures;
+- 35 owner method packets are deterministic;
+- the nine-step handoff chain is complete;
+- 10 stabilization domains and 30 required stabilization results pass;
+- all 18 prohibited runtime or release results remain false;
+- all 21 runtime-effect counters remain zero;
+- CLI, shell, and direct manager packets remain equivalent;
+- no service, listener, socket, thread, subprocess, launcher, browser,
+  automatic restart, autonomous recovery, or systemd action is performed;
+- the block is complete and stabilized, but not release-ready;
+- Genesis release approval remains false;
+- runtime activation remains false;
+- the release gate remains closed.
+
+Commands:
+
+- `partner-runtime-unified-partner-runtime-stabilization-status`
+- `partner-runtime-unified-partner-runtime-stabilization-context`
+- `partner-runtime-unified-partner-runtime-stabilization-check`
+
+Next: Sprint 231 — Genesis Final Integration and Release.

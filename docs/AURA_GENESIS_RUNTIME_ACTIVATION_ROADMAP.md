@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.229.0-genesis
+- Current version: v0.230.0-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 230 — Unified Partner Runtime Stabilization
+- Next: Sprint 231 — Genesis Final Integration and Release
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1825,3 +1825,29 @@ Implemented boundaries:
 The next runtime boundary is `unified_partner_runtime_stabilization`.
 
 Next: Sprint 230 — Unified Partner Runtime Stabilization.
+
+## v0.230.0-genesis — Unified Partner Runtime Stabilization
+
+Sprint 230 stabilizes the Sprint 221-230 Unified Partner Runtime Integration
+block without enabling runtime execution or making a Genesis release decision.
+
+The stabilization contract confirms:
+
+- owner count: 9;
+- owner assertion total: 1,528;
+- deterministic owner method packets: 35;
+- handoff chain count: 9;
+- stabilization domains: 10;
+- required stabilization results: 30;
+- prohibited negative results: 18;
+- zero runtime-effect counters: 21;
+- block complete: true;
+- block stabilized: true;
+- block release-ready: false;
+- Genesis release approved: false;
+- runtime activation allowed: false;
+- release gate open: false.
+
+The next boundary is `genesis_final_integration_and_release`.
+
+Next: Sprint 231 — Genesis Final Integration and Release.

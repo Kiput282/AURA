@@ -4530,6 +4530,39 @@ class AuraCLI:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
+        # Sprint 230 Unified Partner Runtime Stabilization CLI commands.
+        sprint_230_commands = {
+            "partner-runtime-unified-partner-runtime-stabilization-status",
+            "partner-runtime-unified-partner-runtime-stabilization-context",
+            "partner-runtime-unified-partner-runtime-stabilization-check",
+        }
+
+        if raw_args and raw_args[0] in sprint_230_commands:
+            from aura.partner_runtime import (
+                UnifiedPartnerRuntimeStabilizationAlphaManager,
+            )
+
+            manager = UnifiedPartnerRuntimeStabilizationAlphaManager(
+                project_root=self.project_root,
+            )
+            command = raw_args[0]
+
+            if command.endswith("-status"):
+                title = "Unified Partner Runtime Stabilization Status"
+                packet = manager.status()
+            elif command.endswith("-context"):
+                title = "Unified Partner Runtime Stabilization Context"
+                packet = manager.context()
+            else:
+                title = "Unified Partner Runtime Stabilization Check"
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+            return True
+
         # Sprint 229 Genesis Acceptance Rehearsal CLI commands.
         commands = {
             "partner-runtime-genesis-acceptance-rehearsal-status",

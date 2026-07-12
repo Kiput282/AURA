@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-unified-partner-runtime-stabilization-status Show Sprint 230 unified partner runtime stabilization status")
+        print("  partner-runtime-unified-partner-runtime-stabilization-context Show Sprint 230 unified partner runtime stabilization context")
+        print("  partner-runtime-unified-partner-runtime-stabilization-check Run Sprint 230 unified partner runtime stabilization checks")
         print("  partner-runtime-genesis-acceptance-rehearsal-status Show Sprint 228 Genesis acceptance rehearsal contract status")
         print("  partner-runtime-genesis-acceptance-rehearsal-context Show Sprint 228 Genesis acceptance rehearsal contract context")
         print("  partner-runtime-genesis-acceptance-rehearsal-check Run Sprint 228 Genesis acceptance rehearsal contract checks")
@@ -5422,6 +5425,38 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 230 Unified Partner Runtime Stabilization shell commands.
+        sprint_230_commands = {
+            "partner-runtime-unified-partner-runtime-stabilization-status",
+            "partner-runtime-unified-partner-runtime-stabilization-context",
+            "partner-runtime-unified-partner-runtime-stabilization-check",
+        }
+
+        if normalized in sprint_230_commands:
+            from aura.partner_runtime import (
+                UnifiedPartnerRuntimeStabilizationAlphaManager,
+            )
+
+            manager = UnifiedPartnerRuntimeStabilizationAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = "Unified Partner Runtime Stabilization Status"
+                packet = manager.status()
+            elif normalized.endswith("-context"):
+                title = "Unified Partner Runtime Stabilization Context"
+                packet = manager.context()
+            else:
+                title = "Unified Partner Runtime Stabilization Check"
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+            return True
+
         # Sprint 229 Genesis Acceptance Rehearsal shell commands.
         commands = {
             "partner-runtime-genesis-acceptance-rehearsal-status",

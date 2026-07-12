@@ -1583,3 +1583,25 @@ auto-start or autonomous recovery, activate runtime authority, or open a
 release gate.
 
 This boundary prepares Sprint 230 — Unified Partner Runtime Stabilization.
+
+## v0.230.0-genesis — Unified Partner Runtime Stabilization
+
+Sprint 230 completes the contract stabilization of the unified partner runtime
+integration chain assembled during Sprints 221-229.
+
+This checkpoint does not activate service persistence, automatic startup,
+launcher execution, browser launch, autonomous recovery, or any other runtime
+effect. It also does not approve Genesis release.
+
+The stabilized block provides a deterministic handoff into Sprint 231 with:
+
+- nine linked runtime owners;
+- 1,528 upstream assertions with zero failures;
+- 35 deterministic method packets;
+- a complete nine-stage handoff chain;
+- CLI, shell, and direct route parity;
+- permission, audit, recovery, safe-idle, localhost-only, and emergency-stop
+  boundaries preserved;
+- release and runtime gates held closed.
+
+Next: Sprint 231 — Genesis Final Integration and Release.

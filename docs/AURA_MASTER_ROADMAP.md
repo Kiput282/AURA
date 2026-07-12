@@ -3115,3 +3115,30 @@ Canonical checkpoint properties:
 - Capability Registry remains unchanged
 
 Next: Sprint 230 — Unified Partner Runtime Stabilization.
+
+## Checkpoint v0.230.0-genesis — Unified Partner Runtime Stabilization
+
+Sprint 230 closes the Sprint 221-230 Unified Partner Runtime Integration block
+as contract-complete and stabilized.
+
+Checkpoint summary:
+
+- canonical identity advances to `0.230.0-genesis`;
+- nine partner-runtime owners are present;
+- upstream assertion total is 1,528 with zero failures;
+- deterministic method packet count is 35;
+- handoff chain count is 9;
+- stabilization domain count is 10;
+- all 30 required stabilization results pass;
+- all 18 prohibited runtime and release outcomes remain false;
+- all 21 runtime-effect counters remain zero;
+- Sprint 230 direct, CLI, and shell packets are equivalent;
+- block complete is true;
+- block stabilized is true;
+- block release-ready is false;
+- Genesis release approved is false;
+- runtime activation allowed is false;
+- release gate open is false;
+- Capability Registry remains unchanged.
+
+Next: Sprint 231 — Genesis Final Integration and Release.

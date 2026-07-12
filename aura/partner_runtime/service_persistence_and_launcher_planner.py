@@ -903,7 +903,7 @@ class ServicePersistenceAndLauncherPlanner:
             "service_name":
                 "aura.service",
             "identity_version":
-                "0.229.0-genesis",
+                "0.230.0-genesis",
             "lifecycle_state":
                 "stopped",
             "boot_mode":
@@ -944,7 +944,7 @@ class ServicePersistenceAndLauncherPlanner:
                 defaults[
                     "identity_version"
                 ]
-                == "0.229.0-genesis",
+                == "0.230.0-genesis",
                 defaults[
                     "lifecycle_state"
                 ]
@@ -1866,7 +1866,7 @@ class ServicePersistenceAndLauncherPlanner:
                 launcher[
                     "identity_version"
                 ]
-                == "0.229.0-genesis",
+                == "0.230.0-genesis",
 
             "launcher_runtime_closed":
                 launcher[
@@ -1899,7 +1899,7 @@ class ServicePersistenceAndLauncherPlanner:
                 runtime_service[
                     "identity_version"
                 ]
-                == "0.229.0-genesis",
+                == "0.230.0-genesis",
 
             "runtime_service_closed":
                 runtime_service[

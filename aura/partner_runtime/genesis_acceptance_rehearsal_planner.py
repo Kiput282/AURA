@@ -38,7 +38,7 @@ class GenesisAcceptanceRehearsalPlanner:
     name = "genesis_acceptance_rehearsal"
     version = "0.1.0-alpha"
 
-    identity_version = "0.229.0-genesis"
+    identity_version = "0.230.0-genesis"
 
     current_sprint = 229
     next_sprint = 230
