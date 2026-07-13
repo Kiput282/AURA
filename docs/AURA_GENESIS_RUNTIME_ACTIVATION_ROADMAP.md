@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.233.0-genesis
+- Current version: v0.234.0-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 234 — Genesis Release Candidate Readiness
+- Next: Sprint 235 — Genesis Release Candidate Approval
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1916,3 +1916,25 @@ The validated contract:
 The next boundary is `genesis_release_candidate_readiness`.
 
 Next: Sprint 234 — Genesis Release Candidate Readiness.
+
+## v0.234.0-genesis — Genesis Release Candidate Readiness
+
+Sprint 234 adds the read-only Genesis release-candidate readiness contract.
+
+The validated contract:
+
+- preserves the Sprint 233 verification foundation;
+- records thirteen owners and `3952` owner assertions with zero failures;
+- records `55` deterministic method packets and thirteen handoff stages;
+- inventories readiness evidence, source artifacts, and documentation;
+- exposes status, context, and check routes through CLI and shell;
+- keeps release-candidate assembly, readiness, verification, verification
+  passed, and readiness passed false;
+- keeps approval readiness, Genesis release approval, runtime activation,
+  and the release gate false;
+- performs no file, service, launcher, listener, process, approval, release,
+  or operating-system runtime action.
+
+The next boundary is `genesis_release_candidate_approval`.
+
+Next: Sprint 235 — Genesis Release Candidate Approval.

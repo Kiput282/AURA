@@ -12,7 +12,7 @@ class UnifiedPartnerRuntimeStabilizationPlanner(
     GenesisAcceptanceRehearsalPlanner
 ):
     NAME = "unified_partner_runtime_stabilization"
-    VERSION = "0.233.0-genesis"
+    VERSION = "0.234.0-genesis"
     CURRENT_SPRINT = 230
     NEXT_SPRINT = 231
     BOUNDARY = "unified_partner_runtime_stabilization"
