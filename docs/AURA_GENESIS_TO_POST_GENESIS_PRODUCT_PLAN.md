@@ -1624,3 +1624,22 @@ The block has started, but it is not yet complete, stabilized, or
 release-ready. Release-candidate assembly remains a separate future decision.
 
 Next: Sprint 232 — Genesis Release Candidate Assembly.
+
+## v0.232.0-genesis — Genesis Release Candidate Assembly
+
+Sprint 232 establishes a reviewable release-candidate assembly foundation
+without producing or approving an actual release candidate.
+
+Product-facing guarantees remain:
+
+- deterministic integration across eleven partner-runtime owners;
+- explicit operator control and rollback readiness;
+- preserved permission, audit, recovery, and safe-idle boundaries;
+- reviewable manifest, artifact, and documentation inventories;
+- no autonomous assembly, verification, approval, activation, or release
+  action.
+
+Release-candidate assembly, readiness, verification, and Genesis release
+approval remain separate future decisions.
+
+Next: Sprint 233 — Genesis Release Candidate Verification.

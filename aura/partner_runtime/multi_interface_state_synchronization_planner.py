@@ -146,7 +146,7 @@ class MultiInterfaceStateSynchronizationPlanner:
 
     canonical_state_defaults = {
         "aura_identity_version":
-            "0.231.0-genesis",
+            "0.232.0-genesis",
         "selected_channel":
             "metadata_only",
         "safe_idle_mode":
@@ -632,7 +632,7 @@ class MultiInterfaceStateSynchronizationPlanner:
                 identity.get(
                     "identity_version"
                 )
-                == "0.231.0-genesis",
+                == "0.232.0-genesis",
                 identity.get(
                     "runtime_mode"
                 )
@@ -1033,7 +1033,7 @@ class MultiInterfaceStateSynchronizationPlanner:
                 defaults.get(
                     "aura_identity_version"
                 )
-                == "0.231.0-genesis",
+                == "0.232.0-genesis",
                 defaults.get(
                     "selected_channel"
                 )
@@ -1749,7 +1749,7 @@ class MultiInterfaceStateSynchronizationPlanner:
                 schema[
                     "identity_version"
                 ]
-                == "0.231.0-genesis",
+                == "0.232.0-genesis",
             "schema_runtime_mode_blueprint":
                 schema[
                     "runtime_mode"
@@ -2089,7 +2089,7 @@ class MultiInterfaceStateSynchronizationPlanner:
                 defaults[
                     "aura_identity_version"
                 ]
-                == "0.231.0-genesis",
+                == "0.232.0-genesis",
             "policy_ready":
                 policy["ready"] is True,
             "policy_contract_ready":

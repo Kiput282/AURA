@@ -53,7 +53,7 @@ class PersonalityConsistencyRuntimePlanner:
         "0.225.0-genesis",
         "0.226.0-genesis",
         "0.227.0-genesis",
-        "0.231.0-genesis",
+        "0.232.0-genesis",
     )
 
     required_traits = (

@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-genesis-release-candidate-assembly-status Show Sprint 232 Genesis release candidate assembly status")
+        print("  partner-runtime-genesis-release-candidate-assembly-context Show Sprint 232 Genesis release candidate assembly context")
+        print("  partner-runtime-genesis-release-candidate-assembly-check Run Sprint 232 Genesis release candidate assembly checks")
         print("  partner-runtime-genesis-final-integration-and-release-status Show Sprint 231 Genesis final integration and release status")
         print("  partner-runtime-genesis-final-integration-and-release-context Show Sprint 231 Genesis final integration and release context")
         print("  partner-runtime-genesis-final-integration-and-release-check Run Sprint 231 Genesis final integration and release checks")
@@ -5428,6 +5431,38 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 232 Genesis Release Candidate Assembly shell commands.
+        sprint_232_commands = {
+            "partner-runtime-genesis-release-candidate-assembly-status",
+            "partner-runtime-genesis-release-candidate-assembly-context",
+            "partner-runtime-genesis-release-candidate-assembly-check",
+        }
+
+        if normalized in sprint_232_commands:
+            from aura.partner_runtime import (
+                GenesisReleaseCandidateAssemblyAlphaManager,
+            )
+
+            manager = GenesisReleaseCandidateAssemblyAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = "Genesis Release Candidate Assembly Status"
+                packet = manager.status()
+            elif normalized.endswith("-context"):
+                title = "Genesis Release Candidate Assembly Context"
+                packet = manager.context()
+            else:
+                title = "Genesis Release Candidate Assembly Check"
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+            return True
+
         # Sprint 231 Genesis Final Integration and Release shell commands.
         sprint_231_commands = {
             "partner-runtime-genesis-final-integration-and-release-status",

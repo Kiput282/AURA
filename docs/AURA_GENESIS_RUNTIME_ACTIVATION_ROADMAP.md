@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.231.0-genesis
+- Current version: v0.232.0-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 232 — Genesis Release Candidate Assembly
+- Next: Sprint 233 — Genesis Release Candidate Verification
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1872,3 +1872,24 @@ The validated contract:
 The next boundary is `genesis_release_candidate_assembly`.
 
 Next: Sprint 232 — Genesis Release Candidate Assembly.
+
+## v0.232.0-genesis — Genesis Release Candidate Assembly
+
+Sprint 232 adds the read-only Genesis release-candidate assembly contract.
+
+The validated contract:
+
+- preserves the Sprint 231 final-integration foundation;
+- records eleven owners and `2632` owner assertions with zero failures;
+- records `45` deterministic method packets and eleven handoff stages;
+- inventories release-candidate manifests, artifacts, and documentation;
+- exposes status, context, and check routes through CLI and shell;
+- keeps release-candidate assembly, readiness, and verification false;
+- keeps Genesis release approval, runtime activation, and the release gate
+  false;
+- performs no file, service, launcher, listener, process, or operating-system
+  runtime action.
+
+The next boundary is `genesis_release_candidate_verification`.
+
+Next: Sprint 233 — Genesis Release Candidate Verification.
