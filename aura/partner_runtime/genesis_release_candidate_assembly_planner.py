@@ -13,7 +13,7 @@ class GenesisReleaseCandidateAssemblyPlanner(
 ):
     """Read-only Sprint 232 release-candidate assembly contract."""
 
-    VERSION = "0.234.0-genesis"
+    VERSION = "0.235.0-genesis"
 
     CURRENT_SPRINT = 232
     NEXT_SPRINT = 233
@@ -658,7 +658,7 @@ class GenesisReleaseCandidateAssemblyPlanner(
         ] = (
             contract[
                 "identity_version"
-            ] == "0.234.0-genesis"
+            ] == "0.235.0-genesis"
             and contract[
                 "current_sprint"
             ] == 232

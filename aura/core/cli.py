@@ -4530,6 +4530,39 @@ class AuraCLI:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
+        # Sprint 235 Genesis Release Candidate Approval CLI commands.
+        sprint_235_commands = {
+            "partner-runtime-genesis-release-candidate-approval-status",
+            "partner-runtime-genesis-release-candidate-approval-context",
+            "partner-runtime-genesis-release-candidate-approval-check",
+        }
+
+        if raw_args and raw_args[0] in sprint_235_commands:
+            from aura.partner_runtime import (
+                GenesisReleaseCandidateApprovalAlphaManager,
+            )
+
+            manager = GenesisReleaseCandidateApprovalAlphaManager(
+                project_root=self.project_root,
+            )
+            command = raw_args[0]
+
+            if command.endswith("-status"):
+                title = "Genesis Release Candidate Approval Status"
+                packet = manager.status()
+            elif command.endswith("-context"):
+                title = "Genesis Release Candidate Approval Context"
+                packet = manager.context()
+            else:
+                title = "Genesis Release Candidate Approval Check"
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+            return True
+
         # Sprint 234 Genesis Release Candidate Readiness CLI commands.
         sprint_234_commands = {
             "partner-runtime-genesis-release-candidate-readiness-status",

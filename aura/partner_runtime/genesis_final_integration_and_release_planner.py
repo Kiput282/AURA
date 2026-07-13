@@ -13,7 +13,7 @@ class GenesisFinalIntegrationAndReleasePlanner(
 ):
     """Read-only Sprint 231 final-integration foundation contract."""
 
-    VERSION = "0.234.0-genesis"
+    VERSION = "0.235.0-genesis"
     CURRENT_SPRINT = 231
     NEXT_SPRINT = 232
 
@@ -738,7 +738,7 @@ class GenesisFinalIntegrationAndReleasePlanner(
             "identity_version":
                 contract[
                     "identity_version"
-                ] == "0.234.0-genesis",
+                ] == "0.235.0-genesis",
 
             "owner_count":
                 contract[

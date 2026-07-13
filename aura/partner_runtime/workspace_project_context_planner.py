@@ -333,7 +333,7 @@ class WorkspaceProjectContextPlanner:
                 "0.225.0-genesis",
                 "0.226.0-genesis",
                 "0.227.0-genesis",
-                "0.234.0-genesis",
+                "0.235.0-genesis",
             }
         )
 

@@ -151,3 +151,17 @@ __all__.extend(
         "GenesisReleaseCandidateReadinessAlphaManager",
     ]
 )
+
+from .genesis_release_candidate_approval_planner import (
+    GenesisReleaseCandidateApprovalPlanner,
+)
+from .genesis_release_candidate_approval_alpha_manager import (
+    GenesisReleaseCandidateApprovalAlphaManager,
+)
+
+__all__.extend(
+    [
+        "GenesisReleaseCandidateApprovalPlanner",
+        "GenesisReleaseCandidateApprovalAlphaManager",
+    ]
+)

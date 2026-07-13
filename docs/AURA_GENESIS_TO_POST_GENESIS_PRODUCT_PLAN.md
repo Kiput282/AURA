@@ -1676,3 +1676,19 @@ Product-facing guarantees remain:
 - no autonomous readiness decision, approval, activation, or release action.
 
 Next: Sprint 235 — Genesis Release Candidate Approval.
+
+## v0.235.0-genesis — Genesis Release Candidate Approval
+
+Sprint 235 establishes a reviewable approval foundation without approving,
+authorizing, activating, or releasing an actual release candidate.
+
+Product-facing guarantees remain:
+
+- deterministic integration across fourteen partner-runtime owners;
+- explicit operator control and rollback readiness;
+- preserved permission, audit, recovery, emergency-stop, and safe-idle
+  boundaries;
+- reviewable approval evidence, artifact, and documentation inventories;
+- no autonomous approval, authorization, activation, or release action.
+
+Next: Sprint 236 — Genesis Release Candidate Release Authorization.
