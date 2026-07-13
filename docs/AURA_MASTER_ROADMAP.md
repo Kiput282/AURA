@@ -3192,3 +3192,30 @@ Checkpoint state:
 Next boundary: `genesis_release_candidate_verification`
 
 Next: Sprint 233 — Genesis Release Candidate Verification.
+
+## Checkpoint v0.233.0-genesis — Genesis Release Candidate Verification
+
+Sprint 233 continues the Sprint 231–240 Genesis Final Integration and
+Release block.
+
+Checkpoint state:
+
+- canonical identity advances to `0.233.0-genesis`;
+- Sprint 233 passes `690/690` assertions;
+- twelve integration owners provide `3262` assertions with zero failures;
+- `50` deterministic method packets and twelve handoff stages are preserved;
+- CLI, shell, and direct route parity is verified;
+- verification evidence, artifact, and documentation inventories are
+  reviewable;
+- release-candidate verification foundation readiness is true;
+- block completion, stabilization, and release readiness remain false;
+- release-candidate assembly, readiness, verification, and verification
+  passed remain false;
+- Genesis release approval, runtime activation, and release-gate opening
+  remain false;
+- Capability Registry remains unchanged;
+- no runtime or operating-system side effect is introduced.
+
+Next boundary: `genesis_release_candidate_readiness`
+
+Next: Sprint 234 — Genesis Release Candidate Readiness.

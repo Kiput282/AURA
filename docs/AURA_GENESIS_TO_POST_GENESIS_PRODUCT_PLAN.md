@@ -1643,3 +1643,20 @@ Release-candidate assembly, readiness, verification, and Genesis release
 approval remain separate future decisions.
 
 Next: Sprint 233 — Genesis Release Candidate Verification.
+
+## v0.233.0-genesis — Genesis Release Candidate Verification
+
+Sprint 233 establishes a reviewable verification foundation without
+verifying, approving, activating, or releasing an actual release candidate.
+
+Product-facing guarantees remain:
+
+- deterministic integration across twelve partner-runtime owners;
+- explicit operator control and rollback readiness;
+- preserved permission, audit, recovery, emergency-stop, and safe-idle
+  boundaries;
+- reviewable verification evidence, artifact, and documentation inventories;
+- no autonomous verification, readiness decision, approval, activation, or
+  release action.
+
+Next: Sprint 234 — Genesis Release Candidate Readiness.
