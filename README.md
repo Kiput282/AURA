@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.230.0-genesis
+Current version: v0.231.0-genesis
 Current status: Sprint 229 Genesis Acceptance Rehearsal completed; Sprint 221-230 Unified Partner Runtime Integration is active
 Current runtime state: Sprint 229 adds a contract-only and read-only Genesis acceptance rehearsal across eight partner-runtime owners. It validates 1,042 upstream assertions, 30 deterministic method packets, eight handoff boundaries, nine rehearsal phases, and 27 acceptance results while keeping Genesis release approval, runtime activation, auto-start, service control, systemd actions, launcher execution, and release gates disabled.
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 231 — Genesis Final Integration and Release
+- Next planned sprint: Sprint 232 — Genesis Release Candidate Assembly
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5704,3 +5704,28 @@ Commands:
 - `partner-runtime-unified-partner-runtime-stabilization-check`
 
 Next: Sprint 231 — Genesis Final Integration and Release.
+
+## v0.231.0-genesis — Genesis Final Integration and Release
+
+Sprint 231 establishes the contract-only, read-only foundation for the
+Genesis Final Integration and Release block.
+
+Validated integration state:
+
+- ten partner-runtime owners remain deterministic;
+- the owner assertion total is `2056` with zero owner failures;
+- all `40` deterministic owner-method packets remain unique;
+- the handoff chain contains `10` verified stages;
+- Sprint 231 passes `576/576` assertions;
+- CLI, shell, and direct contract routes remain equivalent;
+- permission, audit, emergency-stop, safe-idle, localhost-only, manual
+  recovery, and rollback boundaries remain preserved;
+- no service, listener, socket, thread, subprocess, launcher, browser,
+  systemd, autonomous recovery, or runtime activation action is performed;
+- the current Sprint 231–240 block is started but is not complete,
+  stabilized, or release-ready;
+- release-candidate assembly and Genesis release approval remain false.
+
+Next boundary: `genesis_release_candidate_assembly`
+
+Next: Sprint 232 — Genesis Release Candidate Assembly.

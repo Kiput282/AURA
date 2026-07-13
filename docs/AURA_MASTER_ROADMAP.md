@@ -3142,3 +3142,27 @@ Checkpoint summary:
 - Capability Registry remains unchanged.
 
 Next: Sprint 231 — Genesis Final Integration and Release.
+
+## Checkpoint v0.231.0-genesis — Genesis Final Integration and Release
+
+Sprint 231 begins the Sprint 231–240 Genesis Final Integration and Release
+block.
+
+Checkpoint state:
+
+- canonical identity advances to `0.231.0-genesis`;
+- Sprint 231 passes `576/576` contract assertions;
+- ten integration owners provide `2056` assertions with zero failures;
+- `40` deterministic method packets and ten handoff stages are preserved;
+- CLI, shell, and direct route parity is verified;
+- final-integration foundation readiness is true;
+- current-block completion, stabilization, and release readiness are false;
+- release-candidate assembly and readiness are false;
+- Genesis release approval, runtime activation, and release-gate opening are
+  false;
+- Capability Registry remains unchanged;
+- no runtime or operating-system side effect is introduced.
+
+Next boundary: `genesis_release_candidate_assembly`
+
+Next: Sprint 232 — Genesis Release Candidate Assembly.

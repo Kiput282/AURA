@@ -1605,3 +1605,22 @@ The stabilized block provides a deterministic handoff into Sprint 231 with:
 - release and runtime gates held closed.
 
 Next: Sprint 231 — Genesis Final Integration and Release.
+
+## v0.231.0-genesis — Genesis Final Integration and Release
+
+Sprint 231 establishes the first foundation of the Genesis final-integration
+block without approving a product release or activating runtime behavior.
+
+Product-facing guarantees remain:
+
+- deterministic integration across partner-runtime contracts;
+- explicit operator control;
+- permission and audit preservation;
+- safe-idle and localhost-only defaults;
+- manual recovery and rollback readiness;
+- no autonomous service, launcher, browser, or release action.
+
+The block has started, but it is not yet complete, stabilized, or
+release-ready. Release-candidate assembly remains a separate future decision.
+
+Next: Sprint 232 — Genesis Release Candidate Assembly.

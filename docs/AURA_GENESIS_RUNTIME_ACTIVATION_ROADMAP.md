@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.230.0-genesis
+- Current version: v0.231.0-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 231 — Genesis Final Integration and Release
+- Next: Sprint 232 — Genesis Release Candidate Assembly
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1851,3 +1851,24 @@ The stabilization contract confirms:
 The next boundary is `genesis_final_integration_and_release`.
 
 Next: Sprint 231 — Genesis Final Integration and Release.
+
+## v0.231.0-genesis — Genesis Final Integration and Release
+
+Sprint 231 opens the Sprint 231–240 Genesis Final Integration and Release
+block through a deterministic, contract-only, read-only foundation.
+
+The validated contract:
+
+- preserves the stabilized Sprint 221–230 integration chain;
+- records ten owners, `2056` owner assertions, and zero owner failures;
+- records `40` deterministic method packets and ten handoff stages;
+- exposes status, context, and check routes through CLI and shell;
+- keeps the current block incomplete, unstabilized, and not release-ready;
+- keeps release-candidate assembly and readiness false;
+- keeps Genesis release approval, runtime activation, and the release gate
+  false;
+- performs no service or operating-system runtime action.
+
+The next boundary is `genesis_release_candidate_assembly`.
+
+Next: Sprint 232 — Genesis Release Candidate Assembly.

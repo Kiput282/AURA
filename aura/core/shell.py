@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-genesis-final-integration-and-release-status Show Sprint 231 Genesis final integration and release status")
+        print("  partner-runtime-genesis-final-integration-and-release-context Show Sprint 231 Genesis final integration and release context")
+        print("  partner-runtime-genesis-final-integration-and-release-check Run Sprint 231 Genesis final integration and release checks")
         print("  partner-runtime-unified-partner-runtime-stabilization-status Show Sprint 230 unified partner runtime stabilization status")
         print("  partner-runtime-unified-partner-runtime-stabilization-context Show Sprint 230 unified partner runtime stabilization context")
         print("  partner-runtime-unified-partner-runtime-stabilization-check Run Sprint 230 unified partner runtime stabilization checks")
@@ -5425,6 +5428,38 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 231 Genesis Final Integration and Release shell commands.
+        sprint_231_commands = {
+            "partner-runtime-genesis-final-integration-and-release-status",
+            "partner-runtime-genesis-final-integration-and-release-context",
+            "partner-runtime-genesis-final-integration-and-release-check",
+        }
+
+        if normalized in sprint_231_commands:
+            from aura.partner_runtime import (
+                GenesisFinalIntegrationAndReleaseAlphaManager,
+            )
+
+            manager = GenesisFinalIntegrationAndReleaseAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = "Genesis Final Integration and Release Status"
+                packet = manager.status()
+            elif normalized.endswith("-context"):
+                title = "Genesis Final Integration and Release Context"
+                packet = manager.context()
+            else:
+                title = "Genesis Final Integration and Release Check"
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+            return True
+
         # Sprint 230 Unified Partner Runtime Stabilization shell commands.
         sprint_230_commands = {
             "partner-runtime-unified-partner-runtime-stabilization-status",
