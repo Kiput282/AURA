@@ -3,25 +3,27 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .genesis_release_candidate_readiness_planner import (
-    GenesisReleaseCandidateReadinessPlanner,
+from .genesis_release_candidate_approval_planner import (
+    GenesisReleaseCandidateApprovalPlanner,
 )
 
 
-class GenesisReleaseCandidateApprovalPlanner(
-    GenesisReleaseCandidateReadinessPlanner
+class GenesisReleaseCandidateReleaseAuthorizationPlanner(
+    GenesisReleaseCandidateApprovalPlanner
 ):
-    """Read-only Sprint 235 release-candidate approval contract."""
+    """Read-only Sprint 236 release-authorization contract."""
 
     VERSION = "0.236.0-genesis"
 
-    CURRENT_SPRINT = 235
-    NEXT_SPRINT = 236
+    CURRENT_SPRINT = 236
+    NEXT_SPRINT = 237
 
-    BOUNDARY = "genesis_release_candidate_approval"
+    BOUNDARY = (
+        "genesis_release_candidate_release_authorization"
+    )
 
     NEXT_BOUNDARY = (
-        "genesis_release_candidate_release_authorization"
+        "genesis_release_candidate_release_gate_review"
     )
 
     BLOCK = (
@@ -31,17 +33,18 @@ class GenesisReleaseCandidateApprovalPlanner(
 
     MODE = (
         "contract_only_read_only_"
-        "release_candidate_approval"
+        "release_candidate_release_authorization"
     )
 
-    APPROVAL_DOMAINS = (
+    AUTHORIZATION_DOMAINS = (
         "canonical_checkpoint_integrity",
-        "release_candidate_readiness_foundation_preservation",
-        "fourteen_owner_approval_chain_integrity",
+        "release_candidate_approval_foundation_preservation",
+        "fifteen_owner_authorization_chain_integrity",
         "deterministic_method_packet_integrity",
         "handoff_chain_integrity",
-        "readiness_evidence_preservation",
-        "approval_evidence_readiness",
+        "approval_evidence_preservation",
+        "release_authorization_policy_readiness",
+        "release_authorization_evidence_readiness",
         "artifact_inventory_readiness",
         "documentation_inventory_readiness",
         "cli_shell_direct_route_consistency",
@@ -49,20 +52,21 @@ class GenesisReleaseCandidateApprovalPlanner(
         "operator_control_and_rollback_readiness",
         "safe_idle_and_emergency_stop_preservation",
         "runtime_effect_hold",
-        "approval_decision_separation",
-        "release_authorization_separation",
+        "release_authorization_decision_separation",
+        "release_gate_review_separation",
     )
 
-    APPROVAL_EVIDENCE_INVENTORY = (
+    AUTHORIZATION_EVIDENCE_INVENTORY = (
         "canonical_identity_evidence",
         "checkpoint_parent_evidence",
-        "fourteen_owner_evidence",
+        "fifteen_owner_evidence",
         "owner_assertion_evidence",
         "deterministic_method_packet_evidence",
         "handoff_chain_evidence",
-        "readiness_result_evidence",
+        "approval_result_evidence",
         "approval_policy_evidence",
-        "approval_evidence",
+        "release_authorization_policy_evidence",
+        "release_authorization_evidence",
         "artifact_inventory_evidence",
         "documentation_inventory_evidence",
         "permission_audit_recovery_evidence",
@@ -74,8 +78,9 @@ class GenesisReleaseCandidateApprovalPlanner(
         "release_candidate_assembly_upstream_contract",
         "release_candidate_verification_upstream_contract",
         "release_candidate_readiness_upstream_contract",
-        "release_candidate_approval_planner_contract",
-        "release_candidate_approval_alpha_manager_contract",
+        "release_candidate_approval_upstream_contract",
+        "release_authorization_planner_contract",
+        "release_authorization_alpha_manager_contract",
         "package_export_contract",
         "cli_route_contract",
         "shell_route_contract",
@@ -94,6 +99,10 @@ class GenesisReleaseCandidateApprovalPlanner(
         "docs/AURA_GENESIS_RELEASE_CANDIDATE_VERIFICATION.md",
         "docs/AURA_GENESIS_RELEASE_CANDIDATE_READINESS.md",
         "docs/AURA_GENESIS_RELEASE_CANDIDATE_APPROVAL.md",
+        (
+            "docs/AURA_GENESIS_RELEASE_CANDIDATE_"
+            "RELEASE_AUTHORIZATION.md"
+        ),
     )
 
     def __init__(
@@ -108,14 +117,14 @@ class GenesisReleaseCandidateApprovalPlanner(
         self,
     ) -> dict[str, Any]:
         upstream_planner = (
-            GenesisReleaseCandidateReadinessPlanner(
+            GenesisReleaseCandidateApprovalPlanner(
                 project_root=self.project_root
             )
         )
 
         return upstream_planner.contract()
 
-    def _approval_owner_snapshots(
+    def _authorization_owner_snapshots(
         self,
         upstream: dict[str, Any],
     ) -> list[dict[str, Any]]:
@@ -128,14 +137,14 @@ class GenesisReleaseCandidateApprovalPlanner(
 
         snapshots.append(
             {
-                "sprint": 234,
+                "sprint": 235,
 
                 "owner": (
-                    "GenesisReleaseCandidateReadiness"
+                    "GenesisReleaseCandidateApproval"
                     "AlphaManager"
                 ),
 
-                "assertion_count": 756,
+                "assertion_count": 828,
                 "failed_assertion_count": 0,
                 "method_count": 5,
 
@@ -153,7 +162,7 @@ class GenesisReleaseCandidateApprovalPlanner(
 
         return snapshots
 
-    def _approval_method_packets(
+    def _authorization_method_packets(
         self,
         upstream: dict[str, Any],
     ) -> list[str]:
@@ -166,23 +175,23 @@ class GenesisReleaseCandidateApprovalPlanner(
         packets.extend(
             [
                 (
-                    "GenesisReleaseCandidateReadiness"
+                    "GenesisReleaseCandidateApproval"
                     "AlphaManager.status"
                 ),
                 (
-                    "GenesisReleaseCandidateReadiness"
+                    "GenesisReleaseCandidateApproval"
                     "AlphaManager.context"
                 ),
                 (
-                    "GenesisReleaseCandidateReadiness"
+                    "GenesisReleaseCandidateApproval"
                     "AlphaManager.plan"
                 ),
                 (
-                    "GenesisReleaseCandidateReadiness"
+                    "GenesisReleaseCandidateApproval"
                     "AlphaManager.contract"
                 ),
                 (
-                    "GenesisReleaseCandidateReadiness"
+                    "GenesisReleaseCandidateApproval"
                     "AlphaManager.check"
                 ),
             ]
@@ -198,20 +207,20 @@ class GenesisReleaseCandidateApprovalPlanner(
         )
 
         owner_snapshots = (
-            self._approval_owner_snapshots(
+            self._authorization_owner_snapshots(
                 upstream
             )
         )
 
         method_packets = (
-            self._approval_method_packets(
+            self._authorization_method_packets(
                 upstream
             )
         )
 
         required_results = {
             f"{domain}_{suffix}": True
-            for domain in self.APPROVAL_DOMAINS
+            for domain in self.AUTHORIZATION_DOMAINS
             for suffix in (
                 "contract_ready",
                 "deterministic",
@@ -221,10 +230,10 @@ class GenesisReleaseCandidateApprovalPlanner(
 
         negative_results = {
             f"{domain}_{suffix}": False
-            for domain in self.APPROVAL_DOMAINS
+            for domain in self.AUTHORIZATION_DOMAINS
             for suffix in (
                 "runtime_effect_enabled",
-                "approval_decision_applied",
+                "authorization_decision_applied",
             )
         }
 
@@ -234,18 +243,18 @@ class GenesisReleaseCandidateApprovalPlanner(
 
         zero_counters = {
             f"{domain}_{suffix}": 0
-            for domain in self.APPROVAL_DOMAINS
+            for domain in self.AUTHORIZATION_DOMAINS
             for suffix in (
                 "runtime_effect_count",
-                "approval_decision_count",
+                "authorization_decision_count",
             )
         }
 
         zero_counters.update(
             {
                 "external_target_method_call_count": 0,
-                "release_candidate_approval_write_count": 0,
-                "release_authorization_transition_count": 0,
+                "release_authorization_write_count": 0,
+                "release_gate_transition_count": 0,
             }
         )
 
@@ -276,10 +285,10 @@ class GenesisReleaseCandidateApprovalPlanner(
             "boundary": self.BOUNDARY,
             "next_boundary": self.NEXT_BOUNDARY,
             "block": self.BLOCK,
-            "approval_mode": self.MODE,
+            "authorization_mode": self.MODE,
 
             "canonical_upstream_owner": (
-                "GenesisReleaseCandidateReadiness"
+                "GenesisReleaseCandidateApproval"
                 "AlphaManager"
             ),
 
@@ -303,22 +312,22 @@ class GenesisReleaseCandidateApprovalPlanner(
             "deterministic_method_packet_count":
                 len(method_packets),
 
-            "handoff_chain_count": 14,
+            "handoff_chain_count": 15,
 
-            "approval_domains": list(
-                self.APPROVAL_DOMAINS
+            "authorization_domains": list(
+                self.AUTHORIZATION_DOMAINS
             ),
 
-            "approval_domain_count": len(
-                self.APPROVAL_DOMAINS
+            "authorization_domain_count": len(
+                self.AUTHORIZATION_DOMAINS
             ),
 
-            "approval_evidence_inventory": list(
-                self.APPROVAL_EVIDENCE_INVENTORY
+            "authorization_evidence_inventory": list(
+                self.AUTHORIZATION_EVIDENCE_INVENTORY
             ),
 
-            "approval_evidence_inventory_count": len(
-                self.APPROVAL_EVIDENCE_INVENTORY
+            "authorization_evidence_inventory_count": len(
+                self.AUTHORIZATION_EVIDENCE_INVENTORY
             ),
 
             "release_candidate_artifact_inventory": list(
@@ -337,10 +346,10 @@ class GenesisReleaseCandidateApprovalPlanner(
                 self.DOCUMENTATION_INVENTORY
             ),
 
-            "required_approval_results":
+            "required_authorization_results":
                 required_results,
 
-            "required_approval_result_count":
+            "required_authorization_result_count":
                 len(required_results),
 
             "required_negative_results":
@@ -381,19 +390,29 @@ class GenesisReleaseCandidateApprovalPlanner(
                     "current_block_release_ready"
                 ],
 
-            "upstream_release_candidate_readiness_foundation_ready":
+            "upstream_release_candidate_approval_foundation_ready":
                 upstream[
-                    "release_candidate_readiness_foundation_ready"
-                ],
-
-            "upstream_readiness_passed":
-                upstream[
-                    "readiness_passed"
+                    "release_candidate_approval_foundation_ready"
                 ],
 
             "upstream_release_candidate_approval_ready":
                 upstream[
                     "release_candidate_approval_ready"
+                ],
+
+            "upstream_approval_passed":
+                upstream[
+                    "approval_passed"
+                ],
+
+            "upstream_genesis_release_approved":
+                upstream[
+                    "genesis_release_approved"
+                ],
+
+            "upstream_release_authorization_ready":
+                upstream[
+                    "release_authorization_ready"
                 ],
 
             "current_block_started": True,
@@ -405,8 +424,9 @@ class GenesisReleaseCandidateApprovalPlanner(
             "release_candidate_verification_foundation_ready": True,
             "release_candidate_readiness_foundation_ready": True,
             "release_candidate_approval_foundation_ready": True,
+            "release_authorization_foundation_ready": True,
 
-            "approval_evidence_inventory_ready": True,
+            "authorization_evidence_inventory_ready": True,
             "release_candidate_artifact_inventory_ready": True,
             "release_candidate_documentation_inventory_ready": True,
 
@@ -422,13 +442,16 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             "genesis_release_approved": False,
             "release_authorization_ready": False,
+            "release_authorization_passed": False,
+
+            "release_gate_review_ready": False,
 
             "external_target_methods_invoked": False,
             "runtime_activation_allowed": False,
             "release_gate_open": False,
             "runtime_ready": False,
 
-            "genesis_release_candidate_approval_contract_ready":
+            "genesis_release_candidate_release_authorization_contract_ready":
                 True,
         }
 
@@ -491,19 +514,19 @@ class GenesisReleaseCandidateApprovalPlanner(
                     "handoff_chain_count"
                 ],
 
-            "approval_domain_count":
+            "authorization_domain_count":
                 contract[
-                    "approval_domain_count"
+                    "authorization_domain_count"
                 ],
 
-            "required_approval_result_count":
+            "required_authorization_result_count":
                 contract[
-                    "required_approval_result_count"
+                    "required_authorization_result_count"
                 ],
 
-            "release_candidate_approval_foundation_ready":
+            "release_authorization_foundation_ready":
                 contract[
-                    "release_candidate_approval_foundation_ready"
+                    "release_authorization_foundation_ready"
                 ],
 
             "release_candidate_assembled":
@@ -551,6 +574,16 @@ class GenesisReleaseCandidateApprovalPlanner(
                     "release_authorization_ready"
                 ],
 
+            "release_authorization_passed":
+                contract[
+                    "release_authorization_passed"
+                ],
+
+            "release_gate_review_ready":
+                contract[
+                    "release_gate_review_ready"
+                ],
+
             "runtime_activation_allowed":
                 contract[
                     "runtime_activation_allowed"
@@ -574,9 +607,9 @@ class GenesisReleaseCandidateApprovalPlanner(
             "version": contract["version"],
             "block": contract["block"],
 
-            "approval_mode":
+            "authorization_mode":
                 contract[
-                    "approval_mode"
+                    "authorization_mode"
                 ],
 
             "canonical_upstream_owner":
@@ -594,14 +627,14 @@ class GenesisReleaseCandidateApprovalPlanner(
                     "deterministic_method_packets"
                 ],
 
-            "approval_domains":
+            "authorization_domains":
                 contract[
-                    "approval_domains"
+                    "authorization_domains"
                 ],
 
-            "approval_evidence_inventory":
+            "authorization_evidence_inventory":
                 contract[
-                    "approval_evidence_inventory"
+                    "authorization_evidence_inventory"
                 ],
 
             "release_candidate_artifact_inventory":
@@ -614,9 +647,9 @@ class GenesisReleaseCandidateApprovalPlanner(
                     "release_candidate_documentation_inventory"
                 ],
 
-            "required_approval_results":
+            "required_authorization_results":
                 contract[
-                    "required_approval_results"
+                    "required_authorization_results"
                 ],
 
             "required_negative_results":
@@ -651,6 +684,9 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             "genesis_release_approved": False,
             "release_authorization_ready": False,
+            "release_authorization_passed": False,
+
+            "release_gate_review_ready": False,
 
             "runtime_activation_allowed": False,
             "release_gate_open": False,
@@ -688,25 +724,24 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             "mode":
                 contract[
-                    "approval_mode"
+                    "authorization_mode"
                 ],
 
-            "approval_domains":
+            "authorization_domains":
                 contract[
-                    "approval_domains"
+                    "authorization_domains"
                 ],
 
             "required_results":
                 contract[
-                    "required_approval_results"
+                    "required_authorization_results"
                 ],
 
-            "release_candidate_assembly_allowed": False,
-            "release_candidate_verification_allowed": False,
-            "release_candidate_readiness_decision_allowed": False,
             "release_candidate_approval_decision_allowed": False,
             "genesis_release_approval_allowed": False,
-            "release_authorization_allowed": False,
+            "release_authorization_decision_allowed": False,
+            "release_gate_review_transition_allowed": False,
+            "release_gate_open_allowed": False,
 
             "runtime_effects_allowed": False,
             "runtime_activation_allowed": False,
@@ -718,7 +753,7 @@ class GenesisReleaseCandidateApprovalPlanner(
         self,
     ) -> dict[str, Any]:
         upstream_planner = (
-            GenesisReleaseCandidateReadinessPlanner(
+            GenesisReleaseCandidateApprovalPlanner(
                 project_root=self.project_root
             )
         )
@@ -730,7 +765,7 @@ class GenesisReleaseCandidateApprovalPlanner(
         contract = self.contract()
 
         required_results = contract[
-            "required_approval_results"
+            "required_authorization_results"
         ]
 
         negative_results = contract[
@@ -754,7 +789,7 @@ class GenesisReleaseCandidateApprovalPlanner(
             bool,
         ] = {}
 
-        for domain in self.APPROVAL_DOMAINS:
+        for domain in self.AUTHORIZATION_DOMAINS:
             local_assertions[
                 f"{domain}_required_contract_ready"
             ] = (
@@ -783,16 +818,16 @@ class GenesisReleaseCandidateApprovalPlanner(
             )
 
             local_assertions[
-                f"{domain}_negative_approval_decision_false"
+                f"{domain}_negative_authorization_decision_false"
             ] = (
                 negative_results[
-                    f"{domain}_approval_decision_applied"
+                    f"{domain}_authorization_decision_applied"
                 ]
                 is False
             )
 
         local_assertions[
-            "fourteen_owner_projection_matches"
+            "fifteen_owner_projection_matches"
         ] = (
             contract[
                 "identity_version"
@@ -800,28 +835,29 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             and contract[
                 "current_sprint"
-            ] == 235
+            ] == 236
 
             and contract[
                 "next_sprint"
-            ] == 236
+            ] == 237
 
             and contract[
                 "boundary"
             ] == (
-                "genesis_release_candidate_approval"
+                "genesis_release_candidate_"
+                "release_authorization"
             )
 
             and contract[
                 "next_boundary"
             ] == (
                 "genesis_release_candidate_"
-                "release_authorization"
+                "release_gate_review"
             )
 
             and upstream_check[
                 "assertion_count"
-            ] == 756
+            ] == 828
 
             and upstream_check[
                 "failed_assertion_count"
@@ -833,11 +869,11 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             and contract[
                 "owner_count"
-            ] == 14
+            ] == 15
 
             and contract[
                 "owner_assertion_total"
-            ] == 4708
+            ] == 5536
 
             and contract[
                 "owner_failure_count"
@@ -845,27 +881,27 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             and contract[
                 "deterministic_method_packet_count"
-            ] == 60
+            ] == 65
 
             and len(
                 set(method_packets)
-            ) == 60
+            ) == 65
 
             and contract[
                 "handoff_chain_count"
-            ] == 14
+            ] == 15
         )
 
         local_assertions[
-            "approval_inventory_projection_matches"
+            "authorization_inventory_projection_matches"
         ] = (
             contract[
-                "approval_domain_count"
-            ] == 16
+                "authorization_domain_count"
+            ] == 17
 
             and contract[
-                "required_approval_result_count"
-            ] == 48
+                "required_authorization_result_count"
+            ] == 51
 
             and all(
                 value is True
@@ -873,24 +909,24 @@ class GenesisReleaseCandidateApprovalPlanner(
             )
 
             and contract[
-                "approval_evidence_inventory_count"
-            ] == 14
+                "authorization_evidence_inventory_count"
+            ] == 15
 
             and contract[
                 "release_candidate_artifact_inventory_count"
-            ] == 11
+            ] == 12
 
             and contract[
                 "release_candidate_documentation_inventory_count"
-            ] == 9
+            ] == 10
         )
 
         local_assertions[
-            "approval_hold_state_preserved"
+            "authorization_hold_state_preserved"
         ] = (
             contract[
                 "required_negative_result_count"
-            ] == 32
+            ] == 34
 
             and all(
                 value is False
@@ -899,7 +935,7 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             and contract[
                 "safety_boundary_count"
-            ] == 32
+            ] == 34
 
             and all(
                 value is False
@@ -908,7 +944,7 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             and contract[
                 "zero_counter_count"
-            ] == 35
+            ] == 37
 
             and all(
                 value == 0
@@ -968,6 +1004,14 @@ class GenesisReleaseCandidateApprovalPlanner(
             ] is False
 
             and contract[
+                "release_authorization_passed"
+            ] is False
+
+            and contract[
+                "release_gate_review_ready"
+            ] is False
+
+            and contract[
                 "external_target_methods_invoked"
             ] is False
 
@@ -985,7 +1029,7 @@ class GenesisReleaseCandidateApprovalPlanner(
         )
 
         local_assertions[
-            "approval_contract_shape_ready"
+            "authorization_contract_shape_ready"
         ] = (
             contract[
                 "upstream_block_started"
@@ -1004,7 +1048,7 @@ class GenesisReleaseCandidateApprovalPlanner(
             ] is False
 
             and contract[
-                "upstream_release_candidate_readiness_foundation_ready"
+                "upstream_release_candidate_approval_foundation_ready"
             ] is True
 
             and contract[
@@ -1024,7 +1068,11 @@ class GenesisReleaseCandidateApprovalPlanner(
             ] is True
 
             and contract[
-                "approval_evidence_inventory_ready"
+                "release_authorization_foundation_ready"
+            ] is True
+
+            and contract[
+                "authorization_evidence_inventory_ready"
             ] is True
 
             and contract[
@@ -1036,66 +1084,46 @@ class GenesisReleaseCandidateApprovalPlanner(
             ] is True
 
             and contract[
-                "genesis_release_candidate_approval_contract_ready"
+                "genesis_release_candidate_release_authorization_contract_ready"
             ] is True
         )
 
         local_assertions[
-            "readiness_state_preserved"
+            "approval_state_preserved"
         ] = (
             contract[
-                "upstream_readiness_passed"
+                "upstream_release_candidate_approval_ready"
             ] is False
 
             and contract[
-                "upstream_release_candidate_approval_ready"
+                "upstream_approval_passed"
+            ] is False
+
+            and contract[
+                "upstream_genesis_release_approved"
+            ] is False
+
+            and contract[
+                "upstream_release_authorization_ready"
             ] is False
 
             and upstream_check[
                 "local_assertion_count"
-            ] == 66
+            ] == 72
 
             and upstream_check[
                 "failed_assertions"
             ] == []
-
-            and contract[
-                "readiness_passed"
-            ] is False
-
-            and contract[
-                "release_candidate_approval_ready"
-            ] is False
         )
 
         local_assertions[
-            "approval_decision_separation_preserved"
+            "authorization_decision_separation_preserved"
         ] = (
             contract[
                 "release_candidate_approval_ready"
             ] is False
 
             and contract[
-                "approval_passed"
-            ] is False
-
-            and contract[
-                "genesis_release_approved"
-            ] is False
-
-            and contract[
-                "runtime_activation_allowed"
-            ] is False
-
-            and contract[
-                "release_gate_open"
-            ] is False
-        )
-
-        local_assertions[
-            "release_authorization_separation_preserved"
-        ] = (
-            contract[
                 "approval_passed"
             ] is False
 
@@ -1105,6 +1133,26 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             and contract[
                 "release_authorization_ready"
+            ] is False
+
+            and contract[
+                "release_authorization_passed"
+            ] is False
+        )
+
+        local_assertions[
+            "release_gate_review_separation_preserved"
+        ] = (
+            contract[
+                "release_authorization_ready"
+            ] is False
+
+            and contract[
+                "release_authorization_passed"
+            ] is False
+
+            and contract[
+                "release_gate_review_ready"
             ] is False
 
             and contract[
@@ -1120,18 +1168,21 @@ class GenesisReleaseCandidateApprovalPlanner(
             "interface_surface_projection_ready"
         ] = (
             self.BOUNDARY
-            == "genesis_release_candidate_approval"
-
-            and self.NEXT_BOUNDARY
             == (
                 "genesis_release_candidate_"
                 "release_authorization"
             )
 
+            and self.NEXT_BOUNDARY
+            == (
+                "genesis_release_candidate_"
+                "release_gate_review"
+            )
+
             and self.MODE
             == (
                 "contract_only_read_only_"
-                "release_candidate_approval"
+                "release_candidate_release_authorization"
             )
 
             and contract[
@@ -1140,6 +1191,50 @@ class GenesisReleaseCandidateApprovalPlanner(
 
             and contract[
                 "runtime_ready"
+            ] is False
+        )
+
+        local_assertions[
+            "artifact_document_inventory_ready"
+        ] = (
+            contract[
+                "release_candidate_artifact_inventory_count"
+            ] == 12
+
+            and contract[
+                "release_candidate_documentation_inventory_count"
+            ] == 10
+
+            and contract[
+                "release_candidate_artifact_inventory_ready"
+            ] is True
+
+            and contract[
+                "release_candidate_documentation_inventory_ready"
+            ] is True
+        )
+
+        local_assertions[
+            "authorization_policy_review_ready"
+        ] = (
+            contract[
+                "authorization_domain_count"
+            ] == 17
+
+            and contract[
+                "authorization_evidence_inventory_count"
+            ] == 15
+
+            and contract[
+                "release_authorization_foundation_ready"
+            ] is True
+
+            and contract[
+                "release_authorization_ready"
+            ] is False
+
+            and contract[
+                "release_authorization_passed"
             ] is False
         )
 
@@ -1158,7 +1253,7 @@ class GenesisReleaseCandidateApprovalPlanner(
         failed_assertions = (
             upstream_failures
             + [
-                f"Sprint235:{name}"
+                f"Sprint236:{name}"
                 for name in failed_local
             ]
         )
@@ -1186,7 +1281,7 @@ class GenesisReleaseCandidateApprovalPlanner(
             "local_assertions":
                 local_assertions,
 
-            "genesis_release_candidate_approval_contract":
+            "genesis_release_candidate_release_authorization_contract":
                 contract,
 
             "runtime_ready": False,
