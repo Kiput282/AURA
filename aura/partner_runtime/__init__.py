@@ -193,3 +193,17 @@ __all__.extend(
         "GenesisReleaseCandidateReleaseGateReviewAlphaManager",
     ]
 )
+
+from .genesis_release_candidate_release_gate_approval_planner import (
+    GenesisReleaseCandidateReleaseGateApprovalPlanner,
+)
+from .genesis_release_candidate_release_gate_approval_alpha_manager import (
+    GenesisReleaseCandidateReleaseGateApprovalAlphaManager,
+)
+
+__all__.extend(
+    [
+        "GenesisReleaseCandidateReleaseGateApprovalPlanner",
+        "GenesisReleaseCandidateReleaseGateApprovalAlphaManager",
+    ]
+)

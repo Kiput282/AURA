@@ -1728,3 +1728,22 @@ Product-facing guarantees remain:
   release, or release-gate action.
 
 Next: Sprint 238 — Genesis Release Candidate Release Gate Approval.
+
+## v0.238.0-genesis — Genesis Release Candidate Release Gate Approval
+
+Sprint 238 establishes a reviewable release-gate approval foundation without
+applying an approval, activating runtime, releasing a candidate, or opening
+the release gate.
+
+Product-facing guarantees remain:
+
+- deterministic integration across seventeen partner-runtime owners;
+- explicit operator control and rollback readiness;
+- preserved permission, audit, recovery, emergency-stop, and safe-idle
+  boundaries;
+- reviewable release-gate approval evidence, artifact, and documentation
+  inventories;
+- no autonomous review, approval, authorization, release decision,
+  activation, release, or release-gate action.
+
+Next: Sprint 239 — Genesis Release Candidate Release Decision.
