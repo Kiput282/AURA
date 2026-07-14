@@ -1789,3 +1789,79 @@ The next phase is Genesis Stabilization in the `v1.x` version family, with
 Post-Genesis Hardening as its initial product focus.
 
 Next: Sprint 241 — Genesis Stabilization.
+
+## Canonical v2-v4 Product Delivery Plan
+
+The complete delivery plan is maintained in:
+
+- `docs/AURA_V2_TO_V4_PRODUCT_ROADMAP.md`
+
+This plan converts the previous broad Post-Genesis directions into concrete
+sprint blocks and product acceptance milestones.
+
+### v2.0.0 — AURA Local Multimodal Partner
+
+The v2 path covers Sprint 241-300:
+
+1. stabilize and harden the Genesis runtime;
+2. activate the local runtime and model service layer;
+3. activate chat, STT, TTS, vision, and OCR using real models;
+4. introduce an authenticated, permission-gated ORION action bridge;
+5. deliver Game Companion Coach, Observer, and Recording modes;
+6. integrate the improved dashboard, base plugin manager, personality, and
+   basic moving avatar before v2 acceptance.
+
+Autonomous game control is not required for v2.
+
+### v3.0.0 — Plugin and Work Assistance Platform
+
+The v3 path covers Sprint 301-360:
+
+1. plugin architecture and lifecycle;
+2. plugin permissions, isolation, dependency handling, and rollback;
+3. workspace and project assistance;
+4. documents, files, tasks, and knowledge work;
+5. supervised coding assistance and workflow automation;
+6. integrated v3 work-assistance acceptance.
+
+### v4.0.0 — Virtual Creator and Gaming Companion
+
+The v4 path covers Sprint 361-420:
+
+1. avatar runtime and partner-state synchronization;
+2. voice, face, expression, body, and VRM integration;
+3. OBS creator runtime and viewer interaction;
+4. gaming and livestream safety/performance;
+5. Game Companion live fusion and creator rehearsal;
+6. virtual creator stabilization and v4 acceptance.
+
+### Local-first model direction
+
+AURA remains an orchestrated multi-model system rather than one foundation
+model trained from zero. Planned model roles include:
+
+- core language and tool-planning model;
+- embedding and retrieval model;
+- STT with voice-activity detection;
+- TTS with future viseme timing;
+- vision-language model for selected frames and screenshots;
+- dedicated OCR;
+- lightweight game perception and event models;
+- coach and post-session analysis layers;
+- a future bounded action-policy model only after safety prerequisites pass.
+
+Fine-tuning should begin with reviewed adapters or LoRA-style training and
+curated AURA datasets. Training a foundation model from zero is not a v2-v4
+requirement.
+
+### Cost direction
+
+AURA remains local-first and should not require a mandatory software
+subscription. Expected costs are primarily electricity, storage, backup,
+UPS protection, optional avatar assets, and future hardware upgrades.
+Cloud APIs or rented GPUs remain optional and require explicit budget
+approval.
+
+Current canonical state remains `v1.0.0-genesis`.
+
+Next: Sprint 241 — Genesis Stabilization.

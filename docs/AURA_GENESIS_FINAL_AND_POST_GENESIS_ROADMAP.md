@@ -503,3 +503,46 @@ The next canonical engineering boundary is `genesis_stabilization`.
 
 Genesis Stabilization begins at Sprint 241 in the `v1.x` family and focuses
 first on Post-Genesis Hardening.
+
+## Concrete Post-Genesis Product Roadmap Override
+
+The canonical concrete roadmap for Sprint 241-420 is:
+
+- `docs/AURA_V2_TO_V4_PRODUCT_ROADMAP.md`
+
+The historical phase names Genesis Stabilization, Embodiment, Co-Pilot,
+Ecosystem, and Continuity remain valid descriptions of AURA's broader vision.
+For implementation scheduling and acceptance, they are refined by these
+product milestones:
+
+- Sprint 241-300: v2 Local Multimodal Partner;
+- Sprint 301-360: v3 Plugin and Work Assistance Platform;
+- Sprint 361-420: v4 Virtual Creator and Gaming Companion.
+
+### v2 delivery boundary
+
+v2 must make AURA practically usable through an active bounded runtime,
+real model-backed chat/STT/TTS/vision/OCR, safe ORION actions, Game Companion
+Coach/Observer/Recording, a cleaner Control Center, improved personality, a
+base plugin manager, and a basic moving 3D avatar where feasible.
+
+### v3 delivery boundary
+
+v3 must make plugins and work assistance dependable through installation,
+enable/disable/update/rollback, permission isolation, project awareness,
+documents/files/tasks, knowledge work, and supervised coding workflows.
+
+### v4 delivery boundary
+
+v4 must make AURA safe and coherent as a virtual creator through synchronized
+avatar state, VRM expression, OBS integration, viewer interaction, gaming and
+livestream performance safeguards, and live Game Companion fusion.
+
+None of these roadmap declarations activate services, grant permissions,
+control ORION, start recording, publish a release, or open a release gate.
+
+Current canonical version: `1.0.0-genesis`
+
+Next boundary: `genesis_stabilization`
+
+Next: Sprint 241 — Genesis Stabilization.

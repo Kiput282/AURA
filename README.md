@@ -5975,3 +5975,53 @@ Genesis Final is AURA's birth checkpoint, not the end of development.
 Next boundary: `genesis_stabilization`
 
 Next: Sprint 241 — Genesis Stabilization.
+
+## Canonical Product Roadmap — v2.0.0 to v4.0.0
+
+AURA development after `v1.0.0-genesis` follows a concrete product-first
+roadmap through Sprint 420.
+
+Detailed canonical plan:
+
+- `docs/AURA_V2_TO_V4_PRODUCT_ROADMAP.md`
+
+The earlier abstract Post-Genesis labels such as Embodiment, Co-Pilot, and
+Ecosystem remain part of AURA's historical design language. For Sprint 241
+onward, the concrete v2-v4 product milestones below are canonical for
+scheduling, acceptance, and implementation order.
+
+### Target v2.0.0 — AURA Local Multimodal Partner
+
+- Sprint 241-250: Genesis Stabilization & Runtime Hardening — `v1.1.0`
+- Sprint 251-260: Active Local Runtime & Model Service Integration — `v1.2.0`
+- Sprint 261-270: Chat, STT, TTS, Vision & OCR Activation — `v1.3.0`
+- Sprint 271-280: ORION Safe Action Bridge — `v1.4.0`
+- Sprint 281-290: Game Companion Coach, Observer & Recording — `v1.5.0`
+- Sprint 291-300: Dashboard, Avatar, Personality, Base Plugin Manager &
+  v2 Acceptance — `v2.0.0`
+
+### Target v3.0.0 — Plugin and Work Assistance Platform
+
+- Sprint 301-310: Plugin Architecture & Lifecycle — `v2.1.0`
+- Sprint 311-320: Plugin Permissions, Isolation & Dependencies — `v2.2.0`
+- Sprint 321-330: Workspace & Project Assistance — `v2.3.0`
+- Sprint 331-340: Documents, Files, Tasks & Knowledge Work — `v2.4.0`
+- Sprint 341-350: Supervised Coding Assistance & Workflow Automation —
+  `v2.5.0`
+- Sprint 351-360: Work Assistance Integration & v3 Acceptance — `v3.0.0`
+
+### Target v4.0.0 — Virtual Creator and Gaming Companion
+
+- Sprint 361-370: Avatar Runtime & State Synchronization — `v3.1.0`
+- Sprint 371-380: Voice, Face, Body Expression & VRM Integration — `v3.2.0`
+- Sprint 381-390: OBS Creator Runtime & Viewer Interaction — `v3.3.0`
+- Sprint 391-400: Gaming/Livestream Safety & Performance — `v3.4.0`
+- Sprint 401-410: Game Companion Live Fusion & Creator Rehearsal — `v3.5.0`
+- Sprint 411-420: Virtual Creator Stabilization & v4 Acceptance — `v4.0.0`
+
+This roadmap does not activate runtime, grant ORION control, enable recording,
+create a Git tag, publish a release, or open any operational release gate.
+
+Current canonical state remains `v1.0.0-genesis`.
+
+Next: Sprint 241 — Genesis Stabilization.

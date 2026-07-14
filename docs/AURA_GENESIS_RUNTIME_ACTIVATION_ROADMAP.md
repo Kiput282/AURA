@@ -2091,3 +2091,41 @@ The canonical local checkpoint confirms:
 Next boundary: `genesis_stabilization`
 
 Next: Sprint 241 — Genesis Stabilization.
+
+## Post-Genesis Runtime Activation Handoff — v2 to v4
+
+Genesis runtime activation planning continues in the canonical product roadmap:
+
+- `docs/AURA_V2_TO_V4_PRODUCT_ROADMAP.md`
+
+The Sprint 181-240 activation roadmap remains the historical Genesis path.
+Sprint 241 onward uses the following gated activation sequence:
+
+1. Sprint 241-250 stabilizes the current Genesis checkpoint without broad
+   feature activation.
+2. Sprint 251-260 activates service and model infrastructure through explicit
+   operator-controlled rollout.
+3. Sprint 261-270 activates chat, STT, TTS, vision, and OCR incrementally.
+4. Sprint 271-280 introduces authenticated allowlisted actions to ORION.
+5. Sprint 281-290 activates Game Companion Coach, Observer, and Recording
+   modes without autonomous game control.
+6. Sprint 291-300 integrates the v2 dashboard, avatar, personality, and base
+   plugin manager before product acceptance.
+7. v3 and v4 continue through plugin/work-assistance and virtual-creator
+   activation only after their preceding gates pass.
+
+Every activation must preserve:
+
+- safe-idle and explicit operator control;
+- localhost-first ATLAS service policy;
+- authenticated ATLAS-to-ORION communication;
+- scoped permission, audit, expiry, recovery, and emergency stop;
+- no silent microphone, screenshot, recording, or desktop control;
+- no automatic cloud fallback;
+- no external release publication as a side effect of runtime activation.
+
+This documentation update performs no runtime activation.
+
+Current canonical version: `1.0.0-genesis`
+
+Next: Sprint 241 — Genesis Stabilization.

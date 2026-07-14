@@ -3432,3 +3432,59 @@ Checkpoint state:
 Next boundary: `genesis_stabilization`
 
 Next: Sprint 241 — Genesis Stabilization.
+
+## Canonical Product Milestones — v2.0.0 through v4.0.0
+
+The concrete product milestone plan in
+`docs/AURA_V2_TO_V4_PRODUCT_ROADMAP.md` is canonical for Sprint 241 onward.
+
+Earlier abstract labels remain useful as historical product concepts, but they
+do not override the sprint blocks and acceptance targets below.
+
+| Sprint block | Product boundary | Block milestone |
+|---|---|---|
+| 241-250 | Genesis Stabilization & Runtime Hardening | `v1.1.0` |
+| 251-260 | Active Local Runtime & Model Service Integration | `v1.2.0` |
+| 261-270 | Chat, STT, TTS, Vision & OCR Activation | `v1.3.0` |
+| 271-280 | ORION Safe Action Bridge | `v1.4.0` |
+| 281-290 | Game Companion Coach, Observer & Recording | `v1.5.0` |
+| 291-300 | Dashboard, Avatar, Personality, Base Plugin Manager & v2 Acceptance | `v2.0.0` |
+| 301-310 | Plugin Architecture & Lifecycle | `v2.1.0` |
+| 311-320 | Plugin Permissions, Isolation & Dependencies | `v2.2.0` |
+| 321-330 | Workspace & Project Assistance | `v2.3.0` |
+| 331-340 | Documents, Files, Tasks & Knowledge Work | `v2.4.0` |
+| 341-350 | Supervised Coding Assistance & Workflow Automation | `v2.5.0` |
+| 351-360 | Work Assistance Integration & v3 Acceptance | `v3.0.0` |
+| 361-370 | Avatar Runtime & State Synchronization | `v3.1.0` |
+| 371-380 | Voice, Face, Body Expression & VRM Integration | `v3.2.0` |
+| 381-390 | OBS Creator Runtime & Viewer Interaction | `v3.3.0` |
+| 391-400 | Gaming/Livestream Safety & Performance | `v3.4.0` |
+| 401-410 | Game Companion Live Fusion & Creator Rehearsal | `v3.5.0` |
+| 411-420 | Virtual Creator Stabilization & v4 Acceptance | `v4.0.0` |
+
+### v2.0.0 product definition
+
+AURA v2 is a usable local multimodal partner with an active but bounded
+runtime, model-backed chat, STT, TTS, vision and OCR, allowlisted ORION
+actions, Game Companion Coach/Observer/Recording, a cleaner dashboard, a
+basic synchronized 3D avatar, improved personality, and a base plugin manager.
+
+### v3.0.0 product definition
+
+AURA v3 is a plugin and work-assistance platform with controlled plugin
+lifecycle management, permission isolation, workspace/project assistance,
+document/file/task workflows, and supervised coding or workflow automation.
+
+### v4.0.0 product definition
+
+AURA v4 is a synchronized virtual creator and gaming companion with a mature
+avatar runtime, OBS and viewer integration, gaming/livestream performance
+guardrails, and safe live fusion between voice, avatar, coaching, observation,
+recording, and creator workflows.
+
+Canonical version remains `1.0.0-genesis` until a future sprint explicitly
+promotes it through normal implementation and acceptance validation.
+
+Next boundary: `genesis_stabilization`
+
+Next: Sprint 241 — Genesis Stabilization.
