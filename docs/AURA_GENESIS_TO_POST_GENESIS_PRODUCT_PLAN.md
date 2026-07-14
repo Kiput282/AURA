@@ -1747,3 +1747,23 @@ Product-facing guarantees remain:
   activation, release, or release-gate action.
 
 Next: Sprint 239 — Genesis Release Candidate Release Decision.
+
+## v0.239.0-genesis — Genesis Release Candidate Release Decision
+
+Sprint 239 establishes a reviewable release-decision foundation without
+applying a decision, promoting the version, publishing a release, activating
+runtime, or opening the release gate.
+
+Product-facing guarantees remain:
+
+- deterministic integration across eighteen partner-runtime owners;
+- explicit operator control and rollback readiness;
+- preserved permission, audit, recovery, emergency-stop, and safe-idle
+  boundaries;
+- reviewable release-decision evidence, artifact, and documentation
+  inventories;
+- explicit separation between the release decision and Genesis Final release;
+- no autonomous review, approval, authorization, release decision,
+  version promotion, publication, activation, or release-gate action.
+
+Next: Sprint 240 — Genesis Final Release.

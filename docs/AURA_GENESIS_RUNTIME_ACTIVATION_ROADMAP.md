@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.238.0-genesis
+- Current version: v0.239.0-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 239 — Genesis Release Candidate Release Decision
+- Next: Sprint 240 — Genesis Final Release
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2039,3 +2039,31 @@ The next boundary is
 `genesis_release_candidate_release_decision`.
 
 Next: Sprint 239 — Genesis Release Candidate Release Decision.
+
+## v0.239.0-genesis — Genesis Release Candidate Release Decision
+
+Sprint 239 adds the read-only Genesis release-candidate release-decision
+contract.
+
+The validated contract:
+
+- preserves the Sprint 238 release-gate approval foundation;
+- records eighteen owners and `8504` owner assertions with zero failures;
+- records `80` deterministic method packets and eighteen handoff stages;
+- inventories release-decision evidence, source artifacts, and documentation;
+- exposes status, context, and check routes through CLI and shell;
+- keeps release-candidate assembly, readiness, verification, verification
+  passed, readiness passed, approval passed, authorization passed,
+  release-gate review passed, and release-gate approval passed false;
+- keeps release-decision readiness, release-decision passed, and
+  release-decision applied false;
+- keeps Genesis Final release readiness, completion, and publication false;
+- keeps version-promotion readiness and version promotion false;
+- keeps runtime activation and the release gate false;
+- performs no file, package, tag, service, launcher, listener, process,
+  approval, authorization, release-decision, publication, version-promotion,
+  release-gate, or operating-system runtime action.
+
+The next boundary is `genesis_final_release`.
+
+Next: Sprint 240 — Genesis Final Release.

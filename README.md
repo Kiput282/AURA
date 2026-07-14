@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.238.0-genesis
+Current version: v0.239.0-genesis
 Current status: Sprint 229 Genesis Acceptance Rehearsal completed; Sprint 221-230 Unified Partner Runtime Integration is active
 Current runtime state: Sprint 229 adds a contract-only and read-only Genesis acceptance rehearsal across eight partner-runtime owners. It validates 1,042 upstream assertions, 30 deterministic method packets, eight handoff boundaries, nine rehearsal phases, and 27 acceptance results while keeping Genesis release approval, runtime activation, auto-start, service control, systemd actions, launcher execution, and release gates disabled.
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 239 — Genesis Release Candidate Release Decision
+- Next planned sprint: Sprint 240 — Genesis Final Release
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5916,3 +5916,32 @@ Validated approval state:
 Next boundary: `genesis_release_candidate_release_decision`
 
 Next: Sprint 239 — Genesis Release Candidate Release Decision.
+
+## v0.239.0-genesis — Genesis Release Candidate Release Decision
+
+Sprint 239 establishes the deterministic, contract-only release-decision
+foundation for the final Genesis release stage.
+
+Validated release-decision state:
+
+- eighteen integration owners remain deterministic;
+- the owner assertion total is `8504` with zero owner failures;
+- all `80` deterministic owner-method packets remain unique;
+- the handoff chain contains `18` verified stages;
+- Sprint 239 passes `1164/1164` assertions;
+- CLI, shell, and direct contract routes remain equivalent;
+- release-decision evidence, artifacts, and documentation inventories are
+  reviewable;
+- no release decision is ready, passed, or applied;
+- Genesis Final release readiness, completion, and publication remain false;
+- version-promotion readiness and version promotion remain false;
+- no release candidate is assembled, marked ready, or verified;
+- verification, readiness, approval, authorization, release-gate review, and
+  release-gate approval passed remain false;
+- runtime activation and the release gate remain false;
+- the Sprint 231–240 block remains incomplete, unstabilized, and not
+  release-ready.
+
+Next boundary: `genesis_final_release`
+
+Next: Sprint 240 — Genesis Final Release.
