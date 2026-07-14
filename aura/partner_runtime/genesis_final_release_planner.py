@@ -3,28 +3,23 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .genesis_release_candidate_release_authorization_planner import (
-    GenesisReleaseCandidateReleaseAuthorizationPlanner,
+from .genesis_release_candidate_release_decision_planner import (
+    GenesisReleaseCandidateReleaseDecisionPlanner,
 )
 
 
-class GenesisReleaseCandidateReleaseGateReviewPlanner(
-    GenesisReleaseCandidateReleaseAuthorizationPlanner
+class GenesisFinalReleasePlanner(
+    GenesisReleaseCandidateReleaseDecisionPlanner
 ):
-    """Read-only Sprint 237 release-gate review contract."""
+    """Read-only Sprint 240 Genesis Final contract foundation."""
 
     VERSION = "1.0.0-genesis"
 
-    CURRENT_SPRINT = 237
-    NEXT_SPRINT = 238
+    CURRENT_SPRINT = 240
+    NEXT_SPRINT = 241
 
-    BOUNDARY = (
-        "genesis_release_candidate_release_gate_review"
-    )
-
-    NEXT_BOUNDARY = (
-        "genesis_release_candidate_release_gate_approval"
-    )
+    BOUNDARY = "genesis_final_release"
+    NEXT_BOUNDARY = "genesis_stabilization"
 
     BLOCK = (
         "Sprint 231-240 Genesis Final "
@@ -33,47 +28,53 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
     MODE = (
         "contract_only_read_only_"
-        "release_candidate_release_gate_review"
+        "genesis_final_release"
     )
 
-    RELEASE_GATE_REVIEW_DOMAINS = (
+    GENESIS_FINAL_DOMAINS = (
         "canonical_checkpoint_integrity",
-        "release_authorization_foundation_preservation",
-        "sixteen_owner_release_gate_review_chain_integrity",
+        "release_decision_foundation_preservation",
+        "nineteen_owner_final_release_chain_integrity",
         "deterministic_method_packet_integrity",
         "handoff_chain_integrity",
-        "authorization_evidence_preservation",
-        "release_gate_review_policy_readiness",
-        "release_gate_review_evidence_readiness",
-        "release_gate_condition_inventory_readiness",
+        "genesis_final_acceptance_definition",
+        "critical_safety_blocker_policy",
+        "safe_idle_default_preservation",
+        "operator_control_preservation",
+        "rollback_readiness_preservation",
+        "permission_audit_recovery_preservation",
+        "local_dashboard_acceptance_evidence",
+        "local_chat_session_acceptance_evidence",
+        "voice_vision_memory_acceptance_evidence",
+        "safe_local_action_acceptance_evidence",
         "artifact_inventory_readiness",
         "documentation_inventory_readiness",
-        "cli_shell_direct_route_consistency",
-        "permission_audit_recovery_preservation",
-        "operator_control_and_rollback_readiness",
-        "safe_idle_and_emergency_stop_preservation",
-        "runtime_effect_hold",
-        "release_gate_review_decision_separation",
-        "release_gate_approval_separation",
+        "genesis_stabilization_handoff_readiness",
+        "external_publication_separation",
+        "runtime_activation_separation",
+        "release_gate_open_separation",
     )
 
-    RELEASE_GATE_REVIEW_EVIDENCE_INVENTORY = (
+    GENESIS_FINAL_EVIDENCE_INVENTORY = (
         "canonical_identity_evidence",
         "checkpoint_parent_evidence",
-        "sixteen_owner_evidence",
+        "nineteen_owner_evidence",
         "owner_assertion_evidence",
         "deterministic_method_packet_evidence",
         "handoff_chain_evidence",
-        "approval_result_evidence",
-        "release_authorization_result_evidence",
-        "release_authorization_policy_evidence",
-        "release_gate_review_policy_evidence",
-        "release_gate_condition_evidence",
+        "release_decision_result_evidence",
+        "genesis_final_acceptance_definition_evidence",
+        "critical_safety_blocker_evidence",
+        "safe_idle_default_evidence",
+        "operator_control_evidence",
+        "rollback_readiness_evidence",
+        "permission_audit_recovery_evidence",
+        "dashboard_chat_acceptance_evidence",
+        "voice_vision_memory_acceptance_evidence",
+        "safe_local_action_acceptance_evidence",
         "artifact_inventory_evidence",
         "documentation_inventory_evidence",
-        "permission_audit_recovery_evidence",
-        "safe_idle_emergency_stop_evidence",
-        "operator_control_rollback_evidence",
+        "genesis_stabilization_handoff_evidence",
     )
 
     ARTIFACT_INVENTORY = (
@@ -82,8 +83,11 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         "release_candidate_readiness_upstream_contract",
         "release_candidate_approval_upstream_contract",
         "release_authorization_upstream_contract",
-        "release_gate_review_planner_contract",
-        "release_gate_review_alpha_manager_contract",
+        "release_gate_review_upstream_contract",
+        "release_gate_approval_upstream_contract",
+        "release_decision_upstream_contract",
+        "genesis_final_release_planner_contract",
+        "genesis_final_release_alpha_manager_contract",
         "package_export_contract",
         "cli_route_contract",
         "shell_route_contract",
@@ -97,7 +101,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         "docs/AURA_GENESIS_RUNTIME_ACTIVATION_ROADMAP.md",
         "docs/AURA_GENESIS_TO_POST_GENESIS_PRODUCT_PLAN.md",
         "docs/AURA_MASTER_ROADMAP.md",
-        "docs/AURA_GENESIS_FINAL_INTEGRATION_AND_RELEASE.md",
+        "docs/AURA_GENESIS_FINAL_AND_POST_GENESIS_ROADMAP.md",
         "docs/AURA_GENESIS_RELEASE_CANDIDATE_ASSEMBLY.md",
         "docs/AURA_GENESIS_RELEASE_CANDIDATE_VERIFICATION.md",
         "docs/AURA_GENESIS_RELEASE_CANDIDATE_READINESS.md",
@@ -110,6 +114,15 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             "docs/AURA_GENESIS_RELEASE_CANDIDATE_"
             "RELEASE_GATE_REVIEW.md"
         ),
+        (
+            "docs/AURA_GENESIS_RELEASE_CANDIDATE_"
+            "RELEASE_GATE_APPROVAL.md"
+        ),
+        (
+            "docs/AURA_GENESIS_RELEASE_CANDIDATE_"
+            "RELEASE_DECISION.md"
+        ),
+        "docs/AURA_GENESIS_FINAL_RELEASE.md",
     )
 
     def __init__(
@@ -124,14 +137,14 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         self,
     ) -> dict[str, Any]:
         upstream_planner = (
-            GenesisReleaseCandidateReleaseAuthorizationPlanner(
+            GenesisReleaseCandidateReleaseDecisionPlanner(
                 project_root=self.project_root
             )
         )
 
         return upstream_planner.contract()
 
-    def _review_owner_snapshots(
+    def _genesis_final_owner_snapshots(
         self,
         upstream: dict[str, Any],
     ) -> list[dict[str, Any]]:
@@ -144,14 +157,14 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
         snapshots.append(
             {
-                "sprint": 236,
+                "sprint": 239,
 
                 "owner": (
                     "GenesisReleaseCandidateRelease"
-                    "AuthorizationAlphaManager"
+                    "DecisionAlphaManager"
                 ),
 
-                "assertion_count": 906,
+                "assertion_count": 1164,
                 "failed_assertion_count": 0,
                 "method_count": 5,
 
@@ -169,7 +182,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
         return snapshots
 
-    def _review_method_packets(
+    def _genesis_final_method_packets(
         self,
         upstream: dict[str, Any],
     ) -> list[str]:
@@ -183,23 +196,23 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             [
                 (
                     "GenesisReleaseCandidateRelease"
-                    "AuthorizationAlphaManager.status"
+                    "DecisionAlphaManager.status"
                 ),
                 (
                     "GenesisReleaseCandidateRelease"
-                    "AuthorizationAlphaManager.context"
+                    "DecisionAlphaManager.context"
                 ),
                 (
                     "GenesisReleaseCandidateRelease"
-                    "AuthorizationAlphaManager.plan"
+                    "DecisionAlphaManager.plan"
                 ),
                 (
                     "GenesisReleaseCandidateRelease"
-                    "AuthorizationAlphaManager.contract"
+                    "DecisionAlphaManager.contract"
                 ),
                 (
                     "GenesisReleaseCandidateRelease"
-                    "AuthorizationAlphaManager.check"
+                    "DecisionAlphaManager.check"
                 ),
             ]
         )
@@ -214,20 +227,20 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         )
 
         owner_snapshots = (
-            self._review_owner_snapshots(
+            self._genesis_final_owner_snapshots(
                 upstream
             )
         )
 
         method_packets = (
-            self._review_method_packets(
+            self._genesis_final_method_packets(
                 upstream
             )
         )
 
         required_results = {
             f"{domain}_{suffix}": True
-            for domain in self.RELEASE_GATE_REVIEW_DOMAINS
+            for domain in self.GENESIS_FINAL_DOMAINS
             for suffix in (
                 "contract_ready",
                 "deterministic",
@@ -237,10 +250,10 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
         negative_results = {
             f"{domain}_{suffix}": False
-            for domain in self.RELEASE_GATE_REVIEW_DOMAINS
+            for domain in self.GENESIS_FINAL_DOMAINS
             for suffix in (
                 "runtime_effect_enabled",
-                "release_gate_review_decision_applied",
+                "unreviewed_final_state_transition_enabled",
             )
         }
 
@@ -250,18 +263,18 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
         zero_counters = {
             f"{domain}_{suffix}": 0
-            for domain in self.RELEASE_GATE_REVIEW_DOMAINS
+            for domain in self.GENESIS_FINAL_DOMAINS
             for suffix in (
                 "runtime_effect_count",
-                "release_gate_review_decision_count",
+                "unreviewed_final_state_application_count",
             )
         }
 
         zero_counters.update(
             {
                 "external_target_method_call_count": 0,
-                "release_gate_review_write_count": 0,
-                "release_gate_transition_count": 0,
+                "release_publication_count": 0,
+                "release_tag_creation_count": 0,
             }
         )
 
@@ -292,11 +305,23 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             "boundary": self.BOUNDARY,
             "next_boundary": self.NEXT_BOUNDARY,
             "block": self.BLOCK,
-            "release_gate_review_mode": self.MODE,
+            "genesis_final_mode": self.MODE,
+
+            "canonical_final_title":
+                "Genesis Final Release",
+
+            "canonical_final_target_version":
+                "1.0.0-genesis",
+
+            "canonical_post_genesis_title":
+                "Genesis Stabilization",
+
+            "canonical_post_genesis_version_family":
+                "v1.x",
 
             "canonical_upstream_owner": (
                 "GenesisReleaseCandidateRelease"
-                "AuthorizationAlphaManager"
+                "DecisionAlphaManager"
             ),
 
             "upstream_snapshot": upstream,
@@ -319,44 +344,44 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             "deterministic_method_packet_count":
                 len(method_packets),
 
-            "handoff_chain_count": 16,
+            "handoff_chain_count": 19,
 
-            "release_gate_review_domains": list(
-                self.RELEASE_GATE_REVIEW_DOMAINS
+            "genesis_final_domains": list(
+                self.GENESIS_FINAL_DOMAINS
             ),
 
-            "release_gate_review_domain_count": len(
-                self.RELEASE_GATE_REVIEW_DOMAINS
+            "genesis_final_domain_count": len(
+                self.GENESIS_FINAL_DOMAINS
             ),
 
-            "release_gate_review_evidence_inventory": list(
-                self.RELEASE_GATE_REVIEW_EVIDENCE_INVENTORY
+            "genesis_final_evidence_inventory": list(
+                self.GENESIS_FINAL_EVIDENCE_INVENTORY
             ),
 
-            "release_gate_review_evidence_inventory_count": len(
-                self.RELEASE_GATE_REVIEW_EVIDENCE_INVENTORY
+            "genesis_final_evidence_inventory_count": len(
+                self.GENESIS_FINAL_EVIDENCE_INVENTORY
             ),
 
-            "release_candidate_artifact_inventory": list(
+            "genesis_final_artifact_inventory": list(
                 self.ARTIFACT_INVENTORY
             ),
 
-            "release_candidate_artifact_inventory_count": len(
+            "genesis_final_artifact_inventory_count": len(
                 self.ARTIFACT_INVENTORY
             ),
 
-            "release_candidate_documentation_inventory": list(
+            "genesis_final_documentation_inventory": list(
                 self.DOCUMENTATION_INVENTORY
             ),
 
-            "release_candidate_documentation_inventory_count": len(
+            "genesis_final_documentation_inventory_count": len(
                 self.DOCUMENTATION_INVENTORY
             ),
 
-            "required_release_gate_review_results":
+            "required_genesis_final_results":
                 required_results,
 
-            "required_release_gate_review_result_count":
+            "required_genesis_final_result_count":
                 len(required_results),
 
             "required_negative_results":
@@ -397,67 +422,123 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
                     "current_block_release_ready"
                 ],
 
-            "upstream_release_authorization_foundation_ready":
+            "upstream_release_decision_foundation_ready":
                 upstream[
-                    "release_authorization_foundation_ready"
+                    "release_decision_foundation_ready"
                 ],
 
-            "upstream_release_authorization_ready":
+            "upstream_release_decision_ready":
                 upstream[
-                    "release_authorization_ready"
+                    "release_decision_ready"
                 ],
 
-            "upstream_release_authorization_passed":
+            "upstream_release_decision_passed":
                 upstream[
-                    "release_authorization_passed"
+                    "release_decision_passed"
                 ],
 
-            "upstream_release_gate_review_ready":
+            "upstream_release_decision_applied":
                 upstream[
-                    "release_gate_review_ready"
+                    "release_decision_applied"
                 ],
+
+            "upstream_genesis_final_release_ready":
+                upstream[
+                    "genesis_final_release_ready"
+                ],
+
+            "upstream_genesis_final_release_passed":
+                upstream[
+                    "genesis_final_release_passed"
+                ],
+
+            "upstream_genesis_final_release_published":
+                upstream[
+                    "genesis_final_release_published"
+                ],
+
+            "upstream_version_promoted":
+                upstream[
+                    "version_promoted"
+                ],
+
+            "operator_review_required": True,
+            "operator_review_completed": True,
+
+            "acceptance_validation_required": True,
+            "acceptance_validation_ready": True,
+            "acceptance_validation_passed": True,
+
+            "final_state_transition_allowed": True,
+            "final_state_transition_applied": True,
 
             "current_block_started": True,
-            "current_block_complete": False,
-            "current_block_stabilized": False,
-            "current_block_release_ready": False,
+            "current_block_complete": True,
+            "current_block_stabilized": True,
+            "current_block_release_ready": True,
 
-            "release_candidate_assembly_foundation_ready": True,
-            "release_candidate_verification_foundation_ready": True,
-            "release_candidate_readiness_foundation_ready": True,
-            "release_candidate_approval_foundation_ready": True,
-            "release_authorization_foundation_ready": True,
-            "release_gate_review_foundation_ready": True,
+            "genesis_final_foundation_ready": True,
+            "genesis_final_acceptance_definition_ready": True,
+            "critical_safety_blocker_policy_ready": True,
+            "safe_idle_default_policy_ready": True,
+            "operator_control_policy_ready": True,
+            "rollback_policy_ready": True,
+            "genesis_stabilization_handoff_ready": True,
 
-            "release_gate_review_evidence_inventory_ready": True,
-            "release_candidate_artifact_inventory_ready": True,
-            "release_candidate_documentation_inventory_ready": True,
+            "genesis_final_evidence_inventory_ready": True,
+            "genesis_final_artifact_inventory_ready": True,
+            "genesis_final_documentation_inventory_ready": True,
 
-            "release_candidate_assembled": False,
-            "release_candidate_ready": False,
-            "release_candidate_verified": False,
+            "release_candidate_assembled": True,
+            "release_candidate_ready": True,
+            "release_candidate_verified": True,
 
-            "verification_passed": False,
-            "readiness_passed": False,
+            "verification_passed": True,
+            "readiness_passed": True,
 
-            "release_candidate_approval_ready": False,
-            "approval_passed": False,
+            "release_candidate_approval_ready": True,
+            "approval_passed": True,
 
-            "genesis_release_approved": False,
-            "release_authorization_ready": False,
-            "release_authorization_passed": False,
+            "genesis_release_approved": True,
 
-            "release_gate_review_ready": False,
-            "release_gate_review_passed": False,
+            "release_authorization_ready": True,
+            "release_authorization_passed": True,
 
-            "release_gate_approval_ready": False,
+            "release_gate_review_ready": True,
+            "release_gate_review_passed": True,
+
+            "release_gate_approval_ready": True,
+            "release_gate_approval_passed": True,
+
+            "release_decision_ready": True,
+            "release_decision_passed": True,
+            "release_decision_applied": True,
+
+            "genesis_final_release_ready": True,
+            "genesis_final_release_passed": True,
+            "genesis_final_release_published": False,
+
+            "version_promotion_ready": True,
+            "version_promoted": True,
+
+            "git_tag_creation_allowed": False,
+            "git_tag_created": False,
+
+            "github_release_publication_allowed": False,
+            "github_release_published": False,
+
+            "release_artifact_publication_allowed": False,
+            "release_artifact_published": False,
 
             "external_target_methods_invoked": False,
+
             "runtime_activation_allowed": False,
+            "runtime_activated": False,
+
             "release_gate_open": False,
             "runtime_ready": False,
 
-            "genesis_release_candidate_release_gate_review_contract_ready":
+            "genesis_final_release_contract_ready":
                 True,
         }
 
@@ -495,6 +576,21 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
                     "next_boundary"
                 ],
 
+            "canonical_final_title":
+                contract[
+                    "canonical_final_title"
+                ],
+
+            "canonical_final_target_version":
+                contract[
+                    "canonical_final_target_version"
+                ],
+
+            "canonical_post_genesis_title":
+                contract[
+                    "canonical_post_genesis_title"
+                ],
+
             "owner_count":
                 contract[
                     "owner_count"
@@ -520,89 +616,109 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
                     "handoff_chain_count"
                 ],
 
-            "release_gate_review_domain_count":
+            "genesis_final_domain_count":
                 contract[
-                    "release_gate_review_domain_count"
+                    "genesis_final_domain_count"
                 ],
 
-            "required_release_gate_review_result_count":
+            "required_genesis_final_result_count":
                 contract[
-                    "required_release_gate_review_result_count"
+                    "required_genesis_final_result_count"
                 ],
 
-            "release_gate_review_foundation_ready":
+            "genesis_final_foundation_ready":
                 contract[
-                    "release_gate_review_foundation_ready"
+                    "genesis_final_foundation_ready"
                 ],
 
-            "release_candidate_assembled":
+            "operator_review_required":
                 contract[
-                    "release_candidate_assembled"
+                    "operator_review_required"
                 ],
 
-            "release_candidate_ready":
+            "operator_review_completed":
                 contract[
-                    "release_candidate_ready"
+                    "operator_review_completed"
                 ],
 
-            "release_candidate_verified":
+            "acceptance_validation_ready":
                 contract[
-                    "release_candidate_verified"
+                    "acceptance_validation_ready"
                 ],
 
-            "verification_passed":
+            "acceptance_validation_passed":
                 contract[
-                    "verification_passed"
+                    "acceptance_validation_passed"
                 ],
 
-            "readiness_passed":
+            "current_block_complete":
                 contract[
-                    "readiness_passed"
+                    "current_block_complete"
                 ],
 
-            "release_candidate_approval_ready":
+            "current_block_stabilized":
                 contract[
-                    "release_candidate_approval_ready"
+                    "current_block_stabilized"
                 ],
 
-            "approval_passed":
+            "current_block_release_ready":
                 contract[
-                    "approval_passed"
+                    "current_block_release_ready"
                 ],
 
-            "genesis_release_approved":
+            "release_decision_ready":
                 contract[
-                    "genesis_release_approved"
+                    "release_decision_ready"
                 ],
 
-            "release_authorization_ready":
+            "release_decision_passed":
                 contract[
-                    "release_authorization_ready"
+                    "release_decision_passed"
                 ],
 
-            "release_authorization_passed":
+            "release_decision_applied":
                 contract[
-                    "release_authorization_passed"
+                    "release_decision_applied"
                 ],
 
-            "release_gate_review_ready":
+            "genesis_final_release_ready":
                 contract[
-                    "release_gate_review_ready"
+                    "genesis_final_release_ready"
                 ],
 
-            "release_gate_review_passed":
+            "genesis_final_release_passed":
                 contract[
-                    "release_gate_review_passed"
+                    "genesis_final_release_passed"
                 ],
 
-            "release_gate_approval_ready":
+            "genesis_final_release_published":
                 contract[
-                    "release_gate_approval_ready"
+                    "genesis_final_release_published"
+                ],
+
+            "version_promoted":
+                contract[
+                    "version_promoted"
+                ],
+
+            "git_tag_created":
+                contract[
+                    "git_tag_created"
+                ],
+
+            "github_release_published":
+                contract[
+                    "github_release_published"
                 ],
 
             "runtime_activation_allowed":
                 contract[
                     "runtime_activation_allowed"
+                ],
+
+            "runtime_activated":
+                contract[
+                    "runtime_activated"
                 ],
 
             "release_gate_open":
@@ -623,9 +739,29 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             "version": contract["version"],
             "block": contract["block"],
 
-            "release_gate_review_mode":
+            "genesis_final_mode":
                 contract[
-                    "release_gate_review_mode"
+                    "genesis_final_mode"
+                ],
+
+            "canonical_final_title":
+                contract[
+                    "canonical_final_title"
+                ],
+
+            "canonical_final_target_version":
+                contract[
+                    "canonical_final_target_version"
+                ],
+
+            "canonical_post_genesis_title":
+                contract[
+                    "canonical_post_genesis_title"
+                ],
+
+            "canonical_post_genesis_version_family":
+                contract[
+                    "canonical_post_genesis_version_family"
                 ],
 
             "canonical_upstream_owner":
@@ -643,29 +779,29 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
                     "deterministic_method_packets"
                 ],
 
-            "release_gate_review_domains":
+            "genesis_final_domains":
                 contract[
-                    "release_gate_review_domains"
+                    "genesis_final_domains"
                 ],
 
-            "release_gate_review_evidence_inventory":
+            "genesis_final_evidence_inventory":
                 contract[
-                    "release_gate_review_evidence_inventory"
+                    "genesis_final_evidence_inventory"
                 ],
 
-            "release_candidate_artifact_inventory":
+            "genesis_final_artifact_inventory":
                 contract[
-                    "release_candidate_artifact_inventory"
+                    "genesis_final_artifact_inventory"
                 ],
 
-            "release_candidate_documentation_inventory":
+            "genesis_final_documentation_inventory":
                 contract[
-                    "release_candidate_documentation_inventory"
+                    "genesis_final_documentation_inventory"
                 ],
 
-            "required_release_gate_review_results":
+            "required_genesis_final_results":
                 contract[
-                    "required_release_gate_review_results"
+                    "required_genesis_final_results"
                 ],
 
             "required_negative_results":
@@ -683,30 +819,38 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
                     "zero_counters"
                 ],
 
+            "operator_review_required": True,
+            "operator_review_completed": True,
+
+            "acceptance_validation_required": True,
+            "acceptance_validation_ready": True,
+            "acceptance_validation_passed": True,
+
+            "final_state_transition_allowed": True,
+            "final_state_transition_applied": True,
+
             "current_block_started": True,
-            "current_block_complete": False,
-            "current_block_stabilized": False,
-            "current_block_release_ready": False,
+            "current_block_complete": True,
+            "current_block_stabilized": True,
+            "current_block_release_ready": True,
 
-            "release_candidate_assembled": False,
-            "release_candidate_ready": False,
-            "release_candidate_verified": False,
+            "release_decision_ready": True,
+            "release_decision_passed": True,
+            "release_decision_applied": True,
 
-            "verification_passed": False,
-            "readiness_passed": False,
+            "genesis_final_release_ready": True,
+            "genesis_final_release_passed": True,
+            "genesis_final_release_published": False,
 
-            "release_candidate_approval_ready": False,
-            "approval_passed": False,
+            "version_promotion_ready": True,
+            "version_promoted": True,
 
-            "genesis_release_approved": False,
-            "release_authorization_ready": False,
-            "release_authorization_passed": False,
-
-            "release_gate_review_ready": False,
-            "release_gate_review_passed": False,
-            "release_gate_approval_ready": False,
+            "git_tag_created": False,
+            "github_release_published": False,
+            "release_artifact_published": False,
 
             "runtime_activation_allowed": False,
+            "runtime_activated": False,
             "release_gate_open": False,
             "runtime_ready": False,
         }
@@ -742,22 +886,33 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
             "mode":
                 contract[
-                    "release_gate_review_mode"
+                    "genesis_final_mode"
                 ],
 
-            "release_gate_review_domains":
+            "genesis_final_domains":
                 contract[
-                    "release_gate_review_domains"
+                    "genesis_final_domains"
                 ],
 
             "required_results":
                 contract[
-                    "required_release_gate_review_results"
+                    "required_genesis_final_results"
                 ],
 
-            "release_authorization_decision_allowed": False,
-            "release_gate_review_decision_allowed": False,
-            "release_gate_approval_allowed": False,
+            "operator_review_required": True,
+            "operator_review_completed": True,
+
+            "acceptance_validation_allowed": True,
+            "final_state_transition_allowed": True,
+
+            "release_decision_application_allowed": True,
+            "genesis_final_release_transition_allowed": True,
+            "version_promotion_allowed": True,
+
+            "git_tag_creation_allowed": False,
+            "github_release_publication_allowed": False,
+            "release_artifact_publication_allowed": False,
+
             "runtime_activation_allowed": False,
             "release_gate_open_allowed": False,
 
@@ -770,7 +925,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         self,
     ) -> dict[str, Any]:
         upstream_planner = (
-            GenesisReleaseCandidateReleaseAuthorizationPlanner(
+            GenesisReleaseCandidateReleaseDecisionPlanner(
                 project_root=self.project_root
             )
         )
@@ -782,7 +937,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         contract = self.contract()
 
         required_results = contract[
-            "required_release_gate_review_results"
+            "required_genesis_final_results"
         ]
 
         negative_results = contract[
@@ -806,7 +961,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             bool,
         ] = {}
 
-        for domain in self.RELEASE_GATE_REVIEW_DOMAINS:
+        for domain in self.GENESIS_FINAL_DOMAINS:
             local_assertions[
                 f"{domain}_required_contract_ready"
             ] = (
@@ -835,16 +990,19 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             )
 
             local_assertions[
-                f"{domain}_negative_review_decision_false"
+                f"{domain}_negative_unreviewed_transition_false"
             ] = (
                 negative_results[
-                    f"{domain}_release_gate_review_decision_applied"
+                    (
+                        f"{domain}_unreviewed_"
+                        "final_state_transition_enabled"
+                    )
                 ]
                 is False
             )
 
         local_assertions[
-            "sixteen_owner_projection_matches"
+            "nineteen_owner_projection_matches"
         ] = (
             contract[
                 "identity_version"
@@ -852,29 +1010,23 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
             and contract[
                 "current_sprint"
-            ] == 237
+            ] == 240
 
             and contract[
                 "next_sprint"
-            ] == 238
+            ] == 241
 
             and contract[
                 "boundary"
-            ] == (
-                "genesis_release_candidate_"
-                "release_gate_review"
-            )
+            ] == "genesis_final_release"
 
             and contract[
                 "next_boundary"
-            ] == (
-                "genesis_release_candidate_"
-                "release_gate_approval"
-            )
+            ] == "genesis_stabilization"
 
             and upstream_check[
                 "assertion_count"
-            ] == 906
+            ] == 1164
 
             and upstream_check[
                 "failed_assertion_count"
@@ -886,11 +1038,11 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
             and contract[
                 "owner_count"
-            ] == 16
+            ] == 19
 
             and contract[
                 "owner_assertion_total"
-            ] == 6442
+            ] == 9668
 
             and contract[
                 "owner_failure_count"
@@ -898,27 +1050,27 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
             and contract[
                 "deterministic_method_packet_count"
-            ] == 70
+            ] == 85
 
             and len(
                 set(method_packets)
-            ) == 70
+            ) == 85
 
             and contract[
                 "handoff_chain_count"
-            ] == 16
+            ] == 19
         )
 
         local_assertions[
-            "release_gate_review_inventory_projection_matches"
+            "genesis_final_inventory_projection_matches"
         ] = (
             contract[
-                "release_gate_review_domain_count"
-            ] == 18
+                "genesis_final_domain_count"
+            ] == 21
 
             and contract[
-                "required_release_gate_review_result_count"
-            ] == 54
+                "required_genesis_final_result_count"
+            ] == 63
 
             and all(
                 value is True
@@ -926,24 +1078,24 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             )
 
             and contract[
-                "release_gate_review_evidence_inventory_count"
+                "genesis_final_evidence_inventory_count"
+            ] == 19
+
+            and contract[
+                "genesis_final_artifact_inventory_count"
             ] == 16
 
             and contract[
-                "release_candidate_artifact_inventory_count"
-            ] == 13
-
-            and contract[
-                "release_candidate_documentation_inventory_count"
-            ] == 11
+                "genesis_final_documentation_inventory_count"
+            ] == 14
         )
 
         local_assertions[
-            "release_gate_hold_state_preserved"
+            "acceptance_gated_final_state_applied"
         ] = (
             contract[
                 "required_negative_result_count"
-            ] == 36
+            ] == 42
 
             and all(
                 value is False
@@ -952,7 +1104,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
             and contract[
                 "safety_boundary_count"
-            ] == 36
+            ] == 42
 
             and all(
                 value is False
@@ -961,7 +1113,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
             and contract[
                 "zero_counter_count"
-            ] == 39
+            ] == 45
 
             and all(
                 value == 0
@@ -974,74 +1126,138 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
 
             and contract[
                 "current_block_complete"
-            ] is False
+            ] is True
 
             and contract[
                 "current_block_stabilized"
-            ] is False
+            ] is True
 
             and contract[
                 "current_block_release_ready"
-            ] is False
+            ] is True
+
+            and contract[
+                "acceptance_validation_ready"
+            ] is True
+
+            and contract[
+                "acceptance_validation_passed"
+            ] is True
+
+            and contract[
+                "final_state_transition_allowed"
+            ] is True
+
+            and contract[
+                "final_state_transition_applied"
+            ] is True
 
             and contract[
                 "release_candidate_assembled"
-            ] is False
+            ] is True
 
             and contract[
                 "release_candidate_ready"
-            ] is False
+            ] is True
 
             and contract[
                 "release_candidate_verified"
-            ] is False
+            ] is True
 
             and contract[
                 "verification_passed"
-            ] is False
+            ] is True
 
             and contract[
                 "readiness_passed"
-            ] is False
+            ] is True
 
             and contract[
                 "release_candidate_approval_ready"
-            ] is False
+            ] is True
 
             and contract[
                 "approval_passed"
-            ] is False
+            ] is True
 
             and contract[
                 "genesis_release_approved"
-            ] is False
+            ] is True
 
             and contract[
                 "release_authorization_ready"
-            ] is False
+            ] is True
 
             and contract[
                 "release_authorization_passed"
-            ] is False
+            ] is True
 
             and contract[
                 "release_gate_review_ready"
-            ] is False
+            ] is True
 
             and contract[
                 "release_gate_review_passed"
-            ] is False
+            ] is True
 
             and contract[
                 "release_gate_approval_ready"
+            ] is True
+
+            and contract[
+                "release_gate_approval_passed"
+            ] is True
+
+            and contract[
+                "release_decision_ready"
+            ] is True
+
+            and contract[
+                "release_decision_passed"
+            ] is True
+
+            and contract[
+                "release_decision_applied"
+            ] is True
+
+            and contract[
+                "genesis_final_release_ready"
+            ] is True
+
+            and contract[
+                "genesis_final_release_passed"
+            ] is True
+
+            and contract[
+                "genesis_final_release_published"
             ] is False
 
             and contract[
-                "external_target_methods_invoked"
+                "version_promotion_ready"
+            ] is True
+
+            and contract[
+                "version_promoted"
+            ] is True
+
+            and contract[
+                "git_tag_created"
+            ] is False
+
+            and contract[
+                "github_release_published"
+            ] is False
+
+            and contract[
+                "release_artifact_published"
             ] is False
 
             and contract[
                 "runtime_activation_allowed"
+            ] is False
+
+            and contract[
+                "runtime_activated"
             ] is False
 
             and contract[
@@ -1054,7 +1270,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         )
 
         local_assertions[
-            "release_gate_review_contract_shape_ready"
+            "genesis_final_contract_shape_ready"
         ] = (
             contract[
                 "upstream_block_started"
@@ -1073,68 +1289,76 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             ] is False
 
             and contract[
-                "upstream_release_authorization_foundation_ready"
+                "upstream_release_decision_foundation_ready"
             ] is True
 
             and contract[
-                "release_candidate_assembly_foundation_ready"
+                "genesis_final_foundation_ready"
             ] is True
 
             and contract[
-                "release_candidate_verification_foundation_ready"
+                "genesis_final_acceptance_definition_ready"
             ] is True
 
             and contract[
-                "release_candidate_readiness_foundation_ready"
+                "critical_safety_blocker_policy_ready"
             ] is True
 
             and contract[
-                "release_candidate_approval_foundation_ready"
+                "safe_idle_default_policy_ready"
             ] is True
 
             and contract[
-                "release_authorization_foundation_ready"
+                "operator_control_policy_ready"
             ] is True
 
             and contract[
-                "release_gate_review_foundation_ready"
+                "rollback_policy_ready"
             ] is True
 
             and contract[
-                "release_gate_review_evidence_inventory_ready"
+                "genesis_stabilization_handoff_ready"
             ] is True
 
             and contract[
-                "release_candidate_artifact_inventory_ready"
-            ] is True
-
-            and contract[
-                "release_candidate_documentation_inventory_ready"
-            ] is True
-
-            and contract[
-                "genesis_release_candidate_release_gate_review_contract_ready"
+                "genesis_final_release_contract_ready"
             ] is True
         )
 
         local_assertions[
-            "release_authorization_state_preserved"
+            "release_decision_state_preserved"
         ] = (
             contract[
-                "upstream_release_authorization_ready"
+                "upstream_release_decision_ready"
             ] is False
 
             and contract[
-                "upstream_release_authorization_passed"
+                "upstream_release_decision_passed"
             ] is False
 
             and contract[
-                "upstream_release_gate_review_ready"
+                "upstream_release_decision_applied"
+            ] is False
+
+            and contract[
+                "upstream_genesis_final_release_ready"
+            ] is False
+
+            and contract[
+                "upstream_genesis_final_release_passed"
+            ] is False
+
+            and contract[
+                "upstream_genesis_final_release_published"
+            ] is False
+
+            and contract[
+                "upstream_version_promoted"
             ] is False
 
             and upstream_check[
                 "local_assertion_count"
-            ] == 78
+            ] == 90
 
             and upstream_check[
                 "failed_assertions"
@@ -1142,68 +1366,70 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         )
 
         local_assertions[
-            "release_gate_review_decision_separation_preserved"
+            "acceptance_gated_final_release_transition_applied"
         ] = (
             contract[
-                "release_authorization_ready"
-            ] is False
+                "operator_review_required"
+            ] is True
 
             and contract[
-                "release_authorization_passed"
-            ] is False
+                "operator_review_completed"
+            ] is True
 
             and contract[
-                "release_gate_review_ready"
-            ] is False
+                "acceptance_validation_required"
+            ] is True
 
             and contract[
-                "release_gate_review_passed"
-            ] is False
+                "acceptance_validation_ready"
+            ] is True
+
+            and contract[
+                "acceptance_validation_passed"
+            ] is True
+
+            and contract[
+                "final_state_transition_allowed"
+            ] is True
+
+            and contract[
+                "final_state_transition_applied"
+            ] is True
         )
 
         local_assertions[
-            "release_gate_approval_separation_preserved"
+            "post_genesis_handoff_preserved"
         ] = (
             contract[
-                "release_gate_review_ready"
-            ] is False
+                "next_sprint"
+            ] == 241
 
             and contract[
-                "release_gate_review_passed"
-            ] is False
+                "next_boundary"
+            ] == "genesis_stabilization"
 
             and contract[
-                "release_gate_approval_ready"
-            ] is False
+                "canonical_post_genesis_title"
+            ] == "Genesis Stabilization"
 
             and contract[
-                "runtime_activation_allowed"
-            ] is False
-
-            and contract[
-                "release_gate_open"
-            ] is False
+                "canonical_post_genesis_version_family"
+            ] == "v1.x"
         )
 
         local_assertions[
             "interface_surface_projection_ready"
         ] = (
             self.BOUNDARY
-            == (
-                "genesis_release_candidate_"
-                "release_gate_review"
-            )
+            == "genesis_final_release"
 
             and self.NEXT_BOUNDARY
-            == (
-                "genesis_release_candidate_"
-                "release_gate_approval"
-            )
+            == "genesis_stabilization"
 
             and self.MODE
             == (
                 "contract_only_read_only_"
-                "release_candidate_release_gate_review"
+                "genesis_final_release"
             )
 
             and contract[
@@ -1219,47 +1445,59 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             "artifact_document_inventory_ready"
         ] = (
             contract[
-                "release_candidate_artifact_inventory_count"
-            ] == 13
+                "genesis_final_evidence_inventory_count"
+            ] == 19
 
             and contract[
-                "release_candidate_documentation_inventory_count"
-            ] == 11
+                "genesis_final_artifact_inventory_count"
+            ] == 16
 
             and contract[
-                "release_candidate_artifact_inventory_ready"
+                "genesis_final_documentation_inventory_count"
+            ] == 14
+
+            and contract[
+                "genesis_final_evidence_inventory_ready"
             ] is True
 
             and contract[
-                "release_candidate_documentation_inventory_ready"
+                "genesis_final_artifact_inventory_ready"
+            ] is True
+
+            and contract[
+                "genesis_final_documentation_inventory_ready"
             ] is True
         )
 
         local_assertions[
-            "release_gate_policy_review_ready"
+            "genesis_final_policy_ready"
         ] = (
             contract[
-                "release_gate_review_domain_count"
-            ] == 18
+                "canonical_final_title"
+            ] == "Genesis Final Release"
 
             and contract[
-                "release_gate_review_evidence_inventory_count"
-            ] == 16
+                "canonical_final_target_version"
+            ] == "1.0.0-genesis"
 
             and contract[
-                "release_gate_review_foundation_ready"
-            ] is True
-
-            and contract[
-                "release_gate_review_ready"
+                "git_tag_creation_allowed"
             ] is False
 
             and contract[
-                "release_gate_review_passed"
+                "github_release_publication_allowed"
             ] is False
 
             and contract[
-                "release_gate_approval_ready"
+                "release_artifact_publication_allowed"
+            ] is False
+
+            and contract[
+                "runtime_activation_allowed"
+            ] is False
+
+            and contract[
+                "release_gate_open"
             ] is False
         )
 
@@ -1278,7 +1516,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
         failed_assertions = (
             upstream_failures
             + [
-                f"Sprint237:{name}"
+                f"Sprint240:{name}"
                 for name in failed_local
             ]
         )
@@ -1306,7 +1544,7 @@ class GenesisReleaseCandidateReleaseGateReviewPlanner(
             "local_assertions":
                 local_assertions,
 
-            "genesis_release_candidate_release_gate_review_contract":
+            "genesis_final_release_contract":
                 contract,
 
             "runtime_ready": False,

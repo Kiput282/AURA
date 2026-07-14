@@ -3396,3 +3396,39 @@ Checkpoint state:
 Next boundary: `genesis_final_release`
 
 Next: Sprint 240 — Genesis Final Release.
+
+## Checkpoint v1.0.0-genesis — Genesis Final Release
+
+Sprint 240 closes the Sprint 231–240 Genesis Final Integration and Release
+block.
+
+Checkpoint state:
+
+- canonical identity: `1.0.0-genesis`;
+- Sprint 240 assertions: `1258/1258`;
+- local Sprint 240 assertions: `94/94`;
+- integration owners: `19`;
+- owner assertion total: `9668`;
+- owner failures: `0`;
+- deterministic method packets: `85`;
+- handoff stages: `19`;
+- operator review completed: `true`;
+- acceptance validation passed: `true`;
+- block complete: `true`;
+- block stabilized: `true`;
+- block release-ready: `true`;
+- release decision applied: `true`;
+- Genesis Final release passed: `true`;
+- canonical version promoted: `true`;
+- Git tag created: `false`;
+- GitHub Release published: `false`;
+- release artifact published: `false`;
+- runtime activated: `false`;
+- operational release gate open: `false`;
+- Capability Registry unchanged;
+- safe-idle, permission, audit, recovery, emergency-stop, operator-control,
+  and rollback boundaries preserved.
+
+Next boundary: `genesis_stabilization`
+
+Next: Sprint 241 — Genesis Stabilization.

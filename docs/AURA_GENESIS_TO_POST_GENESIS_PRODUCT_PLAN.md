@@ -1767,3 +1767,25 @@ Product-facing guarantees remain:
   version promotion, publication, activation, or release-gate action.
 
 Next: Sprint 240 — Genesis Final Release.
+
+## v1.0.0-genesis — Genesis Final Release
+
+Sprint 240 establishes AURA's birth checkpoint as a safe local-first AI
+partner.
+
+Genesis Final product guarantees:
+
+- usable local dashboard, chat, and session visibility;
+- deterministic voice, vision, memory, permission, audit, recovery, and safe
+  local-action boundaries;
+- explicit operator control;
+- safe-idle and localhost-first defaults;
+- reviewable rollback and emergency-stop paths;
+- no hidden Post-Genesis feature treated as a release blocker;
+- no automatic tag creation, external publication, runtime activation, or
+  operational release-gate opening.
+
+The next phase is Genesis Stabilization in the `v1.x` version family, with
+Post-Genesis Hardening as its initial product focus.
+
+Next: Sprint 241 — Genesis Stabilization.

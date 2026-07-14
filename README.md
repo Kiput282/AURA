@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v0.239.0-genesis
+Current version: v1.0.0-genesis
 Current status: Sprint 229 Genesis Acceptance Rehearsal completed; Sprint 221-230 Unified Partner Runtime Integration is active
 Current runtime state: Sprint 229 adds a contract-only and read-only Genesis acceptance rehearsal across eight partner-runtime owners. It validates 1,042 upstream assertions, 30 deterministic method packets, eight handoff boundaries, nine rehearsal phases, and 27 acceptance results while keeping Genesis release approval, runtime activation, auto-start, service control, systemd actions, launcher execution, and release gates disabled.
 
@@ -110,7 +110,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 240 — Genesis Final Release
+- Next planned sprint: Sprint 241 — Genesis Stabilization
 Current capability registry summary:
 
 - total capabilities: 121
@@ -5945,3 +5945,33 @@ Validated release-decision state:
 Next boundary: `genesis_final_release`
 
 Next: Sprint 240 — Genesis Final Release.
+
+## v1.0.0-genesis — Genesis Final Release
+
+Sprint 240 completes the Sprint 231–240 Genesis Final Integration and Release
+block as AURA's acceptance-gated local canonical Genesis checkpoint.
+
+Validated final state:
+
+- Sprint 240 passes `1258/1258` assertions;
+- nineteen integration owners provide `9668` assertions with zero failures;
+- all `85` deterministic method packets remain unique;
+- the verified handoff chain contains `19` stages;
+- operator review and acceptance validation are complete;
+- the release-candidate evidence chain is assembled, ready, verified,
+  approved, authorized, reviewed, approved at the release gate, and resolved;
+- the Genesis Final release is ready and passed;
+- canonical version promotion to `1.0.0-genesis` is complete;
+- the Sprint 231–240 block is complete, stabilized, and release-ready;
+- safe-idle, explicit operator control, permission, audit, recovery,
+  emergency-stop, and rollback boundaries remain preserved;
+- no Git tag is created;
+- no GitHub Release or release artifact is published;
+- runtime is not activated automatically;
+- the operational release gate remains closed.
+
+Genesis Final is AURA's birth checkpoint, not the end of development.
+
+Next boundary: `genesis_stabilization`
+
+Next: Sprint 241 — Genesis Stabilization.

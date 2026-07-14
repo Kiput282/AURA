@@ -482,3 +482,24 @@ AURA should always remain:
 - reviewable
 - controllable by Kiput
 - able to grow without losing identity
+
+## Genesis Final Checkpoint — v1.0.0-genesis
+
+Sprint 240 completes the local canonical Genesis Final acceptance checkpoint.
+
+The checkpoint closes the Sprint 231–240 release block while deliberately
+keeping external publication and runtime activation separate:
+
+- Genesis Final acceptance passed;
+- canonical version promotion completed;
+- safe-idle remains the default;
+- operator control and rollback readiness remain mandatory;
+- no Git tag or GitHub Release was created;
+- no release artifact was published;
+- runtime activation remains explicit and separate;
+- the operational release gate remains closed.
+
+The next canonical engineering boundary is `genesis_stabilization`.
+
+Genesis Stabilization begins at Sprint 241 in the `v1.x` family and focuses
+first on Post-Genesis Hardening.

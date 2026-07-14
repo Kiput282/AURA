@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.239.0-genesis
+- Current version: v1.0.0-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 240 — Genesis Final Release
+- Next: Sprint 241 — Genesis Stabilization
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2067,3 +2067,27 @@ The validated contract:
 The next boundary is `genesis_final_release`.
 
 Next: Sprint 240 — Genesis Final Release.
+
+## v1.0.0-genesis — Genesis Final Release
+
+Sprint 240 completes the Genesis Final acceptance contract after explicit
+operator review and successful acceptance validation.
+
+The canonical local checkpoint confirms:
+
+- the Sprint 231–240 block is complete, stabilized, and release-ready;
+- release-candidate assembly, readiness, verification, approval,
+  authorization, release-gate review, release-gate approval, and release
+  decision have passed;
+- Genesis Final release readiness and acceptance have passed;
+- canonical version promotion to `1.0.0-genesis` has completed;
+- safe-idle remains the default and recovery destination;
+- permission, audit, operator-control, emergency-stop, and rollback
+  boundaries remain preserved;
+- no Git tag, GitHub Release, or release artifact is created;
+- no service, browser, listener, network action, runtime activation, or
+  operational release-gate opening is performed.
+
+Next boundary: `genesis_stabilization`
+
+Next: Sprint 241 — Genesis Stabilization.
