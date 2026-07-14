@@ -4101,7 +4101,24 @@ class AuraCLI:
                 print(f"{label:<38}: {packet[key]}")
 
     def handle_codebase_compat_cli_command(self, raw_args: list[str]) -> bool:
-        if not raw_args:
+        # Sprint 241: establish exact command ownership before
+        # constructing any codebase compatibility manager.
+        codebase_commands = {
+            "codebase-change-status",
+            "codebase-change-plan",
+            "codebase-impact-review",
+            "codebase-patch-proposal-status",
+            "codebase-patch-proposal",
+            "codebase-patch-safety-packet",
+            "codebase-validation-gate-status",
+            "codebase-validation-gate-plan",
+            "codebase-validation-preflight-gate",
+        }
+
+        if (
+            not raw_args
+            or raw_args[0] not in codebase_commands
+        ):
             return False
 
         command = raw_args[0]
@@ -4530,6 +4547,51 @@ class AuraCLI:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_cli_command(self, raw_args: list[str]) -> bool:
+        # Sprint 241 Genesis Stabilization Runtime Hardening CLI commands.
+        sprint_241_commands = {
+            "partner-runtime-genesis-stabilization-hardening-status",
+            "partner-runtime-genesis-stabilization-hardening-context",
+            "partner-runtime-genesis-stabilization-hardening-check",
+        }
+
+        if raw_args and raw_args[0] in sprint_241_commands:
+            from aura.partner_runtime import (
+                GenesisStabilizationRuntimeHardeningAlphaManager,
+            )
+
+            manager = (
+                GenesisStabilizationRuntimeHardeningAlphaManager(
+                    project_root=self.project_root,
+                )
+            )
+
+            command = raw_args[0]
+
+            if command.endswith("-status"):
+                title = (
+                    "Genesis Stabilization Runtime "
+                    "Hardening Status"
+                )
+                packet = manager.status()
+            elif command.endswith("-context"):
+                title = (
+                    "Genesis Stabilization Runtime "
+                    "Hardening Context"
+                )
+                packet = manager.context()
+            else:
+                title = (
+                    "Genesis Stabilization Runtime "
+                    "Hardening Check"
+                )
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+            return True
+
         # Sprint 240 Genesis Final Release CLI commands.
         sprint_240_commands = {
             "partner-runtime-genesis-final-release-status",

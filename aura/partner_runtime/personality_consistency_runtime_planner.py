@@ -11,6 +11,7 @@ from aura.local_chat_persona_response_layer.aura_local_chat_persona_response_lay
 from aura.partner_runtime.voice_vision_chat_context_fusion_alpha_manager import (
     VoiceVisionChatContextFusionAlphaManager,
 )
+from .identity_version_compat import is_checkpoint_identity_compatible
 
 
 class PersonalityConsistencyRuntimePlanner:
@@ -256,8 +257,12 @@ class PersonalityConsistencyRuntimePlanner:
         version = data.get("version")
 
         version_supported = (
-            version
-            in self.supported_identity_versions
+            is_checkpoint_identity_compatible(
+                version,
+            historical_versions=(
+                self.supported_identity_versions
+            ),
+            )
         )
 
         required_traits_present = (

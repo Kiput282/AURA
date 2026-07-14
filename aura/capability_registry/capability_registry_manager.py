@@ -1844,6 +1844,29 @@ class CapabilityRegistryManager:
                 ),
             },
 
+            {
+                "id": "aura_genesis_stabilization_runtime_hardening",
+                "name": "AURA Genesis Stabilization Runtime Hardening",
+                "state": "online",
+                "runtime_level": "review_only",
+                "risk_level": "low",
+                "permission_required": "read_project",
+                "introduced_in": "1.0.1-genesis",
+                "category": "stabilization",
+                "control_center_visible": True,
+                "description": (
+                    "Deterministic, read-only Sprint 241 runtime "
+                    "hardening for exact CLI command ownership, "
+                    "pre-construction rejection of unrelated "
+                    "commands, immutable finalized-release status "
+                    "projection, explicit deep contract continuity, "
+                    "latency regression checks, and memory/journal "
+                    "integrity verification without activating "
+                    "services, listeners, systemd, release gates, "
+                    "ORION control, broad voice or vision runtime, "
+                    "or autonomous execution."
+                ),
+            },
 ]
 
 

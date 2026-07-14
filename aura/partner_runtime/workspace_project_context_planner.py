@@ -8,6 +8,7 @@ from typing import Any
 import yaml
 
 from aura.partner_runtime.partner_runtime_planner import PartnerRuntimePlanner
+from .identity_version_compat import is_checkpoint_identity_compatible
 
 
 class WorkspaceProjectContextPlanner:
@@ -324,8 +325,9 @@ class WorkspaceProjectContextPlanner:
         session = self._session()
 
         version_supported = (
-            identity["version"]
-            in {
+            is_checkpoint_identity_compatible(
+                identity["version"],
+            historical_versions={
                 "0.221.0-genesis",
                 "0.222.0-genesis",
                 "0.223.0-genesis",
@@ -333,8 +335,8 @@ class WorkspaceProjectContextPlanner:
                 "0.225.0-genesis",
                 "0.226.0-genesis",
                 "0.227.0-genesis",
-                "1.0.0-genesis",
-            }
+            },
+            )
         )
 
         ready = all(

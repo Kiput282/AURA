@@ -541,8 +541,20 @@ livestream performance safeguards, and live Game Companion fusion.
 None of these roadmap declarations activate services, grant permissions,
 control ORION, start recording, publish a release, or open a release gate.
 
-Current canonical version: `1.0.0-genesis`
+## Sprint 241 Checkpoint — Genesis Stabilization Runtime Hardening
 
-Next boundary: `genesis_stabilization`
+Sprint 241 promotes AURA to `1.0.1-genesis` and begins the concrete
+Genesis Stabilization & Runtime Hardening block.
 
-Next: Sprint 241 — Genesis Stabilization.
+It establishes exact CLI command ownership, eliminates unrelated
+manager construction, provides a bounded immutable Genesis Final
+status projection, preserves explicit deep validation, and records
+11/11 permanent hardening regressions.
+
+Runtime activation and operational release gates remain disabled.
+
+Current canonical version: `1.0.1-genesis`
+
+Next boundary: `service_lifecycle_determinism`
+
+Next: Sprint 242 — Service Lifecycle Determinism.

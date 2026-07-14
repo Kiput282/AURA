@@ -746,3 +746,30 @@ The review-only capability does not increase runtime execution feature
 accounting. No listener, provider, persistence store, permission mutation,
 audit writer, recovery executor, command, tool, action, arbitrary file,
 desktop, voice, vision, background, public/LAN, or autonomous runtime is added.
+
+## Sprint 241 Update — Genesis Stabilization Runtime Hardening
+
+Status: UPDATED FOR v1.0.1-genesis
+
+Sprint 241 adds the online, review-only
+`aura_genesis_stabilization_runtime_hardening` capability.
+
+Current registry summary:
+
+- total capabilities: 122
+- online capabilities: 120
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 12
+- review-only capabilities: 12
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 4
+
+The capability verifies exact CLI ownership, rejects unrelated commands
+before manager construction, preserves explicit deep Genesis Final
+validation, enforces bounded finalized-release status projection latency,
+and confirms memory/journal integrity.
+
+It does not activate runtime behavior, start services or listeners, enable
+systemd, open release gates, control ORION, or enable autonomous execution.

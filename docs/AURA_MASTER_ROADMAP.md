@@ -3433,6 +3433,29 @@ Next boundary: `genesis_stabilization`
 
 Next: Sprint 241 — Genesis Stabilization.
 
+## Checkpoint v1.0.1-genesis — Genesis Stabilization Runtime Hardening
+
+Sprint 241 begins the Sprint 241-250 Genesis Stabilization & Runtime
+Hardening block.
+
+Accepted results:
+
+- exact nine-command ownership for the codebase compatibility handler;
+- unrelated commands rejected before manager construction;
+- CLI dispatch initialization pollution reduced from `1126` log lines to `0`;
+- immutable Genesis Final status projection with deep validation preserved;
+- Sprint 241 regressions: `11/11`;
+- Sprint 240 and Sprint 241 status E2E latency: approximately `0.19` seconds;
+- capability registry: `122` total, `120` online;
+- runtime activation, release gates, systemd, automatic service control,
+  ORION control, and autonomous execution remain disabled.
+
+Current boundary: `genesis_stabilization_runtime_hardening`
+
+Next boundary: `service_lifecycle_determinism`
+
+Next: Sprint 242 — Service Lifecycle Determinism.
+
 ## Canonical Product Milestones — v2.0.0 through v4.0.0
 
 The concrete product milestone plan in
@@ -3482,9 +3505,8 @@ avatar runtime, OBS and viewer integration, gaming/livestream performance
 guardrails, and safe live fusion between voice, avatar, coaching, observation,
 recording, and creator workflows.
 
-Canonical version remains `1.0.0-genesis` until a future sprint explicitly
-promotes it through normal implementation and acceptance validation.
+Canonical version is now `1.0.1-genesis` after Sprint 241 explicitly promoted the first Genesis Stabilization patch release.
 
-Next boundary: `genesis_stabilization`
+Next boundary: `service_lifecycle_determinism`
 
-Next: Sprint 241 — Genesis Stabilization.
+Next: Sprint 242 — Service Lifecycle Determinism.

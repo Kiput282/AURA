@@ -29,6 +29,7 @@ from aura.service_lifecycle_runtime.aura_service_lifecycle_runtime_manager impor
     AuraServiceLifecycleRuntimeManager,
     LifecycleState,
 )
+from .identity_version_compat import is_checkpoint_identity_compatible
 
 
 class ServicePersistenceAndLauncherPlanner:
@@ -1863,10 +1864,7 @@ class ServicePersistenceAndLauncherPlanner:
                 ),
 
             "launcher_identity_version":
-                launcher[
-                    "identity_version"
-                ]
-                == "1.0.0-genesis",
+                is_checkpoint_identity_compatible(launcher['identity_version']),
 
             "launcher_runtime_closed":
                 launcher[
@@ -1896,10 +1894,7 @@ class ServicePersistenceAndLauncherPlanner:
                 ),
 
             "runtime_service_identity_version":
-                runtime_service[
-                    "identity_version"
-                ]
-                == "1.0.0-genesis",
+                is_checkpoint_identity_compatible(runtime_service['identity_version']),
 
             "runtime_service_closed":
                 runtime_service[

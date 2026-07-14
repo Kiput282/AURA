@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.0.0-genesis
+- Current version: v1.0.1-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 241 — Genesis Stabilization
+- Next: Sprint 242 — Service Lifecycle Determinism
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2126,6 +2126,26 @@ Every activation must preserve:
 
 This documentation update performs no runtime activation.
 
-Current canonical version: `1.0.0-genesis`
+## v1.0.1-genesis — Genesis Stabilization Runtime Hardening
 
-Next: Sprint 241 — Genesis Stabilization.
+Sprint 241 establishes exact CLI command ownership, removes unrelated
+manager construction, and introduces a bounded immutable Genesis Final
+status projection while preserving explicit deep contract and check
+validation.
+
+Validated state:
+
+- Sprint 241 regression assertions: `11/11`;
+- capability registry: `122` total, `120` online;
+- Sprint 240 and Sprint 241 status E2E latency: approximately `0.19` seconds;
+- memory and journal integrity preserved;
+- runtime activation, systemd, automatic startup, release gates, ORION
+  control, and autonomous execution remain disabled.
+
+Current boundary: `genesis_stabilization_runtime_hardening`
+
+Next boundary: `service_lifecycle_determinism`
+
+Current canonical version: `1.0.1-genesis`
+
+Next: Sprint 242 — Service Lifecycle Determinism.

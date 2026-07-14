@@ -28,6 +28,7 @@ from aura.local_interaction_runtime_stabilization.aura_local_interaction_runtime
 from .personality_consistency_runtime_alpha_manager import (
     PersonalityConsistencyRuntimeAlphaManager,
 )
+from .identity_version_compat import is_checkpoint_identity_compatible
 
 
 class MultiInterfaceStateSynchronizationPlanner:
@@ -629,10 +630,7 @@ class MultiInterfaceStateSynchronizationPlanner:
                 == list(
                     self.declared_session_events
                 ),
-                identity.get(
-                    "identity_version"
-                )
-                == "1.0.0-genesis",
+                is_checkpoint_identity_compatible(identity.get('identity_version')),
                 identity.get(
                     "runtime_mode"
                 )
@@ -1746,10 +1744,7 @@ class MultiInterfaceStateSynchronizationPlanner:
                 )
                 == 8,
             "schema_identity_version_226":
-                schema[
-                    "identity_version"
-                ]
-                == "1.0.0-genesis",
+                is_checkpoint_identity_compatible(schema['identity_version']),
             "schema_runtime_mode_blueprint":
                 schema[
                     "runtime_mode"

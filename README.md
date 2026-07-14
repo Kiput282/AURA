@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v1.0.0-genesis
-Current status: Sprint 229 Genesis Acceptance Rehearsal completed; Sprint 221-230 Unified Partner Runtime Integration is active
-Current runtime state: Sprint 229 adds a contract-only and read-only Genesis acceptance rehearsal across eight partner-runtime owners. It validates 1,042 upstream assertions, 30 deterministic method packets, eight handoff boundaries, nine rehearsal phases, and 27 acceptance results while keeping Genesis release approval, runtime activation, auto-start, service control, systemd actions, launcher execution, and release gates disabled.
+Current version: v1.0.1-genesis
+Current status: Sprint 241 Genesis Stabilization Runtime Hardening completed; Sprint 241-250 Genesis Stabilization & Runtime Hardening is active
+Current runtime state: Sprint 241 establishes exact CLI command ownership, removes 1,126 unrelated MemoryStore/ProjectJournal initialization log lines, reduces Genesis Final status E2E latency to about 0.19 seconds, and adds 11/11 permanent hardening regressions while keeping runtime activation, automatic service control, systemd, release gates, ORION control, and autonomous execution disabled.
 
 ---
 
@@ -35,11 +35,14 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 217 and extends the Sprint 211-220 Permission, Audit, and Safe Local Actions block with Controlled Folder and Simple File Creation as a contract-only default-deny boundary.
+AURA has completed Sprint 241 and has started the Sprint 241-250 Genesis Stabilization & Runtime Hardening block.
 
-AURA has completed Sprint 161.0 and has started the Sprint 161-170 Local Chat Runtime block.
+Sprint 241 closes CLI dispatch pollution and finalized-release status recursion while preserving the explicit deep validation path.
 
 Latest completed checkpoint:
+
+- v1.0.1-genesis
+- Sprint 241: Genesis Stabilization Runtime Hardening
 
 
 - v0.220.0-genesis
@@ -110,15 +113,15 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 241 — Genesis Stabilization
+- Next planned sprint: Sprint 242 — Service Lifecycle Determinism
 Current capability registry summary:
 
-- total capabilities: 121
-- online capabilities: 119
+- total capabilities: 122
+- online capabilities: 120
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
 - permission-gated capabilities: 12
-- review-only capabilities: 11
+- review-only capabilities: 12
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 4
@@ -5976,6 +5979,34 @@ Next boundary: `genesis_stabilization`
 
 Next: Sprint 241 — Genesis Stabilization.
 
+## v1.0.1-genesis — Genesis Stabilization Runtime Hardening
+
+Sprint 241 begins the Sprint 241-250 Genesis Stabilization & Runtime
+Hardening block.
+
+Validated hardening state:
+
+- exact ownership is enforced for all nine codebase compatibility commands;
+- unrelated commands are rejected before codebase managers are constructed;
+- the former 563 `MemoryStore` and 563 `ProjectJournal` initializations are
+  eliminated from unrelated CLI dispatch;
+- Genesis Final status uses an immutable read-only projection;
+- explicit deep `contract()` and `check()` validation remains available;
+- status projection parity against the deep contract has zero mismatches;
+- Sprint 240 and Sprint 241 status commands complete in about 0.19 seconds;
+- Sprint 241 hardening regressions pass `11/11`;
+- memory and journal hashes remain unchanged;
+- capability registry becomes `122` total and `120` online;
+- runtime activation, release gates, automatic service control, systemd,
+  ORION control, broad voice/vision activation, and autonomous execution
+  remain disabled.
+
+Current boundary: `genesis_stabilization_runtime_hardening`
+
+Next boundary: `service_lifecycle_determinism`
+
+Next: Sprint 242 — Service Lifecycle Determinism.
+
 ## Canonical Product Roadmap — v2.0.0 to v4.0.0
 
 AURA development after `v1.0.0-genesis` follows a concrete product-first
@@ -6022,6 +6053,6 @@ scheduling, acceptance, and implementation order.
 This roadmap does not activate runtime, grant ORION control, enable recording,
 create a Git tag, publish a release, or open any operational release gate.
 
-Current canonical state remains `v1.0.0-genesis`.
+Current canonical state is `v1.0.1-genesis`.
 
-Next: Sprint 241 — Genesis Stabilization.
+Next: Sprint 242 — Service Lifecycle Determinism.

@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.0.0-genesis`
+Current canonical anchor: `v1.0.1-genesis`
 
-Current completed sprint: `240`
+Current completed sprint: `241`
 
-Next sprint: `241`
+Next sprint: `242`
 
-Next boundary: `genesis_stabilization`
+Next boundary: `service_lifecycle_determinism`
 
 Owner: Kiput
 
@@ -80,8 +80,7 @@ Canonical block endpoints:
 | 410 | `v3.5.0` |
 | 420 | `v4.0.0` |
 
-The current canonical version remains `v1.0.0-genesis` until an implementation
-sprint explicitly promotes it.
+The current canonical version is `v1.0.1-genesis`, promoted by Sprint 241.
 
 # Part I — Target v2.0.0
 
@@ -819,15 +818,15 @@ The v2-v4 roadmap must preserve:
 
 # Immediate handoff
 
-Current canonical state: `v1.0.0-genesis`
+Current canonical state: `v1.0.1-genesis`
 
-Current completed sprint: `240`
+Current completed sprint: `241`
 
-Next sprint: `241`
+Next sprint: `242`
 
-Next boundary: `genesis_stabilization`
+Next boundary: `service_lifecycle_determinism`
 
-Sprint 241 begins the Genesis Stabilization & Runtime Hardening block.
+Sprint 241 completed CLI dispatch and finalized-release status hardening. Sprint 242 continues the block with Service Lifecycle Determinism.
 
 The next implementation must start with discovery and may not activate broad
 runtime behavior merely because this roadmap has been approved.

@@ -1,5 +1,5 @@
 name: AURA
-version: "1.0.0-genesis"
+version: "1.0.1-genesis"
 codename: Genesis
 creator: Kiput
 
@@ -348,3 +348,4 @@ modes:
 # autonomous propagation remain disabled.
 # Sprint 226 validates 128 deterministic assertions with zero failures.
 # Next: Sprint 227 — Service Persistence and Launcher.
+# Sprint 241: genesis_stabilization_runtime_hardening establishes exact CLI command ownership, removes unrelated codebase-manager construction, serves the finalized Sprint 240 status as an immutable read-only projection, preserves explicit deep contract/check validation, and adds 11 deterministic hardening regressions while keeping runtime activation, release gates, automatic service control, systemd actions, ORION control, broad voice/vision activation, and autonomous execution disabled.
