@@ -1710,3 +1710,21 @@ Product-facing guarantees remain:
   action.
 
 Next: Sprint 237 — Genesis Release Candidate Release Gate Review.
+
+## v0.237.0-genesis — Genesis Release Candidate Release Gate Review
+
+Sprint 237 establishes a reviewable release-gate review foundation without
+approving, activating, releasing, or opening the release gate for an actual
+release candidate.
+
+Product-facing guarantees remain:
+
+- deterministic integration across sixteen partner-runtime owners;
+- explicit operator control and rollback readiness;
+- preserved permission, audit, recovery, emergency-stop, and safe-idle
+  boundaries;
+- reviewable release-gate evidence, artifact, and documentation inventories;
+- no autonomous review decision, approval, authorization, activation,
+  release, or release-gate action.
+
+Next: Sprint 238 — Genesis Release Candidate Release Gate Approval.

@@ -13,7 +13,7 @@ class GenesisReleaseCandidateReadinessPlanner(
 ):
     """Read-only Sprint 234 release-candidate readiness contract."""
 
-    VERSION = "0.236.0-genesis"
+    VERSION = "0.237.0-genesis"
 
     CURRENT_SPRINT = 234
     NEXT_SPRINT = 235
@@ -769,7 +769,7 @@ class GenesisReleaseCandidateReadinessPlanner(
         ] = (
             contract[
                 "identity_version"
-            ] == "0.236.0-genesis"
+            ] == "0.237.0-genesis"
 
             and contract[
                 "current_sprint"

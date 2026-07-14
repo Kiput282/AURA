@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v0.236.0-genesis
+- Current version: v0.237.0-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 237 — Genesis Release Candidate Release Gate Review
+- Next: Sprint 238 — Genesis Release Candidate Release Gate Approval
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -1986,3 +1986,29 @@ The next boundary is
 `genesis_release_candidate_release_gate_review`.
 
 Next: Sprint 237 — Genesis Release Candidate Release Gate Review.
+
+## v0.237.0-genesis — Genesis Release Candidate Release Gate Review
+
+Sprint 237 adds the read-only Genesis release-candidate release-gate review
+contract.
+
+The validated contract:
+
+- preserves the Sprint 236 release-authorization foundation;
+- records sixteen owners and `6442` owner assertions with zero failures;
+- records `70` deterministic method packets and sixteen handoff stages;
+- inventories release-gate review evidence, source artifacts, and
+  documentation;
+- exposes status, context, and check routes through CLI and shell;
+- keeps release-candidate assembly, readiness, verification, verification
+  passed, readiness passed, approval passed, authorization passed, and
+  release-gate review passed false;
+- keeps release-gate approval readiness, runtime activation, and the release
+  gate false;
+- performs no file, service, launcher, listener, process, approval,
+  authorization, release-gate, or operating-system runtime action.
+
+The next boundary is
+`genesis_release_candidate_release_gate_approval`.
+
+Next: Sprint 238 — Genesis Release Candidate Release Gate Approval.

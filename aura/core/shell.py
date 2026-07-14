@@ -1220,6 +1220,9 @@ class AuraShell:
         print("  partner-runtime-workspace-project-context-status")
         print("  partner-runtime-workspace-project-context-context")
         print("  partner-runtime-workspace-project-context-check")
+        print("  partner-runtime-genesis-release-candidate-release-gate-review-status Show Sprint 237 Genesis release candidate release gate review status")
+        print("  partner-runtime-genesis-release-candidate-release-gate-review-context Show Sprint 237 Genesis release candidate release gate review context")
+        print("  partner-runtime-genesis-release-candidate-release-gate-review-check Run Sprint 237 Genesis release candidate release gate review checks")
         print("  partner-runtime-genesis-release-candidate-release-authorization-status Show Sprint 236 Genesis release candidate release authorization status")
         print("  partner-runtime-genesis-release-candidate-release-authorization-context Show Sprint 236 Genesis release candidate release authorization context")
         print("  partner-runtime-genesis-release-candidate-release-authorization-check Run Sprint 236 Genesis release candidate release authorization checks")
@@ -5443,6 +5446,47 @@ class AuraShell:
                 print(f"{label:<48}: {packet[key]}")
 
     def handle_partner_runtime_shell_command(self, normalized: str) -> bool:
+        # Sprint 237 Genesis Release Candidate Release Gate Review shell commands.
+        sprint_237_commands = {
+            "partner-runtime-genesis-release-candidate-release-gate-review-status",
+            "partner-runtime-genesis-release-candidate-release-gate-review-context",
+            "partner-runtime-genesis-release-candidate-release-gate-review-check",
+        }
+
+        if normalized in sprint_237_commands:
+            from aura.partner_runtime import (
+                GenesisReleaseCandidateReleaseGateReviewAlphaManager,
+            )
+
+            manager = GenesisReleaseCandidateReleaseGateReviewAlphaManager(
+                project_root=self.project_root,
+            )
+
+            if normalized.endswith("-status"):
+                title = (
+                    "Genesis Release Candidate "
+                    "Release Gate Review Status"
+                )
+                packet = manager.status()
+            elif normalized.endswith("-context"):
+                title = (
+                    "Genesis Release Candidate "
+                    "Release Gate Review Context"
+                )
+                packet = manager.context()
+            else:
+                title = (
+                    "Genesis Release Candidate "
+                    "Release Gate Review Check"
+                )
+                packet = manager.check()
+
+            self.print_partner_runtime_packet(
+                title,
+                packet,
+            )
+            return True
+
         # Sprint 236 Genesis Release Candidate Release Authorization shell commands.
         sprint_236_commands = {
             "partner-runtime-genesis-release-candidate-release-authorization-status",
