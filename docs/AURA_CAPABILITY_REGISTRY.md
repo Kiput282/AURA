@@ -843,3 +843,19 @@ capacity visibility, and cleanup-preview packets for the canonical `1 MB`
 rotation and `7 days` retention policy. The active log is protected, rotated
 names are allowlisted, symlinks and directory escape are blocked, and cleanup
 execution remains disabled.
+
+## AURA Resource Baseline Metrics
+
+- ID: `aura_resource_baseline_metrics`
+- Version introduced: `1.0.6-genesis`
+- Category: `stabilization`
+- State: `online`
+- Runtime level: `review_only`
+- Risk: `low`
+- Permission: `read_project`
+- Control Center visible: `true`
+
+Provides read-only, single-snapshot CPU, load, memory, swap, uptime, process,
+filesystem-capacity, and inode-capacity baselines for ATLAS without `psutil`,
+background sampling, persistence, dashboard activation, sockets, systemd,
+network access, process control, or threshold mutation.

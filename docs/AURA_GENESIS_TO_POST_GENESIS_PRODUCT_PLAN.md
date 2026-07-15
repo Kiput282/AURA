@@ -3,7 +3,7 @@
 Status: CANONICAL GENESIS PATH
 Current Canonical Version: v1.0.5-genesis
 Current Canonical Sprint: Sprint 244 — Session and Memory Persistence Checks
-Next Planned Sprint: Sprint 246 — Resource Baseline Metrics
+Next Planned Sprint: Sprint 247 — ATLAS Resource Monitoring
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -29,7 +29,7 @@ AURA is currently at:
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
 - Active block: Sprint 151-160 Control Center Runtime
-- Next sprint: Sprint 147.0 — Service Control Command Review Foundation
+- Next sprint: `247`
 
 Current AURA is not yet an active autonomous runtime system.
 
@@ -1884,4 +1884,22 @@ No canonical log deletion, move, truncation, compression, archive, service,
 socket, systemd, network, or runtime activation occurs.
 
 Next: Sprint 246 — Resource Baseline Metrics.
-Next boundary: `resource_baseline_metrics`.
+Next boundary: `atlas_resource_monitoring`
+
+## Sprint 246 Completion — Resource Baseline Metrics
+
+AURA `v1.0.6-genesis` completes Sprint 246 at the
+`resource_baseline_metrics` boundary.
+
+Sprint 246 adds deterministic, read-only, single-snapshot baseline visibility
+for CPU usage and load averages, memory, swap, uptime, process count,
+filesystem byte capacity, and inode capacity across `/`, `/home`,
+`/mnt/aura-data`, and the AURA project root.
+
+The implementation uses Linux `/proc`, `os.getloadavg`, and `os.statvfs`.
+`psutil` is not required. Background sampling, rolling history, persistence,
+dashboard activation, socket binding, systemd mutation, network access,
+process control, and threshold mutation remain disabled.
+
+Next: Sprint 247 — ATLAS Resource Monitoring.
+Next boundary: `atlas_resource_monitoring`.

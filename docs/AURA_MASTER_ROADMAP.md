@@ -1519,7 +1519,7 @@ This foundation prepares safe-idle ATLAS local service identity, localhost-only 
 
 No service process is started, no socket is opened, no port is bound, no API/web/dashboard/health endpoint is started, no systemd unit is created or enabled, no permission/audit/file/command/tool/action/ORION/git runtime is activated, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 147.0 — Service Control Command Review Foundation.
+Next planned sprint: Sprint 247 — ATLAS Resource Monitoring
 
 ## Product Direction — Genesis to Post-Genesis
 
@@ -3163,7 +3163,7 @@ Checkpoint state:
 - Capability Registry remains unchanged;
 - no runtime or operating-system side effect is introduced.
 
-Next boundary: `genesis_release_candidate_assembly`
+Next boundary: `atlas_resource_monitoring`
 
 Next: Sprint 232 — Genesis Release Candidate Assembly.
 
@@ -3450,7 +3450,7 @@ Accepted results:
 - runtime activation, release gates, systemd, automatic service control,
   ORION control, and autonomous execution remain disabled.
 
-Current boundary: `genesis_stabilization_runtime_hardening`
+Current boundary: `resource_baseline_metrics`
 
 Next boundary: `service_lifecycle_determinism`
 
@@ -3553,7 +3553,7 @@ Next: Sprint 244 — Session and Memory Persistence Checks.
 - Four canonical stores validated: browser sessions, chat history, memory, and journal.
 - Validation passed: `81/81` base checks and `92/92` assertions.
 - Read-only contract preserved: no repair, migration, persistent writes, runtime activation, socket binding, or systemd mutation.
-- Next sprint: Sprint 245 — Log Rotation and Storage Cleanup.
+- Next sprint: `247`
 - Next boundary: `resource_baseline_metrics`.
 
 ## Sprint 245 Completion — Log Rotation and Storage Cleanup
@@ -3575,3 +3575,21 @@ socket, systemd, network, or runtime activation occurs.
 
 Next: Sprint 246 — Resource Baseline Metrics.
 Next boundary: `resource_baseline_metrics`.
+
+## Sprint 246 Completion — Resource Baseline Metrics
+
+AURA `v1.0.6-genesis` completes Sprint 246 at the
+`resource_baseline_metrics` boundary.
+
+Sprint 246 adds deterministic, read-only, single-snapshot baseline visibility
+for CPU usage and load averages, memory, swap, uptime, process count,
+filesystem byte capacity, and inode capacity across `/`, `/home`,
+`/mnt/aura-data`, and the AURA project root.
+
+The implementation uses Linux `/proc`, `os.getloadavg`, and `os.statvfs`.
+`psutil` is not required. Background sampling, rolling history, persistence,
+dashboard activation, socket binding, systemd mutation, network access,
+process control, and threshold mutation remain disabled.
+
+Next: Sprint 247 — ATLAS Resource Monitoring.
+Next boundary: `atlas_resource_monitoring`.

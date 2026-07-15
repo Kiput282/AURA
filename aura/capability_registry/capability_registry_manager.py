@@ -1943,6 +1943,28 @@ class CapabilityRegistryManager:
         "introduced_in": "1.0.5-genesis",
         "visible": True,
     },
+    {
+        "id": "aura_resource_baseline_metrics",
+        "name": "AURA Resource Baseline Metrics",
+        "description": (
+            "Read-only Sprint 246 single-snapshot "
+            "baseline visibility for CPU usage and load, "
+            "memory, swap, uptime, process count, filesystem "
+            "capacity, and inode capacity across root, home, "
+            "AURA data storage, and the project root without "
+            "psutil, background sampling, history persistence, "
+            "dashboard activation, socket binding, systemd "
+            "mutation, network access, process control, or "
+            "threshold mutation."
+        ),
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "introduced_in": "1.0.6-genesis",
+        "category": "stabilization",
+        "control_center_visible": True,
+    },
 ]
 
 

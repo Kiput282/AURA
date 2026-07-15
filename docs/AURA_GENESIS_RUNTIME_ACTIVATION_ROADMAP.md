@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.0.5-genesis
+- Current version: v1.0.6-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -2088,7 +2088,7 @@ The canonical local checkpoint confirms:
 - no service, browser, listener, network action, runtime activation, or
   operational release-gate opening is performed.
 
-Next boundary: `genesis_stabilization`
+Next boundary: `atlas_resource_monitoring`
 
 Next: Sprint 241 — Genesis Stabilization.
 
@@ -2142,7 +2142,7 @@ Validated state:
 - runtime activation, systemd, automatic startup, release gates, ORION
   control, and autonomous execution remain disabled.
 
-Current boundary: `log_rotation_storage_cleanup`
+Current boundary: `resource_baseline_metrics`
 
 Next boundary: `resource_baseline_metrics`
 
@@ -2169,3 +2169,21 @@ socket, systemd, network, or runtime activation occurs.
 
 Next: Sprint 246 — Resource Baseline Metrics.
 Next boundary: `resource_baseline_metrics`.
+
+## Sprint 246 Completion — Resource Baseline Metrics
+
+AURA `v1.0.6-genesis` completes Sprint 246 at the
+`resource_baseline_metrics` boundary.
+
+Sprint 246 adds deterministic, read-only, single-snapshot baseline visibility
+for CPU usage and load averages, memory, swap, uptime, process count,
+filesystem byte capacity, and inode capacity across `/`, `/home`,
+`/mnt/aura-data`, and the AURA project root.
+
+The implementation uses Linux `/proc`, `os.getloadavg`, and `os.statvfs`.
+`psutil` is not required. Background sampling, rolling history, persistence,
+dashboard activation, socket binding, systemd mutation, network access,
+process control, and threshold mutation remain disabled.
+
+Next: Sprint 247 — ATLAS Resource Monitoring.
+Next boundary: `atlas_resource_monitoring`.

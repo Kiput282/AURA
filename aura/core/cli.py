@@ -170,6 +170,7 @@ from aura.service_lifecycle_runtime.aura_service_lifecycle_runtime_cli import ha
 from aura.configuration_integrity.aura_configuration_integrity_cli import handle_configuration_integrity_command
 from aura.session_memory_persistence_checks.aura_session_memory_persistence_checks_cli import handle_session_memory_persistence_command
 from aura.log_rotation_storage_cleanup.aura_log_rotation_storage_cleanup_cli import handle_log_rotation_storage_cleanup_command
+from aura.resource_baseline_metrics.aura_resource_baseline_metrics_cli import handle_resource_baseline_metrics_command
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
@@ -11245,6 +11246,8 @@ class AuraCLI:
             return True
 
         if handle_log_rotation_storage_cleanup_command(args):
+            return True
+        if handle_resource_baseline_metrics_command(args):
             return True
         if handle_session_memory_persistence_command(args):
             return True

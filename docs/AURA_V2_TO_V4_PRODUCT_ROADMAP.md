@@ -4,11 +4,11 @@ Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
 Current canonical anchor: `v1.0.5-genesis`
 
-Current completed sprint: `245`
+Current completed sprint: Sprint 246 — Resource Baseline Metrics
 
-Next sprint: `246`
+Next sprint: `247`
 
-Next boundary: `resource_baseline_metrics`
+Next boundary: `atlas_resource_monitoring`
 
 Owner: Kiput
 
@@ -850,3 +850,21 @@ socket, systemd, network, or runtime activation occurs.
 
 Next: Sprint 246 — Resource Baseline Metrics.
 Next boundary: `resource_baseline_metrics`.
+
+## Sprint 246 Completion — Resource Baseline Metrics
+
+AURA `v1.0.6-genesis` completes Sprint 246 at the
+`resource_baseline_metrics` boundary.
+
+Sprint 246 adds deterministic, read-only, single-snapshot baseline visibility
+for CPU usage and load averages, memory, swap, uptime, process count,
+filesystem byte capacity, and inode capacity across `/`, `/home`,
+`/mnt/aura-data`, and the AURA project root.
+
+The implementation uses Linux `/proc`, `os.getloadavg`, and `os.statvfs`.
+`psutil` is not required. Background sampling, rolling history, persistence,
+dashboard activation, socket binding, systemd mutation, network access,
+process control, and threshold mutation remain disabled.
+
+Next: Sprint 247 — ATLAS Resource Monitoring.
+Next boundary: `atlas_resource_monitoring`.
