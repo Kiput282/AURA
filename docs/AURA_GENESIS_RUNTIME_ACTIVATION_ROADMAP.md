@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.0.3-genesis
+- Current version: v1.0.4-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 242 — Service Lifecycle Determinism
+- Next: Sprint 245 — Log Rotation and Storage Cleanup
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2142,10 +2142,10 @@ Validated state:
 - runtime activation, systemd, automatic startup, release gates, ORION
   control, and autonomous execution remain disabled.
 
-Current boundary: `genesis_stabilization_runtime_hardening`
+Current boundary: `session_memory_persistence_checks`
 
-Next boundary: `service_lifecycle_determinism`
+Next boundary: `log_rotation_storage_cleanup`
 
-Current canonical version: `1.0.3-genesis`
+Current canonical version: `1.0.4-genesis`
 
-Next: Sprint 242 — Service Lifecycle Determinism.
+Next: Sprint 245 — Log Rotation and Storage Cleanup.

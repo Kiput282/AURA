@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v1.0.3-genesis
+Current version: v1.0.4-genesis
 Current status: Sprint 243 Configuration Integrity completed; Sprint 241-250 Genesis Stabilization & Runtime Hardening is active
 Current runtime state: Sprint 243 provides a read-only canonical settings validator for path safety, YAML schema integrity, local-only endpoints, safe-idle and explicit-confirmation boundaries, traversal rejection, secret-like key rejection, and deterministic negative fixtures. Configuration writes, environment mutation, runtime activation, socket binding, memory writes, journal writes, and systemd mutation remain disabled.
 
@@ -1277,7 +1277,7 @@ Safety result:
 - release gate closed
 - future runtime still requires manual approval
 
-Next planned sprint: Sprint 244 — Session and Memory Persistence Checks
+Next planned sprint: Sprint 245 — Log Rotation and Storage Cleanup
 
 - Sprint 144.0 — Service Configuration and Port Registry Foundation
 
@@ -6058,3 +6058,12 @@ create a Git tag, publish a release, or open any operational release gate.
 Current canonical state is `v1.0.1-genesis`.
 
 Next: Sprint 242 — Service Lifecycle Determinism.
+
+### Sprint 244 Persistence Checkpoint
+
+- Version: `v1.0.4-genesis`
+- Boundary: `session_memory_persistence_checks`
+- Canonical stores: browser sessions, chat history, memory, and journal
+- Validation: `81/81` base checks and `92/92` total assertions
+- Capability registry: `125` total, `123` online, `15` review-only, `4` runtime execution features
+- Safety: read-only inspection; no repair, migration, persistent writes, runtime activation, socket binding, or systemd mutation

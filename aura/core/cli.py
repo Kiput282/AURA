@@ -168,6 +168,7 @@ from aura.codebase_patch_proposal.codebase_patch_proposal_renderer_manager impor
 from aura.local_web_runtime_alpha.aura_local_web_runtime_cli import handle_local_web_runtime_command
 from aura.service_lifecycle_runtime.aura_service_lifecycle_runtime_cli import handle_service_lifecycle_command
 from aura.configuration_integrity.aura_configuration_integrity_cli import handle_configuration_integrity_command
+from aura.session_memory_persistence_checks.aura_session_memory_persistence_checks_cli import handle_session_memory_persistence_command
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
@@ -11242,6 +11243,8 @@ class AuraCLI:
         if handle_health_status_api_command(args):
             return True
 
+        if handle_session_memory_persistence_command(args):
+            return True
         if handle_configuration_integrity_command(args):
             return True
 

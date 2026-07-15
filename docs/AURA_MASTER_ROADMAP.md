@@ -3545,3 +3545,13 @@ Acceptance:
 - runtime activation and systemd mutation remained disabled.
 
 Next: Sprint 244 — Session and Memory Persistence Checks.
+
+## Checkpoint v1.0.4-genesis — Session and Memory Persistence Checks
+
+- Sprint 244 completed.
+- Canonical boundary: `session_memory_persistence_checks`.
+- Four canonical stores validated: browser sessions, chat history, memory, and journal.
+- Validation passed: `81/81` base checks and `92/92` assertions.
+- Read-only contract preserved: no repair, migration, persistent writes, runtime activation, socket binding, or systemd mutation.
+- Next sprint: Sprint 245 — Log Rotation and Storage Cleanup.
+- Next boundary: `log_rotation_storage_cleanup`.

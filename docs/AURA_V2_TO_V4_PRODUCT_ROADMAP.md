@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.0.3-genesis`
+Current canonical anchor: `v1.0.4-genesis`
 
-Current completed sprint: `243`
+Current completed sprint: `244`
 
-Next sprint: `244`
+Next sprint: `245`
 
-Next boundary: `session_memory_persistence_checks`
+Next boundary: `log_rotation_storage_cleanup`
 
 Owner: Kiput
 
@@ -820,11 +820,11 @@ The v2-v4 roadmap must preserve:
 
 Current canonical state: `v1.0.1-genesis`
 
-Current completed sprint: `243`
+Current completed sprint: `244`
 
-Next sprint: `244`
+Next sprint: `245`
 
-Next boundary: `session_memory_persistence_checks`
+Next boundary: `log_rotation_storage_cleanup`
 
 Sprint 241 completed CLI dispatch and finalized-release status hardening. Sprint 242 continues the block with Service Lifecycle Determinism.
 

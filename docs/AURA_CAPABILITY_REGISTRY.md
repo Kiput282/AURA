@@ -815,3 +815,14 @@ Current canonical summary:
 Sprint 243 does not add a runtime executor. It validates the existing
 canonical settings file without writing configuration or activating
 service runtime.
+
+## Sprint 244 Update — Session and Memory Persistence Checks
+
+- Added capability `aura_session_memory_persistence_checks`.
+- State: `online`.
+- Runtime level: `review_only`.
+- Risk level: `low`.
+- Permission required: `read_project`.
+- Introduced in: `1.0.4-genesis`.
+- Capability totals: `125` total, `123` online, `78` foundation-only, `7` planner-only, `12` permission-gated, `15` review-only, `0` planned, `2` disabled runtime, and `4` runtime execution features.
+- The capability exposes read-only persistence validation and does not repair, migrate, write, activate runtime, bind sockets, or mutate systemd state.

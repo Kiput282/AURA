@@ -553,8 +553,8 @@ status projection, preserves explicit deep validation, and records
 
 Runtime activation and operational release gates remain disabled.
 
-Current canonical version: `1.0.3-genesis`
+Current canonical version: `1.0.4-genesis`
 
-Next boundary: `service_lifecycle_determinism`
+Next boundary: `log_rotation_storage_cleanup`
 
-Next: Sprint 244 — Session and Memory Persistence Checks.
+Next: Sprint 245 — Log Rotation and Storage Cleanup.

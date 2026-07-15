@@ -1911,6 +1911,26 @@ class CapabilityRegistryManager:
             "writes, journal writes, or systemd mutation."
         ),
     },
+    {
+        "id": "aura_session_memory_persistence_checks",
+        "name": "AURA Session and Memory Persistence Checks",
+        "description": (
+            "Read-only validation of canonical browser "
+            "sessions, chat history, memory, and journal "
+            "stores, including schema, integrity, path, "
+            "timestamp, duplicate-id, and safety-boundary "
+            "visibility without repair, migration, writes, "
+            "runtime activation, socket binding, or systemd "
+            "mutation."
+        ),
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "introduced_in": "1.0.4-genesis",
+        "category": "stabilization",
+        "control_center_visible": True,
+    },
 ]
 
 
