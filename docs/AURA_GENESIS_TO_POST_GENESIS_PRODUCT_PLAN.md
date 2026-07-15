@@ -3,7 +3,7 @@
 Status: CANONICAL GENESIS PATH
 Current Canonical Version: v1.0.5-genesis
 Current Canonical Sprint: Sprint 244 — Session and Memory Persistence Checks
-Next Planned Sprint: Sprint 247 — ATLAS Resource Monitoring
+Next Planned Sprint: Sprint 248 — Localhost and SSH Tunnel Security Review
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -29,7 +29,7 @@ AURA is currently at:
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
 - Active block: Sprint 151-160 Control Center Runtime
-- Next sprint: `247`
+- Next sprint: `248`
 
 Current AURA is not yet an active autonomous runtime system.
 
@@ -1884,7 +1884,7 @@ No canonical log deletion, move, truncation, compression, archive, service,
 socket, systemd, network, or runtime activation occurs.
 
 Next: Sprint 246 — Resource Baseline Metrics.
-Next boundary: `atlas_resource_monitoring`
+Next boundary: `localhost_ssh_tunnel_security_review`
 
 ## Sprint 246 Completion — Resource Baseline Metrics
 
@@ -1903,3 +1903,22 @@ process control, and threshold mutation remain disabled.
 
 Next: Sprint 247 — ATLAS Resource Monitoring.
 Next boundary: `atlas_resource_monitoring`.
+
+## Sprint 247 Completion — ATLAS Resource Monitoring
+
+AURA `v1.0.7-genesis` completes Sprint 247 at the
+`atlas_resource_monitoring` boundary.
+
+Sprint 247 adds deterministic, read-only health classification over the
+Sprint 246 resource baseline snapshot. It reports CPU, normalized load,
+memory, swap, storage, inode capacity, uptime, and process-count states as
+`healthy`, `warning`, `critical`, or `unavailable`.
+
+The threshold policy is immutable and combines percentage thresholds with
+absolute free-space thresholds for filesystems. Background sampling, rolling
+history, metrics persistence, dashboard activation, alert delivery, socket
+binding, systemd mutation, network access, process control, command execution,
+and threshold mutation remain disabled.
+
+Next: Sprint 248 — Localhost and SSH Tunnel Security Review.
+Next boundary: `localhost_ssh_tunnel_security_review`.

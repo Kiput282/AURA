@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.0.6-genesis
+- Current version: v1.0.7-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -2088,7 +2088,7 @@ The canonical local checkpoint confirms:
 - no service, browser, listener, network action, runtime activation, or
   operational release-gate opening is performed.
 
-Next boundary: `atlas_resource_monitoring`
+Next boundary: `localhost_ssh_tunnel_security_review`
 
 Next: Sprint 241 — Genesis Stabilization.
 
@@ -2142,7 +2142,7 @@ Validated state:
 - runtime activation, systemd, automatic startup, release gates, ORION
   control, and autonomous execution remain disabled.
 
-Current boundary: `resource_baseline_metrics`
+Current boundary: `atlas_resource_monitoring`
 
 Next boundary: `resource_baseline_metrics`
 
@@ -2187,3 +2187,22 @@ process control, and threshold mutation remain disabled.
 
 Next: Sprint 247 — ATLAS Resource Monitoring.
 Next boundary: `atlas_resource_monitoring`.
+
+## Sprint 247 Completion — ATLAS Resource Monitoring
+
+AURA `v1.0.7-genesis` completes Sprint 247 at the
+`atlas_resource_monitoring` boundary.
+
+Sprint 247 adds deterministic, read-only health classification over the
+Sprint 246 resource baseline snapshot. It reports CPU, normalized load,
+memory, swap, storage, inode capacity, uptime, and process-count states as
+`healthy`, `warning`, `critical`, or `unavailable`.
+
+The threshold policy is immutable and combines percentage thresholds with
+absolute free-space thresholds for filesystems. Background sampling, rolling
+history, metrics persistence, dashboard activation, alert delivery, socket
+binding, systemd mutation, network access, process control, command execution,
+and threshold mutation remain disabled.
+
+Next: Sprint 248 — Localhost and SSH Tunnel Security Review.
+Next boundary: `localhost_ssh_tunnel_security_review`.

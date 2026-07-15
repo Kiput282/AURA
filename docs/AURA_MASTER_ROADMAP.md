@@ -1519,7 +1519,7 @@ This foundation prepares safe-idle ATLAS local service identity, localhost-only 
 
 No service process is started, no socket is opened, no port is bound, no API/web/dashboard/health endpoint is started, no systemd unit is created or enabled, no permission/audit/file/command/tool/action/ORION/git runtime is activated, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 247 — ATLAS Resource Monitoring
+Next planned sprint: Sprint 248 — Localhost and SSH Tunnel Security Review
 
 ## Product Direction — Genesis to Post-Genesis
 
@@ -3163,7 +3163,7 @@ Checkpoint state:
 - Capability Registry remains unchanged;
 - no runtime or operating-system side effect is introduced.
 
-Next boundary: `atlas_resource_monitoring`
+Next boundary: `localhost_ssh_tunnel_security_review`
 
 Next: Sprint 232 — Genesis Release Candidate Assembly.
 
@@ -3450,7 +3450,7 @@ Accepted results:
 - runtime activation, release gates, systemd, automatic service control,
   ORION control, and autonomous execution remain disabled.
 
-Current boundary: `resource_baseline_metrics`
+Current boundary: `atlas_resource_monitoring`
 
 Next boundary: `service_lifecycle_determinism`
 
@@ -3553,7 +3553,7 @@ Next: Sprint 244 — Session and Memory Persistence Checks.
 - Four canonical stores validated: browser sessions, chat history, memory, and journal.
 - Validation passed: `81/81` base checks and `92/92` assertions.
 - Read-only contract preserved: no repair, migration, persistent writes, runtime activation, socket binding, or systemd mutation.
-- Next sprint: `247`
+- Next sprint: `248`
 - Next boundary: `resource_baseline_metrics`.
 
 ## Sprint 245 Completion — Log Rotation and Storage Cleanup
@@ -3593,3 +3593,22 @@ process control, and threshold mutation remain disabled.
 
 Next: Sprint 247 — ATLAS Resource Monitoring.
 Next boundary: `atlas_resource_monitoring`.
+
+## Sprint 247 Completion — ATLAS Resource Monitoring
+
+AURA `v1.0.7-genesis` completes Sprint 247 at the
+`atlas_resource_monitoring` boundary.
+
+Sprint 247 adds deterministic, read-only health classification over the
+Sprint 246 resource baseline snapshot. It reports CPU, normalized load,
+memory, swap, storage, inode capacity, uptime, and process-count states as
+`healthy`, `warning`, `critical`, or `unavailable`.
+
+The threshold policy is immutable and combines percentage thresholds with
+absolute free-space thresholds for filesystems. Background sampling, rolling
+history, metrics persistence, dashboard activation, alert delivery, socket
+binding, systemd mutation, network access, process control, command execution,
+and threshold mutation remain disabled.
+
+Next: Sprint 248 — Localhost and SSH Tunnel Security Review.
+Next boundary: `localhost_ssh_tunnel_security_review`.

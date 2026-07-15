@@ -859,3 +859,21 @@ Provides read-only, single-snapshot CPU, load, memory, swap, uptime, process,
 filesystem-capacity, and inode-capacity baselines for ATLAS without `psutil`,
 background sampling, persistence, dashboard activation, sockets, systemd,
 network access, process control, or threshold mutation.
+
+## AURA ATLAS Resource Monitoring
+
+- ID: `aura_atlas_resource_monitoring`
+- Version introduced: `1.0.7-genesis`
+- Category: `stabilization`
+- State: `online`
+- Runtime level: `review_only`
+- Risk: `low`
+- Permission: `read_project`
+- Control Center visible: `true`
+
+Provides read-only health classification for CPU, normalized load, memory,
+swap, storage, inode capacity, uptime, and process count from the Sprint 246
+resource snapshot. Thresholds are immutable, and no background monitoring,
+history persistence, dashboard activation, alert delivery, sockets, systemd,
+network access, process control, command execution, or threshold mutation is
+enabled.

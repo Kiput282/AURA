@@ -4,11 +4,11 @@ Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
 Current canonical anchor: `v1.0.5-genesis`
 
-Current completed sprint: Sprint 246 — Resource Baseline Metrics
+Current completed sprint: Sprint 247 — ATLAS Resource Monitoring
 
-Next sprint: `247`
+Next sprint: `248`
 
-Next boundary: `atlas_resource_monitoring`
+Next boundary: `localhost_ssh_tunnel_security_review`
 
 Owner: Kiput
 
@@ -868,3 +868,22 @@ process control, and threshold mutation remain disabled.
 
 Next: Sprint 247 — ATLAS Resource Monitoring.
 Next boundary: `atlas_resource_monitoring`.
+
+## Sprint 247 Completion — ATLAS Resource Monitoring
+
+AURA `v1.0.7-genesis` completes Sprint 247 at the
+`atlas_resource_monitoring` boundary.
+
+Sprint 247 adds deterministic, read-only health classification over the
+Sprint 246 resource baseline snapshot. It reports CPU, normalized load,
+memory, swap, storage, inode capacity, uptime, and process-count states as
+`healthy`, `warning`, `critical`, or `unavailable`.
+
+The threshold policy is immutable and combines percentage thresholds with
+absolute free-space thresholds for filesystems. Background sampling, rolling
+history, metrics persistence, dashboard activation, alert delivery, socket
+binding, systemd mutation, network access, process control, command execution,
+and threshold mutation remain disabled.
+
+Next: Sprint 248 — Localhost and SSH Tunnel Security Review.
+Next boundary: `localhost_ssh_tunnel_security_review`.

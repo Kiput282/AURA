@@ -1965,6 +1965,29 @@ class CapabilityRegistryManager:
         "category": "stabilization",
         "control_center_visible": True,
     },
+    {
+        "id": "aura_atlas_resource_monitoring",
+        "name": "AURA ATLAS Resource Monitoring",
+        "description": (
+            "Read-only Sprint 247 ATLAS health classification "
+            "for CPU, load average, memory, swap, storage, inode "
+            "capacity, uptime, and process count using the Sprint "
+            "246 resource baseline snapshot with immutable warning "
+            "and critical thresholds, absolute free-space checks, "
+            "and healthy, warning, critical, or unavailable states "
+            "without background sampling, rolling history, metrics "
+            "persistence, dashboard activation, alert delivery, "
+            "socket binding, systemd mutation, network access, "
+            "process control, command execution, or threshold mutation."
+        ),
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "introduced_in": "1.0.7-genesis",
+        "category": "stabilization",
+        "control_center_visible": True,
+    },
 ]
 
 
