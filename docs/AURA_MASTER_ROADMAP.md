@@ -1519,7 +1519,7 @@ This foundation prepares safe-idle ATLAS local service identity, localhost-only 
 
 No service process is started, no socket is opened, no port is bound, no API/web/dashboard/health endpoint is started, no systemd unit is created or enabled, no permission/audit/file/command/tool/action/ORION/git runtime is activated, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 249 — Permission Expiry and Recovery Review
+Next planned sprint: Sprint 250 — Backup and Restore Rehearsal
 
 ## Product Direction — Genesis to Post-Genesis
 
@@ -3163,7 +3163,7 @@ Checkpoint state:
 - Capability Registry remains unchanged;
 - no runtime or operating-system side effect is introduced.
 
-Next boundary: `permission_expiry_recovery_review`
+Next boundary: `backup_restore_rehearsal`
 
 Next: Sprint 232 — Genesis Release Candidate Assembly.
 
@@ -3450,7 +3450,7 @@ Accepted results:
 - runtime activation, release gates, systemd, automatic service control,
   ORION control, and autonomous execution remain disabled.
 
-Current boundary: `localhost_ssh_tunnel_security_review`
+Current boundary: `permission_expiry_recovery_review`
 
 Next boundary: `service_lifecycle_determinism`
 
@@ -3553,7 +3553,7 @@ Next: Sprint 244 — Session and Memory Persistence Checks.
 - Four canonical stores validated: browser sessions, chat history, memory, and journal.
 - Validation passed: `81/81` base checks and `92/92` assertions.
 - Read-only contract preserved: no repair, migration, persistent writes, runtime activation, socket binding, or systemd mutation.
-- Next sprint: `249`
+- Next sprint: `250`
 - Next boundary: `resource_baseline_metrics`.
 
 ## Sprint 245 Completion — Log Rotation and Storage Cleanup
@@ -3634,3 +3634,27 @@ mutation, or systemd mutation is performed.
 
 Next: Sprint 249 — Permission Expiry and Recovery Review.
 Next boundary: `permission_expiry_recovery_review`.
+
+## Sprint 249 Completion — Permission Expiry and Recovery Review
+
+AURA `v1.0.9-genesis` completes Sprint 249 at the
+`permission_expiry_recovery_review` boundary.
+
+Sprint 249 adds a deterministic, read-only source-contract review covering
+permission grant lifecycle, expiry enforcement, stale-grant rejection, denial
+lifecycle, revocation visibility, recovery visibility, rollback and
+emergency-stop linkage, and audit linkage.
+
+The canonical contract passes `96/96` assertions with all eight review
+dimensions secure. It preserves the existing active permission runtime
+baseline at `3115/3115` assertions.
+
+The review does not import or execute the permission runtime, read permission,
+audit, or recovery store contents, create or apply grants or denials, apply
+expiry or revocation, execute recovery, rollback, or emergency stop, write
+audit events, mutate files, control processes, activate services, open network
+access, bind sockets, or mutate systemd.
+
+Next: Sprint 250 — Backup and Restore Rehearsal.
+Next boundary: `backup_restore_rehearsal`.
+Next milestone: `v1.1.0`.

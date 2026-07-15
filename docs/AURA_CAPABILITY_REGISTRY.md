@@ -896,3 +896,23 @@ execute sshd, create network connections or tunnels, read credentials or
 private-key content, mutate SSH/firewall configuration, restart services,
 bind sockets, control processes, generate keys, modify known hosts, or mutate
 systemd.
+
+## AURA Permission Expiry and Recovery Review
+
+- ID: `aura_permission_expiry_recovery_review`
+- Version introduced: `1.0.9-genesis`
+- Category: `stabilization`
+- State: `online`
+- Runtime level: `review_only`
+- Risk: `low`
+- Permission: `read_project`
+- Control Center visible: `true`
+
+Provides read-only source-contract visibility for grant lifecycle, expiry
+enforcement, stale-grant rejection, denial lifecycle, revocation, recovery,
+rollback/emergency-stop linkage, and audit linkage. It does not import or
+execute permission runtime, read permission/audit/recovery store contents,
+create or apply grants or denials, apply expiry or revocation, execute
+recovery, rollback, or emergency stop, write audit events, mutate files,
+control processes, activate services, open network access, bind sockets, or
+mutate systemd.

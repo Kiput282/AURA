@@ -2011,6 +2011,30 @@ class CapabilityRegistryManager:
         "category": "stabilization",
         "control_center_visible": True,
     },
+    {
+        "id": "aura_permission_expiry_recovery_review",
+        "name": "AURA Permission Expiry and Recovery Review",
+        "description": (
+            "Read-only Sprint 249 review of permission grant lifecycle, "
+            "expiry enforcement, stale-grant rejection, denial lifecycle, "
+            "revocation visibility, recovery visibility, rollback and "
+            "emergency-stop linkage, and audit linkage. The review "
+            "inspects source contracts and filesystem metadata without "
+            "importing or executing permission runtime, reading permission "
+            "or audit store contents, creating or applying grants or "
+            "denials, applying expiry or revocation, executing recovery, "
+            "rollback, emergency stop, writing audit events, mutating "
+            "files, controlling processes, activating services, opening "
+            "network access, binding sockets, or mutating systemd."
+        ),
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "introduced_in": "1.0.9-genesis",
+        "category": "stabilization",
+        "control_center_visible": True,
+    },
 ]
 
 

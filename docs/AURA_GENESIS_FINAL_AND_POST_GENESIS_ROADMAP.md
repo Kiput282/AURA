@@ -555,7 +555,7 @@ Runtime activation and operational release gates remain disabled.
 
 Current canonical version: `1.0.5-genesis`
 
-Next boundary: `permission_expiry_recovery_review`
+Next boundary: `backup_restore_rehearsal`
 
 Next: Sprint 246 — Resource Baseline Metrics.
 
@@ -637,3 +637,27 @@ mutation, or systemd mutation is performed.
 
 Next: Sprint 249 — Permission Expiry and Recovery Review.
 Next boundary: `permission_expiry_recovery_review`.
+
+## Sprint 249 Completion — Permission Expiry and Recovery Review
+
+AURA `v1.0.9-genesis` completes Sprint 249 at the
+`permission_expiry_recovery_review` boundary.
+
+Sprint 249 adds a deterministic, read-only source-contract review covering
+permission grant lifecycle, expiry enforcement, stale-grant rejection, denial
+lifecycle, revocation visibility, recovery visibility, rollback and
+emergency-stop linkage, and audit linkage.
+
+The canonical contract passes `96/96` assertions with all eight review
+dimensions secure. It preserves the existing active permission runtime
+baseline at `3115/3115` assertions.
+
+The review does not import or execute the permission runtime, read permission,
+audit, or recovery store contents, create or apply grants or denials, apply
+expiry or revocation, execute recovery, rollback, or emergency stop, write
+audit events, mutate files, control processes, activate services, open network
+access, bind sockets, or mutate systemd.
+
+Next: Sprint 250 — Backup and Restore Rehearsal.
+Next boundary: `backup_restore_rehearsal`.
+Next milestone: `v1.1.0`.
