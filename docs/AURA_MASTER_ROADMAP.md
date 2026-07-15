@@ -3546,7 +3546,7 @@ Acceptance:
 
 Next: Sprint 244 — Session and Memory Persistence Checks.
 
-## Checkpoint v1.0.4-genesis — Session and Memory Persistence Checks
+## Checkpoint v1.0.5-genesis — Session and Memory Persistence Checks
 
 - Sprint 244 completed.
 - Canonical boundary: `session_memory_persistence_checks`.
@@ -3554,4 +3554,24 @@ Next: Sprint 244 — Session and Memory Persistence Checks.
 - Validation passed: `81/81` base checks and `92/92` assertions.
 - Read-only contract preserved: no repair, migration, persistent writes, runtime activation, socket binding, or systemd mutation.
 - Next sprint: Sprint 245 — Log Rotation and Storage Cleanup.
-- Next boundary: `log_rotation_storage_cleanup`.
+- Next boundary: `resource_baseline_metrics`.
+
+## Sprint 245 Completion — Log Rotation and Storage Cleanup
+
+AURA `v1.0.5-genesis` completes Sprint 245 at the
+`log_rotation_storage_cleanup` boundary.
+
+The canonical logger rotates `logs/aura.log` at `1 MB` and retains rotated
+logs for `7 days`. Sprint 245 adds deterministic, read-only status, context,
+contract-check, filesystem-capacity, and cleanup-preview visibility.
+
+Cleanup execution remains disabled. The active log is protected; only
+allowlisted rotated log names can become retention candidates; symlinks and
+directory escape are blocked; canonical sessions, conversations, memory,
+journal, audit data, and arbitrary files remain outside the cleanup boundary.
+
+No canonical log deletion, move, truncation, compression, archive, service,
+socket, systemd, network, or runtime activation occurs.
+
+Next: Sprint 246 — Resource Baseline Metrics.
+Next boundary: `resource_baseline_metrics`.

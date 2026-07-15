@@ -1931,6 +1931,18 @@ class CapabilityRegistryManager:
         "category": "stabilization",
         "control_center_visible": True,
     },
+    {
+        "id": "aura_log_rotation_storage_cleanup",
+        "name": "AURA Log Rotation and Storage Cleanup",
+        "category": "stabilization",
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "description": "Read-only inspection of the canonical AURA log rotation policy, seven-day retention policy, filesystem capacity, active-log protection, rotated-log allowlist, and cleanup-preview candidates without deleting, moving, truncating, compressing, archiving, or mutating canonical logs, session data, conversation history, memory, journal, audit data, services, sockets, systemd, network state, or runtime execution features.",
+        "introduced_in": "1.0.5-genesis",
+        "visible": True,
+    },
 ]
 
 

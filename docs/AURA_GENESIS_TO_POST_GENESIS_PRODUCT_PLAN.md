@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Canonical Version: v1.0.4-genesis
+Current Canonical Version: v1.0.5-genesis
 Current Canonical Sprint: Sprint 244 — Session and Memory Persistence Checks
-Next Planned Sprint: Sprint 245 — Log Rotation and Storage Cleanup
+Next Planned Sprint: Sprint 246 — Resource Baseline Metrics
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -1862,6 +1862,26 @@ UPS protection, optional avatar assets, and future hardware upgrades.
 Cloud APIs or rented GPUs remain optional and require explicit budget
 approval.
 
-Current canonical state is `v1.0.4-genesis`.
+Current canonical state is `v1.0.5-genesis`.
 
-Next: Sprint 245 — Log Rotation and Storage Cleanup.
+Next: Sprint 246 — Resource Baseline Metrics.
+
+## Sprint 245 Completion — Log Rotation and Storage Cleanup
+
+AURA `v1.0.5-genesis` completes Sprint 245 at the
+`log_rotation_storage_cleanup` boundary.
+
+The canonical logger rotates `logs/aura.log` at `1 MB` and retains rotated
+logs for `7 days`. Sprint 245 adds deterministic, read-only status, context,
+contract-check, filesystem-capacity, and cleanup-preview visibility.
+
+Cleanup execution remains disabled. The active log is protected; only
+allowlisted rotated log names can become retention candidates; symlinks and
+directory escape are blocked; canonical sessions, conversations, memory,
+journal, audit data, and arbitrary files remain outside the cleanup boundary.
+
+No canonical log deletion, move, truncation, compression, archive, service,
+socket, systemd, network, or runtime activation occurs.
+
+Next: Sprint 246 — Resource Baseline Metrics.
+Next boundary: `resource_baseline_metrics`.

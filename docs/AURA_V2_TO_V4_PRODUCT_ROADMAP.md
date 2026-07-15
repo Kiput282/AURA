@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.0.4-genesis`
+Current canonical anchor: `v1.0.5-genesis`
 
-Current completed sprint: `244`
+Current completed sprint: `245`
 
-Next sprint: `245`
+Next sprint: `246`
 
-Next boundary: `log_rotation_storage_cleanup`
+Next boundary: `resource_baseline_metrics`
 
 Owner: Kiput
 
@@ -820,13 +820,33 @@ The v2-v4 roadmap must preserve:
 
 Current canonical state: `v1.0.1-genesis`
 
-Current completed sprint: `244`
+Current completed sprint: `245`
 
-Next sprint: `245`
+Next sprint: `246`
 
-Next boundary: `log_rotation_storage_cleanup`
+Next boundary: `resource_baseline_metrics`
 
 Sprint 241 completed CLI dispatch and finalized-release status hardening. Sprint 242 continues the block with Service Lifecycle Determinism.
 
 The next implementation must start with discovery and may not activate broad
 runtime behavior merely because this roadmap has been approved.
+
+## Sprint 245 Completion — Log Rotation and Storage Cleanup
+
+AURA `v1.0.5-genesis` completes Sprint 245 at the
+`log_rotation_storage_cleanup` boundary.
+
+The canonical logger rotates `logs/aura.log` at `1 MB` and retains rotated
+logs for `7 days`. Sprint 245 adds deterministic, read-only status, context,
+contract-check, filesystem-capacity, and cleanup-preview visibility.
+
+Cleanup execution remains disabled. The active log is protected; only
+allowlisted rotated log names can become retention candidates; symlinks and
+directory escape are blocked; canonical sessions, conversations, memory,
+journal, audit data, and arbitrary files remain outside the cleanup boundary.
+
+No canonical log deletion, move, truncation, compression, archive, service,
+socket, systemd, network, or runtime activation occurs.
+
+Next: Sprint 246 — Resource Baseline Metrics.
+Next boundary: `resource_baseline_metrics`.

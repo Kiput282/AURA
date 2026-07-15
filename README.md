@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v1.0.4-genesis
+Current version: v1.0.5-genesis
 Current status: Sprint 243 Configuration Integrity completed; Sprint 241-250 Genesis Stabilization & Runtime Hardening is active
 Current runtime state: Sprint 243 provides a read-only canonical settings validator for path safety, YAML schema integrity, local-only endpoints, safe-idle and explicit-confirmation boundaries, traversal rejection, secret-like key rejection, and deterministic negative fixtures. Configuration writes, environment mutation, runtime activation, socket binding, memory writes, journal writes, and systemd mutation remain disabled.
 
@@ -115,7 +115,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 242 — Service Lifecycle Determinism
+- Next planned sprint: Sprint 246 — Resource Baseline Metrics
 Current capability registry summary:
 
 - total capabilities: 124
@@ -1277,7 +1277,7 @@ Safety result:
 - release gate closed
 - future runtime still requires manual approval
 
-Next planned sprint: Sprint 245 — Log Rotation and Storage Cleanup
+Next planned sprint: Sprint 246 — Resource Baseline Metrics
 
 - Sprint 144.0 — Service Configuration and Port Registry Foundation
 
@@ -1288,7 +1288,7 @@ AURA is a local-first AI partner.
 Current canonical state:
 
 - Version: v0.180.0-genesis
-- Current completed sprint: Sprint 180.0 — Memory Runtime Stabilization
+- Current completed sprint: Sprint 245 — Log Rotation and Storage Cleanup
 - Next planned sprint: Sprint 181.0 — Local Web Runtime Activation Cutline
 - Final Genesis target: Sprint 240 — AURA Genesis Final / v1.0.0-genesis
 
@@ -6061,9 +6061,29 @@ Next: Sprint 242 — Service Lifecycle Determinism.
 
 ### Sprint 244 Persistence Checkpoint
 
-- Version: `v1.0.4-genesis`
+- Version: `v1.0.5-genesis`
 - Boundary: `session_memory_persistence_checks`
 - Canonical stores: browser sessions, chat history, memory, and journal
 - Validation: `81/81` base checks and `92/92` total assertions
 - Capability registry: `125` total, `123` online, `15` review-only, `4` runtime execution features
 - Safety: read-only inspection; no repair, migration, persistent writes, runtime activation, socket binding, or systemd mutation
+
+## Sprint 245 Completion — Log Rotation and Storage Cleanup
+
+AURA `v1.0.5-genesis` completes Sprint 245 at the
+`log_rotation_storage_cleanup` boundary.
+
+The canonical logger rotates `logs/aura.log` at `1 MB` and retains rotated
+logs for `7 days`. Sprint 245 adds deterministic, read-only status, context,
+contract-check, filesystem-capacity, and cleanup-preview visibility.
+
+Cleanup execution remains disabled. The active log is protected; only
+allowlisted rotated log names can become retention candidates; symlinks and
+directory escape are blocked; canonical sessions, conversations, memory,
+journal, audit data, and arbitrary files remain outside the cleanup boundary.
+
+No canonical log deletion, move, truncation, compression, archive, service,
+socket, systemd, network, or runtime activation occurs.
+
+Next: Sprint 246 — Resource Baseline Metrics.
+Next boundary: `resource_baseline_metrics`.

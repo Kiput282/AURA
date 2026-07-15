@@ -826,3 +826,20 @@ service runtime.
 - Introduced in: `1.0.4-genesis`.
 - Capability totals: `125` total, `123` online, `78` foundation-only, `7` planner-only, `12` permission-gated, `15` review-only, `0` planned, `2` disabled runtime, and `4` runtime execution features.
 - The capability exposes read-only persistence validation and does not repair, migrate, write, activate runtime, bind sockets, or mutate systemd state.
+
+## AURA Log Rotation and Storage Cleanup
+
+- ID: `aura_log_rotation_storage_cleanup`
+- Version introduced: `1.0.5-genesis`
+- Category: `stabilization`
+- State: `online`
+- Runtime level: `review_only`
+- Risk: `low`
+- Permission: `read_project`
+- Visible: `true`
+
+Provides deterministic read-only status, context, contract checks, filesystem
+capacity visibility, and cleanup-preview packets for the canonical `1 MB`
+rotation and `7 days` retention policy. The active log is protected, rotated
+names are allowlisted, symlinks and directory escape are blocked, and cleanup
+execution remains disabled.

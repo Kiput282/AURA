@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.0.4-genesis
+- Current version: v1.0.5-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -42,7 +42,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 - Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
 - Browser auto-launch: disabled
 - Background/systemd/auto-start: disabled
-- Next: Sprint 245 — Log Rotation and Storage Cleanup
+- Next: Sprint 246 — Resource Baseline Metrics
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2142,10 +2142,30 @@ Validated state:
 - runtime activation, systemd, automatic startup, release gates, ORION
   control, and autonomous execution remain disabled.
 
-Current boundary: `session_memory_persistence_checks`
+Current boundary: `log_rotation_storage_cleanup`
 
-Next boundary: `log_rotation_storage_cleanup`
+Next boundary: `resource_baseline_metrics`
 
-Current canonical version: `1.0.4-genesis`
+Current canonical version: `1.0.5-genesis`
 
-Next: Sprint 245 — Log Rotation and Storage Cleanup.
+Next: Sprint 246 — Resource Baseline Metrics.
+
+## Sprint 245 Completion — Log Rotation and Storage Cleanup
+
+AURA `v1.0.5-genesis` completes Sprint 245 at the
+`log_rotation_storage_cleanup` boundary.
+
+The canonical logger rotates `logs/aura.log` at `1 MB` and retains rotated
+logs for `7 days`. Sprint 245 adds deterministic, read-only status, context,
+contract-check, filesystem-capacity, and cleanup-preview visibility.
+
+Cleanup execution remains disabled. The active log is protected; only
+allowlisted rotated log names can become retention candidates; symlinks and
+directory escape are blocked; canonical sessions, conversations, memory,
+journal, audit data, and arbitrary files remain outside the cleanup boundary.
+
+No canonical log deletion, move, truncation, compression, archive, service,
+socket, systemd, network, or runtime activation occurs.
+
+Next: Sprint 246 — Resource Baseline Metrics.
+Next boundary: `resource_baseline_metrics`.
