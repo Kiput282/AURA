@@ -1988,6 +1988,29 @@ class CapabilityRegistryManager:
         "category": "stabilization",
         "control_center_visible": True,
     },
+    {
+        "id": "aura_localhost_ssh_tunnel_security_review",
+        "name": "AURA Localhost and SSH Tunnel Security Review",
+        "description": (
+            "Read-only Sprint 248 security posture review for AURA "
+            "localhost binding, port 8765 exposure, SSH listener "
+            "scope, visible sshd configuration, tunnel policy, SSH "
+            "file permission metadata, firewall visibility, and "
+            "runtime activation. The review reports secure, review, "
+            "warning, or unavailable states without executing sshd, "
+            "opening connections or tunnels, reading credentials or "
+            "private-key content, changing SSH or firewall settings, "
+            "restarting services, binding sockets, controlling "
+            "processes, mutating systemd, or generating keys."
+        ),
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "introduced_in": "1.0.8-genesis",
+        "category": "stabilization",
+        "control_center_visible": True,
+    },
 ]
 
 

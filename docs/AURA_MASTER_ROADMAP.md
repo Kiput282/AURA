@@ -1519,7 +1519,7 @@ This foundation prepares safe-idle ATLAS local service identity, localhost-only 
 
 No service process is started, no socket is opened, no port is bound, no API/web/dashboard/health endpoint is started, no systemd unit is created or enabled, no permission/audit/file/command/tool/action/ORION/git runtime is activated, and runtime execution features remain 0.
 
-Next planned sprint: Sprint 248 — Localhost and SSH Tunnel Security Review
+Next planned sprint: Sprint 249 — Permission Expiry and Recovery Review
 
 ## Product Direction — Genesis to Post-Genesis
 
@@ -3163,7 +3163,7 @@ Checkpoint state:
 - Capability Registry remains unchanged;
 - no runtime or operating-system side effect is introduced.
 
-Next boundary: `localhost_ssh_tunnel_security_review`
+Next boundary: `permission_expiry_recovery_review`
 
 Next: Sprint 232 — Genesis Release Candidate Assembly.
 
@@ -3450,7 +3450,7 @@ Accepted results:
 - runtime activation, release gates, systemd, automatic service control,
   ORION control, and autonomous execution remain disabled.
 
-Current boundary: `atlas_resource_monitoring`
+Current boundary: `localhost_ssh_tunnel_security_review`
 
 Next boundary: `service_lifecycle_determinism`
 
@@ -3553,7 +3553,7 @@ Next: Sprint 244 — Session and Memory Persistence Checks.
 - Four canonical stores validated: browser sessions, chat history, memory, and journal.
 - Validation passed: `81/81` base checks and `92/92` assertions.
 - Read-only contract preserved: no repair, migration, persistent writes, runtime activation, socket binding, or systemd mutation.
-- Next sprint: `248`
+- Next sprint: `249`
 - Next boundary: `resource_baseline_metrics`.
 
 ## Sprint 245 Completion — Log Rotation and Storage Cleanup
@@ -3612,3 +3612,25 @@ and threshold mutation remain disabled.
 
 Next: Sprint 248 — Localhost and SSH Tunnel Security Review.
 Next boundary: `localhost_ssh_tunnel_security_review`.
+
+## Sprint 248 Completion — Localhost and SSH Tunnel Security Review
+
+AURA `v1.0.8-genesis` completes Sprint 248 at the
+`localhost_ssh_tunnel_security_review` boundary.
+
+Sprint 248 adds a deterministic, read-only security posture review covering
+AURA's canonical `127.0.0.1:8765` binding, current listener exposure, SSH
+listener scope, visible sshd configuration, SSH tunnel policy, SSH file
+permission metadata, firewall visibility, and runtime activation.
+
+The review reports `secure`, `review`, `warning`, or `unavailable` per
+dimension. A non-secure posture state remains an observational finding and does
+not imply contract failure when all safety assertions pass.
+
+No sshd effective-policy execution, SSH connection, tunnel creation, credential
+or private-key content read, firewall mutation, SSH configuration mutation,
+service restart, socket activation, process control, key generation, known-host
+mutation, or systemd mutation is performed.
+
+Next: Sprint 249 — Permission Expiry and Recovery Review.
+Next boundary: `permission_expiry_recovery_review`.

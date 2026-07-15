@@ -3,7 +3,7 @@
 Status: CANONICAL GENESIS PATH
 Current Canonical Version: v1.0.5-genesis
 Current Canonical Sprint: Sprint 244 — Session and Memory Persistence Checks
-Next Planned Sprint: Sprint 248 — Localhost and SSH Tunnel Security Review
+Next Planned Sprint: Sprint 249 — Permission Expiry and Recovery Review
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -29,7 +29,7 @@ AURA is currently at:
 - State: READY
 - Completed block: Sprint 131-140 runtime planning block
 - Active block: Sprint 151-160 Control Center Runtime
-- Next sprint: `248`
+- Next sprint: `249`
 
 Current AURA is not yet an active autonomous runtime system.
 
@@ -1884,7 +1884,7 @@ No canonical log deletion, move, truncation, compression, archive, service,
 socket, systemd, network, or runtime activation occurs.
 
 Next: Sprint 246 — Resource Baseline Metrics.
-Next boundary: `localhost_ssh_tunnel_security_review`
+Next boundary: `permission_expiry_recovery_review`
 
 ## Sprint 246 Completion — Resource Baseline Metrics
 
@@ -1922,3 +1922,25 @@ and threshold mutation remain disabled.
 
 Next: Sprint 248 — Localhost and SSH Tunnel Security Review.
 Next boundary: `localhost_ssh_tunnel_security_review`.
+
+## Sprint 248 Completion — Localhost and SSH Tunnel Security Review
+
+AURA `v1.0.8-genesis` completes Sprint 248 at the
+`localhost_ssh_tunnel_security_review` boundary.
+
+Sprint 248 adds a deterministic, read-only security posture review covering
+AURA's canonical `127.0.0.1:8765` binding, current listener exposure, SSH
+listener scope, visible sshd configuration, SSH tunnel policy, SSH file
+permission metadata, firewall visibility, and runtime activation.
+
+The review reports `secure`, `review`, `warning`, or `unavailable` per
+dimension. A non-secure posture state remains an observational finding and does
+not imply contract failure when all safety assertions pass.
+
+No sshd effective-policy execution, SSH connection, tunnel creation, credential
+or private-key content read, firewall mutation, SSH configuration mutation,
+service restart, socket activation, process control, key generation, known-host
+mutation, or systemd mutation is performed.
+
+Next: Sprint 249 — Permission Expiry and Recovery Review.
+Next boundary: `permission_expiry_recovery_review`.

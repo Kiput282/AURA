@@ -172,6 +172,7 @@ from aura.session_memory_persistence_checks.aura_session_memory_persistence_chec
 from aura.log_rotation_storage_cleanup.aura_log_rotation_storage_cleanup_cli import handle_log_rotation_storage_cleanup_command
 from aura.resource_baseline_metrics.aura_resource_baseline_metrics_cli import handle_resource_baseline_metrics_command
 from aura.atlas_resource_monitoring.aura_atlas_resource_monitoring_cli import handle_atlas_resource_monitoring_command
+from aura.localhost_ssh_tunnel_security_review.aura_localhost_ssh_tunnel_security_review_cli import handle_localhost_ssh_tunnel_security_review_command
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
@@ -11251,6 +11252,8 @@ class AuraCLI:
         if handle_resource_baseline_metrics_command(args):
             return True
         if handle_atlas_resource_monitoring_command(args):
+            return True
+        if handle_localhost_ssh_tunnel_security_review_command(args):
             return True
         if handle_session_memory_persistence_command(args):
             return True

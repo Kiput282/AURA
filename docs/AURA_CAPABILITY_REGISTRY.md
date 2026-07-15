@@ -877,3 +877,22 @@ resource snapshot. Thresholds are immutable, and no background monitoring,
 history persistence, dashboard activation, alert delivery, sockets, systemd,
 network access, process control, command execution, or threshold mutation is
 enabled.
+
+## AURA Localhost and SSH Tunnel Security Review
+
+- ID: `aura_localhost_ssh_tunnel_security_review`
+- Version introduced: `1.0.8-genesis`
+- Category: `stabilization`
+- State: `online`
+- Runtime level: `review_only`
+- Risk: `low`
+- Permission: `read_project`
+- Control Center visible: `true`
+
+Provides read-only posture visibility for the AURA localhost binding, port
+`8765`, SSH listener scope, visible sshd settings, tunnel policy, SSH file
+permission metadata, firewall visibility, and runtime activation. It does not
+execute sshd, create network connections or tunnels, read credentials or
+private-key content, mutate SSH/firewall configuration, restart services,
+bind sockets, control processes, generate keys, modify known hosts, or mutate
+systemd.

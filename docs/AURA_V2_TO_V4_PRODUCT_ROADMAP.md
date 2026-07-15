@@ -4,11 +4,11 @@ Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
 Current canonical anchor: `v1.0.5-genesis`
 
-Current completed sprint: Sprint 247 — ATLAS Resource Monitoring
+Current completed sprint: Sprint 248 — Localhost and SSH Tunnel Security Review
 
-Next sprint: `248`
+Next sprint: `249`
 
-Next boundary: `localhost_ssh_tunnel_security_review`
+Next boundary: `permission_expiry_recovery_review`
 
 Owner: Kiput
 
@@ -887,3 +887,25 @@ and threshold mutation remain disabled.
 
 Next: Sprint 248 — Localhost and SSH Tunnel Security Review.
 Next boundary: `localhost_ssh_tunnel_security_review`.
+
+## Sprint 248 Completion — Localhost and SSH Tunnel Security Review
+
+AURA `v1.0.8-genesis` completes Sprint 248 at the
+`localhost_ssh_tunnel_security_review` boundary.
+
+Sprint 248 adds a deterministic, read-only security posture review covering
+AURA's canonical `127.0.0.1:8765` binding, current listener exposure, SSH
+listener scope, visible sshd configuration, SSH tunnel policy, SSH file
+permission metadata, firewall visibility, and runtime activation.
+
+The review reports `secure`, `review`, `warning`, or `unavailable` per
+dimension. A non-secure posture state remains an observational finding and does
+not imply contract failure when all safety assertions pass.
+
+No sshd effective-policy execution, SSH connection, tunnel creation, credential
+or private-key content read, firewall mutation, SSH configuration mutation,
+service restart, socket activation, process control, key generation, known-host
+mutation, or systemd mutation is performed.
+
+Next: Sprint 249 — Permission Expiry and Recovery Review.
+Next boundary: `permission_expiry_recovery_review`.

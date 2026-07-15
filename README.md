@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v1.0.7-genesis
+Current version: v1.0.8-genesis
 Current status: Sprint 243 Configuration Integrity completed; Sprint 241-250 Genesis Stabilization & Runtime Hardening is active
 Current runtime state: Sprint 243 provides a read-only canonical settings validator for path safety, YAML schema integrity, local-only endpoints, safe-idle and explicit-confirmation boundaries, traversal rejection, secret-like key rejection, and deterministic negative fixtures. Configuration writes, environment mutation, runtime activation, socket binding, memory writes, journal writes, and systemd mutation remain disabled.
 
@@ -115,7 +115,7 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 248 — Localhost and SSH Tunnel Security Review
+- Next planned sprint: Sprint 249 — Permission Expiry and Recovery Review
 Current capability registry summary:
 
 - total capabilities: 124
@@ -1288,7 +1288,7 @@ AURA is a local-first AI partner.
 Current canonical state:
 
 - Version: v0.180.0-genesis
-- Current completed sprint: Sprint 247 — ATLAS Resource Monitoring
+- Current completed sprint: Sprint 248 — Localhost and SSH Tunnel Security Review
 - Next planned sprint: Sprint 181.0 — Local Web Runtime Activation Cutline
 - Final Genesis target: Sprint 240 — AURA Genesis Final / v1.0.0-genesis
 
@@ -3097,8 +3097,8 @@ Sprint 200 confirms:
 - runtime activation allowed: false
 - runtime ready: false
 - release gate open: false
-- next sprint: `248`
-- next boundary: `localhost_ssh_tunnel_security_review`
+- next sprint: `249`
+- next boundary: `permission_expiry_recovery_review`
 
 The dependency baseline remains unchanged:
 
@@ -3143,7 +3143,7 @@ Sprint 201 confirms:
 - activation status: activation_foundation_ready
 - vision block start: 201
 - vision block end: 210
-- current sprint: Sprint 247
+- current sprint: Sprint 248
 - next sprint: 202
 - next boundary: explicit_visual_input_state
 - runtime ready: false
@@ -6003,7 +6003,7 @@ Validated hardening state:
   ORION control, broad voice/vision activation, and autonomous execution
   remain disabled.
 
-Current boundary: `atlas_resource_monitoring`
+Current boundary: `localhost_ssh_tunnel_security_review`
 
 Next boundary: `service_lifecycle_determinism`
 
@@ -6124,3 +6124,25 @@ and threshold mutation remain disabled.
 
 Next: Sprint 248 — Localhost and SSH Tunnel Security Review.
 Next boundary: `localhost_ssh_tunnel_security_review`.
+
+## Sprint 248 Completion — Localhost and SSH Tunnel Security Review
+
+AURA `v1.0.8-genesis` completes Sprint 248 at the
+`localhost_ssh_tunnel_security_review` boundary.
+
+Sprint 248 adds a deterministic, read-only security posture review covering
+AURA's canonical `127.0.0.1:8765` binding, current listener exposure, SSH
+listener scope, visible sshd configuration, SSH tunnel policy, SSH file
+permission metadata, firewall visibility, and runtime activation.
+
+The review reports `secure`, `review`, `warning`, or `unavailable` per
+dimension. A non-secure posture state remains an observational finding and does
+not imply contract failure when all safety assertions pass.
+
+No sshd effective-policy execution, SSH connection, tunnel creation, credential
+or private-key content read, firewall mutation, SSH configuration mutation,
+service restart, socket activation, process control, key generation, known-host
+mutation, or systemd mutation is performed.
+
+Next: Sprint 249 — Permission Expiry and Recovery Review.
+Next boundary: `permission_expiry_recovery_review`.
