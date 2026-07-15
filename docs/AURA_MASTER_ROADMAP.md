@@ -3528,3 +3528,20 @@ Acceptance:
   remain disabled.
 
 Next: Sprint 243 — Configuration Integrity.
+
+## Checkpoint v1.0.3-genesis — Configuration Integrity
+
+Sprint 243 completed read-only canonical settings validation.
+
+Acceptance:
+
+- canonical settings checks: 50/50;
+- Sprint 243 assertions: 61/61;
+- exact schema and local-only endpoint boundaries verified;
+- safe-idle and explicit-confirmation boundaries verified;
+- traversal and secret-like key fixtures rejected;
+- builtin skill registry compatibility restored;
+- configuration, memory, and journal writes remained zero;
+- runtime activation and systemd mutation remained disabled.
+
+Next: Sprint 244 — Session and Memory Persistence Checks.

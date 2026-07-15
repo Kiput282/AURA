@@ -794,3 +794,24 @@ Current canonical summary:
 
 Sprint 242 does not add another runtime executor. It hardens deterministic
 control of the existing localhost foreground lifecycle owner.
+
+## Sprint 243 Update — Configuration Integrity
+
+The registry now includes `aura_configuration_integrity` as an online,
+low-risk, read-project, review-only stabilization capability.
+
+Current canonical summary:
+
+- total capabilities: 124
+- online capabilities: 122
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 12
+- review-only capabilities: 14
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 4
+
+Sprint 243 does not add a runtime executor. It validates the existing
+canonical settings file without writing configuration or activating
+service runtime.

@@ -1888,6 +1888,29 @@ class CapabilityRegistryManager:
             "automatic startup."
         ),
     },
+    {
+        "id": "aura_configuration_integrity",
+        "name": "AURA Configuration Integrity",
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "introduced_in": "1.0.3-genesis",
+        "category": "stabilization",
+        "control_center_visible": True,
+        "description": (
+            "Read-only Sprint 243 canonical settings "
+            "integrity validation for path safety, YAML "
+            "mapping and exact schema, local-only "
+            "reasoning and web endpoints, safe-idle and "
+            "explicit-confirmation boundaries, traversal "
+            "rejection, secret-like key rejection, and "
+            "deterministic negative fixtures without "
+            "configuration writes, environment mutation, "
+            "runtime activation, socket binding, memory "
+            "writes, journal writes, or systemd mutation."
+        ),
+    },
 ]
 
 
