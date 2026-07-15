@@ -773,3 +773,24 @@ and confirms memory/journal integrity.
 
 It does not activate runtime behavior, start services or listeners, enable
 systemd, open release gates, control ORION, or enable autonomous execution.
+
+## Sprint 242 Update — Service Lifecycle Determinism
+
+The registry now includes
+`aura_service_lifecycle_determinism` as an online, low-risk,
+read-project, review-only stabilization capability.
+
+Current canonical summary:
+
+- total capabilities: 123
+- online capabilities: 121
+- foundation-only capabilities: 78
+- planner-only capabilities: 7
+- permission-gated capabilities: 12
+- review-only capabilities: 13
+- planned future capabilities: 0
+- disabled runtime capabilities: 2
+- runtime execution features: 4
+
+Sprint 242 does not add another runtime executor. It hardens deterministic
+control of the existing localhost foreground lifecycle owner.

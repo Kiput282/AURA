@@ -1867,6 +1867,27 @@ class CapabilityRegistryManager:
                     "or autonomous execution."
                 ),
             },
+    {
+        "id": "aura_service_lifecycle_determinism",
+        "name": "AURA Service Lifecycle Determinism",
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "introduced_in": "1.0.2-genesis",
+        "category": "stabilization",
+        "control_center_visible": True,
+        "description": (
+            "Deterministic Sprint 242 lifecycle hardening "
+            "for startup-stop race rejection, repeated-stop "
+            "idempotency, pure-JSON lifecycle validation "
+            "output, and preserved normal access logging "
+            "without enabling PID persistence, lifecycle "
+            "state persistence, systemd, background daemons, "
+            "remote lifecycle control, HTTP mutation, or "
+            "automatic startup."
+        ),
+    },
 ]
 
 

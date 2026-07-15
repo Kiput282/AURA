@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Canonical Version: v1.0.1-genesis
-Current Canonical Sprint: Sprint 241 — Genesis Stabilization Runtime Hardening
-Next Planned Sprint: Sprint 242 — Service Lifecycle Determinism
+Current Canonical Version: v1.0.2-genesis
+Current Canonical Sprint: Sprint 242 — Service Lifecycle Determinism
+Next Planned Sprint: Sprint 243 — Configuration Integrity
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together

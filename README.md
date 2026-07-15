@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v1.0.1-genesis
-Current status: Sprint 241 Genesis Stabilization Runtime Hardening completed; Sprint 241-250 Genesis Stabilization & Runtime Hardening is active
-Current runtime state: Sprint 241 establishes exact CLI command ownership, removes 1,126 unrelated MemoryStore/ProjectJournal initialization log lines, reduces Genesis Final status E2E latency to about 0.19 seconds, and adds 11/11 permanent hardening regressions while keeping runtime activation, automatic service control, systemd, release gates, ORION control, and autonomous execution disabled.
+Current version: v1.0.2-genesis
+Current status: Sprint 242 Service Lifecycle Determinism completed; Sprint 241-250 Genesis Stabilization & Runtime Hardening is active
+Current runtime state: Sprint 242 rejects stop requests during startup, preserves deterministic repeated-stop responses, restores pure-JSON lifecycle self-test output, and preserves normal interactive access logging. PID files, persistent lifecycle state, systemd, background daemons, remote lifecycle control, HTTP lifecycle mutation, and automatic startup remain disabled.
 
 ---
 
@@ -40,6 +40,7 @@ AURA has completed Sprint 241 and has started the Sprint 241-250 Genesis Stabili
 Sprint 241 closes CLI dispatch pollution and finalized-release status recursion while preserving the explicit deep validation path.
 
 Latest completed checkpoint:
+- v1.0.2-genesis - Sprint 242: Service Lifecycle Determinism
 
 - v1.0.1-genesis
 - Sprint 241: Genesis Stabilization Runtime Hardening
@@ -116,12 +117,12 @@ Latest completed checkpoint:
 - Next planned sprint: Sprint 242 — Service Lifecycle Determinism
 Current capability registry summary:
 
-- total capabilities: 122
-- online capabilities: 120
+- total capabilities: 123
+- online capabilities: 121
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
 - permission-gated capabilities: 12
-- review-only capabilities: 12
+- review-only capabilities: 13
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 4
@@ -1275,7 +1276,7 @@ Safety result:
 - release gate closed
 - future runtime still requires manual approval
 
-Next planned sprint:
+Next planned sprint: Sprint 243 — Configuration Integrity
 
 - Sprint 144.0 — Service Configuration and Port Registry Foundation
 

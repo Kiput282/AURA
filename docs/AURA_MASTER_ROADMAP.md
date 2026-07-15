@@ -3510,3 +3510,21 @@ Canonical version is now `1.0.1-genesis` after Sprint 241 explicitly promoted th
 Next boundary: `service_lifecycle_determinism`
 
 Next: Sprint 242 — Service Lifecycle Determinism.
+
+## Checkpoint v1.0.2-genesis — Service Lifecycle Determinism
+
+Sprint 242 completed deterministic lifecycle request hardening.
+
+Acceptance:
+
+- Sprint 242 lifecycle determinism: 25/25;
+- Sprint 182 lifecycle baseline preserved: 41/41;
+- startup-period stop requests fail closed;
+- repeated stopped/stopping requests are deterministic;
+- lifecycle self-test output is pure JSON;
+- normal runtime access logging remains enabled;
+- PID persistence, state persistence, systemd, remote lifecycle control,
+  HTTP lifecycle mutation, background daemon execution, and autostart
+  remain disabled.
+
+Next: Sprint 243 — Configuration Integrity.

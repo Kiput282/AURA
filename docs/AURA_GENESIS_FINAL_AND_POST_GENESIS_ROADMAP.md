@@ -553,8 +553,8 @@ status projection, preserves explicit deep validation, and records
 
 Runtime activation and operational release gates remain disabled.
 
-Current canonical version: `1.0.1-genesis`
+Current canonical version: `1.0.2-genesis`
 
 Next boundary: `service_lifecycle_determinism`
 
-Next: Sprint 242 — Service Lifecycle Determinism.
+Next: Sprint 243 — Configuration Integrity.

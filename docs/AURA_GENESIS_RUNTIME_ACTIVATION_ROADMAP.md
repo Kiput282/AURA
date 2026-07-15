@@ -16,7 +16,7 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.0.1-genesis
+- Current version: v1.0.2-genesis
 - Completed: Sprint 229 — Genesis Acceptance Rehearsal
 - Completed block: Sprint 181-190 Local Interaction Runtime Activation
 - Active block: Sprint 221-230 — Unified Partner Runtime Integration
@@ -2146,6 +2146,6 @@ Current boundary: `genesis_stabilization_runtime_hardening`
 
 Next boundary: `service_lifecycle_determinism`
 
-Current canonical version: `1.0.1-genesis`
+Current canonical version: `1.0.2-genesis`
 
 Next: Sprint 242 — Service Lifecycle Determinism.

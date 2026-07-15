@@ -100,3 +100,15 @@ Sprint 181 localhost listener; it does not introduce a second executor.
 ## Next Sprint
 
 Sprint 183 — Health and Status API Runtime
+
+## Sprint 242 Determinism Hardening
+
+Sprint 242 preserves the Sprint 182 lifecycle contract and adds:
+
+- fail-closed rejection of stop requests during `starting`;
+- deterministic repeated-stop responses;
+- a 25-assertion non-listening determinism check;
+- pure-JSON historical self-test output;
+- preserved access logging for normal interactive runtime.
+
+The historical Sprint 182 self-test remains 41/41.

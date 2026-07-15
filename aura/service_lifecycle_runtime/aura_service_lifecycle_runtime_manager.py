@@ -37,6 +37,8 @@ Still disabled:
 
 from __future__ import annotations
 
+from contextlib import nullcontext, redirect_stderr
+from io import StringIO
 import json
 import signal
 import socket
@@ -591,6 +593,13 @@ class AuraServiceLifecycleRuntimeManager:
                     "state": state.value,
                 }
 
+            if state == LifecycleState.STARTING:
+                return {
+                    "accepted": False,
+                    "reason": "startup_in_progress",
+                    "state": state.value,
+                }
+
             if state == LifecycleState.FAILED:
                 return {
                     "accepted": False,
@@ -626,14 +635,25 @@ class AuraServiceLifecycleRuntimeManager:
     def _http_health(
         host: str,
         port: int,
+        *,
+        suppress_access_log: bool = False,
     ) -> dict[str, Any]:
-        with urllib.request.urlopen(
-            f"http://{host}:{port}/health",
-            timeout=2.0,
-        ) as response:
-            return json.loads(
-                response.read().decode("utf-8")
-            )
+        """Read health data with optional test-only log isolation."""
+
+        stderr_context = (
+            redirect_stderr(StringIO())
+            if suppress_access_log
+            else nullcontext()
+        )
+
+        with stderr_context:
+            with urllib.request.urlopen(
+                f"http://{host}:{port}/health",
+                timeout=2.0,
+            ) as response:
+                return json.loads(
+                    response.read().decode("utf-8")
+                )
 
     @staticmethod
     def _wait_for_state(
@@ -686,6 +706,241 @@ class AuraServiceLifecycleRuntimeManager:
         blocker.bind((host, port))
         blocker.listen(1)
         return blocker
+
+    def determinism_check(self) -> dict[str, Any]:
+        """Verify idempotent lifecycle request behavior without binding a port."""
+
+        assertions: dict[str, bool] = {}
+
+        stopped = type(self)(
+            web_runtime=self.web_runtime
+        )
+        stopped_snapshot = stopped.snapshot()
+
+        assertions["baseline_stopped"] = (
+            stopped_snapshot["state"]
+            == LifecycleState.STOPPED.value
+        )
+        assertions["baseline_safe_idle"] = (
+            stopped_snapshot["safe_idle"]
+            is True
+        )
+
+        first_stopped = stopped.request_stop(
+            reason="determinism_stopped"
+        )
+        second_stopped = stopped.request_stop(
+            reason="determinism_stopped"
+        )
+        stopped_after = stopped.snapshot()
+
+        assertions["stopped_stop_rejected"] = (
+            first_stopped["accepted"]
+            is False
+        )
+        assertions["stopped_reason_exact"] = (
+            first_stopped["reason"]
+            == "already_stopped"
+        )
+        assertions["stopped_repeat_deterministic"] = (
+            first_stopped
+            == second_stopped
+        )
+        assertions["stopped_state_unchanged"] = (
+            stopped_after["state"]
+            == LifecycleState.STOPPED.value
+        )
+        assertions["stopped_count_zero"] = (
+            stopped_after["stop_request_count"]
+            == 0
+        )
+        assertions["stopped_owner_inactive"] = (
+            stopped_after["process_owner"]["active"]
+            is False
+        )
+
+        starting = type(self)(
+            web_runtime=self.web_runtime
+        )
+        starting._transition(
+            LifecycleState.STARTING,
+            reason="determinism_starting_fixture",
+        )
+
+        starting_stop = starting.request_stop(
+            reason="determinism_starting_stop"
+        )
+        starting_after_stop = starting.snapshot()
+
+        assertions["starting_stop_rejected"] = (
+            starting_stop["accepted"]
+            is False
+        )
+        assertions["starting_reason_exact"] = (
+            starting_stop["reason"]
+            == "startup_in_progress"
+        )
+        assertions["starting_state_preserved"] = (
+            starting_after_stop["state"]
+            == LifecycleState.STARTING.value
+        )
+        assertions["starting_count_zero"] = (
+            starting_after_stop[
+                "stop_request_count"
+            ]
+            == 0
+        )
+        assertions["starting_listener_inactive"] = (
+            starting_after_stop[
+                "listener_active"
+            ]
+            is False
+        )
+
+        reentrant_start_blocked = False
+
+        try:
+            starting.run_foreground(
+                confirmed=True,
+                port_override=0,
+            )
+        except LifecycleStartError:
+            reentrant_start_blocked = True
+
+        assertions["reentrant_start_blocked"] = (
+            reentrant_start_blocked
+        )
+        assertions["reentrant_state_preserved"] = (
+            starting.snapshot()["state"]
+            == LifecycleState.STARTING.value
+        )
+
+        starting._startup_rollback(
+            error=LifecycleStartError(
+                "determinism fixture cleanup"
+            )
+        )
+        starting_clean = starting.snapshot()
+
+        assertions["starting_cleanup_stopped"] = (
+            starting_clean["state"]
+            == LifecycleState.STOPPED.value
+        )
+        assertions["starting_cleanup_rollback_one"] = (
+            starting_clean[
+                "startup_rollback_count"
+            ]
+            == 1
+        )
+        assertions["starting_cleanup_owner_inactive"] = (
+            starting_clean[
+                "process_owner"
+            ]["active"]
+            is False
+        )
+        assertions["starting_cleanup_listener_inactive"] = (
+            starting_clean["listener_active"]
+            is False
+        )
+
+        stopping = type(self)(
+            web_runtime=self.web_runtime
+        )
+        stopping._transition(
+            LifecycleState.STARTING,
+            reason="determinism_stopping_fixture",
+        )
+        stopping._transition(
+            LifecycleState.STOPPING,
+            reason="determinism_stop_in_progress",
+        )
+
+        repeated_stopping = stopping.request_stop(
+            reason="determinism_repeat_stop"
+        )
+        stopping_snapshot = stopping.snapshot()
+
+        assertions["stopping_repeat_rejected"] = (
+            repeated_stopping["accepted"]
+            is False
+        )
+        assertions["stopping_reason_exact"] = (
+            repeated_stopping["reason"]
+            == "stop_already_in_progress"
+        )
+        assertions["stopping_state_preserved"] = (
+            stopping_snapshot["state"]
+            == LifecycleState.STOPPING.value
+        )
+        assertions["stopping_count_zero"] = (
+            stopping_snapshot[
+                "stop_request_count"
+            ]
+            == 0
+        )
+
+        stopping._transition(
+            LifecycleState.STOPPED,
+            reason="determinism_stopping_cleanup",
+        )
+        stopping_clean = stopping.snapshot()
+
+        assertions["stopping_cleanup_stopped"] = (
+            stopping_clean["state"]
+            == LifecycleState.STOPPED.value
+        )
+        assertions["stopping_cleanup_owner_inactive"] = (
+            stopping_clean[
+                "process_owner"
+            ]["active"]
+            is False
+        )
+
+        failed = [
+            name
+            for name, passed in assertions.items()
+            if not passed
+        ]
+
+        if len(assertions) != 25:
+            raise LifecycleError(
+                "Expected 25 Sprint 242 lifecycle "
+                "determinism assertions."
+            )
+
+        if failed:
+            raise LifecycleError(
+                "Lifecycle determinism check failed: "
+                + ", ".join(failed)
+            )
+
+        return {
+            "status": "ok",
+            "component": self.name,
+            "component_version":
+                self.component_version,
+            "source_sprint": self.sprint,
+            "current_sprint": 242,
+            "boundary":
+                "service_lifecycle_determinism",
+            "assertion_count":
+                len(assertions),
+            "failed_assertion_count": 0,
+            "failed_assertions": [],
+            "assertions": assertions,
+            "starting_stop_policy":
+                "reject_while_startup_in_progress",
+            "stopped_stop_policy":
+                "idempotent_already_stopped",
+            "stopping_stop_policy":
+                "idempotent_stop_already_in_progress",
+            "listener_started": False,
+            "socket_opened": False,
+            "persistent_pid_file_written": False,
+            "persistent_state_written": False,
+            "systemd_action_performed": False,
+            "automatic_start_performed": False,
+        }
 
     def self_test(self) -> dict[str, Any]:
         """Exercise lifecycle, single-owner, and rollback behavior."""
@@ -780,7 +1035,11 @@ class AuraServiceLifecycleRuntimeManager:
             running["process_owner"]["active"] is True
         )
 
-        health = self._http_health(host, port)
+        health = self._http_health(
+            host,
+            port,
+            suppress_access_log=True,
+        )
         assertions["health_endpoint_ok"] = (
             health.get("status") == "ok"
         )
