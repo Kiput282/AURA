@@ -916,3 +916,23 @@ create or apply grants or denials, apply expiry or revocation, execute
 recovery, rollback, or emergency stop, write audit events, mutate files,
 control processes, activate services, open network access, bind sockets, or
 mutate systemd.
+
+## AURA Backup and Restore Rehearsal
+
+- ID: `aura_backup_restore_rehearsal`
+- Version introduced: `1.1.0`
+- Category: `stabilization`
+- State: `online`
+- Runtime level: `review_only`
+- Risk: `low`
+- Permission: `read_project`
+- Control Center visible: `true`
+
+Provides read-only rehearsal visibility for backup scope, manifest and digest
+integrity, restore-plan reversibility, permission and approval boundaries,
+audit and provenance linkage, safe-idle failure behavior, contract
+deduplication, and Sprint 241–250 block release acceptance. It does not create
+backups or archives, read canonical data or backup-store contents, execute
+restore or rollback, write manifests, replace or delete files, mutate
+permissions or audit state, control processes, activate services, open network
+access, bind sockets, or mutate systemd.

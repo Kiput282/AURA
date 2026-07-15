@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v1.0.9-genesis
+Current version: v1.1.0
 Current status: Sprint 243 Configuration Integrity completed; Sprint 241-250 Genesis Stabilization & Runtime Hardening is active
 Current runtime state: Sprint 243 provides a read-only canonical settings validator for path safety, YAML schema integrity, local-only endpoints, safe-idle and explicit-confirmation boundaries, traversal rejection, secret-like key rejection, and deterministic negative fixtures. Configuration writes, environment mutation, runtime activation, socket binding, memory writes, journal writes, and systemd mutation remain disabled.
 
@@ -115,15 +115,15 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 250 — Backup and Restore Rehearsal
+- Next planned sprint: Sprint 251 — AURA Launcher and Service Controls
 Current capability registry summary:
 
-- total capabilities: 124
-- online capabilities: 122
+- total capabilities: 131
+- online capabilities: 129
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
 - permission-gated capabilities: 12
-- review-only capabilities: 14
+- review-only capabilities: 21
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 4
@@ -1288,7 +1288,7 @@ AURA is a local-first AI partner.
 Current canonical state:
 
 - Version: v0.180.0-genesis
-- Current completed sprint: Sprint 249 — Permission Expiry and Recovery Review
+- Current completed sprint: Sprint 250 — Backup and Restore Rehearsal
 - Next planned sprint: Sprint 181.0 — Local Web Runtime Activation Cutline
 - Final Genesis target: Sprint 240 — AURA Genesis Final / v1.0.0-genesis
 
@@ -3143,7 +3143,7 @@ Sprint 201 confirms:
 - activation status: activation_foundation_ready
 - vision block start: 201
 - vision block end: 210
-- current sprint: Sprint 249
+- current sprint: Sprint 250
 - next sprint: 202
 - next boundary: explicit_visual_input_state
 - runtime ready: false
@@ -6170,3 +6170,30 @@ access, bind sockets, or mutate systemd.
 Next: Sprint 250 — Backup and Restore Rehearsal.
 Next boundary: `backup_restore_rehearsal`.
 Next milestone: `v1.1.0`.
+
+## Sprint 250 Completion — Backup and Restore Rehearsal
+
+AURA `v1.1.0` completes Sprint 250 at the
+`backup_restore_rehearsal` boundary and closes the Sprint 241–250
+**Genesis Stabilization & Runtime Hardening** block.
+
+Sprint 250 adds a deterministic, read-only rehearsal covering backup scope
+inventory, manifest and digest integrity, restore-plan reversibility,
+permission and approval boundaries, audit and provenance linkage, safe-idle
+failure verification, contract deduplication, and block release acceptance.
+
+The canonical contract passes `96/96` assertions with all eight dimensions
+secure. It preserves the Sprint 249 anchor at `96/96`, the Genesis Final
+release anchor at `1258/1258`, and the active permission runtime anchor at
+`3115/3115`.
+
+The rehearsal does not create backups or archives, read canonical data or
+backup-store contents, execute restore or rollback, write manifests, replace
+or delete files, mutate permissions or audit state, control processes,
+activate services, open network access, bind sockets, or mutate systemd.
+
+Next: Sprint 251 — AURA Launcher and Service Controls.
+Next boundary: `aura_launcher_service_controls`.
+Next version: `v1.1.1`.
+Next block: Sprint 251–260 — Active Local Runtime & Model Service Integration,
+targeting `v1.2.0`.

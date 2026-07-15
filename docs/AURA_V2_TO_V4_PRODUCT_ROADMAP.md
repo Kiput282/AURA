@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.0.5-genesis`
+Current canonical anchor: `v1.1.0`
 
-Current completed sprint: Sprint 249 — Permission Expiry and Recovery Review
+Current completed sprint: Sprint 250 — Backup and Restore Rehearsal
 
-Next sprint: `250`
+Next sprint: `251`
 
-Next boundary: `backup_restore_rehearsal`
+Next boundary: `aura_launcher_service_controls`
 
 Owner: Kiput
 
@@ -80,7 +80,7 @@ Canonical block endpoints:
 | 410 | `v3.5.0` |
 | 420 | `v4.0.0` |
 
-The current canonical version is `v1.0.1-genesis`, promoted by Sprint 241.
+The current canonical version is `v1.1.0`, promoted by Sprint 250.
 
 # Part I — Target v2.0.0
 
@@ -818,7 +818,7 @@ The v2-v4 roadmap must preserve:
 
 # Immediate handoff
 
-Current canonical state: `v1.0.1-genesis`
+Current canonical state: `v1.1.0`
 
 Current completed sprint: `245`
 
@@ -933,3 +933,30 @@ access, bind sockets, or mutate systemd.
 Next: Sprint 250 — Backup and Restore Rehearsal.
 Next boundary: `backup_restore_rehearsal`.
 Next milestone: `v1.1.0`.
+
+## Sprint 250 Completion — Backup and Restore Rehearsal
+
+AURA `v1.1.0` completes Sprint 250 at the
+`backup_restore_rehearsal` boundary and closes the Sprint 241–250
+**Genesis Stabilization & Runtime Hardening** block.
+
+Sprint 250 adds a deterministic, read-only rehearsal covering backup scope
+inventory, manifest and digest integrity, restore-plan reversibility,
+permission and approval boundaries, audit and provenance linkage, safe-idle
+failure verification, contract deduplication, and block release acceptance.
+
+The canonical contract passes `96/96` assertions with all eight dimensions
+secure. It preserves the Sprint 249 anchor at `96/96`, the Genesis Final
+release anchor at `1258/1258`, and the active permission runtime anchor at
+`3115/3115`.
+
+The rehearsal does not create backups or archives, read canonical data or
+backup-store contents, execute restore or rollback, write manifests, replace
+or delete files, mutate permissions or audit state, control processes,
+activate services, open network access, bind sockets, or mutate systemd.
+
+Next: Sprint 251 — AURA Launcher and Service Controls.
+Next boundary: `aura_launcher_service_controls`.
+Next version: `v1.1.1`.
+Next block: Sprint 251–260 — Active Local Runtime & Model Service Integration,
+targeting `v1.2.0`.

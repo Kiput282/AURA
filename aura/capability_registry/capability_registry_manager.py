@@ -2035,6 +2035,32 @@ class CapabilityRegistryManager:
         "category": "stabilization",
         "control_center_visible": True,
     },
+    {
+        "id": "aura_backup_restore_rehearsal",
+        "name": "AURA Backup and Restore Rehearsal",
+        "description": (
+            "Read-only Sprint 250 backup and restore rehearsal "
+            "covering backup scope inventory, manifest and digest "
+            "integrity, restore-plan reversibility, permission and "
+            "approval boundaries, audit and provenance linkage, "
+            "safe-idle failure verification, contract deduplication, "
+            "and Sprint 241-250 block release acceptance. The "
+            "rehearsal inspects Python source contracts and path "
+            "metadata without creating backups or archives, reading "
+            "canonical data or backup-store contents, executing "
+            "restore or rollback, replacing or deleting files, "
+            "mutating permissions or audit state, controlling "
+            "processes, activating services, opening network access, "
+            "binding sockets, or mutating systemd."
+        ),
+        "state": "online",
+        "runtime_level": "review_only",
+        "risk_level": "low",
+        "permission_required": "read_project",
+        "introduced_in": "1.1.0",
+        "category": "stabilization",
+        "control_center_visible": True,
+    },
 ]
 
 

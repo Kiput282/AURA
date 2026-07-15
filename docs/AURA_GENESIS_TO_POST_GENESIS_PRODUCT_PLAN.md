@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Canonical Version: v1.0.5-genesis
-Current Canonical Sprint: Sprint 244 — Session and Memory Persistence Checks
-Next Planned Sprint: Sprint 250 — Backup and Restore Rehearsal
+Current Canonical Version: v1.1.0
+Current Canonical Sprint: Sprint 250 — Backup and Restore Rehearsal
+Next Planned Sprint: Sprint 251 — AURA Launcher and Service Controls
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -1968,3 +1968,30 @@ access, bind sockets, or mutate systemd.
 Next: Sprint 250 — Backup and Restore Rehearsal.
 Next boundary: `backup_restore_rehearsal`.
 Next milestone: `v1.1.0`.
+
+## Sprint 250 Completion — Backup and Restore Rehearsal
+
+AURA `v1.1.0` completes Sprint 250 at the
+`backup_restore_rehearsal` boundary and closes the Sprint 241–250
+**Genesis Stabilization & Runtime Hardening** block.
+
+Sprint 250 adds a deterministic, read-only rehearsal covering backup scope
+inventory, manifest and digest integrity, restore-plan reversibility,
+permission and approval boundaries, audit and provenance linkage, safe-idle
+failure verification, contract deduplication, and block release acceptance.
+
+The canonical contract passes `96/96` assertions with all eight dimensions
+secure. It preserves the Sprint 249 anchor at `96/96`, the Genesis Final
+release anchor at `1258/1258`, and the active permission runtime anchor at
+`3115/3115`.
+
+The rehearsal does not create backups or archives, read canonical data or
+backup-store contents, execute restore or rollback, write manifests, replace
+or delete files, mutate permissions or audit state, control processes,
+activate services, open network access, bind sockets, or mutate systemd.
+
+Next: Sprint 251 — AURA Launcher and Service Controls.
+Next boundary: `aura_launcher_service_controls`.
+Next version: `v1.1.1`.
+Next block: Sprint 251–260 — Active Local Runtime & Model Service Integration,
+targeting `v1.2.0`.

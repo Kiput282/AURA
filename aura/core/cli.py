@@ -174,6 +174,7 @@ from aura.resource_baseline_metrics.aura_resource_baseline_metrics_cli import ha
 from aura.atlas_resource_monitoring.aura_atlas_resource_monitoring_cli import handle_atlas_resource_monitoring_command
 from aura.localhost_ssh_tunnel_security_review.aura_localhost_ssh_tunnel_security_review_cli import handle_localhost_ssh_tunnel_security_review_command
 from aura.permission_expiry_recovery_review.aura_permission_expiry_recovery_review_cli import handle_permission_expiry_recovery_review_command
+from aura.backup_restore_rehearsal.aura_backup_restore_rehearsal_cli import handle_backup_restore_rehearsal_command
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
@@ -11257,6 +11258,8 @@ class AuraCLI:
         if handle_localhost_ssh_tunnel_security_review_command(args):
             return True
         if handle_permission_expiry_recovery_review_command(args):
+            return True
+        if handle_backup_restore_rehearsal_command(args):
             return True
         if handle_session_memory_persistence_command(args):
             return True
