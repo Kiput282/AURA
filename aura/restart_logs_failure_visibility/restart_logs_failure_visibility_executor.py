@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import errno
 import fcntl
 import os
 import re
+import stat
 import time
 from contextlib import contextmanager
 from pathlib import Path
@@ -82,34 +84,185 @@ class RestartLogsFailureVisibilityExecutor:
         )
         self.logs_path = self.project_root / "logs"
 
+    @staticmethod
+    def _temporary_mode_is_private(
+        metadata: os.stat_result,
+    ) -> bool:
+        return (
+            stat.S_IMODE(metadata.st_mode)
+            & 0o077
+        ) == 0
+
+    @staticmethod
+    def _close_descriptor(
+        descriptor: int,
+    ) -> None:
+        try:
+            os.close(descriptor)
+        except OSError:
+            pass
+
+    def _open_restart_lock(
+        self,
+    ) -> tuple[int, os.stat_result]:
+        flags = (
+            os.O_CREAT
+            | os.O_RDWR
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0)
+        )
+
+        try:
+            descriptor = os.open(
+                self.lock_path,
+                flags,
+                0o600,
+            )
+        except OSError as exc:
+            code = (
+                "restart_lock_symlink_rejected"
+                if exc.errno == errno.ELOOP
+                else "restart_lock_open_failed"
+            )
+            raise RestartLogsFailureVisibilityError(
+                code,
+                (
+                    "The supervised restart lock "
+                    "could not be opened safely."
+                ),
+                stage="preflight",
+                details={
+                    "path": self.lock_path.as_posix(),
+                    "reason": str(exc),
+                },
+            ) from exc
+
+        metadata = os.fstat(descriptor)
+        mode = stat.S_IMODE(
+            metadata.st_mode
+        )
+
+        if not stat.S_ISREG(
+            metadata.st_mode
+        ):
+            self._close_descriptor(
+                descriptor
+            )
+            raise RestartLogsFailureVisibilityError(
+                "restart_lock_type_rejected",
+                (
+                    "The supervised restart lock "
+                    "is not a regular file."
+                ),
+                stage="preflight",
+                details={
+                    "path": (
+                        self.lock_path.as_posix()
+                    ),
+                },
+            )
+
+        if metadata.st_uid != os.getuid():
+            self._close_descriptor(
+                descriptor
+            )
+            raise RestartLogsFailureVisibilityError(
+                "restart_lock_owner_rejected",
+                (
+                    "The supervised restart lock "
+                    "is not owned by this user."
+                ),
+                stage="preflight",
+                details={
+                    "path": (
+                        self.lock_path.as_posix()
+                    ),
+                    "uid": metadata.st_uid,
+                },
+            )
+
+        if not self._temporary_mode_is_private(
+            metadata
+        ):
+            self._close_descriptor(
+                descriptor
+            )
+            raise RestartLogsFailureVisibilityError(
+                "restart_lock_mode_rejected",
+                (
+                    "The supervised restart lock "
+                    "permissions are too broad."
+                ),
+                stage="preflight",
+                details={
+                    "path": (
+                        self.lock_path.as_posix()
+                    ),
+                    "mode": oct(mode),
+                },
+            )
+
+        return descriptor, metadata
+
     @contextmanager
     def _lock(self) -> Iterator[None]:
-        descriptor = os.open(
-            self.lock_path,
-            os.O_CREAT | os.O_RDWR,
-            0o600,
+        (
+            descriptor,
+            opened_metadata,
+        ) = self._open_restart_lock()
+        handle = os.fdopen(
+            descriptor,
+            "r+",
+            encoding="utf-8",
         )
-        handle = os.fdopen(descriptor, "r+", encoding="utf-8")
+
         try:
             fcntl.flock(
                 handle.fileno(),
-                fcntl.LOCK_EX | fcntl.LOCK_NB,
+                fcntl.LOCK_EX
+                | fcntl.LOCK_NB,
             )
         except BlockingIOError as exc:
             handle.close()
             raise RestartLogsFailureVisibilityError(
                 "restart_control_busy",
-                "Another supervised restart owns the control lock.",
+                (
+                    "Another supervised restart "
+                    "owns the control lock."
+                ),
                 stage="preflight",
             ) from exc
+
         try:
             yield
         finally:
             try:
-                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+                fcntl.flock(
+                    handle.fileno(),
+                    fcntl.LOCK_UN,
+                )
             finally:
                 handle.close()
-                self.lock_path.unlink(missing_ok=True)
+
+                try:
+                    current = (
+                        self.lock_path.lstat()
+                    )
+                except FileNotFoundError:
+                    current = None
+
+                if (
+                    current is not None
+                    and current.st_dev
+                    == opened_metadata.st_dev
+                    and current.st_ino
+                    == opened_metadata.st_ino
+                    and current.st_uid
+                    == os.getuid()
+                ):
+                    self.lock_path.unlink(
+                        missing_ok=True
+                    )
 
     @staticmethod
     def _live(packet: dict[str, Any]) -> dict[str, Any]:
@@ -215,23 +368,144 @@ class RestartLogsFailureVisibilityExecutor:
                 stage="log_preflight",
             )
 
-        path, classification = self._resolve_source(source)
-        before = path.stat()
-        window = min(before.st_size, self.MAX_TAIL_BYTES)
+        path, classification = (
+            self._resolve_source(source)
+        )
+        flags = (
+            os.O_RDONLY
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0)
+        )
 
-        with path.open("rb") as handle:
+        try:
+            descriptor = os.open(
+                path,
+                flags,
+            )
+        except FileNotFoundError as exc:
+            raise RestartLogsFailureVisibilityError(
+                "log_source_unavailable",
+                (
+                    "The allowlisted log source "
+                    "is unavailable."
+                ),
+                stage="log_preflight",
+                details={
+                    "path": path.as_posix(),
+                },
+            ) from exc
+        except OSError as exc:
+            code = (
+                "log_symlink_rejected"
+                if exc.errno == errno.ELOOP
+                else "log_open_failed"
+            )
+            raise RestartLogsFailureVisibilityError(
+                code,
+                (
+                    "The allowlisted log source "
+                    "could not be opened safely."
+                ),
+                stage="log_preflight",
+                details={
+                    "path": path.as_posix(),
+                    "reason": str(exc),
+                },
+            ) from exc
+
+        before = os.fstat(descriptor)
+        mode = stat.S_IMODE(
+            before.st_mode
+        )
+
+        if not stat.S_ISREG(
+            before.st_mode
+        ):
+            self._close_descriptor(
+                descriptor
+            )
+            raise RestartLogsFailureVisibilityError(
+                "log_type_rejected",
+                (
+                    "The allowlisted log source "
+                    "is not a regular file."
+                ),
+                stage="log_preflight",
+                details={
+                    "path": path.as_posix(),
+                },
+            )
+
+        if (
+            classification
+            == "temporary_owned_runtime_log"
+        ):
+            if before.st_uid != os.getuid():
+                self._close_descriptor(
+                    descriptor
+                )
+                raise RestartLogsFailureVisibilityError(
+                    "runtime_log_owner_rejected",
+                    (
+                        "The temporary runtime log "
+                        "is not owned by this user."
+                    ),
+                    stage="log_preflight",
+                    details={
+                        "path": path.as_posix(),
+                        "uid": before.st_uid,
+                    },
+                )
+
+            if not self._temporary_mode_is_private(
+                before
+            ):
+                self._close_descriptor(
+                    descriptor
+                )
+                raise RestartLogsFailureVisibilityError(
+                    "runtime_log_mode_rejected",
+                    (
+                        "The temporary runtime log "
+                        "permissions are too broad."
+                    ),
+                    stage="log_preflight",
+                    details={
+                        "path": path.as_posix(),
+                        "mode": oct(mode),
+                    },
+                )
+
+        window = min(
+            before.st_size,
+            self.MAX_TAIL_BYTES,
+        )
+
+        with os.fdopen(
+            descriptor,
+            "rb",
+        ) as handle:
             if window:
-                handle.seek(-window, os.SEEK_END)
+                handle.seek(
+                    -window,
+                    os.SEEK_END,
+                )
             raw = handle.read(window)
+            after = os.fstat(
+                handle.fileno()
+            )
 
-        after = path.stat()
         if (
             before.st_dev != after.st_dev
-            or before.st_ino != after.st_ino
+            or before.st_ino
+            != after.st_ino
         ):
             raise RestartLogsFailureVisibilityError(
                 "log_identity_changed",
-                "Log identity changed during the bounded read.",
+                (
+                    "Log identity changed during "
+                    "the bounded read."
+                ),
                 stage="log_read",
             )
 
@@ -279,6 +553,10 @@ class RestartLogsFailureVisibilityExecutor:
             "arbitrary_pid_signal": False,
             "arbitrary_log_path": False,
             "log_mutation": False,
+            "descriptor_nofollow_enabled": True,
+            "temporary_file_owner_check": True,
+            "temporary_file_mode_check": True,
+            "descriptor_fstat_check": True,
         }
 
     def _safe_idle(self) -> bool:

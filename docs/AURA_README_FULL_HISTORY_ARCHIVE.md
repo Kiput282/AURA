@@ -283,6 +283,8 @@ Grow Together.
 
 
 
+```
+
 ## Product Vision
 
 The long-term product vision for AURA is documented in:

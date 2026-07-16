@@ -593,6 +593,8 @@ This product vision includes serious/work mode, creative mode, relaxed mode, Ble
 These milestones may be adjusted during the v0.50 review.
 
 
+```
+
 ## Sprint 66.0 — Voice Conversation Planner
 
 Target: v0.66.0-genesis

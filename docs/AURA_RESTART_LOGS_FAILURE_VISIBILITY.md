@@ -94,7 +94,10 @@ Limits:
 - maximum byte window: `65,536`;
 - no arbitrary paths;
 - no symlink following;
-- no log mutation.
+- no log mutation;
+- descriptor-first open with `O_NOFOLLOW`;
+- regular-file verification with `fstat`;
+- current-user ownership and private-mode checks for temporary runtime files.
 
 Redaction covers password-like values, token-like values, and bearer
 authorization values before content is emitted.

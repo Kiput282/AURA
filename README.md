@@ -35,16 +35,16 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 241 and has started the Sprint 241-250 Genesis Stabilization & Runtime Hardening block.
+AURA has completed Sprint 253 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
 
-Sprint 241 closes CLI dispatch pollution and finalized-release status recursion while preserving the explicit deep validation path.
+Sprint 253 adds permission-gated supervised restart, bounded allowlisted and redacted log visibility, structured failure reporting, and verified return to safe idle.
 
-Latest completed checkpoint:
-- v1.0.3-genesis - Sprint 243: Configuration Integrity
-- v1.0.2-genesis - Sprint 242: Service Lifecycle Determinism
+Latest completed checkpoints:
 
-- v1.0.1-genesis
-- Sprint 241: Genesis Stabilization Runtime Hardening
+- v1.1.3 — Sprint 253: Restart, Logs, and Failure Visibility
+- v1.1.2 — Sprint 252: Manual Start, Stop, and Status Runtime
+- v1.1.1 — Sprint 251: AURA Launcher and Service Controls
+- v1.1.0 — Sprint 250: Backup and Restore Rehearsal
 
 
 - v0.220.0-genesis
@@ -114,7 +114,7 @@ Latest completed checkpoint:
 - Sprint 131-140 block: closed as a stabilized planning block
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
-- Sprint 151-160 block: active
+- Sprint 151-160 block: completed
 - Next planned sprint: Sprint 254 — Process Ownership and Service State Persistence
 Current capability registry summary:
 
@@ -131,27 +131,29 @@ Current capability registry summary:
 
 ## Safety State
 
-AURA currently does not execute real runtime actions.
+AURA now executes only narrow, supervised local runtime actions behind explicit approval and ownership verification.
 
-Disabled by design:
+Enabled boundaries:
 
-- no release gate opening
-- no v1 runtime activation
-- no autonomous desktop control
-- no arbitrary shell execution
-- no tool execution runtime
-- no command execution runtime
-- no file read/write/modify/delete runtime
-- no automatic or background service start runtime
-- no public, LAN, wildcard, or IPv6-wildcard port binding
-- no network probe runtime
-- no ORION runtime handshake
-- no mutating dashboard controls or action execution runtime
-- no memory write runtime
-- no git runtime
+- permission-gated localhost service start, stop, status, and restart;
+- strict owned-process and listener verification;
+- bounded allowlisted and redacted log visibility;
+- controlled local open/create actions with preview and confirmation.
 
-AURA can plan, review, summarize, document, and prepare safe boundaries.
-AURA cannot yet act freely.
+Still disabled by design:
+
+- no autonomous desktop control;
+- no arbitrary shell, command, or tool execution;
+- no uncontrolled file read/write/modify/delete runtime;
+- no automatic or background service start;
+- no public, LAN, wildcard, or IPv6-wildcard binding;
+- no unrestricted network probing;
+- no systemd or autostart mutation;
+- no arbitrary PID signaling or arbitrary log paths;
+- no permission-store mutation or persistent audit writes from Sprint 253;
+- no unrestricted memory, Git, dashboard-action, or ORION control runtime.
+
+AURA may act only inside explicit, reviewed, permission-gated boundaries.
 
 ---
 

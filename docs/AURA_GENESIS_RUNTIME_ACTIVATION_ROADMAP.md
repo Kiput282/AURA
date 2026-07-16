@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current anchor: v0.223.0-genesis
+Current canonical anchor: v1.1.3
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,33 +16,26 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.0.9-genesis
-- Completed: Sprint 229 — Genesis Acceptance Rehearsal
-- Completed block: Sprint 181-190 Local Interaction Runtime Activation
-- Active block: Sprint 221-230 — Unified Partner Runtime Integration
-- Runtime execution features: 4
-- Total capabilities: 121
-- Online capabilities: 119
-- Review-only capabilities: 11
-- Active scope: explicitly confirmed foreground localhost listener, health and
-  status APIs, Control Center backend and browser shell, bounded persistent
-  browser chat sessions, explicitly confirmed loopback local-model requests,
-  interactive chat, and read-only permission/audit/recovery visibility
-- Total local interaction route contracts: 37
-- Stabilization components: 9/9 ready
-- Dependency self-tests: 10/10 passed
-- Total assertion coverage: 1,175
-- Stabilization gaps: 0
-- Runtime violations: 0
+- Current version: v1.1.3
+- Completed: Sprint 253 — Restart, Logs, and Failure Visibility
+- Completed block: Sprint 241-250 — Genesis Stabilization & Runtime Hardening
+- Active block: Sprint 251-260 — Active Local Runtime & Model Service Integration
+- Runtime execution features: 6
+- Total capabilities: 134
+- Online capabilities: 132
+- Permission-gated capabilities: 14
+- Review-only capabilities: 22
+- Active scope: explicit supervised localhost start, stop, status, and restart;
+  strict process/listener ownership checks; bounded allowlisted and redacted log
+  visibility; local dashboard/chat foundations; permission-gated safe actions
+- Sprint 253 contract: 168/168, zero failures, fourteen secure dimensions
+- Active Permission Runtime: 3115 assertions, zero violations
+- Genesis Final Release baseline: 1258 assertions
 - Default listener state: stopped
 - Localhost-only boundary: preserved
-- Permission bypass: not detected
-- Arbitrary execution: not detected
-- AURA long-term memory writes: disabled
-- Voice runtime: Sprint 191-200 Voice Interaction Runtime block is complete as contract-only stabilization. Activation, explicit listen, microphone boundary, STT, voice intent/chat, TTS, permission/audit, Control Center voice controls, integration review, and stabilization gates are ready while all voice runtimes and release gates remain blocked.
-- Browser auto-launch: disabled
-- Background/systemd/auto-start: disabled
-- Next: Sprint 246 — Resource Baseline Metrics
+- Systemd and autostart mutation: disabled
+- Arbitrary PID signaling and arbitrary log paths: disabled
+- Next: Sprint 254 — Process Ownership and Service State Persistence
 
 ## Block 181-190 — Local Interaction Runtime Activation
 

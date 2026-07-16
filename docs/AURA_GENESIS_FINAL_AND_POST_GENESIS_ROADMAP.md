@@ -1,7 +1,7 @@
 # AURA Genesis Final & Post-Genesis Roadmap
 
 Status: CANONICAL ROADMAP DIRECTION
-Current anchor: v0.180.0-genesis
+Roadmap origin anchor: v0.180.0-genesis
 Owner: Kiput
 Project motto: Grow Together
 
@@ -13,7 +13,7 @@ AURA is not only a chatbot. AURA is intended to become a local AI Partner that c
 
 ## Genesis Development Runtime Activation Sequence
 
-The canonical completion sequence from the current v0.180.0-genesis checkpoint is:
+The canonical completion sequence from the roadmap origin v0.180.0-genesis checkpoint is:
 
 - Sprint 181-190: Local Interaction Runtime Activation
 - Sprint 191-200: Voice Interaction Runtime
