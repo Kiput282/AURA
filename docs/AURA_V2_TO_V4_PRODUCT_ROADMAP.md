@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.1.1`
+Current canonical anchor: `v1.1.2`
 
-Current completed sprint: Sprint 251 — AURA Launcher and Service Controls
+Current completed sprint: Sprint 252 — Manual Start, Stop, and Status Runtime
 
-Next sprint: `252`
+Next sprint: `253`
 
-Next boundary: `manual_start_stop_status_runtime`
+Next boundary: `restart_logs_failure_visibility`
 
 Owner: Kiput
 
@@ -80,7 +80,7 @@ Canonical block endpoints:
 | 410 | `v3.5.0` |
 | 420 | `v4.0.0` |
 
-The current canonical version is `v1.1.1`, promoted by Sprint 251.
+The current canonical version is `v1.1.2`, promoted by Sprint 252.
 
 # Part I — Target v2.0.0
 
@@ -990,3 +990,36 @@ permissions, or audit state; execute recovery; or run external commands.
 Next: Sprint 252 — Manual Start, Stop, and Status Runtime.
 Next boundary: `manual_start_stop_status_runtime`.
 Next version: `v1.1.2`.
+
+## Sprint 252 Completion — Manual Start, Stop, and Status Runtime
+
+Version `v1.1.2` activates permission-gated supervised manual service control
+on the canonical loopback runtime.
+
+Delivered:
+
+- explicit approved start and stop commands;
+- live lifecycle, process, listener, ownership, and health status;
+- strict PID identity using `/proc` start ticks, argv, cwd, UID, and command
+  digest;
+- exact owned-listener correlation;
+- idempotent start and stop;
+- bounded startup and shutdown timeouts;
+- verified `SIGTERM` shutdown with bounded ownership-checked fallback;
+- temporary per-user ownership, lock, and runtime log evidence under `/tmp`;
+- successful start-status-stop rehearsal;
+- capability `manual_start_stop_status_runtime`;
+- contract result `144/144`, zero failures, twelve secure dimensions.
+
+The rehearsal reached READY in `263 ms`, stopped in `106 ms`, created no
+duplicate process, required no `SIGKILL`, and left zero process and listener
+residue.
+
+Restart, autostart, systemd mutation, non-loopback activation,
+permission-store mutation, and persistent audit writing remain disabled.
+
+Next: Sprint 253 — Restart, Logs, and Failure Visibility.
+
+Next boundary: `restart_logs_failure_visibility`.
+
+Next version: `v1.1.3`.

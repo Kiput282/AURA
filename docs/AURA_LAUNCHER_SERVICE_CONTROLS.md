@@ -97,3 +97,24 @@ Sprint 252 may activate manual start, stop, and status only through explicit
 approval, canonical process ownership, loopback-only binding, health
 verification, timeout handling, audit linkage, and safe-idle failure
 recovery. Restart and autostart remain separately bounded.
+
+## Sprint 252 activation outcome
+
+Sprint 252 completed the handoff from this read-only launcher façade to the
+permission-gated `manual_start_stop_status_runtime`.
+
+The launcher schema and canonical lifecycle ownership were preserved. No
+duplicate service manager was introduced.
+
+Operational results:
+
+- approved start, status, and approved stop are available;
+- start and stop require explicit confirmation;
+- status correlates process, listener, ownership, lifecycle, and health;
+- repeated start and stop are idempotent;
+- start became healthy in `263 ms`;
+- stop completed through `SIGTERM` in `106 ms`;
+- runtime returned to zero process and zero listener;
+- restart and autostart remain disabled.
+
+Next boundary: `restart_logs_failure_visibility`.

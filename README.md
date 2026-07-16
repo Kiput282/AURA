@@ -6,8 +6,8 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v1.1.1
-Current status: Sprint 251 AURA Launcher and Service Controls completed; Sprint 251-260 Active Local Runtime & Model Service Integration is active
+- Current version: `v1.1.2`
+- Current status: Sprint 252 — Manual Start, Stop, and Status Runtime completed
 Current runtime state: Sprint 251 provides a deterministic read-only integration facade for launcher and service-control visibility while reusing the canonical lifecycle owner. Service start, stop, restart, process control, socket activation, network access, systemd mutation, autostart mutation, log mutation, permission mutation, audit writes, recovery execution, and external command execution remain disabled.
 
 ---
@@ -115,18 +115,18 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 252 — Manual Start, Stop, and Status Runtime
+- Next planned sprint: Sprint 253 — Restart, Logs, and Failure Visibility
 Current capability registry summary:
 
-- total capabilities: 132
-- online capabilities: 130
+- total capabilities: 133
+- online capabilities: 131
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 12
+- permission-gated capabilities: 13
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 4
+- runtime execution features: 5
 ---
 
 ## Safety State
@@ -6227,3 +6227,36 @@ permissions, or audit state; execute recovery; or run external commands.
 Next: Sprint 252 — Manual Start, Stop, and Status Runtime.
 Next boundary: `manual_start_stop_status_runtime`.
 Next version: `v1.1.2`.
+
+## Sprint 252 Completion — Manual Start, Stop, and Status Runtime
+
+Version `v1.1.2` activates permission-gated supervised manual service control
+on the canonical loopback runtime.
+
+Delivered:
+
+- explicit approved start and stop commands;
+- live lifecycle, process, listener, ownership, and health status;
+- strict PID identity using `/proc` start ticks, argv, cwd, UID, and command
+  digest;
+- exact owned-listener correlation;
+- idempotent start and stop;
+- bounded startup and shutdown timeouts;
+- verified `SIGTERM` shutdown with bounded ownership-checked fallback;
+- temporary per-user ownership, lock, and runtime log evidence under `/tmp`;
+- successful start-status-stop rehearsal;
+- capability `manual_start_stop_status_runtime`;
+- contract result `144/144`, zero failures, twelve secure dimensions.
+
+The rehearsal reached READY in `263 ms`, stopped in `106 ms`, created no
+duplicate process, required no `SIGKILL`, and left zero process and listener
+residue.
+
+Restart, autostart, systemd mutation, non-loopback activation,
+permission-store mutation, and persistent audit writing remain disabled.
+
+Next: Sprint 253 — Restart, Logs, and Failure Visibility.
+
+Next boundary: `restart_logs_failure_visibility`.
+
+Next version: `v1.1.3`.

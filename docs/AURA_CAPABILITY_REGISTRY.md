@@ -956,3 +956,32 @@ It does not create a duplicate service manager or execute service start,
 stop, restart, process control, socket activation, network access, systemd
 mutation, autostart mutation, log mutation, permission mutation, audit
 writes, recovery actions, or external commands.
+
+## Sprint 252 capability — Manual Start, Stop, and Status Runtime
+
+- ID: `manual_start_stop_status_runtime`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Risk level: `high`
+- Permission required: `user_confirmation`
+- Introduced in: `1.1.2`
+- Category: `runtime_control`
+- Control Center visible: yes
+
+This capability provides explicit supervised local start, verified owned
+process stop, and live status for the canonical loopback service. Runtime
+execution is fail-closed and requires exact approval flags. Restart,
+autostart, systemd mutation, non-loopback activation, permission-store
+mutation, and persistent audit writing remain disabled.
+
+After registration:
+
+- total capabilities: `133`;
+- online capabilities: `131`;
+- foundation-only capabilities: `78`;
+- planner-only capabilities: `7`;
+- permission-gated capabilities: `13`;
+- review-only capabilities: `22`;
+- planned-future capabilities: `0`;
+- disabled-runtime capabilities: `2`;
+- runtime execution features: `5`.
