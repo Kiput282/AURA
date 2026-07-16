@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current canonical anchor: v1.1.8
+Current canonical anchor: v1.1.9
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,26 +16,26 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.1.8
-- Completed: Sprint 258 — Local Model Router Activation
+- Current version: v1.1.9
+- Completed: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets
 - Completed block: Sprint 241-250 — Genesis Stabilization & Runtime Hardening
 - Active block: Sprint 251-260 — Active Local Runtime & Model Service Integration
-- Runtime execution features: 11
-- Total capabilities: 139
-- Online capabilities: 137
-- Permission-gated capabilities: 19
+- Runtime execution features: 12
+- Total capabilities: 140
+- Online capabilities: 138
+- Permission-gated capabilities: 20
 - Review-only capabilities: 22
 - Active scope: explicit supervised localhost start, stop, status, and restart;
   strict process/listener ownership checks; bounded allowlisted and redacted log
   visibility; local dashboard/chat foundations; permission-gated safe actions
-- Sprint 258 contract: 288/288, zero failures, twenty-four secure dimensions
+- Sprint 259 contract: 312/312, zero failures, twenty-six secure dimensions
 - Active Permission Runtime: 3115 assertions, zero violations
 - Genesis Final Release baseline: 1258 assertions
 - Default listener state: stopped
 - Localhost-only boundary: preserved
 - Systemd and autostart mutation: disabled
 - Arbitrary PID signaling and arbitrary log paths: disabled
-- Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets
+- Next: Sprint 260 — Active Local Runtime Integration and Stabilization
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2518,3 +2518,23 @@ for one explicitly approved finalization rehearsal.
 Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets.
 Next boundary: `model_loading_unloading_queue_resource_budgets`.
 Next version: `v1.1.9`.
+
+
+## Sprint 259 Completion — Model Loading, Unloading, Queue, and Resource Budgets
+
+AURA `v1.1.9` completes Sprint 259 at the
+`model_loading_unloading_queue_resource_budgets` boundary.
+
+Delivered: explicit provider lifecycle contracts, `keep_alive` loading,
+explicit release, metadata-only residency status, a bounded in-memory queue
+(depth 4, one in-flight item, 120-second timeout), and read-only memory, swap,
+load, and optional GPU budget gates. The contract passes `312/312` assertions
+across twenty-six secure dimensions.
+
+Automatic load/release, model download/pull, queue persistence, background
+workers, threshold mutation, service control, non-loopback networking,
+credentials, systemd mutation, and autostart mutation remain disabled.
+
+Next: Sprint 260 — Active Local Runtime Integration and Stabilization.
+Next boundary: `active_local_runtime_integration_stabilization`.
+Next version: `v1.2.0`.

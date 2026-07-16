@@ -47,3 +47,7 @@ non-executable through this boundary.
 - no systemd or autostart mutation.
 
 Next boundary: `model_loading_unloading_queue_resource_budgets`.
+
+## Sprint 259 lifecycle handoff
+
+The router remains exact-route only; Sprint 259 adds explicit lifecycle permission, bounded queueing, and read-only budgets.

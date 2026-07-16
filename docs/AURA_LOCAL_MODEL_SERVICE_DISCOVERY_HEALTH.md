@@ -55,3 +55,7 @@ It does not turn health discovery into automatic polling. A route request must
 still receive separate model-request permission.
 
 Next boundary: `model_loading_unloading_queue_resource_budgets`.
+
+## Sprint 259 health dependency
+
+Verified provider health is required before lifecycle work. Health discovery never loads or releases a model automatically.

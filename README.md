@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.1.8`
-- Current status: Sprint 258 — Local Model Router Activation completed
-Current runtime state: Sprint 258 activates permission-gated exact route selection through the existing ModelRouter and bounded handoff to the existing local model bridge. The companion route may become eligible only after health verification and model-request permission. Unknown fallback execution, foundation/planned routes, route persistence, real runtime switching, model management, queueing, and resource-budget mutation remain disabled.
+- Current version: `v1.1.9`
+- Current status: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets completed
+Current runtime state: Sprint 259 adds explicit model lifecycle contracts, bounded non-persistent queueing, and read-only resource-budget gates. All lifecycle and queue execution remains default-off.
 
 ---
 
@@ -35,12 +35,11 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 258 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
-
-Sprint 258 activates permission-gated exact-route selection and bounded handoff from the existing ModelRouter into the existing local model bridge.
+AURA has completed Sprint 259 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
 
 Latest completed checkpoints:
 
+- v1.1.9 — Sprint 259: Model Loading, Unloading, Queue, and Resource Budgets
 - v1.1.8 — Sprint 258: Local Model Router Activation
 - v1.1.7 — Sprint 257: Local Model Service Discovery and Health
 - v1.1.6 — Sprint 256: Persistent Local Chat Session Activation
@@ -119,18 +118,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets
+- Next planned sprint: Sprint 260 — Active Local Runtime Integration and Stabilization
 Current capability registry summary:
 
-- total capabilities: 139
-- online capabilities: 137
+- total capabilities: 140
+- online capabilities: 138
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 19
+- permission-gated capabilities: 20
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 11
+- runtime execution features: 12
 ---
 
 ## Safety State
@@ -6450,3 +6449,23 @@ for one explicitly approved finalization rehearsal.
 Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets.
 Next boundary: `model_loading_unloading_queue_resource_budgets`.
 Next version: `v1.1.9`.
+
+
+## Sprint 259 Completion — Model Loading, Unloading, Queue, and Resource Budgets
+
+AURA `v1.1.9` completes Sprint 259 at the
+`model_loading_unloading_queue_resource_budgets` boundary.
+
+Delivered: explicit provider lifecycle contracts, `keep_alive` loading,
+explicit release, metadata-only residency status, a bounded in-memory queue
+(depth 4, one in-flight item, 120-second timeout), and read-only memory, swap,
+load, and optional GPU budget gates. The contract passes `312/312` assertions
+across twenty-six secure dimensions.
+
+Automatic load/release, model download/pull, queue persistence, background
+workers, threshold mutation, service control, non-loopback networking,
+credentials, systemd mutation, and autostart mutation remain disabled.
+
+Next: Sprint 260 — Active Local Runtime Integration and Stabilization.
+Next boundary: `active_local_runtime_integration_stabilization`.
+Next version: `v1.2.0`.

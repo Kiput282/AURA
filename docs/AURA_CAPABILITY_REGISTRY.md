@@ -1076,3 +1076,10 @@ Sprint 187 bridge.
 
 The capability activates exact-route preview and explicitly approved bounded
 handoff from `ModelRouter` to the existing local model bridge.
+
+## Sprint 259 capability — Model Loading, Unloading, Queue, and Resource Budgets
+
+- ID: `model_loading_unloading_queue_resource_budgets`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Permission: `model_lifecycle_permission`

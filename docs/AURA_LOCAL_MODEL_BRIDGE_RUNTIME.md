@@ -130,3 +130,7 @@ continues to validate provider profile, message schema, request ID, loopback
 transport, response limits, and explicit model-request permission.
 
 Next boundary: `model_loading_unloading_queue_resource_budgets`.
+
+## Sprint 259 lifecycle and queue handoff
+
+The bridge remains the bounded local request transport owner. Model download and pull remain disabled.

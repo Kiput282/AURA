@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.1.8`
+Current canonical anchor: `v1.1.9`
 
-Current completed sprint: Sprint 258 — Local Model Router Activation
+Current completed sprint: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets
 
-Next sprint: `259`
+Next sprint: `260`
 
-Next boundary: `model_loading_unloading_queue_resource_budgets`
+Next boundary: `active_local_runtime_integration_stabilization`
 
 Owner: Kiput
 
@@ -1172,7 +1172,7 @@ load, or unload models; route chat; contact non-loopback endpoints; read
 credentials; mutate systemd or autostart; or run a health probe automatically.
 
 Next: Sprint 258 — Local Model Router Activation.
-Next boundary: `model_loading_unloading_queue_resource_budgets`.
+Next boundary: `active_local_runtime_integration_stabilization`.
 Next version: `v1.1.8`.
 
 
@@ -1204,5 +1204,25 @@ mutation remain disabled. Live inference is disabled by default and is reserved
 for one explicitly approved finalization rehearsal.
 
 Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets.
-Next boundary: `model_loading_unloading_queue_resource_budgets`.
+Next boundary: `active_local_runtime_integration_stabilization`.
 Next version: `v1.1.9`.
+
+
+## Sprint 259 Completion — Model Loading, Unloading, Queue, and Resource Budgets
+
+AURA `v1.1.9` completes Sprint 259 at the
+`model_loading_unloading_queue_resource_budgets` boundary.
+
+Delivered: explicit provider lifecycle contracts, `keep_alive` loading,
+explicit release, metadata-only residency status, a bounded in-memory queue
+(depth 4, one in-flight item, 120-second timeout), and read-only memory, swap,
+load, and optional GPU budget gates. The contract passes `312/312` assertions
+across twenty-six secure dimensions.
+
+Automatic load/release, model download/pull, queue persistence, background
+workers, threshold mutation, service control, non-loopback networking,
+credentials, systemd mutation, and autostart mutation remain disabled.
+
+Next: Sprint 260 — Active Local Runtime Integration and Stabilization.
+Next boundary: `active_local_runtime_integration_stabilization`.
+Next version: `v1.2.0`.
