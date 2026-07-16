@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.1.7`
-- Current status: Sprint 257 — Local Model Service Discovery and Health completed
-Current runtime state: Sprint 257 discovers the existing local model service through the Sprint 187 bridge and exposes a default-off, explicit-confirmation, loopback-only health boundary. Ollama binary, unit, process, listener, profile, and provider metadata are read-only. Service control, model download/load, chat routing, non-loopback networking, credentials, systemd mutation, and autostart mutation remain disabled.
+- Current version: `v1.1.8`
+- Current status: Sprint 258 — Local Model Router Activation completed
+Current runtime state: Sprint 258 activates permission-gated exact route selection through the existing ModelRouter and bounded handoff to the existing local model bridge. The companion route may become eligible only after health verification and model-request permission. Unknown fallback execution, foundation/planned routes, route persistence, real runtime switching, model management, queueing, and resource-budget mutation remain disabled.
 
 ---
 
@@ -35,12 +35,13 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 257 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
+AURA has completed Sprint 258 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
 
-Sprint 257 adds safe local model service discovery and a default-off, explicitly confirmed loopback health boundary over the existing Sprint 187 bridge.
+Sprint 258 activates permission-gated exact-route selection and bounded handoff from the existing ModelRouter into the existing local model bridge.
 
 Latest completed checkpoints:
 
+- v1.1.8 — Sprint 258: Local Model Router Activation
 - v1.1.7 — Sprint 257: Local Model Service Discovery and Health
 - v1.1.6 — Sprint 256: Persistent Local Chat Session Activation
 - v1.1.5 — Sprint 255: Reviewed Optional Autostart
@@ -118,18 +119,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 258 — Local Model Router Activation
+- Next planned sprint: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets
 Current capability registry summary:
 
-- total capabilities: 138
-- online capabilities: 136
+- total capabilities: 139
+- online capabilities: 137
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 18
+- permission-gated capabilities: 19
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 10
+- runtime execution features: 11
 ---
 
 ## Safety State
@@ -6417,3 +6418,35 @@ credentials; mutate systemd or autostart; or run a health probe automatically.
 Next: Sprint 258 — Local Model Router Activation.
 Next boundary: `local_model_router_activation`.
 Next version: `v1.1.8`.
+
+
+## Sprint 258 Completion — Local Model Router Activation
+
+AURA `v1.1.8` completes Sprint 258 at the
+`local_model_router_activation` boundary.
+
+Delivered:
+
+- the existing `ModelRouter` remains the canonical route owner;
+- the Sprint 187 local model bridge remains the execution owner;
+- the Sprint 257 health boundary remains the provider-health dependency;
+- existing configured route metadata is reused without a new route registry;
+- exact-route preview with alias normalization;
+- unknown-route fallback remains visible but cannot execute;
+- only online routes matching the validated provider and model may execute;
+- validated reasoning profile from `aura/config/settings.yaml`;
+- explicit provider-health verification before handoff;
+- exact model-request confirmation token `ROUTE_LOCAL_MODEL_REQUEST`;
+- bounded routed-message validation;
+- isolated fake-transport bridge handoff rehearsal;
+- contract result `288/288`, zero failures, twenty-four secure dimensions.
+
+No route decision is persisted. Real runtime switching, service control, model
+download/pull/load/unload, queue activation, resource-budget mutation,
+non-loopback networking, credential reads, systemd mutation, and autostart
+mutation remain disabled. Live inference is disabled by default and is reserved
+for one explicitly approved finalization rehearsal.
+
+Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets.
+Next boundary: `model_loading_unloading_queue_resource_budgets`.
+Next version: `v1.1.9`.

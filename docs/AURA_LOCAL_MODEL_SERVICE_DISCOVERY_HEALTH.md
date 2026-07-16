@@ -47,3 +47,11 @@ count of valid model records. It does not expose model names.
 - no systemd or autostart mutation.
 
 Next boundary: `local_model_router_activation`.
+
+## Sprint 258 router handoff
+
+Sprint 258 consumes the provider-health boundary as an explicit prerequisite.
+It does not turn health discovery into automatic polling. A route request must
+still receive separate model-request permission.
+
+Next boundary: `model_loading_unloading_queue_resource_budgets`.

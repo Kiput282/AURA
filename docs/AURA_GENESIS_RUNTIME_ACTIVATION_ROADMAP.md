@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current canonical anchor: v1.1.7
+Current canonical anchor: v1.1.8
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,26 +16,26 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.1.7
-- Completed: Sprint 257 — Local Model Service Discovery and Health
+- Current version: v1.1.8
+- Completed: Sprint 258 — Local Model Router Activation
 - Completed block: Sprint 241-250 — Genesis Stabilization & Runtime Hardening
 - Active block: Sprint 251-260 — Active Local Runtime & Model Service Integration
-- Runtime execution features: 10
-- Total capabilities: 138
-- Online capabilities: 136
-- Permission-gated capabilities: 18
+- Runtime execution features: 11
+- Total capabilities: 139
+- Online capabilities: 137
+- Permission-gated capabilities: 19
 - Review-only capabilities: 22
 - Active scope: explicit supervised localhost start, stop, status, and restart;
   strict process/listener ownership checks; bounded allowlisted and redacted log
   visibility; local dashboard/chat foundations; permission-gated safe actions
-- Sprint 257 contract: 264/264, zero failures, twenty-two secure dimensions
+- Sprint 258 contract: 288/288, zero failures, twenty-four secure dimensions
 - Active Permission Runtime: 3115 assertions, zero violations
 - Genesis Final Release baseline: 1258 assertions
 - Default listener state: stopped
 - Localhost-only boundary: preserved
 - Systemd and autostart mutation: disabled
 - Arbitrary PID signaling and arbitrary log paths: disabled
-- Next: Sprint 258 — Local Model Router Activation
+- Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2486,3 +2486,35 @@ credentials; mutate systemd or autostart; or run a health probe automatically.
 Next: Sprint 258 — Local Model Router Activation.
 Next boundary: `local_model_router_activation`.
 Next version: `v1.1.8`.
+
+
+## Sprint 258 Completion — Local Model Router Activation
+
+AURA `v1.1.8` completes Sprint 258 at the
+`local_model_router_activation` boundary.
+
+Delivered:
+
+- the existing `ModelRouter` remains the canonical route owner;
+- the Sprint 187 local model bridge remains the execution owner;
+- the Sprint 257 health boundary remains the provider-health dependency;
+- existing configured route metadata is reused without a new route registry;
+- exact-route preview with alias normalization;
+- unknown-route fallback remains visible but cannot execute;
+- only online routes matching the validated provider and model may execute;
+- validated reasoning profile from `aura/config/settings.yaml`;
+- explicit provider-health verification before handoff;
+- exact model-request confirmation token `ROUTE_LOCAL_MODEL_REQUEST`;
+- bounded routed-message validation;
+- isolated fake-transport bridge handoff rehearsal;
+- contract result `288/288`, zero failures, twenty-four secure dimensions.
+
+No route decision is persisted. Real runtime switching, service control, model
+download/pull/load/unload, queue activation, resource-budget mutation,
+non-loopback networking, credential reads, systemd mutation, and autostart
+mutation remain disabled. Live inference is disabled by default and is reserved
+for one explicitly approved finalization rehearsal.
+
+Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets.
+Next boundary: `model_loading_unloading_queue_resource_budgets`.
+Next version: `v1.1.9`.

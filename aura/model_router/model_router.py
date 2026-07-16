@@ -17,7 +17,9 @@ class ModelRouter:
     """
 
     name = "model_router"
-    version = "0.1.0"
+    version = "0.2.0-alpha"
+    activation_version = "1.1.8"
+    activation_sprint = 258
 
     def __init__(self, project_root: Path):
         self.project_root = project_root
@@ -256,6 +258,33 @@ class ModelRouter:
 
         return None
 
+    def activation_snapshot(self) -> dict[str, Any]:
+        return {
+            "canonical_owner": "ModelRouter",
+            "component_version": self.version,
+            "activation_version": self.activation_version,
+            "activation_sprint": self.activation_sprint,
+            "route_registry_size": len(self.routes),
+            "existing_route_registry_only": True,
+            "route_preview_default": True,
+            "exact_route_required_for_execution": True,
+            "fallback_execution": False,
+            "online_route_required": True,
+            "provider_health_required": True,
+            "model_request_permission_required": True,
+            "bridge_handoff_ready": True,
+            "route_decision_persistence": False,
+            "real_runtime_switching": False,
+            "service_control": False,
+            "model_management": False,
+            "queue_runtime": False,
+            "resource_budget_mutation": False,
+            "non_loopback_network": False,
+            "credentials_read": False,
+            "systemd_mutation": False,
+            "autostart_mutation": False,
+        }
+
     def status(self) -> dict[str, Any]:
         statuses = {}
 
@@ -265,17 +294,20 @@ class ModelRouter:
         return {
             "name": self.name,
             "version": self.version,
-            "status": "foundation",
+            "status": "permission_gated_alpha_runtime",
             "router_ready": True,
             "route_selection_ready": True,
             "runtime_switching_ready": False,
+            "permission_gated_bridge_handoff_ready": True,
+            "activation_version": self.activation_version,
+            "activation_sprint": self.activation_sprint,
             "model_download_ready": False,
             "active_provider": self.current_provider(),
             "active_model": self.current_model(),
             "active_host": self.current_host(),
             "routes": len(self.routes),
             "route_status_counts": statuses,
-            "note": "Model router foundation is online. It selects route metadata only and does not switch real model runtimes yet.",
+            "note": "Model router activation is online for permission-gated exact-route selection and bounded handoff to the existing local model bridge. Real runtime switching, route persistence, queueing, and model management remain disabled.",
         }
 
     def select(self, target: str) -> dict[str, Any]:

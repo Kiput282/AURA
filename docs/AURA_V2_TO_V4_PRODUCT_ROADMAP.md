@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.1.7`
+Current canonical anchor: `v1.1.8`
 
-Current completed sprint: Sprint 257 — Local Model Service Discovery and Health
+Current completed sprint: Sprint 258 — Local Model Router Activation
 
-Next sprint: `258`
+Next sprint: `259`
 
-Next boundary: `local_model_router_activation`
+Next boundary: `model_loading_unloading_queue_resource_budgets`
 
 Owner: Kiput
 
@@ -1172,5 +1172,37 @@ load, or unload models; route chat; contact non-loopback endpoints; read
 credentials; mutate systemd or autostart; or run a health probe automatically.
 
 Next: Sprint 258 — Local Model Router Activation.
-Next boundary: `local_model_router_activation`.
+Next boundary: `model_loading_unloading_queue_resource_budgets`.
 Next version: `v1.1.8`.
+
+
+## Sprint 258 Completion — Local Model Router Activation
+
+AURA `v1.1.8` completes Sprint 258 at the
+`local_model_router_activation` boundary.
+
+Delivered:
+
+- the existing `ModelRouter` remains the canonical route owner;
+- the Sprint 187 local model bridge remains the execution owner;
+- the Sprint 257 health boundary remains the provider-health dependency;
+- existing configured route metadata is reused without a new route registry;
+- exact-route preview with alias normalization;
+- unknown-route fallback remains visible but cannot execute;
+- only online routes matching the validated provider and model may execute;
+- validated reasoning profile from `aura/config/settings.yaml`;
+- explicit provider-health verification before handoff;
+- exact model-request confirmation token `ROUTE_LOCAL_MODEL_REQUEST`;
+- bounded routed-message validation;
+- isolated fake-transport bridge handoff rehearsal;
+- contract result `288/288`, zero failures, twenty-four secure dimensions.
+
+No route decision is persisted. Real runtime switching, service control, model
+download/pull/load/unload, queue activation, resource-budget mutation,
+non-loopback networking, credential reads, systemd mutation, and autostart
+mutation remain disabled. Live inference is disabled by default and is reserved
+for one explicitly approved finalization rehearsal.
+
+Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets.
+Next boundary: `model_loading_unloading_queue_resource_budgets`.
+Next version: `v1.1.9`.

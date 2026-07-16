@@ -121,3 +121,12 @@ loopback health check. The bridge's existing generation and browser-chat
 permission boundaries remain unchanged.
 
 Next boundary: `local_model_router_activation`.
+
+## Sprint 258 router activation handoff
+
+Sprint 258 keeps `AuraLocalModelBridgeRuntimeManager` as the only local model
+request owner. `ModelRouter` chooses an exact eligible route, while the bridge
+continues to validate provider profile, message schema, request ID, loopback
+transport, response limits, and explicit model-request permission.
+
+Next boundary: `model_loading_unloading_queue_resource_budgets`.

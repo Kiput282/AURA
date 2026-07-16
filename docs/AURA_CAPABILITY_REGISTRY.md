@@ -1062,3 +1062,17 @@ history, integrity verification, and explicit existing memory gates.
 The capability provides read-only local-model service discovery and a
 default-off, explicitly confirmed loopback health probe over the existing
 Sprint 187 bridge.
+
+## Sprint 258 capability — Local Model Router Activation
+
+- ID: `local_model_router_activation`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Risk: `high`
+- Permission: `model_request_permission`
+- Introduced in: `1.1.8`
+- Category: `local_model_runtime`
+- Control Center visible: `true`
+
+The capability activates exact-route preview and explicitly approved bounded
+handoff from `ModelRouter` to the existing local model bridge.
