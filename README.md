@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.1.9`
-- Current status: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets completed
-Current runtime state: Sprint 259 adds explicit model lifecycle contracts, bounded non-persistent queueing, and read-only resource-budget gates. All lifecycle and queue execution remains default-off.
+- Current version: `v1.2.0`
+- Current status: Sprint 260 — Active Local Runtime Integration and Stabilization completed
+Current runtime state: Sprint 260 adds an explicit manual end-to-end coordinator across safe-idle service control, persistent chat, Ollama health, exact companion routing, lifecycle, bounded queueing, read-only budgets, successful response persistence, and stop-and-restore.
 
 ---
 
@@ -35,10 +35,11 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 259 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
+AURA has completed Sprint 260 and closed the Sprint 251-260 Active Local Runtime & Model Service Integration block.
 
 Latest completed checkpoints:
 
+- v1.2.0 — Sprint 260: Active Local Runtime Integration and Stabilization
 - v1.1.9 — Sprint 259: Model Loading, Unloading, Queue, and Resource Budgets
 - v1.1.8 — Sprint 258: Local Model Router Activation
 - v1.1.7 — Sprint 257: Local Model Service Discovery and Health
@@ -118,18 +119,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 260 — Active Local Runtime Integration and Stabilization
+- Next planned sprint: Sprint 261 — Roadmap Reconfirmation after v1.2.0
 Current capability registry summary:
 
-- total capabilities: 140
-- online capabilities: 138
+- total capabilities: 141
+- online capabilities: 139
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 20
+- permission-gated capabilities: 21
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 12
+- runtime execution features: 13
 ---
 
 ## Safety State
@@ -6469,3 +6470,14 @@ credentials, systemd mutation, and autostart mutation remain disabled.
 Next: Sprint 260 — Active Local Runtime Integration and Stabilization.
 Next boundary: `active_local_runtime_integration_stabilization`.
 Next version: `v1.2.0`.
+
+
+## Sprint 260 Completion - Active Local Runtime Integration and Stabilization
+
+AURA `v1.2.0` completes Sprint 260 and closes the Sprint 251-260 Active Local Runtime and Model Service Integration block.
+
+The coordinator combines manual service control, safe idle, private persistent chat, explicit Ollama health, exact `companion` routing, explicit model lifecycle, bounded in-memory queueing, read-only resource budgets, persistence only after a successful bounded response, and mandatory stop-and-restore behavior.
+
+Contract target: `336/336` across twenty-eight secure dimensions. Sprint 261 requires roadmap reconfirmation after `v1.2.0`.
+
+Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.

@@ -134,3 +134,7 @@ Next boundary: `model_loading_unloading_queue_resource_budgets`.
 ## Sprint 259 lifecycle and queue handoff
 
 The bridge remains the bounded local request transport owner. Model download and pull remain disabled.
+
+## Sprint 260 integrated runtime handoff
+
+The bridge participates only after explicit service, health, lifecycle, route, queue, resource-budget, and model-request gates pass.

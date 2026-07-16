@@ -1083,3 +1083,10 @@ handoff from `ModelRouter` to the existing local model bridge.
 - State: `online`
 - Runtime level: `permission_gated_alpha_runtime`
 - Permission: `model_lifecycle_permission`
+
+## Sprint 260 capability — Active Local Runtime Integration and Stabilization
+
+- ID: `active_local_runtime_integration_stabilization`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Permission: `active_local_runtime_integration_permission`

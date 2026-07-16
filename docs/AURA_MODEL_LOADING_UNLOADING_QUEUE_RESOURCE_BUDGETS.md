@@ -14,3 +14,7 @@ provider health, and an approved read-only resource budget. Load uses
 provider-managed keep-alive semantics; release uses explicit provider release.
 No download, pull, persistent queue, background worker, threshold mutation,
 service control, systemd, or autostart mutation is enabled.
+
+## Sprint 260 end-to-end integration
+
+Lifecycle, bounded queueing, and read-only budgets are coordinated with service, chat, health, routing, persistence, and stop-and-restore.

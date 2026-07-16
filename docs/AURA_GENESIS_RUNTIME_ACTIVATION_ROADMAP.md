@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current canonical anchor: v1.1.9
+Current canonical anchor: v1.2.0
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,26 +16,26 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.1.9
-- Completed: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets
+- Current version: v1.2.0
+- Completed: Sprint 260 — Active Local Runtime Integration and Stabilization
 - Completed block: Sprint 241-250 — Genesis Stabilization & Runtime Hardening
 - Active block: Sprint 251-260 — Active Local Runtime & Model Service Integration
-- Runtime execution features: 12
-- Total capabilities: 140
-- Online capabilities: 138
-- Permission-gated capabilities: 20
+- Runtime execution features: 13
+- Total capabilities: 141
+- Online capabilities: 139
+- Permission-gated capabilities: 21
 - Review-only capabilities: 22
 - Active scope: explicit supervised localhost start, stop, status, and restart;
   strict process/listener ownership checks; bounded allowlisted and redacted log
   visibility; local dashboard/chat foundations; permission-gated safe actions
-- Sprint 259 contract: 312/312, zero failures, twenty-six secure dimensions
+- Sprint 260 contract: 336/336, zero failures, twenty-eight secure dimensions
 - Active Permission Runtime: 3115 assertions, zero violations
 - Genesis Final Release baseline: 1258 assertions
 - Default listener state: stopped
 - Localhost-only boundary: preserved
 - Systemd and autostart mutation: disabled
 - Arbitrary PID signaling and arbitrary log paths: disabled
-- Next: Sprint 260 — Active Local Runtime Integration and Stabilization
+- Next: Sprint 261 — Roadmap Reconfirmation after v1.2.0
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2538,3 +2538,14 @@ credentials, systemd mutation, and autostart mutation remain disabled.
 Next: Sprint 260 — Active Local Runtime Integration and Stabilization.
 Next boundary: `active_local_runtime_integration_stabilization`.
 Next version: `v1.2.0`.
+
+
+## Sprint 260 Completion - Active Local Runtime Integration and Stabilization
+
+AURA `v1.2.0` completes Sprint 260 and closes the Sprint 251-260 Active Local Runtime and Model Service Integration block.
+
+The coordinator combines manual service control, safe idle, private persistent chat, explicit Ollama health, exact `companion` routing, explicit model lifecycle, bounded in-memory queueing, read-only resource budgets, persistence only after a successful bounded response, and mandatory stop-and-restore behavior.
+
+Contract target: `336/336` across twenty-eight secure dimensions. Sprint 261 requires roadmap reconfirmation after `v1.2.0`.
+
+Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.

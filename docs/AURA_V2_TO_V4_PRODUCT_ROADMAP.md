@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.1.9`
+Current canonical anchor: `v1.2.0`
 
-Current completed sprint: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets
+Current completed sprint: Sprint 260 — Active Local Runtime Integration and Stabilization
 
-Next sprint: `260`
+Next sprint: `261`
 
-Next boundary: `active_local_runtime_integration_stabilization`
+Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`
 
 Owner: Kiput
 
@@ -1172,7 +1172,7 @@ load, or unload models; route chat; contact non-loopback endpoints; read
 credentials; mutate systemd or autostart; or run a health probe automatically.
 
 Next: Sprint 258 — Local Model Router Activation.
-Next boundary: `active_local_runtime_integration_stabilization`.
+Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
 Next version: `v1.1.8`.
 
 
@@ -1204,7 +1204,7 @@ mutation remain disabled. Live inference is disabled by default and is reserved
 for one explicitly approved finalization rehearsal.
 
 Next: Sprint 259 — Model Loading, Unloading, Queue, and Resource Budgets.
-Next boundary: `active_local_runtime_integration_stabilization`.
+Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
 Next version: `v1.1.9`.
 
 
@@ -1224,5 +1224,16 @@ workers, threshold mutation, service control, non-loopback networking,
 credentials, systemd mutation, and autostart mutation remain disabled.
 
 Next: Sprint 260 — Active Local Runtime Integration and Stabilization.
-Next boundary: `active_local_runtime_integration_stabilization`.
+Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
 Next version: `v1.2.0`.
+
+
+## Sprint 260 Completion - Active Local Runtime Integration and Stabilization
+
+AURA `v1.2.0` completes Sprint 260 and closes the Sprint 251-260 Active Local Runtime and Model Service Integration block.
+
+The coordinator combines manual service control, safe idle, private persistent chat, explicit Ollama health, exact `companion` routing, explicit model lifecycle, bounded in-memory queueing, read-only resource budgets, persistence only after a successful bounded response, and mandatory stop-and-restore behavior.
+
+Contract target: `336/336` across twenty-eight secure dimensions. Sprint 261 requires roadmap reconfirmation after `v1.2.0`.
+
+Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
