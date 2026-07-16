@@ -985,3 +985,22 @@ After registration:
 - planned-future capabilities: `0`;
 - disabled-runtime capabilities: `2`;
 - runtime execution features: `5`.
+
+## Sprint 253 capability — Restart, Logs, and Failure Visibility
+
+- ID: `restart_logs_failure_visibility`
+- Name: Restart, Logs, and Failure Visibility
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Risk level: `high`
+- Permission required: `user_confirmation`
+- Introduced in: `1.1.3`
+- Category: `runtime_control`
+- Control Center visible: `true`
+
+This capability provides supervised local restart through the canonical
+manual runtime owner, bounded allowlisted and redacted log tail visibility,
+and structured failure packets. It rejects unowned runtime evidence,
+arbitrary PID signaling, arbitrary log paths, non-loopback activation,
+systemd mutation, autostart mutation, permission-store mutation, persistent
+audit writes, and canonical-log mutation.

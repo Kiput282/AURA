@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.1.2`
-- Current status: Sprint 252 — Manual Start, Stop, and Status Runtime completed
-Current runtime state: Sprint 251 provides a deterministic read-only integration facade for launcher and service-control visibility while reusing the canonical lifecycle owner. Service start, stop, restart, process control, socket activation, network access, systemd mutation, autostart mutation, log mutation, permission mutation, audit writes, recovery execution, and external command execution remain disabled.
+- Current version: `v1.1.3`
+- Current status: Sprint 253 — Restart, Logs, and Failure Visibility completed
+Current runtime state: Sprint 253 provides permission-gated supervised start, stop, and restart on the canonical loopback runtime, bounded allowlisted and redacted log visibility, and structured failure packets. Systemd and autostart mutation, non-loopback binding, arbitrary PID signaling, arbitrary log paths, permission-store mutation, persistent audit writing, and canonical-log mutation remain disabled.
 
 ---
 
@@ -115,18 +115,18 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 253 — Restart, Logs, and Failure Visibility
+- Next planned sprint: Sprint 254 — Process Ownership and Service State Persistence
 Current capability registry summary:
 
-- total capabilities: 133
-- online capabilities: 131
+- total capabilities: 134
+- online capabilities: 132
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 13
+- permission-gated capabilities: 14
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 5
+- runtime execution features: 6
 ---
 
 ## Safety State
@@ -6260,3 +6260,42 @@ Next: Sprint 253 — Restart, Logs, and Failure Visibility.
 Next boundary: `restart_logs_failure_visibility`.
 
 Next version: `v1.1.3`.
+
+## Sprint 253 Completion — Restart, Logs, and Failure Visibility
+
+Version `v1.1.3` adds permission-gated supervised restart,
+bounded allowlisted log visibility, and structured failure reporting on top
+of the canonical manual start/stop owner.
+
+Delivered:
+
+- explicit restart command requiring both `--approve-restart` and
+  `--confirm-localhost`;
+- restart from `STOPPED` through a fresh canonical start;
+- restart from `RUNNING` through verified owned-process stop, safe-idle
+  confirmation, a bounded restart gap, and a fresh canonical start;
+- post-restart ownership, loopback listener, process identity, and health
+  verification;
+- PID rotation verification across a running restart;
+- bounded log tail with a maximum of 200 lines and 65,536 bytes;
+- allowlisted active, latest-rotated, and temporary runtime log sources;
+- symlink rejection, arbitrary-path rejection, and credential redaction;
+- normalized failure packets covering ownership, stop, launch, health,
+  cleanup, and log-preflight stages;
+- contract result `168/168`, zero failures, fourteen secure dimensions;
+- capability `restart_logs_failure_visibility`.
+
+The supervised runtime rehearsal completed two successful restarts, verified
+a new PID after the running restart, preserved canonical data, kept canonical
+logs append-only, and returned AURA to `STOPPED` with zero listener and
+process residue.
+
+Systemd mutation, autostart mutation, non-loopback binding, arbitrary PID
+signaling, arbitrary log paths, permission-store mutation, persistent audit
+writing, and canonical-log mutation remain disabled.
+
+Next: Sprint 254 — Process Ownership and Service State Persistence.
+
+Next boundary: `process_ownership_service_state_persistence`.
+
+Next version: `v1.1.4`.

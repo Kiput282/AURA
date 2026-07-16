@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.1.2`
+Current canonical anchor: `v1.1.3`
 
-Current completed sprint: Sprint 252 — Manual Start, Stop, and Status Runtime
+Current completed sprint: Sprint 253 — Restart, Logs, and Failure Visibility
 
-Next sprint: `253`
+Next sprint: `254`
 
-Next boundary: `restart_logs_failure_visibility`
+Next boundary: `process_ownership_service_state_persistence`
 
 Owner: Kiput
 
@@ -80,7 +80,7 @@ Canonical block endpoints:
 | 410 | `v3.5.0` |
 | 420 | `v4.0.0` |
 
-The current canonical version is `v1.1.2`, promoted by Sprint 252.
+The current canonical version is `v1.1.3`, promoted by Sprint 253.
 
 # Part I — Target v2.0.0
 
@@ -1023,3 +1023,42 @@ Next: Sprint 253 — Restart, Logs, and Failure Visibility.
 Next boundary: `restart_logs_failure_visibility`.
 
 Next version: `v1.1.3`.
+
+## Sprint 253 Completion — Restart, Logs, and Failure Visibility
+
+Version `v1.1.3` adds permission-gated supervised restart,
+bounded allowlisted log visibility, and structured failure reporting on top
+of the canonical manual start/stop owner.
+
+Delivered:
+
+- explicit restart command requiring both `--approve-restart` and
+  `--confirm-localhost`;
+- restart from `STOPPED` through a fresh canonical start;
+- restart from `RUNNING` through verified owned-process stop, safe-idle
+  confirmation, a bounded restart gap, and a fresh canonical start;
+- post-restart ownership, loopback listener, process identity, and health
+  verification;
+- PID rotation verification across a running restart;
+- bounded log tail with a maximum of 200 lines and 65,536 bytes;
+- allowlisted active, latest-rotated, and temporary runtime log sources;
+- symlink rejection, arbitrary-path rejection, and credential redaction;
+- normalized failure packets covering ownership, stop, launch, health,
+  cleanup, and log-preflight stages;
+- contract result `168/168`, zero failures, fourteen secure dimensions;
+- capability `restart_logs_failure_visibility`.
+
+The supervised runtime rehearsal completed two successful restarts, verified
+a new PID after the running restart, preserved canonical data, kept canonical
+logs append-only, and returned AURA to `STOPPED` with zero listener and
+process residue.
+
+Systemd mutation, autostart mutation, non-loopback binding, arbitrary PID
+signaling, arbitrary log paths, permission-store mutation, persistent audit
+writing, and canonical-log mutation remain disabled.
+
+Next: Sprint 254 — Process Ownership and Service State Persistence.
+
+Next boundary: `process_ownership_service_state_persistence`.
+
+Next version: `v1.1.4`.

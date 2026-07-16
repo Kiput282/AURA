@@ -202,3 +202,27 @@ Sprint 253 may add explicit supervised restart, durable log visibility,
 failure-reason surfacing, and recovery evidence. It must retain strict process
 ownership, bounded timeouts, loopback-only networking, approval gates, and
 fail-closed behavior.
+
+## Sprint 253 activation outcome
+
+Sprint 253 completed the handoff from manual start/stop/status to supervised
+restart, bounded log visibility, and structured failure reporting.
+
+The implementation reuses `ManualStartStopStatusRuntimeExecutor` as the
+canonical process owner. It does not create a second lifecycle owner and does
+not signal unowned processes.
+
+Validated outcomes:
+
+- restart from stopped reached a verified owned running state;
+- restart from running stopped the old owned process and launched a new PID;
+- loopback listener and health verification succeeded after each start;
+- runtime log tail stayed within line and byte limits and applied redaction;
+- failure visibility correctly represented both running and stopped states;
+- final state was stopped with zero process and listener residue.
+
+Next sprint: Sprint 254 — Process Ownership and Service State Persistence.
+
+Next boundary: `process_ownership_service_state_persistence`.
+
+Next version: `v1.1.4`.
