@@ -2061,6 +2061,18 @@ class CapabilityRegistryManager:
         "category": "stabilization",
         "control_center_visible": True,
     },
+    {'id': 'aura_launcher_service_controls',
+     'name': 'AURA Launcher and Service Controls',
+     'description': 'Read-only integration facade for launcher and service-control '
+                    'visibility, lifecycle ownership, approval, audit, recovery, and '
+                    'safe-idle handoff.',
+     'state': 'online',
+     'runtime_level': 'review_only',
+     'risk_level': 'low',
+     'permission_required': 'read_project',
+     'introduced_in': '1.1.1',
+     'category': 'runtime_integration',
+     'control_center_visible': True},
 ]
 
 

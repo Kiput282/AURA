@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-Current version: v1.1.0
-Current status: Sprint 243 Configuration Integrity completed; Sprint 241-250 Genesis Stabilization & Runtime Hardening is active
-Current runtime state: Sprint 243 provides a read-only canonical settings validator for path safety, YAML schema integrity, local-only endpoints, safe-idle and explicit-confirmation boundaries, traversal rejection, secret-like key rejection, and deterministic negative fixtures. Configuration writes, environment mutation, runtime activation, socket binding, memory writes, journal writes, and systemd mutation remain disabled.
+Current version: v1.1.1
+Current status: Sprint 251 AURA Launcher and Service Controls completed; Sprint 251-260 Active Local Runtime & Model Service Integration is active
+Current runtime state: Sprint 251 provides a deterministic read-only integration facade for launcher and service-control visibility while reusing the canonical lifecycle owner. Service start, stop, restart, process control, socket activation, network access, systemd mutation, autostart mutation, log mutation, permission mutation, audit writes, recovery execution, and external command execution remain disabled.
 
 ---
 
@@ -115,15 +115,15 @@ Latest completed checkpoint:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: active
-- Next planned sprint: Sprint 251 — AURA Launcher and Service Controls
+- Next planned sprint: Sprint 252 — Manual Start, Stop, and Status Runtime
 Current capability registry summary:
 
-- total capabilities: 131
-- online capabilities: 129
+- total capabilities: 132
+- online capabilities: 130
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
 - permission-gated capabilities: 12
-- review-only capabilities: 21
+- review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
 - runtime execution features: 4
@@ -6197,3 +6197,33 @@ Next boundary: `aura_launcher_service_controls`.
 Next version: `v1.1.1`.
 Next block: Sprint 251–260 — Active Local Runtime & Model Service Integration,
 targeting `v1.2.0`.
+
+## Sprint 251 Completion — AURA Launcher and Service Controls
+
+AURA `v1.1.1` completes Sprint 251 at the
+`aura_launcher_service_controls` boundary and begins the Sprint 251–260
+**Active Local Runtime & Model Service Integration** block.
+
+Sprint 251 establishes a deterministic read-only integration facade for the
+practical AURA launcher and service-control experience. It reuses the
+canonical service lifecycle owner rather than creating another service
+manager.
+
+The canonical contract passes `120/120` assertions with all ten review
+dimensions secure and zero findings. It preserves the Sprint 250 anchor at
+`96/96`, the service-lifecycle anchor at `25/25`, the Genesis Final release
+anchor at `1258/1258`, and the active permission runtime anchor at
+`3115/3115`.
+
+The integration facade covers launcher visibility, canonical service state,
+bounded start and stop previews, status and health visibility, restart and
+recovery planning, read-only log visibility, permission and audit ownership,
+safe-idle failure behavior, and end-to-end acceptance scenarios.
+
+It does not execute service start, stop, or restart; control processes; bind
+sockets; access the network; mutate systemd or autostart; mutate logs,
+permissions, or audit state; execute recovery; or run external commands.
+
+Next: Sprint 252 — Manual Start, Stop, and Status Runtime.
+Next boundary: `manual_start_stop_status_runtime`.
+Next version: `v1.1.2`.

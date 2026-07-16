@@ -936,3 +936,23 @@ backups or archives, read canonical data or backup-store contents, execute
 restore or rollback, write manifests, replace or delete files, mutate
 permissions or audit state, control processes, activate services, open network
 access, bind sockets, or mutate systemd.
+
+## AURA Launcher and Service Controls
+
+- Capability ID: `aura_launcher_service_controls`
+- State: `online`
+- Runtime level: `review_only`
+- Risk level: `low`
+- Permission required: `read_project`
+- Introduced in: `1.1.1`
+- Category: `runtime_integration`
+- Control Center visible: `true`
+
+This capability provides a read-only integration facade over the canonical
+launcher, lifecycle, health, status, log-visibility, permission, audit,
+recovery, and safe-idle owners.
+
+It does not create a duplicate service manager or execute service start,
+stop, restart, process control, socket activation, network access, systemd
+mutation, autostart mutation, log mutation, permission mutation, audit
+writes, recovery actions, or external commands.
