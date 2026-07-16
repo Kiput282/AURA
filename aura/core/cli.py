@@ -179,6 +179,7 @@ from aura.aura_launcher_service_controls.aura_launcher_service_controls_cli impo
 from aura.manual_start_stop_status_runtime.manual_start_stop_status_runtime_cli import handle_manual_start_stop_status_runtime_command
 from aura.restart_logs_failure_visibility.restart_logs_failure_visibility_cli import handle_restart_logs_failure_visibility_command
 from aura.process_ownership_service_state_persistence.process_ownership_service_state_persistence_cli import handle_process_ownership_service_state_persistence_command
+from aura.reviewed_optional_autostart.reviewed_optional_autostart_cli import handle_reviewed_optional_autostart_command
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
@@ -11272,6 +11273,8 @@ class AuraCLI:
         if handle_restart_logs_failure_visibility_command(args):
             return True
         if handle_process_ownership_service_state_persistence_command(args):
+            return True
+        if handle_reviewed_optional_autostart_command(args):
             return True
         if handle_session_memory_persistence_command(args):
             return True

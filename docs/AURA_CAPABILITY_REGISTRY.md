@@ -1018,3 +1018,17 @@ audit writes, and canonical-log mutation.
 
 Persistent ownership state is descriptor-safe, atomic, permission-gated, and
 recoverable only through approved runtime controls.
+
+## Sprint 255 capability — Reviewed Optional Autostart
+
+- ID: `reviewed_optional_autostart`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Risk: `high`
+- Permission: `user_confirmation`
+- Introduced in: `1.1.5`
+- Category: `runtime_control`
+- Control Center visible: `true`
+
+The capability renders and reviews an exact user-unit contract, host posture,
+activation plan, and rollback plan. It performs no systemd mutation.

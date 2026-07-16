@@ -58,3 +58,10 @@ Next boundary: `reviewed_optional_autostart`.
 - Genesis Final Release `1258`;
 - boot `v1.1.4 READY`;
 - final state stopped with no listener, process, or ownership record.
+
+## Sprint 255 successor
+
+Sprint 255 adds only a reviewed optional-autostart contract around the durable
+Sprint 254 ownership state. No unit installation or activation is performed.
+
+Next boundary: `persistent_local_chat_session_activation`.

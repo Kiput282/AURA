@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Version: `v1.1.4`
-Current Sprint: Sprint 254 — Process Ownership and Service State Persistence
-Next Planned Sprint: Sprint 255 — Reviewed Optional Autostart
+Current Version: `v1.1.5`
+Current Sprint: Sprint 255 — Reviewed Optional Autostart
+Next Planned Sprint: Sprint 256 — Persistent Local Chat Session Activation
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -2124,3 +2124,27 @@ background recovery remain disabled.
 Next: Sprint 255 — Reviewed Optional Autostart.
 Next boundary: `reviewed_optional_autostart`.
 Next version: `v1.1.5`.
+
+
+## Sprint 255 Completion — Reviewed Optional Autostart
+
+AURA `v1.1.5` completes Sprint 255 at the
+`reviewed_optional_autostart` boundary.
+
+Delivered:
+
+- exact `aura-local.service` user-unit preview;
+- canonical `ExecStart` derived from the supervised runtime owner;
+- project working directory and loopback runtime handoff;
+- bounded `Restart=on-failure` policy;
+- read-only user-manager, unit, and linger posture;
+- explicit activation preview with confirmation token;
+- complete rollback preview;
+- contract result `216/216`, zero failures, eighteen secure dimensions.
+
+No unit was written. No daemon reload, enable, start, linger change, system-unit
+mutation, non-loopback binding, or automatic activation was performed.
+
+Next: Sprint 256 — Persistent Local Chat Session Activation.
+Next boundary: `persistent_local_chat_session_activation`.
+Next version: `v1.1.6`.

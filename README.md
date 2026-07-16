@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.1.4`
-- Current status: Sprint 254 — Process Ownership and Service State Persistence completed
-Current runtime state: Sprint 254 persists canonical service ownership at `data/runtime/service_state.json` with atomic file and directory fsync, mode `0600`, process start ticks, Linux boot identity, UID, command, cwd, and loopback endpoint checks. Recovery requires approved start, stop, or restart. Systemd, autostart, arbitrary PID signaling, non-loopback binding, automatic stale cleanup, permission-store mutation, and persistent audit writing remain disabled.
+- Current version: `v1.1.5`
+- Current status: Sprint 255 — Reviewed Optional Autostart completed
+Current runtime state: Sprint 255 provides a reviewed systemd user-service contract, host posture, activation preview, and rollback preview for optional autostart. No unit is written or enabled; daemon reload, service start, linger changes, system-unit mutation, and automatic activation remain disabled.
 
 ---
 
@@ -35,12 +35,13 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 254 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
+AURA has completed Sprint 255 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
 
-Sprint 254 adds durable project-local process ownership and service-state persistence with strict file, process, boot, UID, command, cwd, and loopback endpoint identity.
+Sprint 255 adds a review-only optional autostart contract with exact user-unit, host posture, activation, and rollback previews while keeping all systemd mutations disabled.
 
 Latest completed checkpoints:
 
+- v1.1.5 — Sprint 255: Reviewed Optional Autostart
 - v1.1.4 — Sprint 254: Process Ownership and Service State Persistence
 - v1.1.3 — Sprint 253: Restart, Logs, and Failure Visibility
 - v1.1.2 — Sprint 252: Manual Start, Stop, and Status Runtime
@@ -115,18 +116,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 255 — Reviewed Optional Autostart
+- Next planned sprint: Sprint 256 — Persistent Local Chat Session Activation
 Current capability registry summary:
 
-- total capabilities: 135
-- online capabilities: 133
+- total capabilities: 136
+- online capabilities: 134
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 15
+- permission-gated capabilities: 16
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 7
+- runtime execution features: 8
 ---
 
 ## Safety State
@@ -6328,3 +6329,27 @@ background recovery remain disabled.
 Next: Sprint 255 — Reviewed Optional Autostart.
 Next boundary: `reviewed_optional_autostart`.
 Next version: `v1.1.5`.
+
+
+## Sprint 255 Completion — Reviewed Optional Autostart
+
+AURA `v1.1.5` completes Sprint 255 at the
+`reviewed_optional_autostart` boundary.
+
+Delivered:
+
+- exact `aura-local.service` user-unit preview;
+- canonical `ExecStart` derived from the supervised runtime owner;
+- project working directory and loopback runtime handoff;
+- bounded `Restart=on-failure` policy;
+- read-only user-manager, unit, and linger posture;
+- explicit activation preview with confirmation token;
+- complete rollback preview;
+- contract result `216/216`, zero failures, eighteen secure dimensions.
+
+No unit was written. No daemon reload, enable, start, linger change, system-unit
+mutation, non-loopback binding, or automatic activation was performed.
+
+Next: Sprint 256 — Persistent Local Chat Session Activation.
+Next boundary: `persistent_local_chat_session_activation`.
+Next version: `v1.1.6`.

@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current canonical anchor: v1.1.4
+Current canonical anchor: v1.1.5
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,26 +16,26 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.1.4
-- Completed: Sprint 254 — Process Ownership and Service State Persistence
+- Current version: v1.1.5
+- Completed: Sprint 255 — Reviewed Optional Autostart
 - Completed block: Sprint 241-250 — Genesis Stabilization & Runtime Hardening
 - Active block: Sprint 251-260 — Active Local Runtime & Model Service Integration
-- Runtime execution features: 7
-- Total capabilities: 135
-- Online capabilities: 133
-- Permission-gated capabilities: 15
+- Runtime execution features: 8
+- Total capabilities: 136
+- Online capabilities: 134
+- Permission-gated capabilities: 16
 - Review-only capabilities: 22
 - Active scope: explicit supervised localhost start, stop, status, and restart;
   strict process/listener ownership checks; bounded allowlisted and redacted log
   visibility; local dashboard/chat foundations; permission-gated safe actions
-- Sprint 254 contract: 192/192, zero failures, sixteen secure dimensions
+- Sprint 255 contract: 216/216, zero failures, eighteen secure dimensions
 - Active Permission Runtime: 3115 assertions, zero violations
 - Genesis Final Release baseline: 1258 assertions
 - Default listener state: stopped
 - Localhost-only boundary: preserved
 - Systemd and autostart mutation: disabled
 - Arbitrary PID signaling and arbitrary log paths: disabled
-- Next: Sprint 255 — Reviewed Optional Autostart
+- Next: Sprint 256 — Persistent Local Chat Session Activation
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2401,3 +2401,27 @@ background recovery remain disabled.
 Next: Sprint 255 — Reviewed Optional Autostart.
 Next boundary: `reviewed_optional_autostart`.
 Next version: `v1.1.5`.
+
+
+## Sprint 255 Completion — Reviewed Optional Autostart
+
+AURA `v1.1.5` completes Sprint 255 at the
+`reviewed_optional_autostart` boundary.
+
+Delivered:
+
+- exact `aura-local.service` user-unit preview;
+- canonical `ExecStart` derived from the supervised runtime owner;
+- project working directory and loopback runtime handoff;
+- bounded `Restart=on-failure` policy;
+- read-only user-manager, unit, and linger posture;
+- explicit activation preview with confirmation token;
+- complete rollback preview;
+- contract result `216/216`, zero failures, eighteen secure dimensions.
+
+No unit was written. No daemon reload, enable, start, linger change, system-unit
+mutation, non-loopback binding, or automatic activation was performed.
+
+Next: Sprint 256 — Persistent Local Chat Session Activation.
+Next boundary: `persistent_local_chat_session_activation`.
+Next version: `v1.1.6`.

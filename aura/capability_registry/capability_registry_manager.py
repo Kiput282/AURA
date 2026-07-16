@@ -2119,6 +2119,21 @@ class CapabilityRegistryManager:
      'introduced_in': '1.1.4',
      'category': 'runtime_control',
      'control_center_visible': True},
+    {'id': 'reviewed_optional_autostart',
+     'name': 'Reviewed Optional Autostart',
+     'description': 'Review-only systemd user-service contract, host posture, exact unit '
+                    'preview, explicit activation plan, and rollback plan. The target '
+                    'unit is aura-local.service under the current user manager with '
+                    'bounded on-failure restart. Unit writing, daemon reload, enable, '
+                    'start, linger change, system-unit mutation, non-loopback binding, '
+                    'and automatic activation remain disabled.',
+     'state': 'online',
+     'runtime_level': 'permission_gated_alpha_runtime',
+     'risk_level': 'high',
+     'permission_required': 'user_confirmation',
+     'introduced_in': '1.1.5',
+     'category': 'runtime_control',
+     'control_center_visible': True},
 ]
 
 
@@ -2143,7 +2158,7 @@ class CapabilityRegistryManager:
             "review_only_count": sum(1 for item in catalog if item["runtime_level"] == "review_only"),
             "planned_future_count": state_counts.get("planned_future", 0),
             "disabled_runtime_count": state_counts.get("disabled_runtime", 0),
-            "runtime_execution_features": (1 + int(any((capability.get('id') == 'aura_local_model_bridge_runtime' and capability.get('state') == 'online' and (capability.get('runtime_level') == 'permission_gated_alpha_runtime') for capability in self.capability_catalog()))) + int(any((capability.get('id') == 'aura_interactive_control_center_chat_runtime' and capability.get('state') == 'online' and (capability.get('runtime_level') == 'permission_gated_alpha_runtime') for capability in self.capability_catalog()))) + int(any((capability.get('id') == 'aura_permission_audit_recovery_visibility_runtime' and capability.get('state') == 'online' and (capability.get('runtime_level') == 'permission_gated_alpha_runtime') for capability in self.capability_catalog()))) + int(any(capability.get('id') == 'manual_start_stop_status_runtime' and capability.get('state') == 'online' and capability.get('runtime_level') == 'permission_gated_alpha_runtime' for capability in self.capability_catalog())) + int(any(capability.get('id') == 'restart_logs_failure_visibility' and capability.get('state') == 'online' and capability.get('runtime_level') == 'permission_gated_alpha_runtime' for capability in self.capability_catalog())) + int(any(capability.get('id') == 'process_ownership_service_state_persistence' and capability.get('state') == 'online' and capability.get('runtime_level') == 'permission_gated_alpha_runtime' for capability in self.capability_catalog()))),
+            "runtime_execution_features": (1 + int(any((capability.get('id') == 'aura_local_model_bridge_runtime' and capability.get('state') == 'online' and (capability.get('runtime_level') == 'permission_gated_alpha_runtime') for capability in self.capability_catalog()))) + int(any((capability.get('id') == 'aura_interactive_control_center_chat_runtime' and capability.get('state') == 'online' and (capability.get('runtime_level') == 'permission_gated_alpha_runtime') for capability in self.capability_catalog()))) + int(any((capability.get('id') == 'aura_permission_audit_recovery_visibility_runtime' and capability.get('state') == 'online' and (capability.get('runtime_level') == 'permission_gated_alpha_runtime') for capability in self.capability_catalog()))) + int(any(capability.get('id') == 'manual_start_stop_status_runtime' and capability.get('state') == 'online' and capability.get('runtime_level') == 'permission_gated_alpha_runtime' for capability in self.capability_catalog())) + int(any(capability.get('id') == 'restart_logs_failure_visibility' and capability.get('state') == 'online' and capability.get('runtime_level') == 'permission_gated_alpha_runtime' for capability in self.capability_catalog())) + int(any(capability.get('id') == 'process_ownership_service_state_persistence' and capability.get('state') == 'online' and capability.get('runtime_level') == 'permission_gated_alpha_runtime' for capability in self.capability_catalog())) + int(any(capability.get('id') == 'reviewed_optional_autostart' and capability.get('state') == 'online' and capability.get('runtime_level') == 'permission_gated_alpha_runtime' for capability in self.capability_catalog()))),
             "state_counts": state_counts,
             "risk_counts": risk_counts,
             "permission_counts": permission_counts,
