@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.1.5`
-- Current status: Sprint 255 — Reviewed Optional Autostart completed
-Current runtime state: Sprint 255 provides a reviewed systemd user-service contract, host posture, activation preview, and rollback preview for optional autostart. No unit is written or enabled; daemon reload, service start, linger changes, system-unit mutation, and automatic activation remain disabled.
+- Current version: `v1.1.6`
+- Current status: Sprint 256 — Persistent Local Chat Session Activation completed
+Current runtime state: Sprint 256 hardens persistent browser-chat sessions at `data/chat_sessions` with descriptor-safe reads, cross-process locking, private storage and files, atomic writes, integrity verification, bounded metadata history, and exact session loading. Model-service activation, network fallback, non-loopback binding, automatic memory handoff, session-content logging, systemd mutation, and autostart activation remain disabled.
 
 ---
 
@@ -35,12 +35,13 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 255 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
+AURA has completed Sprint 256 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
 
-Sprint 255 adds a review-only optional autostart contract with exact user-unit, host posture, activation, and rollback previews while keeping all systemd mutations disabled.
+Sprint 256 activates hardened persistent local chat sessions through the existing browser-chat owner while preserving schema, saved content, revision control, integrity hashes, and safe-idle boundaries.
 
 Latest completed checkpoints:
 
+- v1.1.6 — Sprint 256: Persistent Local Chat Session Activation
 - v1.1.5 — Sprint 255: Reviewed Optional Autostart
 - v1.1.4 — Sprint 254: Process Ownership and Service State Persistence
 - v1.1.3 — Sprint 253: Restart, Logs, and Failure Visibility
@@ -116,18 +117,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 256 — Persistent Local Chat Session Activation
+- Next planned sprint: Sprint 257 — Local Model Service Discovery and Health
 Current capability registry summary:
 
-- total capabilities: 136
-- online capabilities: 134
+- total capabilities: 137
+- online capabilities: 135
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 16
+- permission-gated capabilities: 17
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 8
+- runtime execution features: 9
 ---
 
 ## Safety State
@@ -6343,6 +6344,7 @@ Delivered:
 - project working directory and loopback runtime handoff;
 - bounded `Restart=on-failure` policy;
 - read-only user-manager, unit, and linger posture;
+- no model-service activation, network fallback, automatic memory handoff, or session-content logging from Sprint 256;
 - explicit activation preview with confirmation token;
 - complete rollback preview;
 - contract result `216/216`, zero failures, eighteen secure dimensions.
@@ -6353,3 +6355,35 @@ mutation, non-loopback binding, or automatic activation was performed.
 Next: Sprint 256 — Persistent Local Chat Session Activation.
 Next boundary: `persistent_local_chat_session_activation`.
 Next version: `v1.1.6`.
+
+
+## Sprint 256 Completion — Persistent Local Chat Session Activation
+
+AURA `v1.1.6` completes Sprint 256 at the
+`persistent_local_chat_session_activation` boundary.
+
+Delivered:
+
+- the existing browser-chat session manager remains the canonical owner;
+- descriptor-safe session reads using directory-relative `open`, `O_NOFOLLOW`,
+  `fstat`, UID checks, private-mode checks, and bounded reads;
+- cross-process shared/exclusive locking on the storage-directory descriptor;
+- secure write preparation with directory mode `0700`;
+- session files mode `0600`;
+- exclusive temporary creation, file fsync, atomic replace, and directory fsync;
+- existing schema `1.0`, integrity hashes, revisions, and idempotent message
+  submission remain compatible;
+- bounded metadata-only history and exact session loading;
+- isolated create, submit, cross-instance load/list, integrity, and symlink
+  rejection rehearsal;
+- contract result `240/240`, zero failures, twenty secure dimensions.
+
+The existing canonical session content is not rewritten by implementation.
+Directory-mode migration from `0775` to `0700` remains a separately validated
+finalization step. Model-service activation, network access, non-loopback
+binding, automatic memory handoff, session-content logging, systemd mutation,
+and autostart activation remain disabled.
+
+Next: Sprint 257 — Local Model Service Discovery and Health.
+Next boundary: `local_model_service_discovery_health`.
+Next version: `v1.1.7`.

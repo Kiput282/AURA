@@ -7,6 +7,8 @@ desktop operation, network fallback, or AURA long-term memory.
 
 from __future__ import annotations
 
+import errno
+import fcntl
 import hashlib
 import json
 import os
@@ -16,6 +18,7 @@ import tempfile
 import threading
 import unicodedata
 import uuid
+from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
@@ -50,15 +53,19 @@ class AuraBrowserChatSessionRuntimeManager:
     """Manage bounded, local, persistent chat sessions without a model."""
 
     name = "aura_browser_chat_session_runtime"
-    component_version = "0.1.0-alpha"
+    component_version = "0.2.0-alpha"
     sprint = 186
     schema_version = "1.0"
+    persistent_activation_version = "1.1.6"
+    persistent_activation_sprint = 256
 
     MAX_TITLE_CHARS = 120
     MAX_MESSAGE_CHARS = 8192
     MAX_MESSAGE_BYTES = 32768
     MAX_MESSAGES_PER_SESSION = 500
     MAX_SESSION_FILE_BYTES = 2 * 1024 * 1024
+    STORAGE_DIRECTORY_MODE = 0o700
+    SESSION_FILE_MODE = 0o600
     RESPONSE_KIND = "model_bridge_unavailable"
     LOCAL_MODEL_RESPONSE_KIND = "local_model_response"
     CLEAR_PREFIX = "CLEAR "
@@ -98,6 +105,154 @@ class AuraBrowserChatSessionRuntimeManager:
             lambda: uuid.uuid4().hex
         )
         self._lock = threading.RLock()
+
+    @staticmethod
+    def _private_mode(
+        metadata: os.stat_result,
+    ) -> bool:
+        return (
+            stat.S_IMODE(metadata.st_mode)
+            & 0o077
+        ) == 0
+
+    def _prepare_storage_directory(
+        self,
+    ) -> None:
+        if self.storage_dir.is_symlink():
+            raise BrowserChatSessionCorruptionError(
+                "Storage directory symlinks are not allowed."
+            )
+
+        self.storage_dir.mkdir(
+            parents=True,
+            exist_ok=True,
+            mode=self.STORAGE_DIRECTORY_MODE,
+        )
+        os.chmod(
+            self.storage_dir,
+            self.STORAGE_DIRECTORY_MODE,
+        )
+        metadata = self.storage_dir.stat()
+
+        if not stat.S_ISDIR(
+            metadata.st_mode
+        ):
+            raise BrowserChatSessionCorruptionError(
+                "Chat session storage is not a directory."
+            )
+
+        if metadata.st_uid != os.getuid():
+            raise BrowserChatSessionCorruptionError(
+                "Chat session storage has the wrong owner."
+            )
+
+        if not self._private_mode(metadata):
+            raise BrowserChatSessionCorruptionError(
+                "Chat session storage permissions are too broad."
+            )
+
+    @contextmanager
+    def _storage_lock(
+        self,
+        *,
+        exclusive: bool,
+        create: bool,
+    ):
+        if create:
+            self._prepare_storage_directory()
+        elif not self.storage_dir.exists():
+            yield None
+            return
+
+        flags = (
+            os.O_RDONLY
+            | getattr(os, "O_DIRECTORY", 0)
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0)
+        )
+
+        try:
+            descriptor = os.open(
+                self.storage_dir,
+                flags,
+            )
+        except OSError as exc:
+            code = (
+                "storage directory symlink rejected"
+                if exc.errno == errno.ELOOP
+                else "storage directory open failed"
+            )
+            raise BrowserChatSessionCorruptionError(
+                f"{code}: {type(exc).__name__}"
+            ) from exc
+
+        try:
+            metadata = os.fstat(descriptor)
+
+            if not stat.S_ISDIR(
+                metadata.st_mode
+            ):
+                raise BrowserChatSessionCorruptionError(
+                    "Chat session storage descriptor is not a directory."
+                )
+
+            if metadata.st_uid != os.getuid():
+                raise BrowserChatSessionCorruptionError(
+                    "Chat session storage descriptor has the wrong owner."
+                )
+
+            if exclusive and not self._private_mode(
+                metadata
+            ):
+                raise BrowserChatSessionCorruptionError(
+                    "Chat session storage must be private before mutation."
+                )
+
+            fcntl.flock(
+                descriptor,
+                (
+                    fcntl.LOCK_EX
+                    if exclusive
+                    else fcntl.LOCK_SH
+                ),
+            )
+            yield descriptor
+        finally:
+            try:
+                fcntl.flock(
+                    descriptor,
+                    fcntl.LOCK_UN,
+                )
+            finally:
+                os.close(descriptor)
+
+    def _validate_session_metadata(
+        self,
+        metadata: os.stat_result,
+        *,
+        path: Path,
+    ) -> None:
+        if not stat.S_ISREG(
+            metadata.st_mode
+        ):
+            raise BrowserChatSessionCorruptionError(
+                f"Session path is not a regular file: {path.name}"
+            )
+
+        if metadata.st_uid != os.getuid():
+            raise BrowserChatSessionCorruptionError(
+                f"Session file has the wrong owner: {path.name}"
+            )
+
+        if not self._private_mode(metadata):
+            raise BrowserChatSessionCorruptionError(
+                f"Session file permissions are too broad: {path.name}"
+            )
+
+        if metadata.st_size > self.MAX_SESSION_FILE_BYTES:
+            raise BrowserChatSessionCorruptionError(
+                "Session file exceeds the size limit."
+            )
 
     @staticmethod
     def _canonical_bytes(
@@ -269,16 +424,20 @@ class AuraBrowserChatSessionRuntimeManager:
         return expected_revision
 
     def _session_path(self, session_id: str) -> Path:
-        validated = self._validate_session_id(session_id)
-        path = self.storage_dir / f"{validated}.json"
-        resolved = path.resolve(strict=False)
-        try:
-            resolved.relative_to(self.storage_dir)
-        except ValueError as exc:
+        validated = self._validate_session_id(
+            session_id
+        )
+        path = (
+            self.storage_dir
+            / f"{validated}.json"
+        )
+
+        if path.parent != self.storage_dir:
             raise BrowserChatValidationError(
                 "session path escapes the storage directory."
-            ) from exc
-        return resolved
+            )
+
+        return path
 
     @staticmethod
     def _metadata(
@@ -531,39 +690,99 @@ class AuraBrowserChatSessionRuntimeManager:
         self,
         session_id: str,
     ) -> dict[str, Any]:
-        path = self._session_path(session_id)
+        validated = self._validate_session_id(
+            session_id
+        )
+        path = self._session_path(validated)
+        filename = f"{validated}.json"
 
-        if path.is_symlink():
-            raise BrowserChatSessionCorruptionError(
-                "Session file symlinks are not allowed."
-            )
-        if not path.exists():
-            raise BrowserChatSessionNotFoundError(
-                f"Session not found: {session_id}"
-            )
-        if not path.is_file():
-            raise BrowserChatSessionCorruptionError(
-                "Session path is not a regular file."
+        with self._storage_lock(
+            exclusive=False,
+            create=False,
+        ) as directory_fd:
+            if directory_fd is None:
+                raise BrowserChatSessionNotFoundError(
+                    f"Session not found: {validated}"
+                )
+
+            flags = (
+                os.O_RDONLY
+                | getattr(os, "O_CLOEXEC", 0)
+                | getattr(os, "O_NOFOLLOW", 0)
             )
 
-        size = path.stat().st_size
-        if size > self.MAX_SESSION_FILE_BYTES:
+            try:
+                descriptor = os.open(
+                    filename,
+                    flags,
+                    dir_fd=directory_fd,
+                )
+            except FileNotFoundError as exc:
+                raise BrowserChatSessionNotFoundError(
+                    f"Session not found: {validated}"
+                ) from exc
+            except OSError as exc:
+                if exc.errno == errno.ELOOP:
+                    raise BrowserChatSessionCorruptionError(
+                        "Session file symlinks are not allowed."
+                    ) from exc
+
+                raise BrowserChatSessionCorruptionError(
+                    "Session file could not be opened safely: "
+                    f"{type(exc).__name__}"
+                ) from exc
+
+            try:
+                before = os.fstat(descriptor)
+                self._validate_session_metadata(
+                    before,
+                    path=path,
+                )
+
+                with os.fdopen(
+                    descriptor,
+                    "rb",
+                ) as handle:
+                    descriptor = -1
+                    raw = handle.read(
+                        self.MAX_SESSION_FILE_BYTES + 1
+                    )
+                    after = os.fstat(
+                        handle.fileno()
+                    )
+            finally:
+                if descriptor >= 0:
+                    os.close(descriptor)
+
+        if (
+            before.st_dev != after.st_dev
+            or before.st_ino != after.st_ino
+        ):
+            raise BrowserChatSessionCorruptionError(
+                "Session file identity changed during read."
+            )
+
+        if len(raw) > self.MAX_SESSION_FILE_BYTES:
             raise BrowserChatSessionCorruptionError(
                 "Session file exceeds the size limit."
             )
 
         try:
             payload = json.loads(
-                path.read_text(encoding="utf-8")
+                raw.decode("utf-8")
             )
-        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        except (
+            UnicodeError,
+            json.JSONDecodeError,
+        ) as exc:
             raise BrowserChatSessionCorruptionError(
-                f"Session file cannot be decoded: {type(exc).__name__}"
+                "Session file cannot be decoded: "
+                f"{type(exc).__name__}"
             ) from exc
 
         return self._validate_session_payload(
             payload,
-            expected_session_id=session_id,
+            expected_session_id=validated,
         )
 
     def _write_session_unlocked(
@@ -576,19 +795,11 @@ class AuraBrowserChatSessionRuntimeManager:
             payload.get("session_id")
         )
         path = self._session_path(session_id)
-
-        if expected_absent and path.exists():
-            raise BrowserChatSessionConflictError(
-                "Generated session id already exists."
-            )
-        if path.is_symlink():
-            raise BrowserChatSessionCorruptionError(
-                "Refusing to replace a session symlink."
-            )
+        filename = f"{session_id}.json"
 
         payload = deepcopy(payload)
-        payload["integrity_sha256"] = self._integrity_digest(
-            payload
+        payload["integrity_sha256"] = (
+            self._integrity_digest(payload)
         )
         self._validate_session_payload(
             payload,
@@ -604,57 +815,128 @@ class AuraBrowserChatSessionRuntimeManager:
             )
             + "\n"
         ).encode("utf-8")
+
         if len(body) > self.MAX_SESSION_FILE_BYTES:
             raise BrowserChatValidationError(
                 "Serialized session exceeds the size limit."
             )
 
-        self.storage_dir.mkdir(
-            parents=True,
-            exist_ok=True,
+        temporary_name = (
+            f".{session_id}."
+            f"{os.getpid()}."
+            f"{threading.get_ident()}."
+            f"{uuid.uuid4().hex}.tmp"
         )
-        if self.storage_dir.is_symlink():
-            raise BrowserChatSessionCorruptionError(
-                "Storage directory symlinks are not allowed."
-            )
 
-        temporary_path: Path | None = None
-        try:
-            descriptor, temporary_name = tempfile.mkstemp(
-                prefix=f".{session_id}.",
-                suffix=".tmp",
-                dir=self.storage_dir,
-            )
-            temporary_path = Path(temporary_name)
+        with self._storage_lock(
+            exclusive=True,
+            create=True,
+        ) as directory_fd:
+            if directory_fd is None:
+                raise BrowserChatSessionCorruptionError(
+                    "Chat session storage could not be prepared."
+                )
 
-            with os.fdopen(descriptor, "wb") as handle:
-                handle.write(body)
-                handle.flush()
-                os.fsync(handle.fileno())
-
-            os.chmod(temporary_path, 0o600)
-            os.replace(temporary_path, path)
-            temporary_path = None
+            existing = None
 
             try:
-                directory_fd = os.open(
-                    self.storage_dir,
-                    os.O_RDONLY,
+                existing = os.stat(
+                    filename,
+                    dir_fd=directory_fd,
+                    follow_symlinks=False,
                 )
-            except OSError:
-                directory_fd = None
+            except FileNotFoundError:
+                existing = None
+            except OSError as exc:
+                raise BrowserChatSessionCorruptionError(
+                    "Existing session metadata could not be inspected."
+                ) from exc
 
-            if directory_fd is not None:
-                try:
-                    os.fsync(directory_fd)
-                finally:
-                    os.close(directory_fd)
-        finally:
             if (
-                temporary_path is not None
-                and temporary_path.exists()
+                expected_absent
+                and existing is not None
             ):
-                temporary_path.unlink()
+                raise BrowserChatSessionConflictError(
+                    "Generated session id already exists."
+                )
+
+            if existing is not None:
+                self._validate_session_metadata(
+                    existing,
+                    path=path,
+                )
+
+            flags = (
+                os.O_WRONLY
+                | os.O_CREAT
+                | os.O_EXCL
+                | getattr(os, "O_CLOEXEC", 0)
+                | getattr(os, "O_NOFOLLOW", 0)
+            )
+            descriptor = -1
+            temporary_created = False
+
+            try:
+                descriptor = os.open(
+                    temporary_name,
+                    flags,
+                    self.SESSION_FILE_MODE,
+                    dir_fd=directory_fd,
+                )
+                temporary_created = True
+                metadata = os.fstat(descriptor)
+                self._validate_session_metadata(
+                    metadata,
+                    path=Path(temporary_name),
+                )
+
+                with os.fdopen(
+                    descriptor,
+                    "wb",
+                ) as handle:
+                    descriptor = -1
+                    handle.write(body)
+                    handle.flush()
+                    os.fsync(
+                        handle.fileno()
+                    )
+
+                os.replace(
+                    temporary_name,
+                    filename,
+                    src_dir_fd=directory_fd,
+                    dst_dir_fd=directory_fd,
+                )
+                temporary_created = False
+
+                os.chmod(
+                    filename,
+                    self.SESSION_FILE_MODE,
+                    dir_fd=directory_fd,
+                    follow_symlinks=False,
+                )
+                os.fsync(directory_fd)
+            except BrowserChatSessionError:
+                raise
+            except OSError as exc:
+                raise BrowserChatSessionCorruptionError(
+                    "Session file could not be committed safely: "
+                    f"{type(exc).__name__}"
+                ) from exc
+            finally:
+                if descriptor >= 0:
+                    os.close(descriptor)
+
+                if temporary_created:
+                    try:
+                        os.unlink(
+                            temporary_name,
+                            dir_fd=directory_fd,
+                        )
+                    except FileNotFoundError:
+                        pass
+                    except OSError:
+                        pass
 
     def contract_snapshot(self) -> dict[str, Any]:
         """Return metadata-only state without loading session payloads."""
@@ -814,6 +1096,10 @@ class AuraBrowserChatSessionRuntimeManager:
             "optimistic_revision_control": True,
             "idempotent_client_message_submission": True,
             "atomic_session_writes": True,
+            "descriptor_safe_session_reads": True,
+            "cross_process_directory_locking": True,
+            "private_session_directory_on_write": True,
+            "private_session_files": True,
             "session_integrity_hash": True,
             "bounded_session_mutation": True,
             "aura_long_term_memory_write": False,

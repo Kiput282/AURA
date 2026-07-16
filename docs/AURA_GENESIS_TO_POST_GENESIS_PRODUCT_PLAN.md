@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Version: `v1.1.5`
-Current Sprint: Sprint 255 — Reviewed Optional Autostart
-Next Planned Sprint: Sprint 256 — Persistent Local Chat Session Activation
+Current Version: `v1.1.6`
+Current Sprint: Sprint 256 — Persistent Local Chat Session Activation
+Next Planned Sprint: Sprint 257 — Local Model Service Discovery and Health
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -2148,3 +2148,35 @@ mutation, non-loopback binding, or automatic activation was performed.
 Next: Sprint 256 — Persistent Local Chat Session Activation.
 Next boundary: `persistent_local_chat_session_activation`.
 Next version: `v1.1.6`.
+
+
+## Sprint 256 Completion — Persistent Local Chat Session Activation
+
+AURA `v1.1.6` completes Sprint 256 at the
+`persistent_local_chat_session_activation` boundary.
+
+Delivered:
+
+- the existing browser-chat session manager remains the canonical owner;
+- descriptor-safe session reads using directory-relative `open`, `O_NOFOLLOW`,
+  `fstat`, UID checks, private-mode checks, and bounded reads;
+- cross-process shared/exclusive locking on the storage-directory descriptor;
+- secure write preparation with directory mode `0700`;
+- session files mode `0600`;
+- exclusive temporary creation, file fsync, atomic replace, and directory fsync;
+- existing schema `1.0`, integrity hashes, revisions, and idempotent message
+  submission remain compatible;
+- bounded metadata-only history and exact session loading;
+- isolated create, submit, cross-instance load/list, integrity, and symlink
+  rejection rehearsal;
+- contract result `240/240`, zero failures, twenty secure dimensions.
+
+The existing canonical session content is not rewritten by implementation.
+Directory-mode migration from `0775` to `0700` remains a separately validated
+finalization step. Model-service activation, network access, non-loopback
+binding, automatic memory handoff, session-content logging, systemd mutation,
+and autostart activation remain disabled.
+
+Next: Sprint 257 — Local Model Service Discovery and Health.
+Next boundary: `local_model_service_discovery_health`.
+Next version: `v1.1.7`.

@@ -1032,3 +1032,18 @@ recoverable only through approved runtime controls.
 
 The capability renders and reviews an exact user-unit contract, host posture,
 activation plan, and rollback plan. It performs no systemd mutation.
+
+## Sprint 256 capability — Persistent Local Chat Session Activation
+
+- ID: `persistent_local_chat_session_activation`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Risk: `high`
+- Permission: `user_confirmation`
+- Introduced in: `1.1.6`
+- Category: `local_chat`
+- Control Center visible: `true`
+
+The capability hardens existing browser-chat persistence with descriptor-safe
+reads, cross-process locking, private storage, atomic writes, bounded metadata
+history, integrity verification, and explicit existing memory gates.

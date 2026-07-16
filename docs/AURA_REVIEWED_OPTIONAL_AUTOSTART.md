@@ -59,3 +59,10 @@ steps.
 - no automatic activation.
 
 Next boundary: `persistent_local_chat_session_activation`.
+
+## Sprint 256 successor
+
+Sprint 256 activates hardened persistent local chat sessions independently of
+autostart. No systemd unit is installed or activated.
+
+Next boundary: `local_model_service_discovery_health`.
