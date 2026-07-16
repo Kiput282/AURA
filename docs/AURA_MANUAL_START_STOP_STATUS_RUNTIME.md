@@ -226,3 +226,13 @@ Next sprint: Sprint 254 — Process Ownership and Service State Persistence.
 Next boundary: `process_ownership_service_state_persistence`.
 
 Next version: `v1.1.4`.
+
+## Sprint 254 persistence outcome
+
+The canonical manual runtime owner now stores service ownership state at
+`data/runtime/service_state.json` using schema v2, mode `0600`, parent mode
+`0700`, process start ticks, Linux boot ID, UID, exact command, cwd, and
+loopback endpoint identity. Status remains read-only and recovery remains
+explicit.
+
+Next: Sprint 255 — Reviewed Optional Autostart.

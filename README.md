@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.1.3`
-- Current status: Sprint 253 — Restart, Logs, and Failure Visibility completed
-Current runtime state: Sprint 253 provides permission-gated supervised start, stop, and restart on the canonical loopback runtime, bounded allowlisted and redacted log visibility, and structured failure packets. Systemd and autostart mutation, non-loopback binding, arbitrary PID signaling, arbitrary log paths, permission-store mutation, persistent audit writing, and canonical-log mutation remain disabled.
+- Current version: `v1.1.4`
+- Current status: Sprint 254 — Process Ownership and Service State Persistence completed
+Current runtime state: Sprint 254 persists canonical service ownership at `data/runtime/service_state.json` with atomic file and directory fsync, mode `0600`, process start ticks, Linux boot identity, UID, command, cwd, and loopback endpoint checks. Recovery requires approved start, stop, or restart. Systemd, autostart, arbitrary PID signaling, non-loopback binding, automatic stale cleanup, permission-store mutation, and persistent audit writing remain disabled.
 
 ---
 
@@ -35,17 +35,17 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 253 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
+AURA has completed Sprint 254 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
 
-Sprint 253 adds permission-gated supervised restart, bounded allowlisted and redacted log visibility, structured failure reporting, and verified return to safe idle.
+Sprint 254 adds durable project-local process ownership and service-state persistence with strict file, process, boot, UID, command, cwd, and loopback endpoint identity.
 
 Latest completed checkpoints:
 
+- v1.1.4 — Sprint 254: Process Ownership and Service State Persistence
 - v1.1.3 — Sprint 253: Restart, Logs, and Failure Visibility
 - v1.1.2 — Sprint 252: Manual Start, Stop, and Status Runtime
 - v1.1.1 — Sprint 251: AURA Launcher and Service Controls
 - v1.1.0 — Sprint 250: Backup and Restore Rehearsal
-
 
 - v0.220.0-genesis
 - Sprint 220: Permission and Action Runtime Stabilization
@@ -115,18 +115,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 254 — Process Ownership and Service State Persistence
+- Next planned sprint: Sprint 255 — Reviewed Optional Autostart
 Current capability registry summary:
 
-- total capabilities: 134
-- online capabilities: 132
+- total capabilities: 135
+- online capabilities: 133
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 14
+- permission-gated capabilities: 15
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 6
+- runtime execution features: 7
 ---
 
 ## Safety State
@@ -150,7 +150,7 @@ Still disabled by design:
 - no unrestricted network probing;
 - no systemd or autostart mutation;
 - no arbitrary PID signaling or arbitrary log paths;
-- no permission-store mutation or persistent audit writes from Sprint 253;
+- no permission-store mutation or persistent audit writes from Sprint 254;
 - no unrestricted memory, Git, dashboard-action, or ORION control runtime.
 
 AURA may act only inside explicit, reviewed, permission-gated boundaries.
@@ -6301,3 +6301,30 @@ Next: Sprint 254 — Process Ownership and Service State Persistence.
 Next boundary: `process_ownership_service_state_persistence`.
 
 Next version: `v1.1.4`.
+
+
+## Sprint 254 Completion — Process Ownership and Service State Persistence
+
+AURA `v1.1.4` completes Sprint 254 at the
+`process_ownership_service_state_persistence` boundary.
+
+Delivered:
+
+- canonical state at `data/runtime/service_state.json`;
+- schema v2 with PID, process start ticks, Linux boot ID, UID, command, cwd,
+  loopback endpoint, and timestamps;
+- mode `0600` file and `0700` parent directory;
+- `O_EXCL`, `O_CLOEXEC`, `O_NOFOLLOW`, `fstat`, file fsync, atomic replace,
+  and directory fsync;
+- stale, previous-boot, and foreign-user record classification;
+- explicit recovery only through approved start, stop, or restart;
+- read-only status and recovery preview;
+- contract `192/192`, zero failures, sixteen secure dimensions.
+
+Systemd, autostart, arbitrary PID signaling, non-loopback binding, automatic
+stale cleanup, permission-store mutation, persistent audit writing, and
+background recovery remain disabled.
+
+Next: Sprint 255 — Reviewed Optional Autostart.
+Next boundary: `reviewed_optional_autostart`.
+Next version: `v1.1.5`.

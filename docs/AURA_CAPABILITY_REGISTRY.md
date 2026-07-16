@@ -1004,3 +1004,17 @@ and structured failure packets. It rejects unowned runtime evidence,
 arbitrary PID signaling, arbitrary log paths, non-loopback activation,
 systemd mutation, autostart mutation, permission-store mutation, persistent
 audit writes, and canonical-log mutation.
+
+## Sprint 254 capability — Process Ownership and Service State Persistence
+
+- ID: `process_ownership_service_state_persistence`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Risk: `high`
+- Permission: `user_confirmation`
+- Introduced in: `1.1.4`
+- Category: `runtime_control`
+- Control Center visible: `true`
+
+Persistent ownership state is descriptor-safe, atomic, permission-gated, and
+recoverable only through approved runtime controls.

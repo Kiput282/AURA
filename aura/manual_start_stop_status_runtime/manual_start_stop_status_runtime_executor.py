@@ -15,6 +15,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
+from aura.process_ownership_service_state_persistence.persistent_service_state_store import (
+    PersistentServiceStateError,
+    PersistentServiceStateStore,
+)
+
 
 class ManualRuntimeControlError(RuntimeError):
     def __init__(
@@ -38,7 +43,7 @@ class ManualRuntimeControlError(RuntimeError):
 
 
 class ManualStartStopStatusRuntimeExecutor:
-    SCHEMA_VERSION = 1
+    SCHEMA_VERSION = 2
     HOST = "127.0.0.1"
     PORT = 8765
     START_TIMEOUT_SECONDS = 12.0
@@ -63,11 +68,21 @@ class ManualStartStopStatusRuntimeExecutor:
             f"aura-manual-start-stop-status-{uid}"
         )
         tmp = Path("/tmp")
+        persistent_state_path = (
+            self.project_root
+            / "data"
+            / "runtime"
+            / "service_state.json"
+        )
 
         self.state_path = Path(
             state_path
             if state_path is not None
-            else tmp / f"{runtime_prefix}.json"
+            else persistent_state_path
+        )
+        self.state_store = PersistentServiceStateStore(
+            self.project_root,
+            state_path=self.state_path,
         )
         self.lock_path = Path(
             lock_path
@@ -368,116 +383,35 @@ class ManualStartStopStatusRuntimeExecutor:
         self,
     ) -> dict[str, Any] | None:
         try:
-            text = self.state_path.read_text(
-                encoding="utf-8"
-            )
-        except FileNotFoundError:
-            return None
-        except OSError as exc:
+            return self.state_store.read()
+        except PersistentServiceStateError as exc:
             raise ManualRuntimeControlError(
-                "state_read_failed",
-                "Temporary ownership state could not be read.",
-                details={
-                    "path": str(
-                        self.state_path
-                    ),
-                    "reason": str(exc),
-                },
+                exc.code,
+                str(exc),
+                details=exc.details,
             ) from exc
-
-        try:
-            packet = json.loads(text)
-        except json.JSONDecodeError as exc:
-            raise ManualRuntimeControlError(
-                "state_invalid_json",
-                "Temporary ownership state is not valid JSON.",
-                details={
-                    "path": str(
-                        self.state_path
-                    ),
-                },
-            ) from exc
-
-        if not isinstance(packet, dict):
-            raise ManualRuntimeControlError(
-                "state_invalid_type",
-                "Temporary ownership state is not an object.",
-                details={
-                    "path": str(
-                        self.state_path
-                    ),
-                },
-            )
-
-        return packet
 
     def _write_state(
         self,
         packet: dict[str, Any],
     ) -> None:
-        self.state_path.parent.mkdir(
-            parents=True,
-            exist_ok=True,
-        )
-        temporary = self.state_path.with_name(
-            self.state_path.name
-            + f".tmp-{os.getpid()}"
-        )
-        raw = (
-            json.dumps(
-                packet,
-                indent=2,
-                sort_keys=True,
-            )
-            + "\n"
-        ).encode("utf-8")
-        descriptor = os.open(
-            temporary,
-            os.O_WRONLY
-            | os.O_CREAT
-            | os.O_TRUNC,
-            0o600,
-        )
-
         try:
-            with os.fdopen(
-                descriptor,
-                "wb",
-            ) as handle:
-                handle.write(raw)
-                handle.flush()
-                os.fsync(handle.fileno())
-            os.replace(
-                temporary,
-                self.state_path,
-            )
-            os.chmod(
-                self.state_path,
-                0o600,
-            )
-        finally:
-            try:
-                temporary.unlink(
-                    missing_ok=True
-                )
-            except OSError:
-                pass
+            self.state_store.write(packet)
+        except PersistentServiceStateError as exc:
+            raise ManualRuntimeControlError(
+                exc.code,
+                str(exc),
+                details=exc.details,
+            ) from exc
 
     def _remove_state(self) -> None:
         try:
-            self.state_path.unlink(
-                missing_ok=True
-            )
-        except OSError as exc:
+            self.state_store.remove()
+        except PersistentServiceStateError as exc:
             raise ManualRuntimeControlError(
-                "state_remove_failed",
-                "Temporary ownership state could not be removed.",
-                details={
-                    "path": str(
-                        self.state_path
-                    ),
-                    "reason": str(exc),
-                },
+                exc.code,
+                str(exc),
+                details=exc.details,
             ) from exc
 
     def _command_digest(self) -> str:
@@ -496,7 +430,10 @@ class ManualStartStopStatusRuntimeExecutor:
         try:
             pid = int(record["pid"])
             start_ticks = int(
-                record["proc_start_ticks"]
+                record.get(
+                    "process_start_ticks",
+                    record["proc_start_ticks"],
+                )
             )
         except (
             KeyError,
@@ -517,8 +454,19 @@ class ManualStartStopStatusRuntimeExecutor:
         )
         argv = self._read_cmdline(pid)
         cwd = self._read_cwd(pid)
+        current_boot_id = (
+            PersistentServiceStateStore.boot_id()
+        )
+        record_uid = record.get(
+            "host_uid",
+            record.get("owner_uid"),
+        )
 
         checks = {
+            "schema_version_match": (
+                record.get("schema_version")
+                == self.SCHEMA_VERSION
+            ),
             "pid_exists": actual_ticks
             is not None,
             "start_ticks_match": (
@@ -533,12 +481,25 @@ class ManualStartStopStatusRuntimeExecutor:
                 == str(self.project_root)
             ),
             "uid_match": (
-                record.get("owner_uid")
+                record_uid
                 == os.getuid()
+            ),
+            "boot_id_match": (
+                bool(current_boot_id)
+                and record.get("boot_id")
+                == current_boot_id
             ),
             "command_digest_match": (
                 record.get("command_sha256")
                 == self._command_digest()
+            ),
+            "bind_host_match": (
+                record.get("bind_host")
+                == self.HOST
+            ),
+            "bind_port_match": (
+                record.get("bind_port")
+                == self.PORT
             ),
         }
 
@@ -548,6 +509,12 @@ class ManualStartStopStatusRuntimeExecutor:
                 "pid": pid,
                 "record_start_ticks": start_ticks,
                 "actual_start_ticks": actual_ticks,
+                "record_boot_id": record.get(
+                    "boot_id"
+                ),
+                "current_boot_id": current_boot_id,
+                "record_uid": record_uid,
+                "current_uid": os.getuid(),
                 "argv": argv,
                 "cwd": cwd,
                 "checks": checks,
@@ -714,6 +681,13 @@ class ManualStartStopStatusRuntimeExecutor:
                     health = self._health_probe()
                     health["executed"] = True
 
+        record_classification = (
+            self.state_store.classify(
+                record,
+                matches_process=record_matches,
+            )
+        )
+
         if record_matches:
             if owned_listeners:
                 lifecycle_state = (
@@ -755,11 +729,19 @@ class ManualStartStopStatusRuntimeExecutor:
             )
         else:
             lifecycle_state = "stopped"
-            ownership_state = "clear"
+            ownership_state = (
+                record_classification
+                if record is not None
+                else "clear"
+            )
             safe_idle = True
             reason = (
-                "no strict Python main.py process "
-                "and no canonical listener"
+                "persistent state requires explicit recovery"
+                if record is not None
+                else (
+                    "no strict Python main.py process "
+                    "and no canonical listener"
+                )
             )
 
         return {
@@ -789,6 +771,17 @@ class ManualStartStopStatusRuntimeExecutor:
             "state_record_matches_process": (
                 record_matches
             ),
+            "state_record_classification": (
+                record_classification
+            ),
+            "state_record_scope": (
+                "persistent_project_runtime"
+            ),
+            "persistent_state_enabled": True,
+            "persistent_state_schema_version": (
+                self.SCHEMA_VERSION
+            ),
+            "state_recovery_requires_explicit_control": True,
             "state_record": record,
             "process_identity": identity,
             "strict_main_process_count": len(
@@ -1150,12 +1143,17 @@ class ManualStartStopStatusRuntimeExecutor:
                     },
                 )
 
+            timestamp = self._now_utc()
             record = {
                 "schema_version": (
                     self.SCHEMA_VERSION
                 ),
                 "pid": process.pid,
+                "process_start_ticks": start_ticks,
                 "proc_start_ticks": start_ticks,
+                "boot_id": (
+                    PersistentServiceStateStore.boot_id()
+                ),
                 "argv": list(
                     self.expected_argv
                 ),
@@ -1165,13 +1163,17 @@ class ManualStartStopStatusRuntimeExecutor:
                 "cwd": str(
                     self.project_root
                 ),
+                "host_uid": os.getuid(),
                 "owner_uid": os.getuid(),
                 "bind_host": self.HOST,
                 "bind_port": self.PORT,
-                "created_at_utc": (
-                    self._now_utc()
-                ),
+                "started_at": timestamp,
+                "updated_at": timestamp,
+                "created_at_utc": timestamp,
                 "start_new_session": True,
+                "state_scope": (
+                    "persistent_project_runtime"
+                ),
             }
             try:
                 self._write_state(record)

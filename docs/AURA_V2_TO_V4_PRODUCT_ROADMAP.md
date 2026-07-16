@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.1.3`
+Current canonical anchor: `v1.1.4`
 
-Current completed sprint: Sprint 253 — Restart, Logs, and Failure Visibility
+Current completed sprint: Sprint 254 — Process Ownership and Service State Persistence
 
-Next sprint: `254`
+Next sprint: `255`
 
-Next boundary: `process_ownership_service_state_persistence`
+Next boundary: `reviewed_optional_autostart`
 
 Owner: Kiput
 
@@ -1062,3 +1062,30 @@ Next: Sprint 254 — Process Ownership and Service State Persistence.
 Next boundary: `process_ownership_service_state_persistence`.
 
 Next version: `v1.1.4`.
+
+
+## Sprint 254 Completion — Process Ownership and Service State Persistence
+
+AURA `v1.1.4` completes Sprint 254 at the
+`process_ownership_service_state_persistence` boundary.
+
+Delivered:
+
+- canonical state at `data/runtime/service_state.json`;
+- schema v2 with PID, process start ticks, Linux boot ID, UID, command, cwd,
+  loopback endpoint, and timestamps;
+- mode `0600` file and `0700` parent directory;
+- `O_EXCL`, `O_CLOEXEC`, `O_NOFOLLOW`, `fstat`, file fsync, atomic replace,
+  and directory fsync;
+- stale, previous-boot, and foreign-user record classification;
+- explicit recovery only through approved start, stop, or restart;
+- read-only status and recovery preview;
+- contract `192/192`, zero failures, sixteen secure dimensions.
+
+Systemd, autostart, arbitrary PID signaling, non-loopback binding, automatic
+stale cleanup, permission-store mutation, persistent audit writing, and
+background recovery remain disabled.
+
+Next: Sprint 255 — Reviewed Optional Autostart.
+Next boundary: `reviewed_optional_autostart`.
+Next version: `v1.1.5`.

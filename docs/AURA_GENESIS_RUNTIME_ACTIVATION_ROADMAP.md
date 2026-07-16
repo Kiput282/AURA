@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current canonical anchor: v1.1.3
+Current canonical anchor: v1.1.4
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,26 +16,26 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.1.3
-- Completed: Sprint 253 — Restart, Logs, and Failure Visibility
+- Current version: v1.1.4
+- Completed: Sprint 254 — Process Ownership and Service State Persistence
 - Completed block: Sprint 241-250 — Genesis Stabilization & Runtime Hardening
 - Active block: Sprint 251-260 — Active Local Runtime & Model Service Integration
-- Runtime execution features: 6
-- Total capabilities: 134
-- Online capabilities: 132
-- Permission-gated capabilities: 14
+- Runtime execution features: 7
+- Total capabilities: 135
+- Online capabilities: 133
+- Permission-gated capabilities: 15
 - Review-only capabilities: 22
 - Active scope: explicit supervised localhost start, stop, status, and restart;
   strict process/listener ownership checks; bounded allowlisted and redacted log
   visibility; local dashboard/chat foundations; permission-gated safe actions
-- Sprint 253 contract: 168/168, zero failures, fourteen secure dimensions
+- Sprint 254 contract: 192/192, zero failures, sixteen secure dimensions
 - Active Permission Runtime: 3115 assertions, zero violations
 - Genesis Final Release baseline: 1258 assertions
 - Default listener state: stopped
 - Localhost-only boundary: preserved
 - Systemd and autostart mutation: disabled
 - Arbitrary PID signaling and arbitrary log paths: disabled
-- Next: Sprint 254 — Process Ownership and Service State Persistence
+- Next: Sprint 255 — Reviewed Optional Autostart
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2374,3 +2374,30 @@ Next: Sprint 254 — Process Ownership and Service State Persistence.
 Next boundary: `process_ownership_service_state_persistence`.
 
 Next version: `v1.1.4`.
+
+
+## Sprint 254 Completion — Process Ownership and Service State Persistence
+
+AURA `v1.1.4` completes Sprint 254 at the
+`process_ownership_service_state_persistence` boundary.
+
+Delivered:
+
+- canonical state at `data/runtime/service_state.json`;
+- schema v2 with PID, process start ticks, Linux boot ID, UID, command, cwd,
+  loopback endpoint, and timestamps;
+- mode `0600` file and `0700` parent directory;
+- `O_EXCL`, `O_CLOEXEC`, `O_NOFOLLOW`, `fstat`, file fsync, atomic replace,
+  and directory fsync;
+- stale, previous-boot, and foreign-user record classification;
+- explicit recovery only through approved start, stop, or restart;
+- read-only status and recovery preview;
+- contract `192/192`, zero failures, sixteen secure dimensions.
+
+Systemd, autostart, arbitrary PID signaling, non-loopback binding, automatic
+stale cleanup, permission-store mutation, persistent audit writing, and
+background recovery remain disabled.
+
+Next: Sprint 255 — Reviewed Optional Autostart.
+Next boundary: `reviewed_optional_autostart`.
+Next version: `v1.1.5`.
