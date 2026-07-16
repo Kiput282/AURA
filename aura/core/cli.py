@@ -181,6 +181,7 @@ from aura.restart_logs_failure_visibility.restart_logs_failure_visibility_cli im
 from aura.process_ownership_service_state_persistence.process_ownership_service_state_persistence_cli import handle_process_ownership_service_state_persistence_command
 from aura.reviewed_optional_autostart.reviewed_optional_autostart_cli import handle_reviewed_optional_autostart_command
 from aura.persistent_local_chat_session_activation.persistent_local_chat_session_activation_cli import handle_persistent_local_chat_session_activation_command
+from aura.local_model_service_discovery_health.local_model_service_discovery_health_cli import handle_local_model_service_discovery_health_command
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
@@ -11278,6 +11279,8 @@ class AuraCLI:
         if handle_reviewed_optional_autostart_command(args):
             return True
         if handle_persistent_local_chat_session_activation_command(args):
+            return True
+        if handle_local_model_service_discovery_health_command(args):
             return True
         if handle_session_memory_persistence_command(args):
             return True

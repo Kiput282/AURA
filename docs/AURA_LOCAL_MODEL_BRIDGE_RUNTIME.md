@@ -112,3 +112,12 @@ Disabled:
 ## Next Sprint
 
 Sprint 188 — Interactive Control Center Chat.
+
+## Sprint 257 health handoff
+
+Sprint 257 keeps `AuraLocalModelBridgeRuntimeManager` as the canonical provider
+owner and adds read-only host discovery plus a default-off, exact-confirmation
+loopback health check. The bridge's existing generation and browser-chat
+permission boundaries remain unchanged.
+
+Next boundary: `local_model_router_activation`.

@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.1.6`
-- Current status: Sprint 256 — Persistent Local Chat Session Activation completed
-Current runtime state: Sprint 256 hardens persistent browser-chat sessions at `data/chat_sessions` with descriptor-safe reads, cross-process locking, private storage and files, atomic writes, integrity verification, bounded metadata history, and exact session loading. Model-service activation, network fallback, non-loopback binding, automatic memory handoff, session-content logging, systemd mutation, and autostart activation remain disabled.
+- Current version: `v1.1.7`
+- Current status: Sprint 257 — Local Model Service Discovery and Health completed
+Current runtime state: Sprint 257 discovers the existing local model service through the Sprint 187 bridge and exposes a default-off, explicit-confirmation, loopback-only health boundary. Ollama binary, unit, process, listener, profile, and provider metadata are read-only. Service control, model download/load, chat routing, non-loopback networking, credentials, systemd mutation, and autostart mutation remain disabled.
 
 ---
 
@@ -35,12 +35,13 @@ Grow Together
 
 ## Current Project Status
 
-AURA has completed Sprint 256 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
+AURA has completed Sprint 257 in the Sprint 251-260 Active Local Runtime & Model Service Integration block.
 
-Sprint 256 activates hardened persistent local chat sessions through the existing browser-chat owner while preserving schema, saved content, revision control, integrity hashes, and safe-idle boundaries.
+Sprint 257 adds safe local model service discovery and a default-off, explicitly confirmed loopback health boundary over the existing Sprint 187 bridge.
 
 Latest completed checkpoints:
 
+- v1.1.7 — Sprint 257: Local Model Service Discovery and Health
 - v1.1.6 — Sprint 256: Persistent Local Chat Session Activation
 - v1.1.5 — Sprint 255: Reviewed Optional Autostart
 - v1.1.4 — Sprint 254: Process Ownership and Service State Persistence
@@ -117,18 +118,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 257 — Local Model Service Discovery and Health
+- Next planned sprint: Sprint 258 — Local Model Router Activation
 Current capability registry summary:
 
-- total capabilities: 137
-- online capabilities: 135
+- total capabilities: 138
+- online capabilities: 136
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 17
+- permission-gated capabilities: 18
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 9
+- runtime execution features: 10
 ---
 
 ## Safety State
@@ -6387,3 +6388,32 @@ and autostart activation remain disabled.
 Next: Sprint 257 — Local Model Service Discovery and Health.
 Next boundary: `local_model_service_discovery_health`.
 Next version: `v1.1.7`.
+
+
+## Sprint 257 Completion — Local Model Service Discovery and Health
+
+AURA `v1.1.7` completes Sprint 257 at the
+`local_model_service_discovery_health` boundary.
+
+Delivered:
+
+- the Sprint 187 local model bridge remains the canonical provider owner;
+- read-only Ollama binary, systemd unit, process, and listener discovery;
+- loopback-only endpoint and resolved-address enforcement;
+- environment profile posture without credential reads or persistence;
+- provider contract visibility for Ollama and OpenAI-compatible local servers;
+- default endpoint `http://127.0.0.1:11434`;
+- default-off health probing with a two-second timeout and exact confirmation
+  token `PROBE_LOCAL_MODEL_SERVICE`;
+- count-only model inventory from the health response;
+- healthy, degraded/unprobed, and unavailable classification;
+- isolated fake-transport rehearsal with no canonical network access;
+- contract result `264/264`, zero failures, twenty-two secure dimensions.
+
+The implementation does not start, stop, or install Ollama; download, pull,
+load, or unload models; route chat; contact non-loopback endpoints; read
+credentials; mutate systemd or autostart; or run a health probe automatically.
+
+Next: Sprint 258 — Local Model Router Activation.
+Next boundary: `local_model_router_activation`.
+Next version: `v1.1.8`.

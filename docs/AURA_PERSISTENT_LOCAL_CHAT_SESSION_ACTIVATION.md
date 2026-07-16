@@ -57,3 +57,11 @@ integrity hashes, and before/after content hashes.
 - no autostart activation.
 
 Next boundary: `local_model_service_discovery_health`.
+
+## Sprint 257 successor
+
+Sprint 257 discovers the local model service and adds a default-off,
+explicit-confirmation health boundary. Persistent chat remains unchanged and
+does not route messages to a model automatically.
+
+Next boundary: `local_model_router_activation`.

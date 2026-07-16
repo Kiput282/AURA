@@ -1,9 +1,9 @@
 # AURA Genesis to Post-Genesis Product Plan
 
 Status: CANONICAL GENESIS PATH
-Current Version: `v1.1.6`
-Current Sprint: Sprint 256 — Persistent Local Chat Session Activation
-Next Planned Sprint: Sprint 257 — Local Model Service Discovery and Health
+Current Version: `v1.1.7`
+Current Sprint: Sprint 257 — Local Model Service Discovery and Health
+Next Planned Sprint: Sprint 258 — Local Model Router Activation
 Final Genesis Target: Sprint 240 — Genesis Final Release v1.0.0-genesis
 Owner: Kiput
 Motto: Grow Together
@@ -2180,3 +2180,32 @@ and autostart activation remain disabled.
 Next: Sprint 257 — Local Model Service Discovery and Health.
 Next boundary: `local_model_service_discovery_health`.
 Next version: `v1.1.7`.
+
+
+## Sprint 257 Completion — Local Model Service Discovery and Health
+
+AURA `v1.1.7` completes Sprint 257 at the
+`local_model_service_discovery_health` boundary.
+
+Delivered:
+
+- the Sprint 187 local model bridge remains the canonical provider owner;
+- read-only Ollama binary, systemd unit, process, and listener discovery;
+- loopback-only endpoint and resolved-address enforcement;
+- environment profile posture without credential reads or persistence;
+- provider contract visibility for Ollama and OpenAI-compatible local servers;
+- default endpoint `http://127.0.0.1:11434`;
+- default-off health probing with a two-second timeout and exact confirmation
+  token `PROBE_LOCAL_MODEL_SERVICE`;
+- count-only model inventory from the health response;
+- healthy, degraded/unprobed, and unavailable classification;
+- isolated fake-transport rehearsal with no canonical network access;
+- contract result `264/264`, zero failures, twenty-two secure dimensions.
+
+The implementation does not start, stop, or install Ollama; download, pull,
+load, or unload models; route chat; contact non-loopback endpoints; read
+credentials; mutate systemd or autostart; or run a health probe automatically.
+
+Next: Sprint 258 — Local Model Router Activation.
+Next boundary: `local_model_router_activation`.
+Next version: `v1.1.8`.

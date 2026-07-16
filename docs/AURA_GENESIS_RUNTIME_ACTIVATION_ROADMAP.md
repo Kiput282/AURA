@@ -1,7 +1,7 @@
 # AURA Genesis Runtime Activation Roadmap — Sprint 181-240
 
 Status: CANONICAL GENESIS COMPLETION PATH
-Current canonical anchor: v1.1.6
+Current canonical anchor: v1.1.7
 Final target: v1.0.0-genesis at Sprint 240
 
 ## Roadmap Principle
@@ -16,26 +16,26 @@ ORION client integration, avatar/presence runtime, advanced desktop control, gam
 
 ## Current Runtime Activation Checkpoint
 
-- Current version: v1.1.6
-- Completed: Sprint 256 — Persistent Local Chat Session Activation
+- Current version: v1.1.7
+- Completed: Sprint 257 — Local Model Service Discovery and Health
 - Completed block: Sprint 241-250 — Genesis Stabilization & Runtime Hardening
 - Active block: Sprint 251-260 — Active Local Runtime & Model Service Integration
-- Runtime execution features: 9
-- Total capabilities: 137
-- Online capabilities: 135
-- Permission-gated capabilities: 17
+- Runtime execution features: 10
+- Total capabilities: 138
+- Online capabilities: 136
+- Permission-gated capabilities: 18
 - Review-only capabilities: 22
 - Active scope: explicit supervised localhost start, stop, status, and restart;
   strict process/listener ownership checks; bounded allowlisted and redacted log
   visibility; local dashboard/chat foundations; permission-gated safe actions
-- Sprint 256 contract: 240/240, zero failures, twenty secure dimensions
+- Sprint 257 contract: 264/264, zero failures, twenty-two secure dimensions
 - Active Permission Runtime: 3115 assertions, zero violations
 - Genesis Final Release baseline: 1258 assertions
 - Default listener state: stopped
 - Localhost-only boundary: preserved
 - Systemd and autostart mutation: disabled
 - Arbitrary PID signaling and arbitrary log paths: disabled
-- Next: Sprint 257 — Local Model Service Discovery and Health
+- Next: Sprint 258 — Local Model Router Activation
 
 ## Block 181-190 — Local Interaction Runtime Activation
 
@@ -2457,3 +2457,32 @@ and autostart activation remain disabled.
 Next: Sprint 257 — Local Model Service Discovery and Health.
 Next boundary: `local_model_service_discovery_health`.
 Next version: `v1.1.7`.
+
+
+## Sprint 257 Completion — Local Model Service Discovery and Health
+
+AURA `v1.1.7` completes Sprint 257 at the
+`local_model_service_discovery_health` boundary.
+
+Delivered:
+
+- the Sprint 187 local model bridge remains the canonical provider owner;
+- read-only Ollama binary, systemd unit, process, and listener discovery;
+- loopback-only endpoint and resolved-address enforcement;
+- environment profile posture without credential reads or persistence;
+- provider contract visibility for Ollama and OpenAI-compatible local servers;
+- default endpoint `http://127.0.0.1:11434`;
+- default-off health probing with a two-second timeout and exact confirmation
+  token `PROBE_LOCAL_MODEL_SERVICE`;
+- count-only model inventory from the health response;
+- healthy, degraded/unprobed, and unavailable classification;
+- isolated fake-transport rehearsal with no canonical network access;
+- contract result `264/264`, zero failures, twenty-two secure dimensions.
+
+The implementation does not start, stop, or install Ollama; download, pull,
+load, or unload models; route chat; contact non-loopback endpoints; read
+credentials; mutate systemd or autostart; or run a health probe automatically.
+
+Next: Sprint 258 — Local Model Router Activation.
+Next boundary: `local_model_router_activation`.
+Next version: `v1.1.8`.

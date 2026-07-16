@@ -1047,3 +1047,18 @@ activation plan, and rollback plan. It performs no systemd mutation.
 The capability hardens existing browser-chat persistence with descriptor-safe
 reads, cross-process locking, private storage, atomic writes, bounded metadata
 history, integrity verification, and explicit existing memory gates.
+
+## Sprint 257 capability — Local Model Service Discovery and Health
+
+- ID: `local_model_service_discovery_health`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Risk: `medium`
+- Permission: `user_confirmation`
+- Introduced in: `1.1.7`
+- Category: `local_model_runtime`
+- Control Center visible: `true`
+
+The capability provides read-only local-model service discovery and a
+default-off, explicitly confirmed loopback health probe over the existing
+Sprint 187 bridge.
