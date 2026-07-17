@@ -3992,3 +3992,19 @@ and all metadata mutations reuse atomic persistence and integrity validation.
 Permanent session deletion remains outside the runtime boundary.
 
 Next boundary: `chat_history_recovery_ux`.
+
+## Sprint 264 Chat History Recovery UX
+
+Current completed sprint: Sprint 264 — `chat_history_recovery_ux`.
+
+AURA now exposes a read-only local history recovery diagnostic and a browser
+recovery panel. Integrity failures remain fail-closed and preserve the
+original file. Stale revision conflicts reload the latest session while
+preserving the unsent draft in memory. Missing sessions return to neutral
+no-session state, and archived conflicts expose explicit restore guidance.
+
+Automatic repair, quarantine, session replacement, cross-session history
+merge, permanent delete, model invocation, and network fallback remain
+disabled.
+
+Next boundary: `review_first_memory_integration`.

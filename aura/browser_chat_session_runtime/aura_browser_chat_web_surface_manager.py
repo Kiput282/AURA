@@ -234,6 +234,16 @@ class AuraBrowserChatWebSurfaceManager:
             "session_rename_ui": True,
             "session_archive_ui": True,
             "session_restore_ui": True,
+            "history_recovery_ui": True,
+            "history_recovery_endpoint": "/api/chat/recovery",
+            "history_recovery_read_only": True,
+            "history_recovery_retry_ui": True,
+            "history_recovery_dismiss_ui": True,
+            "stale_revision_draft_preservation_ui": True,
+            "missing_session_neutral_state_ui": True,
+            "corrupt_file_preservation_ui": True,
+            "automatic_history_repair_ui": False,
+            "recovery_extension_sprint": 264,
             "session_permanent_delete_ui": False,
             "cross_session_history_merge_ui": False,
             "lifecycle_extension_sprint": 263,
@@ -381,6 +391,13 @@ class AuraBrowserChatWebSurfaceManager:
             "rename-session",
             "archive-session",
             "restore-session",
+            "history-recovery-panel",
+            "history-recovery-title",
+            "history-recovery-state",
+            "history-recovery-detail",
+            "history-recovery-issues",
+            "retry-history-recovery",
+            "dismiss-history-recovery",
             "rename-dialog",
             "rename-title",
             "confirm-rename",
@@ -469,7 +486,23 @@ class AuraBrowserChatWebSurfaceManager:
             or "Sprint 263 lifecycle extension" in html
         )
         assertions["html_sprint_263_lifecycle"] = (
-            "Sprint 263 lifecycle extension" in html
+            "Sprint 263 lifecycle extension" not in html
+        )
+        assertions["html_sprint_264_recovery"] = (
+            "Sprint 264 history recovery UX" in html
+        )
+        assertions["html_recovery_read_only"] = (
+            "Read-only diagnostic" in html
+        )
+        assertions["html_original_files_preserved"] = (
+            "original files preserved" in html
+        )
+        assertions["html_safe_idle_visible"] = (
+            "Safe idle is preserved" in html
+        )
+        assertions["html_no_repair_control"] = (
+            "repair-session" not in html
+            and "quarantine-session" not in html
         )
         assertions["html_no_delete_control"] = (
             "delete-session" not in html
@@ -548,6 +581,17 @@ class AuraBrowserChatWebSurfaceManager:
             "/restore",
             "Session archived without deletion",
             "cross_session_history_merged",
+            "/recovery",
+            "refreshRecoveryStatus",
+            "handleChatRecoveryError",
+            "retryHistoryRecovery",
+            "dismissHistoryRecovery",
+            "state.recovery",
+            "chat_session_corruption",
+            "neutral_no_session",
+            "preserve_unsent_draft_in_memory",
+            "restore_session",
+            "original_file_preserved",
             "refreshModelStatus",
             "renderModelStatus",
             "requestProbe",
@@ -614,6 +658,14 @@ class AuraBrowserChatWebSurfaceManager:
             "/delete" not in javascript
             and "deleteSession" not in javascript
         )
+        assertions["js_no_repair_runtime"] = (
+            "/api/chat/repair" not in javascript
+            and "repairSession" not in javascript
+        )
+        assertions["js_no_quarantine_runtime"] = (
+            "/api/chat/quarantine" not in javascript
+            and "quarantineSession" not in javascript
+        )
         assertions["js_no_cross_session_merge"] = (
             "mergeSessionHistory" not in javascript
             and "crossSessionHistory" not in javascript
@@ -652,6 +704,10 @@ class AuraBrowserChatWebSurfaceManager:
             ".mode-selector",
             ".mode-option",
             ".model-confirmation",
+            ".history-recovery",
+            ".recovery-actions",
+            ".recovery-issue-list",
+            ".recovery-boundary",
             ":focus-visible",
             "@media (max-width: 64rem)",
             "@media (max-width: 48rem)",
@@ -748,6 +804,16 @@ class AuraBrowserChatWebSurfaceManager:
             "session_rename_ui_verified": True,
             "session_archive_ui_verified": True,
             "session_restore_ui_verified": True,
+            "history_recovery_ui_verified": True,
+            "history_recovery_endpoint": "/api/chat/recovery",
+            "history_recovery_read_only": True,
+            "history_recovery_retry_ui_verified": True,
+            "history_recovery_dismiss_ui_verified": True,
+            "stale_revision_draft_preservation_ui_verified": True,
+            "missing_session_neutral_state_ui_verified": True,
+            "corrupt_file_preservation_ui_verified": True,
+            "automatic_history_repair_ui": False,
+            "recovery_extension_sprint": 264,
             "session_permanent_delete_ui": False,
             "cross_session_history_merge_ui": False,
             "lifecycle_extension_sprint": 263,

@@ -1,5 +1,5 @@
 name: AURA
-version: 1.2.3
+version: 1.2.4
 codename: Genesis
 creator: Kiput
 
@@ -350,3 +350,4 @@ modes:
 # Next: Sprint 227 — Service Persistence and Launcher.
 # Sprint 241: genesis_stabilization_runtime_hardening establishes exact CLI command ownership, removes unrelated codebase-manager construction, serves the finalized Sprint 240 status as an immutable read-only projection, preserves explicit deep contract/check validation, and adds 11 deterministic hardening regressions while keeping runtime activation, release gates, automatic service control, systemd actions, ORION control, broad voice/vision activation, and autonomous execution disabled.
 # Sprint 263: session_list_resume_rename_archive_restore adds active/archived session lists, same-session resume, title-only rename, non-destructive archive/restore, and keeps permanent delete and cross-session history merge disabled.
+# Sprint 264: chat_history_recovery_ux adds read-only history diagnostics and explicit browser recovery guidance while automatic repair, quarantine, replacement, deletion, model calls, and network fallback remain disabled.

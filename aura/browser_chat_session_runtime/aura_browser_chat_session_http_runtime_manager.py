@@ -75,19 +75,21 @@ class AuraBrowserChatSessionHttpRuntimeManager(
     CHAT_FIXED_GET_ROUTES = (
         "/api/chat/status",
         "/api/chat/sessions",
+        "/api/chat/recovery",
     )
     CHAT_ROUTE_CONTRACTS = (
-        "GET /api/chat/status",
-        "GET /api/chat/sessions",
-        "POST /api/chat/sessions",
-        "GET /api/chat/sessions/{session_id}",
-        "POST /api/chat/sessions/{session_id}/resume",
-        "POST /api/chat/sessions/{session_id}/rename",
-        "POST /api/chat/sessions/{session_id}/archive",
-        "POST /api/chat/sessions/{session_id}/restore",
-        "POST /api/chat/sessions/{session_id}/messages",
-        "POST /api/chat/sessions/{session_id}/model-messages",
-        "POST /api/chat/sessions/{session_id}/clear",
+        'GET /api/chat/status',
+        'GET /api/chat/sessions',
+        'GET /api/chat/recovery',
+        'POST /api/chat/sessions',
+        'GET /api/chat/sessions/{session_id}',
+        'POST /api/chat/sessions/{session_id}/resume',
+        'POST /api/chat/sessions/{session_id}/rename',
+        'POST /api/chat/sessions/{session_id}/archive',
+        'POST /api/chat/sessions/{session_id}/restore',
+        'POST /api/chat/sessions/{session_id}/messages',
+        'POST /api/chat/sessions/{session_id}/model-messages',
+        'POST /api/chat/sessions/{session_id}/clear',
     )
     MODEL_ROUTE_CONTRACTS = (
         "GET /api/model/status",
@@ -109,7 +111,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         len(VISIBILITY_ASSET_ROUTES)
         + len(VISIBILITY_ROUTE_CONTRACTS)
     )
-    TOTAL_ROUTE_CONTRACT_COUNT = 41
+    TOTAL_ROUTE_CONTRACT_COUNT = 42
     MAX_REQUEST_BODY_BYTES = 65536
     LOCAL_INTENT_HEADER = "X-AURA-Local-Intent"
     LOCAL_INTENT_VALUE = "browser-chat-session"
@@ -281,6 +283,14 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             "session_rename_runtime": True,
             "session_archive_runtime": True,
             "session_restore_runtime": True,
+            "chat_history_recovery_diagnostic": True,
+            "chat_history_recovery_read_only": True,
+            "chat_history_recovery_route": (
+                "/api/chat/recovery"
+            ),
+            "automatic_history_repair": False,
+            "corrupt_session_overwrite": False,
+            "session_quarantine_runtime": False,
             "session_permanent_delete_runtime": False,
             "cross_session_history_merge": False,
             "session_id_immutable": True,
@@ -368,15 +378,43 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 "status": "not_found",
                 "error": "chat_session_not_found",
                 "detail": str(exc),
+                "recovery": {
+                    "kind": "missing_session",
+                    "action": "refresh_session_list",
+                    "target_state": "neutral_no_session",
+                    "retryable": False,
+                    "preserve_unsent_draft_in_memory": True,
+                },
             }
         if isinstance(
             exc,
             BrowserChatSessionConflictError,
         ):
+            detail = str(exc)
+            archived = "archived" in detail.lower()
             return 409, {
                 "status": "conflict",
-                "error": "chat_session_revision_conflict",
-                "detail": str(exc),
+                "error": (
+                    "chat_session_archived"
+                    if archived
+                    else "chat_session_revision_conflict"
+                ),
+                "detail": detail,
+                "recovery": {
+                    "kind": (
+                        "archived_session"
+                        if archived
+                        else "stale_revision"
+                    ),
+                    "action": (
+                        "restore_session"
+                        if archived
+                        else "reload_current_session"
+                    ),
+                    "retryable": not archived,
+                    "preserve_unsent_draft_in_memory": True,
+                    "explicit_user_action_required": archived,
+                },
             }
         if isinstance(
             exc,
@@ -401,6 +439,15 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 "status": "degraded",
                 "error": "chat_session_corruption",
                 "detail": str(exc),
+                "recovery": {
+                    "kind": "session_corruption",
+                    "action": "review_recovery_status",
+                    "endpoint": "/api/chat/recovery",
+                    "retryable": False,
+                    "original_file_preserved": True,
+                    "repair_performed": False,
+                    "quarantine_performed": False,
+                },
             }
         if isinstance(exc, BrowserChatSessionError):
             return 500, {
@@ -437,6 +484,18 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                         manager.local_model_chat_manager
                         .status()
                     )
+
+                if path == "/api/chat/recovery":
+                    recovery = (
+                        manager.chat_session_manager
+                        .recovery_status()
+                    )
+                    return 200, {
+                        **recovery,
+                        "route": "/api/chat/recovery",
+                        "read_only": True,
+                        "mutation_allowed": False,
+                    }
 
                 if path == "/api/chat/status":
                     status = manager.chat_session_manager.status()
@@ -625,7 +684,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "control_center_web_shell": True,
                             "control_center_shell_assets": 3,
                             "browser_chat_session_runtime": True,
-                            "browser_chat_http_routes": 11,
+                            "browser_chat_http_routes": 12,
                             "browser_chat_assets": 3,
                             "local_model_bridge_http_routes": 2,
                             "permission_audit_recovery_visibility": True,
@@ -636,7 +695,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "permission_mutation_runtime": False,
                             "audit_writer_runtime": False,
                             "automatic_recovery_runtime": False,
-                            "total_route_contracts": 41,
+                            "total_route_contracts": 42,
                             "model_bridge_configured": (
                                 manager.local_model_chat_manager
                                 .status()["configured"]

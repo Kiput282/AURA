@@ -1110,6 +1110,125 @@ class AuraBrowserChatSessionRuntimeManager:
             "safety_boundary": self.safety_boundary(),
         }
 
+    def recovery_status(self) -> dict[str, Any]:
+        """Return read-only recovery diagnostics and user guidance."""
+
+        status = self.status()
+        issues: list[dict[str, Any]] = []
+
+        for error in status["errors"]:
+            code = str(error.get("code", "session_unreadable"))
+            detail = str(error.get("detail", ""))
+            filename: str | None = None
+            session_id: str | None = None
+
+            prefix = detail.split(":", 1)[0].strip()
+            if (
+                prefix.startswith("chat_")
+                and prefix.endswith(".json")
+            ):
+                filename = prefix
+                candidate = prefix[:-5]
+                if self._SESSION_ID_RE.fullmatch(candidate):
+                    session_id = candidate
+
+            if (
+                "BrowserChatSessionCorruptionError"
+                in detail
+            ):
+                recovery_code = "session_corruption"
+                action = "preserve_original_and_review"
+                retryable = False
+            elif (
+                "BrowserChatSessionNotFoundError"
+                in detail
+            ):
+                recovery_code = "session_missing"
+                action = "refresh_session_list"
+                retryable = False
+            elif code.startswith("storage_"):
+                recovery_code = "storage_unavailable"
+                action = "review_storage_boundary"
+                retryable = False
+            else:
+                recovery_code = "session_unreadable"
+                action = "retry_read_only_diagnostic"
+                retryable = True
+
+            issues.append(
+                {
+                    "code": recovery_code,
+                    "source_code": code,
+                    "session_id": session_id,
+                    "filename": filename,
+                    "detail": detail,
+                    "recommended_action": action,
+                    "retryable": retryable,
+                    "original_file_preserved": True,
+                    "repair_performed": False,
+                    "quarantine_performed": False,
+                }
+            )
+
+        return {
+            "schema_version": "1.0",
+            "name": "chat_history_recovery",
+            "component": self.name,
+            "component_version": self.component_version,
+            "status": (
+                "attention_required"
+                if issues
+                else "healthy"
+            ),
+            "degraded": bool(issues),
+            "issue_count": len(issues),
+            "issues": issues,
+            "readable_session_count": status[
+                "session_count"
+            ],
+            "active_session_count": status[
+                "active_session_count"
+            ],
+            "archived_session_count": status[
+                "archived_session_count"
+            ],
+            "recovery_runtime_kind": (
+                "read_only_diagnostic_and_guidance"
+            ),
+            "guidance": {
+                "stale_revision": {
+                    "action": "reload_current_session",
+                    "retry_after_reload": True,
+                    "preserve_unsent_draft_in_memory": True,
+                },
+                "missing_session": {
+                    "action": "refresh_session_list",
+                    "target_state": "neutral_no_session",
+                    "retryable": False,
+                },
+                "archived_session": {
+                    "action": "restore_session",
+                    "explicit_user_action_required": True,
+                },
+                "session_corruption": {
+                    "action": "preserve_original_and_review",
+                    "retryable": False,
+                    "original_file_preserved": True,
+                },
+            },
+            "history_recovery_user_initiated": True,
+            "automatic_file_repair": False,
+            "automatic_history_merge": False,
+            "automatic_session_replacement": False,
+            "corrupt_file_overwrite": False,
+            "session_quarantine_runtime": False,
+            "permanent_delete_runtime": False,
+            "model_invocation": False,
+            "network_connection_opened": False,
+            "runtime_mutated": False,
+            "safe_idle": True,
+        }
+
     def safety_boundary(self) -> dict[str, Any]:
         """Return the explicit Sprint 186 Part A safety boundary."""
 
@@ -1138,6 +1257,11 @@ class AuraBrowserChatSessionRuntimeManager:
             "private_session_directory_on_write": True,
             "private_session_files": True,
             "session_integrity_hash": True,
+            "history_recovery_diagnostic": True,
+            "history_recovery_read_only": True,
+            "automatic_history_repair": False,
+            "corrupt_session_overwrite": False,
+            "session_quarantine_runtime": False,
             "bounded_session_mutation": True,
             "aura_long_term_memory_write": False,
             "model_bridge_runtime": False,

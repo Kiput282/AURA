@@ -1125,3 +1125,17 @@ permission-gated runtime execution feature introduced in v1.2.2.
   non-destructive archive, and non-destructive restore.
 - Disabled: permanent delete, cross-session history merge, lifecycle model
   invocation, lifecycle network access, tools, commands, and actions.
+
+## Sprint 264 Runtime Capability
+
+- Capability ID: `chat_history_recovery_ux`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Version: `v1.2.4`
+- Scope: read-only recovery diagnostics, integrity failure visibility,
+  stale-revision reload guidance, in-memory draft preservation,
+  missing-session neutral state, archived-session restore guidance, and
+  browser retry/dismiss controls.
+- Disabled: automatic repair, quarantine, replacement, permanent delete,
+  cross-session merge, recovery model calls, recovery network access, tools,
+  commands, and actions.

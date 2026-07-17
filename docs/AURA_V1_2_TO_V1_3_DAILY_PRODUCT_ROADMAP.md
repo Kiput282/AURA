@@ -5,7 +5,7 @@ Canonical block: `daily_chat_control_center_productization`
 - Start: Sprint 261
 - End: Sprint 270
 - Anchor: `v1.2.0`
-- Current roadmap checkpoint: `v1.2.3`
+- Current roadmap checkpoint: `v1.2.4`
 - Release target: `v1.3.0`
 - Primary interface: browser Control Center
 - Primary model route: `companion`
@@ -80,3 +80,18 @@ integrity-hash path. Permanent delete, cross-session history merge, lifecycle
 model calls, and lifecycle network access remain disabled.
 
 Next: Sprint 264 — `chat_history_recovery_ux`.
+
+## Sprint 264 Completion
+
+Sprint 264 — `chat_history_recovery_ux` provides clear history, failure
+visibility, retry, and recovery UX. The session domain exposes a read-only
+diagnostic status, the HTTP adapter adds `GET /api/chat/recovery`, and the
+browser presents integrity, missing-session, stale-revision, and
+archived-session guidance.
+
+Corrupt files are preserved as original evidence. Stale-revision recovery
+keeps the unsent draft in process memory while reloading the current session.
+No repair, quarantine, replacement, deletion, model call, or network fallback
+is performed.
+
+Next: Sprint 265 — `review_first_memory_integration`.

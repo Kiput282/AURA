@@ -14,7 +14,7 @@
     <aside class="session-sidebar" aria-label="Local chat sessions">
       <div class="brand-row">
         <a class="back-link" href="/">← Control Center</a>
-        <p class="eyebrow">Sprint 263 lifecycle extension</p>
+        <p class="eyebrow">Sprint 264 history recovery UX</p>
         <h1>AURA Interactive Chat</h1>
         <p class="muted">
           Persistent local sessions with an explicitly confirmed localhost model bridge.
@@ -77,6 +77,33 @@
           <button id="refresh-model-status" type="button">Refresh status</button>
           <button id="probe-model" type="button">Probe provider</button>
         </div>
+      </section>
+
+      <section
+        id="history-recovery-panel"
+        class="history-recovery"
+        aria-labelledby="history-recovery-title"
+        hidden
+      >
+        <div class="recovery-heading">
+          <div>
+            <p class="eyebrow">History Recovery</p>
+            <h3 id="history-recovery-title">Read-only recovery guidance</h3>
+          </div>
+          <span id="history-recovery-state" class="status-badge" data-state="idle">Healthy</span>
+        </div>
+        <p id="history-recovery-detail" class="muted">
+          Session history is readable. Safe idle is preserved.
+        </p>
+        <ul id="history-recovery-issues" class="recovery-issue-list"></ul>
+        <div class="recovery-actions">
+          <button id="retry-history-recovery" type="button">Retry read-only check</button>
+          <button id="dismiss-history-recovery" type="button">Dismiss guidance</button>
+        </div>
+        <p class="recovery-boundary">
+          Read-only diagnostic · original files preserved · no automatic repair,
+          quarantine, replacement, deletion, model call, or network fallback.
+        </p>
       </section>
 
       <section id="chat-transcript" class="transcript" aria-live="polite">

@@ -6,8 +6,8 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.2.3`
-- Current status: Sprint 263 — Session List, Resume, Rename, Archive, and Restore completed
+- Current version: `v1.2.4`
+- Current status: Sprint 264 — Chat History Recovery UX completed
 Current runtime state: Sprint 260 adds an explicit manual end-to-end coordinator across safe-idle service control, persistent chat, Ollama health, exact companion routing, lifecycle, bounded queueing, read-only budgets, successful response persistence, and stop-and-restore.
 
 ---
@@ -119,18 +119,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 264 — Chat History Recovery UX
+- Next planned sprint: Sprint 265 — Review-First Memory Integration
 Current capability registry summary:
 
-- total capabilities: 144
-- online capabilities: 142
+- total capabilities: 145
+- online capabilities: 143
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 23
+- permission-gated capabilities: 24
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 15
+- runtime execution features: 16
 ---
 
 ## Safety State
@@ -6507,3 +6507,23 @@ The lifecycle controls are localhost-only, user-initiated, revision-checked,
 integrity-hashed, atomically persisted, and safe-idle at construction.
 
 Next: Sprint 264 — `chat_history_recovery_ux`.
+
+## v1.2.4 Chat History Recovery UX
+
+Sprint 264 completes `chat_history_recovery_ux` with a browser-visible,
+read-only recovery path:
+
+- `GET /api/chat/recovery` reports readable sessions and recovery issues;
+- integrity failures are visible while the original file remains untouched;
+- stale revisions reload the current session and preserve the unsent draft in
+  process memory;
+- missing sessions return the UI to a neutral no-session state and refresh the
+  current list;
+- archived-session conflicts expose explicit restore guidance;
+- retry and dismiss controls are available in a persistent inline panel;
+- safe-idle and same-origin localhost boundaries remain visible.
+
+Automatic repair, quarantine, replacement, cross-session merge, permanent
+deletion, recovery model calls, and recovery network fallback remain disabled.
+
+Next: Sprint 265 — `review_first_memory_integration`.

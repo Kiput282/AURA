@@ -12,6 +12,8 @@ const state = {
   modelStatus: null,
   busy: false,
   pendingSubmission: null,
+  recovery: null,
+  recoveryDismissed: false,
 };
 
 function byId(id) {
@@ -69,6 +71,291 @@ function updatePendingStatus() {
 function clearPendingSubmission() {
   state.pendingSubmission = null;
   updatePendingStatus();
+}
+
+const RECOVERY_ERROR_CORRUPTION =
+  "chat_session_corruption";
+const RECOVERY_TARGET_NEUTRAL =
+  "neutral_no_session";
+const RECOVERY_DRAFT_FLAG =
+  "preserve_unsent_draft_in_memory";
+const RECOVERY_ACTION_RESTORE =
+  "restore_session";
+
+function recoveryGuidanceFrom(error) {
+  return error?.payload?.recovery || null;
+}
+
+function recoveryKindLabel(kind) {
+  const labels = {
+    stale_revision: "Session changed",
+    missing_session: "Session unavailable",
+    archived_session: "Session archived",
+    session_corruption: "History integrity failure",
+    storage_unavailable: "Storage unavailable",
+    session_unreadable: "History unavailable",
+  };
+  return labels[kind] || "History recovery";
+}
+
+function recoveryActionLabel(kind) {
+  const labels = {
+    stale_revision: "Reload latest session",
+    missing_session: "Refresh session list",
+    archived_session: "Reload archived session",
+    session_corruption: "Retry read-only check",
+    storage_unavailable: "Retry read-only check",
+    session_unreadable: "Retry read-only check",
+  };
+  return labels[kind] || "Retry read-only check";
+}
+
+function renderRecoveryStatus() {
+  const panel = byId("history-recovery-panel");
+  const badge = byId("history-recovery-state");
+  const title = byId("history-recovery-title");
+  const detail = byId("history-recovery-detail");
+  const issues = byId("history-recovery-issues");
+  const retry = byId("retry-history-recovery");
+
+  if (!state.recovery || state.recoveryDismissed) {
+    panel.hidden = true;
+    issues.replaceChildren();
+    return;
+  }
+
+  const degraded =
+    state.recovery.degraded === true
+    || state.recovery.status === "attention_required";
+  if (!degraded) {
+    panel.hidden = true;
+    issues.replaceChildren();
+    return;
+  }
+
+  const guidance =
+    state.recovery.guidance
+    || state.recovery.recovery
+    || {};
+  const issueList = Array.isArray(state.recovery.issues)
+    ? state.recovery.issues
+    : [];
+
+  const kind =
+    guidance.kind
+    || issueList[0]?.code
+    || "session_unreadable";
+
+  panel.hidden = false;
+  badge.textContent = "Attention";
+  badge.dataset.state = "error";
+  title.textContent = recoveryKindLabel(kind);
+  detail.textContent =
+    state.recovery.detail
+    || issueList[0]?.detail
+    || "A read-only recovery check found a history issue.";
+  retry.textContent = recoveryActionLabel(kind);
+
+  issues.replaceChildren();
+  issueList.forEach((issue) => {
+    const item = document.createElement("li");
+    const heading = document.createElement("strong");
+    heading.textContent = recoveryKindLabel(
+      issue.code || kind,
+    );
+    const body = document.createElement("span");
+    body.textContent =
+      issue.detail
+      || issue.recommended_action
+      || "Review the read-only recovery guidance.";
+    item.append(heading, body);
+    issues.append(item);
+  });
+}
+
+function setRecoveryFromError(error) {
+  const guidance = recoveryGuidanceFrom(error);
+  if (!guidance) {
+    return null;
+  }
+
+  state.recoveryDismissed = false;
+  state.recovery = {
+    status: "attention_required",
+    degraded: true,
+    issue_count: 1,
+    detail: error.message,
+    source_error: error.payload?.error || "chat_history_error",
+    guidance,
+    issues: [
+      {
+        code: guidance.kind || "session_unreadable",
+        detail: error.message,
+        recommended_action:
+          guidance.action || "review_recovery_status",
+        retryable: guidance.retryable === true,
+        original_file_preserved:
+          guidance.original_file_preserved !== false,
+      },
+    ],
+  };
+  renderRecoveryStatus();
+  return guidance;
+}
+
+async function refreshRecoveryStatus({
+  showHealthy = false,
+} = {}) {
+  const payload = await apiRequest(
+    `${API_BASE}/recovery`,
+  );
+  state.recovery = payload;
+  if (payload.degraded) {
+    state.recoveryDismissed = false;
+  } else if (!showHealthy) {
+    state.recoveryDismissed = true;
+  }
+  renderRecoveryStatus();
+  return payload;
+}
+
+async function handleChatRecoveryError(
+  error,
+  {
+    sessionId = state.activeSession?.session_id || null,
+    preservePending = false,
+  } = {},
+) {
+  const guidance = setRecoveryFromError(error);
+  if (!guidance) {
+    return false;
+  }
+
+  const kind = guidance.kind;
+  const sourceError =
+    error?.payload?.error || "chat_history_error";
+  const preserveDraft =
+    guidance[RECOVERY_DRAFT_FLAG] === true;
+  const neutralTarget =
+    guidance.target_state === RECOVERY_TARGET_NEUTRAL;
+  const restoreAction =
+    guidance.action === RECOVERY_ACTION_RESTORE;
+
+  if (
+    kind === "missing_session"
+    && neutralTarget
+  ) {
+    state.activeSession = null;
+    clearPendingSubmission();
+    renderSessionList();
+    renderTranscript();
+    syncComposerControls();
+    try {
+      await refreshSessions({ preserveActive: false });
+    } catch (refreshError) {
+      setRecoveryFromError(refreshError);
+    }
+    return true;
+  }
+
+  if (
+    (
+      kind === "stale_revision"
+      || (
+        kind === "archived_session"
+        && restoreAction
+      )
+    )
+    && sessionId
+  ) {
+    try {
+      await loadSession(
+        sessionId,
+        {
+          preservePending:
+            preservePending || preserveDraft,
+        },
+      );
+    } catch (reloadError) {
+      setRecoveryFromError(reloadError);
+    }
+    return true;
+  }
+
+  if (
+    sourceError === RECOVERY_ERROR_CORRUPTION
+    || kind === "session_corruption"
+    || kind === "storage_unavailable"
+    || kind === "session_unreadable"
+  ) {
+    try {
+      await refreshRecoveryStatus();
+    } catch (diagnosticError) {
+      setStatus(diagnosticError.message, "error");
+    }
+    return true;
+  }
+
+  if (!preservePending) {
+    clearPendingSubmission();
+  }
+  return true;
+}
+
+async function retryHistoryRecovery() {
+  if (state.busy) {
+    return;
+  }
+
+  const guidance =
+    state.recovery?.guidance
+    || state.recovery?.recovery
+    || {};
+  const kind =
+    guidance.kind
+    || state.recovery?.issues?.[0]?.code
+    || null;
+  const sessionId =
+    state.activeSession?.session_id || null;
+
+  setBusy(true);
+  try {
+    if (
+      (kind === "stale_revision"
+        || kind === "archived_session")
+      && sessionId
+    ) {
+      await loadSession(
+        sessionId,
+        { preservePending: true },
+      );
+    } else if (kind === "missing_session") {
+      state.activeSession = null;
+      clearPendingSubmission();
+      await refreshSessions({ preserveActive: false });
+    }
+
+    const payload = await refreshRecoveryStatus({
+      showHealthy: true,
+    });
+    if (!payload.degraded) {
+      state.recoveryDismissed = true;
+      renderRecoveryStatus();
+      setStatus("History recovery check is healthy", "ready");
+    } else {
+      setStatus("History still requires attention", "error");
+    }
+  } catch (error) {
+    setRecoveryFromError(error);
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+function dismissHistoryRecovery() {
+  state.recoveryDismissed = true;
+  renderRecoveryStatus();
 }
 
 function syncSessionFilterControls() {
@@ -223,11 +510,27 @@ function sessionButton(session) {
     `${session.message_count} messages · revision ${session.revision} · ${session.status}`;
 
   button.append(title, detail);
-  button.addEventListener("click", () => {
-    if (session.status === "active") {
-      resumeSession(session.session_id, session.revision);
-    } else {
-      loadSession(session.session_id);
+  button.addEventListener("click", async () => {
+    try {
+      if (session.status === "active") {
+        await resumeSession(
+          session.session_id,
+          session.revision,
+        );
+      } else {
+        await loadSession(session.session_id);
+      }
+    } catch (error) {
+      const handled = await handleChatRecoveryError(
+        error,
+        {
+          sessionId: session.session_id,
+          preservePending: true,
+        },
+      );
+      if (!handled) {
+        setStatus(error.message, "error");
+      }
     }
   });
   return button;
@@ -548,9 +851,19 @@ async function resumeSession(
     state.activeSession = payload.session;
     clearPendingSubmission();
     await refreshSessions();
+    await refreshRecoveryStatus();
     setStatus("Session resumed", "ready");
   } catch (error) {
-    setStatus(error.message, "error");
+    const handled = await handleChatRecoveryError(
+      error,
+      {
+        sessionId,
+        preservePending: true,
+      },
+    );
+    if (!handled) {
+      setStatus(error.message, "error");
+    }
   } finally {
     setBusy(false);
   }
@@ -593,9 +906,19 @@ async function renameSession() {
     clearPendingSubmission();
     await refreshSessions();
     renderTranscript();
+    await refreshRecoveryStatus();
     setStatus("Session renamed", "ready");
   } catch (error) {
-    setStatus(error.message, "error");
+    const handled = await handleChatRecoveryError(
+      error,
+      {
+        sessionId,
+        preservePending: true,
+      },
+    );
+    if (!handled) {
+      setStatus(error.message, "error");
+    }
   } finally {
     setBusy(false);
   }
@@ -619,9 +942,19 @@ async function archiveSession() {
     state.activeSession = null;
     clearPendingSubmission();
     await refreshSessions({ preserveActive: false });
+    await refreshRecoveryStatus();
     setStatus("Session archived without deletion", "ready");
   } catch (error) {
-    setStatus(error.message, "error");
+    const handled = await handleChatRecoveryError(
+      error,
+      {
+        sessionId,
+        preservePending: true,
+      },
+    );
+    if (!handled) {
+      setStatus(error.message, "error");
+    }
   } finally {
     setBusy(false);
   }
@@ -651,9 +984,19 @@ async function restoreSession() {
     clearPendingSubmission();
     await refreshSessions();
     renderTranscript();
+    await refreshRecoveryStatus();
     setStatus("Session restored", "ready");
   } catch (error) {
-    setStatus(error.message, "error");
+    const handled = await handleChatRecoveryError(
+      error,
+      {
+        sessionId,
+        preservePending: true,
+      },
+    );
+    if (!handled) {
+      setStatus(error.message, "error");
+    }
   } finally {
     setBusy(false);
   }
@@ -672,8 +1015,12 @@ async function setSessionFilter(nextFilter) {
   setBusy(true);
   try {
     await refreshSessions({ preserveActive: false });
+    await refreshRecoveryStatus();
   } catch (error) {
-    setStatus(error.message, "error");
+    const handled = await handleChatRecoveryError(error);
+    if (!handled) {
+      setStatus(error.message, "error");
+    }
   } finally {
     setBusy(false);
   }
@@ -787,6 +1134,7 @@ async function submitMessage() {
       preservePending: false,
     });
     await refreshSessions();
+    await refreshRecoveryStatus();
     setStatus(
       result.idempotent_replay
         ? "Recovered saved response"
@@ -796,21 +1144,21 @@ async function submitMessage() {
       "ready",
     );
   } catch (error) {
-    if (error.status === 409 && state.activeSession) {
-      try {
-        await loadSession(
-          state.activeSession.session_id,
-          { preservePending: true },
-        );
-      } catch (reloadError) {
-        setStatus(reloadError.message, "error");
-        return;
-      }
-    }
-    setStatus(
-      `${error.message} · retry keeps the same request ID`,
-      "error",
+    const handled = await handleChatRecoveryError(
+      error,
+      {
+        sessionId: pending.sessionId,
+        preservePending: true,
+      },
     );
+    if (!handled) {
+      setStatus(
+        `${error.message} · retry keeps the same request ID`,
+        "error",
+      );
+    } else {
+      setStatus(error.message, "error");
+    }
     updatePendingStatus();
   } finally {
     setBusy(false);
@@ -841,11 +1189,12 @@ async function confirmClear() {
   }
   const dialog = byId("clear-dialog");
   const confirmation = byId("clear-confirmation").value;
+  const sessionId = state.activeSession.session_id;
   setBusy(true);
   try {
     await apiRequest(
       `${API_BASE}/sessions/`
-      + `${encodeURIComponent(state.activeSession.session_id)}/clear`,
+      + `${encodeURIComponent(sessionId)}/clear`,
       {
         method: "POST",
         body: {
@@ -856,10 +1205,20 @@ async function confirmClear() {
     );
     dialog.close();
     clearPendingSubmission();
-    await loadSession(state.activeSession.session_id);
+    await loadSession(sessionId);
     await refreshSessions();
+    await refreshRecoveryStatus();
   } catch (error) {
-    setStatus(error.message, "error");
+    const handled = await handleChatRecoveryError(
+      error,
+      {
+        sessionId,
+        preservePending: true,
+      },
+    );
+    if (!handled) {
+      setStatus(error.message, "error");
+    }
   } finally {
     setBusy(false);
   }
@@ -895,9 +1254,16 @@ function installHandlers() {
         return;
       }
       setBusy(true);
-      refreshSessions()
-        .catch((error) => {
-          setStatus(error.message, "error");
+      Promise.all([
+        refreshSessions(),
+        refreshRecoveryStatus(),
+      ])
+        .catch(async (error) => {
+          const handled =
+            await handleChatRecoveryError(error);
+          if (!handled) {
+            setStatus(error.message, "error");
+          }
         })
         .finally(() => {
           setBusy(false);
@@ -935,6 +1301,14 @@ function installHandlers() {
   byId("restore-session").addEventListener(
     "click",
     restoreSession,
+  );
+  byId("retry-history-recovery").addEventListener(
+    "click",
+    retryHistoryRecovery,
+  );
+  byId("dismiss-history-recovery").addEventListener(
+    "click",
+    dismissHistoryRecovery,
   );
   byId("refresh-model-status").addEventListener(
     "click",
@@ -1016,20 +1390,27 @@ async function start() {
   updateMessageCount();
   updatePendingStatus();
   syncSessionFilterControls();
+  renderRecoveryStatus();
   setBusy(true);
   const results = await Promise.allSettled([
     refreshSessions({ preserveActive: false }),
+    refreshRecoveryStatus(),
     refreshModelStatus(),
   ]);
-  const failure = results.find(
+  const failures = results.filter(
     (result) => result.status === "rejected",
   );
-  if (failure) {
-    setStatus(
-      failure.reason?.message
-      || "Interactive chat initialization failed.",
-      "error",
+  for (const failure of failures) {
+    const handled = await handleChatRecoveryError(
+      failure.reason,
     );
+    if (!handled) {
+      setStatus(
+        failure.reason?.message
+        || "Interactive chat initialization failed.",
+        "error",
+      );
+    }
   }
   setBusy(false);
 }
