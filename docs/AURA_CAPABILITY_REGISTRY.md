@@ -1090,3 +1090,16 @@ handoff from `ModelRouter` to the existing local model bridge.
 - State: `online`
 - Runtime level: `permission_gated_alpha_runtime`
 - Permission: `active_local_runtime_integration_permission`
+
+## Sprint 261 Roadmap Reconfirmation Capability
+
+The `roadmap_reconfirmation_after_v1_2_0` capability is online as a
+review-only product-roadmap capability introduced in v1.2.1. It does not add a
+runtime execution feature or a new permission-gated action.
+
+Post-Sprint 261 summary:
+
+- total capabilities: 142
+- online capabilities: 140
+- permission-gated capabilities: unchanged at 21
+- runtime execution features: unchanged at 13

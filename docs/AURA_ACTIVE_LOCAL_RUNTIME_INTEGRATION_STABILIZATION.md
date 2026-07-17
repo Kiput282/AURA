@@ -14,3 +14,10 @@
 No execution command is exposed during implementation. Live integration is reserved for explicit finalization.
 
 Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
+
+## Transition to Sprint 261
+
+The v1.2.0 active local runtime block is closed. Sprint 261 begins the
+`daily_chat_control_center_productization` block and reconfirms the roadmap
+through Sprint 270. The next boundary is
+`operational_browser_chat_model_handoff`.

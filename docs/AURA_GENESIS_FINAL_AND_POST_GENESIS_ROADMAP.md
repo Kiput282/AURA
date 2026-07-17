@@ -960,3 +960,10 @@ The coordinator combines manual service control, safe idle, private persistent c
 Contract target: `336/336` across twenty-eight secure dimensions. Sprint 261 requires roadmap reconfirmation after `v1.2.0`.
 
 Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
+
+## Post-v1.2.0 Roadmap Reconfirmation
+
+Sprint 261 confirms the daily productization direction for Sprint 261–270.
+Browser Control Center is the primary interface, `companion` is the primary
+local model route, autostart remains disabled, and memory writes remain
+review-first. Release target: v1.3.0 at Sprint 270.

@@ -6,8 +6,8 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.2.0`
-- Current status: Sprint 260 — Active Local Runtime Integration and Stabilization completed
+- Current version: `v1.2.1`
+- Current status: Sprint 261 — Roadmap Reconfirmation after v1.2.0 completed
 Current runtime state: Sprint 260 adds an explicit manual end-to-end coordinator across safe-idle service control, persistent chat, Ollama health, exact companion routing, lifecycle, bounded queueing, read-only budgets, successful response persistence, and stop-and-restore.
 
 ---
@@ -119,11 +119,11 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 261 — Roadmap Reconfirmation after v1.2.0
+- Next planned sprint: Sprint 262 — Operational Browser Chat Model Handoff
 Current capability registry summary:
 
-- total capabilities: 141
-- online capabilities: 139
+- total capabilities: 142
+- online capabilities: 140
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
 - permission-gated capabilities: 21
@@ -6481,3 +6481,7 @@ The coordinator combines manual service control, safe idle, private persistent c
 Contract target: `336/336` across twenty-eight secure dimensions. Sprint 261 requires roadmap reconfirmation after `v1.2.0`.
 
 Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
+
+## v1.2.1 Daily Product Roadmap Reconfirmation
+
+Sprint 261 canonicalizes the `daily_chat_control_center_productization` block for Sprint 261–270, targeting `v1.3.0`. The browser Control Center and local `companion` route remain primary. Autostart stays disabled, memory remains review-first, and Sprint 270 must complete a live end-to-end acceptance test with failure/recovery verification and safe-idle restore.

@@ -1237,3 +1237,16 @@ The coordinator combines manual service control, safe idle, private persistent c
 Contract target: `336/336` across twenty-eight secure dimensions. Sprint 261 requires roadmap reconfirmation after `v1.2.0`.
 
 Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
+
+## Canonical Checkpoint after v1.2.0
+
+Current canonical anchor: `v1.2.1`
+
+Current completed sprint: Sprint 261 — Roadmap Reconfirmation after v1.2.0
+
+Next sprint: `262`
+
+Next boundary: `operational_browser_chat_model_handoff`
+
+The Sprint 261–270 daily product block targets `v1.3.0` and requires live
+end-to-end acceptance at Sprint 270 before the next block begins.

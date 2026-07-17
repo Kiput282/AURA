@@ -406,6 +406,17 @@ class CapabilityRegistryManager:
                 "introduced_in": "0.80.0-genesis",
                 "control_center_visible": True,
             },
+            {'id': 'roadmap_reconfirmation_after_v1_2_0',
+             'name': 'Roadmap Reconfirmation after v1.2.0',
+             'state': 'online',
+             'runtime_level': 'review_only',
+             'risk_level': 'low',
+             'permission_required': None,
+             'category': 'product_roadmap',
+             'introduced_in': '1.2.1',
+             'control_center_visible': True,
+             'description': 'Canonical v1.2.1 to v1.3.0 daily product roadmap, gap '
+                            'ownership, and end-of-block live acceptance policy.'},
             {
                 "id": "shared_output_formatter",
                 "name": "Shared Output Formatter",

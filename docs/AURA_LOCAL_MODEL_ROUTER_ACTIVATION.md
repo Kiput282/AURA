@@ -55,3 +55,10 @@ The router remains exact-route only; Sprint 259 adds explicit lifecycle permissi
 ## Sprint 260 exact-route integration
 
 The integrated chain permits only the exact `companion` route.
+
+## Next Operational Product Boundary
+
+The verified `companion` route becomes the primary model route for the daily
+browser chat product block. Sprint 262 owns operational browser chat handoff
+and native process-role classification. This Sprint 261 update does not execute
+a model request or open a network connection.
