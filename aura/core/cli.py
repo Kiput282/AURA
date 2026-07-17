@@ -195,6 +195,10 @@ from aura.session_list_resume_rename_archive_restore.session_list_resume_rename_
 from aura.chat_history_recovery_ux.chat_history_recovery_ux_cli import (
     handle_chat_history_recovery_ux_command,
 )
+
+from aura.review_first_memory_integration.review_first_memory_integration_cli import (
+    handle_review_first_memory_integration_command,
+)
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
@@ -11312,6 +11316,9 @@ class AuraCLI:
             return True
 
         if handle_chat_history_recovery_ux_command(args):
+            return True
+
+        if handle_review_first_memory_integration_command(args):
             return True
         if handle_session_memory_persistence_command(args):
             return True

@@ -4008,3 +4008,15 @@ merge, permanent delete, model invocation, and network fallback remain
 disabled.
 
 Next boundary: `review_first_memory_integration`.
+
+## Sprint 265 — Review-First Memory Integration
+
+- Version: `v1.2.5`
+- Boundary: `review_first_memory_integration`
+- Next boundary: `control_center_runtime_ux_consolidation`
+- Adds an explicit browser review surface for one selected user message.
+- Candidate lifecycle: create, edit, privacy hold, approve future write preview, or reject transient candidate.
+- Queue and edits are in-process only and reset on service restart.
+- Approval creates a permission-envelope preview; it does not apply a grant.
+- Durable memory writes and `MemoryStore` construction or mutation remain disabled.
+- Automatic memory write, merge, delete, model invocation, network access, tool execution, and command execution remain disabled.

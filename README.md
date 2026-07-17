@@ -6,8 +6,8 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.2.4`
-- Current status: Sprint 264 — Chat History Recovery UX completed
+- Current version: `v1.2.5`
+- Current status: Sprint 265 — Review-First Memory Integration completed
 Current runtime state: Sprint 260 adds an explicit manual end-to-end coordinator across safe-idle service control, persistent chat, Ollama health, exact companion routing, lifecycle, bounded queueing, read-only budgets, successful response persistence, and stop-and-restore.
 
 ---
@@ -119,18 +119,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 265 — Review-First Memory Integration
+- Next planned sprint: Sprint 266 — Control Center Runtime UX Consolidation
 Current capability registry summary:
 
-- total capabilities: 145
-- online capabilities: 143
+- total capabilities: 146
+- online capabilities: 144
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 24
+- permission-gated capabilities: 25
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 16
+- runtime execution features: 17
 ---
 
 ## Safety State
@@ -6527,3 +6527,9 @@ Automatic repair, quarantine, replacement, cross-session merge, permanent
 deletion, recovery model calls, and recovery network fallback remain disabled.
 
 Next: Sprint 265 — `review_first_memory_integration`.
+
+### Sprint 265 — Review-First Memory Integration
+
+AURA now exposes an explicit local browser review flow for memory candidates selected from one user message at a time. The candidate queue is in-process only. Candidates can be edited, privacy-reviewed, assigned an importance and pin recommendation, rejected without touching durable memory, or approved only as a future permission-envelope preview.
+
+The Sprint 265 boundary deliberately does **not** write durable memory. Candidate persistence, review-queue persistence, permission-grant application, `MemoryStore` construction or mutation, automatic memory write/merge/delete, model invocation, and network access remain disabled. Restarting the local service clears the transient queue.

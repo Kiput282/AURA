@@ -106,6 +106,42 @@
         </p>
       </section>
 
+
+      <section
+        id="memory-review-panel"
+        class="memory-review"
+        aria-labelledby="memory-review-title"
+      >
+        <div class="memory-review-heading">
+          <div>
+            <p class="eyebrow">Review-First Memory</p>
+            <h3 id="memory-review-title">Transient memory candidates</h3>
+          </div>
+          <span id="memory-review-state" class="status-badge" data-state="idle">Empty</span>
+        </div>
+        <p id="memory-review-detail" class="muted">
+          Select one user message, create a local candidate, then review it before any future durable write.
+        </p>
+        <div class="memory-source-controls">
+          <label for="memory-source-message">Source user message</label>
+          <select id="memory-source-message" disabled>
+            <option value="">Select an active session first</option>
+          </select>
+          <button id="create-memory-candidate" type="button" disabled>
+            Create review candidate
+          </button>
+          <button id="refresh-memory-review" type="button">
+            Refresh transient queue
+          </button>
+        </div>
+        <div id="memory-review-list" class="memory-review-list" aria-live="polite">
+          <p class="empty-state">No transient memory candidates.</p>
+        </div>
+        <p id="memory-review-boundary" class="memory-review-boundary">
+          In-process queue only · edit and reject are local · approval creates a permission envelope preview · no grant is applied · no durable memory write or MemoryStore mutation.
+        </p>
+      </section>
+
       <section id="chat-transcript" class="transcript" aria-live="polite">
         <p class="empty-state">No active local chat session.</p>
       </section>

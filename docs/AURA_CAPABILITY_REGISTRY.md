@@ -1139,3 +1139,11 @@ permission-gated runtime execution feature introduced in v1.2.2.
 - Disabled: automatic repair, quarantine, replacement, permanent delete,
   cross-session merge, recovery model calls, recovery network access, tools,
   commands, and actions.
+
+## Review-First Memory Integration (`v1.2.5`)
+
+Capability ID: `review_first_memory_integration`
+
+This permission-gated alpha runtime exposes a transient browser review queue for explicitly selected user-message memory candidates. It supports deterministic local extraction preview, privacy redaction and hold, importance and pin recommendation preview, revision-checked edit, transient rejection, and approval of a future permission-envelope preview.
+
+The capability does not persist candidates or review decisions, apply a permission grant, construct or mutate `MemoryStore`, write durable memory, automatically write/merge/delete memory, invoke a model, or open a network connection.

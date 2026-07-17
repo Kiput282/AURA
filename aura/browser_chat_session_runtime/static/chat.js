@@ -2,6 +2,14 @@
 
 const API_BASE = "/api/chat";
 const MODEL_API_BASE = "/api/model";
+const MEMORY_REVIEW_API = `${API_BASE}/memory-review`;
+const MEMORY_CATEGORIES = (
+  "note preference project_fact instruction "
+  + "milestone relationship other"
+).split(" ");
+const MEMORY_IMPORTANCE_BANDS = (
+  "ephemeral normal important critical_review"
+).split(" ");
 const LOCAL_INTENT = "browser-chat-session";
 const MAX_MESSAGE_CHARACTERS = 8192;
 
@@ -14,6 +22,12 @@ const state = {
   pendingSubmission: null,
   recovery: null,
   recoveryDismissed: false,
+  memoryReview: {
+    candidates: [],
+    pending_review_count: 0,
+    privacy_hold_count: 0,
+    approved_write_preview_count: 0,
+  },
 };
 
 function byId(id) {
@@ -386,6 +400,13 @@ function syncComposerControls() {
   byId("session-filter-active").disabled = state.busy;
   byId("session-filter-archived").disabled = state.busy;
   byId("refresh-model-status").disabled = state.busy;
+  byId("refresh-memory-review").disabled = state.busy;
+  byId("memory-source-message").disabled =
+    state.busy || !activeSession;
+  byId("create-memory-candidate").disabled =
+    state.busy
+    || !activeSession
+    || !Boolean(byId("memory-source-message").value);
   byId("probe-model").disabled =
     state.busy
     || !Boolean(state.modelStatus?.enabled)
@@ -453,6 +474,7 @@ function setBusy(value) {
   state.busy = value;
   syncSessionFilterControls();
   syncComposerControls();
+  renderMemoryReview();
 }
 
 async function apiRequest(path, options = {}) {
@@ -488,6 +510,446 @@ async function apiRequest(path, options = {}) {
     throw error;
   }
   return payload;
+}
+
+
+function renderMemorySourceOptions() {
+  const select = byId("memory-source-message");
+  select.replaceChildren();
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+
+  if (
+    !state.activeSession
+    || !selectedSessionIsActive()
+  ) {
+    placeholder.textContent =
+      "Select an active session first";
+    select.append(placeholder);
+    return;
+  }
+
+  const userMessages = state.activeSession.messages.filter(
+    (message) => message.role === "user",
+  );
+  placeholder.textContent =
+    userMessages.length
+      ? "Choose one user message"
+      : "No user messages are available";
+  select.append(placeholder);
+
+  for (const message of userMessages) {
+    const option = document.createElement("option");
+    option.value = message.message_id;
+    const preview = message.content.length > 80
+      ? `${message.content.slice(0, 77)}...`
+      : message.content;
+    option.textContent =
+      `#${message.sequence} · ${preview}`;
+    select.append(option);
+  }
+}
+
+function memoryCandidateById(candidateId) {
+  return state.memoryReview.candidates.find(
+    (candidate) =>
+      candidate.candidate_id === candidateId,
+  ) || null;
+}
+
+function memoryCandidateCard(candidate) {
+  const card = document.createElement("article");
+  card.className = "memory-candidate-card";
+  card.dataset.memoryCandidateId =
+    candidate.candidate_id;
+
+  const heading = document.createElement("div");
+  heading.className = "memory-candidate-heading";
+
+  const title = document.createElement("strong");
+  title.textContent =
+    `Message #${candidate.source_sequence}`;
+
+  const stateBadge = document.createElement("span");
+  stateBadge.className = "status-badge";
+  stateBadge.dataset.state =
+    candidate.review_state === "privacy_hold"
+      ? "error"
+      : candidate.review_state
+        === "approved_write_preview"
+        ? "ready"
+        : "idle";
+  stateBadge.textContent = candidate.review_state;
+
+  heading.append(title, stateBadge);
+
+  const metadata = document.createElement("p");
+  metadata.className = "memory-candidate-meta";
+  metadata.textContent =
+    `${candidate.category} · `
+    + `${candidate.importance} · `
+    + `revision ${candidate.revision} · `
+    + `${candidate.candidate_id}`;
+
+  const contentLabel = document.createElement("label");
+  contentLabel.textContent = "Candidate content";
+  const content = document.createElement("textarea");
+  content.className = "memory-candidate-content";
+  content.maxLength = 4000;
+  content.value = candidate.content;
+  contentLabel.append(content);
+
+  const fields = document.createElement("div");
+  fields.className = "memory-candidate-fields";
+
+  const categoryLabel = document.createElement("label");
+  categoryLabel.textContent = "Category";
+  const category = document.createElement("select");
+  category.className = "memory-candidate-category";
+  for (const value of MEMORY_CATEGORIES) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    option.selected = value === candidate.category;
+    category.append(option);
+  }
+  categoryLabel.append(category);
+
+  const importanceLabel = document.createElement("label");
+  importanceLabel.textContent = "Importance";
+  const importance = document.createElement("select");
+  importance.className = "memory-candidate-importance";
+  for (const value of MEMORY_IMPORTANCE_BANDS) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = value;
+    option.selected = value === candidate.importance;
+    importance.append(option);
+  }
+  importanceLabel.append(importance);
+
+  const pinnedLabel = document.createElement("label");
+  pinnedLabel.className = "memory-candidate-pinned";
+  const pinned = document.createElement("input");
+  pinned.type = "checkbox";
+  pinned.className = "memory-candidate-pinned-input";
+  pinned.checked = Boolean(candidate.pinned);
+  const pinnedText = document.createElement("span");
+  pinnedText.textContent = "Recommend pin";
+  pinnedLabel.append(pinned, pinnedText);
+
+  fields.append(
+    categoryLabel,
+    importanceLabel,
+    pinnedLabel,
+  );
+
+  const privacy = document.createElement("p");
+  privacy.className = "memory-candidate-privacy";
+  privacy.textContent = candidate.redaction_applied
+    ? `Privacy hold · ${candidate.redaction_notes.join(", ")}`
+    : "Privacy preview clear for manual review.";
+
+  const actions = document.createElement("div");
+  actions.className = "memory-candidate-actions";
+
+  const save = document.createElement("button");
+  save.type = "button";
+  save.textContent = "Save review edit";
+  save.disabled = state.busy;
+  save.addEventListener(
+    "click",
+    () => editMemoryCandidate(candidate.candidate_id),
+  );
+
+  const approve = document.createElement("button");
+  approve.type = "button";
+  approve.textContent = "Approve write preview";
+  approve.disabled =
+    state.busy
+    || candidate.review_state === "privacy_hold";
+  approve.addEventListener(
+    "click",
+    () => approveMemoryCandidatePreview(
+      candidate.candidate_id,
+    ),
+  );
+
+  const reject = document.createElement("button");
+  reject.type = "button";
+  reject.textContent = "Reject transient candidate";
+  reject.disabled = state.busy;
+  reject.addEventListener(
+    "click",
+    () => rejectMemoryCandidate(candidate.candidate_id),
+  );
+
+  actions.append(save, approve, reject);
+
+  if (candidate.write_preview) {
+    const preview = document.createElement("p");
+    preview.className = "memory-write-preview";
+    preview.textContent =
+      "Permission envelope preview created. "
+      + "write_authorized=false · "
+      + "permission_grant_applied=false · "
+      + "durable_memory_written=false · "
+      + "memory_store_mutated=false";
+    card.append(
+      heading,
+      metadata,
+      contentLabel,
+      fields,
+      privacy,
+      preview,
+      actions,
+    );
+  } else {
+    card.append(
+      heading,
+      metadata,
+      contentLabel,
+      fields,
+      privacy,
+      actions,
+    );
+  }
+
+  return card;
+}
+
+function renderMemoryReview() {
+  const payload = state.memoryReview;
+  const list = byId("memory-review-list");
+  list.replaceChildren();
+
+  const candidates = payload.candidates || [];
+  const badge = byId("memory-review-state");
+  badge.textContent = candidates.length
+    ? `${candidates.length} queued`
+    : "Empty";
+  badge.dataset.state = candidates.length
+    ? "ready"
+    : "idle";
+
+  byId("memory-review-detail").textContent =
+    candidates.length
+      ? (
+        `${payload.pending_review_count || 0} pending · `
+        + `${payload.privacy_hold_count || 0} privacy hold · `
+        + `${payload.approved_write_preview_count || 0} approved preview`
+      )
+      : (
+        "Select one user message, create a local candidate, "
+        + "then review it before any future durable write."
+      );
+
+  if (!candidates.length) {
+    const empty = document.createElement("p");
+    empty.className = "empty-state";
+    empty.textContent =
+      "No transient memory candidates.";
+    list.append(empty);
+    return;
+  }
+
+  for (const candidate of candidates) {
+    list.append(memoryCandidateCard(candidate));
+  }
+}
+
+async function refreshMemoryReview() {
+  const payload = await apiRequest(
+    `${MEMORY_REVIEW_API}`,
+  );
+  state.memoryReview = payload;
+  renderMemoryReview();
+  return payload;
+}
+
+async function createMemoryCandidate() {
+  if (
+    state.busy
+    || !state.activeSession
+    || !selectedSessionIsActive()
+  ) {
+    return;
+  }
+
+  const messageId =
+    byId("memory-source-message").value;
+  if (!messageId) {
+    setStatus(
+      "Select one user message for memory review.",
+      "error",
+    );
+    return;
+  }
+
+  setBusy(true);
+  try {
+    await apiRequest(
+      `${MEMORY_REVIEW_API}/candidates`,
+      {
+        method: "POST",
+        body: {
+          session_id: state.activeSession.session_id,
+          message_id: messageId,
+          confirm_memory_candidate: true,
+        },
+      },
+    );
+    await refreshMemoryReview();
+    setStatus(
+      "Transient memory candidate created",
+      "ready",
+    );
+  } catch (error) {
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+function memoryCandidateCardNode(candidateId) {
+  return Array.from(
+    byId("memory-review-list").children,
+  ).find(
+    (node) =>
+      node.dataset?.memoryCandidateId === candidateId,
+  ) || null;
+}
+
+async function editMemoryCandidate(candidateId) {
+  if (state.busy) {
+    return;
+  }
+  const candidate = memoryCandidateById(candidateId);
+  const card = memoryCandidateCardNode(candidateId);
+  if (!candidate || !card) {
+    return;
+  }
+
+  setBusy(true);
+  try {
+    await apiRequest(
+      `${MEMORY_REVIEW_API}/candidates/`
+      + `${encodeURIComponent(candidateId)}/edit`,
+      {
+        method: "POST",
+        body: {
+          content:
+            card.querySelector(
+              ".memory-candidate-content",
+            ).value,
+          category:
+            card.querySelector(
+              ".memory-candidate-category",
+            ).value,
+          importance:
+            card.querySelector(
+              ".memory-candidate-importance",
+            ).value,
+          pinned:
+            card.querySelector(
+              ".memory-candidate-pinned-input",
+            ).checked,
+          expected_revision: candidate.revision,
+          confirm_review_edit: true,
+        },
+      },
+    );
+    await refreshMemoryReview();
+    setStatus(
+      "Memory candidate review edit saved",
+      "ready",
+    );
+  } catch (error) {
+    if (error.status === 409) {
+      await refreshMemoryReview();
+    }
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function approveMemoryCandidatePreview(
+  candidateId,
+) {
+  if (state.busy) {
+    return;
+  }
+  const candidate = memoryCandidateById(candidateId);
+  if (!candidate) {
+    return;
+  }
+
+  setBusy(true);
+  try {
+    await apiRequest(
+      `${MEMORY_REVIEW_API}/candidates/`
+      + `${encodeURIComponent(candidateId)}`
+      + "/approve-preview",
+      {
+        method: "POST",
+        body: {
+          expected_revision: candidate.revision,
+          confirm_review_approval: true,
+        },
+      },
+    );
+    await refreshMemoryReview();
+    setStatus(
+      "Permission-gated write preview approved",
+      "ready",
+    );
+  } catch (error) {
+    if (error.status === 409) {
+      await refreshMemoryReview();
+    }
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function rejectMemoryCandidate(candidateId) {
+  if (state.busy) {
+    return;
+  }
+  const candidate = memoryCandidateById(candidateId);
+  if (!candidate) {
+    return;
+  }
+
+  setBusy(true);
+  try {
+    await apiRequest(
+      `${MEMORY_REVIEW_API}/candidates/`
+      + `${encodeURIComponent(candidateId)}/reject`,
+      {
+        method: "POST",
+        body: {
+          expected_revision: candidate.revision,
+          confirm_reject: true,
+        },
+      },
+    );
+    await refreshMemoryReview();
+    setStatus(
+      "Transient memory candidate rejected",
+      "ready",
+    );
+  } catch (error) {
+    if (error.status === 409) {
+      await refreshMemoryReview();
+    }
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
 }
 
 function sessionButton(session) {
@@ -580,6 +1042,7 @@ function messageKindLabel(message) {
 function renderTranscript() {
   const transcript = byId("chat-transcript");
   transcript.replaceChildren();
+  renderMemorySourceOptions();
 
   if (!state.activeSession) {
     const empty = document.createElement("p");
@@ -1257,6 +1720,7 @@ function installHandlers() {
       Promise.all([
         refreshSessions(),
         refreshRecoveryStatus(),
+        refreshMemoryReview(),
       ])
         .catch(async (error) => {
           const handled =
@@ -1383,6 +1847,31 @@ function installHandlers() {
       }
     },
   );
+
+  byId("refresh-memory-review").addEventListener(
+    "click",
+    () => {
+      if (state.busy) {
+        return;
+      }
+      setBusy(true);
+      refreshMemoryReview()
+        .catch((error) => {
+          setStatus(error.message, "error");
+        })
+        .finally(() => {
+          setBusy(false);
+        });
+    },
+  );
+  byId("create-memory-candidate").addEventListener(
+    "click",
+    createMemoryCandidate,
+  );
+  byId("memory-source-message").addEventListener(
+    "change",
+    syncComposerControls,
+  );
 }
 
 async function start() {
@@ -1391,10 +1880,12 @@ async function start() {
   updatePendingStatus();
   syncSessionFilterControls();
   renderRecoveryStatus();
+  renderMemoryReview();
   setBusy(true);
   const results = await Promise.allSettled([
     refreshSessions({ preserveActive: false }),
     refreshRecoveryStatus(),
+    refreshMemoryReview(),
     refreshModelStatus(),
   ]);
   const failures = results.filter(

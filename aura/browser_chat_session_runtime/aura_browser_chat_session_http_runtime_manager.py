@@ -56,6 +56,13 @@ from aura.permission_audit_recovery_visibility_runtime import (
 )
 
 
+from aura.review_first_memory_integration import (
+    ReviewFirstMemoryConflictError,
+    ReviewFirstMemoryIntegrationRuntimeManager,
+    ReviewFirstMemoryNotFoundError,
+    ReviewFirstMemoryValidationError,
+)
+
 class AuraBrowserChatSessionHttpRuntimeManager(
     AuraControlCenterWebShellHttpRuntimeManager
 ):
@@ -73,14 +80,20 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         AuraBrowserChatWebSurfaceManager.ASSET_ROUTES
     )
     CHAT_FIXED_GET_ROUTES = (
-        "/api/chat/status",
-        "/api/chat/sessions",
-        "/api/chat/recovery",
+        '/api/chat/status',
+        '/api/chat/sessions',
+        '/api/chat/recovery',
+        '/api/chat/memory-review',
     )
     CHAT_ROUTE_CONTRACTS = (
         'GET /api/chat/status',
         'GET /api/chat/sessions',
         'GET /api/chat/recovery',
+        'GET /api/chat/memory-review',
+        'POST /api/chat/memory-review/candidates',
+        'POST /api/chat/memory-review/candidates/{candidate_id}/edit',
+        'POST /api/chat/memory-review/candidates/{candidate_id}/approve-preview',
+        'POST /api/chat/memory-review/candidates/{candidate_id}/reject',
         'POST /api/chat/sessions',
         'GET /api/chat/sessions/{session_id}',
         'POST /api/chat/sessions/{session_id}/resume',
@@ -111,7 +124,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         len(VISIBILITY_ASSET_ROUTES)
         + len(VISIBILITY_ROUTE_CONTRACTS)
     )
-    TOTAL_ROUTE_CONTRACT_COUNT = 42
+    TOTAL_ROUTE_CONTRACT_COUNT = 47
     MAX_REQUEST_BODY_BYTES = 65536
     LOCAL_INTENT_HEADER = "X-AURA-Local-Intent"
     LOCAL_INTENT_VALUE = "browser-chat-session"
@@ -141,6 +154,20 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         r"^/api/chat/sessions/(chat_[0-9a-f]{32})/model-messages$"
     )
 
+    _MEMORY_CANDIDATE_EDIT_RE = re.compile(
+        r"^/api/chat/memory-review/candidates/"
+        r"(memory_candidate_[0-9a-f]{24})/edit$"
+    )
+    _MEMORY_CANDIDATE_APPROVE_RE = re.compile(
+        r"^/api/chat/memory-review/candidates/"
+        r"(memory_candidate_[0-9a-f]{24})/"
+        r"approve-preview$"
+    )
+    _MEMORY_CANDIDATE_REJECT_RE = re.compile(
+        r"^/api/chat/memory-review/candidates/"
+        r"(memory_candidate_[0-9a-f]{24})/reject$"
+    )
+
     def __init__(
         self,
         project_root: str | Path | None = None,
@@ -162,6 +189,11 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         )
         self.chat_web_manager = (
             AuraBrowserChatWebSurfaceManager(
+                project_root=project_root
+            )
+        )
+        self.memory_review_manager = (
+            ReviewFirstMemoryIntegrationRuntimeManager(
                 project_root=project_root
             )
         )
@@ -303,6 +335,19 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             "model_bridge_runtime": False,
             "model_inference_runtime": False,
             "network_fallback_runtime": False,
+            "review_first_memory_integration_runtime": True,
+            "memory_candidate_in_process_queue": True,
+            "memory_candidate_edit_runtime": True,
+            "memory_candidate_reject_runtime": True,
+            "memory_write_preview_runtime": True,
+            "memory_candidate_persistence": False,
+            "memory_review_queue_persistence": False,
+            "memory_permission_grant_apply": False,
+            "memory_store_constructed": False,
+            "memory_store_mutation": False,
+            "automatic_memory_write": False,
+            "automatic_memory_merge": False,
+            "automatic_memory_delete": False,
             "aura_long_term_memory_write": False,
             "tool_execution": False,
             "action_dispatch": False,
@@ -369,6 +414,36 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 "status": "error",
                 "error": "local_model_bridge_error",
                 "detail": str(exc),
+            }
+        if isinstance(
+            exc,
+            ReviewFirstMemoryNotFoundError,
+        ):
+            return 404, {
+                "status": "not_found",
+                "error": "memory_candidate_not_found",
+                "detail": str(exc),
+                "memory_store_mutated": False,
+            }
+        if isinstance(
+            exc,
+            ReviewFirstMemoryConflictError,
+        ):
+            return 409, {
+                "status": "conflict",
+                "error": "memory_candidate_conflict",
+                "detail": str(exc),
+                "memory_store_mutated": False,
+            }
+        if isinstance(
+            exc,
+            ReviewFirstMemoryValidationError,
+        ):
+            return 400, {
+                "status": "invalid_request",
+                "error": "memory_candidate_validation_error",
+                "detail": str(exc),
+                "memory_store_mutated": False,
             }
         if isinstance(
             exc,
@@ -483,6 +558,12 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     return 200, (
                         manager.local_model_chat_manager
                         .status()
+                    )
+
+                if path == "/api/chat/memory-review":
+                    return 200, (
+                        manager.memory_review_manager
+                        .list_candidates()
                     )
 
                 if path == "/api/chat/recovery":
@@ -684,7 +765,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "control_center_web_shell": True,
                             "control_center_shell_assets": 3,
                             "browser_chat_session_runtime": True,
-                            "browser_chat_http_routes": 12,
+                            "browser_chat_http_routes": 17,
                             "browser_chat_assets": 3,
                             "local_model_bridge_http_routes": 2,
                             "permission_audit_recovery_visibility": True,
@@ -695,7 +776,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "permission_mutation_runtime": False,
                             "audit_writer_runtime": False,
                             "automatic_recovery_runtime": False,
-                            "total_route_contracts": 42,
+                            "total_route_contracts": 47,
                             "model_bridge_configured": (
                                 manager.local_model_chat_manager
                                 .status()["configured"]
@@ -1007,6 +1088,22 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 model_probe_route = (
                     path == "/api/model/probe"
                 )
+                memory_candidate_create_route = (
+                    path
+                    == "/api/chat/memory-review/candidates"
+                )
+                memory_candidate_edit_match = (
+                    manager._MEMORY_CANDIDATE_EDIT_RE
+                    .fullmatch(path)
+                )
+                memory_candidate_approve_match = (
+                    manager._MEMORY_CANDIDATE_APPROVE_RE
+                    .fullmatch(path)
+                )
+                memory_candidate_reject_match = (
+                    manager._MEMORY_CANDIDATE_REJECT_RE
+                    .fullmatch(path)
+                )
 
                 if not (
                     create_route
@@ -1018,6 +1115,10 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     or clear_match is not None
                     or model_message_match is not None
                     or model_probe_route
+                    or memory_candidate_create_route
+                    or memory_candidate_edit_match is not None
+                    or memory_candidate_approve_match is not None
+                    or memory_candidate_reject_match is not None
                 ):
                     self._reject_mutation()
                     return
@@ -1030,7 +1131,146 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     return
 
                 try:
-                    if create_route:
+                    if memory_candidate_create_route:
+                        allowed = {
+                            "session_id",
+                            "message_id",
+                            "confirm_memory_candidate",
+                        }
+                        if set(payload) != allowed:
+                            raise ReviewFirstMemoryValidationError(
+                                "Memory candidate creation fields must be "
+                                "session_id, message_id, and "
+                                "confirm_memory_candidate."
+                            )
+                        if (
+                            payload["confirm_memory_candidate"]
+                            is not True
+                        ):
+                            raise ReviewFirstMemoryValidationError(
+                                "Memory candidate creation requires "
+                                "explicit confirmation."
+                            )
+                        session = (
+                            manager.chat_session_manager
+                            .load_session(payload["session_id"])
+                        )
+                        message_matches = [
+                            item
+                            for item in session["messages"]
+                            if item["message_id"]
+                            == payload["message_id"]
+                        ]
+                        if len(message_matches) != 1:
+                            raise ReviewFirstMemoryNotFoundError(
+                                "Source user message was not found."
+                            )
+                        source_message = message_matches[0]
+                        if source_message["role"] != "user":
+                            raise ReviewFirstMemoryValidationError(
+                                "Only a user message can become a "
+                                "memory candidate."
+                            )
+                        result = (
+                            manager.memory_review_manager
+                            .create_candidate(
+                                content=source_message["content"],
+                                source_session_id=session[
+                                    "session_id"
+                                ],
+                                source_message_id=source_message[
+                                    "message_id"
+                                ],
+                                source_sequence=source_message[
+                                    "sequence"
+                                ],
+                            )
+                        )
+                        status = 201
+                    elif memory_candidate_edit_match is not None:
+                        allowed = {
+                            "content",
+                            "category",
+                            "importance",
+                            "pinned",
+                            "expected_revision",
+                            "confirm_review_edit",
+                        }
+                        if set(payload) != allowed:
+                            raise ReviewFirstMemoryValidationError(
+                                "Memory candidate edit fields are invalid."
+                            )
+                        if payload["confirm_review_edit"] is not True:
+                            raise ReviewFirstMemoryValidationError(
+                                "Memory candidate edit requires "
+                                "explicit confirmation."
+                            )
+                        result = (
+                            manager.memory_review_manager
+                            .edit_candidate(
+                                memory_candidate_edit_match.group(1),
+                                content=payload["content"],
+                                category=payload["category"],
+                                importance=payload["importance"],
+                                pinned=payload["pinned"],
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                            )
+                        )
+                        status = 200
+                    elif memory_candidate_approve_match is not None:
+                        if set(payload) != {
+                            "expected_revision",
+                            "confirm_review_approval",
+                        }:
+                            raise ReviewFirstMemoryValidationError(
+                                "Memory approval-preview fields are invalid."
+                            )
+                        if (
+                            payload["confirm_review_approval"]
+                            is not True
+                        ):
+                            raise ReviewFirstMemoryValidationError(
+                                "Approval preview requires explicit "
+                                "review confirmation."
+                            )
+                        result = (
+                            manager.memory_review_manager
+                            .approve_write_preview(
+                                memory_candidate_approve_match
+                                .group(1),
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                            )
+                        )
+                        status = 200
+                    elif memory_candidate_reject_match is not None:
+                        if set(payload) != {
+                            "expected_revision",
+                            "confirm_reject",
+                        }:
+                            raise ReviewFirstMemoryValidationError(
+                                "Memory rejection fields are invalid."
+                            )
+                        if payload["confirm_reject"] is not True:
+                            raise ReviewFirstMemoryValidationError(
+                                "Memory rejection requires explicit "
+                                "confirmation."
+                            )
+                        result = (
+                            manager.memory_review_manager
+                            .reject_candidate(
+                                memory_candidate_reject_match
+                                .group(1),
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                            )
+                        )
+                        status = 200
+                    elif create_route:
                         allowed = {"title"}
                         if not set(payload).issubset(allowed):
                             raise BrowserChatValidationError(

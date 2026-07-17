@@ -94,4 +94,6 @@ keeps the unsent draft in process memory while reloading the current session.
 No repair, quarantine, replacement, deletion, model call, or network fallback
 is performed.
 
-Next: Sprint 265 — `review_first_memory_integration`.
+Current: Sprint 265 — `review_first_memory_integration` completed.
+
+Next: Sprint 266 — `control_center_runtime_ux_consolidation`.

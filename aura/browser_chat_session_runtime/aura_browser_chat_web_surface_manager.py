@@ -244,6 +244,21 @@ class AuraBrowserChatWebSurfaceManager:
             "corrupt_file_preservation_ui": True,
             "automatic_history_repair_ui": False,
             "recovery_extension_sprint": 264,
+            "memory_review_ui": True,
+            "memory_review_endpoint": (
+                "/api/chat/memory-review"
+            ),
+            "memory_review_in_process_queue": True,
+            "memory_candidate_create_ui": True,
+            "memory_candidate_edit_ui": True,
+            "memory_candidate_reject_ui": True,
+            "memory_write_preview_ui": True,
+            "memory_candidate_persistence_ui": False,
+            "memory_review_queue_persistence_ui": False,
+            "memory_permission_grant_apply_ui": False,
+            "durable_memory_write_ui": False,
+            "memory_store_mutation_ui": False,
+            "memory_review_extension_sprint": 265,
             "session_permanent_delete_ui": False,
             "cross_session_history_merge_ui": False,
             "lifecycle_extension_sprint": 263,
@@ -318,6 +333,50 @@ class AuraBrowserChatWebSurfaceManager:
         )
         assertions["idempotent_retry_true"] = (
             status["idempotent_retry_ui"] is True
+        )
+        assertions["memory_review_ui_true"] = (
+            status["memory_review_ui"] is True
+        )
+        assertions["memory_review_endpoint"] = (
+            status["memory_review_endpoint"]
+            == "/api/chat/memory-review"
+        )
+        assertions["memory_review_queue_in_process"] = (
+            status["memory_review_in_process_queue"]
+            is True
+        )
+        assertions["memory_candidate_create_ui"] = (
+            status["memory_candidate_create_ui"] is True
+        )
+        assertions["memory_candidate_edit_ui"] = (
+            status["memory_candidate_edit_ui"] is True
+        )
+        assertions["memory_candidate_reject_ui"] = (
+            status["memory_candidate_reject_ui"] is True
+        )
+        assertions["memory_write_preview_ui"] = (
+            status["memory_write_preview_ui"] is True
+        )
+        assertions["memory_candidate_not_persisted"] = (
+            status["memory_candidate_persistence_ui"]
+            is False
+        )
+        assertions["memory_queue_not_persisted"] = (
+            status["memory_review_queue_persistence_ui"]
+            is False
+        )
+        assertions["memory_grant_not_applied"] = (
+            status["memory_permission_grant_apply_ui"]
+            is False
+        )
+        assertions["durable_memory_write_false"] = (
+            status["durable_memory_write_ui"] is False
+        )
+        assertions["memory_store_mutation_false"] = (
+            status["memory_store_mutation_ui"] is False
+        )
+        assertions["memory_review_sprint_265"] = (
+            status["memory_review_extension_sprint"] == 265
         )
         assertions["placeholder_true"] = (
             status["placeholder_route_available"] is True
@@ -398,6 +457,15 @@ class AuraBrowserChatWebSurfaceManager:
             "history-recovery-issues",
             "retry-history-recovery",
             "dismiss-history-recovery",
+            "memory-review-panel",
+            "memory-review-title",
+            "memory-review-state",
+            "memory-review-detail",
+            "memory-source-message",
+            "create-memory-candidate",
+            "refresh-memory-review",
+            "memory-review-list",
+            "memory-review-boundary",
             "rename-dialog",
             "rename-title",
             "confirm-rename",
@@ -504,6 +572,24 @@ class AuraBrowserChatWebSurfaceManager:
             "repair-session" not in html
             and "quarantine-session" not in html
         )
+        assertions["html_memory_review_title"] = (
+            "Review-First Memory" in html
+        )
+        assertions["html_memory_transient"] = (
+            "Transient memory candidates" in html
+        )
+        assertions["html_memory_permission_preview"] = (
+            "permission envelope preview" in html
+        )
+        assertions["html_memory_no_grant"] = (
+            "no grant is applied" in html
+        )
+        assertions["html_memory_no_durable_write"] = (
+            "no durable memory write" in html
+        )
+        assertions["html_memory_no_store_mutation"] = (
+            "MemoryStore mutation" in html
+        )
         assertions["html_no_delete_control"] = (
             "delete-session" not in html
             and "Delete session" not in html
@@ -592,6 +678,23 @@ class AuraBrowserChatWebSurfaceManager:
             "preserve_unsent_draft_in_memory",
             "restore_session",
             "original_file_preserved",
+            "MEMORY_REVIEW_API",
+            "refreshMemoryReview",
+            "renderMemoryReview",
+            "renderMemorySourceOptions",
+            "createMemoryCandidate",
+            "editMemoryCandidate",
+            "approveMemoryCandidatePreview",
+            "rejectMemoryCandidate",
+            "confirm_memory_candidate",
+            "confirm_review_edit",
+            "confirm_review_approval",
+            "confirm_reject",
+            "approved_write_preview",
+            "privacy_hold",
+            "permission_grant_applied=false",
+            "durable_memory_written=false",
+            "memory_store_mutated=false",
             "refreshModelStatus",
             "renderModelStatus",
             "requestProbe",
@@ -670,6 +773,19 @@ class AuraBrowserChatWebSurfaceManager:
             "mergeSessionHistory" not in javascript
             and "crossSessionHistory" not in javascript
         )
+        assertions["js_no_memory_store_route"] = (
+            "/api/memory/store" not in javascript
+            and "/api/memory/write" not in javascript
+        )
+        assertions["js_no_grant_apply_route"] = (
+            "/api/permissions/grant" not in javascript
+        )
+        assertions["js_no_automatic_memory_write"] = (
+            "automaticMemoryWrite" not in javascript
+        )
+        assertions["js_no_memory_delete_route"] = (
+            "/api/memory/delete" not in javascript
+        )
         assertions["js_no_stream"] = (
             "ReadableStream" not in javascript
             and "response.body.getReader" not in javascript
@@ -708,6 +824,14 @@ class AuraBrowserChatWebSurfaceManager:
             ".recovery-actions",
             ".recovery-issue-list",
             ".recovery-boundary",
+            ".memory-review",
+            ".memory-review-heading",
+            ".memory-source-controls",
+            ".memory-review-list",
+            ".memory-candidate-card",
+            ".memory-candidate-fields",
+            ".memory-candidate-actions",
+            ".memory-review-boundary",
             ":focus-visible",
             "@media (max-width: 64rem)",
             "@media (max-width: 48rem)",
@@ -814,6 +938,21 @@ class AuraBrowserChatWebSurfaceManager:
             "corrupt_file_preservation_ui_verified": True,
             "automatic_history_repair_ui": False,
             "recovery_extension_sprint": 264,
+            "memory_review_ui_verified": True,
+            "memory_review_endpoint": (
+                "/api/chat/memory-review"
+            ),
+            "memory_review_in_process_queue_verified": True,
+            "memory_candidate_create_ui_verified": True,
+            "memory_candidate_edit_ui_verified": True,
+            "memory_candidate_reject_ui_verified": True,
+            "memory_write_preview_ui_verified": True,
+            "memory_candidate_persistence_ui": False,
+            "memory_review_queue_persistence_ui": False,
+            "memory_permission_grant_apply_ui": False,
+            "durable_memory_write_ui": False,
+            "memory_store_mutation_ui": False,
+            "memory_review_extension_sprint": 265,
             "session_permanent_delete_ui": False,
             "cross_session_history_merge_ui": False,
             "lifecycle_extension_sprint": 263,
