@@ -3968,3 +3968,12 @@ The canonical Sprint 261–270 block is
 `daily_chat_control_center_productization`, targeting v1.3.0. Sprint 270 must
 complete a live end-to-end acceptance test, relevant failure/recovery testing,
 and safe-idle restoration before Sprint 271 begins.
+
+## Sprint 262 Operational Browser Handoff
+
+Current completed sprint: Sprint 262 — Operational Browser Chat Model Handoff.
+
+The explicitly confirmed browser model route now canonically targets
+`companion`. Native process-role classification is active and the historical
+count allowance removed. Next boundary:
+`session_list_resume_rename_archive_restore`.

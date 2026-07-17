@@ -44,6 +44,9 @@ from aura.local_model_bridge_runtime.aura_local_model_bridge_runtime_manager imp
     LocalModelBridgeTransportError,
     LocalModelBridgeValidationError,
 )
+from aura.local_model_router_activation.local_model_router_activation_contract import (
+    LocalModelRouterActivationContract,
+)
 from aura.local_model_bridge_runtime.aura_local_model_browser_chat_runtime_manager import (
     AuraLocalModelBrowserChatRuntimeManager,
 )
@@ -61,6 +64,10 @@ class AuraBrowserChatSessionHttpRuntimeManager(
     name = "aura_browser_chat_session_http_runtime"
     component_version = "0.1.0-alpha"
     sprint = 189
+    PRIMARY_MODEL_ROUTE = "companion"
+    OPERATIONAL_MODEL_ENDPOINT = (
+        "/api/chat/sessions/{session_id}/model-messages"
+    )
 
     CHAT_ASSET_ROUTES = (
         AuraBrowserChatWebSurfaceManager.ASSET_ROUTES
@@ -146,6 +153,25 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 AuraLocalModelBridgeProfileResolver
                 .resolve(os.environ)
             )
+            if local_model_profile is None:
+                settings_profile = (
+                    LocalModelRouterActivationContract(
+                        project_root=self.project_root
+                    )
+                    .profile_mapping()
+                )
+                local_model_profile = {
+                    key: settings_profile[key]
+                    for key in (
+                        "provider",
+                        "base_url",
+                        "model",
+                        "enabled",
+                        "timeout_seconds",
+                        "max_output_tokens",
+                        "temperature",
+                    )
+                }
             local_model_configuration_error = None
         except LocalModelBridgeConfigurationError as exc:
             local_model_profile = None
@@ -175,6 +201,27 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 project_root=project_root
             )
         )
+
+    def operational_model_handoff_status(
+        self,
+    ) -> dict[str, Any]:
+        return {
+            "operational_browser_chat_model_handoff": True,
+            "browser_chat_connected": True,
+            "model_message_route_available": True,
+            "primary_model_route": self.PRIMARY_MODEL_ROUTE,
+            "operational_model_endpoint": (
+                self.OPERATIONAL_MODEL_ENDPOINT
+            ),
+            "explicit_model_confirmation_required": True,
+            "save_only_fallback_available": True,
+            "model_output_text_only": True,
+            "tool_calling_runtime": False,
+            "action_dispatch_runtime": False,
+            "aura_memory_write_runtime": False,
+            "network_fallback_runtime": False,
+            "runtime_mutated": False,
+        }
 
     def safety_boundary(self) -> dict[str, Any]:
         return {

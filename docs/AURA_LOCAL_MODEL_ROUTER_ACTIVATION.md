@@ -62,3 +62,10 @@ The verified `companion` route becomes the primary model route for the daily
 browser chat product block. Sprint 262 owns operational browser chat handoff
 and native process-role classification. This Sprint 261 update does not execute
 a model request or open a network connection.
+
+## Browser Chat Operational Handoff
+
+Sprint 262 connects the browser model-message route to the verified
+`companion` router as the canonical product handoff. Explicit confirmation is
+mandatory for each model request. No model download, network fallback, tools,
+actions, commands, or memory writes are enabled.

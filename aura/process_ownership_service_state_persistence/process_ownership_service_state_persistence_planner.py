@@ -558,3 +558,9 @@ class ProcessOwnershipServiceStatePersistencePlanner:
                 "persistent_audit_write": True,
             },
         }
+
+SPRINT_262_PROCESS_ROLE_POLICY = {'native_process_role_classification': True,
+ 'service_runtime_role': 'service_runtime',
+ 'control_plane_role': 'control_plane',
+ 'foreign_role': 'unclassified_main',
+ 'count_allowance_removed': True}

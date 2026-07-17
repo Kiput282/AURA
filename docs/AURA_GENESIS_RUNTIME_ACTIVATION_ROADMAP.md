@@ -2557,3 +2557,13 @@ Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
 - Sprint 261 contract target: 360/360 with thirty secure dimensions
 - Next: Sprint 262 — Operational Browser Chat Model Handoff
 - End-of-block live acceptance: required at Sprint 270
+
+## Sprint 262 Runtime Checkpoint
+
+- Current version: v1.2.2
+- Completed: Sprint 262 — Operational Browser Chat Model Handoff
+- Target contract: 384/384 with thirty-two secure dimensions
+- Primary route: `companion`
+- Native process-role classification: enabled
+- Count allowance removed: true
+- Next: Sprint 263 — Session List, Resume, Rename, Archive, and Restore

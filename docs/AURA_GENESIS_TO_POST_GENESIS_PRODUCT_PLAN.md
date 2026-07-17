@@ -2282,3 +2282,10 @@ Current Sprint: Sprint 261 — Roadmap Reconfirmation after v1.2.0
 Next Planned Sprint: Sprint 262 — Operational Browser Chat Model Handoff
 
 The current product block runs through Sprint 270 and targets `v1.3.0`.
+
+## Operational Browser Chat at v1.2.2
+
+AURA's persistent browser chat now has a canonical operational handoff to the
+explicitly confirmed localhost `companion` route. The save-only route remains
+available. Sprint 262 also removes process-count normalization by classifying
+service runtime and control-plane processes natively.

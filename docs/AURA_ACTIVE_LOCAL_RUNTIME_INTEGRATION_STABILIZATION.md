@@ -21,3 +21,10 @@ The v1.2.0 active local runtime block is closed. Sprint 261 begins the
 `daily_chat_control_center_productization` block and reconfirms the roadmap
 through Sprint 270. The next boundary is
 `operational_browser_chat_model_handoff`.
+
+## Native Process Roles after Sprint 262
+
+The Sprint 260 control-plane normalization workaround has been retired.
+Runtime status now reports native `service_runtime`, `control_plane`, and
+`unclassified_main` roles. Control-plane commands remain visible but are not
+miscounted as strict service-runtime conflicts.

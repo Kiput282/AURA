@@ -21,6 +21,10 @@ class RoadmapReconfirmationContract:
     """Validate the v1.2.1 to v1.3.0 product roadmap."""
 
     VERSION = "1.2.1"
+    COMPATIBLE_IDENTITY_VERSIONS = (
+        "1.2.1",
+        "1.2.2",
+    )
     ANCHOR_VERSION = "1.2.0"
     CURRENT_SPRINT = 261
     NEXT_SPRINT = 262
@@ -312,8 +316,7 @@ class RoadmapReconfirmationContract:
 
         facts = {
             "identity_version": (
-                self._identity_version()
-                == self.VERSION
+                self._identity_version() in self.COMPATIBLE_IDENTITY_VERSIONS
             ),
             "current_sprint": (
                 direction["current_sprint"]
@@ -463,8 +466,7 @@ class RoadmapReconfirmationContract:
     ) -> dict[str, Any]:
         facts = self._facts()
         common = (
-            self._identity_version()
-            == self.VERSION,
+            self._identity_version() in self.COMPATIBLE_IDENTITY_VERSIONS,
             self._package_files()
             == set(self.REQUIRED_PACKAGE_FILES),
             self._cli_state()["import_count"] == 1,

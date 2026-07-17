@@ -51,6 +51,9 @@ class ManualStartStopStatusRuntimeExecutor:
     KILL_TIMEOUT_SECONDS = 3.0
     HEALTH_REQUEST_TIMEOUT_SECONDS = 1.0
     POLL_INTERVAL_SECONDS = 0.1
+    PROCESS_ROLE_SERVICE_RUNTIME = "service_runtime"
+    PROCESS_ROLE_CONTROL_PLANE = "control_plane"
+    PROCESS_ROLE_UNCLASSIFIED = "unclassified_main"
 
     def __init__(
         self,
@@ -292,6 +295,113 @@ class ManualStartStopStatusRuntimeExecutor:
 
         return records
 
+    def classify_main_process_role(
+        self,
+        argv: list[str] | tuple[str, ...],
+        cwd: str | None,
+    ) -> str:
+        tokens = [str(item) for item in argv]
+
+        if len(tokens) < 2:
+            return self.PROCESS_ROLE_UNCLASSIFIED
+
+        executable = Path(tokens[0]).name.lower()
+
+        if not executable.startswith("python"):
+            return self.PROCESS_ROLE_UNCLASSIFIED
+
+        indexes = [
+            index
+            for index, item in enumerate(
+                tokens[1:],
+                start=1,
+            )
+            if Path(item).name == "main.py"
+        ]
+
+        if len(indexes) != 1 or cwd is None:
+            return self.PROCESS_ROLE_UNCLASSIFIED
+
+        try:
+            cwd_path = Path(cwd).resolve()
+            script = Path(tokens[indexes[0]])
+            script_path = (
+                script.resolve()
+                if script.is_absolute()
+                else (cwd_path / script).resolve()
+            )
+        except OSError:
+            return self.PROCESS_ROLE_UNCLASSIFIED
+
+        if (
+            cwd_path != self.project_root
+            or script_path != self.main_path
+        ):
+            return self.PROCESS_ROLE_UNCLASSIFIED
+
+        if tuple(tokens) == self.expected_argv:
+            return self.PROCESS_ROLE_SERVICE_RUNTIME
+
+        return self.PROCESS_ROLE_CONTROL_PLANE
+
+    def _observed_main_processes(
+        self,
+    ) -> list[dict[str, Any]]:
+        processes = []
+        current_pid = os.getpid()
+        proc_root = Path("/proc")
+
+        if not proc_root.is_dir():
+            return processes
+
+        for entry in proc_root.iterdir():
+            if not entry.name.isdigit():
+                continue
+
+            pid = int(entry.name)
+
+            if pid == current_pid:
+                continue
+
+            argv = self._read_cmdline(pid)
+
+            if not argv:
+                continue
+
+            executable = Path(
+                argv[0]
+            ).name.lower()
+            has_main = any(
+                Path(item).name == "main.py"
+                for item in argv[1:]
+            )
+
+            if (
+                executable.startswith("python")
+                and has_main
+            ):
+                cwd = self._read_cwd(pid)
+                processes.append(
+                    {
+                        "pid": pid,
+                        "argv": argv,
+                        "start_ticks": (
+                            self._read_proc_start_ticks(
+                                pid
+                            )
+                        ),
+                        "cwd": cwd,
+                        "process_role": (
+                            self.classify_main_process_role(
+                                argv,
+                                cwd,
+                            )
+                        ),
+                    }
+                )
+
+        return processes
+
     def _strict_main_processes(
         self,
     ) -> list[dict[str, Any]]:
@@ -328,6 +438,20 @@ class ManualStartStopStatusRuntimeExecutor:
                 executable.startswith("python")
                 and has_main
             ):
+                cwd = self._read_cwd(pid)
+                process_role = (
+                    self.classify_main_process_role(
+                        argv,
+                        cwd,
+                    )
+                )
+
+                if (
+                    process_role
+                    == self.PROCESS_ROLE_CONTROL_PLANE
+                ):
+                    continue
+
                 processes.append(
                     {
                         "pid": pid,
@@ -337,7 +461,8 @@ class ManualStartStopStatusRuntimeExecutor:
                                 pid
                             )
                         ),
-                        "cwd": self._read_cwd(pid),
+                        "cwd": cwd,
+                        "process_role": process_role,
                     }
                 )
 
@@ -642,9 +767,21 @@ class ManualStartStopStatusRuntimeExecutor:
         listeners = self._listener_records(
             self.PORT
         )
-        strict_processes = (
-            self._strict_main_processes()
+        observed_processes = (
+            self._observed_main_processes()
         )
+        strict_processes = [
+            item
+            for item in observed_processes
+            if item["process_role"]
+            != self.PROCESS_ROLE_CONTROL_PLANE
+        ]
+        control_plane_processes = [
+            item
+            for item in observed_processes
+            if item["process_role"]
+            == self.PROCESS_ROLE_CONTROL_PLANE
+        ]
         record_matches = False
         identity: dict[str, Any] = {
             "reason": "no_record"
@@ -784,6 +921,19 @@ class ManualStartStopStatusRuntimeExecutor:
             "state_recovery_requires_explicit_control": True,
             "state_record": record,
             "process_identity": identity,
+            "native_process_role_classification": True,
+            "observed_main_process_count": len(
+                observed_processes
+            ),
+            "observed_main_processes": (
+                observed_processes
+            ),
+            "control_plane_process_count": len(
+                control_plane_processes
+            ),
+            "control_plane_processes": (
+                control_plane_processes
+            ),
             "strict_main_process_count": len(
                 strict_processes
             ),

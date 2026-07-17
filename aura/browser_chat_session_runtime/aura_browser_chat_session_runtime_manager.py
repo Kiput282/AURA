@@ -1002,6 +1002,24 @@ class AuraBrowserChatSessionRuntimeManager:
             "safety_boundary": boundary,
         }
 
+    def operational_model_handoff_contract(
+        self,
+    ) -> dict[str, Any]:
+        return {
+            "submit_local_model_message_available": True,
+            "atomic_user_model_pair_persistence": True,
+            "persist_only_after_success": True,
+            "idempotent_model_replay": True,
+            "local_model_response_kind": (
+                self.LOCAL_MODEL_RESPONSE_KIND
+            ),
+            "tool_execution": False,
+            "action_dispatch": False,
+            "command_execution": False,
+            "aura_memory_write": False,
+            "network_fallback": False,
+        }
+
     def status(self) -> dict[str, Any]:
         """Inspect storage without creating or changing it."""
 

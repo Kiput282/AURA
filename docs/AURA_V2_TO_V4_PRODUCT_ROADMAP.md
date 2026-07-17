@@ -1250,3 +1250,16 @@ Next boundary: `operational_browser_chat_model_handoff`
 
 The Sprint 261–270 daily product block targets `v1.3.0` and requires live
 end-to-end acceptance at Sprint 270 before the next block begins.
+
+## Canonical Checkpoint at v1.2.2
+
+Current completed sprint: Sprint 262 — Operational Browser Chat Model Handoff.
+
+Current version: `v1.2.2`
+
+Next sprint: Sprint 263
+
+Next boundary: `session_list_resume_rename_archive_restore`
+
+Sprint 262 finalization requires one live model handoff rehearsal followed by
+safe-idle restoration.

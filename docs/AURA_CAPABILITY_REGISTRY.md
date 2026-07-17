@@ -1103,3 +1103,14 @@ Post-Sprint 261 summary:
 - online capabilities: 140
 - permission-gated capabilities: unchanged at 21
 - runtime execution features: unchanged at 13
+
+## Sprint 262 Operational Browser Handoff Capability
+
+The `operational_browser_chat_model_handoff` capability is online as a
+permission-gated runtime execution feature introduced in v1.2.2.
+
+- total capabilities: 143
+- online capabilities: 141
+- review-only capabilities: 23
+- permission-gated capabilities: 22
+- runtime execution features: 14

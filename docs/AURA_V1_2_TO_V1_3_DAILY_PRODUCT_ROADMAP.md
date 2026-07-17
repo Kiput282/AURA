@@ -57,3 +57,12 @@ process, and no stale state record.
 - Operational voice is planned after `v1.3.0`.
 - Operational vision and ORION capture follow voice stabilization.
 - Avatar, livestream, and Game Companion features remain outside this block.
+
+## Sprint 262 Completion
+
+Sprint 262 — `operational_browser_chat_model_handoff` completes the canonical
+browser-to-`companion` model handoff while retaining explicit confirmation and
+the save-only fallback. Native process-role classification replaces the Sprint
+260 count allowance removed from active integration validation.
+
+Next: Sprint 263 — `session_list_resume_rename_archive_restore`.

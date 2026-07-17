@@ -6,8 +6,8 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.2.1`
-- Current status: Sprint 261 — Roadmap Reconfirmation after v1.2.0 completed
+- Current version: `v1.2.2`
+- Current status: Sprint 262 — Operational Browser Chat Model Handoff completed
 Current runtime state: Sprint 260 adds an explicit manual end-to-end coordinator across safe-idle service control, persistent chat, Ollama health, exact companion routing, lifecycle, bounded queueing, read-only budgets, successful response persistence, and stop-and-restore.
 
 ---
@@ -119,18 +119,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 262 — Operational Browser Chat Model Handoff
+- Next planned sprint: Sprint 263 — Session List, Resume, Rename, Archive, and Restore
 Current capability registry summary:
 
-- total capabilities: 142
-- online capabilities: 140
+- total capabilities: 143
+- online capabilities: 141
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 21
+- permission-gated capabilities: 22
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 13
+- runtime execution features: 14
 ---
 
 ## Safety State
@@ -6485,3 +6485,7 @@ Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`.
 ## v1.2.1 Daily Product Roadmap Reconfirmation
 
 Sprint 261 canonicalizes the `daily_chat_control_center_productization` block for Sprint 261–270, targeting `v1.3.0`. The browser Control Center and local `companion` route remain primary. Autostart stays disabled, memory remains review-first, and Sprint 270 must complete a live end-to-end acceptance test with failure/recovery verification and safe-idle restore.
+
+## v1.2.2 Operational Browser Chat Model Handoff
+
+Sprint 262 makes the explicitly confirmed localhost `companion` route the canonical operational browser-chat handoff. Native process-role classification separates service runtime, control-plane, and unclassified `main.py` processes. The Sprint 260 count allowance removed all normalization overrides. A live model handoff rehearsal is required during finalization.

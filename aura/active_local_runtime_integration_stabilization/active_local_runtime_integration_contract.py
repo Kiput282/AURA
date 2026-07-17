@@ -6,10 +6,8 @@ import hashlib
 import json
 import os
 import re
-import shutil
 import stat
 import subprocess
-import sys
 
 from aura.local_model_router_activation.local_model_router_activation_contract import (
     LocalModelRouterActivationContract,
@@ -21,6 +19,7 @@ from aura.model_loading_unloading_queue_resource_budgets.model_lifecycle_queue_b
     BoundedModelLifecycleQueue,
     ModelLifecycleQueueBudgetContract,
 )
+import sys
 
 
 class ActiveLocalRuntimeIntegrationError(RuntimeError):
@@ -41,18 +40,6 @@ class ActiveLocalRuntimeIntegrationContract:
     CHAT_TURN_TOKEN = "RUN_LOCAL_RUNTIME_CHAT_TURN"
     STOP_RESTORE_TOKEN = "STOP_AND_RESTORE_LOCAL_RUNTIME"
     ROUTE_TARGET = "companion"
-    CONTROL_PLANE_COMMANDS = frozenset(
-        {
-            "active-local-runtime-integration-status",
-            "active-local-runtime-integration-context",
-            "active-local-runtime-integration-check",
-            "active-local-runtime-integration-review",
-            "active-local-runtime-integration-preview",
-            "active-local-runtime-chat-turn-preview",
-            "active-local-runtime-stop-restore-preview",
-            "active-local-runtime-integration-isolated-rehearsal",
-        }
-    )
     MAX_USER_MESSAGE_CHARS = 4000
     MAX_RESPONSE_CHARS = 16000
 
@@ -115,219 +102,26 @@ class ActiveLocalRuntimeIntegrationContract:
             )
         return packet
 
-    def dependency_status(
-        self,
-    ) -> dict[str, Any]:
-        commands = {
-            "launcher": (
-                "aura-launcher-service-controls-check",
-                120,
-            ),
-            "service": (
-                "manual-start-stop-status-runtime-check",
-                144,
-            ),
-            "process": (
-                "process-ownership-service-state-persistence-check",
-                192,
-            ),
-            "chat": (
-                "persistent-local-chat-session-activation-check",
-                240,
-            ),
-            "health": (
-                "local-model-service-discovery-health-check",
-                264,
-            ),
-            "router": (
-                "local-model-router-activation-check",
-                288,
-            ),
-            "lifecycle": (
-                "model-lifecycle-queue-budget-check",
-                312,
-            ),
-        }
+    def dependency_status(self) -> dict[str, Any]:
+        commands = {'launcher': ('aura-launcher-service-controls-check', 120), 'service': ('manual-start-stop-status-runtime-check', 144), 'process': ('process-ownership-service-state-persistence-check', 192), 'chat': ('persistent-local-chat-session-activation-check', 240), 'health': ('local-model-service-discovery-health-check', 264), 'router': ('local-model-router-activation-check', 288), 'lifecycle': ('model-lifecycle-queue-budget-check', 312)}
         results = {}
-        allowance = (
-            self._control_plane_self_allowance()
-        )
-
-        for name, (
-            command,
-            expected,
-        ) in commands.items():
+        allowance = 0
+        for name, (command, expected) in commands.items():
             packet = self._command(command)
-            count = packet.get("assertion_count")
-            failed = packet.get(
-                "failed_assertion_count",
-                0,
-            )
-            raw_valid = (
-                count == expected
-                and failed == 0
-            )
-            result = {
-                "assertion_count": count,
-                "failed_assertion_count": failed,
-                "expected_assertion_count": expected,
-                "raw_valid": raw_valid,
-                "valid": raw_valid,
-                "control_plane_override_applied": False,
-            }
-
-            if (
-                name == "process"
-                and allowance == 1
-                and count == 192
-                and failed == 17
-            ):
-                status_packet = self._command(
-                    "manual-start-stop-status-runtime-status"
-                )
-                live = status_packet.get(
-                    "live_status",
-                    status_packet,
-                )
-
-                bounded_conflict = (
-                    isinstance(live, dict)
-                    and live.get("lifecycle_state")
-                    == "ownership_conflict"
-                    and live.get("listener_count") == 0
-                    and live.get(
-                        "strict_main_process_count"
-                    )
-                    == 1
-                    and live.get(
-                        "state_record_exists"
-                    )
-                    is False
-                )
-
+            count = packet.get('assertion_count')
+            failed = packet.get('failed_assertion_count', 0)
+            raw_valid = count == expected and failed == 0
+            result = {'assertion_count': count, 'failed_assertion_count': failed, 'expected_assertion_count': expected, 'raw_valid': raw_valid, 'valid': raw_valid, 'count_allowance_removed': False}
+            if name == 'process' and allowance == 1 and (count == 192) and (failed == 17):
+                status_packet = self._command('manual-start-stop-status-runtime-status')
+                live = status_packet.get('live_status', status_packet)
+                bounded_conflict = isinstance(live, dict) and live.get('lifecycle_state') == 'ownership_conflict' and (live.get('listener_count') == 0) and (live.get('strict_main_process_count') == 1) and (live.get('state_record_exists') is False)
                 if bounded_conflict:
-                    result.update(
-                        {
-                            "raw_failed_assertion_count": 17,
-                            "effective_failed_assertion_count": 0,
-                            "failed_assertion_count": 0,
-                            "valid": True,
-                            "control_plane_override_applied": True,
-                            "control_plane_allowance": 1,
-                            "raw_lifecycle_state": (
-                                "ownership_conflict"
-                            ),
-                            "effective_lifecycle_state": (
-                                "stopped"
-                            ),
-                        }
-                    )
-
+                    result.update({'raw_failed_assertion_count': 17, 'effective_failed_assertion_count': 0, 'failed_assertion_count': 0, 'valid': True, 'count_allowance_removed': True, 'control_plane_allowance': 1, 'raw_lifecycle_state': 'ownership_conflict', 'effective_lifecycle_state': 'stopped'})
             results[name] = result
-
         return results
 
 
-    def _control_plane_self_allowance(
-        self,
-    ) -> int:
-        if len(sys.argv) != 2:
-            return 0
-
-        command = sys.argv[1]
-
-        if command not in self.CONTROL_PLANE_COMMANDS:
-            return 0
-
-        script = Path(sys.argv[0])
-
-        try:
-            resolved_script = (
-                script.resolve()
-                if script.is_absolute()
-                else (
-                    Path.cwd()
-                    / script
-                ).resolve()
-            )
-        except OSError:
-            return 0
-
-        if resolved_script != (
-            self.project_root
-            / "main.py"
-        ):
-            return 0
-
-        try:
-            process_cmdline = (
-                Path("/proc/self/cmdline")
-                .read_bytes()
-                .split(b"\x00")
-            )
-        except OSError:
-            return 0
-
-        tokens = [
-            item.decode(
-                "utf-8",
-                errors="replace",
-            )
-            for item in process_cmdline
-            if item
-        ]
-
-        if len(tokens) != 3:
-            return 0
-
-        executable_token = tokens[0]
-
-        try:
-            if "/" in executable_token:
-                executable = Path(
-                    executable_token
-                ).resolve()
-            else:
-                located = shutil.which(
-                    executable_token
-                )
-
-                if located is None:
-                    return 0
-
-                executable = Path(
-                    located
-                ).resolve()
-
-            expected_executable = Path(
-                sys.executable
-            ).resolve()
-            command_script = Path(
-                tokens[1]
-            )
-            resolved_command_script = (
-                command_script.resolve()
-                if command_script.is_absolute()
-                else (
-                    Path.cwd()
-                    / command_script
-                ).resolve()
-            )
-        except OSError:
-            return 0
-
-        if (
-            executable != expected_executable
-            or resolved_command_script
-            != (
-                self.project_root
-                / "main.py"
-            )
-            or tokens[2] != command
-        ):
-            return 0
-
-        return 1
 
 
     def service_safe_idle(
@@ -343,67 +137,47 @@ class ActiveLocalRuntimeIntegrationContract:
                 "Runtime status payload is invalid."
             )
 
-        raw_state = live.get(
-            "lifecycle_state"
-        )
-        observed_count = live.get(
+        state = live.get("lifecycle_state")
+        strict_count = live.get(
             "strict_main_process_count"
         )
-        allowance = (
-            self._control_plane_self_allowance()
-        )
-
-        if (
-            isinstance(observed_count, int)
-            and not isinstance(
-                observed_count,
-                bool,
-            )
-            and observed_count >= allowance
-        ):
-            effective_count = (
-                observed_count
-                - allowance
-            )
-        else:
-            effective_count = observed_count
-
-        bounded_conflict = (
-            allowance == 1
-            and raw_state == "ownership_conflict"
-            and live.get("listener_count") == 0
-            and observed_count == 1
-            and effective_count == 0
-            and live.get(
-                "state_record_exists"
-            )
-            is False
-        )
-        effective_state = (
-            "stopped"
-            if bounded_conflict
-            else raw_state
+        native_roles = live.get(
+            "native_process_role_classification"
         )
         safe_idle = (
-            effective_state == "stopped"
+            state == "stopped"
             and live.get("listener_count") == 0
-            and effective_count == 0
+            and strict_count == 0
             and live.get(
                 "state_record_exists"
             )
             is False
+            and native_roles is True
         )
 
         return {
-            "lifecycle_state": effective_state,
-            "raw_lifecycle_state": raw_state,
+            "lifecycle_state": state,
+            "raw_lifecycle_state": state,
             "listener_count": live.get(
                 "listener_count"
             ),
-            "strict_main_process_count": observed_count,
-            "control_plane_main_process_allowance": allowance,
-            "effective_strict_main_process_count": effective_count,
-            "control_plane_conflict_normalized": bounded_conflict,
+            "strict_main_process_count": (
+                strict_count
+            ),
+            "observed_main_process_count": (
+                live.get(
+                    "observed_main_process_count"
+                )
+            ),
+            "control_plane_process_count": (
+                live.get(
+                    "control_plane_process_count"
+                )
+            ),
+            "native_process_role_classification": (
+                native_roles
+            ),
+            "count_allowance_removed": True,
             "state_record_exists": live.get(
                 "state_record_exists"
             ),

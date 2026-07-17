@@ -52,3 +52,10 @@ Sprint 270 must:
 
 This Sprint 261 boundary is read-only. It does not activate runtime, open a
 network connection, mutate systemd, enable autostart, or write user memory.
+
+## Sprint 262 Result
+
+The first productization sprint after roadmap reconfirmation is complete.
+Browser chat uses the explicitly confirmed `companion` route as its canonical
+operational handoff, and native process-role classification removes the prior
+count allowance.
