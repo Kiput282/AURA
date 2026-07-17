@@ -229,6 +229,14 @@ class AuraBrowserChatWebSurfaceManager:
             "model_request_confirmation_ui": True,
             "model_probe_confirmation_ui": True,
             "idempotent_retry_ui": True,
+            "session_list_filter_ui": True,
+            "session_resume_ui": True,
+            "session_rename_ui": True,
+            "session_archive_ui": True,
+            "session_restore_ui": True,
+            "session_permanent_delete_ui": False,
+            "cross_session_history_merge_ui": False,
+            "lifecycle_extension_sprint": 263,
             "placeholder_route_available": True,
             "response_kind_visibility": True,
             "browser_auto_launch": False,
@@ -366,6 +374,17 @@ class AuraBrowserChatWebSurfaceManager:
             "session-title",
             "create-session",
             "refresh-sessions",
+            "session-filter-active",
+            "session-filter-archived",
+            "session-state-label",
+            "resume-session",
+            "rename-session",
+            "archive-session",
+            "restore-session",
+            "rename-dialog",
+            "rename-title",
+            "confirm-rename",
+            "cancel-rename",
             "chat-transcript",
             "message-input",
             "message-count",
@@ -432,8 +451,8 @@ class AuraBrowserChatWebSurfaceManager:
             inspector.event_handlers == []
         )
         assertions["html_forms_zero"] = inspector.forms == 0
-        assertions["html_dialog_two"] = (
-            len(inspector.dialogs) == 2
+        assertions["html_dialog_three"] = (
+            len(inspector.dialogs) == 3
         )
         assertions["html_fieldset_one"] = (
             len(inspector.fieldsets) == 1
@@ -446,7 +465,15 @@ class AuraBrowserChatWebSurfaceManager:
             and "https://" not in html
         )
         assertions["html_sprint_188"] = (
-            "Sprint 188" in html
+            "Sprint 188" not in html
+            or "Sprint 263 lifecycle extension" in html
+        )
+        assertions["html_sprint_263_lifecycle"] = (
+            "Sprint 263 lifecycle extension" in html
+        )
+        assertions["html_no_delete_control"] = (
+            "delete-session" not in html
+            and "Delete session" not in html
         )
         assertions["html_interactive_title"] = (
             "AURA Interactive Chat" in html
@@ -509,6 +536,18 @@ class AuraBrowserChatWebSurfaceManager:
             'cache: "no-store"',
             "Promise.allSettled",
             "refreshSessions",
+            "sessionFilter",
+            "?state=",
+            "resumeSession",
+            "renameSession",
+            "archiveSession",
+            "restoreSession",
+            "/resume",
+            "/rename",
+            "/archive",
+            "/restore",
+            "Session archived without deletion",
+            "cross_session_history_merged",
             "refreshModelStatus",
             "renderModelStatus",
             "requestProbe",
@@ -570,6 +609,14 @@ class AuraBrowserChatWebSurfaceManager:
             "/api/tools" not in javascript
             and "/api/actions" not in javascript
             and "/api/commands" not in javascript
+        )
+        assertions["js_no_permanent_delete"] = (
+            "/delete" not in javascript
+            and "deleteSession" not in javascript
+        )
+        assertions["js_no_cross_session_merge"] = (
+            "mergeSessionHistory" not in javascript
+            and "crossSessionHistory" not in javascript
         )
         assertions["js_no_stream"] = (
             "ReadableStream" not in javascript
@@ -696,6 +743,14 @@ class AuraBrowserChatWebSurfaceManager:
             "model_request_confirmation_ui_verified": True,
             "model_probe_confirmation_ui_verified": True,
             "idempotent_retry_ui_verified": True,
+            "session_list_filter_ui_verified": True,
+            "session_resume_ui_verified": True,
+            "session_rename_ui_verified": True,
+            "session_archive_ui_verified": True,
+            "session_restore_ui_verified": True,
+            "session_permanent_delete_ui": False,
+            "cross_session_history_merge_ui": False,
+            "lifecycle_extension_sprint": 263,
             "placeholder_route_ui_verified": True,
             "response_kind_visibility_verified": True,
             "safe_dom_rendering_verified": True,

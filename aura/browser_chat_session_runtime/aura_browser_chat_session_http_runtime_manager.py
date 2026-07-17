@@ -8,7 +8,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Type
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 from http.server import BaseHTTPRequestHandler
 
 from aura.control_center_web_shell_runtime import (
@@ -81,6 +81,10 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         "GET /api/chat/sessions",
         "POST /api/chat/sessions",
         "GET /api/chat/sessions/{session_id}",
+        "POST /api/chat/sessions/{session_id}/resume",
+        "POST /api/chat/sessions/{session_id}/rename",
+        "POST /api/chat/sessions/{session_id}/archive",
+        "POST /api/chat/sessions/{session_id}/restore",
         "POST /api/chat/sessions/{session_id}/messages",
         "POST /api/chat/sessions/{session_id}/model-messages",
         "POST /api/chat/sessions/{session_id}/clear",
@@ -105,13 +109,25 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         len(VISIBILITY_ASSET_ROUTES)
         + len(VISIBILITY_ROUTE_CONTRACTS)
     )
-    TOTAL_ROUTE_CONTRACT_COUNT = 37
+    TOTAL_ROUTE_CONTRACT_COUNT = 41
     MAX_REQUEST_BODY_BYTES = 65536
     LOCAL_INTENT_HEADER = "X-AURA-Local-Intent"
     LOCAL_INTENT_VALUE = "browser-chat-session"
 
     _SESSION_DETAIL_RE = re.compile(
         r"^/api/chat/sessions/(chat_[0-9a-f]{32})$"
+    )
+    _SESSION_RESUME_RE = re.compile(
+        r"^/api/chat/sessions/(chat_[0-9a-f]{32})/resume$"
+    )
+    _SESSION_RENAME_RE = re.compile(
+        r"^/api/chat/sessions/(chat_[0-9a-f]{32})/rename$"
+    )
+    _SESSION_ARCHIVE_RE = re.compile(
+        r"^/api/chat/sessions/(chat_[0-9a-f]{32})/archive$"
+    )
+    _SESSION_RESTORE_RE = re.compile(
+        r"^/api/chat/sessions/(chat_[0-9a-f]{32})/restore$"
     )
     _SESSION_MESSAGE_RE = re.compile(
         r"^/api/chat/sessions/(chat_[0-9a-f]{32})/messages$"
@@ -260,6 +276,14 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             "explicit_model_request_confirmation": True,
             "explicit_model_probe_confirmation": True,
             "bounded_session_mutation": True,
+            "session_list_filter_runtime": True,
+            "session_resume_runtime": True,
+            "session_rename_runtime": True,
+            "session_archive_runtime": True,
+            "session_restore_runtime": True,
+            "session_permanent_delete_runtime": False,
+            "cross_session_history_merge": False,
+            "session_id_immutable": True,
             "json_content_type_required": True,
             "local_intent_header_required": True,
             "same_origin_required": True,
@@ -426,12 +450,28 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     }
 
                 if path == "/api/chat/sessions":
+                    query = parse_qs(
+                        urlsplit(self.path).query,
+                        keep_blank_values=True,
+                    )
+                    unknown = set(query) - {"state"}
+                    if unknown:
+                        raise BrowserChatValidationError(
+                            "Unknown session-list query field."
+                        )
+                    state_values = query.get("state", ["active"])
+                    if len(state_values) != 1:
+                        raise BrowserChatValidationError(
+                            "Session-list state must appear once."
+                        )
+                    session_state = state_values[0] or "active"
                     sessions = (
                         manager.chat_session_manager
-                        .list_sessions()
+                        .list_sessions(state=session_state)
                     )
                     return 200, {
                         "status": "ok",
+                        "state": session_state,
                         "session_count": len(sessions),
                         "sessions": sessions,
                         "model_bridge_active": False,
@@ -585,7 +625,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "control_center_web_shell": True,
                             "control_center_shell_assets": 3,
                             "browser_chat_session_runtime": True,
-                            "browser_chat_http_routes": 7,
+                            "browser_chat_http_routes": 11,
                             "browser_chat_assets": 3,
                             "local_model_bridge_http_routes": 2,
                             "permission_audit_recovery_visibility": True,
@@ -596,7 +636,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "permission_mutation_runtime": False,
                             "audit_writer_runtime": False,
                             "automatic_recovery_runtime": False,
-                            "total_route_contracts": 37,
+                            "total_route_contracts": 41,
                             "model_bridge_configured": (
                                 manager.local_model_chat_manager
                                 .status()["configured"]
@@ -871,6 +911,26 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 create_route = (
                     path == "/api/chat/sessions"
                 )
+                resume_match = (
+                    manager._SESSION_RESUME_RE.fullmatch(
+                        path
+                    )
+                )
+                rename_match = (
+                    manager._SESSION_RENAME_RE.fullmatch(
+                        path
+                    )
+                )
+                archive_match = (
+                    manager._SESSION_ARCHIVE_RE.fullmatch(
+                        path
+                    )
+                )
+                restore_match = (
+                    manager._SESSION_RESTORE_RE.fullmatch(
+                        path
+                    )
+                )
                 message_match = (
                     manager._SESSION_MESSAGE_RE.fullmatch(
                         path
@@ -891,6 +951,10 @@ class AuraBrowserChatSessionHttpRuntimeManager(
 
                 if not (
                     create_route
+                    or resume_match is not None
+                    or rename_match is not None
+                    or archive_match is not None
+                    or restore_match is not None
                     or message_match is not None
                     or clear_match is not None
                     or model_message_match is not None
@@ -920,6 +984,74 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             )
                         )
                         status = 201
+                    elif resume_match is not None:
+                        if set(payload) != {"expected_revision"}:
+                            raise BrowserChatValidationError(
+                                "Resume-session requires only "
+                                "expected_revision."
+                            )
+                        result = (
+                            manager.chat_session_manager
+                            .resume_session(
+                                resume_match.group(1),
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                            )
+                        )
+                        status = 200
+                    elif rename_match is not None:
+                        if set(payload) != {
+                            "title",
+                            "expected_revision",
+                        }:
+                            raise BrowserChatValidationError(
+                                "Rename-session fields must be title "
+                                "and expected_revision."
+                            )
+                        result = (
+                            manager.chat_session_manager
+                            .rename_session(
+                                rename_match.group(1),
+                                title=payload["title"],
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                            )
+                        )
+                        status = 200
+                    elif archive_match is not None:
+                        if set(payload) != {"expected_revision"}:
+                            raise BrowserChatValidationError(
+                                "Archive-session requires only "
+                                "expected_revision."
+                            )
+                        result = (
+                            manager.chat_session_manager
+                            .archive_session(
+                                archive_match.group(1),
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                            )
+                        )
+                        status = 200
+                    elif restore_match is not None:
+                        if set(payload) != {"expected_revision"}:
+                            raise BrowserChatValidationError(
+                                "Restore-session requires only "
+                                "expected_revision."
+                            )
+                        result = (
+                            manager.chat_session_manager
+                            .restore_session(
+                                restore_match.group(1),
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                            )
+                        )
+                        status = 200
                     elif model_probe_route:
                         if set(payload) != {
                             "confirm_local_connection"

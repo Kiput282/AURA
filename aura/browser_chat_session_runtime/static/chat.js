@@ -8,6 +8,7 @@ const MAX_MESSAGE_CHARACTERS = 8192;
 const state = {
   sessions: [],
   activeSession: null,
+  sessionFilter: "active",
   modelStatus: null,
   busy: false,
   pendingSubmission: null,
@@ -27,9 +28,7 @@ function setStatus(label, kind = "idle") {
 }
 
 function selectedMode() {
-  return byId("mode-local-model").checked
-    ? "local-model"
-    : "save-only";
+  return byId("mode-local-model").checked ? "local-model" : "save-only";
 }
 
 function modelIsActive() {
@@ -37,6 +36,13 @@ function modelIsActive() {
     state.modelStatus
     && state.modelStatus.active === true
     && state.modelStatus.degraded !== true,
+  );
+}
+
+function selectedSessionIsActive() {
+  return Boolean(
+    state.activeSession
+    && state.activeSession.status === "active",
   );
 }
 
@@ -53,7 +59,6 @@ function updatePendingStatus() {
     node.dataset.state = "idle";
     return;
   }
-
   node.textContent =
     state.pendingSubmission.mode === "local-model"
       ? "Retry preserves model request ID"
@@ -66,68 +71,100 @@ function clearPendingSubmission() {
   updatePendingStatus();
 }
 
+function syncSessionFilterControls() {
+  const active = state.sessionFilter === "active";
+  byId("session-filter-active").setAttribute(
+    "aria-pressed",
+    String(active),
+  );
+  byId("session-filter-archived").setAttribute(
+    "aria-pressed",
+    String(!active),
+  );
+  byId("session-state-label").textContent =
+    active
+      ? "Showing active sessions."
+      : "Showing archived sessions. Restore returns a session to the active list.";
+}
+
 function syncComposerControls() {
   const hasSession = Boolean(state.activeSession);
+  const activeSession = selectedSessionIsActive();
+  const archivedSession = hasSession && !activeSession;
   const activeModel = modelIsActive();
   const useModel = selectedMode() === "local-model";
 
   byId("create-session").disabled = state.busy;
   byId("refresh-sessions").disabled = state.busy;
+  byId("session-filter-active").disabled = state.busy;
+  byId("session-filter-archived").disabled = state.busy;
   byId("refresh-model-status").disabled = state.busy;
   byId("probe-model").disabled =
     state.busy
     || !Boolean(state.modelStatus?.enabled)
     || Boolean(state.modelStatus?.degraded);
 
+  byId("resume-session").disabled =
+    state.busy || !hasSession || !activeSession;
+  byId("rename-session").disabled = state.busy || !hasSession;
+  byId("archive-session").disabled =
+    state.busy || !hasSession || !activeSession;
+  byId("restore-session").disabled =
+    state.busy || !hasSession || !archivedSession;
   byId("clear-session").disabled =
-    state.busy || !hasSession;
-  byId("message-input").disabled =
-    state.busy || !hasSession;
-  byId("mode-save-only").disabled =
-    state.busy || !hasSession;
-  byId("mode-local-model").disabled =
-    state.busy || !hasSession || !activeModel;
-  byId("confirm-model-request").disabled =
-    state.busy || !hasSession || !activeModel || !useModel;
+    state.busy || !hasSession || !activeSession;
 
-  if (!activeModel && useModel) {
+  byId("message-input").disabled =
+    state.busy || !hasSession || !activeSession;
+  byId("mode-save-only").disabled =
+    state.busy || !hasSession || !activeSession;
+  byId("mode-local-model").disabled =
+    state.busy || !hasSession || !activeSession || !activeModel;
+  byId("confirm-model-request").disabled =
+    state.busy
+    || !hasSession
+    || !activeSession
+    || !activeModel
+    || !useModel;
+
+  if ((!activeModel || !activeSession) && useModel) {
     byId("mode-save-only").checked = true;
     byId("confirm-model-request").checked = false;
   }
 
-  const effectiveModelMode =
-    selectedMode() === "local-model";
+  const effectiveModelMode = selectedMode() === "local-model";
   const confirmationReady =
-    !effectiveModelMode
-    || byId("confirm-model-request").checked;
-
+    !effectiveModelMode || byId("confirm-model-request").checked;
   byId("send-message").disabled =
     state.busy
     || !hasSession
+    || !activeSession
     || !byId("message-input").value.trim()
     || !confirmationReady;
-
   byId("send-message").textContent =
-    effectiveModelMode
-      ? "Send to local model"
-      : "Save without model";
+    effectiveModelMode ? "Send to local model" : "Save without model";
 
   setStatus(
     state.busy
       ? "Working"
-      : hasSession
-      ? "Ready"
-      : "Idle",
+      : archivedSession
+        ? "Archived"
+        : hasSession
+          ? "Ready"
+          : "Idle",
     state.busy
       ? "busy"
-      : hasSession
-      ? "ready"
-      : "idle",
+      : archivedSession
+        ? "idle"
+        : hasSession
+          ? "ready"
+          : "idle",
   );
 }
 
 function setBusy(value) {
   state.busy = value;
+  syncSessionFilterControls();
   syncComposerControls();
 }
 
@@ -137,30 +174,21 @@ async function apiRequest(path, options = {}) {
     Accept: "application/json",
     ...(options.headers || {}),
   };
-
   if (method !== "GET" && method !== "HEAD") {
     headers["Content-Type"] = "application/json";
     headers["X-AURA-Local-Intent"] = LOCAL_INTENT;
   }
-
   const response = await fetch(path, {
     method,
     headers,
-    body: options.body
-      ? JSON.stringify(options.body)
-      : undefined,
+    body: options.body ? JSON.stringify(options.body) : undefined,
     cache: "no-store",
     credentials: "same-origin",
   });
-
-  const contentType =
-    response.headers.get("content-type") || "";
+  const contentType = response.headers.get("content-type") || "";
   const payload = contentType.includes("application/json")
     ? await response.json()
-    : {
-        detail: await response.text(),
-      };
-
+    : { detail: await response.text() };
   if (!response.ok) {
     const error = new Error(
       payload.detail
@@ -172,7 +200,6 @@ async function apiRequest(path, options = {}) {
     error.payload = payload;
     throw error;
   }
-
   return payload;
 }
 
@@ -181,25 +208,27 @@ function sessionButton(session) {
   button.type = "button";
   button.className = "session-item";
   button.dataset.sessionId = session.session_id;
+  button.dataset.sessionState = session.status;
   button.setAttribute(
     "aria-current",
     String(
-      state.activeSession?.session_id
-      === session.session_id,
+      state.activeSession?.session_id === session.session_id,
     ),
   );
 
   const title = document.createElement("strong");
   title.textContent = session.title;
-
   const detail = document.createElement("small");
   detail.textContent =
-    `${session.message_count} messages · `
-    + `revision ${session.revision}`;
+    `${session.message_count} messages · revision ${session.revision} · ${session.status}`;
 
   button.append(title, detail);
   button.addEventListener("click", () => {
-    loadSession(session.session_id);
+    if (session.status === "active") {
+      resumeSession(session.session_id, session.revision);
+    } else {
+      loadSession(session.session_id);
+    }
   });
   return button;
 }
@@ -207,15 +236,16 @@ function sessionButton(session) {
 function renderSessionList() {
   const list = byId("session-list");
   list.replaceChildren();
-
   if (state.sessions.length === 0) {
     const empty = document.createElement("p");
     empty.className = "empty-state";
-    empty.textContent = "No local chat sessions yet.";
+    empty.textContent =
+      state.sessionFilter === "active"
+        ? "No active local chat sessions."
+        : "No archived local chat sessions.";
     list.append(empty);
     return;
   }
-
   state.sessions.forEach((session) => {
     list.append(sessionButton(session));
   });
@@ -261,13 +291,16 @@ function renderTranscript() {
   byId("session-meta").textContent =
     `${state.activeSession.title} · `
     + `${state.activeSession.message_count} messages · `
-    + `revision ${state.activeSession.revision}`;
+    + `revision ${state.activeSession.revision} · `
+    + `${state.activeSession.status}`;
 
   if (state.activeSession.messages.length === 0) {
     const empty = document.createElement("p");
     empty.className = "empty-state";
     empty.textContent =
-      "This local session has no messages.";
+      state.activeSession.status === "archived"
+        ? "This archived session has no messages."
+        : "This local session has no messages.";
     transcript.append(empty);
     return;
   }
@@ -282,27 +315,21 @@ function renderTranscript() {
     const header = document.createElement("header");
     const role = document.createElement("strong");
     role.textContent = messageRoleLabel(message);
-
     const metadata = document.createElement("span");
     metadata.className = "message-metadata";
-
     const kind = document.createElement("span");
     kind.className = "message-kind";
     kind.textContent = messageKindLabel(message);
-
     const sequence = document.createElement("span");
     sequence.textContent = `#${message.sequence}`;
-
     metadata.append(kind, sequence);
     header.append(role, metadata);
 
     const content = document.createElement("p");
     content.textContent = message.content;
-
     article.append(header, content);
     transcript.append(article);
   });
-
   transcript.scrollTop = transcript.scrollHeight;
 }
 
@@ -338,7 +365,7 @@ function renderModelStatus() {
     badge.textContent = "Active";
     badge.dataset.state = "ready";
     detail.textContent =
-      "Ready for explicitly confirmed text requests. "
+      "Ready for explicitly confirmed text requests.\n"
       + "No tools, actions, streaming, or fallback are connected.";
   } else if (state.modelStatus.configured) {
     badge.textContent = "Disabled";
@@ -358,35 +385,25 @@ function renderModelStatus() {
     byId("confirm-model-request").checked = false;
     clearPendingSubmission();
   }
-
   syncComposerControls();
 }
 
 function clientMessageId() {
   if (globalThis.crypto?.randomUUID) {
-    return `client_${
-      crypto.randomUUID().replaceAll("-", "")
-    }`;
+    return `client_${crypto.randomUUID().replaceAll("-", "")}`;
   }
-  return `client_${Date.now()}_${
-    Math.random().toString(36).slice(2)
-  }`;
+  return `client_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 }
 
 function modelRequestId() {
   if (globalThis.crypto?.randomUUID) {
-    return `modelreq_${
-      crypto.randomUUID().replaceAll("-", "")
-    }`;
+    return `modelreq_${crypto.randomUUID().replaceAll("-", "")}`;
   }
-  return `modelreq_${Date.now()}_${
-    Math.random().toString(36).slice(2)
-  }`;
+  return `modelreq_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 }
 
 function submissionFor(content, mode) {
   const sessionId = state.activeSession.session_id;
-
   if (
     state.pendingSubmission
     && state.pendingSubmission.sessionId === sessionId
@@ -404,9 +421,7 @@ function submissionFor(content, mode) {
     mode,
     clientMessageId: clientMessageId(),
     requestId:
-      mode === "local-model"
-        ? modelRequestId()
-        : null,
+      mode === "local-model" ? modelRequestId() : null,
     expectedRevision: state.activeSession.revision,
   };
   updatePendingStatus();
@@ -416,16 +431,17 @@ function submissionFor(content, mode) {
 async function refreshSessions({
   preserveActive = true,
 } = {}) {
-  const payload = await apiRequest(`${API_BASE}/sessions`);
+  const payload = await apiRequest(
+    `${API_BASE}/sessions?state=${encodeURIComponent(state.sessionFilter)}`,
+  );
   state.sessions = payload.sessions;
 
   if (preserveActive && state.activeSession) {
-    const stillExists = state.sessions.some(
+    const stillVisible = state.sessions.some(
       (session) =>
-        session.session_id
-        === state.activeSession.session_id,
+        session.session_id === state.activeSession.session_id,
     );
-    if (!stillExists) {
+    if (!stillVisible) {
       state.activeSession = null;
       clearPendingSubmission();
     }
@@ -433,6 +449,7 @@ async function refreshSessions({
 
   renderSessionList();
   renderTranscript();
+  syncSessionFilterControls();
   syncComposerControls();
 }
 
@@ -453,7 +470,6 @@ async function createSession() {
   if (state.busy) {
     return;
   }
-
   setBusy(true);
   try {
     const title = byId("session-title").value.trim();
@@ -461,11 +477,10 @@ async function createSession() {
       `${API_BASE}/sessions`,
       {
         method: "POST",
-        body: {
-          title: title || null,
-        },
+        body: { title: title || null },
       },
     );
+    state.sessionFilter = "active";
     state.activeSession = payload.session;
     byId("session-title").value = "";
     clearPendingSubmission();
@@ -485,20 +500,15 @@ async function loadSession(
   if (state.busy && !preservePending) {
     return;
   }
-
   const previousSessionId =
     state.activeSession?.session_id || null;
   if (!preservePending && previousSessionId !== sessionId) {
     clearPendingSubmission();
   }
-
   const payload = await apiRequest(
-    `${API_BASE}/sessions/${
-      encodeURIComponent(sessionId)
-    }`,
+    `${API_BASE}/sessions/${encodeURIComponent(sessionId)}`,
   );
   state.activeSession = payload.session;
-
   if (
     preservePending
     && state.pendingSubmission
@@ -508,10 +518,165 @@ async function loadSession(
       state.activeSession.revision;
     updatePendingStatus();
   }
-
   renderSessionList();
   renderTranscript();
   syncComposerControls();
+}
+
+async function resumeSession(
+  sessionId = state.activeSession?.session_id,
+  expectedRevision = state.activeSession?.revision,
+) {
+  if (!sessionId || state.busy) {
+    return;
+  }
+  setBusy(true);
+  try {
+    const payload = await apiRequest(
+      `${API_BASE}/sessions/${encodeURIComponent(sessionId)}/resume`,
+      {
+        method: "POST",
+        body: { expected_revision: expectedRevision },
+      },
+    );
+    if (payload.cross_session_history_merged !== false) {
+      throw new Error(
+        "Resume response violated cross-session history isolation.",
+      );
+    }
+    state.sessionFilter = "active";
+    state.activeSession = payload.session;
+    clearPendingSubmission();
+    await refreshSessions();
+    setStatus("Session resumed", "ready");
+  } catch (error) {
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+function requestRename() {
+  if (!state.activeSession || state.busy) {
+    return;
+  }
+  byId("rename-title").value = state.activeSession.title;
+  byId("rename-dialog").showModal();
+  byId("rename-title").focus();
+}
+
+async function renameSession() {
+  if (!state.activeSession || state.busy) {
+    return;
+  }
+  const title = byId("rename-title").value.trim();
+  if (!title) {
+    setStatus("Session title is empty", "error");
+    return;
+  }
+  const sessionId = state.activeSession.session_id;
+  const expectedRevision = state.activeSession.revision;
+  byId("rename-dialog").close();
+  setBusy(true);
+  try {
+    const payload = await apiRequest(
+      `${API_BASE}/sessions/${encodeURIComponent(sessionId)}/rename`,
+      {
+        method: "POST",
+        body: {
+          title,
+          expected_revision: expectedRevision,
+        },
+      },
+    );
+    state.activeSession = payload.session;
+    clearPendingSubmission();
+    await refreshSessions();
+    renderTranscript();
+    setStatus("Session renamed", "ready");
+  } catch (error) {
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function archiveSession() {
+  if (!selectedSessionIsActive() || state.busy) {
+    return;
+  }
+  const sessionId = state.activeSession.session_id;
+  const expectedRevision = state.activeSession.revision;
+  setBusy(true);
+  try {
+    await apiRequest(
+      `${API_BASE}/sessions/${encodeURIComponent(sessionId)}/archive`,
+      {
+        method: "POST",
+        body: { expected_revision: expectedRevision },
+      },
+    );
+    state.activeSession = null;
+    clearPendingSubmission();
+    await refreshSessions({ preserveActive: false });
+    setStatus("Session archived without deletion", "ready");
+  } catch (error) {
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function restoreSession() {
+  if (
+    !state.activeSession
+    || state.activeSession.status !== "archived"
+    || state.busy
+  ) {
+    return;
+  }
+  const sessionId = state.activeSession.session_id;
+  const expectedRevision = state.activeSession.revision;
+  setBusy(true);
+  try {
+    const payload = await apiRequest(
+      `${API_BASE}/sessions/${encodeURIComponent(sessionId)}/restore`,
+      {
+        method: "POST",
+        body: { expected_revision: expectedRevision },
+      },
+    );
+    state.sessionFilter = "active";
+    state.activeSession = payload.session;
+    clearPendingSubmission();
+    await refreshSessions();
+    renderTranscript();
+    setStatus("Session restored", "ready");
+  } catch (error) {
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function setSessionFilter(nextFilter) {
+  if (
+    state.busy
+    || !["active", "archived"].includes(nextFilter)
+  ) {
+    return;
+  }
+  state.sessionFilter = nextFilter;
+  state.activeSession = null;
+  clearPendingSubmission();
+  setBusy(true);
+  try {
+    await refreshSessions({ preserveActive: false });
+  } catch (error) {
+    setStatus(error.message, "error");
+  } finally {
+    setBusy(false);
+  }
 }
 
 function requestProbe() {
@@ -529,19 +694,15 @@ async function confirmProbe() {
   if (state.busy) {
     return;
   }
-
   const dialog = byId("probe-dialog");
   dialog.close();
   setBusy(true);
-
   try {
     const payload = await apiRequest(
       `${MODEL_API_BASE}/probe`,
       {
         method: "POST",
-        body: {
-          confirm_local_connection: true,
-        },
+        body: { confirm_local_connection: true },
       },
     );
     setStatus(
@@ -559,10 +720,13 @@ async function confirmProbe() {
 }
 
 async function submitMessage() {
-  if (state.busy || !state.activeSession) {
+  if (
+    state.busy
+    || !state.activeSession
+    || !selectedSessionIsActive()
+  ) {
     return;
   }
-
   const input = byId("message-input");
   const content = input.value.trim();
   if (!content) {
@@ -571,10 +735,7 @@ async function submitMessage() {
   }
 
   const mode = selectedMode();
-  if (
-    mode === "local-model"
-    && !modelIsActive()
-  ) {
+  if (mode === "local-model" && !modelIsActive()) {
     setStatus(
       "The local model bridge is not active.",
       "error",
@@ -594,11 +755,9 @@ async function submitMessage() {
 
   const pending = submissionFor(content, mode);
   setBusy(true);
-
   try {
-    const encodedSessionId = encodeURIComponent(
-      pending.sessionId,
-    );
+    const encodedSessionId =
+      encodeURIComponent(pending.sessionId);
     const useModel = mode === "local-model";
     const endpoint = useModel
       ? `${API_BASE}/sessions/${encodedSessionId}/model-messages`
@@ -621,42 +780,33 @@ async function submitMessage() {
       method: "POST",
       body,
     });
-
     input.value = "";
     byId("confirm-model-request").checked = false;
     clearPendingSubmission();
-
     await loadSession(pending.sessionId, {
       preservePending: false,
     });
     await refreshSessions();
-
     setStatus(
       result.idempotent_replay
         ? "Recovered saved response"
         : useModel
-        ? "Model response saved"
-        : "Message saved locally",
+          ? "Model response saved"
+          : "Message saved locally",
       "ready",
     );
   } catch (error) {
-    if (
-      error.status === 409
-      && state.activeSession
-    ) {
+    if (error.status === 409 && state.activeSession) {
       try {
         await loadSession(
           state.activeSession.session_id,
-          {
-            preservePending: true,
-          },
+          { preservePending: true },
         );
       } catch (reloadError) {
         setStatus(reloadError.message, "error");
         return;
       }
     }
-
     setStatus(
       `${error.message} · retry keeps the same request ID`,
       "error",
@@ -668,49 +818,45 @@ async function submitMessage() {
 }
 
 function requestClear() {
-  if (!state.activeSession || state.busy) {
+  if (
+    !state.activeSession
+    || !selectedSessionIsActive()
+    || state.busy
+  ) {
     return;
   }
-
-  const phrase =
-    `CLEAR ${state.activeSession.session_id}`;
+  const phrase = `CLEAR ${state.activeSession.session_id}`;
   byId("clear-phrase").textContent = phrase;
   byId("clear-confirmation").value = "";
   byId("clear-dialog").showModal();
 }
 
 async function confirmClear() {
-  if (!state.activeSession || state.busy) {
+  if (
+    !state.activeSession
+    || !selectedSessionIsActive()
+    || state.busy
+  ) {
     return;
   }
-
   const dialog = byId("clear-dialog");
-  const confirmation =
-    byId("clear-confirmation").value;
+  const confirmation = byId("clear-confirmation").value;
   setBusy(true);
-
   try {
     await apiRequest(
       `${API_BASE}/sessions/`
-      + `${
-        encodeURIComponent(
-          state.activeSession.session_id,
-        )
-      }/clear`,
+      + `${encodeURIComponent(state.activeSession.session_id)}/clear`,
       {
         method: "POST",
         body: {
           confirmation,
-          expected_revision:
-            state.activeSession.revision,
+          expected_revision: state.activeSession.revision,
         },
       },
     );
     dialog.close();
     clearPendingSubmission();
-    await loadSession(
-      state.activeSession.session_id,
-    );
+    await loadSession(state.activeSession.session_id);
     await refreshSessions();
   } catch (error) {
     setStatus(error.message, "error");
@@ -721,15 +867,13 @@ async function confirmClear() {
 
 function handleComposerChange() {
   updateMessageCount();
-
   if (
     state.pendingSubmission
     && state.pendingSubmission.content
-    !== byId("message-input").value.trim()
+      !== byId("message-input").value.trim()
   ) {
     clearPendingSubmission();
   }
-
   syncComposerControls();
 }
 
@@ -760,6 +904,38 @@ function installHandlers() {
         });
     },
   );
+  byId("session-filter-active").addEventListener(
+    "click",
+    () => setSessionFilter("active"),
+  );
+  byId("session-filter-archived").addEventListener(
+    "click",
+    () => setSessionFilter("archived"),
+  );
+  byId("resume-session").addEventListener(
+    "click",
+    () => resumeSession(),
+  );
+  byId("rename-session").addEventListener(
+    "click",
+    requestRename,
+  );
+  byId("confirm-rename").addEventListener(
+    "click",
+    renameSession,
+  );
+  byId("cancel-rename").addEventListener(
+    "click",
+    () => byId("rename-dialog").close(),
+  );
+  byId("archive-session").addEventListener(
+    "click",
+    archiveSession,
+  );
+  byId("restore-session").addEventListener(
+    "click",
+    restoreSession,
+  );
   byId("refresh-model-status").addEventListener(
     "click",
     () => {
@@ -786,9 +962,7 @@ function installHandlers() {
   );
   byId("cancel-probe").addEventListener(
     "click",
-    () => {
-      byId("probe-dialog").close();
-    },
+    () => byId("probe-dialog").close(),
   );
   byId("send-message").addEventListener(
     "click",
@@ -804,9 +978,7 @@ function installHandlers() {
   );
   byId("cancel-clear").addEventListener(
     "click",
-    () => {
-      byId("clear-dialog").close();
-    },
+    () => byId("clear-dialog").close(),
   );
   byId("message-input").addEventListener(
     "input",
@@ -843,15 +1015,12 @@ async function start() {
   installHandlers();
   updateMessageCount();
   updatePendingStatus();
+  syncSessionFilterControls();
   setBusy(true);
-
   const results = await Promise.allSettled([
-    refreshSessions({
-      preserveActive: false,
-    }),
+    refreshSessions({ preserveActive: false }),
     refreshModelStatus(),
   ]);
-
   const failure = results.find(
     (result) => result.status === "rejected",
   );
@@ -862,7 +1031,6 @@ async function start() {
       "error",
     );
   }
-
   setBusy(false);
 }
 

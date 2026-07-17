@@ -1114,3 +1114,14 @@ permission-gated runtime execution feature introduced in v1.2.2.
 - review-only capabilities: 23
 - permission-gated capabilities: 22
 - runtime execution features: 14
+
+## Sprint 263 Runtime Capability
+
+- Capability ID: `session_list_resume_rename_archive_restore`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Version: `v1.2.3`
+- Scope: active/archived list, same-session resume, title-only rename,
+  non-destructive archive, and non-destructive restore.
+- Disabled: permanent delete, cross-session history merge, lifecycle model
+  invocation, lifecycle network access, tools, commands, and actions.

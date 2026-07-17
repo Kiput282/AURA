@@ -5,7 +5,7 @@ Canonical block: `daily_chat_control_center_productization`
 - Start: Sprint 261
 - End: Sprint 270
 - Anchor: `v1.2.0`
-- Current roadmap checkpoint: `v1.2.1`
+- Current roadmap checkpoint: `v1.2.3`
 - Release target: `v1.3.0`
 - Primary interface: browser Control Center
 - Primary model route: `companion`
@@ -66,3 +66,17 @@ the save-only fallback. Native process-role classification replaces the Sprint
 260 count allowance removed from active integration validation.
 
 Next: Sprint 263 — `session_list_resume_rename_archive_restore`.
+
+## Sprint 263 Completion
+
+Sprint 263 — `session_list_resume_rename_archive_restore` completes the
+daily session organization and recovery lifecycle. The browser now exposes
+explicit active and archived lists, same-session resume, validated title-only
+rename, non-destructive archive, and non-destructive restore.
+
+Session IDs and message histories remain isolated and immutable during
+lifecycle operations. Archive and restore reuse the existing atomic write and
+integrity-hash path. Permanent delete, cross-session history merge, lifecycle
+model calls, and lifecycle network access remain disabled.
+
+Next: Sprint 264 — `chat_history_recovery_ux`.

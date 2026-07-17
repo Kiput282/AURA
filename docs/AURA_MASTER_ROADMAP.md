@@ -3977,3 +3977,18 @@ The explicitly confirmed browser model route now canonically targets
 `companion`. Native process-role classification is active and the historical
 count allowance removed. Next boundary:
 `session_list_resume_rename_archive_restore`.
+
+## Sprint 263 Session List, Resume, Rename, Archive, and Restore
+
+Current completed sprint: Sprint 263 —
+`session_list_resume_rename_archive_restore`.
+
+The localhost browser chat now provides active and archived session lists,
+same-session resume, validated title-only rename, non-destructive archive, and
+non-destructive restore. Session IDs do not change, histories are not merged
+between sessions, archived sessions are mutation-blocked until restoration,
+and all metadata mutations reuse atomic persistence and integrity validation.
+
+Permanent session deletion remains outside the runtime boundary.
+
+Next boundary: `chat_history_recovery_ux`.

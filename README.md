@@ -6,8 +6,8 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.2.2`
-- Current status: Sprint 262 — Operational Browser Chat Model Handoff completed
+- Current version: `v1.2.3`
+- Current status: Sprint 263 — Session List, Resume, Rename, Archive, and Restore completed
 Current runtime state: Sprint 260 adds an explicit manual end-to-end coordinator across safe-idle service control, persistent chat, Ollama health, exact companion routing, lifecycle, bounded queueing, read-only budgets, successful response persistence, and stop-and-restore.
 
 ---
@@ -119,18 +119,18 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 263 — Session List, Resume, Rename, Archive, and Restore
+- Next planned sprint: Sprint 264 — Chat History Recovery UX
 Current capability registry summary:
 
-- total capabilities: 143
-- online capabilities: 141
+- total capabilities: 144
+- online capabilities: 142
 - foundation-only capabilities: 78
 - planner-only capabilities: 7
-- permission-gated capabilities: 22
+- permission-gated capabilities: 23
 - review-only capabilities: 22
 - planned future capabilities: 0
 - disabled runtime capabilities: 2
-- runtime execution features: 14
+- runtime execution features: 15
 ---
 
 ## Safety State
@@ -6489,3 +6489,21 @@ Sprint 261 canonicalizes the `daily_chat_control_center_productization` block fo
 ## v1.2.2 Operational Browser Chat Model Handoff
 
 Sprint 262 makes the explicitly confirmed localhost `companion` route the canonical operational browser-chat handoff. Native process-role classification separates service runtime, control-plane, and unclassified `main.py` processes. The Sprint 260 count allowance removed all normalization overrides. A live model handoff rehearsal is required during finalization.
+
+## v1.2.3 Session List, Resume, Rename, Archive, and Restore
+
+Sprint 263 completes the daily browser session lifecycle boundary `session_list_resume_rename_archive_restore`:
+
+- the default session list shows active sessions;
+- archived sessions are shown only through an explicit archived filter;
+- resume reopens the same immutable session ID and its own history;
+- rename changes only the validated display title;
+- archive changes `active` to `archived` without moving or deleting the file;
+- restore changes `archived` to `active` without duplication;
+- archived sessions cannot receive messages, model messages, or clear-history mutations;
+- permanent deletion and cross-session history merging remain disabled.
+
+The lifecycle controls are localhost-only, user-initiated, revision-checked,
+integrity-hashed, atomically persisted, and safe-idle at construction.
+
+Next: Sprint 264 — `chat_history_recovery_ux`.

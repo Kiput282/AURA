@@ -562,3 +562,36 @@ dialog::backdrop {
     animation-duration: 0.01ms !important;
   }
 }
+.session-filter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+.session-filter button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--surface-soft);
+}
+.session-item[data-session-state="archived"] {
+  border-style: dashed;
+  opacity: 0.88;
+}
+.workspace-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+#archive-session {
+  border-color: #8a6b35;
+}
+#restore-session {
+  border-color: #3c8060;
+}
+#session-state-label {
+  margin: 0.6rem 0 0;
+  font-size: 0.78rem;
+}
+@media (max-width: 38rem) {
+  .session-filter {
+    grid-template-columns: 1fr;
+  }
+}

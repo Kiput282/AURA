@@ -611,7 +611,7 @@ class AuraBrowserChatSessionRuntimeManager:
                 str(exc)
             ) from exc
 
-        if payload["status"] != "active":
+        if payload["status"] not in {"active", "archived"}:
             raise BrowserChatSessionCorruptionError(
                 "Persisted session status is invalid."
             )
@@ -1078,6 +1078,16 @@ class AuraBrowserChatSessionRuntimeManager:
             "storage_path": str(self.storage_dir),
             "storage_exists": self.storage_dir.exists(),
             "session_count": len(sessions),
+            "active_session_count": sum(
+                1
+                for item in sessions
+                if item["status"] == "active"
+            ),
+            "archived_session_count": sum(
+                1
+                for item in sessions
+                if item["status"] == "archived"
+            ),
             "total_message_count": sum(
                 int(item["message_count"])
                 for item in sessions
@@ -1110,6 +1120,15 @@ class AuraBrowserChatSessionRuntimeManager:
             "deterministic_response_delivery": True,
             "local_history_persistence": True,
             "session_reload_runtime": True,
+            "session_list_filter_runtime": True,
+            "session_resume_runtime": True,
+            "session_rename_runtime": True,
+            "session_archive_runtime": True,
+            "session_restore_runtime": True,
+            "session_permanent_delete_runtime": False,
+            "cross_session_history_merge": False,
+            "session_id_immutable": True,
+            "message_history_immutable_for_lifecycle_operations": True,
             "explicit_clear_confirmation": True,
             "optimistic_revision_control": True,
             "idempotent_client_message_submission": True,
@@ -1207,15 +1226,244 @@ class AuraBrowserChatSessionRuntimeManager:
             payload = self._read_session_unlocked(validated)
         return deepcopy(payload)
 
-    def list_sessions(self) -> list[dict[str, Any]]:
-        """List readable local session metadata."""
+    @staticmethod
+    def _validate_session_state(state: Any) -> str:
+        if not isinstance(state, str):
+            raise BrowserChatValidationError(
+                "session state must be active, archived, or all."
+            )
+        normalized = state.strip().lower()
+        if normalized not in {"active", "archived", "all"}:
+            raise BrowserChatValidationError(
+                "session state must be active, archived, or all."
+            )
+        return normalized
 
+    @staticmethod
+    def _require_active_session(
+        payload: Mapping[str, Any],
+        *,
+        operation: str,
+    ) -> None:
+        if payload.get("status") != "active":
+            raise BrowserChatSessionConflictError(
+                "Archived session must be restored before "
+                + operation
+                + "."
+            )
+
+    def list_sessions(
+        self,
+        *,
+        state: str = "active",
+    ) -> list[dict[str, Any]]:
+        # List readable local session metadata by lifecycle state.
+
+        validated_state = self._validate_session_state(state)
         status = self.status()
         if status["degraded"]:
             raise BrowserChatSessionCorruptionError(
                 "One or more local chat sessions are unreadable."
             )
-        return deepcopy(status["sessions"])
+
+        sessions = status["sessions"]
+        if validated_state != "all":
+            sessions = [
+                item
+                for item in sessions
+                if item["status"] == validated_state
+            ]
+        return deepcopy(sessions)
+
+    def resume_session(
+        self,
+        session_id: str,
+        *,
+        expected_revision: int | None = None,
+    ) -> dict[str, Any]:
+        # Resume one active session without merging other histories.
+
+        validated_session_id = self._validate_session_id(session_id)
+        validated_revision = self._validate_expected_revision(
+            expected_revision
+        )
+
+        with self._lock:
+            payload = self._read_session_unlocked(
+                validated_session_id
+            )
+            self._require_active_session(
+                payload,
+                operation="resume",
+            )
+            if (
+                validated_revision is not None
+                and payload["revision"] != validated_revision
+            ):
+                raise BrowserChatSessionConflictError(
+                    "Session revision changed before resume."
+                )
+
+        return {
+            "status": "resumed",
+            "session": deepcopy(payload),
+            "session_id_immutable": True,
+            "cross_session_history_merged": False,
+            "model_bridge_active": False,
+            "tools_invoked": False,
+            "actions_invoked": False,
+        }
+
+    def rename_session(
+        self,
+        session_id: str,
+        *,
+        title: str,
+        expected_revision: int | None = None,
+    ) -> dict[str, Any]:
+        # Rename one session without changing its identity or history.
+
+        validated_session_id = self._validate_session_id(session_id)
+        validated_title = self._validate_title(title)
+        validated_revision = self._validate_expected_revision(
+            expected_revision
+        )
+
+        with self._lock:
+            payload = self._read_session_unlocked(
+                validated_session_id
+            )
+            if (
+                validated_revision is not None
+                and payload["revision"] != validated_revision
+            ):
+                raise BrowserChatSessionConflictError(
+                    "Session revision changed before rename."
+                )
+
+            timestamp = self._now()
+            previous_title = payload["title"]
+            payload["title"] = validated_title
+            payload["revision"] += 1
+            payload["updated_at_utc"] = timestamp
+
+            self._write_session_unlocked(payload)
+            stored = self._read_session_unlocked(
+                validated_session_id
+            )
+
+        return {
+            "status": "renamed",
+            "session": deepcopy(stored),
+            "previous_title": previous_title,
+            "session_id_immutable": True,
+            "message_history_mutated": False,
+            "model_bridge_active": False,
+            "tools_invoked": False,
+            "actions_invoked": False,
+        }
+
+    def archive_session(
+        self,
+        session_id: str,
+        *,
+        expected_revision: int | None = None,
+    ) -> dict[str, Any]:
+        # Archive one active session without deleting or moving its file.
+
+        validated_session_id = self._validate_session_id(session_id)
+        validated_revision = self._validate_expected_revision(
+            expected_revision
+        )
+
+        with self._lock:
+            payload = self._read_session_unlocked(
+                validated_session_id
+            )
+            self._require_active_session(
+                payload,
+                operation="archive",
+            )
+            if (
+                validated_revision is not None
+                and payload["revision"] != validated_revision
+            ):
+                raise BrowserChatSessionConflictError(
+                    "Session revision changed before archive."
+                )
+
+            timestamp = self._now()
+            payload["status"] = "archived"
+            payload["revision"] += 1
+            payload["updated_at_utc"] = timestamp
+
+            self._write_session_unlocked(payload)
+            stored = self._read_session_unlocked(
+                validated_session_id
+            )
+
+        return {
+            "status": "archived",
+            "session": deepcopy(stored),
+            "session_file_deleted": False,
+            "session_file_moved": False,
+            "session_id_immutable": True,
+            "message_history_mutated": False,
+            "model_bridge_active": False,
+            "tools_invoked": False,
+            "actions_invoked": False,
+        }
+
+    def restore_session(
+        self,
+        session_id: str,
+        *,
+        expected_revision: int | None = None,
+    ) -> dict[str, Any]:
+        # Restore one archived session to the active session list.
+
+        validated_session_id = self._validate_session_id(session_id)
+        validated_revision = self._validate_expected_revision(
+            expected_revision
+        )
+
+        with self._lock:
+            payload = self._read_session_unlocked(
+                validated_session_id
+            )
+            if payload["status"] != "archived":
+                raise BrowserChatSessionConflictError(
+                    "Only archived sessions can be restored."
+                )
+            if (
+                validated_revision is not None
+                and payload["revision"] != validated_revision
+            ):
+                raise BrowserChatSessionConflictError(
+                    "Session revision changed before restore."
+                )
+
+            timestamp = self._now()
+            payload["status"] = "active"
+            payload["revision"] += 1
+            payload["updated_at_utc"] = timestamp
+
+            self._write_session_unlocked(payload)
+            stored = self._read_session_unlocked(
+                validated_session_id
+            )
+
+        return {
+            "status": "restored",
+            "session": deepcopy(stored),
+            "session_file_deleted": False,
+            "session_file_moved": False,
+            "session_id_immutable": True,
+            "message_history_mutated": False,
+            "model_bridge_active": False,
+            "tools_invoked": False,
+            "actions_invoked": False,
+        }
 
     def submit_message(
         self,
@@ -1247,6 +1495,10 @@ class AuraBrowserChatSessionRuntimeManager:
         with self._lock:
             payload = self._read_session_unlocked(
                 validated_session_id
+            )
+            self._require_active_session(
+                payload,
+                operation="message submission",
             )
 
             if validated_client_id is not None:
@@ -1412,6 +1664,10 @@ class AuraBrowserChatSessionRuntimeManager:
         with self._lock:
             payload = self._read_session_unlocked(
                 validated_session_id
+            )
+            self._require_active_session(
+                payload,
+                operation="model message submission",
             )
             messages = payload["messages"]
 
@@ -1644,6 +1900,10 @@ class AuraBrowserChatSessionRuntimeManager:
         with self._lock:
             payload = self._read_session_unlocked(
                 validated_session_id
+            )
+            self._require_active_session(
+                payload,
+                operation="clear",
             )
 
             if (

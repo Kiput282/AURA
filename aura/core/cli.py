@@ -187,6 +187,10 @@ from aura.model_loading_unloading_queue_resource_budgets.model_lifecycle_queue_b
 from aura.active_local_runtime_integration_stabilization.active_local_runtime_integration_cli import handle_active_local_runtime_integration_command
 from aura.roadmap_reconfirmation_after_v1_2_0.roadmap_reconfirmation_cli import handle_roadmap_reconfirmation_after_v1_2_0_command
 from aura.operational_browser_chat_model_handoff.operational_browser_chat_model_handoff_cli import handle_operational_browser_chat_model_handoff_command
+
+from aura.session_list_resume_rename_archive_restore.session_list_resume_rename_archive_restore_cli import (
+    handle_session_list_resume_rename_archive_restore_command,
+)
 from aura.health_status_api_runtime.aura_health_status_api_runtime_cli import handle_health_status_api_command
 from aura.control_center_backend_runtime.aura_control_center_backend_runtime_cli import handle_control_center_backend_command
 from aura.control_center_web_shell_runtime.aura_control_center_web_shell_runtime_cli import handle_control_center_web_shell_command
@@ -11298,6 +11302,9 @@ class AuraCLI:
             return True
 
         if handle_operational_browser_chat_model_handoff_command(args):
+            return True
+
+        if handle_session_list_resume_rename_archive_restore_command(args):
             return True
         if handle_session_memory_persistence_command(args):
             return True
