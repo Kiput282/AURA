@@ -26,6 +26,10 @@ from aura.health_status_api_runtime.aura_health_status_api_runtime_manager impor
 )
 
 
+from aura.control_center_runtime_ux_consolidation import (
+    ControlCenterRuntimeUxConsolidationRuntimeManager,
+)
+
 class ControlCenterBackendError(RuntimeError):
     """Raised when the backend view-model contract fails validation."""
 
@@ -948,7 +952,38 @@ class AuraControlCenterBackendRuntimeManager:
             "listener_started_by_backend": False,
         }
 
+    def operations_panel(self) -> dict[str, Any]:
+        manager = (
+            ControlCenterRuntimeUxConsolidationRuntimeManager(
+                project_root=self.project_root
+            )
+        )
+        return manager.operations_snapshot()
+
     def payload_for_route(
+        self,
+        route: str,
+        *args: Any,
+        **kwargs: Any,
+    ) -> dict[str, Any]:
+        base_payload = self._payload_for_route_base(
+            route,
+            *args,
+            **kwargs,
+        )
+        if route not in {
+            "/api/control-center",
+            "/api/control-center/service",
+        }:
+            return base_payload
+
+        payload = dict(base_payload)
+        payload[
+            "runtime_ux_consolidation"
+        ] = self.operations_panel()
+        return payload
+
+    def _payload_for_route_base(
         self,
         route: str,
         *,

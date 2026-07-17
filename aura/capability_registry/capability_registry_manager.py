@@ -2288,6 +2288,22 @@ class CapabilityRegistryManager:
      'introduced_in': '1.2.5',
      'category': 'memory_runtime',
      'control_center_visible': True},
+    {'id': 'control_center_runtime_ux_consolidation',
+     'name': 'Control Center Runtime UX Consolidation',
+     'description': 'Permission-gated local browser review runtime for explicitly selected '
+                    'user-message memory candidates. Candidates live only in an in-process queue and '
+                    'support edit, privacy hold, importance and pinning preview, transient rejection, '
+                    'and approval of a future permission envelope preview. Candidate persistence, '
+                    'review queue persistence, permission grant application, durable memory writes, '
+                    'MemoryStore construction or mutation, automatic write, merge, delete, model '
+                    'invocation, and network access remain disabled.',
+     'state': 'online',
+     'runtime_level': 'permission_gated_alpha_runtime',
+     'risk_level': 'medium',
+     'permission_required': 'memory_write',
+     'introduced_in': '1.2.6',
+     'category': 'memory_runtime',
+     'control_center_visible': True},
 ]
 
 

@@ -97,3 +97,16 @@ is performed.
 Current: Sprint 265 — `review_first_memory_integration` completed.
 
 Next: Sprint 266 — `control_center_runtime_ux_consolidation`.
+
+### Sprint 266 completion checkpoint
+
+- Version: `v1.2.6`
+- Boundary: `control_center_runtime_ux_consolidation`
+- Status: complete
+- Contract: 480 assertions across 40 dimensions
+- Operational owners: 5/5 available, 0 degraded
+- UI: six-card Operations panel in the existing Control Center
+- Chat remains at `/chat`
+- Visibility remains at `/visibility`
+- New execution authority: none
+- Next: Sprint 267 — `atlas_resource_monitoring_dashboard`

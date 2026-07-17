@@ -4020,3 +4020,12 @@ Next boundary: `review_first_memory_integration`.
 - Approval creates a permission-envelope preview; it does not apply a grant.
 - Durable memory writes and `MemoryStore` construction or mutation remain disabled.
 - Automatic memory write, merge, delete, model invocation, network access, tool execution, and command execution remain disabled.
+
+## Sprint 266 — Control Center Runtime UX Consolidation — Complete
+
+Version `v1.2.6` consolidates service, bounded logs/failure metadata,
+model queue/resource budgets, safety visibility, chat navigation, and
+review-first memory summary in the existing local Control Center.
+
+The boundary remains read-only and safe-idle. Sprint 267 continues with
+`atlas_resource_monitoring_dashboard`.

@@ -40,6 +40,7 @@
       <nav class="panel-nav" aria-label="Dashboard panels">
         <a href="#overview" data-panel-link="overview">Overview</a>
         <a href="#service" data-panel-link="service">Service</a>
+        <a href="#operations">Operations</a>
         <a href="#capabilities" data-panel-link="capabilities">
           Capabilities
         </a>
@@ -233,7 +234,111 @@
         </div>
       </section>
 
-      <section
+<section
+        id="operations"
+        class="panel"
+        aria-labelledby="operations-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Sprint 266</p>
+            <h2 id="operations-title">Operational workspace</h2>
+          </div>
+          <span
+            id="operations-status"
+            class="panel-badge"
+          >Loading</span>
+        </div>
+
+        <p id="operations-detail" class="panel-copy">
+          Loading consolidated service, logs, model, visibility,
+          chat, and memory-review status.
+        </p>
+
+        <div class="operations-grid">
+          <article class="operation-card">
+            <p class="operation-label">Service</p>
+            <h3 id="operation-service-state">Loading</h3>
+            <p id="operation-service-detail">
+              Existing service status only. No new start, stop,
+              or restart route is exposed here.
+            </p>
+          </article>
+
+          <article class="operation-card">
+            <p class="operation-label">Logs and failures</p>
+            <h3 id="operation-logs-state">Loading</h3>
+            <p id="operation-logs-detail">
+              Bounded metadata only. Raw log content and arbitrary
+              file browsing remain unavailable.
+            </p>
+          </article>
+
+          <article class="operation-card">
+            <p class="operation-label">Model runtime</p>
+            <h3 id="operation-model-state">Loading</h3>
+            <p id="operation-model-detail">
+              Queue and resource-budget visibility without implicit
+              model activation.
+            </p>
+          </article>
+
+          <article class="operation-card">
+            <p class="operation-label">Safety visibility</p>
+            <h3 id="operation-visibility-state">Loading</h3>
+            <p id="operation-visibility-detail">
+              Permission, audit, and recovery guidance remain
+              read-only.
+            </p>
+            <a class="operation-link" href="/visibility">
+              Open visibility workspace
+            </a>
+          </article>
+
+          <article class="operation-card">
+            <p class="operation-label">Chat workspace</p>
+            <h3 id="operation-chat-state">Loading</h3>
+            <p id="operation-chat-detail">
+              The full browser-chat workspace remains separate from
+              the operational dashboard.
+            </p>
+            <a
+              id="operation-chat-link"
+              class="operation-link"
+              href="/chat"
+            >Open chat workspace</a>
+          </article>
+
+          <article class="operation-card">
+            <p class="operation-label">Memory review</p>
+            <h3 id="operation-memory-state">Loading</h3>
+            <p id="operation-memory-detail">
+              Review queue summary only. Approval remains a
+              permission-gated write preview.
+            </p>
+            <a class="operation-link" href="/chat#memory-review-panel">
+              Open memory review
+            </a>
+          </article>
+        </div>
+
+        <ul class="operations-boundary" aria-label="Safety boundary">
+          <li id="operation-boundary-actions">
+            No service or restart action routes
+          </li>
+          <li id="operation-boundary-model">
+            No implicit model activation
+          </li>
+          <li id="operation-boundary-permission">
+            No permission grant or recovery execution
+          </li>
+          <li id="operation-boundary-memory">
+            No durable memory write
+          </li>
+        </ul>
+      </section>
+
+<section
         id="capabilities"
         class="dashboard-panel"
         data-panel="capabilities"

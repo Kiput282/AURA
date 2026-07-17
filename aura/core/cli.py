@@ -11248,7 +11248,52 @@ class AuraCLI:
 
         return False
 
+    def print_control_center_runtime_ux_consolidation_packet(
+        self,
+        packet: dict[str, Any],
+    ) -> None:
+        print(
+            __import__("json").dumps(
+                packet,
+                indent=2,
+                sort_keys=True,
+            )
+        )
+
+    def handle_control_center_runtime_ux_consolidation_cli_command(
+        self,
+        command: str,
+    ) -> bool:
+        from aura.control_center_runtime_ux_consolidation import (
+            ControlCenterRuntimeUxConsolidationCLI,
+        )
+
+        packet = ControlCenterRuntimeUxConsolidationCLI().run_command(
+            command
+        )
+        self.print_control_center_runtime_ux_consolidation_packet(
+            packet
+        )
+        return True
+
     def run(self, args: list[str] | None = None) -> bool:
+        sprint_266_argv = __import__("sys").argv
+        if (
+            len(sprint_266_argv) >= 2
+            and sprint_266_argv[1]
+            in {
+                "control-center-runtime-ux-status",
+                "control-center-runtime-ux-check",
+                "control-center-runtime-ux-context",
+                "control-center-runtime-ux-review",
+                "control-center-runtime-ux-preview",
+            }
+        ):
+            self.handle_control_center_runtime_ux_consolidation_cli_command(
+                sprint_266_argv[1]
+            )
+            return
+
         if handle_local_interaction_runtime_stabilization_command(args):
             return True
 

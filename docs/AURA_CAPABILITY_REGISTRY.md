@@ -1147,3 +1147,17 @@ Capability ID: `review_first_memory_integration`
 This permission-gated alpha runtime exposes a transient browser review queue for explicitly selected user-message memory candidates. It supports deterministic local extraction preview, privacy redaction and hold, importance and pin recommendation preview, revision-checked edit, transient rejection, and approval of a future permission-envelope preview.
 
 The capability does not persist candidates or review decisions, apply a permission grant, construct or mutate `MemoryStore`, write durable memory, automatically write/merge/delete memory, invoke a model, or open a network connection.
+
+## `control_center_runtime_ux_consolidation`
+
+- Introduced in: `1.2.6`
+- State: online
+- Runtime level: permission-gated read-only runtime visibility
+- Control Center visible: yes
+- Boundary: read-only operational aggregation
+- Next boundary: `atlas_resource_monitoring_dashboard`
+
+This capability consolidates existing runtime status into the Control
+Center without adding service actions, restart execution, arbitrary
+log reads, model activation, permission grants, recovery execution, or
+durable memory writes.

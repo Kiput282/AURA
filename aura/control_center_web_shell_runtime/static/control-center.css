@@ -599,3 +599,69 @@ a {
     animation-iteration-count: 1 !important;
   }
 }
+*(Sprint, 266, —, Control, Center, runtime, UX, consolidation, */)
+.operations-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.operation-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.9rem;
+  background: rgba(127, 127, 127, 0.06);
+}
+
+.operation-card h3,
+.operation-card p {
+  margin: 0;
+}
+
+.operation-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+  text-transform: uppercase;
+}
+
+.operation-link {
+  align-self: flex-start;
+  margin-top: auto;
+  font-weight: 700;
+}
+
+.operations-boundary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.operations-boundary li {
+  padding: 0.7rem 0.85rem;
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+  opacity: 0.84;
+}
+
+@media (max-width: 70rem) {
+  .operations-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 46rem) {
+  .operations-grid,
+  .operations-boundary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

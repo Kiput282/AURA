@@ -871,6 +871,28 @@ class AuraControlCenterWebShellRuntimeManager:
                 and not degraded_manager.memory_file.exists()
             )
 
+        assertions["sprint266_operations_panel"] = (
+            'id="operations"' in html
+        )
+        assertions["sprint266_operations_status"] = (
+            'id="operations-status"' in html
+        )
+        assertions["sprint266_chat_link"] = (
+            'id="operation-chat-link"' in html
+            and 'href="/chat"' in html
+        )
+        assertions["sprint266_render_operations"] = (
+            "function renderOperations(" in javascript
+        )
+        assertions["sprint266_payload_reuse"] = (
+            ".runtime_ux_consolidation || {}"
+            in javascript
+        )
+        assertions["sprint266_operations_css"] = (
+            ".operations-grid" in css
+            and ".operations-boundary" in css
+        )
+
         failed = [
             key
             for key, passed in assertions.items()

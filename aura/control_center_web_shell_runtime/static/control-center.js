@@ -390,7 +390,176 @@ function renderReadiness(panel) {
   );
 }
 
+
+function operationOwner(operations, ownerId) {
+  const owners = operations && operations.owners;
+  if (!owners || !owners[ownerId]) {
+    return {
+      available: false,
+      degraded: true,
+      status: "unavailable",
+      snapshot: {},
+    };
+  }
+  return owners[ownerId];
+}
+
+function operationState(owner) {
+  if (!owner || owner.available !== true) {
+    return "Unavailable";
+  }
+  if (owner.degraded === true) {
+    return "Degraded";
+  }
+  return readableState(owner.status || "available");
+}
+
+function operationCount(value, fallback) {
+  return Number.isFinite(Number(value))
+    ? formatNumber(Number(value))
+    : fallback;
+}
+
+function renderOperations(operations) {
+  const payload = operations || {};
+  const service = operationOwner(payload, "service");
+  const logs = operationOwner(payload, "restart_logs");
+  const model = operationOwner(payload, "model_runtime");
+  const visibility = operationOwner(payload, "visibility");
+  const memory = operationOwner(payload, "memory_review");
+
+  setPanelBadge(
+    "operations-status",
+    payload.status || "unavailable",
+  );
+
+  const available = operationCount(
+    payload.available_owner_count,
+    "0",
+  );
+  const total = operationCount(payload.owner_count, "5");
+  const degraded = operationCount(
+    payload.degraded_owner_count,
+    "0",
+  );
+  setText(
+    "operations-detail",
+    `${available} of ${total} runtime owners available; `
+      + `${degraded} degraded. This dashboard remains read-only.`,
+  );
+
+  setText(
+    "operation-service-state",
+    operationState(service),
+  );
+  setText(
+    "operation-service-detail",
+    payload.service_controls
+      && payload.service_controls.status_visible === true
+      ? "Service status is visible. Existing confirmation and "
+        + "safety gates remain authoritative; no action route was added."
+      : "Service status is currently unavailable.",
+  );
+
+  setText(
+    "operation-logs-state",
+    operationState(logs),
+  );
+  setText(
+    "operation-logs-detail",
+    payload.logs
+      && payload.logs.bounded_metadata_only === true
+      ? "Failure state and bounded metadata are visible. Raw log "
+        + "content, paths, and arbitrary file reads remain hidden."
+      : "Bounded logs and failure metadata are unavailable.",
+  );
+
+  setText(
+    "operation-model-state",
+    operationState(model),
+  );
+  setText(
+    "operation-model-detail",
+    payload.model_runtime
+      && payload.model_runtime.queue_and_budget_visibility === true
+      ? "Queue and resource-budget status are visible without "
+        + "activating or invoking the model."
+      : "Model queue and budget status are unavailable.",
+  );
+
+  setText(
+    "operation-visibility-state",
+    operationState(visibility),
+  );
+  setText(
+    "operation-visibility-detail",
+    payload.visibility
+      && payload.visibility.permission_read_only === true
+      ? "Permission, audit, and recovery information is read-only. "
+        + "No grant or recovery execution route is exposed."
+      : "Safety visibility is unavailable.",
+  );
+
+  const chat = payload.chat || {};
+  const chatRoute = chat.workspace_route || "/chat";
+  const chatLink = byId("operation-chat-link");
+  chatLink.setAttribute("href", chatRoute);
+  setText(
+    "operation-chat-state",
+    chat.available === true ? "Available" : "Unavailable",
+  );
+  setText(
+    "operation-chat-detail",
+    chat.embedded === false
+      ? "Chat remains a dedicated full workspace and is linked "
+        + "from this operational home."
+      : "Chat workspace status is unavailable.",
+  );
+
+  setText(
+    "operation-memory-state",
+    operationState(memory),
+  );
+  setText(
+    "operation-memory-detail",
+    payload.memory_review
+      && payload.memory_review.summary_visible === true
+      ? "Review queue summary is visible. Candidates remain "
+        + "transient and approval produces a write preview only."
+      : "Memory-review summary is unavailable.",
+  );
+
+  setText(
+    "operation-boundary-actions",
+    payload.service_action_routes === false
+      && payload.restart_action_routes === false
+      ? "No service or restart action routes"
+      : "Review service action boundary",
+  );
+  setText(
+    "operation-boundary-model",
+    payload.model_activation_route === false
+      ? "No implicit model activation"
+      : "Review model activation boundary",
+  );
+  setText(
+    "operation-boundary-permission",
+    payload.permission_grant_route === false
+      && payload.recovery_execution_route === false
+      ? "No permission grant or recovery execution"
+      : "Review permission and recovery boundary",
+  );
+  setText(
+    "operation-boundary-memory",
+    payload.memory_write_route === false
+      ? "No durable memory write"
+      : "Review memory-write boundary",
+  );
+}
+
 function renderDashboard(payload) {
+  renderOperations(payload.runtime_ux_consolidation || {});
+
   if (
     !payload
     || payload.read_only !== true

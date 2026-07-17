@@ -6533,3 +6533,14 @@ Next: Sprint 265 — `review_first_memory_integration`.
 AURA now exposes an explicit local browser review flow for memory candidates selected from one user message at a time. The candidate queue is in-process only. Candidates can be edited, privacy-reviewed, assigned an importance and pin recommendation, rejected without touching durable memory, or approved only as a future permission-envelope preview.
 
 The Sprint 265 boundary deliberately does **not** write durable memory. Candidate persistence, review-queue persistence, permission-grant application, `MemoryStore` construction or mutation, automatic memory write/merge/delete, model invocation, and network access remain disabled. Restarting the local service clears the transient queue.
+
+## Current checkpoint — v1.2.6 / Sprint 266
+
+Sprint 266 completes **Control Center Runtime UX Consolidation**. The
+existing Control Center is now the operational home for service status,
+bounded logs/failure metadata, model queue and resource budgets,
+permission/audit/recovery visibility, chat navigation, and review-first
+memory summary. The implementation adds no execution authority and
+retains `/chat` as the dedicated chat workspace.
+
+Next: Sprint 267 — `atlas_resource_monitoring_dashboard`.
