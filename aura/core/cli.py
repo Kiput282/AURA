@@ -11276,7 +11276,53 @@ class AuraCLI:
         )
         return True
 
+    def print_atlas_resource_monitoring_dashboard_packet(
+        self,
+        packet: dict[str, Any],
+    ) -> None:
+        print(
+            __import__("json").dumps(
+                packet,
+                indent=2,
+                sort_keys=True,
+            )
+        )
+
+    def handle_atlas_resource_monitoring_dashboard_cli_command(
+        self,
+        command: str,
+    ) -> bool:
+        from aura.atlas_resource_monitoring_dashboard import (
+            AtlasResourceMonitoringDashboardCLI,
+        )
+
+        packet = (
+            AtlasResourceMonitoringDashboardCLI()
+            .run_command(command)
+        )
+        self.print_atlas_resource_monitoring_dashboard_packet(
+            packet
+        )
+        return True
+
     def run(self, args: list[str] | None = None) -> bool:
+        sprint_267_argv = __import__("sys").argv
+        if (
+            len(sprint_267_argv) >= 2
+            and sprint_267_argv[1]
+            in {
+                "atlas-resource-monitoring-dashboard-status",
+                "atlas-resource-monitoring-dashboard-check",
+                "atlas-resource-monitoring-dashboard-context",
+                "atlas-resource-monitoring-dashboard-review",
+                "atlas-resource-monitoring-dashboard-preview",
+            }
+        ):
+            self.handle_atlas_resource_monitoring_dashboard_cli_command(
+                sprint_267_argv[1]
+            )
+            return
+
         sprint_266_argv = __import__("sys").argv
         if (
             len(sprint_266_argv) >= 2

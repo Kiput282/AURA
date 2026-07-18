@@ -1263,3 +1263,13 @@ Next boundary: `session_list_resume_rename_archive_restore`
 
 Sprint 262 finalization requires one live model handoff rehearsal followed by
 safe-idle restoration.
+
+## Daily product checkpoint — Sprint 267 / v1.2.7
+
+The v1.2 product line now includes a read-only ATLAS Resource
+Monitoring Dashboard in the existing Control Center. It covers current
+system metrics, storage health for the canonical mount points, and
+in-process CPU/RAM rolling history while preserving the safe-idle,
+localhost-oriented operating boundary.
+
+Next implementation boundary: `permission_audit_action_visibility_ux`.

@@ -665,3 +665,215 @@ a {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+*(Sprint, 267, —, ATLAS, resource, monitoring, dashboard, */)
+.resource-dashboard {
+  scroll-margin-top: 1rem;
+}
+
+.resource-window-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.resource-window-button {
+  min-width: 4.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.resource-window-button.is-active {
+  background: currentColor;
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.resource-window-button.is-active::first-line {
+  color: Canvas;
+}
+
+.resource-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.resource-summary-card,
+.resource-chart-card,
+.resource-storage-card {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.9rem;
+  background: rgba(127, 127, 127, 0.06);
+}
+
+.resource-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.resource-summary-card p,
+.resource-chart-card h3,
+.resource-chart-card p,
+.resource-storage-card h3,
+.resource-storage-card p {
+  margin: 0;
+}
+
+.resource-summary-card strong {
+  font-size: clamp(1.35rem, 3vw, 2rem);
+}
+
+.resource-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+  text-transform: uppercase;
+}
+
+.resource-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.resource-chart-heading,
+.resource-storage-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.resource-chart-heading span,
+.resource-storage-heading span {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.resource-chart-heading span[data-resource-state="green"] {
+  color: #2f9e44;
+}
+
+.resource-chart-heading span[data-resource-state="yellow"] {
+  color: #d18b00;
+}
+
+.resource-chart-heading span[data-resource-state="red"] {
+  color: #d9485f;
+}
+
+.resource-chart {
+  display: block;
+  width: 100%;
+  height: 11rem;
+  margin-top: 0.8rem;
+  overflow: visible;
+  border-radius: 0.6rem;
+  background: rgba(127, 127, 127, 0.07);
+}
+
+.resource-chart-guide {
+  stroke: currentColor;
+  stroke-dasharray: 3 3;
+  stroke-opacity: 0.22;
+  stroke-width: 1;
+}
+
+.resource-chart-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.resource-storage-card {
+  margin-top: 0.8rem;
+}
+
+.resource-storage-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resource-storage-item {
+  min-width: 0;
+  padding: 0.8rem;
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+}
+
+.resource-storage-item[data-resource-state="green"] {
+  border-color: #2f9e44;
+}
+
+.resource-storage-item[data-resource-state="yellow"] {
+  border-color: #d18b00;
+}
+
+.resource-storage-item[data-resource-state="red"] {
+  border-color: #d9485f;
+}
+
+.resource-storage-meter {
+  height: 0.55rem;
+  margin: 0.65rem 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(127, 127, 127, 0.2);
+}
+
+.resource-storage-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: currentColor;
+}
+
+.resource-storage-item p {
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+  opacity: 0.82;
+}
+
+.resource-boundary {
+  margin: 0.9rem 0 0;
+  font-size: 0.88rem;
+  opacity: 0.78;
+}
+
+@media (max-width: 70rem) {
+  .resource-summary-grid,
+  .resource-storage-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 46rem) {
+  .resource-summary-grid,
+  .resource-chart-grid,
+  .resource-storage-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .resource-chart {
+    height: 9rem;
+  }
+}

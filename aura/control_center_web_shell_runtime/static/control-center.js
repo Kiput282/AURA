@@ -2,6 +2,7 @@
 
 const BACKEND_ENDPOINT = "/api/control-center";
 const REFRESH_INTERVAL_MS = 5000;
+const RESOURCE_REFRESH_INTERVAL_MS = 1000;
 
 const shellState = {
   payload: null,
@@ -420,6 +421,250 @@ function operationCount(value, fallback) {
     : fallback;
 }
 
+
+// Sprint 267 — ATLAS resource monitoring dashboard
+const RESOURCE_WINDOW_MINUTES = [5, 15, 60];
+let activeResourceWindowMinutes = 5;
+let latestResourcePayload = null;
+
+function resourceNumber(value, fallback = 0) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
+function resourcePercent(value) {
+  return Math.max(0, Math.min(100, resourceNumber(value)));
+}
+
+function formatResourcePercent(value) {
+  return `${resourcePercent(value).toFixed(1)}%`;
+}
+
+function formatResourceBytes(value) {
+  const bytes = Math.max(0, resourceNumber(value));
+  const units = ["B", "KiB", "MiB", "GiB", "TiB"];
+  let unitIndex = 0;
+  let amount = bytes;
+
+  while (amount >= 1024 && unitIndex < units.length - 1) {
+    amount /= 1024;
+    unitIndex += 1;
+  }
+
+  const precision = unitIndex === 0 ? 0 : 1;
+  return `${amount.toFixed(precision)} ${units[unitIndex]}`;
+}
+
+function formatResourceUptime(value) {
+  let seconds = Math.max(0, Math.floor(resourceNumber(value)));
+  const days = Math.floor(seconds / 86400);
+  seconds %= 86400;
+  const hours = Math.floor(seconds / 3600);
+  seconds %= 3600;
+  const minutes = Math.floor(seconds / 60);
+
+  const parts = [];
+  if (days > 0) {
+    parts.push(`${days}d`);
+  }
+  if (hours > 0 || days > 0) {
+    parts.push(`${hours}h`);
+  }
+  parts.push(`${minutes}m`);
+  return parts.join(" ");
+}
+
+function resourceStateLabel(metric) {
+  const state = String(metric?.state || "unknown");
+  return state.charAt(0).toUpperCase() + state.slice(1);
+}
+
+function setResourceState(id, metric) {
+  const element = byId(id);
+  if (!element) {
+    return;
+  }
+
+  const color = String(metric?.color || "gray");
+  element.textContent = resourceStateLabel(metric);
+  element.dataset.resourceState = color;
+}
+
+function renderResourceChart(id, series, label) {
+  const svg = byId(id);
+  if (!svg) {
+    return;
+  }
+
+  const line = svg.querySelector(".resource-chart-line");
+  if (!line) {
+    return;
+  }
+
+  const values = Array.isArray(series)
+    ? series.map((item) => resourcePercent(item?.value_percent))
+    : [];
+
+  if (values.length === 0) {
+    line.setAttribute("points", "");
+    svg.setAttribute("aria-label", `${label}: no samples yet`);
+    return;
+  }
+
+  const denominator = Math.max(1, values.length - 1);
+  const points = values.map((value, index) => {
+    const x = (index / denominator) * 100;
+    const y = 39 - (value / 100) * 38;
+    return `${x.toFixed(3)},${y.toFixed(3)}`;
+  });
+
+  line.setAttribute("points", points.join(" "));
+  svg.setAttribute(
+    "aria-label",
+    `${label}: ${values.length} samples; latest `
+      + `${values.at(-1).toFixed(1)} percent`,
+  );
+}
+
+function resourceStatsText(stats) {
+  const payload = stats || {};
+  return `Min ${formatResourcePercent(payload.minimum)} · `
+    + `Avg ${formatResourcePercent(payload.average)} · `
+    + `Max ${formatResourcePercent(payload.maximum)}`;
+}
+
+function renderResourceStorage(records) {
+  const list = byId("resource-storage-list");
+  if (!list) {
+    return;
+  }
+
+  list.replaceChildren();
+
+  const mounts = Array.isArray(records) ? records : [];
+  mounts.forEach((record) => {
+    const item = document.createElement("li");
+    item.className = "resource-storage-item";
+    item.dataset.resourceState = String(record?.color || "gray");
+
+    const heading = document.createElement("div");
+    heading.className = "resource-storage-heading";
+
+    const mount = document.createElement("strong");
+    mount.textContent = String(record?.mount_point || "Unknown mount");
+
+    const state = document.createElement("span");
+    state.textContent = resourceStateLabel(record);
+
+    heading.append(mount, state);
+
+    const meter = document.createElement("div");
+    meter.className = "resource-storage-meter";
+    meter.setAttribute("aria-hidden", "true");
+
+    const fill = document.createElement("span");
+    fill.style.width = `${resourcePercent(record?.used_percent)}%`;
+    meter.appendChild(fill);
+
+    const detail = document.createElement("p");
+    detail.textContent = `${formatResourceBytes(record?.used_bytes)} used · `
+      + `${formatResourceBytes(record?.free_bytes)} free · `
+      + `${formatResourceBytes(record?.total_bytes)} total · `
+      + `${formatResourcePercent(record?.used_percent)}`;
+
+    item.append(heading, meter, detail);
+    list.appendChild(item);
+  });
+}
+
+function updateResourceWindowButtons() {
+  all("[data-resource-window]").forEach((button) => {
+    const windowMinutes = Number(button.dataset.resourceWindow);
+    const isActive = windowMinutes === activeResourceWindowMinutes;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
+function renderResources(resourcePayload) {
+  latestResourcePayload = resourcePayload || null;
+  const payload = latestResourcePayload || {};
+  const current = payload.current || {};
+  const cpu = current.cpu || {};
+  const memory = current.memory || {};
+  const swap = current.swap || {};
+  const uptime = current.uptime || {};
+  const processes = current.processes || {};
+  const history = payload.history || {};
+  const selected = history[String(activeResourceWindowMinutes)] || {};
+  const cpuHistory = selected.cpu || {};
+  const memoryHistory = selected.memory || {};
+
+  setPanelBadge(
+    "resources-status",
+    current.overall_state || "unavailable",
+  );
+
+  const sampleCount = resourceNumber(selected.sample_count);
+  setText(
+    "resources-detail",
+    `${sampleCount} samples in the ${activeResourceWindowMinutes}-minute `
+      + "window. Metrics are sampled on read and remain in-process only.",
+  );
+
+  setText(
+    "resource-cpu-current",
+    formatResourcePercent(cpu.usage_percent),
+  );
+  setText(
+    "resource-cpu-stats",
+    resourceStatsText(cpuHistory.stats),
+  );
+  setResourceState("resource-cpu-state", cpu);
+
+  setText(
+    "resource-memory-current",
+    formatResourcePercent(memory.used_percent),
+  );
+  setText(
+    "resource-memory-stats",
+    resourceStatsText(memoryHistory.stats),
+  );
+  setResourceState("resource-memory-state", memory);
+
+  setText(
+    "resource-swap-current",
+    formatResourcePercent(swap.used_percent),
+  );
+  setText(
+    "resource-swap-detail",
+    `${formatResourceBytes(swap.used_bytes)} used · `
+      + `${formatResourceBytes(swap.free_bytes)} free`,
+  );
+
+  setText(
+    "resource-uptime-current",
+    formatResourceUptime(uptime.seconds),
+  );
+  setText(
+    "resource-process-count",
+    `Processes ${operationCount(processes.count, "0")}`,
+  );
+
+  renderResourceChart(
+    "resource-cpu-chart",
+    cpuHistory.series,
+    "CPU usage history",
+  );
+  renderResourceChart(
+    "resource-memory-chart",
+    memoryHistory.series,
+    "RAM usage history",
+  );
+  renderResourceStorage(current.storage);
+  updateResourceWindowButtons();
+}
+
 function renderOperations(operations) {
   const payload = operations || {};
   const service = operationOwner(payload, "service");
@@ -559,6 +804,7 @@ function renderOperations(operations) {
 
 function renderDashboard(payload) {
   renderOperations(payload.runtime_ux_consolidation || {});
+  renderResources(payload.atlas_resource_monitoring_dashboard || {});
 
   if (
     !payload
@@ -662,7 +908,7 @@ function scheduleRefresh() {
     if (document.visibilityState === "visible") {
       loadDashboard();
     }
-  }, REFRESH_INTERVAL_MS);
+  }, RESOURCE_REFRESH_INTERVAL_MS);
 }
 
 function updateActiveNavigation() {
@@ -691,6 +937,26 @@ function updateActiveNavigation() {
 function installEventHandlers() {
   byId("refresh-data")?.addEventListener("click", () => {
     loadDashboard({ announce: true });
+  });
+
+  all("[data-resource-window]").forEach((control) => {
+    const activateWindow = () => {
+      const nextWindow = Number(control.dataset.resourceWindow);
+      if (!RESOURCE_WINDOW_MINUTES.includes(nextWindow)) {
+        return;
+      }
+      activeResourceWindowMinutes = nextWindow;
+      renderResources(latestResourcePayload);
+    };
+
+    control.addEventListener("click", activateWindow);
+    control.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+      event.preventDefault();
+      activateWindow();
+    });
   });
 
   byId("capability-search")?.addEventListener("input", (event) => {

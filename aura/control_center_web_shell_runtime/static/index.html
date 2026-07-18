@@ -338,6 +338,158 @@
         </ul>
       </section>
 
+
+      <!-- Sprint 267 — ATLAS resource monitoring dashboard -->
+      <section
+        id="resources"
+        class="panel resource-dashboard"
+        aria-labelledby="resources-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Sprint 267</p>
+            <h2 id="resources-title">ATLAS resource monitoring</h2>
+          </div>
+          <span
+            id="resources-status"
+            class="panel-badge"
+          >Loading</span>
+        </div>
+
+        <p id="resources-detail" class="panel-copy">
+          Loading read-only CPU, memory, swap, storage, uptime,
+          process, and rolling-history metrics.
+        </p>
+
+        <div
+          class="resource-window-switcher"
+          role="group"
+          aria-label="Resource chart time window"
+        >
+          <span
+            class="resource-window-button is-active"
+            data-resource-window="5"
+            role="button"
+            tabindex="0"
+            aria-pressed="true"
+          >5 min</span>
+          <span
+            class="resource-window-button"
+            data-resource-window="15"
+            role="button"
+            tabindex="0"
+            aria-pressed="false"
+          >15 min</span>
+          <span
+            class="resource-window-button"
+            data-resource-window="60"
+            role="button"
+            tabindex="0"
+            aria-pressed="false"
+          >60 min</span>
+        </div>
+
+        <div class="resource-summary-grid">
+          <article class="resource-summary-card">
+            <p class="resource-label">CPU</p>
+            <strong id="resource-cpu-current">—</strong>
+            <p id="resource-cpu-stats">Min — · Avg — · Max —</p>
+          </article>
+          <article class="resource-summary-card">
+            <p class="resource-label">RAM</p>
+            <strong id="resource-memory-current">—</strong>
+            <p id="resource-memory-stats">Min — · Avg — · Max —</p>
+          </article>
+          <article class="resource-summary-card">
+            <p class="resource-label">Swap</p>
+            <strong id="resource-swap-current">—</strong>
+            <p id="resource-swap-detail">Loading</p>
+          </article>
+          <article class="resource-summary-card">
+            <p class="resource-label">Uptime</p>
+            <strong id="resource-uptime-current">—</strong>
+            <p id="resource-process-count">Processes —</p>
+          </article>
+        </div>
+
+        <div class="resource-chart-grid">
+          <article class="resource-chart-card">
+            <div class="resource-chart-heading">
+              <h3>CPU usage</h3>
+              <span id="resource-cpu-state">Unknown</span>
+            </div>
+            <svg
+              id="resource-cpu-chart"
+              class="resource-chart"
+              viewBox="0 0 100 40"
+              preserveAspectRatio="none"
+              role="img"
+              aria-label="CPU usage history"
+            >
+              <line
+                class="resource-chart-guide"
+                x1="0"
+                x2="100"
+                y1="20"
+                y2="20"
+              ></line>
+              <polyline
+                class="resource-chart-line"
+                points=""
+                vector-effect="non-scaling-stroke"
+              ></polyline>
+            </svg>
+          </article>
+
+          <article class="resource-chart-card">
+            <div class="resource-chart-heading">
+              <h3>RAM usage</h3>
+              <span id="resource-memory-state">Unknown</span>
+            </div>
+            <svg
+              id="resource-memory-chart"
+              class="resource-chart"
+              viewBox="0 0 100 40"
+              preserveAspectRatio="none"
+              role="img"
+              aria-label="RAM usage history"
+            >
+              <line
+                class="resource-chart-guide"
+                x1="0"
+                x2="100"
+                y1="20"
+                y2="20"
+              ></line>
+              <polyline
+                class="resource-chart-line"
+                points=""
+                vector-effect="non-scaling-stroke"
+              ></polyline>
+            </svg>
+          </article>
+        </div>
+
+        <article class="resource-storage-card">
+          <div class="resource-chart-heading">
+            <h3>Storage</h3>
+            <span>Read-only mount status</span>
+          </div>
+          <ul
+            id="resource-storage-list"
+            class="resource-storage-list"
+            aria-label="ATLAS storage mount metrics"
+          ></ul>
+        </article>
+
+        <p class="resource-boundary">
+          Sampling occurs on dashboard reads at a minimum one-second
+          interval. History remains in-process only; no background
+          sampler, persistence, process control, or execution authority
+          is enabled.
+        </p>
+      </section>
+
 <section
         id="capabilities"
         class="dashboard-panel"

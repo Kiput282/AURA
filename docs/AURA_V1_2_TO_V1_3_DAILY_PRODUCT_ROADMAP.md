@@ -110,3 +110,19 @@ Next: Sprint 266 — `control_center_runtime_ux_consolidation`.
 - Visibility remains at `/visibility`
 - New execution authority: none
 - Next: Sprint 267 — `atlas_resource_monitoring_dashboard`
+
+### Sprint 267 completion checkpoint
+
+- Version: `v1.2.7`
+- Boundary: `atlas_resource_monitoring_dashboard`
+- Status: complete
+- Contract: 504 assertions across 42 dimensions
+- Runtime self-test: 49 assertions
+- Storage mounts: `/`, `/home`, `/mnt/aura-data`
+- CPU/RAM rolling windows: 5, 15, and 60 minutes
+- UI refresh: one second
+- Background sampler: disabled
+- History persistence: disabled
+- New HTTP route: none
+- New execution authority: none
+- Next: Sprint 268 — `permission_audit_action_visibility_ux`

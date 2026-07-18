@@ -30,6 +30,10 @@ from aura.control_center_runtime_ux_consolidation import (
     ControlCenterRuntimeUxConsolidationRuntimeManager,
 )
 
+from aura.atlas_resource_monitoring_dashboard import (
+    AtlasResourceMonitoringDashboardRuntimeManager,
+)
+
 class ControlCenterBackendError(RuntimeError):
     """Raised when the backend view-model contract fails validation."""
 
@@ -960,6 +964,25 @@ class AuraControlCenterBackendRuntimeManager:
         )
         return manager.operations_snapshot()
 
+    def atlas_resource_monitoring_dashboard_panel(
+        self,
+    ) -> dict[str, Any]:
+        manager = getattr(
+            self,
+            "_atlas_resource_monitoring_dashboard",
+            None,
+        )
+        if manager is None:
+            manager = (
+                AtlasResourceMonitoringDashboardRuntimeManager(
+                    project_root=self.project_root
+                )
+            )
+            self._atlas_resource_monitoring_dashboard = (
+                manager
+            )
+        return manager.snapshot()
+
     def payload_for_route(
         self,
         route: str,
@@ -981,6 +1004,13 @@ class AuraControlCenterBackendRuntimeManager:
         payload[
             "runtime_ux_consolidation"
         ] = self.operations_panel()
+        if route == "/api/control-center":
+            payload[
+                "atlas_resource_monitoring_dashboard"
+            ] = (
+                self.atlas_resource_monitoring_dashboard_panel()
+            )
+
         return payload
 
     def _payload_for_route_base(

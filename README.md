@@ -6544,3 +6544,17 @@ memory summary. The implementation adds no execution authority and
 retains `/chat` as the dedicated chat workspace.
 
 Next: Sprint 267 — `atlas_resource_monitoring_dashboard`.
+
+## Current checkpoint — v1.2.7 / Sprint 267
+
+Sprint 267 completes **ATLAS Resource Monitoring Dashboard**. The
+existing Control Center now displays read-only CPU, RAM, swap, storage,
+uptime, process count, and rolling CPU/RAM history for 5, 15, and
+60-minute windows. Storage visibility covers `/`, `/home`, and
+`/mnt/aura-data`.
+
+Sampling occurs on dashboard reads at a minimum one-second interval.
+History remains in-process only. No new HTTP route, external dependency,
+background sampler, persistence, or execution authority is added.
+
+Next: Sprint 268 — `permission_audit_action_visibility_ux`.

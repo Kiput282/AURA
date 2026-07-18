@@ -4029,3 +4029,12 @@ review-first memory summary in the existing local Control Center.
 
 The boundary remains read-only and safe-idle. Sprint 267 continues with
 `atlas_resource_monitoring_dashboard`.
+
+## Sprint 267 — ATLAS Resource Monitoring Dashboard — Complete
+
+Version `v1.2.7` adds read-only CPU, RAM, swap, storage, uptime,
+process-count, and rolling-history visibility to the existing local
+Control Center. The implementation reuses `/api/control-center`, keeps
+history in-process, and remains safe-idle.
+
+Sprint 268 continues with `permission_audit_action_visibility_ux`.

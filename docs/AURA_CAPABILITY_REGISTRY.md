@@ -1161,3 +1161,19 @@ This capability consolidates existing runtime status into the Control
 Center without adding service actions, restart execution, arbitrary
 log reads, model activation, permission grants, recovery execution, or
 durable memory writes.
+
+## `atlas_resource_monitoring_dashboard`
+
+- Introduced in: `1.2.7`
+- State: online
+- Runtime level: permission-gated read-only visibility
+- Control Center visible: yes
+- Mounts: `/`, `/home`, `/mnt/aura-data`
+- Rolling windows: 5, 15, and 60 minutes
+- Boundary: `atlas_resource_monitoring_dashboard`
+- Next boundary: `permission_audit_action_visibility_ux`
+
+This capability exposes resource metrics without process control,
+service actions, systemd mutation, threshold mutation, background
+sampling, history persistence, network fallback, or new execution
+authority.

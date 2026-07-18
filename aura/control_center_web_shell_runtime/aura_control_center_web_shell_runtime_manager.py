@@ -893,6 +893,88 @@ class AuraControlCenterWebShellRuntimeManager:
             and ".operations-boundary" in css
         )
 
+        assertions["sprint267_resources_panel"] = (
+            'id="resources"' in html
+        )
+        assertions["sprint267_resources_status"] = (
+            'id="resources-status"' in html
+            and 'id="resources-detail"' in html
+        )
+        assertions["sprint267_summary_metrics"] = all(
+            token in html
+            for token in (
+                'id="resource-cpu-current"',
+                'id="resource-memory-current"',
+                'id="resource-swap-current"',
+                'id="resource-uptime-current"',
+                'id="resource-process-count"',
+            )
+        )
+        assertions["sprint267_chart_surfaces"] = (
+            'id="resource-cpu-chart"' in html
+            and 'id="resource-memory-chart"' in html
+            and html.count(
+                'class="resource-chart-line"'
+            )
+            == 2
+        )
+        assertions["sprint267_storage_surface"] = (
+            'id="resource-storage-list"' in html
+        )
+        assertions["sprint267_window_controls"] = all(
+            token in html
+            for token in (
+                'data-resource-window="5"',
+                'data-resource-window="15"',
+                'data-resource-window="60"',
+                'role="button"',
+            )
+        )
+        assertions["sprint267_render_resources"] = (
+            "function renderResources("
+            in javascript
+        )
+        assertions["sprint267_render_chart"] = (
+            "function renderResourceChart("
+            in javascript
+        )
+        assertions["sprint267_render_storage"] = (
+            "function renderResourceStorage("
+            in javascript
+        )
+        assertions["sprint267_payload_reuse"] = (
+            "payload.atlas_resource_monitoring_dashboard"
+            in javascript
+        )
+        assertions["sprint267_refresh_contract"] = (
+            "REFRESH_INTERVAL_MS = 5000"
+            in javascript
+            and "RESOURCE_REFRESH_INTERVAL_MS = 1000"
+            in javascript
+        )
+        assertions["sprint267_no_route_or_dependency"] = (
+            javascript.count("fetch(") == 1
+            and "http://" not in javascript
+            and "https://" not in javascript
+        )
+        assertions["sprint267_resource_css"] = (
+            ".resource-summary-grid" in css
+            and ".resource-chart-line" in css
+            and ".resource-storage-list" in css
+        )
+        sprint267_html_lower = html.lower()
+        assertions["sprint267_read_only_boundary"] = (
+            "history remains in-process only"
+            in sprint267_html_lower
+            and "no background"
+            in sprint267_html_lower
+            and "sampler, persistence, process control, "
+            "or execution authority"
+            in sprint267_html_lower
+            and "is enabled"
+            in sprint267_html_lower
+        )
+
         failed = [
             key
             for key, passed in assertions.items()
