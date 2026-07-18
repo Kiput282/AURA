@@ -126,3 +126,18 @@ Next: Sprint 266 — `control_center_runtime_ux_consolidation`.
 - New HTTP route: none
 - New execution authority: none
 - Next: Sprint 268 — `permission_audit_action_visibility_ux`
+
+### Sprint 268 completion checkpoint
+
+- Version: `v1.2.8`
+- Boundary: `permission_audit_action_visibility_ux`
+- Status: complete
+- Contract: 528 assertions across 44 dimensions
+- Runtime self-test: 60 assertions
+- Visibility sections: permission, audit, proposal, approval, action,
+  recovery
+- New HTTP route: none
+- Automatic permission grant: disabled
+- Automatic recovery: disabled
+- New execution authority: none
+- Next: Sprint 269 — `daily_use_acceptance_rehearsal_and_release_harness`

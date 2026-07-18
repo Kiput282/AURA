@@ -975,6 +975,113 @@ class AuraControlCenterWebShellRuntimeManager:
             in sprint267_html_lower
         )
 
+        assertions["sprint268_visibility_panel"] = (
+            'id="permission-visibility"' in html
+        )
+        assertions["sprint268_visibility_status"] = (
+            'id="permission-visibility-status"' in html
+            and 'id="permission-visibility-detail"' in html
+        )
+        assertions["sprint268_visibility_cards"] = (
+            html.count(
+                'class="permission-visibility-card"'
+            )
+            == 6
+            and html.count(
+                'data-visibility-section="'
+            )
+            == 6
+        )
+        assertions["sprint268_visibility_state_ids"] = all(
+            f'id="permission-visibility-{section}-state"'
+            in html
+            for section in (
+                "permission",
+                "audit",
+                "proposal",
+                "approval",
+                "action",
+                "recovery",
+            )
+        )
+        assertions["sprint268_visibility_detail_ids"] = all(
+            f'id="permission-visibility-{section}-detail"'
+            in html
+            for section in (
+                "permission",
+                "audit",
+                "proposal",
+                "approval",
+                "action",
+                "recovery",
+            )
+        )
+        assertions["sprint268_visibility_boundary"] = (
+            html.count(
+                'id="permission-visibility-boundary-'
+            )
+            == 4
+        )
+        assertions["sprint268_visibility_renderer"] = (
+            "function renderPermissionAuditActionVisibility("
+            in javascript
+        )
+        assertions["sprint268_visibility_payload"] = (
+            "payload.permission_audit_action_visibility_ux"
+            in javascript
+        )
+        assertions["sprint268_visibility_render_call"] = (
+            javascript.count(
+                "renderPermissionAuditActionVisibility("
+            )
+            == 2
+        )
+        assertions["sprint268_no_new_fetch_or_route"] = (
+            javascript.count("fetch(") == 1
+            and "http://" not in javascript
+            and "https://" not in javascript
+        )
+        visibility_start = html.index(
+            'id="permission-visibility"'
+        )
+        visibility_end = html.index(
+            "<!-- Sprint 267 — ATLAS resource monitoring dashboard -->"
+        )
+        visibility_html = html[
+            visibility_start:visibility_end
+        ]
+        assertions["sprint268_no_action_controls"] = (
+            html.count("<button") == 1
+            and "href=" not in visibility_html
+            and __import__("re").search(
+                r"<a",
+                visibility_html,
+            )
+            is None
+        )
+        assertions["sprint268_visibility_css"] = (
+            ".permission-visibility-grid" in css
+            and ".permission-visibility-card" in css
+            and ".permission-visibility-boundary"
+            in css
+        )
+        visibility_lower = visibility_html.lower()
+        assertions["sprint268_read_only_boundary"] = all(
+            token in visibility_lower
+            for token in (
+                "no automatic permission grant",
+                "no service, restart, or approval action route",
+                "no automatic recovery or recovery execution",
+                "read-only visibility; no runtime mutation",
+            )
+        )
+        assertions["sprint268_refresh_preserved"] = (
+            "REFRESH_INTERVAL_MS = 5000"
+            in javascript
+            and "RESOURCE_REFRESH_INTERVAL_MS = 1000"
+            in javascript
+        )
+
         failed = [
             key
             for key, passed in assertions.items()

@@ -1273,3 +1273,12 @@ in-process CPU/RAM rolling history while preserving the safe-idle,
 localhost-oriented operating boundary.
 
 Next implementation boundary: `permission_audit_action_visibility_ux`.
+
+## Daily product checkpoint — Sprint 268 / v1.2.8
+
+The v1.2 product line now includes a consolidated Permission Audit
+Action Visibility UX in the existing Control Center. It surfaces the
+full review chain while preserving manual approval, read-only
+operation, and the safe-idle execution boundary.
+
+Next implementation boundary: `daily_use_acceptance_rehearsal_and_release_harness`.

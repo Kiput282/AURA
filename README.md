@@ -6558,3 +6558,15 @@ History remains in-process only. No new HTTP route, external dependency,
 background sampler, persistence, or execution authority is added.
 
 Next: Sprint 268 — `permission_audit_action_visibility_ux`.
+
+## Current checkpoint — v1.2.8 / Sprint 268
+
+Sprint 268 completes **Permission Audit Action Visibility UX**. The
+Control Center now consolidates permission, audit, proposal, approval,
+action, and recovery state into six read-only cards.
+
+The panel adds no action button, action link, HTTP route, automatic
+permission grant, automatic recovery, mutation route, background
+worker, external dependency, or new execution authority.
+
+Next: Sprint 269 — `daily_use_acceptance_rehearsal_and_release_harness`.

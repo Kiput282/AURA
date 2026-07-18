@@ -34,6 +34,10 @@ from aura.atlas_resource_monitoring_dashboard import (
     AtlasResourceMonitoringDashboardRuntimeManager,
 )
 
+from aura.permission_audit_action_visibility_ux import (
+    PermissionAuditActionVisibilityUxRuntimeManager,
+)
+
 class ControlCenterBackendError(RuntimeError):
     """Raised when the backend view-model contract fails validation."""
 
@@ -964,6 +968,39 @@ class AuraControlCenterBackendRuntimeManager:
         )
         return manager.operations_snapshot()
 
+    def permission_audit_action_visibility_ux_panel(
+        self,
+        *,
+        runtime_ux: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        manager = getattr(
+            self,
+            "_permission_audit_action_visibility_ux",
+            None,
+        )
+        if manager is None:
+            manager = (
+                PermissionAuditActionVisibilityUxRuntimeManager(
+                    project_root=self.project_root
+                )
+            )
+            self._permission_audit_action_visibility_ux = (
+                manager
+            )
+
+        operations = (
+            runtime_ux
+            if runtime_ux is not None
+            else self.operations_panel()
+        )
+        backend = self.snapshot()
+        panels = backend["panels"]
+        return manager.snapshot(
+            permission_panel=panels["permissions"],
+            audit_panel=panels["audit"],
+            runtime_ux=operations,
+        )
+
     def atlas_resource_monitoring_dashboard_panel(
         self,
     ) -> dict[str, Any]:
@@ -1009,6 +1046,15 @@ class AuraControlCenterBackendRuntimeManager:
                 "atlas_resource_monitoring_dashboard"
             ] = (
                 self.atlas_resource_monitoring_dashboard_panel()
+            )
+            payload[
+                "permission_audit_action_visibility_ux"
+            ] = (
+                self.permission_audit_action_visibility_ux_panel(
+                    runtime_ux=payload[
+                        "runtime_ux_consolidation"
+                    ]
+                )
             )
 
         return payload

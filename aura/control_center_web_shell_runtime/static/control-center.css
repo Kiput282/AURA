@@ -877,3 +877,68 @@ a {
     height: 9rem;
   }
 }
+
+/* Sprint 268 — permission, audit, action visibility UX */
+.permission-visibility-panel {
+  scroll-margin-top: 1rem;
+}
+
+.permission-visibility-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.permission-visibility-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.9rem;
+  background: rgba(127, 127, 127, 0.06);
+}
+
+.permission-visibility-card h3,
+.permission-visibility-card p {
+  margin: 0;
+}
+
+.permission-visibility-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+  text-transform: uppercase;
+}
+
+.permission-visibility-boundary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.permission-visibility-boundary li {
+  padding: 0.7rem 0.85rem;
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+  opacity: 0.84;
+}
+
+@media (max-width: 70rem) {
+  .permission-visibility-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 46rem) {
+  .permission-visibility-grid,
+  .permission-visibility-boundary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

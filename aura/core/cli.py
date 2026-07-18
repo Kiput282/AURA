@@ -11305,7 +11305,53 @@ class AuraCLI:
         )
         return True
 
+    def print_permission_audit_action_visibility_ux_packet(
+        self,
+        packet: dict[str, Any],
+    ) -> None:
+        print(
+            __import__("json").dumps(
+                packet,
+                indent=2,
+                sort_keys=True,
+            )
+        )
+
+    def handle_permission_audit_action_visibility_ux_cli_command(
+        self,
+        command: str,
+    ) -> bool:
+        from aura.permission_audit_action_visibility_ux import (
+            PermissionAuditActionVisibilityUxCLI,
+        )
+
+        packet = (
+            PermissionAuditActionVisibilityUxCLI()
+            .run_command(command)
+        )
+        self.print_permission_audit_action_visibility_ux_packet(
+            packet
+        )
+        return True
+
     def run(self, args: list[str] | None = None) -> bool:
+        sprint_268_argv = __import__("sys").argv
+        if (
+            len(sprint_268_argv) >= 2
+            and sprint_268_argv[1]
+            in {
+                "permission-audit-action-visibility-ux-status",
+                "permission-audit-action-visibility-ux-check",
+                "permission-audit-action-visibility-ux-context",
+                "permission-audit-action-visibility-ux-review",
+                "permission-audit-action-visibility-ux-preview",
+            }
+        ):
+            self.handle_permission_audit_action_visibility_ux_cli_command(
+                sprint_268_argv[1]
+            )
+            return
+
         sprint_267_argv = __import__("sys").argv
         if (
             len(sprint_267_argv) >= 2

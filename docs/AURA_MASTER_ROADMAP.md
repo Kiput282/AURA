@@ -4038,3 +4038,12 @@ Control Center. The implementation reuses `/api/control-center`, keeps
 history in-process, and remains safe-idle.
 
 Sprint 268 continues with `permission_audit_action_visibility_ux`.
+
+## Sprint 268 — Permission Audit Action Visibility UX — Complete
+
+Version `v1.2.8` consolidates permission, audit, proposal, approval,
+action, and recovery visibility in the existing local Control Center.
+The implementation reuses `/api/control-center`, exposes no controls,
+and remains read-only and safe-idle.
+
+Sprint 269 continues with `daily_use_acceptance_rehearsal_and_release_harness`.

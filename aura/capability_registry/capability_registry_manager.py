@@ -2320,6 +2320,22 @@ class CapabilityRegistryManager:
      'introduced_in': '1.2.7',
      'category': 'memory_runtime',
      'control_center_visible': True},
+    {'id': 'permission_audit_action_visibility_ux',
+     'name': 'Permission Audit Action Visibility UX',
+     'description': 'Permission-gated local browser review runtime for explicitly selected '
+                    'user-message memory candidates. Candidates live only in an in-process queue and '
+                    'support edit, privacy hold, importance and pinning preview, transient rejection, '
+                    'and approval of a future permission envelope preview. Candidate persistence, '
+                    'review queue persistence, permission grant application, durable memory writes, '
+                    'MemoryStore construction or mutation, automatic write, merge, delete, model '
+                    'invocation, and network access remain disabled.',
+     'state': 'online',
+     'runtime_level': 'permission_gated_alpha_runtime',
+     'risk_level': 'medium',
+     'permission_required': 'memory_write',
+     'introduced_in': '1.2.8',
+     'category': 'memory_runtime',
+     'control_center_visible': True},
 ]
 
 

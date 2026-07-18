@@ -802,9 +802,81 @@ function renderOperations(operations) {
   );
 }
 
+function renderPermissionAuditActionVisibility(visibilityPayload) {
+  const payload = visibilityPayload || {};
+  const sections = payload.sections || {};
+  const sectionIds = [
+    "permission",
+    "audit",
+    "proposal",
+    "approval",
+    "action",
+    "recovery",
+  ];
+
+  setPanelBadge(
+    "permission-visibility-status",
+    payload.status || "unavailable",
+  );
+
+  const available = Number(payload.available_section_count || 0);
+  const total = Number(payload.section_count || sectionIds.length);
+  setText(
+    "permission-visibility-detail",
+    `${available} of ${total} visibility sections available. `
+      + "All sections remain read-only and safe-idle.",
+  );
+
+  sectionIds.forEach((sectionId) => {
+    const section = sections[sectionId] || {};
+    setText(
+      `permission-visibility-${sectionId}-state`,
+      readableState(section.state || "unavailable"),
+    );
+    setText(
+      `permission-visibility-${sectionId}-detail`,
+      section.detail || "Visibility data unavailable.",
+    );
+  });
+
+  setText(
+    "permission-visibility-boundary-grant",
+    payload.automatic_permission_grant === false
+      && payload.permission_grant_route === false
+      ? "No automatic permission grant"
+      : "Review permission-grant boundary",
+  );
+  setText(
+    "permission-visibility-boundary-action",
+    payload.service_action_routes === false
+      && payload.restart_action_routes === false
+      && payload.mutation_routes === false
+      ? "No service, restart, or approval action route"
+      : "Review action-route boundary",
+  );
+  setText(
+    "permission-visibility-boundary-recovery",
+    payload.automatic_recovery === false
+      && payload.recovery_execution_route === false
+      ? "No automatic recovery or recovery execution"
+      : "Review recovery boundary",
+  );
+  setText(
+    "permission-visibility-boundary-mutation",
+    payload.read_only === true
+      && payload.runtime_mutated === false
+      && payload.new_execution_authority === false
+      ? "Read-only visibility; no runtime mutation"
+      : "Review mutation and execution boundary",
+  );
+}
+
 function renderDashboard(payload) {
   renderOperations(payload.runtime_ux_consolidation || {});
   renderResources(payload.atlas_resource_monitoring_dashboard || {});
+  renderPermissionAuditActionVisibility(
+    payload.permission_audit_action_visibility_ux || {},
+  );
 
   if (
     !payload

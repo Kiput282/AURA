@@ -1177,3 +1177,17 @@ This capability exposes resource metrics without process control,
 service actions, systemd mutation, threshold mutation, background
 sampling, history persistence, network fallback, or new execution
 authority.
+
+## `permission_audit_action_visibility_ux`
+
+- Introduced in: `1.2.8`
+- State: online
+- Runtime level: permission-gated read-only visibility
+- Control Center visible: yes
+- Sections: permission, audit, proposal, approval, action, recovery
+- Boundary: `permission_audit_action_visibility_ux`
+- Next boundary: `daily_use_acceptance_rehearsal_and_release_harness`
+
+This capability consolidates safety and action visibility without
+automatic approval, automatic recovery, mutation routes, or new
+execution authority.

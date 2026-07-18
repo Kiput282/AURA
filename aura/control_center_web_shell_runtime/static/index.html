@@ -339,6 +339,118 @@
       </section>
 
 
+      <!-- Sprint 268 — permission, audit, action visibility UX -->
+      <section
+        id="permission-visibility"
+        class="panel permission-visibility-panel"
+        aria-labelledby="permission-visibility-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Sprint 268</p>
+            <h2 id="permission-visibility-title">
+              Permission and action visibility
+            </h2>
+          </div>
+          <span
+            id="permission-visibility-status"
+            class="panel-badge"
+          >Loading</span>
+        </div>
+
+        <p id="permission-visibility-detail" class="panel-copy">
+          Loading consolidated permission, audit, proposal, approval,
+          action, and recovery visibility.
+        </p>
+
+        <div class="permission-visibility-grid">
+          <article
+            class="permission-visibility-card"
+            data-visibility-section="permission"
+          >
+            <p class="permission-visibility-label">Permission</p>
+            <h3 id="permission-visibility-permission-state">Loading</h3>
+            <p id="permission-visibility-permission-detail">
+              Declared permission and runtime-gate visibility only.
+            </p>
+          </article>
+
+          <article
+            class="permission-visibility-card"
+            data-visibility-section="audit"
+          >
+            <p class="permission-visibility-label">Audit</p>
+            <h3 id="permission-visibility-audit-state">Loading</h3>
+            <p id="permission-visibility-audit-detail">
+              Audit writer, persistence, and event-state visibility only.
+            </p>
+          </article>
+
+          <article
+            class="permission-visibility-card"
+            data-visibility-section="proposal"
+          >
+            <p class="permission-visibility-label">Proposal</p>
+            <h3 id="permission-visibility-proposal-state">Loading</h3>
+            <p id="permission-visibility-proposal-detail">
+              Pending request visibility without decision execution.
+            </p>
+          </article>
+
+          <article
+            class="permission-visibility-card"
+            data-visibility-section="approval"
+          >
+            <p class="permission-visibility-label">Approval</p>
+            <h3 id="permission-visibility-approval-state">Loading</h3>
+            <p id="permission-visibility-approval-detail">
+              Manual-review boundary without automatic grant.
+            </p>
+          </article>
+
+          <article
+            class="permission-visibility-card"
+            data-visibility-section="action"
+          >
+            <p class="permission-visibility-label">Action</p>
+            <h3 id="permission-visibility-action-state">Loading</h3>
+            <p id="permission-visibility-action-detail">
+              Route visibility without service, restart, or grant controls.
+            </p>
+          </article>
+
+          <article
+            class="permission-visibility-card"
+            data-visibility-section="recovery"
+          >
+            <p class="permission-visibility-label">Recovery</p>
+            <h3 id="permission-visibility-recovery-state">Loading</h3>
+            <p id="permission-visibility-recovery-detail">
+              Recovery status without automatic or route-based execution.
+            </p>
+          </article>
+        </div>
+
+        <ul
+          class="permission-visibility-boundary"
+          aria-label="Sprint 268 safety boundary"
+        >
+          <li id="permission-visibility-boundary-grant">
+            No automatic permission grant
+          </li>
+          <li id="permission-visibility-boundary-action">
+            No service, restart, or approval action route
+          </li>
+          <li id="permission-visibility-boundary-recovery">
+            No automatic recovery or recovery execution
+          </li>
+          <li id="permission-visibility-boundary-mutation">
+            Read-only visibility; no runtime mutation
+          </li>
+        </ul>
+      </section>
+
+
       <!-- Sprint 267 — ATLAS resource monitoring dashboard -->
       <section
         id="resources"
