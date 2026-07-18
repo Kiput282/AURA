@@ -1082,6 +1082,150 @@ class AuraControlCenterWebShellRuntimeManager:
             in javascript
         )
 
+        step_ids = (
+            "baseline",
+            "service_visibility",
+            "browser_chat_readiness",
+            "model_handoff_readiness",
+            "memory_review_readiness",
+            "permission_action_visibility",
+            "resource_readiness",
+            "release_decision",
+            "safe_idle_return",
+        )
+        assertions["sprint269_acceptance_panel"] = (
+            html.count(
+                'id="daily-use-acceptance"'
+            )
+            == 1
+        )
+        assertions["sprint269_acceptance_heading"] = (
+            html.count(
+                'id="daily-use-acceptance-title"'
+            )
+            == 1
+            and html.count(
+                'id="daily-use-acceptance-status"'
+            )
+            == 1
+            and html.count(
+                'id="daily-use-acceptance-summary"'
+            )
+            == 1
+        )
+        assertions["sprint269_acceptance_step_list"] = (
+            html.count(
+                'id="daily-use-acceptance-step-list"'
+            )
+            == 1
+        )
+        assertions["sprint269_acceptance_step_cards"] = (
+            html.count(
+                'class="daily-use-acceptance-step"'
+            )
+            == 9
+            and html.count(
+                'data-rehearsal-step="'
+            )
+            == 9
+        )
+        assertions["sprint269_acceptance_state_ids"] = all(
+            f'id="daily-use-acceptance-{step_id}-state"'
+            in html
+            for step_id in step_ids
+        )
+        assertions["sprint269_acceptance_detail_ids"] = all(
+            f'id="daily-use-acceptance-{step_id}-detail"'
+            in html
+            for step_id in step_ids
+        )
+        assertions["sprint269_acceptance_boundary"] = (
+            html.count(
+                'id="daily-use-acceptance-boundary-'
+            )
+            == 4
+        )
+        assertions["sprint269_acceptance_renderer"] = (
+            "function renderDailyUseAcceptance("
+            in javascript
+        )
+        assertions["sprint269_acceptance_payload"] = (
+            "payload.daily_use_acceptance_rehearsal_release_harness"
+            in javascript
+        )
+        assertions["sprint269_acceptance_render_call"] = (
+            javascript.count(
+                "renderDailyUseAcceptance("
+            )
+            == 2
+        )
+        assertions["sprint269_no_new_fetch_or_interval"] = (
+            javascript.count("fetch(") == 1
+            and "REFRESH_INTERVAL_MS = 5000"
+            in javascript
+            and "RESOURCE_REFRESH_INTERVAL_MS = 1000"
+            in javascript
+        )
+        assertions["sprint269_no_external_route"] = (
+            "http://" not in javascript
+            and "https://" not in javascript
+        )
+        acceptance_start = html.index(
+            'id="daily-use-acceptance"'
+        )
+        acceptance_end = html.index(
+            "<!-- Sprint 267 — ATLAS resource monitoring dashboard -->",
+            acceptance_start,
+        )
+        acceptance_html = html[
+            acceptance_start:acceptance_end
+        ]
+        assertions["sprint269_no_action_controls"] = (
+            html.count("<button") == 1
+            and "href=" not in acceptance_html
+            and __import__("re").search(
+                r"<a\b",
+                acceptance_html,
+            )
+            is None
+            and __import__("re").search(
+                r"<button\b",
+                acceptance_html,
+            )
+            is None
+            and __import__("re").search(
+                r"<form\b",
+                acceptance_html,
+            )
+            is None
+        )
+        assertions["sprint269_acceptance_css"] = (
+            ".daily-use-acceptance-steps" in css
+            and ".daily-use-acceptance-step" in css
+            and ".daily-use-acceptance-boundary"
+            in css
+        )
+        acceptance_lower = acceptance_html.lower()
+        assertions["sprint269_read_only_boundary"] = all(
+            token in acceptance_lower
+            for token in (
+                "contract-only; live e2e begins in sprint 270",
+                "rehearsal results are not persisted",
+                "no service, model, memory, permission, or recovery execution",
+                "read-only rehearsal must finish in safe-idle",
+            )
+        )
+        assertions["sprint269_runtime_boundary_copy"] = (
+            "sprint_270_live_e2e_required"
+            in javascript
+            and "result_persistence_enabled"
+            in javascript
+            and "runtime_mutated"
+            in javascript
+            and "safe_idle"
+            in javascript
+        )
+
         failed = [
             key
             for key, passed in assertions.items()

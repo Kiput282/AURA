@@ -871,11 +871,90 @@ function renderPermissionAuditActionVisibility(visibilityPayload) {
   );
 }
 
+function renderDailyUseAcceptance(harnessPayload) {
+  const payload = harnessPayload || {};
+  const steps = payload.steps || {};
+  const stepIds = [
+    "baseline",
+    "service_visibility",
+    "browser_chat_readiness",
+    "model_handoff_readiness",
+    "memory_review_readiness",
+    "permission_action_visibility",
+    "resource_readiness",
+    "release_decision",
+    "safe_idle_return",
+  ];
+
+  setPanelBadge(
+    "daily-use-acceptance-status",
+    payload.status || "unavailable",
+  );
+
+  const ready = Number(payload.ready_step_count || 0);
+  const total = Number(payload.step_count || stepIds.length);
+  const mode = String(
+    payload.runtime_mode || "contract_only_rehearsal",
+  ).replaceAll("_", " ");
+
+  setText(
+    "daily-use-acceptance-summary",
+    `${ready} of ${total} rehearsal steps ready · ${mode}.`,
+  );
+
+  stepIds.forEach((stepId) => {
+    const step = steps[stepId] || {};
+    setText(
+      `daily-use-acceptance-${stepId}-state`,
+      readableState(step.state || "unavailable"),
+    );
+    setText(
+      `daily-use-acceptance-${stepId}-detail`,
+      step.detail || "Rehearsal evidence unavailable.",
+    );
+  });
+
+  setText(
+    "daily-use-acceptance-boundary-live",
+    payload.live_e2e_required === false
+      && payload.sprint_270_live_e2e_required === true
+      ? "Sprint 269 is contract-only; live E2E begins in Sprint 270"
+      : "Live acceptance boundary unavailable",
+  );
+  setText(
+    "daily-use-acceptance-boundary-persistence",
+    payload.result_persistence_enabled === false
+      ? "Rehearsal results are not persisted"
+      : "Rehearsal persistence boundary unavailable",
+  );
+  setText(
+    "daily-use-acceptance-boundary-execution",
+    payload.service_lifecycle_changed === false
+      && payload.model_invoked === false
+      && payload.memory_written === false
+      && payload.permission_granted === false
+      && payload.recovery_executed === false
+      ? "No service, model, memory, permission, or recovery execution"
+      : "Execution boundary unavailable",
+  );
+  setText(
+    "daily-use-acceptance-boundary-safe-idle",
+    payload.runtime_mutated === false
+      && payload.read_only === true
+      && payload.safe_idle === true
+      ? "Read-only rehearsal must finish in safe-idle"
+      : "Safe-idle boundary unavailable",
+  );
+}
+
 function renderDashboard(payload) {
   renderOperations(payload.runtime_ux_consolidation || {});
   renderResources(payload.atlas_resource_monitoring_dashboard || {});
   renderPermissionAuditActionVisibility(
     payload.permission_audit_action_visibility_ux || {},
+  );
+  renderDailyUseAcceptance(
+    payload.daily_use_acceptance_rehearsal_release_harness || {},
   );
 
   if (

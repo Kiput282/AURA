@@ -11334,7 +11334,53 @@ class AuraCLI:
         )
         return True
 
+    def print_daily_use_acceptance_rehearsal_release_harness_packet(
+        self,
+        packet: dict[str, Any],
+    ) -> None:
+        print(
+            __import__("json").dumps(
+                packet,
+                indent=2,
+                sort_keys=True,
+            )
+        )
+
+    def handle_daily_use_acceptance_rehearsal_release_harness_cli_command(
+        self,
+        command: str,
+    ) -> bool:
+        from aura.daily_use_acceptance_rehearsal_release_harness import (
+            DailyUseAcceptanceRehearsalReleaseHarnessCLI,
+        )
+
+        packet = (
+            DailyUseAcceptanceRehearsalReleaseHarnessCLI()
+            .run_command(command)
+        )
+        self.print_daily_use_acceptance_rehearsal_release_harness_packet(
+            packet
+        )
+        return True
+
     def run(self, args: list[str] | None = None) -> bool:
+        sprint_269_argv = __import__("sys").argv
+        if (
+            len(sprint_269_argv) >= 2
+            and sprint_269_argv[1]
+            in {
+                "daily-use-acceptance-rehearsal-release-harness-status",
+                "daily-use-acceptance-rehearsal-release-harness-check",
+                "daily-use-acceptance-rehearsal-release-harness-context",
+                "daily-use-acceptance-rehearsal-release-harness-review",
+                "daily-use-acceptance-rehearsal-release-harness-preview",
+            }
+        ):
+            self.handle_daily_use_acceptance_rehearsal_release_harness_cli_command(
+                sprint_269_argv[1]
+            )
+            return
+
         sprint_268_argv = __import__("sys").argv
         if (
             len(sprint_268_argv) >= 2

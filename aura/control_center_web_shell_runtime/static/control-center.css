@@ -942,3 +942,68 @@ a {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Sprint 269 — daily-use acceptance rehearsal */
+.daily-use-acceptance-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.daily-use-acceptance-step {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.9rem;
+  background: rgba(127, 127, 127, 0.06);
+}
+
+.daily-use-acceptance-step h3,
+.daily-use-acceptance-step p {
+  margin: 0;
+}
+
+.daily-use-acceptance-label {
+  margin-bottom: 0.5rem !important;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  opacity: 0.72;
+  text-transform: uppercase;
+}
+
+.daily-use-acceptance-boundary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.daily-use-acceptance-boundary li {
+  padding: 0.72rem 0.85rem;
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+  opacity: 0.84;
+}
+
+@media (max-width: 72rem) {
+  .daily-use-acceptance-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 46rem) {
+  .daily-use-acceptance-steps,
+  .daily-use-acceptance-boundary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

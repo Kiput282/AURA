@@ -38,6 +38,10 @@ from aura.permission_audit_action_visibility_ux import (
     PermissionAuditActionVisibilityUxRuntimeManager,
 )
 
+from aura.daily_use_acceptance_rehearsal_release_harness import (
+    DailyUseAcceptanceRehearsalReleaseHarnessRuntimeManager,
+)
+
 class ControlCenterBackendError(RuntimeError):
     """Raised when the backend view-model contract fails validation."""
 
@@ -968,6 +972,56 @@ class AuraControlCenterBackendRuntimeManager:
         )
         return manager.operations_snapshot()
 
+    def daily_use_acceptance_rehearsal_release_harness_panel(
+        self,
+        *,
+        root_payload: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        manager = getattr(
+            self,
+            "_daily_use_acceptance_rehearsal_release_harness",
+            None,
+        )
+        if manager is None:
+            manager = (
+                DailyUseAcceptanceRehearsalReleaseHarnessRuntimeManager(
+                    project_root=self.project_root
+                )
+            )
+            self._daily_use_acceptance_rehearsal_release_harness = (
+                manager
+            )
+
+        payload = (
+            dict(root_payload)
+            if root_payload is not None
+            else self._payload_for_route_base(
+                "/api/control-center"
+            )
+        )
+        if root_payload is None:
+            payload["runtime_ux_consolidation"] = (
+                self.operations_panel()
+            )
+            payload[
+                "atlas_resource_monitoring_dashboard"
+            ] = (
+                self.atlas_resource_monitoring_dashboard_panel()
+            )
+            payload[
+                "permission_audit_action_visibility_ux"
+            ] = (
+                self.permission_audit_action_visibility_ux_panel(
+                    runtime_ux=payload[
+                        "runtime_ux_consolidation"
+                    ]
+                )
+            )
+
+        return manager.snapshot(
+            root_payload=payload
+        )
+
     def permission_audit_action_visibility_ux_panel(
         self,
         *,
@@ -1054,6 +1108,13 @@ class AuraControlCenterBackendRuntimeManager:
                     runtime_ux=payload[
                         "runtime_ux_consolidation"
                     ]
+                )
+            )
+            payload[
+                "daily_use_acceptance_rehearsal_release_harness"
+            ] = (
+                self.daily_use_acceptance_rehearsal_release_harness_panel(
+                    root_payload=payload
                 )
             )
 

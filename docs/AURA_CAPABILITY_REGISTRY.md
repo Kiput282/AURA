@@ -1191,3 +1191,16 @@ authority.
 This capability consolidates safety and action visibility without
 automatic approval, automatic recovery, mutation routes, or new
 execution authority.
+
+## `daily_use_acceptance_rehearsal_release_harness`
+
+- Introduced in: `1.2.9`
+- State: online
+- Runtime level: permission-gated read-only rehearsal
+- Control Center visible: yes
+- Rehearsal steps: 9
+- Boundary: `daily_use_acceptance_rehearsal_and_release_harness`
+- Next boundary: `daily_local_assistant_live_acceptance_stabilization`
+
+This capability aggregates daily-use readiness and release-decision
+evidence without invoking runtime actions or persisting results.

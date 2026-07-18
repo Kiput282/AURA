@@ -6570,3 +6570,17 @@ permission grant, automatic recovery, mutation route, background
 worker, external dependency, or new execution authority.
 
 Next: Sprint 269 — `daily_use_acceptance_rehearsal_and_release_harness`.
+
+## Current checkpoint — v1.2.9 / Sprint 269
+
+Sprint 269 completes the **Daily-use Acceptance Rehearsal Release
+Harness**. The Control Center now summarizes nine readiness steps in a
+contract-only, read-only panel.
+
+The harness adds no action control, HTTP route, persistence, service
+lifecycle mutation, chat-session creation, model invocation, memory
+write, permission grant, recovery execution, background worker,
+external dependency, or execution authority.
+
+Next: Sprint 270 — `daily_local_assistant_live_acceptance_stabilization` with mandatory live E2E,
+failure/recovery verification, and return to safe-idle.

@@ -1282,3 +1282,13 @@ full review chain while preserving manual approval, read-only
 operation, and the safe-idle execution boundary.
 
 Next implementation boundary: `daily_use_acceptance_rehearsal_and_release_harness`.
+
+## Daily product checkpoint — Sprint 269 / v1.2.9
+
+The v1.2 product line now includes a contract-only daily-use
+acceptance rehearsal and release-decision harness. It composes existing
+read-only runtime evidence while preserving safe-idle and all manual
+approval boundaries.
+
+Next implementation boundary: `daily_local_assistant_live_acceptance_stabilization` with mandatory live
+acceptance, failure/recovery verification, and safe-idle return.

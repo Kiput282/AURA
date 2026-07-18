@@ -141,3 +141,17 @@ Next: Sprint 266 — `control_center_runtime_ux_consolidation`.
 - Automatic recovery: disabled
 - New execution authority: none
 - Next: Sprint 269 — `daily_use_acceptance_rehearsal_and_release_harness`
+
+### Sprint 269 completion checkpoint
+
+- Version: `v1.2.9`
+- Boundary: `daily_use_acceptance_rehearsal_and_release_harness`
+- Status: complete
+- Contract: 552 assertions across 46 dimensions
+- Runtime self-test: 72 assertions
+- Rehearsal steps: 9
+- Control Center web shell: 190 assertions
+- Result persistence: disabled
+- Runtime execution: none
+- Live E2E: deferred to Sprint 270
+- Next: Sprint 270 — `daily_local_assistant_live_acceptance_stabilization`

@@ -4047,3 +4047,13 @@ The implementation reuses `/api/control-center`, exposes no controls,
 and remains read-only and safe-idle.
 
 Sprint 269 continues with `daily_use_acceptance_rehearsal_and_release_harness`.
+
+## Sprint 269 — Daily-use Acceptance Rehearsal Release Harness — Complete
+
+Version `v1.2.9` aggregates baseline, service, browser chat, model
+handoff, memory review, permission/action visibility, ATLAS resource,
+release-decision, and safe-idle evidence in the existing local Control
+Center.
+
+Sprint 270 continues with `daily_local_assistant_live_acceptance_stabilization` and requires live E2E,
+failure/recovery verification, and return to safe-idle.
