@@ -61,6 +61,12 @@ class AtlasResourceMonitoringDashboardRuntimeManager:
         self.project_root = Path(
             project_root or Path.cwd()
         ).resolve()
+        self._baseline_manager_injected = (
+            baseline_manager is not None
+        )
+        self._monitor_manager_injected = (
+            monitor_manager is not None
+        )
         self._baseline = baseline_manager or (
             AuraResourceBaselineMetricsAlphaManager(
                 project_root=self.project_root
@@ -334,8 +340,24 @@ class AtlasResourceMonitoringDashboardRuntimeManager:
         dict[str, Any],
         dict[str, Any],
     ]:
-        baseline = self._baseline.snapshot()
-        monitor = self._monitor.snapshot()
+        baseline_manager = self._baseline
+        if not self._baseline_manager_injected:
+            baseline_manager = (
+                AuraResourceBaselineMetricsAlphaManager(
+                    project_root=self.project_root
+                )
+            )
+
+        monitor_manager = self._monitor
+        if not self._monitor_manager_injected:
+            monitor_manager = (
+                AuraAtlasResourceMonitoringAlphaManager(
+                    project_root=self.project_root
+                )
+            )
+
+        baseline = baseline_manager.snapshot()
+        monitor = monitor_manager.snapshot()
 
         if not isinstance(baseline, dict):
             raise AtlasResourceMonitoringDashboardError(

@@ -661,6 +661,13 @@ class AuraControlCenterWebShellRuntimeManager:
         )
         assertions["js_abort_controller"] = (
             "new AbortController()" in javascript
+            and '"pagehide"' in javascript
+            and "shellState.activeController?.abort();"
+            in javascript
+            and "shellState.activeRequest" in javascript
+            and "announceAfterActiveRequest" in javascript
+            and "shellState.activeController.abort();"
+            not in javascript
         )
         assertions["js_visibility_refresh"] = (
             '"visibilitychange"' in javascript
@@ -951,6 +958,12 @@ class AuraControlCenterWebShellRuntimeManager:
             in javascript
             and "RESOURCE_REFRESH_INTERVAL_MS = 1000"
             in javascript
+            and "window.setTimeout(async () =>"
+            in javascript
+            and "window.setInterval(" not in javascript
+            and "await loadDashboard();" in javascript
+            and "loadDashboard().finally(scheduleRefresh);"
+            in javascript
         )
         assertions["sprint267_no_route_or_dependency"] = (
             javascript.count("fetch(") == 1
@@ -1080,6 +1093,11 @@ class AuraControlCenterWebShellRuntimeManager:
             in javascript
             and "RESOURCE_REFRESH_INTERVAL_MS = 1000"
             in javascript
+            and "shellState.activeRequest" in javascript
+            and "return shellState.activeRequest;"
+            in javascript
+            and "window.clearTimeout(shellState.refreshTimer);"
+            in javascript
         )
 
         step_ids = (
@@ -1165,6 +1183,10 @@ class AuraControlCenterWebShellRuntimeManager:
             in javascript
             and "RESOURCE_REFRESH_INTERVAL_MS = 1000"
             in javascript
+            and "window.setInterval(" not in javascript
+            and javascript.count("window.setTimeout(") == 1
+            and "shellState.activeController.abort();"
+            not in javascript
         )
         assertions["sprint269_no_external_route"] = (
             "http://" not in javascript

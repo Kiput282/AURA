@@ -236,7 +236,7 @@ class PermissionAuditActionVisibilityUxContract:
                 not in audit_payload
             ),
             "web_surface_contract": (
-                web_test["assertion_count"] == 174
+                web_test["assertion_count"] == 190
                 and web_test[
                     "failed_assertion_count"
                 ]

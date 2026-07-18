@@ -9,6 +9,8 @@ const shellState = {
   capabilityQuery: "",
   refreshTimer: null,
   activeController: null,
+  activeRequest: null,
+  announceAfterActiveRequest: false,
 };
 
 function byId(id) {
@@ -19,8 +21,19 @@ function all(selector) {
   return Array.from(document.querySelectorAll(selector));
 }
 
+function bindingTargets(binding) {
+  const targets = new Set(all(`[data-bind="${binding}"]`));
+  const idTarget = byId(binding);
+
+  if (idTarget) {
+    targets.add(idTarget);
+  }
+
+  return Array.from(targets);
+}
+
 function setText(binding, value) {
-  all(`[data-bind="${binding}"]`).forEach((node) => {
+  bindingTargets(binding).forEach((node) => {
     node.textContent = value ?? "—";
   });
 }
@@ -95,7 +108,7 @@ function setBadge(node, label, state) {
 }
 
 function setPanelBadge(binding, status) {
-  all(`[data-bind="${binding}"]`).forEach((node) => {
+  bindingTargets(binding).forEach((node) => {
     setBadge(node, readableState(status), String(status ?? "unknown"));
   });
 }
@@ -1008,57 +1021,85 @@ function renderConnectionError(error) {
 }
 
 async function loadDashboard({ announce = false } = {}) {
+  if (shellState.activeRequest) {
+    if (announce) {
+      shellState.announceAfterActiveRequest = true;
+    }
+    return shellState.activeRequest;
+  }
+
   const refreshButton = byId("refresh-data");
   if (refreshButton) {
     refreshButton.disabled = true;
   }
 
-  if (shellState.activeController) {
-    shellState.activeController.abort();
-  }
-  shellState.activeController = new AbortController();
+  const controller = new AbortController();
+  shellState.activeController = controller;
 
-  try {
-    const response = await fetch(BACKEND_ENDPOINT, {
-      method: "GET",
-      cache: "no-store",
-      credentials: "same-origin",
-      headers: {
-        Accept: "application/json",
-      },
-      signal: shellState.activeController.signal,
-    });
+  const request = (async () => {
+    try {
+      const response = await fetch(BACKEND_ENDPOINT, {
+        method: "GET",
+        cache: "no-store",
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+        },
+        signal: controller.signal,
+      });
 
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
 
-    const payload = await response.json();
-    renderDashboard(payload);
+      const payload = await response.json();
+      renderDashboard(payload);
 
-    if (announce) {
-      const message = byId("shell-message");
-      if (message && payload.degraded !== true) {
-        message.textContent = "Dashboard data refreshed.";
+      const shouldAnnounce =
+        announce || shellState.announceAfterActiveRequest;
+      if (shouldAnnounce) {
+        const message = byId("shell-message");
+        if (message && payload.degraded !== true) {
+          message.textContent = "Dashboard data refreshed.";
+        }
+      }
+
+      return payload;
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        renderConnectionError(error);
+      }
+      return null;
+    } finally {
+      if (refreshButton) {
+        refreshButton.disabled = false;
       }
     }
-  } catch (error) {
-    if (error.name !== "AbortError") {
-      renderConnectionError(error);
-    }
+  })();
+
+  shellState.activeRequest = request;
+
+  try {
+    return await request;
   } finally {
-    if (refreshButton) {
-      refreshButton.disabled = false;
+    if (shellState.activeRequest === request) {
+      shellState.activeRequest = null;
+      shellState.activeController = null;
+      shellState.announceAfterActiveRequest = false;
     }
   }
 }
 
 function scheduleRefresh() {
-  window.clearInterval(shellState.refreshTimer);
-  shellState.refreshTimer = window.setInterval(() => {
+  window.clearTimeout(shellState.refreshTimer);
+  shellState.refreshTimer = window.setTimeout(async () => {
+    shellState.refreshTimer = null;
+
     if (document.visibilityState === "visible") {
-      loadDashboard();
+      await loadDashboard();
     }
+
+    scheduleRefresh();
   }, RESOURCE_REFRESH_INTERVAL_MS);
 }
 
@@ -1122,16 +1163,24 @@ function installEventHandlers() {
 
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") {
-      loadDashboard();
+      loadDashboard().finally(scheduleRefresh);
+    } else {
+      window.clearTimeout(shellState.refreshTimer);
+      shellState.refreshTimer = null;
     }
+  });
+
+  window.addEventListener("pagehide", () => {
+    window.clearTimeout(shellState.refreshTimer);
+    shellState.refreshTimer = null;
+    shellState.activeController?.abort();
   });
 }
 
 function startControlCenter() {
   installEventHandlers();
   updateActiveNavigation();
-  loadDashboard();
-  scheduleRefresh();
+  loadDashboard().finally(scheduleRefresh);
 }
 
 document.addEventListener("DOMContentLoaded", startControlCenter);
