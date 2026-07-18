@@ -11363,7 +11363,50 @@ class AuraCLI:
         )
         return True
 
+    def handle_daily_local_assistant_live_acceptance_stabilization_cli_command(
+        self,
+        command: str,
+    ) -> bool:
+        from aura.daily_local_assistant_live_acceptance_stabilization import (
+            DailyLocalAssistantLiveAcceptanceStabilizationCLI,
+        )
+
+        packet = (
+            DailyLocalAssistantLiveAcceptanceStabilizationCLI()
+            .run_command(command)
+        )
+
+        import json
+
+        print(
+            json.dumps(
+                packet,
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return True
+
+
+
     def run(self, args: list[str] | None = None) -> bool:
+        sprint_270_argv = __import__("sys").argv
+        if (
+            len(sprint_270_argv) >= 2
+            and sprint_270_argv[1]
+            in {
+                "daily-local-assistant-live-acceptance-stabilization-status",
+                "daily-local-assistant-live-acceptance-stabilization-check",
+                "daily-local-assistant-live-acceptance-stabilization-context",
+                "daily-local-assistant-live-acceptance-stabilization-review",
+                "daily-local-assistant-live-acceptance-stabilization-preview",
+            }
+        ):
+            self.handle_daily_local_assistant_live_acceptance_stabilization_cli_command(
+                sprint_270_argv[1]
+            )
+            return
+
         sprint_269_argv = __import__("sys").argv
         if (
             len(sprint_269_argv) >= 2

@@ -155,6 +155,35 @@ class ManualStartStopStatusRuntimeExecutor:
             return None
 
     @staticmethod
+    def _read_proc_state(
+        pid: int,
+    ) -> str | None:
+        path = Path(f"/proc/{pid}/stat")
+
+        try:
+            text = path.read_text(
+                encoding="utf-8"
+            )
+        except (
+            FileNotFoundError,
+            PermissionError,
+            ProcessLookupError,
+            OSError,
+        ):
+            return None
+
+        if ")" not in text:
+            return None
+
+        remainder = text.rsplit(")", 1)[1].strip()
+        fields = remainder.split()
+
+        if not fields:
+            return None
+
+        return fields[0]
+
+    @staticmethod
     def _read_cmdline(
         pid: int,
     ) -> list[str] | None:
@@ -1002,6 +1031,72 @@ class ManualStartStopStatusRuntimeExecutor:
             "status": status,
         }
 
+    def _owned_process_stopped(
+        self,
+        record: dict[str, Any],
+    ) -> tuple[bool, dict[str, Any]]:
+        try:
+            pid = int(record["pid"])
+            start_ticks = int(
+                record.get(
+                    "process_start_ticks",
+                    record["proc_start_ticks"],
+                )
+            )
+        except (
+            KeyError,
+            TypeError,
+            ValueError,
+        ):
+            return (
+                False,
+                {
+                    "reason": (
+                        "record_missing_pid_identity"
+                    )
+                },
+            )
+
+        actual_ticks = self._read_proc_start_ticks(
+            pid
+        )
+        process_state = self._read_proc_state(pid)
+        listeners = self._listener_records(
+            self.PORT
+        )
+        process_absent = actual_ticks is None
+        same_process_terminal = (
+            actual_ticks == start_ticks
+            and process_state in {"Z", "X", "x"}
+        )
+        stopped = (
+            not listeners
+            and (
+                process_absent
+                or same_process_terminal
+            )
+        )
+
+        return (
+            stopped,
+            {
+                "pid": pid,
+                "record_start_ticks": start_ticks,
+                "actual_start_ticks": actual_ticks,
+                "process_state": process_state,
+                "process_absent": process_absent,
+                "same_process_terminal": (
+                    same_process_terminal
+                ),
+                "listener_count": len(listeners),
+                "terminal_state_catalog": [
+                    "Z",
+                    "X",
+                    "x",
+                ],
+            },
+        )
+
     def _terminate_owned(
         self,
         record: dict[str, Any],
@@ -1040,15 +1135,14 @@ class ManualStartStopStatusRuntimeExecutor:
         )
 
         while time.monotonic() < deadline:
-            if (
-                self._read_proc_start_ticks(
-                    pid
-                )
-                is None
-                and not self._listener_records(
-                    self.PORT
-                )
-            ):
+            (
+                stopped_after_term,
+                stop_evidence,
+            ) = self._owned_process_stopped(
+                record
+            )
+
+            if stopped_after_term:
                 return {
                     "stopped": True,
                     "term_sent": term_sent,
@@ -1060,6 +1154,7 @@ class ManualStartStopStatusRuntimeExecutor:
                         )
                         * 1000
                     ),
+                    "stop_evidence": stop_evidence,
                 }
 
             time.sleep(
@@ -1087,12 +1182,14 @@ class ManualStartStopStatusRuntimeExecutor:
         )
 
         if not matches_after:
-            if (
-                self._read_proc_start_ticks(
-                    pid
-                )
-                is None
-            ):
+            (
+                stopped_before_fallback,
+                stop_evidence,
+            ) = self._owned_process_stopped(
+                record
+            )
+
+            if stopped_before_fallback:
                 return {
                     "stopped": True,
                     "term_sent": term_sent,
@@ -1104,6 +1201,7 @@ class ManualStartStopStatusRuntimeExecutor:
                         )
                         * 1000
                     ),
+                    "stop_evidence": stop_evidence,
                 }
 
             raise ManualRuntimeControlError(
@@ -1114,6 +1212,7 @@ class ManualStartStopStatusRuntimeExecutor:
                 ),
                 details={
                     "identity": identity_after,
+                    "stop_evidence": stop_evidence,
                 },
             )
 
@@ -1128,15 +1227,14 @@ class ManualStartStopStatusRuntimeExecutor:
         )
 
         while time.monotonic() < kill_deadline:
-            if (
-                self._read_proc_start_ticks(
-                    pid
-                )
-                is None
-                and not self._listener_records(
-                    self.PORT
-                )
-            ):
+            (
+                stopped_after_kill,
+                stop_evidence,
+            ) = self._owned_process_stopped(
+                record
+            )
+
+            if stopped_after_kill:
                 return {
                     "stopped": True,
                     "term_sent": term_sent,
@@ -1148,6 +1246,7 @@ class ManualStartStopStatusRuntimeExecutor:
                         )
                         * 1000
                     ),
+                    "stop_evidence": stop_evidence,
                 }
 
             time.sleep(

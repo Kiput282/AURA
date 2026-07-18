@@ -155,3 +155,22 @@ Next: Sprint 266 — `control_center_runtime_ux_consolidation`.
 - Runtime execution: none
 - Live E2E: deferred to Sprint 270
 - Next: Sprint 270 — `daily_local_assistant_live_acceptance_stabilization`
+
+### Sprint 270 completion checkpoint
+
+- Version: `v1.3.0`
+- Boundary: `daily_local_assistant_live_acceptance_stabilization`
+- Live E2E: complete
+- Real function and usage result: verified
+- Bounded failure and canonical recovery: verified
+- Final safe-idle: verified
+- Memory write delta: none
+- Permission grant: none
+- Evidence SHA-256: `72dbd6c243d55171b39f1b2a1a659ee654ea7622c31e09c0ea9000a666e29fb1`
+- Block 261–270 complete: yes
+- Release ready: yes
+- Next: Sprint 271 — `voice_daily_use_activation`
+
+Sprint 271 discovery must reconcile the immediate voice boundary with the
+existing broader ORION roadmap before implementation. No larger roadmap
+rescheduling is implied by this checkpoint.

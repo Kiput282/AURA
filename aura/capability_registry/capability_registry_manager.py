@@ -2352,6 +2352,22 @@ class CapabilityRegistryManager:
      'introduced_in': '1.2.9',
      'category': 'memory_runtime',
      'control_center_visible': True},
+    {'id': 'daily_local_assistant_live_acceptance_stabilization',
+     'name': 'Daily Local Assistant Live Acceptance Stabilization',
+     'description': 'Canonical Sprint 270 v1.3.0 live end-to-end acceptance release '
+                    'checkpoint. It records the verified local service, Control Center, '
+                    'persistent session, local-model usage result, bounded failure, '
+                    'recovery, and safe-idle outcome by immutable summary and evidence '
+                    'checksum without storing raw chat content, granting permission, '
+                    'writing memory, adding a route, adding a panel, or creating execution '
+                    'authority.',
+     'state': 'online',
+     'runtime_level': 'review_only',
+     'risk_level': 'low',
+     'permission_required': None,
+     'introduced_in': '1.3.0',
+     'category': 'release_runtime',
+     'control_center_visible': True},
 ]
 
 
@@ -2365,7 +2381,8 @@ class CapabilityRegistryManager:
             state_counts[item["state"]] = state_counts.get(item["state"], 0) + 1
             risk_counts[item["risk_level"]] = risk_counts.get(item["risk_level"], 0) + 1
             permission = item["permission_required"]
-            permission_counts[permission] = permission_counts.get(permission, 0) + 1
+            if permission is not None:
+                permission_counts[permission] = permission_counts.get(permission, 0) + 1
 
         return {
             "total_capabilities": len(catalog),

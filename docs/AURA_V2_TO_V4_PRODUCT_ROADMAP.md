@@ -1292,3 +1292,21 @@ approval boundaries.
 
 Next implementation boundary: `daily_local_assistant_live_acceptance_stabilization` with mandatory live
 acceptance, failure/recovery verification, and safe-idle return.
+
+## Daily product checkpoint — Sprint 270 / v1.3.0
+
+The Sprint 261–270 daily local product block is complete after mandatory live
+end-to-end acceptance. Real service, Control Center, persistent-session,
+local-model, bounded-failure, recovery, and safe-idle behavior were verified.
+
+- Boundary: `daily_local_assistant_live_acceptance_stabilization`
+- Next boundary: `voice_daily_use_activation`
+- Evidence SHA-256: `72dbd6c243d55171b39f1b2a1a659ee654ea7622c31e09c0ea9000a666e29fb1`
+- Final lifecycle: stopped
+- Final ownership: clear
+- Final state record: absent
+- Final listener: closed
+
+Sprint 271 discovery must reconcile the immediate voice boundary with the
+existing broader ORION Safe Action Bridge roadmap before implementation.
+This checkpoint does not silently rewrite or reschedule the broader roadmap.

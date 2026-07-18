@@ -6571,7 +6571,7 @@ worker, external dependency, or new execution authority.
 
 Next: Sprint 269 — `daily_use_acceptance_rehearsal_and_release_harness`.
 
-## Current checkpoint — v1.2.9 / Sprint 269
+## Sprint 269 checkpoint — v1.2.9 — Complete
 
 Sprint 269 completes the **Daily-use Acceptance Rehearsal Release
 Harness**. The Control Center now summarizes nine readiness steps in a
@@ -6584,3 +6584,27 @@ external dependency, or execution authority.
 
 Next: Sprint 270 — `daily_local_assistant_live_acceptance_stabilization` with mandatory live E2E,
 failure/recovery verification, and return to safe-idle.
+
+## Current checkpoint — v1.3.0 / Sprint 270
+
+Sprint 270 completes `daily_local_assistant_live_acceptance_stabilization`
+and closes the Sprint 261–270 daily local product block. The mandatory live
+end-to-end acceptance proved real local service and Control Center operation,
+persistent-session recovery, a local-model usage result before and after
+recovery, bounded failure, canonical restart, and final safe-idle.
+
+- Live E2E: complete
+- Failure/recovery: verified
+- Final lifecycle: stopped
+- Ownership: clear
+- State record: absent
+- Port 8765: closed
+- Memory writes: none
+- Permission grants: none
+- Acceptance evidence SHA-256: `72dbd6c243d55171b39f1b2a1a659ee654ea7622c31e09c0ea9000a666e29fb1`
+- Next: Sprint 271 — `voice_daily_use_activation`
+- Sprint 271 discovery must reconcile the immediate voice boundary with the
+  existing broader ORION roadmap before implementation.
+
+The Sprint 269 rehearsal panel remains as historical readiness evidence.
+Sprint 270 adds no new backend route or Control Center panel.

@@ -4057,3 +4057,22 @@ Center.
 
 Sprint 270 continues with `daily_local_assistant_live_acceptance_stabilization` and requires live E2E,
 failure/recovery verification, and return to safe-idle.
+
+## Sprint 270 — Daily Local Assistant Live Acceptance Stabilization — Complete
+
+Version `v1.3.0` closes the Sprint 261–270 daily local product block. A real
+live end-to-end acceptance run proved service startup, health and Control
+Center availability, persistent chat recovery, local-model usage before and
+after recovery, bounded failure, canonical restart, and safe-idle return.
+
+Acceptance evidence SHA-256: `72dbd6c243d55171b39f1b2a1a659ee654ea7622c31e09c0ea9000a666e29fb1`.
+
+The release preserves review-first memory, applies no permission grant, creates
+no unrelated chat mutation, adds no new route or web panel, and ends with the
+service stopped, ownership clear, persistent state absent, and port 8765
+closed.
+
+Next implementation boundary: `voice_daily_use_activation`. Sprint 271
+discovery must reconcile this immediate boundary with the existing broader
+ORION roadmap before implementation; Sprint 270 does not silently reschedule
+that roadmap.

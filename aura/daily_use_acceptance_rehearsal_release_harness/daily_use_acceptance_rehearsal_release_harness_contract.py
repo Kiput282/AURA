@@ -326,6 +326,9 @@ class DailyUseAcceptanceRehearsalReleaseHarnessContract:
                 "version: 1.2.9" in identity
                 or 'version: "1.2.9"' in identity
                 or "version: '1.2.9'" in identity
+                or "version: 1.3.0" in identity
+                or 'version: "1.3.0"' in identity
+                or "version: '1.3.0'" in identity
             ),
             "documentation_contract": (
                 "Daily-use Acceptance Rehearsal Release Harness"

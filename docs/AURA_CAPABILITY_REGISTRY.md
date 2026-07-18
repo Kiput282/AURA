@@ -1204,3 +1204,22 @@ execution authority.
 
 This capability aggregates daily-use readiness and release-decision
 evidence without invoking runtime actions or persisting results.
+
+### Daily Local Assistant Live Acceptance Stabilization
+
+- ID: `daily_local_assistant_live_acceptance_stabilization`
+- State: online
+- Runtime level: review-only
+- Risk: low
+- Permission required: none declared
+- Introduced in: `1.3.0`
+- Category: release runtime
+- Control Center visible: yes
+- Boundary: `daily_local_assistant_live_acceptance_stabilization`
+- Next boundary: `voice_daily_use_activation`
+- Evidence SHA-256: `72dbd6c243d55171b39f1b2a1a659ee654ea7622c31e09c0ea9000a666e29fb1`
+
+This capability records the successful Sprint 270 live acceptance summary and
+checksum. It does not store raw chat content, write memory, grant permission,
+add a route or panel, invoke a model, control the service, or create execution
+authority when inspected.
