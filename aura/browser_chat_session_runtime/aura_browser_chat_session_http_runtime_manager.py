@@ -62,6 +62,15 @@ from aura.review_first_memory_integration import (
     ReviewFirstMemoryNotFoundError,
     ReviewFirstMemoryValidationError,
 )
+from aura.voice.voice_daily_use_runtime_manager import (
+    AuraVoiceDailyUseRuntimeManager,
+    VoiceDailyUseBackendError,
+    VoiceDailyUseBusyError,
+    VoiceDailyUseConfigurationError,
+    VoiceDailyUseRuntimeError,
+    VoiceDailyUseValidationError,
+)
+
 
 class AuraBrowserChatSessionHttpRuntimeManager(
     AuraControlCenterWebShellHttpRuntimeManager
@@ -108,6 +117,11 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         "GET /api/model/status",
         "POST /api/model/probe",
     )
+    VOICE_ROUTE_CONTRACTS = (
+        "GET /api/voice/status",
+        "POST /api/voice/transcribe",
+        "POST /api/voice/synthesize",
+    )
     VISIBILITY_ASSET_ROUTES = (
         AuraPermissionAuditRecoveryWebSurfaceManager.ASSET_ROUTES
     )
@@ -124,10 +138,16 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         len(VISIBILITY_ASSET_ROUTES)
         + len(VISIBILITY_ROUTE_CONTRACTS)
     )
-    TOTAL_ROUTE_CONTRACT_COUNT = 47
+    TOTAL_ROUTE_CONTRACT_COUNT = 50
     MAX_REQUEST_BODY_BYTES = 65536
+    MAX_VOICE_AUDIO_BYTES = (
+        AuraVoiceDailyUseRuntimeManager.MAX_AUDIO_BYTES
+    )
     LOCAL_INTENT_HEADER = "X-AURA-Local-Intent"
     LOCAL_INTENT_VALUE = "browser-chat-session"
+    VOICE_CONFIRM_HEADER = "X-AURA-Voice-Confirm"
+    VOICE_MICROPHONE_CONFIRM_VALUE = "microphone-listen"
+    VOICE_REQUEST_ID_HEADER = "X-AURA-Request-ID"
 
     _SESSION_DETAIL_RE = re.compile(
         r"^/api/chat/sessions/(chat_[0-9a-f]{32})$"
@@ -251,6 +271,11 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 project_root=project_root
             )
         )
+        self.voice_daily_use_manager = (
+            AuraVoiceDailyUseRuntimeManager(
+                project_root=project_root
+            )
+        )
 
     def operational_model_handoff_status(
         self,
@@ -349,6 +374,27 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             "automatic_memory_merge": False,
             "automatic_memory_delete": False,
             "aura_long_term_memory_write": False,
+            "voice_daily_use_runtime": True,
+            "voice_route_contract_count": len(
+                self.VOICE_ROUTE_CONTRACTS
+            ),
+            "voice_status_route": "/api/voice/status",
+            "voice_transcribe_route": "/api/voice/transcribe",
+            "voice_synthesize_route": "/api/voice/synthesize",
+            "voice_inference_host": "ATLAS",
+            "voice_capture_host": "ORION browser",
+            "voice_playback_host": "ORION browser",
+            "voice_audio_content_type": "audio/wav",
+            "voice_audio_limit_bytes": (
+                self.MAX_VOICE_AUDIO_BYTES
+            ),
+            "voice_single_flight": True,
+            "voice_explicit_confirmation_required": True,
+            "voice_raw_audio_retention": False,
+            "voice_always_listening": False,
+            "voice_wake_word": False,
+            "voice_cloud_fallback": False,
+            "voice_direct_action_dispatch": False,
             "tool_execution": False,
             "action_dispatch": False,
             "command_execution": False,
@@ -536,6 +582,52 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             "detail": f"{type(exc).__name__}: {exc}",
         }
 
+    def _voice_error_payload(
+        self,
+        exc: Exception,
+    ) -> tuple[int, dict[str, Any]]:
+        if isinstance(exc, VoiceDailyUseBusyError):
+            return 409, {
+                "status": "busy",
+                "error": "voice_inference_busy",
+                "detail": str(exc),
+                "retryable": True,
+            }
+        if isinstance(exc, VoiceDailyUseValidationError):
+            return 400, {
+                "status": "invalid_request",
+                "error": "voice_validation_error",
+                "detail": str(exc),
+                "retryable": False,
+            }
+        if isinstance(exc, VoiceDailyUseConfigurationError):
+            return 503, {
+                "status": "degraded",
+                "error": "voice_configuration_error",
+                "detail": str(exc),
+                "retryable": False,
+            }
+        if isinstance(exc, VoiceDailyUseBackendError):
+            return 502, {
+                "status": "backend_error",
+                "error": "voice_backend_error",
+                "detail": str(exc),
+                "retryable": True,
+            }
+        if isinstance(exc, VoiceDailyUseRuntimeError):
+            return 500, {
+                "status": "error",
+                "error": "voice_runtime_error",
+                "detail": str(exc),
+                "retryable": False,
+            }
+        return 500, {
+            "status": "error",
+            "error": "unexpected_voice_runtime_error",
+            "detail": f"{type(exc).__name__}: {exc}",
+            "retryable": False,
+        }
+
     def _handler_class(
         self,
         bound_port_getter: Any,
@@ -554,6 +646,12 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 self,
                 path: str,
             ) -> tuple[int, dict[str, Any]] | None:
+                if path == "/api/voice/status":
+                    return 200, (
+                        manager.voice_daily_use_manager
+                        .status()
+                    )
+
                 if path == "/api/model/status":
                     return 200, (
                         manager.local_model_chat_manager
@@ -766,6 +864,15 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "control_center_shell_assets": 3,
                             "browser_chat_session_runtime": True,
                             "browser_chat_http_routes": 17,
+                            "voice_daily_use_runtime": True,
+                            "voice_http_routes": 3,
+                            "voice_backend_ready": (
+                                manager.voice_daily_use_manager
+                                .status()["ready"]
+                            ),
+                            "voice_inference_host": "ATLAS",
+                            "voice_capture_host": "ORION browser",
+                            "voice_playback_host": "ORION browser",
                             "browser_chat_assets": 3,
                             "local_model_bridge_http_routes": 2,
                             "permission_audit_recovery_visibility": True,
@@ -776,7 +883,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "permission_mutation_runtime": False,
                             "audit_writer_runtime": False,
                             "automatic_recovery_runtime": False,
-                            "total_route_contracts": 47,
+                            "total_route_contracts": 50,
                             "model_bridge_configured": (
                                 manager.local_model_chat_manager
                                 .status()["configured"]
@@ -994,6 +1101,91 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                     return None
                 return payload
 
+            def _read_voice_audio_body(
+                self,
+            ) -> bytes | None:
+                content_type = self.headers.get(
+                    "Content-Type",
+                    "",
+                )
+                if (
+                    content_type.split(";", 1)[0].strip().lower()
+                    != "audio/wav"
+                ):
+                    self._send_json(
+                        415,
+                        {
+                            "status": "blocked",
+                            "reason": "audio_wav_required",
+                        },
+                        send_body=True,
+                    )
+                    return None
+
+                if self.headers.get("Transfer-Encoding", ""):
+                    self._send_json(
+                        400,
+                        {
+                            "status": "blocked",
+                            "reason": (
+                                "transfer_encoding_not_supported"
+                            ),
+                        },
+                        send_body=True,
+                    )
+                    return None
+
+                content_length_text = self.headers.get(
+                    "Content-Length"
+                )
+                if content_length_text is None:
+                    self._send_json(
+                        411,
+                        {
+                            "status": "blocked",
+                            "reason": "content_length_required",
+                        },
+                        send_body=True,
+                    )
+                    return None
+                try:
+                    content_length = int(content_length_text)
+                except ValueError:
+                    self._send_json(
+                        400,
+                        {
+                            "status": "blocked",
+                            "reason": "invalid_content_length",
+                        },
+                        send_body=True,
+                    )
+                    return None
+
+                if content_length <= 0:
+                    self._send_json(
+                        400,
+                        {
+                            "status": "blocked",
+                            "reason": "empty_voice_audio",
+                        },
+                        send_body=True,
+                    )
+                    return None
+                if content_length > manager.MAX_VOICE_AUDIO_BYTES:
+                    self._send_json(
+                        413,
+                        {
+                            "status": "blocked",
+                            "reason": "voice_audio_too_large",
+                            "max_bytes": (
+                                manager.MAX_VOICE_AUDIO_BYTES
+                            ),
+                        },
+                        send_body=True,
+                    )
+                    return None
+                return self.rfile.read(content_length)
+
             def _chat_mutation_guard(self) -> bool:
                 if not manager._host_header_allowed(
                     self.headers.get("Host", "")
@@ -1047,6 +1239,99 @@ class AuraBrowserChatSessionHttpRuntimeManager(
 
             def do_POST(self) -> None:
                 path = urlsplit(self.path).path
+
+                voice_transcribe_route = (
+                    path == "/api/voice/transcribe"
+                )
+                voice_synthesize_route = (
+                    path == "/api/voice/synthesize"
+                )
+                if (
+                    voice_transcribe_route
+                    or voice_synthesize_route
+                ):
+                    if not self._chat_mutation_guard():
+                        return
+                    request_id = self.headers.get(
+                        manager.VOICE_REQUEST_ID_HEADER
+                    )
+                    try:
+                        if voice_transcribe_route:
+                            if (
+                                self.headers.get(
+                                    manager.VOICE_CONFIRM_HEADER
+                                )
+                                != manager.VOICE_MICROPHONE_CONFIRM_VALUE
+                            ):
+                                self._send_json(
+                                    403,
+                                    {
+                                        "status": "blocked",
+                                        "reason": (
+                                            "microphone_confirmation_"
+                                            "required"
+                                        ),
+                                    },
+                                    send_body=True,
+                                )
+                                return
+                            audio = self._read_voice_audio_body()
+                            if audio is None:
+                                return
+                            result = (
+                                manager.voice_daily_use_manager
+                                .transcribe_wav_bytes(
+                                    audio,
+                                    request_id=request_id,
+                                )
+                            )
+                            self._send_json(
+                                200,
+                                result,
+                                send_body=True,
+                            )
+                            return
+
+                        payload = self._read_json_body()
+                        if payload is None:
+                            return
+                        if set(payload) != {
+                            "text",
+                            "confirm_speak",
+                        }:
+                            raise VoiceDailyUseValidationError(
+                                "TTS fields must be text and "
+                                "confirm_speak."
+                            )
+                        if payload["confirm_speak"] is not True:
+                            raise VoiceDailyUseValidationError(
+                                "TTS playback requires explicit "
+                                "speaker confirmation."
+                            )
+                        audio, _metadata = (
+                            manager.voice_daily_use_manager
+                            .synthesize_wav(
+                                payload["text"],
+                                request_id=request_id,
+                            )
+                        )
+                        self._send(
+                            200,
+                            audio,
+                            "audio/wav",
+                            send_body=True,
+                        )
+                        return
+                    except Exception as exc:
+                        status, error_payload = (
+                            manager._voice_error_payload(exc)
+                        )
+                        self._send_json(
+                            status,
+                            error_payload,
+                            send_body=True,
+                        )
+                        return
 
                 create_route = (
                     path == "/api/chat/sessions"

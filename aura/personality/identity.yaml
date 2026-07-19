@@ -1,5 +1,5 @@
 name: AURA
-version: 1.3.0
+version: 1.3.1
 codename: Genesis
 creator: Kiput
 
@@ -358,4 +358,15 @@ modes:
 # Acceptance evidence checksum: 72dbd6c243d55171b39f1b2a1a659ee654ea7622c31e09c0ea9000a666e29fb1
 # Sprint 271 boundary: voice_daily_use_activation. Sprint 271 discovery must
 # reconcile this boundary with the existing broader ORION roadmap before
-# implementation; no roadmap rescheduling is implied by this release.
+# implementation; no roadmap rescheduling is implied by this release.# Sprint 271: voice_daily_use_activation releases v1.3.1.
+# ORION browser push-to-talk captures microphone audio only after an explicit
+# user gesture, ATLAS performs isolated local faster-whisper STT, the user
+# reviews an editable transcript, and Open Chat Draft transfers it through
+# a URL fragment without automatic send. Piper TTS is generated locally and
+# played or stopped explicitly on ORION. Permissions-Policy keeps microphone
+# self-only; CSP permits media only from self and browser-generated blob URLs.
+# Always-listening, wake word, automatic chat send, TTS autoplay, cloud
+# fallback, raw-audio retention, voice action dispatch, and automatic
+# sensitive-action approval remain disabled. Real ORION acceptance: 21/21;
+# evidence SHA-256: d9a7aa1a5440ad8e67274a2ce1312fca04dcddf6da3c3afae963e4b28cb593f6. Next: Sprint 272 —
+# voice_auto_conversation_and_companion_context_reinforcement.

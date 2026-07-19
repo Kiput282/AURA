@@ -154,7 +154,7 @@ class AuraControlCenterWebShellHttpRuntimeManager(
                 )
                 self.send_header(
                     "Permissions-Policy",
-                    "camera=(), microphone=(), "
+                    "camera=(), microphone=(self), "
                     "geolocation=(), payment=(), usb=()",
                 )
 
@@ -166,7 +166,7 @@ class AuraControlCenterWebShellHttpRuntimeManager(
                         "connect-src 'self'; "
                         "img-src 'self' data:; "
                         "font-src 'none'; "
-                        "media-src 'none'; "
+                        "media-src 'self' blob:; "
                         "object-src 'none'; "
                         "worker-src 'none'; "
                         "manifest-src 'none'; "

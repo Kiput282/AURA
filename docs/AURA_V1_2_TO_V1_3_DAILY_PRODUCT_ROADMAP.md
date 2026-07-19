@@ -174,3 +174,17 @@ Next: Sprint 266 — `control_center_runtime_ux_consolidation`.
 Sprint 271 discovery must reconcile the immediate voice boundary with the
 existing broader ORION roadmap before implementation. No larger roadmap
 rescheduling is implied by this checkpoint.
+
+## Post-v1.3.0 handoff — Sprint 271 / v1.3.1
+
+Sprint 271 completes `voice_daily_use_activation` after the Sprint 261–270
+block. It activates explicit ORION browser push-to-talk, local ATLAS STT,
+editable transcript preview, fragment-only chat-draft transfer without
+automatic send, explicit local TTS, and ORION playback interruption.
+
+Real ORION acceptance passed and returned to safe-idle. Always-listening,
+wake word, automatic send, autoplay, cloud fallback, raw-audio retention,
+and voice action dispatch remain disabled.
+
+Next: Sprint 272 —
+`voice_auto_conversation_and_companion_context_reinforcement`.

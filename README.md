@@ -6608,3 +6608,29 @@ recovery, bounded failure, canonical restart, and final safe-idle.
 
 The Sprint 269 rehearsal panel remains as historical readiness evidence.
 Sprint 270 adds no new backend route or Control Center panel.
+
+## Current checkpoint — v1.3.1 / Sprint 271
+
+Sprint 271 completes `voice_daily_use_activation`. ORION now provides
+explicit browser push-to-talk through the dashboard button or focused-page
+`V`; ATLAS performs isolated local faster-whisper STT; the editable
+transcript can be transferred to `/chat` as a fragment-only draft without
+automatic send; and local Piper TTS can be generated, played, and stopped on
+ORION.
+
+Real ORION acceptance passed `21/21`, with reconciliation `14/14`. Final
+service state was stopped and safe-idle, port `8765` was closed, the voice
+worker was released, temporary audio leaks were zero, and no unexpected
+action, wake word, continuous recording, or cloud fallback occurred.
+Acceptance evidence SHA-256: `d9a7aa1a5440ad8e67274a2ce1312fca04dcddf6da3c3afae963e4b28cb593f6`.
+
+Browser policy is restricted to `microphone=(self)` and
+`media-src 'self' blob:`; remote media, camera, geolocation, payment, USB,
+public binding, and hidden capture remain blocked.
+
+The current `id_ID-news_tts-medium` Piper voice is a replaceable local
+baseline. Sprint 272 continues with
+`voice_auto_conversation_and_companion_context_reinforcement`: optional PTT
+auto-answer and TTS autoplay plus initial AURA persona and grounded context.
+Manual Review remains available and sensitive actions retain explicit
+preview and approval.

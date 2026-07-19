@@ -1184,3 +1184,667 @@ function startControlCenter() {
 }
 
 document.addEventListener("DOMContentLoaded", startControlCenter);
+
+/* Sprint 271 — voice daily-use dashboard controls */
+const AURA_VOICE_STATUS_ENDPOINT = "/api/voice/status";
+const AURA_VOICE_TRANSCRIBE_ENDPOINT = "/api/voice/transcribe";
+const AURA_VOICE_SYNTHESIZE_ENDPOINT = "/api/voice/synthesize";
+const AURA_VOICE_LOCAL_INTENT = "browser-chat-session";
+const AURA_VOICE_MAX_CAPTURE_MS = 15000;
+const AURA_VOICE_MIN_CAPTURE_SECONDS = 0.2;
+
+const auraVoiceUiState = {
+  ready: false,
+  busy: false,
+  capturePending: false,
+  recording: false,
+  stopping: false,
+  holdActive: false,
+  keyboardHeld: false,
+  stream: null,
+  context: null,
+  source: null,
+  processor: null,
+  sink: null,
+  chunks: [],
+  totalFrames: 0,
+  sampleRate: 0,
+  startedAt: 0,
+  maxTimer: null,
+  audioUrl: null,
+};
+
+function auraVoiceElement(id) {
+  return document.getElementById(id);
+}
+
+function auraVoiceRequestId(prefix) {
+  if (globalThis.crypto?.randomUUID) {
+    return `${prefix}-${globalThis.crypto.randomUUID()}`;
+  }
+  return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function auraVoiceSetStatus(message, state = "idle") {
+  const detail = auraVoiceElement("voice-status-detail");
+  const badge = auraVoiceElement("voice-status");
+  if (detail) {
+    detail.textContent = message;
+  }
+  if (badge) {
+    badge.textContent = state === "ready"
+      ? "Ready"
+      : state === "recording"
+      ? "Listening"
+      : state === "busy"
+      ? "Working"
+      : state === "error"
+      ? "Error"
+      : "Idle";
+    badge.dataset.state = state;
+  }
+}
+
+function auraVoiceErrorMessage(error) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+  return String(error || "Unknown voice error");
+}
+
+function auraVoiceEditableTarget(target) {
+  if (!(target instanceof Element)) {
+    return false;
+  }
+  return Boolean(
+    target.closest(
+      "input, textarea, select, button, [contenteditable='true']",
+    ),
+  );
+}
+
+function auraVoiceSyncControls() {
+  const holdButton = auraVoiceElement("voice-hold-to-talk");
+  const transcript = auraVoiceElement("voice-transcript");
+  const speakText = auraVoiceElement("voice-speak-text");
+  const openChat = auraVoiceElement("voice-open-chat");
+  const clear = auraVoiceElement("voice-clear-transcript");
+  const speak = auraVoiceElement("voice-speak");
+  const stop = auraVoiceElement("voice-stop-playback");
+  const audio = auraVoiceElement("voice-audio");
+
+  const transcriptReady = Boolean(transcript?.value.trim());
+  const speakReady = Boolean(speakText?.value.trim());
+
+  if (holdButton) {
+    holdButton.disabled = !auraVoiceUiState.ready
+      || (auraVoiceUiState.busy
+        && !auraVoiceUiState.recording
+        && !auraVoiceUiState.capturePending);
+    holdButton.setAttribute(
+      "aria-pressed",
+      String(auraVoiceUiState.recording),
+    );
+    holdButton.dataset.recording = String(auraVoiceUiState.recording);
+    holdButton.textContent = auraVoiceUiState.recording
+      ? "Release to Transcribe"
+      : auraVoiceUiState.capturePending
+      ? "Requesting Microphone…"
+      : "Hold to Talk";
+  }
+
+  if (openChat) {
+    openChat.disabled = auraVoiceUiState.busy || !transcriptReady;
+  }
+  if (clear) {
+    clear.disabled = auraVoiceUiState.busy || !transcriptReady;
+  }
+  if (speak) {
+    speak.disabled = auraVoiceUiState.busy || !speakReady;
+  }
+  if (stop) {
+    stop.disabled = !audio?.src;
+  }
+}
+
+function auraVoiceWriteAscii(view, offset, value) {
+  for (let index = 0; index < value.length; index += 1) {
+    view.setUint8(offset + index, value.charCodeAt(index));
+  }
+}
+
+function auraVoiceEncodeWav(chunks, totalFrames, sampleRate) {
+  const buffer = new ArrayBuffer(44 + totalFrames * 2);
+  const view = new DataView(buffer);
+
+  auraVoiceWriteAscii(view, 0, "RIFF");
+  view.setUint32(4, 36 + totalFrames * 2, true);
+  auraVoiceWriteAscii(view, 8, "WAVE");
+  auraVoiceWriteAscii(view, 12, "fmt ");
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  auraVoiceWriteAscii(view, 36, "data");
+  view.setUint32(40, totalFrames * 2, true);
+
+  let offset = 44;
+  for (const chunk of chunks) {
+    for (let index = 0; index < chunk.length; index += 1) {
+      const sample = Math.max(-1, Math.min(1, chunk[index]));
+      view.setInt16(
+        offset,
+        sample < 0 ? sample * 0x8000 : sample * 0x7fff,
+        true,
+      );
+      offset += 2;
+    }
+  }
+  return new Blob([buffer], { type: "audio/wav" });
+}
+
+async function auraVoiceReleaseCaptureResources() {
+  if (auraVoiceUiState.maxTimer) {
+    clearTimeout(auraVoiceUiState.maxTimer);
+    auraVoiceUiState.maxTimer = null;
+  }
+  if (auraVoiceUiState.processor) {
+    auraVoiceUiState.processor.onaudioprocess = null;
+    try {
+      auraVoiceUiState.processor.disconnect();
+    } catch {
+      // Already disconnected.
+    }
+  }
+  if (auraVoiceUiState.source) {
+    try {
+      auraVoiceUiState.source.disconnect();
+    } catch {
+      // Already disconnected.
+    }
+  }
+  if (auraVoiceUiState.sink) {
+    try {
+      auraVoiceUiState.sink.disconnect();
+    } catch {
+      // Already disconnected.
+    }
+  }
+  if (auraVoiceUiState.stream) {
+    auraVoiceUiState.stream.getTracks().forEach((track) => track.stop());
+  }
+  if (auraVoiceUiState.context) {
+    try {
+      await auraVoiceUiState.context.close();
+    } catch {
+      // Context may already be closed.
+    }
+  }
+
+  auraVoiceUiState.stream = null;
+  auraVoiceUiState.context = null;
+  auraVoiceUiState.source = null;
+  auraVoiceUiState.processor = null;
+  auraVoiceUiState.sink = null;
+}
+
+async function auraVoiceFetchJson(endpoint, options = {}) {
+  const response = await fetch(endpoint, {
+    cache: "no-store",
+    credentials: "same-origin",
+    ...options,
+  });
+  const contentType = response.headers.get("content-type") || "";
+  const payload = contentType.includes("application/json")
+    ? await response.json()
+    : { detail: await response.text() };
+
+  if (!response.ok) {
+    throw new Error(
+      payload.detail
+      || payload.reason
+      || payload.error
+      || `HTTP ${response.status}`,
+    );
+  }
+  return payload;
+}
+
+async function auraVoiceRefreshStatus() {
+  const holdButton = auraVoiceElement("voice-hold-to-talk");
+  const audioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!navigator.mediaDevices?.getUserMedia || !audioContextClass) {
+    auraVoiceUiState.ready = false;
+    auraVoiceSetStatus(
+      "This browser does not expose the required microphone audio APIs.",
+      "error",
+    );
+    auraVoiceSyncControls();
+    return;
+  }
+
+  try {
+    const status = await auraVoiceFetchJson(AURA_VOICE_STATUS_ENDPOINT);
+    auraVoiceUiState.ready = status.ready === true;
+    if (!auraVoiceUiState.ready) {
+      throw new Error(status.reason || "Voice backend is not ready.");
+    }
+    if (holdButton) {
+      holdButton.title = (
+        `${status.stt_backend} · ${status.tts_backend} · `
+        + `${status.max_audio_seconds}s maximum`
+      );
+    }
+    auraVoiceSetStatus(
+      "ATLAS STT/TTS ready. Hold the button or V while this page is focused.",
+      "ready",
+    );
+  } catch (error) {
+    auraVoiceUiState.ready = false;
+    auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+  }
+  auraVoiceSyncControls();
+}
+
+async function auraVoiceStartCapture() {
+  if (
+    !auraVoiceUiState.ready
+    || auraVoiceUiState.busy
+    || auraVoiceUiState.capturePending
+    || auraVoiceUiState.recording
+  ) {
+    return;
+  }
+
+  auraVoiceUiState.capturePending = true;
+  auraVoiceUiState.chunks = [];
+  auraVoiceUiState.totalFrames = 0;
+  auraVoiceSetStatus("Requesting microphone permission…", "busy");
+  auraVoiceSyncControls();
+
+  let stream = null;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        channelCount: 1,
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true,
+      },
+      video: false,
+    });
+
+    if (!auraVoiceUiState.holdActive) {
+      stream.getTracks().forEach((track) => track.stop());
+      auraVoiceSetStatus(
+        "Microphone released before recording started.",
+        "idle",
+      );
+      return;
+    }
+
+    const AudioContextClass = (
+      window.AudioContext || window.webkitAudioContext
+    );
+    const context = new AudioContextClass();
+    await context.resume();
+
+    const source = context.createMediaStreamSource(stream);
+    const processor = context.createScriptProcessor(4096, 1, 1);
+    const sink = context.createGain();
+    sink.gain.value = 0;
+
+    processor.onaudioprocess = (event) => {
+      if (!auraVoiceUiState.recording) {
+        return;
+      }
+      const input = event.inputBuffer.getChannelData(0);
+      const chunk = new Float32Array(input.length);
+      chunk.set(input);
+      auraVoiceUiState.chunks.push(chunk);
+      auraVoiceUiState.totalFrames += chunk.length;
+    };
+
+    source.connect(processor);
+    processor.connect(sink);
+    sink.connect(context.destination);
+
+    auraVoiceUiState.stream = stream;
+    auraVoiceUiState.context = context;
+    auraVoiceUiState.source = source;
+    auraVoiceUiState.processor = processor;
+    auraVoiceUiState.sink = sink;
+    auraVoiceUiState.sampleRate = context.sampleRate;
+    auraVoiceUiState.startedAt = performance.now();
+    auraVoiceUiState.recording = true;
+    auraVoiceUiState.maxTimer = setTimeout(() => {
+      auraVoiceUiState.holdActive = false;
+      void auraVoiceStopCapture({ automatic: true });
+    }, AURA_VOICE_MAX_CAPTURE_MS);
+
+    auraVoiceSetStatus(
+      "Listening locally in the ORION browser. Release to transcribe.",
+      "recording",
+    );
+  } catch (error) {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
+    auraVoiceUiState.holdActive = false;
+    auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+  } finally {
+    auraVoiceUiState.capturePending = false;
+    auraVoiceSyncControls();
+  }
+}
+
+async function auraVoiceStopCapture({
+  cancel = false,
+  automatic = false,
+} = {}) {
+  auraVoiceUiState.holdActive = false;
+
+  if (
+    auraVoiceUiState.capturePending
+    && !auraVoiceUiState.recording
+  ) {
+    return;
+  }
+  if (!auraVoiceUiState.recording || auraVoiceUiState.stopping) {
+    return;
+  }
+
+  auraVoiceUiState.stopping = true;
+  auraVoiceUiState.recording = false;
+  const chunks = auraVoiceUiState.chunks.slice();
+  const totalFrames = auraVoiceUiState.totalFrames;
+  const sampleRate = auraVoiceUiState.sampleRate;
+  auraVoiceUiState.chunks = [];
+  auraVoiceUiState.totalFrames = 0;
+  auraVoiceSyncControls();
+
+  try {
+    await auraVoiceReleaseCaptureResources();
+    const durationSeconds = totalFrames / sampleRate;
+    auraVoiceElement("voice-duration").textContent = (
+      `${durationSeconds.toFixed(2)} seconds`
+    );
+
+    if (cancel) {
+      auraVoiceSetStatus("Voice capture cancelled and released.", "idle");
+      return;
+    }
+    if (
+      !Number.isFinite(durationSeconds)
+      || durationSeconds < AURA_VOICE_MIN_CAPTURE_SECONDS
+    ) {
+      throw new Error("Recording was too short to transcribe.");
+    }
+
+    auraVoiceUiState.busy = true;
+    auraVoiceSetStatus(
+      automatic
+        ? "Maximum capture reached. Transcribing on ATLAS…"
+        : "Transcribing on ATLAS…",
+      "busy",
+    );
+    auraVoiceSyncControls();
+
+    const wav = auraVoiceEncodeWav(
+      chunks,
+      totalFrames,
+      sampleRate,
+    );
+    const payload = await auraVoiceFetchJson(
+      AURA_VOICE_TRANSCRIBE_ENDPOINT,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "audio/wav",
+          "X-AURA-Local-Intent": AURA_VOICE_LOCAL_INTENT,
+          "X-AURA-Voice-Confirm": "microphone-listen",
+          "X-AURA-Request-ID": auraVoiceRequestId("voice-stt"),
+        },
+        body: wav,
+      },
+    );
+
+    const transcript = String(payload.transcript || "").trim();
+    if (!transcript) {
+      throw new Error("ATLAS returned an empty transcript.");
+    }
+
+    const transcriptInput = auraVoiceElement("voice-transcript");
+    const speakInput = auraVoiceElement("voice-speak-text");
+    transcriptInput.value = transcript;
+    speakInput.value = transcript;
+    auraVoiceSetStatus(
+      `Transcript ready in ${Number(payload.elapsed_seconds).toFixed(2)}s. `
+      + "Review it before opening the chat draft.",
+      "ready",
+    );
+  } catch (error) {
+    auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+  } finally {
+    auraVoiceUiState.busy = false;
+    auraVoiceUiState.stopping = false;
+    auraVoiceSyncControls();
+  }
+}
+
+function auraVoiceStopPlayback() {
+  const audio = auraVoiceElement("voice-audio");
+  if (!audio) {
+    return;
+  }
+  audio.pause();
+  audio.currentTime = 0;
+  auraVoiceSetStatus("Voice playback stopped.", "idle");
+}
+
+async function auraVoiceSpeakText() {
+  const input = auraVoiceElement("voice-speak-text");
+  const text = input?.value.trim() || "";
+  if (!text || auraVoiceUiState.busy) {
+    return;
+  }
+
+  auraVoiceUiState.busy = true;
+  auraVoiceStopPlayback();
+  auraVoiceSetStatus("Synthesizing speech on ATLAS…", "busy");
+  auraVoiceSyncControls();
+
+  try {
+    const response = await fetch(AURA_VOICE_SYNTHESIZE_ENDPOINT, {
+      method: "POST",
+      cache: "no-store",
+      credentials: "same-origin",
+      headers: {
+        "Accept": "audio/wav",
+        "Content-Type": "application/json",
+        "X-AURA-Local-Intent": AURA_VOICE_LOCAL_INTENT,
+        "X-AURA-Request-ID": auraVoiceRequestId("voice-tts"),
+      },
+      body: JSON.stringify({
+        text,
+        confirm_speak: true,
+      }),
+    });
+
+    if (!response.ok) {
+      const payload = await response.json().catch(() => ({}));
+      throw new Error(
+        payload.detail
+        || payload.reason
+        || payload.error
+        || `HTTP ${response.status}`,
+      );
+    }
+
+    const audioBlob = await response.blob();
+    if (auraVoiceUiState.audioUrl) {
+      URL.revokeObjectURL(auraVoiceUiState.audioUrl);
+    }
+    auraVoiceUiState.audioUrl = URL.createObjectURL(audioBlob);
+
+    const audio = auraVoiceElement("voice-audio");
+    audio.src = auraVoiceUiState.audioUrl;
+    audio.load();
+    try {
+      await audio.play();
+      auraVoiceSetStatus("Playing synthesized speech on ORION.", "ready");
+    } catch {
+      auraVoiceSetStatus(
+        "Speech is ready. Use the audio control to play it.",
+        "ready",
+      );
+    }
+  } catch (error) {
+    auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+  } finally {
+    auraVoiceUiState.busy = false;
+    auraVoiceSyncControls();
+  }
+}
+
+function auraVoiceOpenChatDraft() {
+  const transcript = auraVoiceElement("voice-transcript")?.value.trim();
+  if (!transcript) {
+    return;
+  }
+
+  const fragment = new URLSearchParams({
+    voice_draft: transcript.slice(0, 8192),
+  });
+  window.location.assign(`/chat#${fragment.toString()}`);
+}
+
+function auraVoiceClearTranscript() {
+  const transcript = auraVoiceElement("voice-transcript");
+  const speakText = auraVoiceElement("voice-speak-text");
+  transcript.value = "";
+  speakText.value = "";
+  auraVoiceElement("voice-duration").textContent = "—";
+  auraVoiceSetStatus("Transcript cleared. No text was sent.", "idle");
+  auraVoiceSyncControls();
+}
+
+function auraVoiceBindControls() {
+  const holdButton = auraVoiceElement("voice-hold-to-talk");
+  const transcript = auraVoiceElement("voice-transcript");
+  const speakText = auraVoiceElement("voice-speak-text");
+
+  if (!holdButton || !transcript || !speakText) {
+    return;
+  }
+
+  holdButton.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) {
+      return;
+    }
+    event.preventDefault();
+    auraVoiceUiState.holdActive = true;
+    holdButton.setPointerCapture?.(event.pointerId);
+    void auraVoiceStartCapture();
+  });
+  holdButton.addEventListener("pointerup", (event) => {
+    event.preventDefault();
+    auraVoiceUiState.holdActive = false;
+    void auraVoiceStopCapture();
+  });
+  holdButton.addEventListener("pointercancel", () => {
+    auraVoiceUiState.holdActive = false;
+    void auraVoiceStopCapture({ cancel: true });
+  });
+  holdButton.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      if (
+        auraVoiceUiState.recording
+        || auraVoiceUiState.capturePending
+      ) {
+        auraVoiceUiState.holdActive = false;
+        void auraVoiceStopCapture({ cancel: true });
+      }
+      auraVoiceStopPlayback();
+      return;
+    }
+    if (
+      event.key.toLowerCase() !== "v"
+      || event.repeat
+      || event.ctrlKey
+      || event.altKey
+      || event.metaKey
+      || auraVoiceEditableTarget(event.target)
+    ) {
+      return;
+    }
+    event.preventDefault();
+    auraVoiceUiState.keyboardHeld = true;
+    auraVoiceUiState.holdActive = true;
+    void auraVoiceStartCapture();
+  });
+  document.addEventListener("keyup", (event) => {
+    if (
+      event.key.toLowerCase() !== "v"
+      || !auraVoiceUiState.keyboardHeld
+    ) {
+      return;
+    }
+    event.preventDefault();
+    auraVoiceUiState.keyboardHeld = false;
+    auraVoiceUiState.holdActive = false;
+    void auraVoiceStopCapture();
+  });
+
+  transcript.addEventListener("input", auraVoiceSyncControls);
+  speakText.addEventListener("input", auraVoiceSyncControls);
+  auraVoiceElement("voice-clear-transcript").addEventListener(
+    "click",
+    auraVoiceClearTranscript,
+  );
+  auraVoiceElement("voice-open-chat").addEventListener(
+    "click",
+    auraVoiceOpenChatDraft,
+  );
+  auraVoiceElement("voice-speak").addEventListener(
+    "click",
+    () => void auraVoiceSpeakText(),
+  );
+  auraVoiceElement("voice-stop-playback").addEventListener(
+    "click",
+    auraVoiceStopPlayback,
+  );
+  auraVoiceElement("voice-audio").addEventListener("ended", () => {
+    auraVoiceSetStatus("Voice playback completed.", "ready");
+  });
+
+  window.addEventListener("pagehide", () => {
+    auraVoiceUiState.holdActive = false;
+    auraVoiceUiState.recording = false;
+    void auraVoiceReleaseCaptureResources();
+    if (auraVoiceUiState.audioUrl) {
+      URL.revokeObjectURL(auraVoiceUiState.audioUrl);
+      auraVoiceUiState.audioUrl = null;
+    }
+  });
+
+  auraVoiceSyncControls();
+  void auraVoiceRefreshStatus();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    auraVoiceBindControls,
+    { once: true },
+  );
+} else {
+  queueMicrotask(auraVoiceBindControls);
+}

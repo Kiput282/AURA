@@ -1907,3 +1907,58 @@ async function start() {
 }
 
 document.addEventListener("DOMContentLoaded", start);
+
+/* Sprint 271 — import explicit voice transcript drafts */
+const AURA_VOICE_CHAT_DRAFT_FRAGMENT = "voice_draft";
+
+function importAuraVoiceTranscriptDraft() {
+  const fragmentText = window.location.hash.startsWith("#")
+    ? window.location.hash.slice(1)
+    : "";
+  const fragment = new URLSearchParams(fragmentText);
+  const draft = fragment.get(AURA_VOICE_CHAT_DRAFT_FRAGMENT);
+  if (!draft) {
+    return;
+  }
+
+  const cleanUrl = new URL(window.location.href);
+  cleanUrl.hash = "";
+  window.history.replaceState(
+    null,
+    "",
+    `${cleanUrl.pathname}${cleanUrl.search}`,
+  );
+
+  const input = byId("message-input");
+  if (!input) {
+    return;
+  }
+
+  if (input.value.trim()) {
+    setStatus(
+      "A voice transcript draft was received, but the existing composer "
+      + "was not replaced.",
+      "idle",
+    );
+    return;
+  }
+
+  input.value = draft.slice(0, 8192);
+  updateMessageCount();
+  syncComposerControls();
+  input.focus();
+  setStatus(
+    "Voice transcript loaded. Review it and send explicitly.",
+    "ready",
+  );
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    importAuraVoiceTranscriptDraft,
+    { once: true },
+  );
+} else {
+  queueMicrotask(importAuraVoiceTranscriptDraft);
+}

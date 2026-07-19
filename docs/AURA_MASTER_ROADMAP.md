@@ -4076,3 +4076,62 @@ Next implementation boundary: `voice_daily_use_activation`. Sprint 271
 discovery must reconcile this immediate boundary with the existing broader
 ORION roadmap before implementation; Sprint 270 does not silently reschedule
 that roadmap.
+
+## Sprint 271 — Voice Daily-Use Activation — Complete
+
+Version `v1.3.1` activates a bounded local voice path between ORION and
+ATLAS. The user explicitly holds the dashboard button or focused-page `V`;
+ORION records only during the requested turn; ATLAS performs local STT; the
+transcript remains editable; Open Chat Draft does not send automatically;
+local TTS is explicit; and Stop/Esc interrupts playback or capture.
+
+Live acceptance passed `21/21` plus `14/14` reconciliation and returned the
+runtime to safe-idle with the listener closed, worker released, and no
+temporary-audio residue.
+
+Next implementation boundary:
+`voice_auto_conversation_and_companion_context_reinforcement`.
+
+## Canonical execution sequence — Sprint 272 to Sprint 300
+
+The milestone targets remain unchanged: Sprint 280 -> `v1.4.0`, Sprint 290
+-> `v1.5.0`, and Sprint 300 -> `v2.0.0`. Each sprint remains
+discovery-first, and Sprints 280, 290, and 300 require live end-to-end
+acceptance with failure/recovery proof and final safe-idle restoration.
+
+| Sprint | Canonical focus |
+|---:|---|
+| 272 | PTT auto-conversation, TTS autoplay, initial companion persona/context reinforcement |
+| 273 | Native ORION agent foundation |
+| 274 | Authenticated pairing and device identity |
+| 275 | Capability negotiation, heartbeat, and live runtime grounding |
+| 276 | Allowlisted action preview and explicit approval |
+| 277 | Scoped permission/expiry/audit and reviewed-memory relevance |
+| 278 | Bounded ORION actions for capture, app launch, files, and OBS |
+| 279 | Watchdog, emergency stop, recovery, and natural-dialogue evaluation |
+| 280 | Mandatory live acceptance and `v1.4.0` |
+| 281 | Game detection and session-mode foundation |
+| 282 | Observer capture and input telemetry |
+| 283 | Coach Mode foundation and VAD foundation |
+| 284 | Recording pipeline and speech-turn detection |
+| 285 | Explicit hands-free session alpha and auto-idle |
+| 286 | Echo guard, device switching, and game/OBS coexistence |
+| 287 | Barge-in and interruption |
+| 288 | Coach + Observer + Recording + voice integration |
+| 289 | Disconnect, emergency-stop, and recovery rehearsal |
+| 290 | Mandatory live acceptance, hands-free beta, and `v1.5.0` |
+| 291 | v2 scope freeze and integration contract |
+| 292 | Unified chat, voice, vision, memory, and ORION session |
+| 293 | Context quality, persona consistency, and memory relevance |
+| 294 | Release-grade hands-free hardening and conversation recovery |
+| 295 | Control Center UX and ATLAS/ORION monitoring |
+| 296 | Base plugin manager and capability registration |
+| 297 | Initial avatar/dashboard presence |
+| 298 | Security, privacy, backup, restore, and rollback |
+| 299 | v2 release-candidate rehearsal |
+| 300 | Mandatory live acceptance and `v2.0.0` |
+
+Hands-free remains an optional explicitly enabled mode, never the default.
+Sensitive actions continue to require preview and approval; v2 does not
+introduce unrestricted shell access, silent cloud fallback, hidden
+microphone capture, unrestricted ORION control, or multiplayer automation.

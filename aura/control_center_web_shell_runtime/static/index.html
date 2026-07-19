@@ -41,6 +41,7 @@
         <a href="#overview" data-panel-link="overview">Overview</a>
         <a href="#service" data-panel-link="service">Service</a>
         <a href="#operations">Operations</a>
+        <a href="#voice">Voice</a>
         <a href="#capabilities" data-panel-link="capabilities">
           Capabilities
         </a>
@@ -804,6 +805,141 @@
           sampler, persistence, process control, or execution authority
           is enabled.
         </p>
+      </section>
+
+
+      <!-- Sprint 271 — voice daily-use activation -->
+      <section
+        id="voice"
+        class="panel voice-dashboard"
+        aria-labelledby="voice-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Sprint 271</p>
+            <h2 id="voice-title">Voice daily use</h2>
+          </div>
+          <span
+            id="voice-status"
+            class="panel-badge"
+            data-state="idle"
+          >Idle</span>
+        </div>
+
+        <p id="voice-status-detail" class="panel-copy" role="status">
+          Checking the isolated ATLAS STT/TTS backend.
+        </p>
+
+        <div class="voice-grid">
+          <article class="voice-card voice-capture-card">
+            <p class="voice-card-label">ORION microphone</p>
+            <h3>Push to talk</h3>
+            <button
+              id="voice-hold-to-talk"
+              class="voice-ptt-button"
+              type="button"
+              aria-pressed="false"
+              data-recording="false"
+              disabled
+            >
+              Hold to Talk
+            </button>
+            <p class="voice-shortcut">
+              Hold the dashboard button or <kbd>V</kbd> while this page
+              is focused. Release to transcribe. Press <kbd>Esc</kbd>
+              to cancel or stop playback.
+            </p>
+            <dl class="voice-detail-list">
+              <div>
+                <dt>Maximum capture</dt>
+                <dd>15 seconds</dd>
+              </div>
+              <div>
+                <dt>Last duration</dt>
+                <dd id="voice-duration">—</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article class="voice-card voice-transcript-card">
+            <p class="voice-card-label">ATLAS speech to text</p>
+            <h3>Transcript preview</h3>
+            <label for="voice-transcript">
+              Review or correct the transcript before opening chat.
+            </label>
+            <textarea
+              id="voice-transcript"
+              rows="7"
+              maxlength="8192"
+              placeholder="Your transcript will appear here."
+            ></textarea>
+            <div class="voice-actions">
+              <button
+                id="voice-clear-transcript"
+                type="button"
+                disabled
+              >
+                Clear
+              </button>
+              <button
+                id="voice-open-chat"
+                class="voice-primary-action"
+                type="button"
+                disabled
+              >
+                Open Chat Draft
+              </button>
+            </div>
+            <p class="voice-note">
+              Opening chat only pre-fills the composer. AURA does not
+              send the transcript until you review it and press Send.
+            </p>
+          </article>
+
+          <article class="voice-card voice-playback-card">
+            <p class="voice-card-label">ATLAS text to speech</p>
+            <h3>Explicit playback</h3>
+            <label for="voice-speak-text">
+              Text to synthesize, such as a copied AURA response.
+            </label>
+            <textarea
+              id="voice-speak-text"
+              rows="5"
+              maxlength="600"
+              placeholder="Enter up to 600 characters to speak."
+            ></textarea>
+            <div class="voice-actions">
+              <button
+                id="voice-speak"
+                class="voice-primary-action"
+                type="button"
+                disabled
+              >
+                Speak on ORION
+              </button>
+              <button
+                id="voice-stop-playback"
+                type="button"
+                disabled
+              >
+                Stop
+              </button>
+            </div>
+            <audio
+              id="voice-audio"
+              controls
+              preload="none"
+              aria-label="AURA synthesized speech playback"
+            ></audio>
+          </article>
+        </div>
+
+        <ul class="voice-boundary" aria-label="Voice safety boundary">
+          <li>Microphone access begins only while push-to-talk is held</li>
+          <li>Audio inference stays local on ATLAS</li>
+          <li>Raw microphone audio is not retained by AURA</li>
+          <li>No wake word, always-listening, cloud fallback, or action dispatch</li>
+        </ul>
       </section>
 
 <section

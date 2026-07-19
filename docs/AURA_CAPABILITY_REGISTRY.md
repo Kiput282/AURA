@@ -1223,3 +1223,25 @@ This capability records the successful Sprint 270 live acceptance summary and
 checksum. It does not store raw chat content, write memory, grant permission,
 add a route or panel, invoke a model, control the service, or create execution
 authority when inspected.
+
+## Sprint 271 runtime capability — Voice Daily-Use Activation
+
+- Capability ID: `voice_daily_use_activation`
+- State: `online`
+- Runtime level: `permission_gated_alpha_runtime`
+- Risk: `high`
+- Permission: `user_confirmation`
+- Introduced in: `1.3.1`
+- Category: `voice_runtime`
+- Control Center visible: `true`
+- Boundary: `voice_daily_use_activation`
+- Next boundary: `voice_auto_conversation_and_companion_context_reinforcement`
+
+This capability activates explicit ORION push-to-talk capture, bounded WAV
+transfer through the localhost tunnel, isolated local ATLAS STT, editable
+transcript preview, fragment-only chat draft handoff without automatic
+send, explicit local TTS generation, and ORION playback/stop controls.
+
+Always-listening, wake word, automatic chat send, TTS autoplay, cloud
+fallback, raw-audio retention, voice action dispatch, public binding, and
+automatic sensitive-action approval remain disabled.

@@ -1310,3 +1310,59 @@ local-model, bounded-failure, recovery, and safe-idle behavior were verified.
 Sprint 271 discovery must reconcile the immediate voice boundary with the
 existing broader ORION Safe Action Bridge roadmap before implementation.
 This checkpoint does not silently rewrite or reschedule the broader roadmap.
+
+## Canonical post-Sprint 271 path to v2.0.0
+
+Sprint 271 completes the manual-review voice daily-use boundary at
+`v1.3.1`. The roadmap reconciliation preserves the broader product
+milestones while making the interaction sequence explicit:
+
+- Sprint 272: optional PTT auto-conversation and TTS autoplay, plus initial
+  companion persona/context reinforcement;
+- Sprint 273–280: authenticated ORION Safe Action Bridge, ending with
+  mandatory live acceptance at `v1.4.0`;
+- Sprint 281–290: Game Companion Coach/Observer/Recording and hands-free
+  progression from foundation to operational beta, ending with mandatory
+  live acceptance at `v1.5.0`;
+- Sprint 291–300: unified product integration, release-grade hands-free,
+  plugin/avatar foundations, security/recovery hardening, release-candidate
+  rehearsal, and mandatory live acceptance at `v2.0.0`.
+
+Hands-free is always an optional explicitly enabled session with visible
+microphone state, Stop Listening/Esc, timeout, echo guard, and recovery.
+It does not authorize actions. Sensitive actions continue to require a
+visible preview and explicit approval.
+
+### Sprint-level execution map
+
+| Sprint | Focus |
+|---:|---|
+| 272 | Auto voice conversation, autoplay, persona/context reinforcement |
+| 273 | ORION agent foundation |
+| 274 | Authenticated pairing and device identity |
+| 275 | Heartbeat, capability negotiation, live grounding |
+| 276 | Action preview and explicit approval |
+| 277 | Scoped permission, expiry, audit, reviewed memory |
+| 278 | Bounded ORION capture/app/file/OBS actions |
+| 279 | Watchdog, emergency stop, recovery, dialogue evaluation |
+| 280 | `v1.4.0` live acceptance |
+| 281 | Game detection and session modes |
+| 282 | Observer and input telemetry |
+| 283 | Coach and VAD foundations |
+| 284 | Recording and turn detection |
+| 285 | Hands-free alpha and auto-idle |
+| 286 | Echo guard and device/game/OBS coexistence |
+| 287 | Barge-in |
+| 288 | Integrated Coach/Observer/Recording/voice |
+| 289 | Failure and recovery rehearsal |
+| 290 | `v1.5.0` live acceptance and hands-free beta |
+| 291 | v2 scope freeze |
+| 292 | Unified multimodal/ORION session |
+| 293 | Persona, context, and memory quality |
+| 294 | Hands-free release hardening |
+| 295 | Control Center and monitoring |
+| 296 | Plugin foundation |
+| 297 | Avatar/dashboard presence |
+| 298 | Security, privacy, backup, restore, rollback |
+| 299 | v2 release-candidate rehearsal |
+| 300 | `v2.0.0` mandatory live acceptance |
