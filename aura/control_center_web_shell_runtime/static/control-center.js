@@ -1189,6 +1189,13 @@ document.addEventListener("DOMContentLoaded", startControlCenter);
 const AURA_VOICE_STATUS_ENDPOINT = "/api/voice/status";
 const AURA_VOICE_TRANSCRIBE_ENDPOINT = "/api/voice/transcribe";
 const AURA_VOICE_SYNTHESIZE_ENDPOINT = "/api/voice/synthesize";
+const AURA_VOICE_TTS_SERVER_MAX_CHARACTERS = 600;
+const AURA_VOICE_TTS_CHUNK_CHARACTERS = 360;
+const AURA_VOICE_TTS_MAX_CHUNKS = 8;
+const AURA_VOICE_AUTO_STATUS_ENDPOINT = "/api/voice/auto-conversation/status";
+const AURA_VOICE_AUTO_TURN_ENDPOINT = "/api/voice/auto-conversation/turn";
+const AURA_VOICE_CHAT_SESSIONS_ENDPOINT = "/api/chat/sessions";
+const AURA_VOICE_MODEL_STATUS_ENDPOINT = "/api/model/status";
 const AURA_VOICE_LOCAL_INTENT = "browser-chat-session";
 const AURA_VOICE_MAX_CAPTURE_MS = 15000;
 const AURA_VOICE_MIN_CAPTURE_SECONDS = 0.2;
@@ -1212,6 +1219,18 @@ const auraVoiceUiState = {
   startedAt: 0,
   maxTimer: null,
   audioUrl: null,
+
+  autoEnabled: false,
+  autoStatus: null,
+  modelStatus: null,
+  sessions: [],
+  selectedSessionId: "",
+  selectedSessionRevision: null,
+  turnGeneration: 0,
+  turnController: null,
+  ttsController: null,
+  playbackContext: null,
+  audioUnlocked: false,
 };
 
 function auraVoiceElement(id) {
@@ -1223,6 +1242,22 @@ function auraVoiceRequestId(prefix) {
     return `${prefix}-${globalThis.crypto.randomUUID()}`;
   }
   return `${prefix}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function auraVoiceClientMessageId() {
+  if (globalThis.crypto?.randomUUID) {
+    const suffix = globalThis.crypto.randomUUID().replaceAll("-", "");
+    return `client_${suffix}`;
+  }
+  const timestamp = Date.now().toString(16);
+  const random = Math.random().toString(16).slice(2);
+  return `client_${timestamp}${random}`.slice(0, 71);
+}
+function auraVoiceModelRequestId() {
+  if (globalThis.crypto?.randomUUID) {
+    return `modelreq_${globalThis.crypto.randomUUID().replaceAll("-", "")}`;
+  }
+  return `modelreq_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 }
 
 function auraVoiceSetStatus(message, state = "idle") {
@@ -1272,9 +1307,23 @@ function auraVoiceSyncControls() {
   const speak = auraVoiceElement("voice-speak");
   const stop = auraVoiceElement("voice-stop-playback");
   const audio = auraVoiceElement("voice-audio");
+  const autoToggle = auraVoiceElement("voice-auto-enable");
+  const autoSession = auraVoiceElement("voice-auto-session");
+  const autoRefresh = auraVoiceElement("voice-auto-refresh");
+  const autoState = auraVoiceElement("voice-auto-state");
 
   const transcriptReady = Boolean(transcript?.value.trim());
   const speakReady = Boolean(speakText?.value.trim());
+  const autoRuntimeReady = Boolean(
+    auraVoiceUiState.autoStatus?.ready
+    && auraVoiceUiState.autoStatus?.model_invocation_enabled
+    && auraVoiceUiState.modelStatus?.active
+    && auraVoiceUiState.modelStatus?.degraded !== true
+  );
+  const selectedSessionReady = Boolean(
+    auraVoiceUiState.selectedSessionId
+    && Number.isInteger(auraVoiceUiState.selectedSessionRevision)
+  );
 
   if (holdButton) {
     holdButton.disabled = !auraVoiceUiState.ready
@@ -1293,6 +1342,29 @@ function auraVoiceSyncControls() {
       : "Hold to Talk";
   }
 
+  if (autoToggle) {
+    autoToggle.checked = auraVoiceUiState.autoEnabled;
+    autoToggle.disabled = !auraVoiceUiState.ready || !autoRuntimeReady;
+  }
+  if (autoSession) {
+    autoSession.disabled = (
+      auraVoiceUiState.busy || !auraVoiceUiState.autoEnabled
+    );
+  }
+  if (autoRefresh) {
+    autoRefresh.disabled = auraVoiceUiState.busy;
+  }
+  if (autoState) {
+    autoState.textContent = auraVoiceUiState.autoEnabled
+      ? selectedSessionReady
+        ? "Enabled"
+        : "Select session"
+      : "Manual";
+    autoState.dataset.state = (
+      auraVoiceUiState.autoEnabled && selectedSessionReady
+    ) ? "ready" : "idle";
+  }
+
   if (openChat) {
     openChat.disabled = auraVoiceUiState.busy || !transcriptReady;
   }
@@ -1303,8 +1375,257 @@ function auraVoiceSyncControls() {
     speak.disabled = auraVoiceUiState.busy || !speakReady;
   }
   if (stop) {
-    stop.disabled = !audio?.src;
+    stop.disabled = !audio?.src
+      && !auraVoiceUiState.turnController
+      && !auraVoiceUiState.ttsController;
   }
+}
+
+function auraVoiceSelectedSession() {
+  return auraVoiceUiState.sessions.find(
+    (session) => (
+      session.session_id === auraVoiceUiState.selectedSessionId
+      && session.status === "active"
+    ),
+  ) || null;
+}
+
+function auraVoiceInvalidateTurn({ stopPlayback = false } = {}) {
+  auraVoiceUiState.turnGeneration += 1;
+  auraVoiceUiState.turnController?.abort();
+  auraVoiceUiState.ttsController?.abort();
+  auraVoiceUiState.turnController = null;
+  auraVoiceUiState.ttsController = null;
+  if (stopPlayback) {
+    auraVoiceStopPlayback({ announce: false });
+  }
+}
+
+async function auraVoiceUnlockAudio() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) {
+    throw new Error("Browser audio unlock is unavailable.");
+  }
+  if (!auraVoiceUiState.playbackContext) {
+    auraVoiceUiState.playbackContext = new AudioContextClass();
+  }
+  await auraVoiceUiState.playbackContext.resume();
+  auraVoiceUiState.audioUnlocked = (
+    auraVoiceUiState.playbackContext.state === "running"
+  );
+  if (!auraVoiceUiState.audioUnlocked) {
+    throw new Error("Browser audio could not be unlocked.");
+  }
+}
+
+function auraVoiceRenderSessions() {
+  const select = auraVoiceElement("voice-auto-session");
+  if (!select) {
+    return;
+  }
+  const previous = auraVoiceUiState.selectedSessionId;
+  select.replaceChildren();
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = auraVoiceUiState.sessions.length
+    ? "Select an active chat session"
+    : "No active chat session available";
+  select.append(placeholder);
+
+  auraVoiceUiState.sessions.forEach((session) => {
+    const option = document.createElement("option");
+    option.value = session.session_id;
+    option.textContent = (
+      `${session.title || "Untitled session"} · `
+      + `${session.message_count || 0} messages`
+    );
+    option.selected = session.session_id === previous;
+    select.append(option);
+  });
+
+  if (!auraVoiceUiState.sessions.some(
+    (session) => session.session_id === previous,
+  )) {
+    auraVoiceUiState.selectedSessionId = "";
+    auraVoiceUiState.selectedSessionRevision = null;
+    select.value = "";
+  }
+}
+
+async function auraVoiceRefreshAutoConversation() {
+  const detail = auraVoiceElement("voice-auto-detail");
+  try {
+    const [autoStatus, sessionPayload, modelStatus] = await Promise.all([
+      auraVoiceFetchJson(AURA_VOICE_AUTO_STATUS_ENDPOINT),
+      auraVoiceFetchJson(AURA_VOICE_CHAT_SESSIONS_ENDPOINT),
+      auraVoiceFetchJson(AURA_VOICE_MODEL_STATUS_ENDPOINT),
+    ]);
+    auraVoiceUiState.autoStatus = autoStatus;
+    auraVoiceUiState.modelStatus = modelStatus;
+    auraVoiceUiState.sessions = Array.isArray(sessionPayload.sessions)
+      ? sessionPayload.sessions.filter(
+          (session) => session.status === "active",
+        )
+      : [];
+
+    const selected = auraVoiceSelectedSession();
+    if (selected) {
+      auraVoiceUiState.selectedSessionRevision = selected.revision;
+    }
+    auraVoiceRenderSessions();
+
+    if (detail) {
+      detail.textContent = modelStatus.active === true
+        && modelStatus.degraded !== true
+        ? (
+          "Manual Review is default. Enable this page session, "
+          + "then select one active chat session."
+        )
+        : "The local model bridge is not active.";
+    }
+  } catch (error) {
+    auraVoiceUiState.autoStatus = null;
+    auraVoiceUiState.modelStatus = null;
+    auraVoiceUiState.sessions = [];
+    auraVoiceRenderSessions();
+    if (detail) {
+      detail.textContent = auraVoiceErrorMessage(error);
+    }
+  }
+  auraVoiceSyncControls();
+}
+
+async function auraVoiceSetAutoConversationEnabled(enabled) {
+  if (!enabled) {
+    auraVoiceUiState.autoEnabled = false;
+    auraVoiceInvalidateTurn({ stopPlayback: true });
+    auraVoiceSetStatus(
+      "Auto Conversation disabled. Manual Review is active.",
+      "idle",
+    );
+    auraVoiceSyncControls();
+    return;
+  }
+
+  await auraVoiceUnlockAudio();
+  await auraVoiceRefreshAutoConversation();
+  if (
+    !auraVoiceUiState.autoStatus?.ready
+    || !auraVoiceUiState.autoStatus?.model_invocation_enabled
+    || !auraVoiceUiState.modelStatus?.active
+    || auraVoiceUiState.modelStatus?.degraded === true
+  ) {
+    throw new Error("Auto Conversation runtime is not ready.");
+  }
+  auraVoiceUiState.autoEnabled = true;
+  auraVoiceSetStatus(
+    "Auto Conversation enabled for this page only. Select a session.",
+    "ready",
+  );
+  auraVoiceSyncControls();
+}
+
+async function auraVoiceRunAutoConversation(transcript, generation) {
+  if (!auraVoiceUiState.autoEnabled) {
+    return null;
+  }
+  const session = auraVoiceSelectedSession();
+  if (!session) {
+    throw new Error(
+      "Select one active chat session before using Auto Conversation.",
+    );
+  }
+  if (!auraVoiceUiState.audioUnlocked) {
+    throw new Error("Enable Auto Conversation to unlock browser audio.");
+  }
+
+  const controller = new AbortController();
+  auraVoiceUiState.turnController?.abort();
+  auraVoiceUiState.turnController = controller;
+  auraVoiceSetStatus(
+    `Sending one turn to ${session.title || "the selected session"}…`,
+    "busy",
+  );
+  auraVoiceSyncControls();
+
+  try {
+    const payload = await auraVoiceFetchJson(
+      AURA_VOICE_AUTO_TURN_ENDPOINT,
+      {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "X-AURA-Local-Intent": AURA_VOICE_LOCAL_INTENT,
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          session_id: session.session_id,
+          transcript,
+          expected_revision: session.revision,
+          client_message_id: auraVoiceClientMessageId(),
+          request_id: auraVoiceModelRequestId(),
+          confirm_auto_conversation: true,
+          confirm_model_request: true,
+        }),
+      },
+    );
+    if (
+      generation !== auraVoiceUiState.turnGeneration
+      || !auraVoiceUiState.autoEnabled
+      || session.session_id !== auraVoiceUiState.selectedSessionId
+    ) {
+      return null;
+    }
+
+    const assistantText = String(payload.assistant_text || "").trim();
+    if (!assistantText) {
+      throw new Error("AURA returned an empty assistant response.");
+    }
+
+    const responseNode = auraVoiceElement("voice-auto-response");
+    if (responseNode) {
+      responseNode.textContent = assistantText;
+      responseNode.hidden = false;
+    }
+    const speakInput = auraVoiceElement("voice-speak-text");
+    if (speakInput) {
+      speakInput.value = assistantText;
+    }
+
+    await auraVoiceRefreshAutoConversation();
+    if (
+      generation !== auraVoiceUiState.turnGeneration
+      || !auraVoiceUiState.autoEnabled
+      || session.session_id !== auraVoiceUiState.selectedSessionId
+    ) {
+      return payload;
+    }
+
+    auraVoiceSetStatus(
+      "AURA response is visible. Preparing local speech…",
+      "busy",
+    );
+    await auraVoiceSpeakText({
+      textOverride: assistantText,
+      manageBusy: false,
+      generation,
+    });
+    return payload;
+  } finally {
+    if (auraVoiceUiState.turnController === controller) {
+      auraVoiceUiState.turnController = null;
+    }
+    auraVoiceSyncControls();
+  }
+}
+
+function auraVoiceStopAll() {
+  auraVoiceInvalidateTurn({ stopPlayback: true });
+  auraVoiceUiState.busy = false;
+  auraVoiceSetStatus("Voice work stopped.", "idle");
+  auraVoiceSyncControls();
 }
 
 function auraVoiceWriteAscii(view, offset, value) {
@@ -1621,13 +1942,23 @@ async function auraVoiceStopCapture({
     const speakInput = auraVoiceElement("voice-speak-text");
     transcriptInput.value = transcript;
     speakInput.value = transcript;
-    auraVoiceSetStatus(
-      `Transcript ready in ${Number(payload.elapsed_seconds).toFixed(2)}s. `
-      + "Review it before opening the chat draft.",
-      "ready",
-    );
+    if (auraVoiceUiState.autoEnabled) {
+      const generation = auraVoiceUiState.turnGeneration + 1;
+      auraVoiceUiState.turnGeneration = generation;
+      await auraVoiceRunAutoConversation(transcript, generation);
+    } else {
+      auraVoiceSetStatus(
+        `Transcript ready in ${Number(payload.elapsed_seconds).toFixed(2)}s. `
+        + "Review it before opening the chat draft.",
+        "ready",
+      );
+    }
   } catch (error) {
-    auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+    if (error.name === "AbortError") {
+      auraVoiceSetStatus("Voice work cancelled.", "idle");
+    } else {
+      auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+    }
   } finally {
     auraVoiceUiState.busy = false;
     auraVoiceUiState.stopping = false;
@@ -1635,77 +1966,320 @@ async function auraVoiceStopCapture({
   }
 }
 
-function auraVoiceStopPlayback() {
+function auraVoiceStopPlayback({ announce = true } = {}) {
   const audio = auraVoiceElement("voice-audio");
   if (!audio) {
     return;
   }
   audio.pause();
   audio.currentTime = 0;
-  auraVoiceSetStatus("Voice playback stopped.", "idle");
+  if (announce) {
+    auraVoiceSetStatus("Voice playback stopped.", "idle");
+  }
 }
 
-async function auraVoiceSpeakText() {
+function auraVoicePlanTtsChunks(
+  text,
+  {
+    maxCharacters = AURA_VOICE_TTS_CHUNK_CHARACTERS,
+    maxChunks = AURA_VOICE_TTS_MAX_CHUNKS,
+  } = {},
+) {
+  const boundedMaximum = Math.min(
+    Math.max(1, Number(maxCharacters) || 1),
+    AURA_VOICE_TTS_SERVER_MAX_CHARACTERS,
+  );
+  const boundedChunkCount = Math.max(
+    1,
+    Number(maxChunks) || 1,
+  );
+  const normalized = String(text ?? "")
+    .replace(/\r\n?/g, "\n")
+    .trim();
+
+  if (!normalized) {
+    return {
+      chunks: [],
+      truncated: false,
+      originalCharacters: 0,
+      spokenCharacters: 0,
+    };
+  }
+
+  const chunks = [];
+  let remaining = normalized;
+
+  while (remaining && chunks.length < boundedChunkCount) {
+    if (remaining.length <= boundedMaximum) {
+      chunks.push(remaining);
+      remaining = "";
+      break;
+    }
+
+    const window = remaining.slice(0, boundedMaximum + 1);
+    const minimumBoundary = Math.floor(boundedMaximum * 0.45);
+    const boundaryPatterns = [
+      /[.!?…]["')\]]?\s+/g,
+      /\n+/g,
+      /[,;:]\s+/g,
+      /\s+/g,
+    ];
+
+    let boundary = -1;
+    for (const pattern of boundaryPatterns) {
+      let match;
+      let candidate = -1;
+      while ((match = pattern.exec(window)) !== null) {
+        const matchEnd = match.index + match[0].length;
+        if (
+          matchEnd >= minimumBoundary
+          && matchEnd <= boundedMaximum
+        ) {
+          candidate = matchEnd;
+        }
+      }
+      if (candidate > 0) {
+        boundary = candidate;
+        break;
+      }
+    }
+
+    if (boundary <= 0) {
+      boundary = boundedMaximum;
+    }
+
+    let chunk = remaining.slice(0, boundary).trim();
+    if (!chunk) {
+      boundary = boundedMaximum;
+      chunk = remaining.slice(0, boundary).trim();
+    }
+
+    chunks.push(chunk);
+    remaining = remaining.slice(boundary).trimStart();
+  }
+
+  const spokenCharacters = chunks.reduce(
+    (total, chunk) => total + chunk.length,
+    0,
+  );
+
+  return {
+    chunks,
+    truncated: Boolean(remaining.trim()),
+    originalCharacters: normalized.length,
+    spokenCharacters,
+  };
+}
+
+function auraVoiceCreatePlaybackTracker(audio, signal) {
+  let settled = false;
+  let resolvePromise;
+  let rejectPromise;
+
+  const promise = new Promise((resolve, reject) => {
+    resolvePromise = resolve;
+    rejectPromise = reject;
+  });
+
+  const cleanup = () => {
+    audio.removeEventListener("ended", onEnded);
+    audio.removeEventListener("error", onError);
+    signal.removeEventListener("abort", onAbort);
+  };
+
+  const settle = (callback, value) => {
+    if (settled) {
+      return;
+    }
+    settled = true;
+    cleanup();
+    callback(value);
+  };
+
+  const onEnded = () => settle(resolvePromise);
+  const onError = () => settle(
+    rejectPromise,
+    new Error("Audio playback failed."),
+  );
+  const onAbort = () => {
+    audio.pause();
+    settle(
+      rejectPromise,
+      new DOMException("Playback aborted.", "AbortError"),
+    );
+  };
+
+  audio.addEventListener("ended", onEnded);
+  audio.addEventListener("error", onError);
+  signal.addEventListener("abort", onAbort, { once: true });
+
+  if (signal.aborted) {
+    onAbort();
+  }
+
+  return {
+    promise,
+    cleanup,
+  };
+}
+
+async function auraVoicePlayLoadedAudio(audio, signal) {
+  const tracker = auraVoiceCreatePlaybackTracker(audio, signal);
+  try {
+    await audio.play();
+  } catch (error) {
+    tracker.cleanup();
+    return {
+      started: false,
+      error,
+    };
+  }
+
+  await tracker.promise;
+  return {
+    started: true,
+    error: null,
+  };
+}
+
+async function auraVoiceSpeakText({
+  textOverride = null,
+  manageBusy = true,
+  generation = null,
+} = {}) {
   const input = auraVoiceElement("voice-speak-text");
-  const text = input?.value.trim() || "";
-  if (!text || auraVoiceUiState.busy) {
+  const text = String(textOverride ?? input?.value ?? "").trim();
+  if (!text || (manageBusy && auraVoiceUiState.busy)) {
     return;
   }
 
-  auraVoiceUiState.busy = true;
-  auraVoiceStopPlayback();
-  auraVoiceSetStatus("Synthesizing speech on ATLAS…", "busy");
+  const plan = auraVoicePlanTtsChunks(text);
+  if (!plan.chunks.length) {
+    return;
+  }
+
+  if (manageBusy) {
+    auraVoiceUiState.busy = true;
+  }
+  auraVoiceStopPlayback({ announce: false });
   auraVoiceSyncControls();
 
+  const controller = new AbortController();
+  auraVoiceUiState.ttsController?.abort();
+  auraVoiceUiState.ttsController = controller;
+
   try {
-    const response = await fetch(AURA_VOICE_SYNTHESIZE_ENDPOINT, {
-      method: "POST",
-      cache: "no-store",
-      credentials: "same-origin",
-      headers: {
-        "Accept": "audio/wav",
-        "Content-Type": "application/json",
-        "X-AURA-Local-Intent": AURA_VOICE_LOCAL_INTENT,
-        "X-AURA-Request-ID": auraVoiceRequestId("voice-tts"),
-      },
-      body: JSON.stringify({
-        text,
-        confirm_speak: true,
-      }),
-    });
+    for (let index = 0; index < plan.chunks.length; index += 1) {
+      if (
+        controller.signal.aborted
+        || (
+          generation !== null
+          && generation !== auraVoiceUiState.turnGeneration
+        )
+      ) {
+        return;
+      }
 
-    if (!response.ok) {
-      const payload = await response.json().catch(() => ({}));
-      throw new Error(
-        payload.detail
-        || payload.reason
-        || payload.error
-        || `HTTP ${response.status}`,
-      );
-    }
+      const chunk = plan.chunks[index];
+      const part = index + 1;
+      const total = plan.chunks.length;
 
-    const audioBlob = await response.blob();
-    if (auraVoiceUiState.audioUrl) {
-      URL.revokeObjectURL(auraVoiceUiState.audioUrl);
-    }
-    auraVoiceUiState.audioUrl = URL.createObjectURL(audioBlob);
-
-    const audio = auraVoiceElement("voice-audio");
-    audio.src = auraVoiceUiState.audioUrl;
-    audio.load();
-    try {
-      await audio.play();
-      auraVoiceSetStatus("Playing synthesized speech on ORION.", "ready");
-    } catch {
       auraVoiceSetStatus(
-        "Speech is ready. Use the audio control to play it.",
+        total > 1
+          ? `Synthesizing speech part ${part} of ${total} on ATLAS…`
+          : "Synthesizing speech on ATLAS…",
+        "busy",
+      );
+      auraVoiceSyncControls();
+
+      const response = await fetch(AURA_VOICE_SYNTHESIZE_ENDPOINT, {
+        method: "POST",
+        cache: "no-store",
+        credentials: "same-origin",
+        headers: {
+          "Accept": "audio/wav",
+          "Content-Type": "application/json",
+          "X-AURA-Local-Intent": AURA_VOICE_LOCAL_INTENT,
+          "X-AURA-Request-ID": auraVoiceRequestId("voice-tts"),
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          text: chunk,
+          confirm_speak: true,
+        }),
+      });
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(
+          payload.detail
+          || payload.reason
+          || payload.error
+          || `HTTP ${response.status}`,
+        );
+      }
+      if (
+        generation !== null
+        && generation !== auraVoiceUiState.turnGeneration
+      ) {
+        return;
+      }
+
+      const audioBlob = await response.blob();
+      if (auraVoiceUiState.audioUrl) {
+        URL.revokeObjectURL(auraVoiceUiState.audioUrl);
+      }
+      auraVoiceUiState.audioUrl = URL.createObjectURL(audioBlob);
+
+      const audio = auraVoiceElement("voice-audio");
+      audio.src = auraVoiceUiState.audioUrl;
+      audio.load();
+
+      auraVoiceSetStatus(
+        total > 1
+          ? `Playing AURA speech part ${part} of ${total} on ORION…`
+          : "Playing AURA's synthesized response on ORION.",
         "ready",
       );
+
+      const playback = await auraVoicePlayLoadedAudio(
+        audio,
+        controller.signal,
+      );
+      if (!playback.started) {
+        auraVoiceSetStatus(
+          total > 1
+            ? (
+              `Speech part ${part} of ${total} is ready. `
+              + "Use the audio control to play it."
+            )
+            : "Speech is ready. Use the audio control to play it.",
+          "ready",
+        );
+        return;
+      }
     }
+
+    auraVoiceSetStatus(
+      plan.truncated
+        ? (
+          "Finished the bounded spoken preview. "
+          + "The complete response remains visible."
+        )
+        : "AURA's spoken response finished.",
+      "ready",
+    );
   } catch (error) {
-    auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+    if (error.name !== "AbortError") {
+      auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+    }
   } finally {
-    auraVoiceUiState.busy = false;
+    if (auraVoiceUiState.ttsController === controller) {
+      auraVoiceUiState.ttsController = null;
+    }
+    if (manageBusy) {
+      auraVoiceUiState.busy = false;
+    }
     auraVoiceSyncControls();
   }
 }
@@ -1772,7 +2346,7 @@ function auraVoiceBindControls() {
         auraVoiceUiState.holdActive = false;
         void auraVoiceStopCapture({ cancel: true });
       }
-      auraVoiceStopPlayback();
+      auraVoiceStopAll();
       return;
     }
     if (
@@ -1805,6 +2379,39 @@ function auraVoiceBindControls() {
 
   transcript.addEventListener("input", auraVoiceSyncControls);
   speakText.addEventListener("input", auraVoiceSyncControls);
+  auraVoiceElement("voice-auto-enable").addEventListener(
+    "change",
+    (event) => {
+      const enabled = Boolean(event.currentTarget.checked);
+      void auraVoiceSetAutoConversationEnabled(enabled).catch((error) => {
+        auraVoiceUiState.autoEnabled = false;
+        event.currentTarget.checked = false;
+        auraVoiceSetStatus(auraVoiceErrorMessage(error), "error");
+        auraVoiceSyncControls();
+      });
+    },
+  );
+  auraVoiceElement("voice-auto-session").addEventListener(
+    "change",
+    (event) => {
+      auraVoiceInvalidateTurn({ stopPlayback: true });
+      auraVoiceUiState.selectedSessionId = event.currentTarget.value;
+      const selected = auraVoiceSelectedSession();
+      auraVoiceUiState.selectedSessionRevision = (
+        selected?.revision ?? null
+      );
+      const responseNode = auraVoiceElement("voice-auto-response");
+      if (responseNode) {
+        responseNode.hidden = true;
+        responseNode.textContent = "";
+      }
+      auraVoiceSyncControls();
+    },
+  );
+  auraVoiceElement("voice-auto-refresh").addEventListener(
+    "click",
+    () => void auraVoiceRefreshAutoConversation(),
+  );
   auraVoiceElement("voice-clear-transcript").addEventListener(
     "click",
     auraVoiceClearTranscript,
@@ -1819,7 +2426,7 @@ function auraVoiceBindControls() {
   );
   auraVoiceElement("voice-stop-playback").addEventListener(
     "click",
-    auraVoiceStopPlayback,
+    auraVoiceStopAll,
   );
   auraVoiceElement("voice-audio").addEventListener("ended", () => {
     auraVoiceSetStatus("Voice playback completed.", "ready");
@@ -1828,15 +2435,22 @@ function auraVoiceBindControls() {
   window.addEventListener("pagehide", () => {
     auraVoiceUiState.holdActive = false;
     auraVoiceUiState.recording = false;
+    auraVoiceInvalidateTurn({ stopPlayback: true });
     void auraVoiceReleaseCaptureResources();
     if (auraVoiceUiState.audioUrl) {
       URL.revokeObjectURL(auraVoiceUiState.audioUrl);
       auraVoiceUiState.audioUrl = null;
     }
+    if (auraVoiceUiState.playbackContext) {
+      void auraVoiceUiState.playbackContext.close();
+      auraVoiceUiState.playbackContext = null;
+      auraVoiceUiState.audioUnlocked = false;
+    }
   });
 
   auraVoiceSyncControls();
   void auraVoiceRefreshStatus();
+  void auraVoiceRefreshAutoConversation();
 }
 
 if (document.readyState === "loading") {

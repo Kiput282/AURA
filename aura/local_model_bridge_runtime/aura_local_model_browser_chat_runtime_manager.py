@@ -99,35 +99,40 @@ class AuraLocalModelBrowserChatRuntimeManager:
         }
 
     def submit_model_message(
-        self,
-        session_id: str,
-        *,
-        content: str,
-        client_message_id: str,
-        expected_revision: int,
-        request_id: str,
-        confirm_model_request: bool,
-    ) -> dict[str, Any]:
-        self._require_configuration()
+            self,
+            session_id: str,
+            *,
+            content: str,
+            client_message_id: str,
+            expected_revision: int,
+            request_id: str,
+            confirm_model_request: bool,
+            system_prompt: str | None = None,
+        ) -> dict[str, Any]:
+            self._require_configuration()
 
-        def response_factory(
-            messages: list[dict[str, str]],
-        ) -> Mapping[str, Any]:
-            return self.bridge_manager.generate(
-                messages=messages,
-                request_id=request_id,
-                confirm_model_request=confirm_model_request,
+            def response_factory(
+                messages: list[dict[str, str]],
+            ) -> Mapping[str, Any]:
+                return self.bridge_manager.generate(
+                    messages=messages,
+                    request_id=request_id,
+                    confirm_model_request=confirm_model_request,
+                )
+
+            result = self.session_manager.submit_local_model_message(
+                session_id,
+                content=content,
+                client_message_id=client_message_id,
+                expected_revision=expected_revision,
+                system_prompt=(
+                    system_prompt
+                    if system_prompt is not None
+                    else self.SYSTEM_PROMPT
+                ),
+                response_factory=response_factory,
             )
-
-        result = self.session_manager.submit_local_model_message(
-            session_id,
-            content=content,
-            client_message_id=client_message_id,
-            expected_revision=expected_revision,
-            system_prompt=self.SYSTEM_PROMPT,
-            response_factory=response_factory,
-        )
-        return {
-            **result,
-            "browser_chat_model_bridge": True,
-        }
+            return {
+                **result,
+                "browser_chat_model_bridge": True,
+            }

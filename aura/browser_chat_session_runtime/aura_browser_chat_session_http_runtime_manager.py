@@ -70,6 +70,10 @@ from aura.voice.voice_daily_use_runtime_manager import (
     VoiceDailyUseRuntimeError,
     VoiceDailyUseValidationError,
 )
+from aura.voice.voice_auto_conversation_runtime_manager import (
+    AuraVoiceAutoConversationRuntimeManager,
+    VoiceAutoConversationValidationError,
+)
 
 
 class AuraBrowserChatSessionHttpRuntimeManager(
@@ -121,6 +125,9 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         "GET /api/voice/status",
         "POST /api/voice/transcribe",
         "POST /api/voice/synthesize",
+        "GET /api/voice/auto-conversation/status",
+        "POST /api/voice/auto-conversation/prepare",
+        "POST /api/voice/auto-conversation/turn",
     )
     VISIBILITY_ASSET_ROUTES = (
         AuraPermissionAuditRecoveryWebSurfaceManager.ASSET_ROUTES
@@ -138,7 +145,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
         len(VISIBILITY_ASSET_ROUTES)
         + len(VISIBILITY_ROUTE_CONTRACTS)
     )
-    TOTAL_ROUTE_CONTRACT_COUNT = 50
+    TOTAL_ROUTE_CONTRACT_COUNT = 53
     MAX_REQUEST_BODY_BYTES = 65536
     MAX_VOICE_AUDIO_BYTES = (
         AuraVoiceDailyUseRuntimeManager.MAX_AUDIO_BYTES
@@ -276,6 +283,11 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 project_root=project_root
             )
         )
+        self.voice_auto_conversation_manager = (
+            AuraVoiceAutoConversationRuntimeManager(
+                project_root=project_root
+            )
+        )
 
     def operational_model_handoff_status(
         self,
@@ -395,6 +407,17 @@ class AuraBrowserChatSessionHttpRuntimeManager(
             "voice_wake_word": False,
             "voice_cloud_fallback": False,
             "voice_direct_action_dispatch": False,
+            "voice_auto_conversation_foundation": True,
+            "voice_auto_conversation_enabled_by_default": False,
+            "voice_auto_conversation_explicit_enable_required": True,
+            "voice_auto_conversation_turn_route": (
+                "/api/voice/auto-conversation/turn"
+            ),
+            "voice_auto_conversation_active_session_required": True,
+            "voice_auto_conversation_stale_turn_suppression": True,
+            "voice_auto_conversation_model_invocation": True,
+            "voice_auto_conversation_automatic_send": True,
+            "voice_auto_conversation_tts_autoplay": True,
             "tool_execution": False,
             "action_dispatch": False,
             "command_execution": False,
@@ -646,6 +669,11 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                 self,
                 path: str,
             ) -> tuple[int, dict[str, Any]] | None:
+                if path == "/api/voice/auto-conversation/status":
+                    return 200, (
+                        manager.voice_auto_conversation_manager
+                        .status()
+                    )
                 if path == "/api/voice/status":
                     return 200, (
                         manager.voice_daily_use_manager
@@ -865,7 +893,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "browser_chat_session_runtime": True,
                             "browser_chat_http_routes": 17,
                             "voice_daily_use_runtime": True,
-                            "voice_http_routes": 3,
+                            "voice_http_routes": 6,
                             "voice_backend_ready": (
                                 manager.voice_daily_use_manager
                                 .status()["ready"]
@@ -883,7 +911,7 @@ class AuraBrowserChatSessionHttpRuntimeManager(
                             "permission_mutation_runtime": False,
                             "audit_writer_runtime": False,
                             "automatic_recovery_runtime": False,
-                            "total_route_contracts": 50,
+                            "total_route_contracts": 53,
                             "model_bridge_configured": (
                                 manager.local_model_chat_manager
                                 .status()["configured"]
@@ -1239,6 +1267,198 @@ class AuraBrowserChatSessionHttpRuntimeManager(
 
             def do_POST(self) -> None:
                 path = urlsplit(self.path).path
+                voice_auto_conversation_prepare_route = (
+                    path == (
+                        "/api/voice/auto-conversation/prepare"
+                    )
+                )
+                if voice_auto_conversation_prepare_route:
+                    if not self._chat_mutation_guard():
+                        return
+                    try:
+                        payload = self._read_json_body()
+                        if payload is None:
+                            return
+                        if set(payload) != {
+                            "session_id",
+                            "transcript",
+                            "confirm_auto_conversation",
+                            "request_id",
+                        }:
+                            raise (
+                                VoiceAutoConversationValidationError(
+                                    (
+                                        "Prepare fields must be "
+                                        "session_id, transcript, "
+                                        "confirm_auto_conversation, "
+                                        "and request_id."
+                                    )
+                                )
+                            )
+                        result = (
+                            manager.voice_auto_conversation_manager
+                            .prepare_turn(
+                                session_id=payload[
+                                    "session_id"
+                                ],
+                                transcript=payload[
+                                    "transcript"
+                                ],
+                                confirm_auto_conversation=(
+                                    payload[
+                                        "confirm_auto_conversation"
+                                    ]
+                                ),
+                                request_id=payload[
+                                    "request_id"
+                                ],
+                                voice_status=(
+                                    manager.voice_daily_use_manager
+                                    .status()
+                                ),
+                            )
+                        )
+                        self._send_json(
+                            200,
+                            result,
+                            send_body=True,
+                        )
+                        return
+                    except (
+                        VoiceAutoConversationValidationError
+                    ) as exc:
+                        self._send_json(
+                            400,
+                            {
+                                "status": "invalid_request",
+                                "error": (
+                                    "voice_auto_conversation_"
+                                    "validation_error"
+                                ),
+                                "detail": str(exc),
+                                "retryable": False,
+                            },
+                            send_body=True,
+                        )
+                        return
+                    except Exception as exc:
+                        status, error_payload = (
+                            manager._voice_error_payload(exc)
+                        )
+                        self._send_json(
+                            status,
+                            error_payload,
+                            send_body=True,
+                        )
+                        return
+
+                voice_auto_conversation_turn_route = (
+                    path == "/api/voice/auto-conversation/turn"
+                )
+                if voice_auto_conversation_turn_route:
+                    if not self._chat_mutation_guard():
+                        return
+                    try:
+                        payload = self._read_json_body()
+                        if payload is None:
+                            return
+                        allowed = {
+                            "session_id",
+                            "transcript",
+                            "expected_revision",
+                            "client_message_id",
+                            "request_id",
+                            "confirm_auto_conversation",
+                            "confirm_model_request",
+                        }
+                        if set(payload) != allowed:
+                            raise (
+                                VoiceAutoConversationValidationError(
+                                    "Turn fields must be session_id, "
+                                    "transcript, expected_revision, "
+                                    "client_message_id, request_id, "
+                                    "confirm_auto_conversation, and "
+                                    "confirm_model_request."
+                                )
+                            )
+                        if (
+                            payload["confirm_auto_conversation"]
+                            is not True
+                        ):
+                            raise (
+                                VoiceAutoConversationValidationError(
+                                    "Explicit Auto Conversation "
+                                    "confirmation is required."
+                                )
+                            )
+                        if payload["confirm_model_request"] is not True:
+                            raise (
+                                VoiceAutoConversationValidationError(
+                                    "Explicit local-model confirmation "
+                                    "is required."
+                                )
+                            )
+                        result = (
+                            manager.voice_auto_conversation_manager
+                            .execute_turn(
+                                session_id=payload["session_id"],
+                                transcript=payload["transcript"],
+                                expected_revision=payload[
+                                    "expected_revision"
+                                ],
+                                client_message_id=payload[
+                                    "client_message_id"
+                                ],
+                                request_id=payload["request_id"],
+                                confirm_auto_conversation=payload[
+                                    "confirm_auto_conversation"
+                                ],
+                                confirm_model_request=payload[
+                                    "confirm_model_request"
+                                ],
+                                voice_status=(
+                                    manager.voice_daily_use_manager
+                                    .status()
+                                ),
+                                submit_model_message=(
+                                    manager.local_model_chat_manager
+                                    .submit_model_message
+                                ),
+                            )
+                        )
+                        self._send_json(
+                            200,
+                            result,
+                            send_body=True,
+                        )
+                        return
+                    except (
+                        VoiceAutoConversationValidationError
+                    ) as exc:
+                        self._send_json(
+                            400,
+                            {
+                                "status": "invalid_request",
+                                "error": (
+                                    "voice_auto_conversation_"
+                                    "validation_error"
+                                ),
+                                "detail": str(exc),
+                                "retryable": False,
+                            },
+                            send_body=True,
+                        )
+                        return
+                    except Exception as exc:
+                        status, error_payload = (
+                            manager._chat_error_payload(exc)
+                        )
+                        self._send_json(
+                            status,
+                            error_payload,
+                            send_body=True,
+                        )
+                        return
 
                 voice_transcribe_route = (
                     path == "/api/voice/transcribe"

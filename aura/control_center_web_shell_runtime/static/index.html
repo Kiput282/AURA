@@ -861,7 +861,72 @@
             </dl>
           </article>
 
-          <article class="voice-card voice-transcript-card">
+                    <article class="voice-card voice-auto-card">
+            <div class="voice-card-heading">
+              <div>
+                <p class="eyebrow">Optional mode</p>
+                <h3>Auto Conversation</h3>
+              </div>
+              <span
+                id="voice-auto-state"
+                class="status-badge"
+                data-state="idle"
+              >
+                Manual
+              </span>
+            </div>
+
+            <label class="voice-auto-toggle">
+              <input
+                id="voice-auto-enable"
+                type="checkbox"
+              >
+              <span>
+                Enable for this browser page only
+              </span>
+            </label>
+
+            <label class="voice-auto-session-field">
+              <span>Active chat session</span>
+              <select
+                id="voice-auto-session"
+                disabled
+              >
+                <option value="">
+                  Select an active chat session
+                </option>
+              </select>
+            </label>
+
+            <div class="voice-actions">
+              <button
+                id="voice-auto-refresh"
+                type="button"
+              >
+                Refresh sessions
+              </button>
+              <a href="/chat">
+                Open Chat workspace
+              </a>
+            </div>
+
+            <p
+              id="voice-auto-detail"
+              class="voice-auto-detail"
+            >
+              Manual Review is the default. Enable this page session,
+              then select one active chat session.
+            </p>
+
+            <div
+              id="voice-auto-response"
+              class="voice-auto-response"
+              aria-live="polite"
+              hidden
+            ></div>
+          </article>
+
+<article class="voice-card voice-transcript-card">
             <p class="voice-card-label">ATLAS speech to text</p>
             <h3>Transcript preview</h3>
             <label for="voice-transcript">
