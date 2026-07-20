@@ -212,6 +212,9 @@ from aura.local_interaction_runtime_stabilization.aura_local_interaction_runtime
 from aura.orion_agent_foundation.aura_orion_agent_foundation_cli import (
     handle_orion_agent_foundation_command,
 )
+from aura.orion_pairing_identity_runtime.aura_orion_pairing_identity_runtime_cli import (
+    handle_orion_pairing_identity_command,
+)
 class AuraCLI:
     """
     Simple command-line interface for AURA.
@@ -11393,6 +11396,11 @@ class AuraCLI:
 
 
     def run(self, args: list[str] | None = None) -> bool:
+        if handle_orion_pairing_identity_command(
+            args,
+            project_root=self.project_root,
+        ):
+            return True
         if handle_orion_agent_foundation_command(
             args,
             project_root=self.project_root,
