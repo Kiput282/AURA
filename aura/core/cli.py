@@ -209,6 +209,9 @@ from aura.permission_audit_recovery_visibility_runtime.aura_permission_audit_rec
 from aura.local_interaction_runtime_stabilization.aura_local_interaction_runtime_stabilization_cli import handle_local_interaction_runtime_stabilization_command
 
 
+from aura.orion_agent_foundation.aura_orion_agent_foundation_cli import (
+    handle_orion_agent_foundation_command,
+)
 class AuraCLI:
     """
     Simple command-line interface for AURA.
@@ -11390,6 +11393,11 @@ class AuraCLI:
 
 
     def run(self, args: list[str] | None = None) -> bool:
+        if handle_orion_agent_foundation_command(
+            args,
+            project_root=self.project_root,
+        ):
+            return True
         sprint_270_argv = __import__("sys").argv
         if (
             len(sprint_270_argv) >= 2
