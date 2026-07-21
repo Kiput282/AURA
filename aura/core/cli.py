@@ -215,6 +215,9 @@ from aura.orion_agent_foundation.aura_orion_agent_foundation_cli import (
 from aura.orion_pairing_identity_runtime.aura_orion_pairing_identity_runtime_cli import (
     handle_orion_pairing_identity_command,
 )
+from aura.orion_live_link_runtime.aura_orion_live_link_runtime_cli import (
+    handle_orion_live_link_command,
+)
 class AuraCLI:
     """
     Simple command-line interface for AURA.
@@ -11396,6 +11399,11 @@ class AuraCLI:
 
 
     def run(self, args: list[str] | None = None) -> bool:
+        if handle_orion_live_link_command(
+            args,
+            project_root=self.project_root,
+        ):
+            return True
         if handle_orion_pairing_identity_command(
             args,
             project_root=self.project_root,

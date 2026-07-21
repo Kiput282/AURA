@@ -187,6 +187,9 @@ class AuraOrionPairingIdentityRuntimeManager:
     SECRET_FILE_NAME = "pairing_secret.key"
     DIRECTORY_MODE = 0o700
     FILE_MODE = 0o600
+    AUTHENTICATED_ENVELOPE_DOMAIN_PREFIX = (
+        "AURA-ORION-AUTHENTICATED-ENVELOPE-V1"
+    )
 
     DEFERRED_FALSE_FIELDS = (
         "network_listener_active",
@@ -743,6 +746,165 @@ class AuraOrionPairingIdentityRuntimeManager:
         if record is None:
             return None
         return record.to_dict()
+
+
+    @staticmethod
+    def _validate_envelope_domain(domain: str) -> str:
+        value = str(domain).strip()
+        if not value or len(value) > 64:
+            raise OrionPairingIdentityRuntimeError(
+                "Authenticated envelope domain is invalid."
+            )
+        if any(
+            char not in "abcdefghijklmnopqrstuvwxyz0123456789._-"
+            for char in value
+        ):
+            raise OrionPairingIdentityRuntimeError(
+                "Authenticated envelope domain must use lowercase ASCII."
+            )
+        return value
+
+    @staticmethod
+    def _canonical_envelope_bytes(
+        payload: dict[str, Any],
+    ) -> bytes:
+        if not isinstance(payload, dict):
+            raise OrionPairingIdentityRuntimeError(
+                "Authenticated envelope payload must be an object."
+            )
+        try:
+            return json.dumps(
+                payload,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+                allow_nan=False,
+            ).encode("utf-8")
+        except (TypeError, ValueError) as exc:
+            raise OrionPairingIdentityRuntimeError(
+                "Authenticated envelope payload is not canonicalizable."
+            ) from exc
+
+    def authenticated_binding(self) -> dict[str, Any]:
+        """Return the paired public identity binding without its secret."""
+
+        record = self._load_record()
+        if record is None or record.state != self.STATE_PAIRED:
+            raise OrionPairingIdentityRuntimeError(
+                "An authenticated paired identity is required."
+            )
+        return {
+            "pairing_id": record.pairing_id,
+            "device_id": record.device.device_id,
+            "credential_id": record.device.credential_id,
+            "credential_fingerprint": (
+                record.device.credential_fingerprint
+            ),
+            "identity_version": record.device.identity_version,
+            "device_role": record.device.device_role,
+            "display_name": record.device.display_name,
+            "platform": record.device.platform,
+            "secret_exposed": False,
+        }
+
+    def sign_authenticated_envelope(
+        self,
+        *,
+        domain: str,
+        payload: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Sign a domain-separated envelope with the paired credential."""
+
+        domain = self._validate_envelope_domain(domain)
+        binding = self.authenticated_binding()
+        canonical = self._canonical_envelope_bytes(payload)
+
+        if payload.get("pairing_id") != binding["pairing_id"]:
+            raise OrionPairingIdentityRuntimeError(
+                "Envelope pairing ID does not match the paired identity."
+            )
+        if payload.get("device_id") != binding["device_id"]:
+            raise OrionPairingIdentityRuntimeError(
+                "Envelope device ID does not match the paired identity."
+            )
+
+        secret = self._read_secret()
+        message = (
+            self.AUTHENTICATED_ENVELOPE_DOMAIN_PREFIX.encode("ascii")
+            + b"\n"
+            + domain.encode("ascii")
+            + b"\n"
+            + canonical
+        )
+        proof = hmac.new(
+            secret,
+            message,
+            hashlib.sha256,
+        ).digest()
+        return {
+            "status": "OK",
+            "algorithm": "HMAC-SHA256",
+            "verification": "hmac.compare_digest",
+            "domain": domain,
+            "proof_b64url": self._b64url_encode(proof),
+            "binding": binding,
+            "secret_exposed": False,
+        }
+
+    def verify_authenticated_envelope(
+        self,
+        *,
+        domain: str,
+        payload: dict[str, Any],
+        proof_b64url: str,
+    ) -> dict[str, Any]:
+        """Verify a domain-separated envelope against the paired identity."""
+
+        domain = self._validate_envelope_domain(domain)
+        binding = self.authenticated_binding()
+        canonical = self._canonical_envelope_bytes(payload)
+
+        if payload.get("pairing_id") != binding["pairing_id"]:
+            raise OrionPairingIdentityRuntimeError(
+                "Envelope pairing ID does not match the paired identity."
+            )
+        if payload.get("device_id") != binding["device_id"]:
+            raise OrionPairingIdentityRuntimeError(
+                "Envelope device ID does not match the paired identity."
+            )
+
+        proof = self._b64url_decode(proof_b64url)
+        if len(proof) != hashlib.sha256().digest_size:
+            raise OrionPairingIdentityRuntimeError(
+                "Authenticated envelope proof has an invalid length."
+            )
+
+        secret = self._read_secret()
+        message = (
+            self.AUTHENTICATED_ENVELOPE_DOMAIN_PREFIX.encode("ascii")
+            + b"\n"
+            + domain.encode("ascii")
+            + b"\n"
+            + canonical
+        )
+        expected = hmac.new(
+            secret,
+            message,
+            hashlib.sha256,
+        ).digest()
+        if not hmac.compare_digest(proof, expected):
+            raise OrionPairingIdentityRuntimeError(
+                "Authenticated envelope proof verification failed."
+            )
+        return {
+            "status": "OK",
+            "verified": True,
+            "algorithm": "HMAC-SHA256",
+            "verification": "hmac.compare_digest",
+            "domain": domain,
+            "binding": binding,
+            "secret_exposed": False,
+        }
 
     def status(self) -> dict[str, Any]:
         record = self._load_record()
