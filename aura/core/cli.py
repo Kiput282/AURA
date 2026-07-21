@@ -221,6 +221,9 @@ from aura.orion_live_link_runtime.aura_orion_live_link_runtime_cli import (
 from aura.orion_action_preview_approval_runtime.aura_orion_action_preview_approval_runtime_cli import (
     handle_orion_action_preview_approval_command,
 )
+from aura.orion_scoped_permission_runtime.aura_orion_scoped_permission_runtime_cli import (
+    handle_orion_scoped_permission_command,
+)
 class AuraCLI:
     """
     Simple command-line interface for AURA.
@@ -11408,6 +11411,11 @@ class AuraCLI:
         ):
             return True
         if handle_orion_action_preview_approval_command(
+            args,
+            project_root=self.project_root,
+        ):
+            return True
+        if handle_orion_scoped_permission_command(
             args,
             project_root=self.project_root,
         ):
