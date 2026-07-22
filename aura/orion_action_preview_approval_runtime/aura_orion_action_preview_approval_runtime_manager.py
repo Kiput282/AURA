@@ -23,7 +23,7 @@ class AuraOrionActionPreviewApprovalRuntimeManager:
 
     COMPONENT_NAME = "orion_action_preview_approval_runtime"
     COMPONENT_VERSION = "0.1.0"
-    PRODUCT_VERSION = "1.3.1"
+    PRODUCT_VERSION = "1.4.0"
     SPRINT = 276
     SCHEMA_VERSION = "1"
     APPROVAL_PROOF_DOMAIN = "action-approval-decision"

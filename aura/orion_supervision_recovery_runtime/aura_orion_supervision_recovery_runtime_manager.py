@@ -204,7 +204,7 @@ class AuraOrionSupervisionRecoveryRuntimeManager:
 
     COMPONENT_NAME = "orion_supervision_recovery_runtime"
     COMPONENT_VERSION = "0.1.0"
-    PRODUCT_VERSION = "1.3.1"
+    PRODUCT_VERSION = "1.4.0"
     SPRINT = 279
     SCHEMA_VERSION = "1"
     DESIGN_CONTRACT_SHA = (

@@ -4135,3 +4135,23 @@ Hands-free remains an optional explicitly enabled mode, never the default.
 Sensitive actions continue to require preview and approval; v2 does not
 introduce unrestricted shell access, silent cloud fallback, hidden
 microphone capture, unrestricted ORION control, or multiplayer automation.
+
+## Sprint 280 Closure - v1.4.0 Live Acceptance
+
+Sprint 280 completed the mandatory cross-host live end-to-end acceptance
+for the Sprint 271-280 ORION Safe Action Bridge block.
+
+Accepted evidence:
+
+- browser voice checks 6/6;
+- authenticated ORION-to-ATLAS localhost SSH tunnel;
+- one controlled `create_controlled_file` execution;
+- exact content digest and verified cleanup;
+- watchdog `live -> stale -> failed`;
+- automatic recovery disabled;
+- manual emergency and reviewed recovery markers 3/3;
+- full ORION, browser session, and web regression suite passed;
+- service and acceptance harness stopped in safe-idle.
+
+This closes the v1.4.0 boundary without enabling unrestricted control.
+The next product block begins at Sprint 281.

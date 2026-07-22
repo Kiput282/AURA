@@ -6609,8 +6609,7 @@ recovery, bounded failure, canonical restart, and final safe-idle.
 The Sprint 269 rehearsal panel remains as historical readiness evidence.
 Sprint 270 adds no new backend route or Control Center panel.
 
-## Current checkpoint — v1.3.1 / Sprint 271
-
+## Current checkpoint - v1.4.0 / Sprint 280
 Sprint 271 completes `voice_daily_use_activation`. ORION now provides
 explicit browser push-to-talk through the dashboard button or focused-page
 `V`; ATLAS performs isolated local faster-whisper STT; the editable
@@ -6634,3 +6633,26 @@ baseline. Sprint 272 continues with
 auto-answer and TTS autoplay plus initial AURA persona and grounded context.
 Manual Review remains available and sensitive actions retain explicit
 preview and approval.
+
+## Sprint 280 - v1.4.0 Release Checkpoint
+
+Status: completed, live-accepted, and release-ready.
+
+Sprint 280 closes the Sprint 271-280 ORION Safe Action Bridge block.
+The cross-host acceptance proved:
+
+- ORION browser voice checks: 6/6;
+- authenticated SSH localhost transport;
+- external watchdog transition: live -> stale -> failed;
+- automatic recovery remained disabled;
+- manual emergency stop and reviewed recovery markers: 3/3;
+- exactly one permission-scoped controlled file execution;
+- controlled artifact SHA verification and cleanup;
+- all ORION, session, and web regressions passed;
+- final runtime returned to safe-idle with ports 8765 and 18765 closed.
+
+Release acceptance contract:
+`AURA-SPRINT-280-LIVE-ACCEPTANCE-v1`
+
+The v1.4.0 release does not enable unrestricted desktop control,
+arbitrary shell execution, uncontrolled file access, or automatic recovery.

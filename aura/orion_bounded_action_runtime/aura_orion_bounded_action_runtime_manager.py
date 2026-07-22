@@ -339,7 +339,7 @@ class AuraOrionBoundedActionRuntimeManager:
 
     COMPONENT_NAME = "orion_bounded_action_runtime"
     COMPONENT_VERSION = "0.1.0"
-    PRODUCT_VERSION = "1.3.1"
+    PRODUCT_VERSION = "1.4.0"
     SPRINT = 278
     SCHEMA_VERSION = "1"
 

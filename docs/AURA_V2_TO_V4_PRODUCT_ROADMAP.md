@@ -1366,3 +1366,16 @@ visible preview and explicit approval.
 | 298 | Security, privacy, backup, restore, rollback |
 | 299 | v2 release-candidate rehearsal |
 | 300 | `v2.0.0` mandatory live acceptance |
+
+## v1.4.0 Achieved - Sprint 280
+
+The Sprint 271-280 ORION Safe Action Bridge milestone reached v1.4.0
+after mandatory live end-to-end acceptance.
+
+The accepted boundary includes authenticated pairing, live-link grounding,
+explicit preview and approval, scoped permission, exactly one bounded
+controlled action, watchdog failure detection, manual emergency handling,
+and reviewed recovery decisions. Automatic recovery and unrestricted
+desktop or shell control remain disabled.
+
+The canonical next milestone remains Sprint 290 -> v1.5.0.
