@@ -227,6 +227,9 @@ from aura.orion_scoped_permission_runtime.aura_orion_scoped_permission_runtime_c
 from aura.orion_bounded_action_runtime.aura_orion_bounded_action_runtime_cli import (
     handle_orion_bounded_action_command,
 )
+from aura.orion_supervision_recovery_runtime.aura_orion_supervision_recovery_runtime_cli import (
+    handle_orion_supervision_command,
+)
 class AuraCLI:
     """
     Simple command-line interface for AURA.
@@ -11424,6 +11427,11 @@ class AuraCLI:
         ):
             return True
         if handle_orion_bounded_action_command(
+            args,
+            project_root=self.project_root,
+        ):
+            return True
+        if handle_orion_supervision_command(
             args,
             project_root=self.project_root,
         ):
