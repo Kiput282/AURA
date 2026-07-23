@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.4.2`
+Current canonical anchor: `v1.4.3`
 
-Current completed sprint: Sprint 282 — Supported Game Detection
+Current completed sprint: Sprint 283 — Game Window Capture
 
-Next sprint: `283`
+Next sprint: `284`
 
-Next boundary: `game_window_capture`
+Next boundary: `game_audio_capture`
 
 Owner: Kiput
 
@@ -80,7 +80,7 @@ Canonical block endpoints:
 | 410 | `v3.5.0` |
 | 420 | `v4.0.0` |
 
-The current canonical version is `v1.4.2`, promoted by Sprint 282.
+The current canonical version is `v1.4.3`, promoted by Sprint 283.
 
 # Part I — Target v2.0.0
 
@@ -1415,4 +1415,25 @@ Delivered scope:
 - no automatic session, capture, recording, telemetry, coaching, launch, or
   game-control start.
 
-The next boundary is Sprint 283 `game_window_capture`.
+The Sprint 283 `game_window_capture` boundary is implemented.
+
+## Sprint 283 Closure - Game Window Capture
+
+Sprint 283 implements `game_window_capture` at v1.4.3.
+
+Delivered scope:
+
+- visible preview after reviewed supported-game detection;
+- operator-selected Game Companion mode;
+- exact separate capture approval;
+- expiring single-use permission;
+- one selected-window PNG frame per request;
+- exact agent, device, game, process, executable, and window binding;
+- bounded width, height, pixel, byte, and freshness limits;
+- temporary private ORION artifact;
+- metadata-only ATLAS receipt with MIME type, dimensions, size, and SHA-256;
+- explicit temporary-artifact cleanup and return to `safe_idle`;
+- no full-screen fallback, continuous capture, audio, recording, telemetry,
+  coaching, launch, or game input control.
+
+The next boundary is Sprint 284 `game_audio_capture`.

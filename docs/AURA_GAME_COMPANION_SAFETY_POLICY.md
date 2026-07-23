@@ -105,4 +105,28 @@ Capture, recording, telemetry, coaching, application launch,
 voice-command-to-action, game input control, autonomous gameplay, and
 multiplayer automation remain prohibited in Sprint 282.
 
-The next boundary is Sprint 283 `game_window_capture`.
+The Sprint 283 `game_window_capture` boundary is implemented.
+
+## Sprint 283 game-window capture boundary
+
+Sprint 283 activates only bounded explicit one-shot capture for the already
+reviewed `osu_offline` window.
+
+- ATLAS remains the permission and session authority.
+- Detection alone cannot start capture.
+- Operator mode selection and a separate capture approval are required.
+- Permission is exact-target, expiring, single-use, and limited to one frame.
+- ORION must revalidate process ID, executable basename, and selected-window
+  availability immediately before capture.
+- The output is one bounded temporary private PNG.
+- The receipt contains MIME type, dimensions, size, and SHA-256 only.
+- Raw image bytes, raw window titles, and local artifact paths must not enter
+  ATLAS packets.
+- Full-screen fallback and arbitrary-window capture are prohibited.
+- Explicit cleanup evidence is required before returning to `safe_idle`.
+
+Game audio capture, continuous capture, recording, telemetry, coaching,
+application launch, voice-command-to-action, game input control, autonomous
+gameplay, and multiplayer automation remain prohibited.
+
+The next boundary is Sprint 284 `game_audio_capture`.

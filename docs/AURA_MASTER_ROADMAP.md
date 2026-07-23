@@ -4196,4 +4196,27 @@ Accepted implementation scope:
 - no automatic start of capture, recording, telemetry, coaching, application
   launch, voice action, or game control.
 
-Sprint 283 owns `game_window_capture`.
+Sprint 283 implements `game_window_capture`.
+
+## Sprint 283 - Game Window Capture
+
+Sprint 283 adds bounded explicit one-shot selected-game-window capture at
+v1.4.3.
+
+Accepted implementation scope:
+
+- capability `orion.game.capture_window.one_shot`;
+- capture only after Sprint 282 detection review and operator mode selection;
+- separate exact capture preview and approval;
+- one expiring single-use permission;
+- exact ATLAS agent/device/game/process/executable/window binding;
+- selected-window-only PowerShell/System.Drawing adapter contract on ORION;
+- one bounded PNG frame;
+- temporary private ORION storage;
+- metadata-only receipt containing MIME type, dimensions, size, and SHA-256;
+- no raw image bytes, raw title, or local path in ATLAS packets;
+- explicit cleanup receipt and safe-idle restoration;
+- no full-screen fallback, background capture, audio capture, recording,
+  telemetry, coaching, application launch, voice action, or game control.
+
+Sprint 284 owns `game_audio_capture`.

@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.4.2`
-- Current status: Sprint 282 — Supported Game Detection implemented
-Current runtime state: Sprint 282 adds explicit read-only, allowlist-only supported-game detection for ORION. A match creates a review prompt only; capture, recording, telemetry, coaching, launch, and game control remain disabled.
+- Current version: `v1.4.3`
+- Current status: Sprint 283 — Game Window Capture implemented
+Current runtime state: Sprint 283 adds explicit, permission-bound, one-shot selected-game-window capture for ORION. Capture requires a reviewed detection, mode selection, separate approval, single-use permission, bounded temporary PNG, metadata-only receipt, and explicit cleanup. Audio, recording, telemetry, coaching, launch, and game control remain disabled.
 
 ---
 
@@ -119,7 +119,7 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 283 — Game Window Capture
+- Next planned sprint: Sprint 284 — Game Audio Capture
 Current capability registry summary:
 
 - total capabilities: 146
@@ -6691,3 +6691,21 @@ launch, voice-command-to-action, game input control, autonomous gameplay, and
 multiplayer automation remain disabled.
 
 Sprint 283 owns `game_window_capture`.
+
+## Sprint 283 — Game Window Capture
+
+Sprint 283 implements `game_window_capture` at `v1.4.3`.
+
+AURA can now prepare and validate one explicit, permission-bound selected-game
+window capture for `osu_offline`. ORION revalidates the exact process and
+visible window, creates one bounded temporary PNG, and returns only metadata
+and SHA-256 for review. Raw image bytes, raw window titles, and local artifact
+paths do not enter ATLAS packets.
+
+Capture never starts from detection alone. A separate visible preview, exact
+operator confirmation, expiring single-use permission, one-frame request,
+artifact review, and explicit cleanup are required. Full-screen fallback,
+continuous capture, audio capture, recording, telemetry, coaching, launch,
+voice action, and game input control remain disabled.
+
+Next planned sprint: Sprint 284 — Game Audio Capture

@@ -1,5 +1,5 @@
 name: AURA
-version: 1.4.2
+version: 1.4.3
 codename: Genesis
 creator: Kiput
 
@@ -370,3 +370,13 @@ modes:
 # sensitive-action approval remain disabled. Real ORION acceptance: 21/21;
 # evidence SHA-256: d9a7aa1a5440ad8e67274a2ce1312fca04dcddf6da3c3afae963e4b28cb593f6. Next: Sprint 272 —
 # voice_auto_conversation_and_companion_context_reinforcement.
+
+# Sprint 283: game_window_capture activates one explicit, reviewed,
+# permission-bound selected-game-window PNG capture for osu_offline on ORION.
+# Detection alone cannot start capture. Exact mode selection, visible preview,
+# exact approval, expiring single-use permission, bounded one-frame request,
+# metadata-only artifact receipt, and explicit cleanup are required. Raw image
+# bytes, raw window titles, local artifact paths, full-screen fallback,
+# continuous capture, audio, recording, telemetry, coaching, launch, voice
+# actions, and game input control remain disabled. Sprint 284 owns
+# game_audio_capture.
