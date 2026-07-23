@@ -6,9 +6,9 @@ Current canonical anchor: `v1.4.3`
 
 Current completed sprint: Sprint 283 — Game Window Capture
 
-Next sprint: `284`
+Next sprint: `285`
 
-Next boundary: `game_audio_capture`
+Next boundary: `game_input_telemetry`
 
 Owner: Kiput
 
@@ -1437,3 +1437,15 @@ Delivered scope:
   coaching, launch, or game input control.
 
 The next boundary is Sprint 284 `game_audio_capture`.
+
+## Sprint 284 Completion — Game Audio Capture
+
+AURA `v1.4.4` adds one explicit, permission-bound process-loopback game-audio
+sample for `osu_offline`. The sample is limited to five seconds and one
+temporary private 48 kHz stereo signed-16-bit PCM WAV. ATLAS receives only
+metadata and SHA-256, while microphone capture, whole-system fallback,
+continuous capture, recording, transcription, telemetry, coaching, and game
+control remain closed.
+
+Next sprint: `285`
+Next boundary: `game_input_telemetry`

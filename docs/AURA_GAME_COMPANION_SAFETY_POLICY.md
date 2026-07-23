@@ -129,4 +129,20 @@ Game audio capture, continuous capture, recording, telemetry, coaching,
 application launch, voice-command-to-action, game input control, autonomous
 gameplay, and multiplayer automation remain prohibited.
 
-The next boundary is Sprint 284 `game_audio_capture`.
+Sprint 284 implements `game_audio_capture`; the next boundary is Sprint 285 `game_input_telemetry`.
+
+## Sprint 284 bounded game-audio boundary
+
+Game audio may be sampled only after the detected `osu_offline` process and
+mode have been reviewed, a visible audio preview has been approved, and ATLAS
+has issued one short-lived single-use permission.
+
+The ORION source must use process-scoped loopback for the exact reviewed
+process tree. Microphone capture, endpoint enumeration, arbitrary audio-device
+selection, and whole-system fallback are forbidden. The sample is limited to
+five seconds, 48 kHz stereo signed-16-bit PCM WAV, temporary private storage,
+metadata-only receipt, and explicit cleanup.
+
+Continuous capture, recording sessions, transcription, telemetry, coaching,
+application launch, voice actions, and game input control remain outside
+Sprint 284. Sprint 285 owns `game_input_telemetry`.

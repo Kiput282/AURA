@@ -4220,3 +4220,31 @@ Accepted implementation scope:
   telemetry, coaching, application launch, voice action, or game control.
 
 Sprint 284 owns `game_audio_capture`.
+
+## Sprint 284 Completion — Game Audio Capture
+
+AURA `v1.4.4` implements `game_audio_capture` as one explicit bounded sample
+from the reviewed `osu_offline` process on ORION.
+
+Delivered:
+
+- visible ATLAS audio preview;
+- exact operator approval;
+- expiring single-use permission;
+- exact agent, device, game, process, executable, and window binding;
+- process-loopback `IncludeTargetProcessTree` contract;
+- maximum five-second duration;
+- 48 kHz stereo signed-16-bit PCM WAV;
+- one MiB encoded-size limit;
+- temporary private ORION artifact;
+- metadata-only receipt with SHA-256;
+- explicit cleanup and return to `safe_idle`.
+
+Microphone input, whole-system fallback, arbitrary endpoint capture,
+continuous capture, recording, transcription, telemetry, coaching,
+application launch, voice-command-to-action, and game input control remain
+disabled.
+
+Next: Sprint 285 — Game Input Telemetry.
+Next boundary: `game_input_telemetry`.
+Next version: `v1.4.5`.

@@ -1,5 +1,5 @@
 name: AURA
-version: 1.4.3
+version: 1.4.4
 codename: Genesis
 creator: Kiput
 
@@ -380,3 +380,4 @@ modes:
 # continuous capture, audio, recording, telemetry, coaching, launch, voice
 # actions, and game input control remain disabled. Sprint 284 owns
 # game_audio_capture.
+# Sprint 284: game_audio_capture adds one explicit, permission-bound, maximum-five-second osu! process-loopback WAV sample on ORION. Microphone capture, whole-system fallback, continuous capture, recording, transcription, telemetry, coaching, and game input control remain disabled. Next: Sprint 285 game_input_telemetry.

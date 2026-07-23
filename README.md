@@ -6709,3 +6709,19 @@ continuous capture, audio capture, recording, telemetry, coaching, launch,
 voice action, and game input control remain disabled.
 
 Next planned sprint: Sprint 284 — Game Audio Capture
+
+## Sprint 284 — Game Audio Capture
+
+AURA `v1.4.4` adds one explicit, permission-bound short game-audio sample for
+the reviewed `osu_offline` process. ATLAS creates the preview, grants one
+single-use permission, authorizes one bounded request, and validates a
+metadata-only receipt. ORION remains the only capture host.
+
+The sample is limited to five seconds, 48 kHz stereo signed-16-bit PCM WAV,
+one MiB, temporary private storage, and explicit cleanup. The ATLAS packet
+contains no raw audio and no local artifact path.
+
+Microphone capture, whole-system fallback, arbitrary endpoint capture,
+continuous capture, recording sessions, transcription, telemetry, coaching,
+application launch, voice-command-to-action, and game input control remain
+closed. Sprint 285 owns `game_input_telemetry`.
