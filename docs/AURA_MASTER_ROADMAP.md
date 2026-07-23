@@ -4175,3 +4175,25 @@ Accepted scope:
   launch, game input control, and autonomous gameplay fields closed.
 
 The next boundary is Sprint 282 `supported_game_detection`.
+
+## Sprint 282 - Supported Game Detection
+
+Sprint 282 adds the first read-only Game Companion runtime capability at
+v1.4.2.
+
+Accepted implementation scope:
+
+- capability `orion.game.detect_supported.read_only`;
+- explicit one-shot scan only;
+- exact local allowlist filtering on ORION;
+- only `osu_offline` / `osu!.exe` active;
+- visible top-level window requirement;
+- raw process inventory, command line, executable path, and raw window title
+  excluded from exported evidence;
+- authenticated identity, freshness, sequence, digest, and replay validation;
+- in-memory detection-event deduplication;
+- safe `game_detected_pending_review` prompt;
+- no automatic start of capture, recording, telemetry, coaching, application
+  launch, voice action, or game control.
+
+Sprint 283 owns `game_window_capture`.

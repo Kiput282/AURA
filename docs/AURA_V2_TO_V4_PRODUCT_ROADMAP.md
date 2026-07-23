@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.4.1`
+Current canonical anchor: `v1.4.2`
 
-Current completed sprint: Sprint 281 — Game Companion Runtime Foundation
+Current completed sprint: Sprint 282 — Supported Game Detection
 
-Next sprint: `282`
+Next sprint: `283`
 
-Next boundary: `supported_game_detection`
+Next boundary: `game_window_capture`
 
 Owner: Kiput
 
@@ -80,7 +80,7 @@ Canonical block endpoints:
 | 410 | `v3.5.0` |
 | 420 | `v4.0.0` |
 
-The current canonical version is `v1.4.1`, promoted by Sprint 281.
+The current canonical version is `v1.4.2`, promoted by Sprint 282.
 
 # Part I — Target v2.0.0
 
@@ -1395,3 +1395,24 @@ recording, coaching output, application launch, game input control,
 voice-command-to-action, or autonomous gameplay is activated.
 
 Sprint 282 owns `supported_game_detection`.
+
+## Sprint 282 Closure - Supported Game Detection
+
+Sprint 282 implements the `supported_game_detection` boundary at v1.4.2.
+
+Delivered scope:
+
+- one explicit read-only ORION scan;
+- local exact executable-basename allowlist filtering;
+- `osu_offline` as the only active detection profile;
+- visible top-level window requirement;
+- local window-title hashing and raw-title exclusion;
+- no full process inventory, command-line, or executable-path export;
+- bounded observation schema and digest;
+- freshness, sequence, authenticated identity, and replay checks;
+- in-memory duplicate prompt suppression;
+- `game_detected_pending_review` prompt construction;
+- no automatic session, capture, recording, telemetry, coaching, launch, or
+  game-control start.
+
+The next boundary is Sprint 283 `game_window_capture`.

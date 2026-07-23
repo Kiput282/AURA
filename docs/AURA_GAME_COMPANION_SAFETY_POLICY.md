@@ -1,8 +1,8 @@
 # AURA Game Companion Safety Policy
 
 Status: ACTIVE GUARDED FOUNDATION
-Current Canonical Version: v1.4.1
-Current Sprint: 281
+Current Canonical Version: v1.4.2
+Current Sprint: 282
 Owner: Kiput
 Motto: Grow Together
 
@@ -83,3 +83,26 @@ Runtime work after Sprint 281 requires:
 Sprint 281 remains contract-only. The next boundary is Sprint 282
 `supported_game_detection`. Detection must remain read-only and may not start
 capture, recording, telemetry, coaching, or application control.
+
+## Sprint 282 supported-game detection boundary
+
+Sprint 282 activates only an explicit read-only detection capability.
+
+- Active reference profile: `osu_offline`
+- Exact executable basename: `osu!.exe`
+- A visible top-level window is required.
+- Filtering occurs locally on ORION.
+- Only matched evidence may be exported.
+- Full process inventories, command lines, executable paths, and raw window
+  titles must not leave ORION.
+- ATLAS must receive the observation through the existing authenticated
+  live-link boundary and bind it to the expected agent and device identity.
+- A match creates `game_detected_pending_review`; it does not start a session.
+- Duplicate observations must not create repeated prompts.
+- A no-match observation remains `safe_idle`.
+
+Capture, recording, telemetry, coaching, application launch,
+voice-command-to-action, game input control, autonomous gameplay, and
+multiplayer automation remain prohibited in Sprint 282.
+
+The next boundary is Sprint 283 `game_window_capture`.

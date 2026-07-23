@@ -6,9 +6,9 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.4.1`
-- Current status: Sprint 265 — Review-First Memory Integration completed
-Current runtime state: Sprint 260 adds an explicit manual end-to-end coordinator across safe-idle service control, persistent chat, Ollama health, exact companion routing, lifecycle, bounded queueing, read-only budgets, successful response persistence, and stop-and-restore.
+- Current version: `v1.4.2`
+- Current status: Sprint 282 — Supported Game Detection implemented
+Current runtime state: Sprint 282 adds explicit read-only, allowlist-only supported-game detection for ORION. A match creates a review prompt only; capture, recording, telemetry, coaching, launch, and game control remain disabled.
 
 ---
 
@@ -119,7 +119,7 @@ Latest completed checkpoints:
 - Sprint 141 completed: Local Service Runtime Foundation
 - Sprint 141-150 block: completed
 - Sprint 151-160 block: completed
-- Next planned sprint: Sprint 266 — Control Center Runtime UX Consolidation
+- Next planned sprint: Sprint 283 — Game Window Capture
 Current capability registry summary:
 
 - total capabilities: 146
@@ -6609,7 +6609,7 @@ recovery, bounded failure, canonical restart, and final safe-idle.
 The Sprint 269 rehearsal panel remains as historical readiness evidence.
 Sprint 270 adds no new backend route or Control Center panel.
 
-## Current checkpoint - v1.4.1 / Sprint 281
+## Current checkpoint - v1.4.2 / Sprint 282
 Sprint 271 completes `voice_daily_use_activation`. ORION now provides
 explicit browser push-to-talk through the dashboard button or focused-page
 `V`; ATLAS performs isolated local faster-whisper STT; the editable
@@ -6673,3 +6673,21 @@ launch, game input control, voice-command-to-action, and autonomous gameplay
 remain disabled.
 
 Sprint 282 owns `supported_game_detection`.
+
+## Sprint 282 - Supported Game Detection
+
+Sprint 282 implements `supported_game_detection` at v1.4.2.
+
+The new runtime provides an explicit one-shot Windows scan for ORION and an
+ATLAS review boundary. Only the exact `osu!.exe` reference profile is active.
+ORION filters locally and exports matched evidence only; the complete process
+inventory, command lines, executable paths, and raw window titles are not
+exported.
+
+A valid authenticated observation creates a
+`game_detected_pending_review` prompt with the four Sprint 281 modes. Nothing
+starts automatically. Capture, recording, telemetry, coaching, application
+launch, voice-command-to-action, game input control, autonomous gameplay, and
+multiplayer automation remain disabled.
+
+Sprint 283 owns `game_window_capture`.
