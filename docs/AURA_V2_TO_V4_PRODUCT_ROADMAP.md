@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.4.3`
+Current canonical anchor: `v1.4.5`
 
-Current completed sprint: Sprint 283 — Game Window Capture
+Current completed sprint: Sprint 285 — Game Window Capture
 
-Next sprint: `285`
+Next sprint: `286`
 
-Next boundary: `game_input_telemetry`
+Next boundary: `game_timestamp_synchronization`
 
 Owner: Kiput
 
@@ -1449,3 +1449,19 @@ control remain closed.
 
 Next sprint: `285`
 Next boundary: `game_input_telemetry`
+
+## Sprint 285 Completion - Game Input Telemetry
+
+AURA `v1.4.5` adds one explicit, permission-bound, foreground-only telemetry
+sample for `osu_offline`. It permits only semantic `Z`/`X`, left/right mouse
+transitions, and normalized in-client cursor coordinates. The sample is
+limited to five seconds, 512 events, 128 KiB, temporary private ORION storage,
+metadata-only ATLAS receipt, and explicit cleanup.
+
+Live ORION acceptance passed with 128 sanitized events, a final event timestamp
+of 4,984 ms, no arbitrary-key or text capture, no background input, no hook or
+Raw Input registration, no input injection, no raw event export, and a final
+return to `safe_idle`.
+
+Next sprint: `286`
+Next boundary: `game_timestamp_synchronization`

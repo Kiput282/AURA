@@ -4248,3 +4248,37 @@ disabled.
 Next: Sprint 285 — Game Input Telemetry.
 Next boundary: `game_input_telemetry`.
 Next version: `v1.4.5`.
+
+## Sprint 285 Completion - Game Input Telemetry
+
+AURA `v1.4.5` implements `game_input_telemetry` as one explicit, bounded,
+foreground-only observation sample from the reviewed `osu_offline` process on
+ORION.
+
+Delivered:
+
+- visible ATLAS telemetry preview;
+- exact operator approval;
+- expiring single-use permission;
+- exact agent, device, game, process, process-start, executable, and window
+  binding;
+- foreground binding enforced on every poll with fail-closed focus loss;
+- semantic `Z`/`X` and left/right mouse transitions only;
+- cursor coordinates normalized to the bound game client area;
+- maximum five-second observation window;
+- 17 ms polling contract and 60 Hz cursor ceiling;
+- 512-event and 128 KiB limits;
+- temporary private ORION JSONL artifact;
+- metadata-only receipt and SHA-256;
+- explicit cleanup and return to `safe_idle`;
+- live ORION acceptance with 128 events and a final event timestamp of
+  4,984 ms.
+
+Arbitrary keys, text, clipboard reads, raw scan codes, background capture,
+global cursor history, absolute coordinates, hooks, Raw Input, input
+injection, controller control, continuous monitoring, recording, coaching,
+autonomous gameplay, and multiplayer automation remain disabled.
+
+Next: Sprint 286 - Game Timestamp Synchronization.
+Next boundary: `game_timestamp_synchronization`.
+Next version: `v1.4.6`.

@@ -6725,3 +6725,25 @@ Microphone capture, whole-system fallback, arbitrary endpoint capture,
 continuous capture, recording sessions, transcription, telemetry, coaching,
 application launch, voice-command-to-action, and game input control remain
 closed. Sprint 285 owns `game_input_telemetry`.
+
+## Sprint 285 - Game Input Telemetry
+
+AURA `v1.4.5` adds one explicit, permission-bound, foreground-only game-input
+telemetry sample for the reviewed `osu_offline` process. ATLAS remains the
+review and permission authority; ORION remains the only observation host.
+
+The sample is limited to five seconds, 512 events, and 128 KiB of temporary
+private JSONL. Only sanitized `Z`/`X`, left/right mouse transitions, and cursor
+coordinates normalized to the bound osu! client area are permitted. ATLAS
+receives metadata and SHA-256 only.
+
+Live ORION acceptance passed with 128 events and a final event timestamp of
+4,984 ms. The temporary artifact was explicitly deleted and the runtime
+returned to `safe_idle`.
+
+Arbitrary-key capture, text logging, clipboard reads, raw scan codes,
+background input capture, global cursor history, absolute screen-coordinate
+export, hooks, Raw Input, input injection, controller control, continuous
+monitoring, recording, coaching, autonomous gameplay, and multiplayer
+automation remain closed. Sprint 286 owns
+`game_timestamp_synchronization`.

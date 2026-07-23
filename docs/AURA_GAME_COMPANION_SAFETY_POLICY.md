@@ -129,7 +129,7 @@ Game audio capture, continuous capture, recording, telemetry, coaching,
 application launch, voice-command-to-action, game input control, autonomous
 gameplay, and multiplayer automation remain prohibited.
 
-Sprint 284 implements `game_audio_capture`; the next boundary is Sprint 285 `game_input_telemetry`.
+Sprint 285 implements `game_input_telemetry`; the next boundary is Sprint 286 `game_timestamp_synchronization`.
 
 ## Sprint 284 bounded game-audio boundary
 
@@ -146,3 +146,23 @@ metadata-only receipt, and explicit cleanup.
 Continuous capture, recording sessions, transcription, telemetry, coaching,
 application launch, voice actions, and game input control remain outside
 Sprint 284. Sprint 285 owns `game_input_telemetry`.
+
+## Sprint 285 bounded foreground input-telemetry boundary
+
+Game-input telemetry may be sampled only after the detected `osu_offline`
+process and mode have been reviewed, a visible telemetry preview has been
+approved, and ATLAS has issued one short-lived single-use permission.
+
+Every poll must remain bound to the exact reviewed `osu!.exe` process,
+process-start evidence, visible window, and foreground window. Focus loss
+fails closed. Only semantic `Z`/`X`, left/right mouse transitions, and cursor
+coordinates normalized to the bound game client area are allowed.
+
+Arbitrary keys, characters, text, clipboard data, raw scan codes, background
+input, global cursor history, absolute screen coordinates, hooks, Raw Input,
+input injection, controller reads, continuous monitoring, recording,
+coaching, autonomous gameplay, and multiplayer automation are forbidden.
+The sample is limited to five seconds, 512 events, 128 KiB, temporary private
+ORION storage, metadata-only ATLAS receipt, and explicit cleanup.
+
+Sprint 286 owns cross-stream timestamp alignment and clock synchronization.
