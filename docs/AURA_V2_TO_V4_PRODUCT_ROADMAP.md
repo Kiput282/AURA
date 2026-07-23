@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.2.0`
+Current canonical anchor: `v1.4.1`
 
-Current completed sprint: Sprint 260 — Active Local Runtime Integration and Stabilization
+Current completed sprint: Sprint 281 — Game Companion Runtime Foundation
 
-Next sprint: `261`
+Next sprint: `282`
 
-Next boundary: `roadmap_reconfirmation_required_after_v1_2_0`
+Next boundary: `supported_game_detection`
 
 Owner: Kiput
 
@@ -80,7 +80,7 @@ Canonical block endpoints:
 | 410 | `v3.5.0` |
 | 420 | `v4.0.0` |
 
-The current canonical version is `v1.1.3`, promoted by Sprint 253.
+The current canonical version is `v1.4.1`, promoted by Sprint 281.
 
 # Part I — Target v2.0.0
 
@@ -1379,3 +1379,19 @@ and reviewed recovery decisions. Automatic recovery and unrestricted
 desktop or shell control remain disabled.
 
 The canonical next milestone remains Sprint 290 -> v1.5.0.
+
+## Sprint 281 Closure - Game Companion Runtime Foundation
+
+Sprint 281 establishes the deterministic `game_companion_runtime_foundation`
+contract at v1.4.1.
+
+The boundary defines the canonical game catalog, four operator-selectable
+modes, review-only session proposals, a nine-state session state machine,
+independent emergency-stop handling, and strict public/private pipeline
+separation. `osu_offline` is the first reference game.
+
+No process scan, window scan, supported-game detection, capture, telemetry,
+recording, coaching output, application launch, game input control,
+voice-command-to-action, or autonomous gameplay is activated.
+
+Sprint 282 owns `supported_game_detection`.

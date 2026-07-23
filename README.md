@@ -6,7 +6,7 @@ AURA is a long-term AI companion project designed to grow into a local-first ani
 
 AURA is currently in the Genesis Runtime Readiness phase.
 
-- Current version: `v1.2.5`
+- Current version: `v1.4.1`
 - Current status: Sprint 265 — Review-First Memory Integration completed
 Current runtime state: Sprint 260 adds an explicit manual end-to-end coordinator across safe-idle service control, persistent chat, Ollama health, exact companion routing, lifecycle, bounded queueing, read-only budgets, successful response persistence, and stop-and-restore.
 
@@ -6609,7 +6609,7 @@ recovery, bounded failure, canonical restart, and final safe-idle.
 The Sprint 269 rehearsal panel remains as historical readiness evidence.
 Sprint 270 adds no new backend route or Control Center panel.
 
-## Current checkpoint - v1.4.0 / Sprint 280
+## Current checkpoint - v1.4.1 / Sprint 281
 Sprint 271 completes `voice_daily_use_activation`. ORION now provides
 explicit browser push-to-talk through the dashboard button or focused-page
 `V`; ATLAS performs isolated local faster-whisper STT; the editable
@@ -6656,3 +6656,20 @@ Release acceptance contract:
 
 The v1.4.0 release does not enable unrestricted desktop control,
 arbitrary shell execution, uncontrolled file access, or automatic recovery.
+
+## Sprint 281 - Game Companion Runtime Foundation
+
+Sprint 281 establishes `game_companion_runtime_foundation` at v1.4.1.
+
+The implemented boundary defines the canonical game catalog, four
+operator-selectable modes, a review-only session proposal, a nine-state session
+state machine, independent emergency-stop handling, and strict separation
+between future public livestream output and private training-data recording.
+
+`osu_offline` is the first reference game. Catalog membership does not mean
+runtime detection or capture support. Process scanning, game detection,
+screen/audio capture, input telemetry, recording, coaching output, application
+launch, game input control, voice-command-to-action, and autonomous gameplay
+remain disabled.
+
+Sprint 282 owns `supported_game_detection`.

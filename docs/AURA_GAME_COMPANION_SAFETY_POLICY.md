@@ -1,226 +1,85 @@
 # AURA Game Companion Safety Policy
 
-Status: PLANNED
-Current Canonical Version: v0.140.0-genesis
+Status: ACTIVE GUARDED FOUNDATION
+Current Canonical Version: v1.4.1
+Current Sprint: 281
 Owner: Kiput
 Motto: Grow Together
 
 ## Purpose
 
-This document defines the safety policy for AURA's future Game Companion direction.
+AURA Game Companion is a companion, coach, observer, learner, performer, and
+future livestream identity layer. It is not cheat automation.
 
-AURA Game Companion is a future post-core feature pillar. It must be developed gradually after AURA has sufficient permission, audit, memory, vision, ORION bridge, Control Center, and safe-idle foundations.
+Sprint 281 establishes only the deterministic runtime foundation: the game
+catalog, operator-selectable modes, session state machine, public/private
+pipeline separation, and hard safety guards. It does not detect games, capture
+screens or audio, collect input telemetry, record gameplay, control input, or
+launch applications.
 
-Game Companion must not be treated as cheat automation. It is a companion, coach, learner, performer, and livestream identity layer.
+## Active reference order
 
-## Game Companion Identity
+1. osu! offline — first reference implementation for Coach, Observer, and
+   reviewed Recording.
+2. Beat Saber — future 3D rhythm performer track.
+3. Monster Hunter: World — single-player Hunter Coach first.
+4. Ace Combat — single-player virtual-pilot track.
+5. Mortal Kombat — local two-player research only.
+6. Resident Evil 4 — Observer stage first.
+7. Minecraft — legacy private/local candidate, not the Sprint 281 reference.
+8. Arknights: Endfield — deferred.
 
-AURA Game Companion is intended to be:
+Genshin Impact and Clash of Clans are excluded from the active Game Companion
+roadmap.
 
-- a companion
-- a coach
-- a learner
-- a performer
-- a devlog character
-- a livestream partner
-- a long-term AI presence that visibly grows over time
+## Canonical operator modes
 
-AURA Game Companion is not intended to be:
+- Coach only
+- Observer only
+- Coach + Observer
+- Coach + Observer + Recording
 
-- a cheat bot
-- an online ranked automation tool
-- a multiplayer farming bot
-- a silent input controller
-- an exploit assistant
-- a tool for bypassing game fairness
+The operator selects the mode and explicitly starts the session. Recording is
+never implied by Coach or Observer.
 
-## Planned Game Order
-
-AURA Game Companion should begin in this order:
-
-1. Minecraft
-2. osu
-3. Beat Saber
-4. Monster Hunter
-
-This order is chosen because the complexity increases gradually:
-
-- Minecraft is sandbox-friendly and safe for early planning/coaching.
-- osu introduces rhythm learning and timing feedback.
-- Beat Saber adds 3D rhythm performance, avatar movement, and livestream identity.
-- Monster Hunter adds complex screen understanding, combat coaching, and long-term strategy.
-
-## Stage 1 — Minecraft Companion
-
-Allowed direction:
-
-- private world
-- local server
-- survival coaching
-- building assistance
-- resource planning
-- navigation help
-- base planning
-- crafting helper
-- redstone planning
-- devlog progression
-- project memory for builds
-
-Not allowed without explicit future approval:
-
-- public server automation
-- griefing assistance
-- exploit automation
-- silent input control
-- uncontrolled bot behavior
-- bypassing server rules
-- automated multiplayer advantage
-
-Required future gates:
-
-- ORION bridge gate
-- vision/screen permission gate
-- manual input-control approval
-- audit trail
-- stop/disconnect control
-- private/local world default
-
-## Stage 2 — osu Companion
-
-Allowed direction:
-
-- offline practice
-- rhythm learning
-- timing analysis
-- aim/timing feedback from vision/audio/feedback
-- progress tracking
-- curated request queue
-- devlog learning sessions
-
-Not allowed:
-
-- ranked/online score automation
-- cheat behavior
-- score submission automation
-- reading beatmap files as answer keys for perfect play
-- bypassing fair-play boundaries
-- silent game input control
-- online account automation
-
-Required future gates:
-
-- offline/private mode first
-- no score submission mode
-- visual/audio observation boundary
-- input-control approval
-- audit trail
-- clear stream disclosure of mode/context
-
-## Stage 3 — Beat Saber Companion
-
-Allowed direction:
-
-- 3D rhythm performer mode
-- avatar performance
-- avatar dance/motion planning
-- cinematic camera planning
-- viewer challenge queue
-- livestream rhythm identity
-- performance growth tracking
-
-Not allowed:
-
-- unsafe modding workflows
-- online abuse
-- silent input control
-- misleading performance claims
-- bypassing fair-play boundaries
-
-Required future gates:
-
-- ORION bridge
-- avatar/presence foundation
-- OBS/streaming permission gate
-- motion/camera safety boundary
-- curated viewer interaction
-- stop/disconnect control
-
-## Stage 4 — Monster Hunter Companion
-
-Allowed direction:
-
-- single-player Hunter Coach
-- monster pattern observation
-- positioning advice
-- dodge/opening reminders
-- item/loadout advice
-- quest preparation planning
-- offline learning research
-
-Not allowed:
-
-- multiplayer automation
-- online farming
-- botting
-- exploit guidance
-- unfair client modification
-- silent input control
-- account automation
-
-Required future gates:
-
-- single-player-only policy
-- ORION screen context gate
-- visual understanding safety boundary
-- no multiplayer control mode
-- audit trail
-- Creator manual approval
-
-## Required Gates Before Any Game Companion Runtime
-
-Before any Game Companion runtime, AURA must have:
-
-- ORION pairing/trust boundary
-- screen/vision permission boundary
-- audio context boundary
-- permission grant workflow
-- audit trail
-- Control Center visibility
-- manual approval
-- safe-idle fallback
-- disconnect/stop control
-- local/private/offline-first mode
-- game-specific safety policy
-
-## Livestream Policy
-
-AURA may become a livestream character and performer only when:
-
-- stream context is visible
-- OBS actions are permission-gated
-- audience interaction is curated
-- game mode is safe and compliant
-- no online unfair automation is used
-- Creator can stop AURA immediately
-- AURA's mode is clear: coach, learner, performer, or observer
-
-## Global Prohibited Behaviors
+## Global prohibited behavior
 
 AURA Game Companion must not:
 
-- cheat
-- exploit
-- secretly automate input
-- farm multiplayer or online games
-- submit online ranked scores
-- bypass game rules
-- modify clients for unfair advantage
-- hide automation from Creator
-- ignore stop/disconnect command
-- operate without audit visibility
+- cheat, exploit, or bypass game rules;
+- secretly automate keyboard, mouse, controller, or virtual-controller input;
+- automate multiplayer, online farming, account actions, or ranked score
+  submission;
+- read internal game data as an answer key for perfect play;
+- start capture or recording without visible operator selection;
+- merge public livestream output with private training data;
+- ignore stop, disconnect, permission expiry, watchdog, or emergency stop;
+- use unrestricted shell or unrestricted ORION control.
 
-## Core Rule
+## Public and private pipeline rule
 
-AURA may learn games, coach, perform, and grow.
+Public livestream output and private training-data recording are separate
+pipelines with separate visibility, retention, and approval. Private datasets
+must not be published implicitly or included in a public scene by default.
 
-AURA must not cheat, exploit, secretly automate, or interfere with online fairness.
+## Required gates before runtime activation
+
+Runtime work after Sprint 281 requires:
+
+- authenticated ORION identity and live link;
+- allowlisted supported-game detection;
+- explicit game/window selection;
+- visible Control Center state;
+- permission grant and expiry;
+- bounded capture;
+- audit records;
+- storage quotas and reserved free space;
+- independent stop and emergency stop;
+- failure-to-safe-idle behavior;
+- game-specific safety policy.
+
+## Sprint 281 boundary
+
+Sprint 281 remains contract-only. The next boundary is Sprint 282
+`supported_game_detection`. Detection must remain read-only and may not start
+capture, recording, telemetry, coaching, or application control.

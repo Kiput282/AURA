@@ -4155,3 +4155,23 @@ Accepted evidence:
 
 This closes the v1.4.0 boundary without enabling unrestricted control.
 The next product block begins at Sprint 281.
+
+## Sprint 281 - Game Companion Runtime Foundation
+
+Sprint 281 opens the Sprint 281-290 Game Companion block with a deterministic,
+side-effect-free foundation at v1.4.1.
+
+Accepted scope:
+
+- canonical Game Companion game catalog;
+- `osu_offline` as the first reference game;
+- Coach only, Observer only, Coach + Observer, and Coach + Observer + Recording;
+- review-only session proposals;
+- nine-state session contract;
+- operator-controlled start and stop;
+- emergency-stop and failure-safe states;
+- public livestream/private dataset separation;
+- all detection, capture, telemetry, recording, coaching output, application
+  launch, game input control, and autonomous gameplay fields closed.
+
+The next boundary is Sprint 282 `supported_game_detection`.
