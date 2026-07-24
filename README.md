@@ -6747,3 +6747,24 @@ export, hooks, Raw Input, input injection, controller control, continuous
 monitoring, recording, coaching, autonomous gameplay, and multiplayer
 automation remain closed. Sprint 286 owns
 `game_timestamp_synchronization`.
+
+## Sprint 286 - Game Timestamp Synchronization
+
+AURA `v1.4.6` defines one explicit, permission-bound, bounded shared session
+clock for Game Companion window, audio, and input metadata. ORION uses one
+high-resolution monotonic epoch and explicit clock frequency for all three
+streams. UTC is an anchor only; ATLAS and ORION wall clocks are not assumed to
+be equivalent for ordering.
+
+ORION preflight and a 1,200 ms metadata-only multistream probe passed. The
+probe produced 264 logical envelopes with one shared epoch, contiguous
+per-stream sequences, monotonic non-decreasing timestamps, a maximum sample
+timestamp of 1,186.5345 ms, no clock discontinuity, no real capture, no raw
+stream export, no cleanup requirement, and a final return to `safe_idle`.
+
+System-clock, NTP, or Windows Time changes; raw monotonic tick export; real
+window/audio/input alignment; drift compensation; resampling; interpolation;
+time stretching; recording or Observer orchestration; Coach runtime;
+autonomous gameplay; and multiplayer automation remain closed. Sprint 287
+owns `game_session_orchestration` and shared live session state for the future
+native ORION overlay.

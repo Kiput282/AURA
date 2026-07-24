@@ -2,13 +2,13 @@
 
 Status: CANONICAL POST-GENESIS PRODUCT ROADMAP
 
-Current canonical anchor: `v1.4.5`
+Current canonical anchor: `v1.4.6`
 
-Current completed sprint: Sprint 285 — Game Window Capture
+Current completed sprint: Sprint 286 — Game Window Capture
 
-Next sprint: `286`
+Next sprint: `287`
 
-Next boundary: `game_timestamp_synchronization`
+Next boundary: `game_session_orchestration`
 
 Owner: Kiput
 
@@ -1465,3 +1465,18 @@ return to `safe_idle`.
 
 Next sprint: `286`
 Next boundary: `game_timestamp_synchronization`
+
+## Sprint 286 Completion - Game Timestamp Synchronization
+
+AURA `v1.4.6` defines one bounded shared ORION monotonic session clock for
+window, audio, and input metadata. UTC remains anchor-only and ATLAS wall time
+is not used for event ordering.
+
+The high-resolution preflight and 1,200 ms logical multistream probe passed
+with 264 envelopes, one shared epoch, contiguous sequences, monotonic
+timestamps, no discontinuity, no real capture, no raw export, and a final
+return to `safe_idle`.
+
+Next sprint: `287`
+Next boundary: `game_session_orchestration`
+Native ORION overlay foundation target: Sprint `288`

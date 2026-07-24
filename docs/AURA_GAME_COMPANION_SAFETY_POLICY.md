@@ -129,7 +129,7 @@ Game audio capture, continuous capture, recording, telemetry, coaching,
 application launch, voice-command-to-action, game input control, autonomous
 gameplay, and multiplayer automation remain prohibited.
 
-Sprint 285 implements `game_input_telemetry`; the next boundary is Sprint 286 `game_timestamp_synchronization`.
+Sprint 286 implements `game_timestamp_synchronization`; the next boundary is Sprint 287 `game_session_orchestration`.
 
 ## Sprint 284 bounded game-audio boundary
 
@@ -166,3 +166,24 @@ The sample is limited to five seconds, 512 events, 128 KiB, temporary private
 ORION storage, metadata-only ATLAS receipt, and explicit cleanup.
 
 Sprint 286 owns cross-stream timestamp alignment and clock synchronization.
+
+## Sprint 286 bounded shared-clock boundary
+
+Timestamp synchronization may begin only after a visible ATLAS preview,
+explicit operator approval, and one short-lived single-use permission. ORION
+must create one high-resolution monotonic session epoch and explicit clock
+frequency shared by window, audio, and input metadata envelopes.
+
+UTC may be recorded only as a session anchor. Wall clock must not be the sole
+ordering source, and ATLAS/ORION wall-clock equivalence must not be assumed.
+Clock identity, frequency, epoch, per-stream start, sequence, and relative
+sample timestamp are validated. A monotonic clock discontinuity fails closed.
+
+The runtime must not change the Windows system clock, NTP, or Windows Time
+service. It must not export raw monotonic ticks, raw logical envelopes, window
+frames, audio, or input. Real capture alignment, drift compensation,
+resampling, interpolation, time stretching, session orchestration, coaching,
+autonomous gameplay, and multiplayer automation remain disabled.
+
+Sprint 287 owns Game Companion session orchestration and shared live session
+state for the future native ORION overlay.

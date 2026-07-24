@@ -1,5 +1,5 @@
 name: AURA
-version: 1.4.5
+version: 1.4.6
 codename: Genesis
 creator: Kiput
 
@@ -382,3 +382,4 @@ modes:
 # game_audio_capture.
 # Sprint 284: game_audio_capture adds one explicit, permission-bound, maximum-five-second osu! process-loopback WAV sample on ORION. Microphone capture, whole-system fallback, continuous capture, recording, transcription, telemetry, coaching, and game input control remain disabled. Next: Sprint 285 game_input_telemetry.
 # Sprint 285: game_input_telemetry adds one explicit, permission-bound, foreground-only, maximum-five-second osu! observation sample on ORION. Only sanitized Z/X, left/right mouse, and normalized in-client cursor events are allowed. Arbitrary keys, text logging, background capture, hooks, Raw Input, input injection, continuous monitoring, coaching, autonomous gameplay, and cross-stream synchronization remain disabled. Next: Sprint 286 game_timestamp_synchronization.
+# Sprint 286: game_timestamp_synchronization adds one explicit, permission-bound, bounded shared monotonic session-clock envelope for window, audio, and input metadata on ORION. UTC is anchor-only and ATLAS wall time is not used for ordering. System-clock/NTP/time-service changes, raw stream export, real capture alignment, drift compensation, resampling, orchestration, coaching, and autonomous gameplay remain disabled. Next: Sprint 287 game_session_orchestration.
