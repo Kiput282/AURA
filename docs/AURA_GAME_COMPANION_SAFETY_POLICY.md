@@ -203,3 +203,15 @@ ORION operational status and the Sprint 288 overlay are read-only status
 surfaces, not authority. Implicit start, background observation, unreviewed
 recording, autonomous gameplay, multiplayer automation, anti-cheat bypass,
 input injection, and raw media/input export to ATLAS remain forbidden.
+
+## Sprint 288 — Native Overlay Safety Boundary
+
+The ORION overlay is a read-only operational status surface and is never
+authority. It cannot authorize or start a session, change Coach/Observer/
+Recording mode, infer active state from stale data, or display raw media/input.
+
+The default helper mode is noninteractive inspection. The only Sprint 288
+window path is an explicitly approved, bounded synthetic `SAFE_IDLE` preview.
+There is no live orchestration binding, quick-stop execution, emergency-stop
+execution, process control, capture, input telemetry, input hook, input
+injection, network listener, or cloud dependency.

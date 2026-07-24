@@ -4324,3 +4324,19 @@ Native ORION overlay foundation target: Sprint 288.
 - Acceptance: ATLAS in-memory contract probe passed 88 assertions with all
   profiles and failure paths returned to safe idle.
 - Next: Sprint 288 `orion_native_overlay_foundation`.
+
+## Sprint 288 — ORION Native Overlay Foundation
+
+- Version: `v1.4.8`
+- Boundary: `orion_native_overlay_foundation`
+- Runtime: `aura.orion_native_overlay_runtime`
+- Native ORION surface: primary operational indicator.
+- Browser Control Center: secondary configuration/history/technical surface.
+- Window contract: WinForms, STA, top-most, borderless, hidden taskbar,
+  `WS_EX_NOACTIVATE`, `WS_EX_TOOLWINDOW`, DPI-aware, single-instance.
+- Views: compact, normal, expanded.
+- Status: 25-field metadata schema, 10 states, four profiles, 250 ms polling
+  contract, 1500 ms stale timeout, fail-closed invalid/missing/stale data.
+- ORION probes: preflight PASS; 30/30 synthetic renders; 6/6 multi-monitor
+  placements; focus unchanged; no window shown during probes.
+- Next: Sprint 289 `orion_overlay_session_status_integration`.

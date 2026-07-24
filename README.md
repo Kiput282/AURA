@@ -6786,3 +6786,19 @@ The logical ATLAS probe passed 88 assertions and returned every profile and
 failure path to `safe_idle`. No ORION contact, real session, capture, input read,
 Coach/Observer/Recording runtime, overlay, input injection, or raw export was
 started. Sprint 288 owns `orion_native_overlay_foundation`.
+
+## Sprint 288 — ORION Native Overlay Foundation
+
+AURA `v1.4.8` adds a disabled-by-default native ORION overlay foundation using
+PowerShell 5.1 and WinForms. The window contract is top-most, borderless,
+hidden from the taskbar, DPI-aware, single-instance, and no-activate so the game
+keeps focus.
+
+The runtime validates the Sprint 287 metadata-only status contract, supports
+compact/normal/expanded layouts, and fails closed for stale, invalid, missing,
+or regressed status. ORION acceptance passed 30 unique in-memory render cases
+and six valid placements over two monitors without showing a window.
+
+The included helper defaults to noninteractive `Inspect`. A bounded synthetic
+`SAFE_IDLE` preview requires exact approval. Live session status and reviewed
+stop controls remain deferred to Sprint 289.

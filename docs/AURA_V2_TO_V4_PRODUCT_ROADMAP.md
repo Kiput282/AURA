@@ -1493,3 +1493,18 @@ Native ORION overlay foundation target: Sprint `288`
   stop controls.
 - Sprint 290: live end-to-end block acceptance, failure/recovery validation, and
   final return to safe idle.
+
+### Sprint 288 — ORION Native Overlay Foundation
+
+Completed foundation scope targets `v1.4.8`:
+
+- native PowerShell/WinForms overlay helper;
+- always-on-top and no-activate window contract;
+- compact, normal, and expanded layouts;
+- single-instance and DPI/multi-monitor positioning;
+- local atomic metadata status contract;
+- stale/invalid/missing status fail-closed;
+- bounded synthetic SAFE_IDLE preview only.
+
+Sprint 289 owns live orchestration status binding, Coach/Observer/Recording
+indicators, focus warnings, session timer, and reviewed stop controls.
