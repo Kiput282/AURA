@@ -1480,3 +1480,16 @@ return to `safe_idle`.
 Next sprint: `287`
 Next boundary: `game_session_orchestration`
 Native ORION overlay foundation target: Sprint `288`
+
+## Sprint 287–290 Game Companion Operational Surfaces
+
+- Sprint 287: `game_session_orchestration` — explicit mode profiles, one
+  authorized session state machine, foreground pause, rollback, idempotent stop,
+  emergency stop-all, and read-only overlay status contract.
+- Sprint 288: `orion_native_overlay_foundation` — native ORION status window,
+  always-on-top/no-activate behavior, mode indicators, foreground warning, and
+  status-derived quick-stop surface.
+- Sprint 289: integrate Coach/Observer/Recording operational status and reviewed
+  stop controls.
+- Sprint 290: live end-to-end block acceptance, failure/recovery validation, and
+  final return to safe idle.

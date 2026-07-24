@@ -4310,3 +4310,17 @@ Next: Sprint 287 - Game Session Orchestration.
 Next boundary: `game_session_orchestration`.
 Next version: `v1.4.7`.
 Native ORION overlay foundation target: Sprint 288.
+
+## Sprint 287 — Game Session Orchestration
+
+- Version: `v1.4.7`
+- Boundary: `game_session_orchestration`
+- Runtime: `aura.game_session_orchestration_runtime`
+- Profiles: Coach only, Observer only, Coach + Observer, and Coach + Observer +
+  Recording.
+- Safety: explicit permission, exact game/window binding, foreground gate,
+  shared timestamp dependency, fail-closed transitions, partial-start rollback,
+  idempotent stop, emergency stop-all, metadata-only status, safe-idle default.
+- Acceptance: ATLAS in-memory contract probe passed 88 assertions with all
+  profiles and failure paths returned to safe idle.
+- Next: Sprint 288 `orion_native_overlay_foundation`.

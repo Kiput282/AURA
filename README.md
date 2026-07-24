@@ -6768,3 +6768,21 @@ time stretching; recording or Observer orchestration; Coach runtime;
 autonomous gameplay; and multiplayer automation remain closed. Sprint 287
 owns `game_session_orchestration` and shared live session state for the future
 native ORION overlay.
+
+## Sprint 287 - Game Session Orchestration
+
+AURA `v1.4.7` defines an ATLAS-authorized, safe-idle state machine for explicit
+Game Companion session profiles: Coach only, Observer only, Coach + Observer,
+and Coach + Observer + Recording. It requires exact game/window binding,
+foreground verification, a valid permission snapshot, and the Sprint 286 shared
+timestamp session before any future activation.
+
+The contract includes partial-start rollback, fail-closed transitions,
+idempotent normal stop, idempotent emergency stop-all, and a metadata-only
+operational status snapshot. ORION status and the future overlay are not
+authorization authority and contain no raw media or raw input.
+
+The logical ATLAS probe passed 88 assertions and returned every profile and
+failure path to `safe_idle`. No ORION contact, real session, capture, input read,
+Coach/Observer/Recording runtime, overlay, input injection, or raw export was
+started. Sprint 288 owns `orion_native_overlay_foundation`.

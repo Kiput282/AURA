@@ -187,3 +187,19 @@ autonomous gameplay, and multiplayer automation remain disabled.
 
 Sprint 287 owns Game Companion session orchestration and shared live session
 state for the future native ORION overlay.
+
+## Sprint 287 — Game Session Orchestration Boundary
+
+Game Companion sessions are explicit, single-session, permission-bound, and
+safe-idle by default. Supported profiles are `coach_only`, `observer_only`,
+`coach_observer`, and `coach_observer_recording`; recording-only is forbidden.
+
+Any future start requires exact process/window binding, foreground verification,
+a valid permission snapshot, and one shared timestamp session. Partial start
+failure must roll back all already-started dependencies. Invalid transitions
+fail closed. Normal stop and emergency stop-all are idempotent.
+
+ORION operational status and the Sprint 288 overlay are read-only status
+surfaces, not authority. Implicit start, background observation, unreviewed
+recording, autonomous gameplay, multiplayer automation, anti-cheat bypass,
+input injection, and raw media/input export to ATLAS remain forbidden.
