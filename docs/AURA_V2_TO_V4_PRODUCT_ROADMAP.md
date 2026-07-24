@@ -1508,3 +1508,20 @@ Completed foundation scope targets `v1.4.8`:
 
 Sprint 289 owns live orchestration status binding, Coach/Observer/Recording
 indicators, focus warnings, session timer, and reviewed stop controls.
+
+### Sprint 289 — ORION Overlay Session Status Integration
+
+Target `v1.4.9` integrates the native overlay with live authoritative
+session-status metadata:
+
+- atomic 250 ms local status polling;
+- 1500 ms stale fail-closed behavior;
+- Coach/Observer/Recording indicators;
+- foreground-loss warning and session timer;
+- two-step reviewed quick-stop request;
+- press-and-hold reviewed emergency-stop-all request;
+- acknowledgement, expiry, audit, and idempotency.
+
+The overlay remains non-authoritative. Sprint 290 performs the Game Companion
+block live end-to-end acceptance, failure/recovery verification, and final safe
+idle.

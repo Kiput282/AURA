@@ -215,3 +215,18 @@ window path is an explicitly approved, bounded synthetic `SAFE_IDLE` preview.
 There is no live orchestration binding, quick-stop execution, emergency-stop
 execution, process control, capture, input telemetry, input hook, input
 injection, network listener, or cloud dependency.
+
+## Sprint 289 — Reviewed Overlay Control Boundary
+
+The ORION overlay may originate reviewed metadata-only requests for quick-stop
+or emergency-stop-all. It remains non-authoritative and never performs the stop
+itself.
+
+Quick-stop requires a verified current session and two-step local confirmation.
+Emergency-stop-all requires a local press-and-hold of at least 1500
+milliseconds. Requests expire after five seconds, require audit, carry an
+idempotency key and permission-snapshot digest, and exclude raw input.
+
+Invalid, stale, or missing status disables quick-stop and hides active state.
+Session start, mode change, process control, capture, input hooks, input
+injection, raw media/input display, and network listeners remain forbidden.

@@ -6802,3 +6802,17 @@ and six valid placements over two monitors without showing a window.
 The included helper defaults to noninteractive `Inspect`. A bounded synthetic
 `SAFE_IDLE` preview requires exact approval. Live session status and reviewed
 stop controls remain deferred to Sprint 289.
+
+## Sprint 289 — ORION Overlay Session Status Integration
+
+AURA `v1.4.9` connects the native ORION overlay to a local atomic projection of
+the authoritative Game Companion session state. It displays Coach, Observer,
+Recording, focus, canonical state, and a monotonic session timer while failing
+closed for stale, invalid, missing, or regressed status.
+
+The overlay now includes reviewed local controls: two-step quick-stop for the
+current verified session and 1.5-second press-and-hold emergency-stop-all.
+These controls only write metadata request files. The Game Companion session
+orchestrator remains the authoritative handler and returns acknowledgement
+files. The overlay cannot start a session, change mode, or execute stop
+directly.

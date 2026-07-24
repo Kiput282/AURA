@@ -1,5 +1,5 @@
 name: AURA
-version: 1.4.8
+version: 1.4.9
 codename: Genesis
 creator: Kiput
 
@@ -385,3 +385,5 @@ modes:
 # Sprint 286: game_timestamp_synchronization adds one explicit, permission-bound, bounded shared monotonic session-clock envelope for window, audio, and input metadata on ORION. UTC is anchor-only and ATLAS wall time is not used for ordering. System-clock/NTP/time-service changes, raw stream export, real capture alignment, drift compensation, resampling, orchestration, coaching, and autonomous gameplay remain disabled. Next: Sprint 287 game_session_orchestration.
 # Sprint 287: game_session_orchestration adds an ATLAS-authorized, safe-idle explicit session state machine with four reviewed mode profiles, foreground pause, partial-start rollback, idempotent stop, emergency stop-all, and a read-only ORION overlay status contract; real session activation and the native overlay remain deferred.
 # Sprint 288: orion_native_overlay_foundation adds a disabled-by-default PowerShell/WinForms no-activate overlay, three view profiles, metadata-only status validation, stale fail-closed handling, bounded synthetic SAFE_IDLE preview, and defers live status/stop controls to Sprint 289.
+
+# Sprint 289: orion_overlay_session_status_integration adds local atomic live status polling, mode/focus/timer display, reviewed quick-stop and emergency-stop-all requests, authoritative acknowledgement, and preserves overlay non-authority.

@@ -4340,3 +4340,18 @@ Native ORION overlay foundation target: Sprint 288.
 - ORION probes: preflight PASS; 30/30 synthetic renders; 6/6 multi-monitor
   placements; focus unchanged; no window shown during probes.
 - Next: Sprint 289 `orion_overlay_session_status_integration`.
+
+## Sprint 289 — ORION Overlay Session Status Integration
+
+- Version: `v1.4.9`
+- Boundary: `orion_overlay_session_status_integration`
+- Runtime: `aura.orion_overlay_session_status_runtime`
+- Status source: authoritative Game Companion session-orchestration metadata.
+- Status transport: local atomic JSON polling at 250 ms.
+- Stale timeout: 1500 ms with fail-closed active-state hiding.
+- Live UI: Coach, Observer, Recording, focus warning, canonical state, timer.
+- Quick stop: current session only, two-step review, five-second expiry.
+- Emergency stop all: 1500 ms press-and-hold, no session binding.
+- Command transport: local atomic request and authoritative acknowledgement.
+- Overlay authority: false; direct execution: false.
+- Next: Sprint 290 `game_companion_block_acceptance`.
